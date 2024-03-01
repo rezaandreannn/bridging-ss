@@ -10,42 +10,33 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Master Patient Index (MPI)</h1>
+            <h1>Rujukan</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                <div class="breadcrumb-item"><a href="#">Master Data</a></div>
-                <div class="breadcrumb-item">Pasien</div>
+                <div class="breadcrumb-item"><a href="#">Kunjungan</a></div>
+                <div class="breadcrumb-item">Rujukan</div>
             </div>
         </div>
 
         <div class="section-body">
             <form id="filterForm" action="" method="get">
                 <div class="row">
-                    <div class="col-sm-12 col-md-2">
+                    <div class="col-md-4">
                         <div class="form-group">
-                            <label for="No_mr">No MR</label>
-                            <input type="text" class="form-control" id="No_mr" name="no_mr" value="">
+                            <label for="kode_dokter">Pilih Dokter</label>
+                            <select class="form-control select2" id="kode_dokter" name="kode_dokter">
+                                <option value="" selected disabled>-- silahkan pillih --</option>
+
+                            </select>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
-                            <label for="nik">NIK</label>
-                            <input type="text" class="form-control" id="nik" name="nik" value="">
+                            <label for="tanggal">Tanggal <small>(kosongkan jika filter tanggal saat ini)</small></label>
+                            <input type="date" class="form-control" id="tanggal" name="tanggal" value="">
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-3">
-                        <div class="form-group">
-                            <label for="bpjs">BPJS</label>
-                            <input type="text" class="form-control" id="bpjs" name="no_bpjs" value="">
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-2">
-                        <div class="form-group">
-                            <label for="nama">Nama</label>
-                            <input type="text" class="form-control" id="nama" name="nama" value="">
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-2 filter-buttons">
+                    <div class="col-md-4 filter-buttons">
                         <div class="form-group d-flex align-items-end">
                             <button type="submit" class="btn btn-primary mr-2" style="margin-top: 30px;"><i class="fas fa-filter"></i> Filter</button>
                             <button type="button" class="btn btn-danger" style="margin-top: 30px;" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
@@ -55,7 +46,7 @@
             </form>
             <div class="card">
                 <div class="card-header">
-                    <h4>Master Patient Index (MPI)</h4>
+                    <h4>Rujukan</h4>
                 </div>
                 <div class="card-body">
                     <table class="table-striped table" id="myTable">

@@ -31,14 +31,14 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item dropdown {{ $type_menu === 'bootstrap' ? 'active' : '' }}">
+            <li class="nav-item dropdown {{ $type_menu === 'kunjungan' ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-th"></i> <span>Kunjungan</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('bootstrap-alert') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ url('bootstrap-alert') }}">Pendaftaran</a>
+                    <li class="{{ Request::is('pendaftaran') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ url('pendaftaran') }}">Pendaftaran</a>
                     </li>
-                    <li class="{{ Request::is('bootstrap-badge') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ url('bootstrap-badge') }}">Rujukan</a>
+                    <li class="{{ Request::is('rujukan') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ url('rujukan') }}">Rujukan</a>
                     </li>
                 </ul>
             </li>
