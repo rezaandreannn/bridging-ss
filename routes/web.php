@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PasienController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,6 +40,8 @@ Route::get('/rujukan', function () {
 Route::get('/pendaftaran', function () {
     return view('pages.pendaftaran', ['type_menu' => 'kunjungan']);
 });
+
+Route::get('test', [PasienController::class, 'index']);
 
 // credits
 Route::get('/credits', function () {
