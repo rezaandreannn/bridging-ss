@@ -48,7 +48,7 @@
                     <div class="col-sm-12 col-md-2 filter-buttons">
                         <div class="form-group d-flex align-items-end">
                             <button type="submit" class="btn btn-primary mr-2" style="margin-top: 30px;"><i class="fas fa-filter"></i> Filter</button>
-                            <button type="button" class="btn btn-danger" style="margin-top: 30px;" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
+                            <button type="button" class="btn btn-danger " style="margin-top: 30px;" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
                         </div>
                     </div>
                 </div>
