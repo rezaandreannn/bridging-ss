@@ -58,7 +58,7 @@
                     <h4>Master Patient Index (MPI)</h4>
                 </div>
                 <div class="card-body">
-                    <table class="table-striped table">
+                    <table class="table-striped table" id="myTable">
                         <thead>
                             <tr>
                                 <th scope="col">No</th>
