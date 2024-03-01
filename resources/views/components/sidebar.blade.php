@@ -8,7 +8,7 @@
         </div>
         <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>
-            <li class="nav-item dropdown {{ $type_menu === 'dashboard' ? 'active' : '' }}">
+            <li class="nav-item dropdown ">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Dashboard</span></a>
                 <ul class="dropdown-menu">
                     <li class='{{ Request::is('dashboard-general-dashboard') ? 'active' : '' }}'>
@@ -20,7 +20,7 @@
                 </ul>
             </li>
             <li class="menu-header">RSUMM</li>
-            <li class="nav-item dropdown {{ $type_menu === 'master-data' ? 'active' : '' }}">
+            <li class="nav-item dropdown ">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Master Data</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('pasien') ? 'active' : '' }}">
@@ -31,7 +31,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item dropdown {{ $type_menu === 'kunjungan' ? 'active' : '' }}">
+            <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-th"></i> <span>Kunjungan</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('pendaftaran') ? 'active' : '' }}">

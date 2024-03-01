@@ -56,23 +56,25 @@
                                 <th scope="col">No MR</th>
                                 <th scope="col">Nama Pasien</th>
                                 <th scope="col">NIK</th>
-                                <th scope="col">No HP</th>
-                                <th scope="col">Jenis Kelamin</th>
+                                <th scope="col">Tanggal</th>
                                 <th scope="col">BPJS</th>
                                 <th scope="col">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <?php $no = 1;
+                            ?>
+                            @foreach ($data->data as $data)
                             <tr>
-                                <th scope="row">1</th>
-                                <td>2131231</td>
-                                <td>Otto</td>
-                                <td>2312413213131314</td>
-                                <td>08231132134</td>
-                                <td>L</td>
-                                <td>000020319391</td>
-                                <td>Aksi</td>
+                                <td>{{ $no++ }}</td>
+                                <td>{{ $data->No_MR }}</td>
+                                <td>{{ $data->Nama_Pasien }}</td>
+                                <td>{{ $data->HP2 }}</td>
+                                <td>{{ $data->Tanggal }}</td>
+                                <td>{{ $data->No_Identitas }}</td>
+                                <!-- Tambahkan kolom lainnya sesuai kebutuhan -->
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

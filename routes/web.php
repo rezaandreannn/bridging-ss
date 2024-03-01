@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AntreanController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Http;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,9 +35,17 @@ Route::get('/dokter', function () {
 });
 
 // Kunjungan
-Route::get('/rujukan', function () {
-    return view('pages.rujukan', ['type_menu' => 'kunjungan']);
-});
+// Route::get('/rujukan', function () {
+//     return view('pages.rujukan', ['type_menu' => 'kunjungan']);
+// });
+Route::get('/rujukan', [AntreanController::class, 'index']);
+
+
+// Route::get('testing', function () {
+//     $client = Http::get('https://daftar.rsumm.co.id/api.simrs/index.php/api/antrian/140')->status();
+
+//     dd($client);
+// });
 Route::get('/pendaftaran', function () {
     return view('pages.pendaftaran', ['type_menu' => 'kunjungan']);
 });
