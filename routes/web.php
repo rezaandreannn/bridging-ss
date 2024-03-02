@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AntreanController;
+use App\Http\Controllers\DokterController;
 use App\Http\Controllers\PasienController;
+use App\Http\Controllers\PendaftaranController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 
@@ -25,21 +27,26 @@ Route::get('/dashboard-general-dashboard', function () {
 Route::get('/dashboard-ecommerce-dashboard', function () {
     return view('pages.dashboard-ecommerce-dashboard', ['type_menu' => 'dashboard']);
 });
-
+// Route::get('/pasien', [PasienController::class, 'index'] ['type_menu' => 'dashboard']);
 
 //  Master Data
-Route::get('/pasien', function () {
-    return view('pages.pasien', ['type_menu' => 'master-data']);
-});
-Route::get('/dokter', function () {
-    return view('pages.dokter', ['type_menu' => 'master-data']);
-});
+// Route::get('/pasien', function () {
+//     return view('pages.pasien', ['type_menu' => 'master-data']);
+// });
+
+Route::get('/pasien',  [PasienController::class, 'index'])->name('pasien');
+Route::get('/dokter', [DokterController::class, 'index'])->name('dokter');
+
+// Route::get('/dokter', function () {
+//     return view('pages.dokter', ['type_menu' => 'master-data']);
+// });
 
 // Kunjungan
 // Route::get('/rujukan', function () {
 //     return view('pages.rujukan', ['type_menu' => 'kunjungan']);
 // });
-Route::get('/rujukan', [AntreanController::class, 'index']);
+Route::get('/rujukan', [AntreanController::class, 'index'])->name('rujukan');
+Route::get('/pendaftaran', [PendaftaranController::class, 'index'])->name('pendaftaran');
 
 
 // Route::get('testing', function () {
@@ -47,9 +54,9 @@ Route::get('/rujukan', [AntreanController::class, 'index']);
 
 //     dd($client);
 // });
-Route::get('/pendaftaran', function () {
-    return view('pages.pendaftaran', ['type_menu' => 'kunjungan']);
-});
+// Route::get('/pendaftaran', function () {
+//     return view('pages.pendaftaran', ['type_menu' => 'kunjungan']);
+// });
 
 Route::get('test', [PasienController::class, 'index']);
 
