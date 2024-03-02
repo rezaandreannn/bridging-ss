@@ -53,11 +53,12 @@
                         <thead>
                             <tr>
                                 <th scope="col">No</th>
-                                <th scope="col">No MR</th>
+                                <th scope="col">Nama Reg</th>
                                 <th scope="col">Nama Pasien</th>
                                 <th scope="col">NIK</th>
-                                <th scope="col">Tanggal</th>
-                                <th scope="col">BPJS</th>
+                                <th scope="col">No MR</th>
+                                <th scope="col">Medis</th>
+                                <th scope="col">Jenis Pasien</th>
                                 <th scope="col">Aksi</th>
                             </tr>
                         </thead>
@@ -67,12 +68,22 @@
                             @foreach ($data->data as $data)
                             <tr>
                                 <td>{{ $no++ }}</td>
-                                <td>{{ $data->No_MR }}</td>
+                                <td>{{ $data->No_Reg }}</td>
                                 <td>{{ $data->Nama_Pasien }}</td>
                                 <td>{{ $data->HP2 }}</td>
-                                <td>{{ $data->Tanggal }}</td>
-                                <td>{{ $data->No_Identitas }}</td>
-                                <!-- Tambahkan kolom lainnya sesuai kebutuhan -->
+                                <td>{{ $data->No_MR }}</td>
+                                <td>
+                                    @if ($data->Medis == 'RAWAT JALAN')
+                                    <div class="badge badge-success">RJ</div>
+                                    @else
+                                    <div class="badge badge-info">RI</div>
+                                    @endif
+                                </td>
+                                <td>{{ $data->KODEREKANAN }}</td>
+                                <td width="10%">
+                                    <a href="http://" class="btn btn-sm btn-outline-primary"><i class="far fa-eye"></i></a>
+                                    <a href="http://" class="btn btn-sm btn-outline-primary">sync</a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -86,6 +97,11 @@
 
 @push('scripts')
 <!-- JS Libraies -->
+<script>
+    $(document).ready(function() {
+        $('#myTable').DataTable();
+    });
+</script>
 
 <!-- Page Specific JS File -->
 @endpush

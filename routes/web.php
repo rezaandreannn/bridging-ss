@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AntreanController;
+use App\Http\Controllers\PasienController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 
@@ -49,6 +50,8 @@ Route::get('/rujukan', [AntreanController::class, 'index']);
 Route::get('/pendaftaran', function () {
     return view('pages.pendaftaran', ['type_menu' => 'kunjungan']);
 });
+
+Route::get('test', [PasienController::class, 'index']);
 
 // credits
 Route::get('/credits', function () {
