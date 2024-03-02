@@ -2,15 +2,26 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Http;
 
 class Antrean extends Model
 {
-    public static function fetchData()
+    protected $httpClient;
+
+    public function __construct()
     {
-        $response = Http::get('https://daftar.rsumm.co.id/api.simrs/index.php/api/antrian/140');
-        return $response->json();
+        $this->httpClient = new Client([
+            'headers' => [
+                'Content-Type' => 'application/json'
+            ],
+        ]);
+    }
+    public function byKodeDokter($kodeDokter = '')
+    {
+        $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/index.php/api/antrian/' . $kodeDokter);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
     }
 }
