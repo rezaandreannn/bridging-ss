@@ -22,5 +22,10 @@ class PasienController extends Controller
             'birthdate' => '1997-03-22'
         ]);
         return  $data;
+
+        // return view('pages.pasien', [
+        //     'title' => 'Pasien',
+
+        // ]);
     }
 }
