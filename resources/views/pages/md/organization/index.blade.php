@@ -29,35 +29,40 @@
                     <a href="http://" class="btn btn-primary rounded-0">New Data</a>
                 </div>
                 <div class="card-body">
-                    <table class="table-striped table" id="table-1">
-                        <thead>
-                            <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Nama Reg</th>
-                                <th scope="col">Nama Pasien</th>
-                                <th scope="col">NIK</th>
-                                <th scope="col">No MR</th>
-                                <th scope="col">Medis</th>
-                                <th scope="col">Jenis Pasien</th>
-                                <th scope="col">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1.</td>
-                                <td>sdfj1</td>
-                                <td>dsjkg</td>
-                                <td>jkdf</td>
-                                <td>dfjhs</td>
-                                <td>jdsg</td>
-                                <td>vsd</td>
-                                <td width="10%">
-                                    <a href="http://" class="btn btn-sm btn-outline-primary"><i class="far fa-eye"></i></a>
-                                    <a href="http://" class="btn btn-sm btn-outline-primary">sync</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table-striped table" id="table-1">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">
+                                        No
+                                    </th>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Part Of</th>
+                                    <th>Updated At</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center" width="5%">
+                                        1
+                                    </td>
+                                    <td>Create a mobile app</td>
+                                    <td class="align-middle">
+                                        <div class="progress" data-height="4" data-toggle="tooltip" title="100%">
+                                            <div class="progress-bar bg-success" data-width="100%"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <img alt="image" src="assets/img/avatar/avatar-5.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Wildan Ahdian">
+                                    </td>
+                                    <td>2018-01-20</td>
+                                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
