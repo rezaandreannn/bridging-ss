@@ -21,12 +21,12 @@
             </li>
             <li class="menu-header">RSUMM</li>
             <li class="nav-item dropdown ">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Master Data</span></a>
+                <a href="#" class="nav-link has-dropdown {{ $type_menu === 'master-data' ? 'active' : '' }}" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Master Data</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ request()->routeIs('/') ?  'active' : '' }}">
+                    <li class="{{ Request::is('pasien') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ url('pasien') }}">Pasien</a>
                     </li>
-                    <li class="{{ Request::is('dokter') ? 'active' : '' }}">
+                    <li class="{{ 'dokter' == request()->path() ? 'active' : '' }}">
                         <a class="nav-link" href="{{ url('dokter') }}">Dokter</a>
                     </li>
                 </ul>

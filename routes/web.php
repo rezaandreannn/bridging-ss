@@ -2,8 +2,9 @@
 
 use App\Http\Controllers\AntreanController;
 use App\Http\Controllers\DokterController;
-use App\Http\Controllers\PasienController;
 use App\Http\Controllers\PendaftaranController;
+use App\Http\Controllers\PasienController;
+use App\Models\Pasien;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 
@@ -34,7 +35,7 @@ Route::get('/dashboard-ecommerce-dashboard', function () {
 //     return view('pages.pasien', ['type_menu' => 'master-data']);
 // });
 
-Route::get('/pasien',  [PasienController::class, 'index'])->name('pasien');
+Route::get('/pasien', [PasienController::class, 'index']);
 Route::get('/dokter', [DokterController::class, 'index'])->name('dokter');
 
 // Route::get('/dokter', function () {
