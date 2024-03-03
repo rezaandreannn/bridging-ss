@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Kunjungan\AntreanController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Kunjungan\AntreanController;
 use App\Http\Controllers\MasterData\DokterController;
 use App\Http\Controllers\MasterData\PasienController;
 use App\Http\Controllers\Kunjungan\PendaftaranController;
@@ -34,9 +34,6 @@ Route::get('/dashboard-ecommerce-dashboard', function () {
 
 //     dd($client);
 // });
-// Route::get('/pendaftaran', function () {
-//     return view('pages.pendaftaran', ['type_menu' => 'kunjungan']);
-// });
 
 // Route::get('test', [PasienController::class, 'index']);
 
@@ -67,6 +64,7 @@ Route::prefix('kj')->group(function () {
 
     // PASIEN
     Route::get('/antrean', [AntreanController::class, 'index'])->name('antrean.index');
+    Route::get('/antrean/{kodeDokter}', [AntreanController::class, 'getByKodeDokter']);
     Route::get('/antrean/create', [AntreanController::class, 'create'])->name('antrean.create');
     Route::post('/antrean', [AntreanController::class, 'store'])->name('antrean.store');
 });
