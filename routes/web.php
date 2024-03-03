@@ -48,9 +48,7 @@ Route::prefix('md')->group(function () {
     Route::get('/organization/{organization_id}', [OrganizationController::class, 'show'])->name('organization.show');
     Route::get('/organization/{organization_id}/edit', [OrganizationController::class, 'edit'])->name('organization.edit');
     Route::post('/organization', [OrganizationController::class, 'store'])->name('organization.store');
-<<<<<<< HEAD
     Route::put('/organization{organization_id}', [OrganizationController::class, 'update'])->name('organization.update');
-=======
 
     // PASIEN
     Route::get('/pasien', [PasienController::class, 'index'])->name('pasien.index');
@@ -74,7 +72,6 @@ Route::prefix('kj')->group(function () {
     Route::get('/antrean', [AntreanController::class, 'index'])->name('antrean.index');
     Route::get('/antrean/create', [AntreanController::class, 'create'])->name('antrean.create');
     Route::post('/antrean', [AntreanController::class, 'store'])->name('antrean.store');
->>>>>>> 715e5ebc7f2a4293e838df5db4e820a34c4cd892
 });
 
 // credits
