@@ -14,6 +14,8 @@ Several quick start options are available:
 -   Run `php artisan serve` command
 -   Done
 
+Read the [documentation page](https://getstisla.com/docs) for more information on the framework contents, templates and examples, and more.
+
 ## License
 
-</span>
+**Stisla** is licensed under the [MIT License](LICENSE)
