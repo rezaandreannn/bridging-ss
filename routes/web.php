@@ -42,7 +42,10 @@ Route::prefix('md')->group(function () {
     // ORGANIZATION
     Route::get('/organization', [OrganizationController::class, 'index'])->name('organization.index');
     Route::get('/organization/create', [OrganizationController::class, 'create'])->name('organization.create');
+    Route::get('/organization/{organization_id}', [OrganizationController::class, 'show'])->name('organization.show');
+    Route::get('/organization/{organization_id}/edit', [OrganizationController::class, 'edit'])->name('organization.edit');
     Route::post('/organization', [OrganizationController::class, 'store'])->name('organization.store');
+    Route::put('/organization{organization_id}', [OrganizationController::class, 'update'])->name('organization.update');
 
     // PASIEN
     Route::get('/pasien', [PasienController::class, 'index'])->name('pasien.index');
