@@ -1,15 +1,4 @@
-<p align="center">
-  <a href="https://laravel.com/">
-    <img src="https://laravel.com/img/logomark.min.svg" alt="laravel logo" width="75" height="75">
-  </a>
-  <a href="https://getstisla.com">
-    <img src="https://avatars2.githubusercontent.com/u/45754626?s=75&v=4" alt="Stisla logo" width="75" height="75">
-  </a>
-</p>
-
-<h1 align="center">Laravel Stisla</h1>
-
-<span align="center">
+<span align="left">
 
 ## Quick start
 
@@ -26,3 +15,5 @@ Several quick start options are available:
 -   Done
 
 ## License
+
+</span>
