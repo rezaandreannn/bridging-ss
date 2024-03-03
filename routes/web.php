@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\AntreanController;
-use App\Http\Controllers\DokterController;
-use App\Http\Controllers\MasterData\OrganizationController;
-use App\Http\Controllers\PasienController;
-use App\Http\Controllers\PendaftaranController;
+use App\Http\Controllers\Kunjungan\AntreanController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MasterData\DokterController;
+use App\Http\Controllers\MasterData\PasienController;
+use App\Http\Controllers\Kunjungan\PendaftaranController;
+use App\Http\Controllers\MasterData\OrganizationController;
 
 
 /*
@@ -28,27 +28,6 @@ Route::get('/dashboard-general-dashboard', function () {
 Route::get('/dashboard-ecommerce-dashboard', function () {
     return view('pages.dashboard-ecommerce-dashboard', ['type_menu' => 'dashboard']);
 });
-// Route::get('/pasien', [PasienController::class, 'index'] ['type_menu' => 'dashboard']);
-
-//  Master Data
-// Route::get('/pasien', function () {
-//     return view('pages.pasien', ['type_menu' => 'master-data']);
-// });
-
-Route::get('/pasien',  [PasienController::class, 'index'])->name('pasien');
-Route::get('/dokter', [DokterController::class, 'index'])->name('dokter');
-
-// Route::get('/dokter', function () {
-//     return view('pages.dokter', ['type_menu' => 'master-data']);
-// });
-
-// Kunjungan
-// Route::get('/rujukan', function () {
-//     return view('pages.rujukan', ['type_menu' => 'kunjungan']);
-// });
-Route::get('/rujukan', [AntreanController::class, 'index'])->name('rujukan');
-Route::get('/pendaftaran', [PendaftaranController::class, 'index'])->name('pendaftaran');
-
 
 // Route::get('testing', function () {
 //     $client = Http::get('https://daftar.rsumm.co.id/api.simrs/index.php/api/antrian/140')->status();
@@ -59,7 +38,7 @@ Route::get('/pendaftaran', [PendaftaranController::class, 'index'])->name('penda
 //     return view('pages.pendaftaran', ['type_menu' => 'kunjungan']);
 // });
 
-Route::get('test', [PasienController::class, 'index']);
+// Route::get('test', [PasienController::class, 'index']);
 
 // MASTER DATA 
 Route::prefix('md')->group(function () {
@@ -69,7 +48,33 @@ Route::prefix('md')->group(function () {
     Route::get('/organization/{organization_id}', [OrganizationController::class, 'show'])->name('organization.show');
     Route::get('/organization/{organization_id}/edit', [OrganizationController::class, 'edit'])->name('organization.edit');
     Route::post('/organization', [OrganizationController::class, 'store'])->name('organization.store');
+<<<<<<< HEAD
     Route::put('/organization{organization_id}', [OrganizationController::class, 'update'])->name('organization.update');
+=======
+
+    // PASIEN
+    Route::get('/pasien', [PasienController::class, 'index'])->name('pasien.index');
+    Route::get('/pasien/create', [PasienController::class, 'create'])->name('pasien.create');
+    Route::post('/pasien', [PasienController::class, 'store'])->name('pasien.store');
+
+    // DOKTER
+    Route::get('/dokter', [DokterController::class, 'index'])->name('dokter.index');
+    Route::get('/dokter/create', [DokterController::class, 'create'])->name('dokter.create');
+    Route::post('/dokter', [DokterController::class, 'store'])->name('dokter.store');
+});
+
+// KUNJUNGAN
+Route::prefix('kj')->group(function () {
+    // PENDAFTARAN
+    Route::get('/pendaftaran', [PendaftaranController::class, 'index'])->name('pendaftaran.index');
+    Route::get('/pendaftaran/create', [PendaftaranController::class, 'create'])->name('pendaftaran.create');
+    Route::post('/pendaftaran', [PendaftaranController::class, 'store'])->name('pendaftaran.store');
+
+    // PASIEN
+    Route::get('/antrean', [AntreanController::class, 'index'])->name('antrean.index');
+    Route::get('/antrean/create', [AntreanController::class, 'create'])->name('antrean.create');
+    Route::post('/antrean', [AntreanController::class, 'store'])->name('antrean.store');
+>>>>>>> 715e5ebc7f2a4293e838df5db4e820a34c4cd892
 });
 
 // credits

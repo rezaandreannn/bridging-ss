@@ -23,11 +23,11 @@
             <li class="nav-item dropdown {{ Request::is('md*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Master Data</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ request()->routeIs('/') ?  'active' : '' }}">
-                        <a class="nav-link" href="{{ url('pasien') }}">Pasien</a>
+                    <li class="{{ Request::is('md/pasien*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('pasien.index') }}">Pasien</a>
                     </li>
-                    <li class="{{ Request::is('dokter') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ url('dokter') }}">Dokter</a>
+                    <li class="{{ Request::is('md/dokter*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('dokter.index') }}">Dokter</a>
                     </li>
                     <li class="{{ Request::is('md/organization*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('organization.index') }}">Organization</a>
@@ -37,14 +37,14 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-th"></i> <span>Kunjungan</span></a>
+            <li class="nav-item dropdown {{ Request::is('kj*') ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Kunjungan</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('pendaftaran') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ url('pendaftaran') }}">Pendaftaran</a>
+                    <li class="{{ Request::is('kj/pendaftaran') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('pendaftaran.index') }}">Pendaftaran</a>
                     </li>
-                    <li class="{{ Request::is('rujukan') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ url('rujukan') }}">Rujukan</a>
+                    <li class="{{ Request::is('kj/antrean') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('antrean.index') }}">Antrean</a>
                     </li>
                 </ul>
             </li>

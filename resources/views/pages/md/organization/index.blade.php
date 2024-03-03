@@ -54,7 +54,9 @@
                                     <td>{{$organization->part_of}}</td>
                                     <td>{{$organization->updated_at}}</td>
                                     <td width="20%">
+                                        @if($organization->id != 1)
                                         <a href="{{ route('organization.edit', $organization->organization_id )}}" class="btn btn-warning"><i class="far fa-edit"></i></a>
+                                        @endif
                                         <a href="{{ route('organization.show', $organization->organization_id )}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                                     </td>
                                 </tr>
