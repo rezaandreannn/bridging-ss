@@ -12,7 +12,8 @@ Several quick start options are available:
 -   Run `cp .env.example .env` command
 -   Run `php artisan key:generate` command
 -   Run `php artisan migrate` command
--   Copy Konfigurasi
+
+Copy To .env
 
 ```php
 SATU_SEHAT_BASE_URL={base_url}
