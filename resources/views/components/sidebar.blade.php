@@ -29,6 +29,9 @@
                     <li class="{{ Request::is('dokter') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ url('dokter') }}">Dokter</a>
                     </li>
+                    <li class="{{ Request::is('md/organization') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('organization.index') }}">Organization</a>
+                    </li>
                 </ul>
             </li>
             <li class="nav-item dropdown">
