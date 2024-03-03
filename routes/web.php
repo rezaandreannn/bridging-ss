@@ -2,11 +2,11 @@
 
 use App\Http\Controllers\AntreanController;
 use App\Http\Controllers\DokterController;
-use App\Http\Controllers\MasterData\Organization;
+use App\Http\Controllers\MasterData\OrganizationController;
 use App\Http\Controllers\PasienController;
 use App\Http\Controllers\PendaftaranController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Http;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -64,8 +64,9 @@ Route::get('test', [PasienController::class, 'index']);
 // MASTER DATA 
 Route::prefix('md')->group(function () {
     // ORGANIZATION
-    Route::get('/organization', [Organization::class, 'index'])->name('organization.index');
-    Route::get('/organization/create', [Organization::class, 'create'])->name('organization.create');
+    Route::get('/organization', [OrganizationController::class, 'index'])->name('organization.index');
+    Route::get('/organization/create', [OrganizationController::class, 'create'])->name('organization.create');
+    Route::post('/organization', [OrganizationController::class, 'store'])->name('organization.store');
 });
 
 // credits

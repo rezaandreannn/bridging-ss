@@ -13,6 +13,7 @@ class ConfigSatuSehat extends ManageService
     protected $authUrl;
     protected $clientId;
     protected $clientSecret;
+    protected $organizationId;
 
     public function __construct()
     {
@@ -22,6 +23,7 @@ class ConfigSatuSehat extends ManageService
         $this->authUrl = env('SATU_SEHAT_AUTH_URL');
         $this->clientId = env('SATU_SEHAT_CLIENT_ID');
         $this->clientSecret = env('SATU_SEHAT_CLIENT_SECRET');
+        $this->organizationId = env('SATU_SEHAT_ORGANIZATION_ID');
     }
 
     public function setUrl()
@@ -42,5 +44,10 @@ class ConfigSatuSehat extends ManageService
     public function setClientSecret()
     {
         return $this->clientSecret;
+    }
+
+    public function setOrganizationId()
+    {
+        return $this->organizationId;
     }
 }
