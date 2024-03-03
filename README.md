@@ -12,16 +12,17 @@ Several quick start options are available:
 -   Run `cp .env.example .env` command
 -   Run `php artisan key:generate` command
 -   Run `php artisan migrate` command
--   Run `php artisan serve` command
+-   Copy Konfigurasi
 
-```json
-SATU_SEHAT_BASE_URL=https://api-satusehat-stg.dto.kemkes.go.id/fhir-r4/v1/
-SATU_SEHAT_AUTH_URL=https://api-satusehat-stg.dto.kemkes.go.id/oauth2/v1
-SATU_SEHAT_CLIENT_ID=XlHWu3gId44OWgCLKfKn7md1ANSmrhJxUfapy9rOcOSnsNA4
-SATU_SEHAT_CLIENT_SECRET=J2G6b4mqYfz2bPaLQJYygn5bzDkfhu1C33MokL9jDT8li6tHYHjR9GxPs5tQvHQa
-SATU_SEHAT_ORGANIZATION_ID=861b3be1-9a10-4cc1-b34d-8d5d23779d54
+```php
+SATU_SEHAT_BASE_URL={base_url}
+SATU_SEHAT_AUTH_URL={auth_url}
+SATU_SEHAT_ORGANIZATION_ID={organization_id}
+SATU_SEHAT_CLIENT_ID={client_id}
+SATU_SEHAT_CLIENT_SECRET={client_secret}
 ```
 
+-   Run `php artisan serve` command
 -   Done
 
 Read the [documentation page](https://getstisla.com/docs) for more information on the framework contents, templates and examples, and more.
