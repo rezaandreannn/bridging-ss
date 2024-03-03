@@ -24,8 +24,9 @@
             <h2 class="section-title"></h2>
             <p class="section-lead">We provide advanced input fields, such as date picker, color picker, and so on.</p>
 
-            <form action="{{ route('organization.store')}}" method="post">
+            <form action="{{ route('organization.update', $organization->organization_id)}}" method="post">
                 @csrf
+                @method('put')
                 <div class="row">
                     <div class="col-12 col-md-6 col-lg-6">
                         <div class="card">
@@ -35,14 +36,16 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label>name</label>
-                                    <input type="text" class="form-control" name="name">
+                                    <input type="text" class="form-control" name="name" value="{{ $organization->name }}">
                                 </div>
                                 <div class="form-group">
                                     <label>part of</label>
                                     <select class="form-control selectric" name="part_of">
                                         <option>-- select item --</option>
-                                        @foreach($organizations as $organization)
-                                        <option>{{ $organization->name}}</option>
+                                        @foreach($organizations as $value)
+                                        <option value="{{ $value->organization_id }}" {{ substr($organization->part_of, 13) == $value->organization_id ? 'selected' : '' }}>
+                                            {{ $value->name }}
+                                        </option>
                                         @endforeach
                                     </select>
                                 </div>

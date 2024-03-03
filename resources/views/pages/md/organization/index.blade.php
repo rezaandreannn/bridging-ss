@@ -44,22 +44,21 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($organizations as $organization)
                                 <tr>
                                     <td class="text-center" width="5%">
-                                        1
+                                        {{ $loop->iteration }}
                                     </td>
-                                    <td>Create a mobile app</td>
-                                    <td class="align-middle">
-                                        <div class="progress" data-height="4" data-toggle="tooltip" title="100%">
-                                            <div class="progress-bar bg-success" data-width="100%"></div>
-                                        </div>
+                                    <td>{{$organization->organization_id}}</td>
+                                    <td>{{$organization->name}}</td>
+                                    <td>{{$organization->part_of}}</td>
+                                    <td>{{$organization->updated_at}}</td>
+                                    <td width="20%">
+                                        <a href="{{ route('organization.edit', $organization->organization_id )}}" class="btn btn-warning"><i class="far fa-edit"></i></a>
+                                        <a href="{{ route('organization.show', $organization->organization_id )}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                                     </td>
-                                    <td>
-                                        <img alt="image" src="assets/img/avatar/avatar-5.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Wildan Ahdian">
-                                    </td>
-                                    <td>2018-01-20</td>
-                                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

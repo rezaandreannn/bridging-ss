@@ -98,7 +98,60 @@ class OrganizationService
             ]
         ];
 
+        $additionalData = [];
+
+        // Tambahkan elemen "id" berdasarkan kondisi ke dalam array tambahan
+        if ($body['id']) {
+            $additionalData["id"] = $body['id'];
+        }
+        // Tambahkan elemen "partOf" ke dalam array tambahan
+        if ($body['part_of']) {
+            $additionalData["partOf"] = [
+                "reference" => "Organization/" . $body['part_of']
+            ];
+        }
+        // Gabungkan array tambahan ke dalam array utama
+        $data = array_merge($data, $additionalData);
+        // Tambahkan elemen "active" ke dalam array utama
+        $data["active"] = true;
+
         return $data;
+    }
+
+    protected function processParams($params)
+    {
+        if (isset($params['id'])) {
+            $params['id'] = $params['id'];
+        }
+
+        if (isset($params['name'])) {
+            $params['name'] = $params['name'];
+        }
+
+        if (isset($params['partOf'])) {
+            $params['partOf'] = $params['partOf'];
+        }
+
+        return $params;
+    }
+
+    public function getRequest($endpoint, $params = [])
+    {
+        $token = $this->accessToken->token();
+
+        $url = $this->config->setUrl() . $endpoint;
+
+        $params = $this->processParams($params);
+
+        $response = $this->httpClient->get($url, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+                'Accept' => 'application/json',
+            ],
+        ]);
+
+        $data = $response->getBody()->getContents();
+        return json_decode($data, true);
     }
 
     public function postRequest($endpoint, array $body)
@@ -110,6 +163,25 @@ class OrganizationService
         $bodyRaw = $this->bodyRaw($body);
 
         $response = $this->httpClient->post($url, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token
+            ],
+            'json' => $bodyRaw
+        ]);
+
+        $data = $response->getBody()->getContents();
+        return json_decode($data, true);
+    }
+
+    public function putRequest($endpoint, array $body)
+    {
+        $token = $this->accessToken->token();
+
+        $url = $this->config->setUrl() . $endpoint;
+
+        $bodyRaw = $this->bodyRaw($body);
+
+        $response = $this->httpClient->put($url, [
             'headers' => [
                 'Authorization' => 'Bearer ' . $token
             ],

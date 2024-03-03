@@ -32,6 +32,9 @@
                     <li class="{{ Request::is('md/organization*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('organization.index') }}">Organization</a>
                     </li>
+                    <li class="{{ Request::is('md/location*') ? 'active' : '' }}">
+                        <a class="nav-link" href="">Location</a>
+                    </li>
                 </ul>
             </li>
             <li class="nav-item dropdown">
