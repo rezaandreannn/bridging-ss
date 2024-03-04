@@ -16,46 +16,17 @@ class AntreanController extends Controller
         $this->antrean = $antrean;
     }
 
-    public function getByKodeDokter(Request $request, $kodeDokter)
-    {
-        // Panggil metode byKodeDokter model Antrean untuk mengambil data
-        $data = $this->antrean->byKodeDokter($kodeDokter);
-
-        // Periksa apakah datanya kosong atau tidak
-        if (empty($data)) {
-            return response()->json(['message' => 'No data found'], 404);
-        }
-
-        // Kembalikan data yang diambil sebagai respons JSON
-        return response()->json(['data' => $data], 200);
-    }
-
     public function index(Request $request)
     {
         try {
-            // $kodeDokter = $request->input('kodeDokter', ''); // Ambil kode dokter dari request, default menjadi string kosong jika tidak disediakan
-            // $dataDokter = $this->antrean->byKodeDokter($kodeDokter); // Panggil fungsi byKodeDokter dari model
             $title = 'Antrean';
             $data = $this->antrean->getData();
-            return view('pages.kunjungan.antrean.index', ['data' => $data]);
+            $dokters = $this->antrean->byKodeDokter();
+            return view('pages.kunjungan.antrean.index', ['data' => $data, 'dokters' => $dokters]);
         } catch (\Exception $e) {
             // Tangani kesalahan
             return response()->json(['error' => 'Failed to fetch data'], 500);
             // return view('error-view', ['error' => 'Failed to fetch data']);
         }
     }
-
-    // public function index()
-    // {
-    //     $headers = [
-    //         'Content-Type' => 'application/json',
-    //     ];
-    //     $client = new Client([
-    //         'headers'   => $headers
-    //     ]);
-    //     $request = $client->get('https://daftar.rsumm.co.id/api.simrs/index.php/api/antrian/140');
-    //     $response = $request->getBody()->getContents();
-    //     $data = json_decode($response);
-    //     return view('pages.kunjungan.antrean.index', compact('data'));
-    // }
 }

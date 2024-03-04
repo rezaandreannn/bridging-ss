@@ -31,7 +31,10 @@
                         <div class="form-group">
                             <label for="kode_dokter">Pilih Dokter</label>
                             <select class="form-control select2" id="kode_dokter" name="kode_dokter">
-
+                                <option value="" selected disabled>-- silahkan pillih --</option>
+                                @foreach ($dokters as $dokter)
+                                <option value="{{ $dokter['kode_dokter'] }}">{{ $dokter['nama_dokter'] }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>

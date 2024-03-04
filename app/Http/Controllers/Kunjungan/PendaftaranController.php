@@ -20,7 +20,8 @@ class PendaftaranController extends Controller
         try {
             $title = 'Antrean';
             $data = $this->pendaftaran->getData();
-            return view('pages.kunjungan.pendaftaran.index', ['data' => $data]);
+            $dokters = $this->pendaftaran->byKodeDokter();
+            return view('pages.kunjungan.pendaftaran.index', ['data' => $data, 'dokters' => $dokters]);
         } catch (\Exception $e) {
             // Tangani kesalahan
             return response()->json(['error' => 'Failed to fetch data'], 500);
