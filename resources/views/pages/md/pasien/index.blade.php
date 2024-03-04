@@ -52,8 +52,8 @@
                     </div>
                     <div class="col-sm-12 col-md-2 filter-buttons">
                         <div class="form-group d-flex align-items-end">
-                            <button type="submit" class="btn btn-primary mr-2" style="margin-top: 30px;"><i class="fas fa-filter"></i> Filter</button>
-                            <button type="button" class="btn btn-danger " style="margin-top: 30px;" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
+                            <button type="submit" class="btn btn-sm btn-primary mr-2" style="margin-top: 30px;"><i class="fas fa-filter"></i> Filter</button>
+                            <button type="button" class="btn btn-sm btn-danger" style="margin-top: 30px;" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
                         </div>
                     </div>
                 </div>
@@ -68,25 +68,40 @@
                             <tr>
                                 <th scope="col">No</th>
                                 <th scope="col">No MR</th>
-                                <th scope="col">Nama Pasien</th>
-                                <th scope="col">NIK</th>
-                                <th scope="col">No HP</th>
-                                <th scope="col">Jenis Kelamin</th>
+                                <th scope="col" width="30%">Nama Pasien</th>
                                 <th scope="col">BPJS</th>
+                                <th scope="col">Nik</th>
+                                <th scope="col">No Hp</th>
+                                <th scope="col">Tanggal Lahir</th>
+                                <th scope="col">Jenis Kelamin</th>
                                 <th scope="col">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <?php $no = 1;
+                            ?>
+                            @foreach ($data as $item)
                             <tr>
-                                <th scope="row">1</th>
-                                <td>2131231</td>
-                                <td>Otto</td>
-                                <td>2312413213131314</td>
-                                <td>08231132134</td>
-                                <td>L</td>
-                                <td>000020319391</td>
-                                <td>Aksi</td>
+                                <td>{{ $no++ }}</td>
+                                <td class="badge badge-success">{{ $item['no_mr'] }}</td>
+                                <td width="30%">{{ $item['nama_pasien'] }}</td>
+                                <td>{{ $item['no_bpjs'] }}</td>
+                                <td>{{ $item['nik'] }}</td>
+                                <td>{{ $item['no_hp'] }}</td>
+                                <td>{{ date('d-m-Y', strtotime($item['tanggal_lahir'])) }}</td>
+                                <td>
+                                    @if ($item['jenis_kelamin'] == 'L')
+                                    <div>L</div>
+                                    @else
+                                    <div>P</div>
+                                    @endif
+                                </td>
+                                <td width="10%">
+                                    <a href="http://" class="btn btn-sm btn-outline-primary"><i class="far fa-eye"></i></a>
+                                    <a href="http://" class="btn btn-sm btn-outline-primary">sync</a>
+                                </td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -105,6 +120,26 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+
+
+<script>
+    function resetForm() {
+        document.getElementById("filterForm").value = "";
+        alert('Filter telah direset!');
+        window.location.href = "{{ route('pasien.index') }}";
+    }
+</script>
+<!-- <script>
+    function submitForm() {
+        var formData = $('#filterForm').serialize(); // Ambil data formulir
+        var url = '/md/pasien'; // Ganti URL sesuai kebutuhan Anda
+
+        // Hanya kirim permintaan jika ada nilai yang dimasukkan
+        if (formData !== '') {
+            window.location.href = url + '?' + formData; // Kirim permintaan GET
+        }
+    }
+</script> -->
 
 <!-- Page Specific JS File -->
 @endpush

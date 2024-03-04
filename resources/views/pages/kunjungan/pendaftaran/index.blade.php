@@ -74,9 +74,9 @@
                                 <th scope="col">No Reg</th>
                                 <th scope="col">No MR</th>
                                 <th scope="col">Nama Pasien</th>
-                                <th scope="col">Refrensi</th>
+                                <th scope="col">NIK</th>
                                 <th scope="col">Jenis Pasien</th>
-                                <th scope="col">Kode Ruang</th>
+                                <th scope="col">Rekanan</th>
                                 <th scope="col">Aksi</th>
                             </tr>
                         </thead>
@@ -86,24 +86,18 @@
                             @foreach ($data as $item)
                             <tr>
                                 <td>{{ $no++ }}</td>
-                                <td>{{ $item['No_Reg'] }}</td>
-                                <td>{{ $item['No_MR'] }}</td>
-                                <td>{{ $item['Nama_Pasien'] }}</td>
+                                <td>{{ $item['no_registrasi'] }}</td>
+                                <td>{{ $item['no_mr'] }}</td>
+                                <td>{{ $item['nama_pasien'] }}</td>
+                                <td>{{ $item['nik'] }}</td>
                                 <td>
-                                    @if ($item['Referensi'] == 'DATANG SENDIRI')
-                                    <div>Datang Sendiri</div>
-                                    @else
-                                    <div>RI</div>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($item['Medis'] == 'RAWAT JALAN')
+                                    @if ($item['status_rawat'] == 'RAWAT JALAN')
                                     <div class="badge badge-success">RJ</div>
                                     @else
                                     <div class="badge badge-info">RI</div>
                                     @endif
                                 </td>
-                                <td>{{ $item['Kode_Ruang'] }}</td>
+                                <td>{{ $item['nama_rekanan'] }}</td>
                                 <td width="10%">
                                     <a href="http://" class="btn btn-sm btn-outline-primary"><i class="far fa-eye"></i></a>
                                     <a href="http://" class="btn btn-sm btn-outline-primary">sync</a>

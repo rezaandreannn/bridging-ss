@@ -22,7 +22,7 @@ class Pendaftaran extends Model
     public function getData()
     {
         try {
-            $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/index.php/api/pendaftaran/140');
+            $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/pendaftaran');
             $response = $request->getBody()->getContents();
             $data = json_decode($response, true);
             return $data['data']; // Mengambil bagian 'data' dari respons

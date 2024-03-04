@@ -3,22 +3,36 @@
 namespace App\Http\Controllers\MasterData;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pasien;
 use Illuminate\Http\Request;
 
 class PasienController extends Controller
 {
-    public function index()
-    {
-        // $param = '1807062203970004';
-        // $client = new PatientService();
-        // $data = $client->getRequest('Patient', [
-        //     'identifier' => $param,
-        //     'name' => 'Reza andrean',
-        //     'birthdate' => '1997-03-22'
-        // ]);
-        // return  $data;
+    protected $pasien;
 
-        $title = 'Pasien';
-        return view('pages.md.pasien.index', compact('title'));
+    public function __construct(Pasien $pasien)
+    {
+        $this->pasien = $pasien;
+    }
+
+    public function index(Request $request)
+    {
+        try {
+            // Filter
+            // Retrieve query parameters
+            $no_mr = $request->input('no_mr');
+            $no_bpjs = $request->input('no_bpjs');
+            $nik = $request->input('nik');
+            $nama = $request->input('nama');
+
+            $title = 'Pasien';
+            $data = $this->pasien->getData($no_mr, $no_bpjs, $nik, $nama);
+
+            return view('pages.md.pasien.index', ['data' => $data]);
+        } catch (\Exception $e) {
+            // Tangani kesalahan
+            return response()->json(['error' => 'Failed to fetch data'], 500);
+            // return view('error-view', ['error' => 'Failed to fetch data']);
+        }
     }
 }

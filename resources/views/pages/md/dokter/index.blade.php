@@ -55,7 +55,7 @@
                                 <td>{{ $item['email'] }}</td>
                                 <td>{{ $item['nik'] }}</td>
                                 <td width="10%">
-                                    <a href="http://" class="btn btn-sm btn-outline-primary"><i class="far fa-eye"></i></a>
+                                    <a href="http://" class="btn btn-sm btn-outline-primary"><i class="fa fa-circle-info"></i></a>
                                     <a href="http://" class="btn btn-sm btn-outline-primary">sync</a>
                                 </td>
                             </tr>
