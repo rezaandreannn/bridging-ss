@@ -21,7 +21,7 @@ class Antrean extends Model
     public function getData()
     {
         try {
-            $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/index.php/api/antrian/');
+            $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/index.php/api/antrian/140');
             $response = $request->getBody()->getContents();
             $data = json_decode($response, true);
             return $data['data']; // Mengambil bagian 'data' dari respons

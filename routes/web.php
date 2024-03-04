@@ -21,6 +21,9 @@ use App\Http\Controllers\MasterData\OrganizationController;
 
 Route::redirect('/', '/dashboard-general-dashboard');
 
+Route::get('/form', function () {
+    return view('pages.forms-advanced-form');
+});
 // Dashboard
 Route::get('/dashboard-general-dashboard', function () {
     return view('pages.dashboard-general-dashboard', ['type_menu' => 'dashboard']);

@@ -43,7 +43,7 @@
     width: 38px;
     height: 38px;
     line-height: 38px;
-    background-color: #5897fb;
+    background-color: #fdfdff;
     color: #bbb;
     text-align: center;
     font: 0/0 a;
@@ -202,12 +202,12 @@
 }
 
 .selectric-items li.highlighted {
-    background: #5897fb;
+    background: #6777ef;
     color: #444;
 }
 
 .selectric-items li:hover {
-    background: #5897fb;
+    background: #f2f2f2;
     color: #444;
 }
 

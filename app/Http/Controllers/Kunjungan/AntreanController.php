@@ -32,7 +32,14 @@ class AntreanController extends Controller
 
     public function index()
     {
+
+        // filtered
+        $kode_dokter = $this->input->get('kode_dokter');
+        $tanggal = $this->input->get('tanggal');
         try {
+            // Mengambil daftar semua dokter
+            $doctors = $this->byKodeDokter($kode_dokter);
+
             $data = $this->antrean->getData();
             return view('pages.kunjungan.antrean.index', ['data' => $data]);
         } catch (\Exception $e) {

@@ -31,8 +31,9 @@
                         <div class="form-group">
                             <label for="kode_dokter">Pilih Dokter</label>
                             <select class="form-control select2" id="kode_dokter" name="kode_dokter">
-                                <option value="" selected disabled>-- silahkan pillih --</option>
-                                <option value="">ds</option>
+                                @foreach ($data as $doctor)
+                                <option value="{{ $doctor['Kode_Dokter'] }}">{{ $doctor['Kode_Dokter'] }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -74,18 +75,18 @@
                             @foreach ($data as $item)
                             <tr>
                                 <td>{{ $no++ }}</td>
-                                <td>{{ $item->No_Reg }}</td>
-                                <td>{{ $item->Nama_Pasien }}</td>
-                                <td>{{ $item->HP2 }}</td>
-                                <td>{{ $item->No_MR }}</td>
+                                <td>{{ $item['No_Reg'] }}</td>
+                                <td>{{ $item['Nama_Pasien'] }}</td>
+                                <td>{{ $item['HP2'] }}</td>
+                                <td>{{ $item['No_MR'] }}</td>
                                 <td>
-                                    @if ($item->Medis == 'RAWAT JALAN')
+                                    @if ($item['Medis'] == 'RAWAT JALAN')
                                     <div class="badge badge-success">RJ</div>
                                     @else
                                     <div class="badge badge-info">RI</div>
                                     @endif
                                 </td>
-                                <td>{{ $item->KODEREKANAN }}</td>
+                                <td>{{ $item['KODEREKANAN'] }}</td>
                                 <td width="10%">
                                     <a href="http://" class="btn btn-sm btn-outline-primary"><i class="far fa-eye"></i></a>
                                     <a href="http://" class="btn btn-sm btn-outline-primary">sync</a>

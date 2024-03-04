@@ -17,7 +17,6 @@
     @stack('style')
 
 </head>
-</head>
 
 <body>
     <div id="app">
