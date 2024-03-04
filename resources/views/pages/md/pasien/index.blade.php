@@ -29,25 +29,25 @@
                     <div class="col-sm-12 col-md-2">
                         <div class="form-group">
                             <label for="No_mr">No MR</label>
-                            <input type="text" class="form-control" id="No_mr" name="no_mr" value="">
+                            <input type="text" class="form-control" id="No_mr" name="no_mr" value="{{ request('no_mr') }}">
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-3">
                         <div class="form-group">
                             <label for="nik">NIK</label>
-                            <input type="text" class="form-control" id="nik" name="nik" value="">
+                            <input type="text" class="form-control" id="nik" name="nik" value="{{ request('nik') }}">
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-3">
                         <div class="form-group">
                             <label for="bpjs">BPJS</label>
-                            <input type="text" class="form-control" id="bpjs" name="no_bpjs" value="">
+                            <input type="text" class="form-control" id="bpjs" name="no_bpjs" value="{{ request('no_bpjs') }}">
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-2">
                         <div class="form-group">
                             <label for="nama">Nama</label>
-                            <input type="text" class="form-control" id="nama" name="nama" value="">
+                            <input type="text" class="form-control" id="nama" name="nama" value="{{ request('nama') }}">
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-2 filter-buttons">
