@@ -78,12 +78,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $no = 1;
-                            ?>
                             @foreach ($data as $item)
                             <tr>
-                                <td>{{ $no++ }}</td>
-                                <td class="badge badge-success">{{ $item['no_mr'] }}</td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>
+                                    <div class="badge badge-success">{{ $item['no_mr'] }}</div>
+                                </td>
                                 <td width="30%">{{ $item['nama_pasien'] }}</td>
                                 <td>{{ $item['no_bpjs'] }}</td>
                                 <td>{{ $item['nik'] }}</td>
@@ -128,6 +128,7 @@
         alert('Filter telah direset!');
         window.location.href = "{{ route('pasien.index') }}";
     }
+
 </script>
 <!-- <script>
     function submitForm() {
