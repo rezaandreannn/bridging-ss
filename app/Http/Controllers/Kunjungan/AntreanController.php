@@ -30,16 +30,12 @@ class AntreanController extends Controller
         return response()->json(['data' => $data], 200);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-
-        // filtered
-        $kode_dokter = $this->input->get('kode_dokter');
-        $tanggal = $this->input->get('tanggal');
         try {
-            // Mengambil daftar semua dokter
-            $doctors = $this->byKodeDokter($kode_dokter);
-
+            // $kodeDokter = $request->input('kodeDokter', ''); // Ambil kode dokter dari request, default menjadi string kosong jika tidak disediakan
+            // $dataDokter = $this->antrean->byKodeDokter($kodeDokter); // Panggil fungsi byKodeDokter dari model
+            $title = 'Antrean';
             $data = $this->antrean->getData();
             return view('pages.kunjungan.antrean.index', ['data' => $data]);
         } catch (\Exception $e) {

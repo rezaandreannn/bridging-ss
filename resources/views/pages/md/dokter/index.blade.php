@@ -26,33 +26,40 @@
         <div class="section-body">
             <div class="card">
                 <div class="card-header">
-                    <h4>Master Patient Index (MPI)</h4>
+                    <h4>Data Dokter</h4>
                 </div>
                 <div class="card-body">
                     <table class="table-striped table" id="table-1">
                         <thead>
                             <tr>
                                 <th scope="col">No</th>
-                                <th scope="col">No MR</th>
-                                <th scope="col">Nama Pasien</th>
-                                <th scope="col">NIK</th>
-                                <th scope="col">No HP</th>
-                                <th scope="col">Jenis Kelamin</th>
-                                <th scope="col">BPJS</th>
+                                <th scope="col">Kode Dokter</th>
+                                <th scope="col">Profesi</th>
+                                <th scope="col">Spesialis</th>
+                                <th scope="col">Nama Dokter</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Nik</th>
                                 <th scope="col">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <?php $no = 1;
+                            ?>
+                            @foreach ($data as $item)
                             <tr>
-                                <th scope="row">1</th>
-                                <td>2131231</td>
-                                <td>Otto</td>
-                                <td>2312413213131314</td>
-                                <td>08231132134</td>
-                                <td>L</td>
-                                <td>000020319391</td>
-                                <td>Aksi</td>
+                                <td>{{ $no++ }}</td>
+                                <td class="badge badge-success">{{ $item['kode_dokter'] }}</td>
+                                <td>{{ $item['jenis_profesi'] }}</td>
+                                <td>{{ $item['spesialis'] }}</td>
+                                <td>{{ $item['nama_dokter'] }}</td>
+                                <td>{{ $item['email'] }}</td>
+                                <td>{{ $item['nik'] }}</td>
+                                <td width="10%">
+                                    <a href="http://" class="btn btn-sm btn-outline-primary"><i class="far fa-eye"></i></a>
+                                    <a href="http://" class="btn btn-sm btn-outline-primary">sync</a>
+                                </td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

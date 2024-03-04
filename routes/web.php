@@ -77,5 +77,5 @@ Route::prefix('kj')->group(function () {
 
 // credits
 Route::get('/credits', function () {
-    return view('pages.credits', ['type_menu' => '']);
+    return view('pages.forms-advanced-form');
 });

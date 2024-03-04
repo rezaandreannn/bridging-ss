@@ -31,9 +31,7 @@
                         <div class="form-group">
                             <label for="kode_dokter">Pilih Dokter</label>
                             <select class="form-control select2" id="kode_dokter" name="kode_dokter">
-                                @foreach ($data as $doctor)
-                                <option value="{{ $doctor['Kode_Dokter'] }}">{{ $doctor['Kode_Dokter'] }}</option>
-                                @endforeach
+
                             </select>
                         </div>
                     </div>

@@ -4,12 +4,27 @@ namespace App\Http\Controllers\Kunjungan;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Pendaftaran;
 
 class PendaftaranController extends Controller
 {
-    public function index()
+    protected $pendaftaran;
+
+    public function __construct(Pendaftaran $pendaftaran)
     {
-        $title = 'Pendaftaran';
-        return view('pages.kunjungan.pendaftaran.index', compact('title'));
+        $this->pendaftaran = $pendaftaran;
+    }
+
+    public function index(Request $request)
+    {
+        try {
+            $title = 'Antrean';
+            $data = $this->pendaftaran->getData();
+            return view('pages.kunjungan.pendaftaran.index', ['data' => $data]);
+        } catch (\Exception $e) {
+            // Tangani kesalahan
+            return response()->json(['error' => 'Failed to fetch data'], 500);
+            // return view('error-view', ['error' => 'Failed to fetch data']);
+        }
     }
 }

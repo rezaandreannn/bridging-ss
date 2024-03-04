@@ -7,10 +7,11 @@
 <link rel="stylesheet" href="{{ asset('library/datatables/datatables.min.css') }}">
 <link rel="stylesheet" href="{{ asset('library/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('library/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
-<link rel="stylesheet" href="{{ asset('library/jquery-selectric/selectric.css') }}">
-
 <link rel="stylesheet" href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}">
+
+<link rel="stylesheet" href="{{ asset('library/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css') }}">
+<link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
+<link rel="stylesheet" href="{{ asset('library/selectric/public/selectric.css') }}">
 @endpush
 
 @section('main')
@@ -33,7 +34,7 @@
                             <label for="kode_dokter">Pilih Dokter</label>
                             <select class="form-control select2" id="kode_dokter" name="kode_dokter">
                                 <option value="" selected disabled>-- silahkan pillih --</option>
-
+                                <option value="">saf</option>
                             </select>
                         </div>
                     </div>
@@ -63,33 +64,52 @@
             </form>
             <div class="card">
                 <div class="card-header">
-                    <h4>Rujukan</h4>
+                    <h4>Pendaftaran</h4>
                 </div>
                 <div class="card-body">
                     <table class="table-striped table" id="table-1">
                         <thead>
                             <tr>
                                 <th scope="col">No</th>
+                                <th scope="col">No Reg</th>
                                 <th scope="col">No MR</th>
                                 <th scope="col">Nama Pasien</th>
-                                <th scope="col">NIK</th>
-                                <th scope="col">No HP</th>
-                                <th scope="col">Jenis Kelamin</th>
-                                <th scope="col">BPJS</th>
+                                <th scope="col">Refrensi</th>
+                                <th scope="col">Jenis Pasien</th>
+                                <th scope="col">Kode Ruang</th>
                                 <th scope="col">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <?php $no = 1;
+                            ?>
+                            @foreach ($data as $item)
                             <tr>
-                                <th scope="row">1</th>
-                                <td>2131231</td>
-                                <td>Otto</td>
-                                <td>2312413213131314</td>
-                                <td>08231132134</td>
-                                <td>L</td>
-                                <td>000020319391</td>
-                                <td>Aksi</td>
+                                <td>{{ $no++ }}</td>
+                                <td>{{ $item['No_Reg'] }}</td>
+                                <td>{{ $item['No_MR'] }}</td>
+                                <td>{{ $item['Nama_Pasien'] }}</td>
+                                <td>
+                                    @if ($item['Referensi'] == 'DATANG SENDIRI')
+                                    <div>Datang Sendiri</div>
+                                    @else
+                                    <div>RI</div>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($item['Medis'] == 'RAWAT JALAN')
+                                    <div class="badge badge-success">RJ</div>
+                                    @else
+                                    <div class="badge badge-info">RI</div>
+                                    @endif
+                                </td>
+                                <td>{{ $item['Kode_Ruang'] }}</td>
+                                <td width="10%">
+                                    <a href="http://" class="btn btn-sm btn-outline-primary"><i class="far fa-eye"></i></a>
+                                    <a href="http://" class="btn btn-sm btn-outline-primary">sync</a>
+                                </td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -105,9 +125,15 @@
 <script src="{{ asset('library/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('library/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
+
+
+
+<script src="{{ asset('library/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js') }}"></script>
+
 <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
-<script src="{{ asset('library/jquery-selectric/jquery.selectric.min.js') }}"></script>
+<script src="{{ asset('library/selectric/public/jquery.selectric.min.js') }}"></script>
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+<script src="{{ asset('js/page/forms-advanced-forms.js') }}"></script>
 @endpush
