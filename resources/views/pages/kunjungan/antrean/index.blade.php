@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Default Layout')
+@section('title', 'Antrean')
 
 @push('style')
 <!-- CSS Libraries -->
@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="{{ asset('library/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
 
-<link rel="stylesheet" href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}">
+<!-- <link rel="stylesheet" href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}"> -->
 @endpush
 
 @section('main')

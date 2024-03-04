@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Default Layout')
+@section('title', 'Pasien')
 
 @push('style')
 <!-- CSS Libraries -->
@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="{{ asset('library/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('library/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
 
-<link rel="stylesheet" href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}">
+<!-- <link rel="stylesheet" href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}"> -->
 @endpush
 
 @section('main')
@@ -83,7 +83,9 @@
                             @foreach ($data as $item)
                             <tr>
                                 <td>{{ $no++ }}</td>
-                                <td class="badge badge-success">{{ $item['no_mr'] }}</td>
+                                <td>
+                                    <div class="badge badge-success"> {{ $item['no_mr'] }}</div>
+                                </td>
                                 <td width="30%">{{ $item['nama_pasien'] }}</td>
                                 <td>{{ $item['no_bpjs'] }}</td>
                                 <td>{{ $item['nik'] }}</td>

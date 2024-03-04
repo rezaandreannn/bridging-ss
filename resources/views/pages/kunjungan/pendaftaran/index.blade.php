@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'Default Layout')
+@section('title', 'Pendaftaran')
 
 @push('style')
 <!-- CSS Libraries -->
 <link rel="stylesheet" href="{{ asset('library/datatables/datatables.min.css') }}">
 <link rel="stylesheet" href="{{ asset('library/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('library/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}">
+<!-- <link rel="stylesheet" href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}"> -->
 
 <link rel="stylesheet" href="{{ asset('library/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css') }}">
 <link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
