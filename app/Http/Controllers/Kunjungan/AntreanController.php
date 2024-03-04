@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Kunjungan;
 use App\Models\Antrean;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use GuzzleHttp\Client;
 
 class AntreanController extends Controller
 {

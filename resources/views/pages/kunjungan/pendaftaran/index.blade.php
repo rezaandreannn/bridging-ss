@@ -83,11 +83,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $no = 1;
-                            ?>
                             @foreach ($data as $item)
                             <tr>
-                                <td>{{ $no++ }}</td>
+                                <td class="text-center" width="5%">
+                                    {{ $loop->iteration }}
+                                </td>
                                 <td>{{ $item['no_registrasi'] }}</td>
                                 <td>{{ $item['no_mr'] }}</td>
                                 <td>{{ $item['nama_pasien'] }}</td>
@@ -101,8 +101,8 @@
                                 </td>
                                 <td>{{ $item['nama_rekanan'] }}</td>
                                 <td width="10%">
-                                    <a href="http://" class="btn btn-sm btn-outline-primary"><i class="far fa-eye"></i></a>
-                                    <a href="http://" class="btn btn-sm btn-outline-primary">sync</a>
+                                    <a href="http://" class="btn btn-warning"><i class="far fa-eye"></i></a>
+                                    <a href="http://" class="btn btn-primary">sync</a>
                                 </td>
                             </tr>
                             @endforeach

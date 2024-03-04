@@ -71,11 +71,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $no = 1;
-                            ?>
                             @foreach ($data as $item)
                             <tr>
-                                <td>{{ $no++ }}</td>
+                                <td class="text-center" width="5%">
+                                    {{ $loop->iteration }}
+                                </td>
                                 <td>{{ $item['No_Reg'] }}</td>
                                 <td>{{ $item['Nama_Pasien'] }}</td>
                                 <td>{{ $item['HP2'] }}</td>
@@ -89,8 +89,8 @@
                                 </td>
                                 <td>{{ $item['KODEREKANAN'] }}</td>
                                 <td width="10%">
-                                    <a href="http://" class="btn btn-sm btn-outline-primary"><i class="far fa-eye"></i></a>
-                                    <a href="http://" class="btn btn-sm btn-outline-primary">sync</a>
+                                    <a href="http://" class="btn btn-warning"><i class="far fa-eye"></i></a>
+                                    <a href="http://" class="btn btn-primary">sync</a>
                                 </td>
                             </tr>
                             @endforeach

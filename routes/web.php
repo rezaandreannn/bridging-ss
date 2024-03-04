@@ -58,7 +58,8 @@ Route::prefix('md')->group(function () {
     // DOKTER
     Route::get('/dokter', [DokterController::class, 'index'])->name('dokter.index');
     Route::get('/dokter/create', [DokterController::class, 'create'])->name('dokter.create');
-    Route::post('/dokter', [DokterController::class, 'store'])->name('dokter.store');
+    Route::get('/dokter/{kode_dokter}/edit', [DokterController::class, 'edit'])->name('dokter.edit');
+    Route::get('/dokter/{kode_dokter}', [DokterController::class, 'show'])->name('dokter.show');
 });
 
 // KUNJUNGAN

@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Organization;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,5 +21,10 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        Organization::create([
+            'organization_id' => '861b3be1-9a10-4cc1-b34d-8d5d23779d54',
+            'name' => 'STAGING itrsumm08@gmail.com',
+            'created_by' => 'seeder'
+        ]);
     }
 }

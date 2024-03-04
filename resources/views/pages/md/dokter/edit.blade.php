@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $title)
+@section('title', 'Edit')
 
 @push('style')
 <!-- CSS Libraries -->
@@ -12,37 +12,31 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>{{ $title }}</h1>
+            <h1>Edit</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#">Master Data</a></div>
-                <div class="breadcrumb-item"><a href="#">Organization</a></div>
-                <div class="breadcrumb-item">Create Organization</div>
+                <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+                <div class="breadcrumb-item"><a href="#">Forms</a></div>
+                <div class="breadcrumb-item">Advanced Forms</div>
             </div>
         </div>
 
         <div class="section-body">
+            <h2 class="section-title"></h2>
+            <p class="section-lead">We provide advanced input fields, such as date picker, color picker, and so on.</p>
 
-            <form action="{{ route('organization.store')}}" method="post">
+            <form action="" method="post">
                 @csrf
+                @method('put')
                 <div class="row">
-                    <div class="col-12 col-md-12 col-lg-12">
+                    <div class="col-12 col-md-6 col-lg-6">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Form Data</h4>
+                                <h4>Input Text</h4>
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label>Name</label>
-                                    <input type="text" class="form-control" name="name">
-                                </div>
-                                <div class="form-group">
-                                    <label>part of</label>
-                                    <select class="form-control selectric" name="part_of">
-                                        <option>-- select item --</option>
-                                        @foreach($organizations as $organization)
-                                        <option>{{ $organization->name}}</option>
-                                        @endforeach
-                                    </select>
+                                    <label>Nama Dokter</label>
+                                    <input type="text" class="form-control" name="name" value="{{ $data['kode_dokter'] }}">
                                 </div>
                                 <button type="submit" class="btn btn-primary">submit</button>
                             </div>

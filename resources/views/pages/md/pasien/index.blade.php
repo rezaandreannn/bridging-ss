@@ -97,8 +97,8 @@
                                     @endif
                                 </td>
                                 <td width="10%">
-                                    <a href="http://" class="btn btn-sm btn-outline-primary"><i class="far fa-eye"></i></a>
-                                    <a href="http://" class="btn btn-sm btn-outline-primary">sync</a>
+                                    <a href="http://" class="btn btn-warning"><i class="far fa-eye"></i></a>
+                                    <a href="http://" class="btn btn-primary">sync</a>
                                 </td>
                             </tr>
                             @endforeach
@@ -128,7 +128,6 @@
         alert('Filter telah direset!');
         window.location.href = "{{ route('pasien.index') }}";
     }
-
 </script>
 <!-- <script>
     function submitForm() {

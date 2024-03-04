@@ -31,4 +31,27 @@ class Dokter extends Model
             return []; // Mengembalikan array kosong jika terjadi kesalahan
         }
     }
+
+    // Method to fetch data for a specific doctor
+    public static function editDokter($kode_dokter)
+    {
+        try {
+            $httpClient = new Client();
+            $response = $httpClient->get('https://daftar.rsumm.co.id/api.simrs/dokter/' . $kode_dokter);
+            $responseData = json_decode($response->getBody()->getContents(), true);
+
+            // Check if 'data' key exists in the response
+            if (isset($responseData['data'])) {
+                return $responseData['data'];
+            } else {
+                \Log::error('Data key not found in API response');
+                return null; // Or handle the error in another way
+            }
+        } catch (\Exception $e) {
+            // Log the error
+            \Log::error($e->getMessage());
+            // Return null or handle the error in another way
+            return null;
+        }
+    }
 }
