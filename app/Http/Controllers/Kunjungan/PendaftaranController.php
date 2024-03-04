@@ -18,8 +18,14 @@ class PendaftaranController extends Controller
     public function index(Request $request)
     {
         try {
+            // Filter
+            // Retrieve query parameters
+            $kode_dokter = $request->input('kode_dokter');
+            $tanggal = $request->input('tanggal');
+            $status_rawat = $request->input('status_rawat');
+
             $title = 'Antrean';
-            $data = $this->pendaftaran->getData();
+            $data = $this->pendaftaran->getData($kode_dokter, $tanggal, $status_rawat);
             $dokters = $this->pendaftaran->byKodeDokter();
             return view('pages.kunjungan.pendaftaran.index', ['data' => $data, 'dokters' => $dokters]);
         } catch (\Exception $e) {

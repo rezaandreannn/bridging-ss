@@ -19,12 +19,30 @@ class Pendaftaran extends Model
         ]);
     }
 
-    public function getData()
+    public function getData($kode_dokter = null, $tanggal = null, $status_rawat = null)
     {
         try {
-            $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/pendaftaran');
+            // Menyiapkan query parameters
+            $queryParams = [];
+            if ($kode_dokter !== null) {
+                $queryParams['kode_dokter'] = $kode_dokter;
+            }
+            if ($tanggal !== null) {
+                $queryParams['tanggal'] = date('Y-m-d'); // Tanggal sekarang;
+            }
+            if ($status_rawat !== null) {
+                $queryParams['status_rawat'] = $status_rawat;
+            }
+            // Mengirim permintaan HTTP dengan query parameters
+            $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/pendaftaran', [
+                'query' => $queryParams,
+            ]);
+
+            // Mengambil respons dari API
             $response = $request->getBody()->getContents();
             $data = json_decode($response, true);
+
+            // Mengembalikan data pasien
             return $data['data']; // Mengambil bagian 'data' dari respons
         } catch (\Exception $e) {
             // Tangani kesalahan

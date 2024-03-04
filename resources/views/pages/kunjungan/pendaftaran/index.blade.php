@@ -27,15 +27,15 @@
         </div>
 
         <div class="section-body">
-            <form id="filterForm" action="" action="" method="get">
+            <form id="filterForm" action="" method="get">
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="kode_dokter">Pilih Dokter</label>
                             <select class="form-control select2" id="kode_dokter" name="kode_dokter">
-                                <option value="" selected disabled>-- silahkan pillih --</option>
+                                <option value="" selected disabled>-- Silahkan pilih --</option>
                                 @foreach ($dokters as $dokter)
-                                <option value="{{ $dokter['kode_dokter'] }}">{{ $dokter['nama_dokter'] }}</option>
+                                <option value="{{ $dokter['kode_dokter'] }}" {{ request('kode_dokter') == $dokter['kode_dokter'] ? 'selected' : '' }}>{{ $dokter['nama_dokter'] }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -43,15 +43,15 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="tanggal">Tanggal <small>(kosongkan jika tanggal saat ini)</small></label>
-                            <input type="date" class="form-control" id="tanggal" name="tanggal" value="">
+                            <input type="date" class="form-control" id="tanggal" name="tanggal" value="{{ request('tanggal') }}">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="status_rawat">Status Rawat </label>
+                            <label for="status_rawat">Status Rawat</label>
                             <select class="form-control selectric" id="status_rawat" name="status_rawat">
-                                <option value="" selected disabled>-- silahkan pillih --</option>
-                                <option value="RAWAT JALAN">Rawat Jalan</option>
+                                <option value="" selected disabled>-- Silahkan pilih --</option>
+                                <option value="RAWAT JALAN" {{ request('status_rawat') ? 'selected' : '' }}>Rawat Jalan</option>
                                 <option value="RAWAT INAP">Rawat Inap</option>
                             </select>
                         </div>
