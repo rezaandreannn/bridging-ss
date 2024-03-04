@@ -25,6 +25,10 @@ class PasienController extends Controller
             $nik = $request->input('nik');
             $nama = $request->input('nama');
 
+            if (empty($no_bpjs)) {
+                $no_bpjs = '';
+            }
+
             $title = 'Pasien';
             $data = $this->pasien->getData($no_mr, $no_bpjs, $nik, $nama);
 
