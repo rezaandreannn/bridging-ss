@@ -80,15 +80,9 @@
                         <tbody>
                             @foreach ($data as $item)
                             <tr>
-<<<<<<< HEAD
-                                <td>{{ $no++ }}</td>
-                                <td>
-                                    <div class="badge badge-success"> {{ $item['no_mr'] }}</div>
-=======
                                 <td>{{ $loop->iteration }}</td>
                                 <td>
                                     <div class="badge badge-success">{{ $item['no_mr'] }}</div>
->>>>>>> 1cb1024abc8e92eeb0727d384bc1f1f4a6a9cafe
                                 </td>
                                 <td width="30%">{{ $item['nama_pasien'] }}</td>
                                 <td>{{ $item['no_bpjs'] }}</td>
