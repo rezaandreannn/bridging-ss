@@ -18,8 +18,13 @@ class AntreanController extends Controller
     public function index(Request $request)
     {
         try {
+            // Filter
+            // Retrieve query parameters
+            $kode_dokter = $request->input('kode_dokter');
+            $tanggal = $request->input('tanggal');
+
             $title = 'Antrean';
-            $data = $this->antrean->getData();
+            $data = $this->antrean->getData($kode_dokter, $tanggal);
             $dokters = $this->antrean->byKodeDokter();
             return view('pages.kunjungan.antrean.index', ['data' => $data, 'dokters' => $dokters]);
         } catch (\Exception $e) {

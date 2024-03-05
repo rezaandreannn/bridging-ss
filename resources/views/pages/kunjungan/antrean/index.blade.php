@@ -32,15 +32,15 @@
                             <select class="form-control select2" id="kode_dokter" name="kode_dokter">
                                 <option value="" selected disabled>-- silahkan pillih --</option>
                                 @foreach ($dokters as $dokter)
-                                <option value="{{ $dokter['kode_dokter'] }}">{{ $dokter['nama_dokter'] }}</option>
+                                <option value="{{ $dokter['kode_dokter'] }}" {{ request('kode_dokter') == $dokter['kode_dokter'] ? 'selected' : '' }}>{{ $dokter['nama_dokter'] }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="tanggal">Tanggal <small>(kosongkan jika filter tanggal saat ini)</small></label>
-                            <input type="date" class="form-control" id="tanggal" name="tanggal" value="">
+                            <label for="tanggal">Tanggal <small>(kosongkan jika tanggal saat ini)</small></label>
+                            <input type="date" class="form-control" id="tanggal" name="tanggal" value="{{ request('tanggal') }}">
                         </div>
                     </div>
                     <div class="col-md-4 filter-buttons">
@@ -60,12 +60,12 @@
                         <thead>
                             <tr>
                                 <th scope="col">No</th>
-                                <th scope="col">Nama Reg</th>
+                                <th scope="col">No Antrean</th>
                                 <th scope="col">Nama Pasien</th>
-                                <th scope="col">NIK</th>
                                 <th scope="col">No MR</th>
-                                <th scope="col">Medis</th>
+                                <th scope="col">No HP</th>
                                 <th scope="col">Jenis Pasien</th>
+                                <th scope="col">Daftar Dari</th>
                                 <th scope="col">Aksi</th>
                             </tr>
                         </thead>
@@ -75,20 +75,16 @@
                                 <td class="text-center" width="5%">
                                     {{ $loop->iteration }}
                                 </td>
-                                <td>{{ $item['No_Reg'] }}</td>
-                                <td>{{ $item['Nama_Pasien'] }}</td>
-                                <td>{{ $item['HP2'] }}</td>
-                                <td>{{ $item['No_MR'] }}</td>
                                 <td>
-                                    @if ($item['Medis'] == 'RAWAT JALAN')
-                                    <div class="badge badge-success">RJ</div>
-                                    @else
-                                    <div class="badge badge-info">RI</div>
-                                    @endif
+                                    <div class="badge badge-success"> {{ $item['nomor_antrean'] }}</div>
                                 </td>
-                                <td>{{ $item['KODEREKANAN'] }}</td>
+                                <td>{{ $item['nama_pasien'] }}</td>
+                                <td>{{ $item['no_mr'] }}</td>
+                                <td>{{ $item['no_hp'] }}</td>
+                                <td>{{ $item['jenis_pasien'] }}</td>
+                                <td>{{ $item['created_by'] }}</td>
                                 <td width="15%">
-                                    <a href="http://" class="btn btn-warning"><i class="far fa-eye"></i></a>
+                                    <a href="http://" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                                     <a href="http://" class="btn btn-primary">sync</a>
                                 </td>
                             </tr>
@@ -113,5 +109,12 @@
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
 
+<script>
+    function resetForm() {
+        document.getElementById("filterForm").value = "";
+        alert('Filter telah direset!');
+        window.location.href = "{{ route('pendaftaran.index') }}";
+    }
+</script>
 <!-- Page Specific JS File -->
 @endpush
