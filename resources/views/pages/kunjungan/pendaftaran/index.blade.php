@@ -26,43 +26,47 @@
         </div>
 
         <div class="section-body">
-            <form id="filterForm" action="" method="get">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="kode_dokter">Pilih Dokter</label>
-                            <select class="form-control select2" id="kode_dokter" name="kode_dokter">
-                                <option value="" selected disabled>-- Silahkan pilih --</option>
-                                @foreach ($dokters as $dokter)
-                                <option value="{{ $dokter['kode_dokter'] }}" {{ request('kode_dokter') == $dokter['kode_dokter'] ? 'selected' : '' }}>{{ $dokter['nama_dokter'] }}</option>
-                                @endforeach
-                            </select>
+            <div class="card">
+                <div class="card-body">
+                    <form id="filterForm" action="" method="get">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="kode_dokter">Pilih Dokter</label>
+                                    <select class="form-control select2" id="kode_dokter" name="kode_dokter">
+                                        <option value="" selected disabled>-- Silahkan pilih --</option>
+                                        @foreach ($dokters as $dokter)
+                                        <option value="{{ $dokter['kode_dokter'] }}" {{ request('kode_dokter') == $dokter['kode_dokter'] ? 'selected' : '' }}>{{ $dokter['nama_dokter'] }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="tanggal">Tanggal <small>(kosongkan tanggal saat ini)</small></label>
+                                    <input type="date" class="form-control" id="tanggal" name="tanggal" value="{{ request('tanggal') }}">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="status_rawat">Status Rawat</label>
+                                    <select class="form-control selectric" id="status_rawat" name="status_rawat">
+                                        <option value="" selected disabled>-- Silahkan pilih --</option>
+                                        <option value="RAWAT JALAN" {{ request('status_rawat') ? 'selected' : '' }}>Rawat Jalan</option>
+                                        <option value="RAWAT INAP">Rawat Inap</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3 filter-buttons">
+                                <div class="form-group d-flex align-items-end">
+                                    <button type="submit" class="btn btn-primary mr-2" style="margin-top: 30px;"><i class="fas fa-filter"></i> Filter</button>
+                                    <button type="button" class="btn btn-danger" style="margin-top: 30px;" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="tanggal">Tanggal <small>(kosongkan jika tanggal saat ini)</small></label>
-                            <input type="date" class="form-control" id="tanggal" name="tanggal" value="{{ request('tanggal') }}">
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="status_rawat">Status Rawat</label>
-                            <select class="form-control selectric" id="status_rawat" name="status_rawat">
-                                <option value="" selected disabled>-- Silahkan pilih --</option>
-                                <option value="RAWAT JALAN" {{ request('status_rawat') ? 'selected' : '' }}>Rawat Jalan</option>
-                                <option value="RAWAT INAP">Rawat Inap</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-3 filter-buttons">
-                        <div class="form-group d-flex align-items-end">
-                            <button type="submit" class="btn btn-primary mr-2" style="margin-top: 30px;"><i class="fas fa-filter"></i> Filter</button>
-                            <button type="button" class="btn btn-danger" style="margin-top: 30px;" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
-            </form>
+            </div>
             <div class="card">
                 <div class="card-header">
                     <h4>Pendaftaran</h4>
@@ -74,7 +78,7 @@
                                 <th scope="col">No</th>
                                 <th scope="col">No Reg</th>
                                 <th scope="col">No MR</th>
-                                <th scope="col">Nama Pasien</th>
+                                <th scope="col">Name</th>
                                 <th scope="col">NIK</th>
                                 <th scope="col">Jenis Pasien</th>
                                 <th scope="col">Rekanan</th>
