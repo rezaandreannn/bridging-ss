@@ -17,9 +17,8 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                <div class="breadcrumb-item"><a href="#">Kunjungan</a></div>
-                <div class="breadcrumb-item">Rujukan</div>
+                <div class="breadcrumb-item active"><a href="#">Master Data</a></div>
+                <div class="breadcrumb-item">Organization</div>
             </div>
         </div>
 
@@ -53,7 +52,7 @@
                                     <td>{{$organization->name}}</td>
                                     <td>{{$organization->part_of}}</td>
                                     <td>{{$organization->updated_at}}</td>
-                                    <td width="20%">
+                                    <td width="15%">
                                         @if($organization->id != 1)
                                         <a href="{{ route('organization.edit', $organization->organization_id )}}" class="btn btn-warning"><i class="far fa-edit"></i></a>
                                         @endif

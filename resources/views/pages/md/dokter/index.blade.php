@@ -15,18 +15,17 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Dokter</h1>
+            <h1>Master Practitioner Index</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                <div class="breadcrumb-item"><a href="#">Master Data</a></div>
-                <div class="breadcrumb-item">Dokter</div>
+                <div class="breadcrumb-item active"><a href="#">Master Data</a></div>
+                <div class="breadcrumb-item">Practitioner</div>
             </div>
         </div>
 
         <div class="section-body">
             <div class="card">
                 <div class="card-header">
-                    <h4>Data Dokter</h4>
+                    <h4>Data Practitioner</h4>
                 </div>
                 <div class="card-body">
                     <table class="table-striped table" id="table-1">
@@ -56,7 +55,7 @@
                                 <td>{{ $item['nama_dokter'] }}</td>
                                 <td>{{ $item['email'] }}</td>
                                 <td>{{ $item['nik'] }}</td>
-                                <td width="10%">
+                                <td width="15%">
                                     <a href="{{ route('dokter.edit', $item['kode_dokter'] )}}" class="btn btn-warning"><i class="far fa-edit"></i></a>
                                     <a href="{{ route('dokter.show', $item['kode_dokter'] )}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                                 </td>

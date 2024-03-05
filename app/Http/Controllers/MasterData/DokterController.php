@@ -29,16 +29,28 @@ class DokterController extends Controller
         }
     }
 
-    public function edit($kode_dokter)
+    public function edit($kodeDokter)
     {
         try {
-            $title = 'Dokter';
-            $data = $this->dokter->editDokter($kode_dokter);
-            return view('pages.md.dokter.edit', ['data' => $data]);
+            $dokterData = $this->dokter->getByKodeDokter($kodeDokter);
+            // Assuming you want to return the edit form view with doctor data
+            return view('pages.md.dokter.edit', ['dokter' => $dokterData]);
         } catch (\Exception $e) {
-            // Tangani kesalahan
-            return response()->json(['error' => 'Failed to fetch data'], 500);
-            // return view('error-view', ['error' => 'Failed to fetch data']);
+            // Handle any exceptions that occur during the API request
+            // For example, you could redirect to an error page
+            return redirect()->route('error')->with('error', $e->getMessage());
+        }
+    }
+
+    public function show()
+    {
+        try {
+            $dokterData = $this->byKodeDokter();
+            // Assuming you want to return the doctor data as JSON
+            return view('pages.md.dokter.detail', ['data' => $dokterData]);
+        } catch (\Exception $e) {
+            // Handle any exceptions that occur during the API request
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 }

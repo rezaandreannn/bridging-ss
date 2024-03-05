@@ -26,7 +26,7 @@
 
             <form action="" method="post">
                 @csrf
-                @method('put')
+                @method('PUT')
                 <div class="row">
                     <div class="col-12 col-md-6 col-lg-6">
                         <div class="card">
@@ -35,8 +35,12 @@
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
+                                    <label>Kode Dokter</label>
+                                    <input type="text" class="form-control" name="kode_dokter" value="{{ $dokter['kode_dokter'] }}">
+                                </div>
+                                <div class="form-group">
                                     <label>Nama Dokter</label>
-                                    <input type="text" class="form-control" name="name" value="{{ $data['kode_dokter'] }}">
+                                    <input type="text" class="form-control" name="nama_dokter" value="{{ $dokter['nama_dokter'] }}">
                                 </div>
                                 <button type="submit" class="btn btn-primary">submit</button>
                             </div>

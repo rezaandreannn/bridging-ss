@@ -15,11 +15,10 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Master Patient Index (MPI)</h1>
+            <h1>Master Patient Index</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                <div class="breadcrumb-item"><a href="#">Master Data</a></div>
-                <div class="breadcrumb-item">Pasien</div>
+                <div class="breadcrumb-item active"><a href="#">Master Data</a></div>
+                <div class="breadcrumb-item">Patient</div>
             </div>
         </div>
 
@@ -52,15 +51,15 @@
                     </div>
                     <div class="col-sm-12 col-md-2 filter-buttons">
                         <div class="form-group d-flex align-items-end">
-                            <button type="submit" class="btn btn-sm btn-primary mr-2" style="margin-top: 30px;"><i class="fas fa-filter"></i> Filter</button>
-                            <button type="button" class="btn btn-sm btn-danger" style="margin-top: 30px;" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
+                            <button type="submit" class="btn btn-primary mr-2" style="margin-top: 30px;"><i class="fas fa-filter"></i> Filter</button>
+                            <button type="button" class="btn btn-danger" style="margin-top: 30px;" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
                         </div>
                     </div>
                 </div>
             </form>
             <div class="card">
                 <div class="card-header">
-                    <h4>Master Patient Index (MPI)</h4>
+                    <h4>Master Patient Index</h4>
                 </div>
                 <div class="card-body">
                     <table class="table-striped table" id="table-1">
@@ -96,7 +95,7 @@
                                     <div>P</div>
                                     @endif
                                 </td>
-                                <td width="10%">
+                                <td width="15%">
                                     <a href="http://" class="btn btn-warning"><i class="far fa-eye"></i></a>
                                     <a href="http://" class="btn btn-primary">sync</a>
                                 </td>
@@ -129,17 +128,6 @@
         window.location.href = "{{ route('pasien.index') }}";
     }
 </script>
-<!-- <script>
-    function submitForm() {
-        var formData = $('#filterForm').serialize(); // Ambil data formulir
-        var url = '/md/pasien'; // Ganti URL sesuai kebutuhan Anda
-
-        // Hanya kirim permintaan jika ada nilai yang dimasukkan
-        if (formData !== '') {
-            window.location.href = url + '?' + formData; // Kirim permintaan GET
-        }
-    }
-</script> -->
 
 <!-- Page Specific JS File -->
 @endpush

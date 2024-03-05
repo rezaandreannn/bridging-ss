@@ -20,8 +20,7 @@
         <div class="section-header">
             <h1>Pendaftaran</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                <div class="breadcrumb-item"><a href="#">Kunjungan</a></div>
+                <div class="breadcrumb-item active"><a href="#">Kunjungan</a></div>
                 <div class="breadcrumb-item">Pendaftaran</div>
             </div>
         </div>
@@ -100,8 +99,8 @@
                                     @endif
                                 </td>
                                 <td>{{ $item['nama_rekanan'] }}</td>
-                                <td width="10%">
-                                    <a href="http://" class="btn btn-warning"><i class="far fa-eye"></i></a>
+                                <td width="15%">
+                                    <a href="http://" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                                     <a href="http://" class="btn btn-primary">sync</a>
                                 </td>
                             </tr>
@@ -132,4 +131,11 @@
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
 <script src="{{ asset('js/page/forms-advanced-forms.js') }}"></script>
+<script>
+    function resetForm() {
+        document.getElementById("filterForm").value = "";
+        alert('Filter telah direset!');
+        window.location.href = "{{ route('pendaftaran.index') }}";
+    }
+</script>
 @endpush

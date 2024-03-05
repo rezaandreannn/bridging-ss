@@ -18,8 +18,7 @@
         <div class="section-header">
             <h1>Antrean</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                <div class="breadcrumb-item"><a href="#">Kunjungan</a></div>
+                <div class="breadcrumb-item active"><a href="#">Kunjungan</a></div>
                 <div class="breadcrumb-item">Antrean</div>
             </div>
         </div>
@@ -88,7 +87,7 @@
                                     @endif
                                 </td>
                                 <td>{{ $item['KODEREKANAN'] }}</td>
-                                <td width="10%">
+                                <td width="15%">
                                     <a href="http://" class="btn btn-warning"><i class="far fa-eye"></i></a>
                                     <a href="http://" class="btn btn-primary">sync</a>
                                 </td>

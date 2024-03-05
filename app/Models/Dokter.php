@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Dokter extends Model
 {
@@ -53,5 +54,11 @@ class Dokter extends Model
             // Return null or handle the error in another way
             return null;
         }
+    }
+
+    public function getByKodeDokter($kodeDokter)
+    {
+        $response = Http::get('https://daftar.rsumm.co.id/api.simrs/dokter/' . $kodeDokter);
+        return $response->json();
     }
 }

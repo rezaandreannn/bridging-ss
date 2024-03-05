@@ -24,10 +24,10 @@
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Master Data</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('md/pasien*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('pasien.index') }}">Pasien</a>
+                        <a class="nav-link" href="{{ route('pasien.index') }}">Patient</a>
                     </li>
                     <li class="{{ Request::is('md/dokter*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('dokter.index') }}">Dokter</a>
+                        <a class="nav-link" href="{{ route('dokter.index') }}">Practitioner</a>
                     </li>
                     <li class="{{ Request::is('md/organization*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('organization.index') }}">Organization</a>
