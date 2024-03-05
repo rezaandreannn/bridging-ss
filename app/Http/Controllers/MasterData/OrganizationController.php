@@ -64,10 +64,17 @@ class OrganizationController extends Controller
 
     public function show($organization_id)
     {
+        $title = 'Detail' . ' ' . $this->prefix;
         $organization = Organization::where('organization_id', $organization_id)->first();
-        $data =  $this->organization->getRequest('Organization/' . $organization_id);
+        $dataById =  $this->organization->getRequest('Organization/' . $organization_id);
 
-        return $data;
+        $organizationbyParts = $this->organization->getRequest('Organization', [
+            'partOf' => $organization_id
+        ]);
+
+        // return $organizationbyParts['entry'];
+
+        return view('pages.md.organization.detail', compact('dataById', 'title', 'organizationbyParts'));
     }
 
     public function edit($organization_id)

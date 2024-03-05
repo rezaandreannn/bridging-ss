@@ -129,7 +129,7 @@ class OrganizationService
         }
 
         if (isset($params['partOf'])) {
-            $params['partOf'] = $params['partOf'];
+            $params['partof'] = $params['partOf'];
         }
 
         return $params;
@@ -142,6 +142,10 @@ class OrganizationService
         $url = $this->config->setUrl() . $endpoint;
 
         $params = $this->processParams($params);
+
+        if (!empty($params['partOf'])) {
+            $url .= '?' . http_build_query($params);
+        }
 
         $response = $this->httpClient->get($url, [
             'headers' => [
