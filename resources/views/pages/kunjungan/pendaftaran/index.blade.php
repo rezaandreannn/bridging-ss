@@ -20,7 +20,7 @@
         <div class="section-header">
             <h1>Pendaftaran</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#">Kunjungan</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('pendaftaran.index') }}">Kunjungan</a></div>
                 <div class="breadcrumb-item">Pendaftaran</div>
             </div>
         </div>

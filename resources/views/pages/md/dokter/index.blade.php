@@ -17,7 +17,7 @@
         <div class="section-header">
             <h1>Master Practicioner Index</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#">Master Data</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('dokter.index') }}">Master Data</a></div>
                 <div class="breadcrumb-item">Practicioner</div>
             </div>
         </div>

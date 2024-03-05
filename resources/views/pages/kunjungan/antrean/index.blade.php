@@ -18,7 +18,7 @@
         <div class="section-header">
             <h1>Antrean</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#">Kunjungan</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('antrean.index') }}">Kunjungan</a></div>
                 <div class="breadcrumb-item">Antrean</div>
             </div>
         </div>
