@@ -68,8 +68,13 @@ class OrganizationController extends Controller
         $organization = Organization::where('organization_id', $organization_id)->first();
         $dataById =  $this->organization->getRequest('Organization/' . $organization_id);
 
-        // return $dataById['address'][0]['line'][0];
-        return view('pages.md.organization.detail', compact('dataById', 'title'));
+        $organizationbyParts = $this->organization->getRequest('Organization', [
+            'partOf' => $organization_id
+        ]);
+
+        // return $organizationbyParts['entry'];
+
+        return view('pages.md.organization.detail', compact('dataById', 'title', 'organizationbyParts'));
     }
 
     public function edit($organization_id)

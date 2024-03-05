@@ -101,63 +101,25 @@
             <div class="col-12 col-md-6 col-lg-6">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Part Of </h4>
+                        <h4>Part Detail </h4>
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
                             <table class="table table-striped table-md">
                                 <tr>
-                                    <th>#</th>
+                                    <th>Organization ID</th>
                                     <th>Name</th>
-                                    <th>Created At</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <th>Active</th>
                                 </tr>
+                                @foreach($organizationbyParts['entry'] as $organization)
                                 <tr>
-                                    <td>1</td>
-                                    <td>Irwansyah Saputra</td>
-                                    <td>2017-01-09</td>
+                                    <td>{{ $organization['resource']['id']}}</td>
+                                    <td>{{ $organization['resource']['name']}}</td>
                                     <td>
-                                        <div class="badge badge-success">Active</div>
+                                        <div class="badge badge-success">{{ $organization['resource']['active']}}</div>
                                     </td>
-                                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Hasan Basri</td>
-                                    <td>2017-01-09</td>
-                                    <td>
-                                        <div class="badge badge-success">Active</div>
-                                    </td>
-                                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Kusnadi</td>
-                                    <td>2017-01-11</td>
-                                    <td>
-                                        <div class="badge badge-danger">Not Active</div>
-                                    </td>
-                                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Rizal Fakhri</td>
-                                    <td>2017-01-11</td>
-                                    <td>
-                                        <div class="badge badge-success">Active</div>
-                                    </td>
-                                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Isnap Kiswandi</td>
-                                    <td>2017-01-17</td>
-                                    <td>
-                                        <div class="badge badge-success">Active</div>
-                                    </td>
-                                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                                </tr>
+                                @endforeach
                             </table>
                         </div>
                     </div>
