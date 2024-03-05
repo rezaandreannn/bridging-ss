@@ -24,33 +24,37 @@
         </div>
 
         <div class="section-body">
-            <form id="filterForm" action="" method="get">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="kode_dokter">Pilih Dokter</label>
-                            <select class="form-control select2" id="kode_dokter" name="kode_dokter">
-                                <option value="" selected disabled>-- silahkan pillih --</option>
-                                @foreach ($dokters as $dokter)
-                                <option value="{{ $dokter['kode_dokter'] }}" {{ request('kode_dokter') == $dokter['kode_dokter'] ? 'selected' : '' }}>{{ $dokter['nama_dokter'] }}</option>
-                                @endforeach
-                            </select>
+            <div class="card">
+                <div class="card-body">
+                    <form id="filterForm" action="" method="get">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="kode_dokter">Pilih Dokter</label>
+                                    <select class="form-control select2" id="kode_dokter" name="kode_dokter">
+                                        <option value="" selected disabled>-- silahkan pillih --</option>
+                                        @foreach ($dokters as $dokter)
+                                        <option value="{{ $dokter['kode_dokter'] }}" {{ request('kode_dokter') == $dokter['kode_dokter'] ? 'selected' : '' }}>{{ $dokter['nama_dokter'] }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="tanggal">Tanggal <small>(kosongkan jika tanggal saat ini)</small></label>
+                                    <input type="date" class="form-control" id="tanggal" name="tanggal" value="{{ request('tanggal') }}">
+                                </div>
+                            </div>
+                            <div class="col-md-4 filter-buttons">
+                                <div class="form-group d-flex align-items-end">
+                                    <button type="submit" class="btn btn-primary mr-2" style="margin-top: 30px;"><i class="fas fa-filter"></i> Filter</button>
+                                    <button type="button" class="btn btn-danger" style="margin-top: 30px;" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="tanggal">Tanggal <small>(kosongkan jika tanggal saat ini)</small></label>
-                            <input type="date" class="form-control" id="tanggal" name="tanggal" value="{{ request('tanggal') }}">
-                        </div>
-                    </div>
-                    <div class="col-md-4 filter-buttons">
-                        <div class="form-group d-flex align-items-end">
-                            <button type="submit" class="btn btn-primary mr-2" style="margin-top: 30px;"><i class="fas fa-filter"></i> Filter</button>
-                            <button type="button" class="btn btn-danger" style="margin-top: 30px;" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
-            </form>
+            </div>
             <div class="card">
                 <div class="card-header">
                     <h4>Antrean</h4>
