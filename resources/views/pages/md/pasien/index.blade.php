@@ -23,86 +23,92 @@
         </div>
 
         <div class="section-body">
-            <form id="filterForm" action="" method="get">
-                <div class="row">
-                    <div class="col-sm-12 col-md-2">
-                        <div class="form-group">
-                            <label for="No_mr">No MR</label>
-                            <input type="text" class="form-control" id="No_mr" name="no_mr" value="{{ request('no_mr') }}">
+            <div class="card">
+                <div class="card-body">
+                    <form id="filterForm" action="" method="get">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-2">
+                                <div class="form-group">
+                                    <label for="No_mr">No MR</label>
+                                    <input type="text" class="form-control" id="No_mr" name="no_mr" value="{{ request('no_mr') }}">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-3">
+                                <div class="form-group">
+                                    <label for="nik">NIK</label>
+                                    <input type="text" class="form-control" id="nik" name="nik" value="{{ request('nik') }}">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-3">
+                                <div class="form-group">
+                                    <label for="bpjs">BPJS</label>
+                                    <input type="text" class="form-control" id="bpjs" name="no_bpjs" value="{{ request('no_bpjs') }}">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-2">
+                                <div class="form-group">
+                                    <label for="nama">Nama</label>
+                                    <input type="text" class="form-control" id="nama" name="nama" value="{{ request('nama') }}">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-2 filter-buttons">
+                                <div class="form-group d-flex align-items-end">
+                                    <button type="submit" class="btn btn-primary mr-2" style="margin-top: 30px;">Filter</button>
+                                    <button type="button" class="btn btn-danger" style="margin-top: 30px;" onclick="resetForm()"> Reset</button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-12 col-md-3">
-                        <div class="form-group">
-                            <label for="nik">NIK</label>
-                            <input type="text" class="form-control" id="nik" name="nik" value="{{ request('nik') }}">
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-3">
-                        <div class="form-group">
-                            <label for="bpjs">BPJS</label>
-                            <input type="text" class="form-control" id="bpjs" name="no_bpjs" value="{{ request('no_bpjs') }}">
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-2">
-                        <div class="form-group">
-                            <label for="nama">Nama</label>
-                            <input type="text" class="form-control" id="nama" name="nama" value="{{ request('nama') }}">
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-2 filter-buttons">
-                        <div class="form-group d-flex align-items-end">
-                            <button type="submit" class="btn btn-primary mr-2" style="margin-top: 30px;"><i class="fas fa-filter"></i> Filter</button>
-                            <button type="button" class="btn btn-danger" style="margin-top: 30px;" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
-            </form>
+            </div>
             <div class="card">
                 <div class="card-header">
-                    <h4>Master Patient Index</h4>
+                    <a href="" class="btn btn-primary rounded-0">New Data</a>
                 </div>
                 <div class="card-body">
-                    <table class="table-striped table" id="table-1">
-                        <thead>
-                            <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">No MR</th>
-                                <th scope="col" width="30%">Nama Pasien</th>
-                                <th scope="col">BPJS</th>
-                                <th scope="col">Nik</th>
-                                <th scope="col">No Hp</th>
-                                <th scope="col">Tanggal Lahir</th>
-                                <th scope="col">Jenis Kelamin</th>
-                                <th scope="col">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($data as $item)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>
-                                    <div class="badge badge-success">{{ $item['no_mr'] }}</div>
-                                </td>
-                                <td width="30%">{{ $item['nama_pasien'] }}</td>
-                                <td>{{ $item['no_bpjs'] }}</td>
-                                <td>{{ $item['nik'] }}</td>
-                                <td>{{ $item['no_hp'] }}</td>
-                                <td>{{ date('d-m-Y', strtotime($item['tanggal_lahir'])) }}</td>
-                                <td>
-                                    @if ($item['jenis_kelamin'] == 'L')
-                                    <div>L</div>
-                                    @else
-                                    <div>P</div>
-                                    @endif
-                                </td>
-                                <td width="15%">
-                                    <a href="http://" class="btn btn-warning"><i class="far fa-eye"></i></a>
-                                    <a href="http://" class="btn btn-primary">sync</a>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table-striped table" id="table-1">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>No MR</th>
+                                    <th>Name</th>
+                                    <th>BPJS</th>
+                                    <th>NIK</th>
+                                    <th>No Hp</th>
+                                    <th>Birthdate</th>
+                                    <th>Gender</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($data as $item)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>
+                                        <div class="badge badge-success">{{ $item['no_mr'] }}</div>
+                                    </td>
+                                    <td width="30%">{{ $item['nama_pasien'] }}</td>
+                                    <td>{{ $item['no_bpjs'] }}</td>
+                                    <td>{{ $item['nik'] }}</td>
+                                    <td>{{ $item['no_hp'] }}</td>
+                                    <td>{{ date('d-m-Y', strtotime($item['tanggal_lahir'])) }}</td>
+                                    <td>
+                                        @if ($item['jenis_kelamin'] == 'L')
+                                        <div>L</div>
+                                        @else
+                                        <div>P</div>
+                                        @endif
+                                    </td>
+                                    <td width="15%">
+                                        <a href="" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
+                                        <a href="http://" class="btn btn-primary">sync</a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -127,6 +133,7 @@
         alert('Filter telah direset!');
         window.location.href = "{{ route('pasien.index') }}";
     }
+
 </script>
 
 <!-- Page Specific JS File -->

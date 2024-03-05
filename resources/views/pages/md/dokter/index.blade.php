@@ -15,10 +15,10 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Master Practitioner Index</h1>
+            <h1>Master Practicioner Index</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="#">Master Data</a></div>
-                <div class="breadcrumb-item">Practitioner</div>
+                <div class="breadcrumb-item">Practicioner</div>
             </div>
         </div>
 
@@ -37,8 +37,8 @@
                                 <th scope="col">Spesialis</th>
                                 <th scope="col">Nama Dokter</th>
                                 <th scope="col">Email</th>
-                                <th scope="col">Nik</th>
-                                <th scope="col">Aksi</th>
+                                <th scope="col">NIK</th>
+                                <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
