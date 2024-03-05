@@ -47,7 +47,7 @@
                             </div>
                             <div class="col-sm-12 col-md-2">
                                 <div class="form-group">
-                                    <label for="nama">Nama</label>
+                                    <label for="nama">Name</label>
                                     <input type="text" class="form-control" id="nama" name="nama" value="{{ request('nama') }}">
                                 </div>
                             </div>
@@ -133,7 +133,6 @@
         alert('Filter telah direset!');
         window.location.href = "{{ route('pasien.index') }}";
     }
-
 </script>
 
 <!-- Page Specific JS File -->
