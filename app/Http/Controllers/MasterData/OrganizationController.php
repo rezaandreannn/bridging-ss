@@ -4,7 +4,6 @@ namespace App\Http\Controllers\MasterData;
 
 use App\Models\Organization;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Services\SatuSehat\OrganizationService;
 
@@ -62,11 +61,11 @@ class OrganizationController extends Controller
                 'created_by' => 'system'
             ]);
 
-            $message = 'Send data succesfully';
+            $message = 'New item has been created successfully.';
             if ($request->modal == 'modal') {
-                return redirect()->back()->with('success', $message);
+                return redirect()->back()->with('toast_success', $message);
             }
-            return redirect()->route($this->routeIndex)->with('success', $message);
+            return redirect()->route($this->routeIndex)->with('toast_success', $message);
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan data');
         }
@@ -118,8 +117,8 @@ class OrganizationController extends Controller
                 'created_by' => 'system'
             ]);
 
-            $message = 'Send data succesfully';
-            return redirect()->route($this->routeIndex)->with('success', $message);
+            $message = 'Data has been updated successfully.';
+            return redirect()->route($this->routeIndex)->with('toast_success', $message);
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan data');
         }

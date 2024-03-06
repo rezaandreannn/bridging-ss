@@ -51,7 +51,11 @@
                                                 Status
                                             </div>
                                             <div class="col-md-8">
-                                                {{ $dataById['active'] == true ? 'active' : 'non active'}}
+                                                @if(isset($dataById['active']) == true)
+                                                <b>Active</b>(true)
+                                                @else
+                                                <b>Inactive</b>
+                                                @endif
                                             </div>
                                             <div class="col-md-4">
                                                 Part Of
@@ -67,7 +71,8 @@
                                                 Country
                                             </div>
                                             <div class="col-md-8">
-                                                {{ $dataById['address'][0]['country'] ?? ''}}
+                                                {{ isset($dataById['address'][0]['country']) && $dataById['address'][0]['country'] == 'ID' ? 'Indonesia' : (isset($dataById['address'][0]['country']) ? $dataById['address'][0]['country'] : '') }}
+
                                             </div>
                                             <div class="col-md-4">
                                                 City
@@ -119,7 +124,11 @@
                                         <td>{{ $organization['resource']['id']}}</td>
                                         <td>{{ $organization['resource']['name']}}</td>
                                         <td>
-                                            <div class="badge badge-success">{{ $organization['resource']['active']}}</div>
+                                            @if($organization['resource']['active'] == true)
+                                            <div class="badge badge-success">active</div>
+                                            @else
+                                            <div class="badge badge-danger">inactive</div>
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach

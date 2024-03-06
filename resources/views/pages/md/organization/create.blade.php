@@ -28,7 +28,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Create Data</h4>
+                                <h4>Form Create</h4>
                             </div>
                             <div class="card-body">
                                 <div class="form-group row mb-4">
