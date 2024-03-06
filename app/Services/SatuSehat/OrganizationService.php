@@ -212,6 +212,11 @@ class OrganizationService
                     "op" => "replace",
                     "path" => "/name",
                     "value" => $body['name']
+                ],
+                [
+                    "op" => "replace",
+                    "path" => "/partOf/reference",
+                    "value" => "Organization/" . $body['part_of']
                 ]
             ],
         ]);

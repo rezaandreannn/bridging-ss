@@ -12,10 +12,17 @@ class OrganizationController extends Controller
 {
     protected $organization;
     protected $prefix;
+    protected $endpoint;
+    protected $view;
+    protected $routeIndex;
+
     public function __construct()
     {
         $this->organization = new OrganizationService();
         $this->prefix = 'Organization';
+        $this->endpoint = 'Organization';
+        $this->view = 'pages.md.organization.';
+        $this->routeIndex = 'organization.index';
     }
     public function index()
     {
@@ -26,14 +33,14 @@ class OrganizationController extends Controller
         // dd($organizations);
         $title = $this->prefix . ' ' . 'Index';
         $organizations = Organization::all();
-        return view('pages.md.organization.index', compact('title', 'organizations'));
+        return view($this->view . 'index', compact('title', 'organizations'));
     }
 
     public function create()
     {
         $title = 'Create' . ' ' . $this->prefix;
         $organizations = Organization::select('organization_id', 'name')->get();
-        return view('pages.md.organization.create', compact('title', 'organizations'));
+        return view($this->view . 'create', compact('title', 'organizations'));
     }
 
     public function store(Request $request)
@@ -45,7 +52,7 @@ class OrganizationController extends Controller
 
         try {
             // send API 
-            $data = $this->organization->postRequest('Organization', $body);
+            $data = $this->organization->postRequest($this->endpoint, $body);
 
             // Send DB
             $organization =  Organization::create([
@@ -59,7 +66,7 @@ class OrganizationController extends Controller
             if ($request->modal == 'modal') {
                 return redirect()->back()->with('success', $message);
             }
-            return redirect()->route('organization.index')->with('success', $message);
+            return redirect()->route($this->routeIndex)->with('success', $message);
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan data');
         }
@@ -69,15 +76,15 @@ class OrganizationController extends Controller
     {
         $title = 'Detail' . ' ' . $this->prefix;
         $organization = Organization::where('organization_id', $organization_id)->first();
-        $dataById =  $this->organization->getRequest('Organization/' . $organization_id);
+        $dataById =  $this->organization->getRequest($this->endpoint . '/' . $organization_id);
 
-        $organizationbyParts = $this->organization->getRequest('Organization', [
+        $organizationbyParts = $this->organization->getRequest($this->endpoint, [
             'partOf' => $organization_id
         ]);
 
         // return $organizationbyParts['entry'];
 
-        return view('pages.md.organization.detail', compact('dataById', 'title', 'organizationbyParts'));
+        return view($this->view . 'detail', compact('dataById', 'title', 'organizationbyParts'));
     }
 
     public function edit($organization_id)
@@ -85,7 +92,7 @@ class OrganizationController extends Controller
         $title = 'Edit' . ' ' . $this->prefix;
         $organization = Organization::where('organization_id', $organization_id)->first();
         $organizations = Organization::select('organization_id', 'name')->get();
-        return view('pages.md.organization.edit', compact('title', 'organization', 'organizations'));
+        return view($this->view . 'edit', compact('title', 'organization', 'organizations'));
     }
 
     public function update($organization_id, Request $request)
@@ -97,12 +104,11 @@ class OrganizationController extends Controller
             'part_of' => $request->part_of ?? ''
         ];
 
-        $url = 'Organization/' . $body['id'];
+        $url = $this->endpoint . '/' . $body['id'];
 
-        $data = $this->organization->patchRequest($url, $body);
-        dd($data);
         try {
             // send API 
+            $data = $this->organization->patchRequest($url, $body);
 
             // Send DB
             $organization->update([
@@ -113,7 +119,7 @@ class OrganizationController extends Controller
             ]);
 
             $message = 'Send data succesfully';
-            return redirect()->route('organization.index')->with('success', $message);
+            return redirect()->route($this->routeIndex)->with('success', $message);
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan data');
         }
