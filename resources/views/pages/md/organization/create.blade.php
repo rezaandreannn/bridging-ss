@@ -43,7 +43,7 @@
                                         <select class="form-control selectric" name="part_of">
                                             <option>-- Select item --</option>
                                             @foreach($organizations as $organization)
-                                            <option>{{ $organization->name}}</option>
+                                            <option value="{{ $organization->organization_id }}">{{ $organization->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>

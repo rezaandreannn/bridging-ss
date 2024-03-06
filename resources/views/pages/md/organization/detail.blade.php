@@ -95,140 +95,143 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="row">
-            <div class="col-12 col-md-6 col-lg-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Part Detail </h4>
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-md">
-                                <tr>
-                                    <th>Organization ID</th>
-                                    <th>Name</th>
-                                    <th>Active</th>
-                                </tr>
-                                @foreach($organizationbyParts['entry'] as $organization)
-                                <tr>
-                                    <td>{{ $organization['resource']['id']}}</td>
-                                    <td>{{ $organization['resource']['name']}}</td>
-                                    <td>
-                                        <div class="badge badge-success">{{ $organization['resource']['active']}}</div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </table>
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Part Detail </h4>
+                            <div class="card-header-action">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newOrganization">
+                                    New Orgnization
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card-footer text-right">
-                        <nav class="d-inline-block">
-                            <ul class="pagination mb-0">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
-                                </li>
-                                <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">2</a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
-                                </li>
-                            </ul>
-                        </nav>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-md">
+                                    <tr>
+                                        <th>Organization ID</th>
+                                        <th>Name</th>
+                                        <th>Active</th>
+                                    </tr>
+                                    @foreach($organizationbyParts['entry'] as $organization)
+                                    <tr>
+                                        <td>{{ $organization['resource']['id']}}</td>
+                                        <td>{{ $organization['resource']['name']}}</td>
+                                        <td>
+                                            <div class="badge badge-success">{{ $organization['resource']['active']}}</div>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer text-right">
+                            <nav class="d-inline-block">
+                                <ul class="pagination mb-0">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">2</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Location By Organization </h4>
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-md">
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Created At</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Irwansyah Saputra</td>
-                                    <td>2017-01-09</td>
-                                    <td>
-                                        <div class="badge badge-success">Active</div>
-                                    </td>
-                                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Hasan Basri</td>
-                                    <td>2017-01-09</td>
-                                    <td>
-                                        <div class="badge badge-success">Active</div>
-                                    </td>
-                                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Kusnadi</td>
-                                    <td>2017-01-11</td>
-                                    <td>
-                                        <div class="badge badge-danger">Not Active</div>
-                                    </td>
-                                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Rizal Fakhri</td>
-                                    <td>2017-01-11</td>
-                                    <td>
-                                        <div class="badge badge-success">Active</div>
-                                    </td>
-                                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Isnap Kiswandi</td>
-                                    <td>2017-01-17</td>
-                                    <td>
-                                        <div class="badge badge-success">Active</div>
-                                    </td>
-                                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                                </tr>
-                            </table>
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Location By Organization </h4>
+                            <div class="card-header-action">
+                                <a href="#" class="btn btn-primary">New Location</a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card-footer text-right">
-                        <nav class="d-inline-block">
-                            <ul class="pagination mb-0">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
-                                </li>
-                                <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">2</a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
-                                </li>
-                            </ul>
-                        </nav>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-md">
+                                    <tr>
+                                        <th>Location ID</th>
+                                        <th>Name</th>
+                                        <th>Active</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Irwansyah Saputra</td>
+                                        <td>
+                                            <div class="badge badge-success">1</div>
+                                        </td>
+                                        <td><a href="#" class="btn btn-secondary">Detail</a></td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer text-right">
+                            <nav class="d-inline-block">
+                                <ul class="pagination mb-0">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">2</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
 </div>
 
-</div>
-</section>
+<!-- Modal create organization -->
+<div class="modal fade" id="newOrganization" tabindex="-1" aria-labelledby="newOrganizationLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newOrganizationLabel">Create By Part Of {{ $dataById['name'] ?? '' }} </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{ route('organization.store')}}" method="post">
+                @csrf
+                <div class="modal-body">
+                    <input type="hidden" class="form-control" id="" name="modal" value="modal">
+                    <div class="form-group">
+                        <label for="name">Organization Name<code>*</code></label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="input your organization name">
+                    </div>
+                    <div class="form-group">
+                        <label for="part_of">Part Of</label>
+                        <input type="text" class="form-control" id="part_of" name="part_of" value="{{ $dataById['id'] ?? '' }}" readonly>
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="active" checked>
+                        <label class="form-check-label" for="active">Active</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 @endsection
 

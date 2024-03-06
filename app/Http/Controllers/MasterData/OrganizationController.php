@@ -56,6 +56,9 @@ class OrganizationController extends Controller
             ]);
 
             $message = 'Send data succesfully';
+            if ($request->modal == 'modal') {
+                return redirect()->back()->with('success', $message);
+            }
             return redirect()->route('organization.index')->with('success', $message);
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan data');
@@ -94,9 +97,12 @@ class OrganizationController extends Controller
             'part_of' => $request->part_of ?? ''
         ];
 
+        $url = 'Organization/' . $body['id'];
+
+        $data = $this->organization->patchRequest($url, $body);
+        dd($data);
         try {
             // send API 
-            $data = $this->organization->putRequest('Organization', $body);
 
             // Send DB
             $organization->update([
