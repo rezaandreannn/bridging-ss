@@ -51,7 +51,11 @@
                                                 Status
                                             </div>
                                             <div class="col-md-8">
-                                                {{ $dataById['active'] == true ? 'active' : 'non active'}}
+                                                @if(isset($dataById['active']) == true)
+                                                <b>Active</b>(true)
+                                                @else
+                                                <b>Inactive</b>
+                                                @endif
                                             </div>
                                             <div class="col-md-4">
                                                 Part Of
@@ -67,7 +71,8 @@
                                                 Country
                                             </div>
                                             <div class="col-md-8">
-                                                {{ $dataById['address'][0]['country'] ?? ''}}
+                                                {{ isset($dataById['address'][0]['country']) && $dataById['address'][0]['country'] == 'ID' ? 'Indonesia' : (isset($dataById['address'][0]['country']) ? $dataById['address'][0]['country'] : '') }}
+
                                             </div>
                                             <div class="col-md-4">
                                                 City
@@ -95,149 +100,147 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="row">
-            <div class="col-12 col-md-6 col-lg-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Part Detail </h4>
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-md" id="table-1">
-                                <thead>
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Part Detail </h4>
+                            <div class="card-header-action">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newOrganization">
+                                    New Orgnization
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-md">
                                     <tr>
                                         <th>Organization ID</th>
                                         <th>Name</th>
                                         <th>Active</th>
                                     </tr>
-                                </thead>
-                                <tbody>
                                     @foreach($organizationbyParts['entry'] as $organization)
                                     <tr>
                                         <td>{{ $organization['resource']['id']}}</td>
                                         <td>{{ $organization['resource']['name']}}</td>
                                         <td>
-                                            <div class="badge badge-success">{{ $organization['resource']['active']}}</div>
+                                            @if($organization['resource']['active'] == true)
+                                            <div class="badge badge-success">active</div>
+                                            @else
+                                            <div class="badge badge-danger">inactive</div>
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach
-                                </tbody>
-                            </table>
+                                </table>
+                            </div>
                         </div>
-                        {{ $organizationbyParts->links() }}
-                    </div>
-                    <div class="card-footer text-right">
-                        <nav class="d-inline-block">
-                            <ul class="pagination mb-0">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
-                                </li>
-                                <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">2</a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
-                                </li>
-                            </ul>
-                        </nav>
+                        <div class="card-footer text-right">
+                            <nav class="d-inline-block">
+                                <ul class="pagination mb-0">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">2</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Location By Organization </h4>
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-md" id="table-1">
-                                <thead>
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Location By Organization </h4>
+                            <div class="card-header-action">
+                                <a href="#" class="btn btn-primary">New Location</a>
+                            </div>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-md">
                                     <tr>
-                                        <th>#</th>
+                                        <th>Location ID</th>
                                         <th>Name</th>
-                                        <th>Created At</th>
-                                        <th>Status</th>
+                                        <th>Active</th>
                                         <th>Action</th>
                                     </tr>
-                                </thead>
-                                <tbody>
                                     <tr>
                                         <td>1</td>
                                         <td>Irwansyah Saputra</td>
-                                        <td>2017-01-09</td>
                                         <td>
-                                            <div class="badge badge-success">Active</div>
+                                            <div class="badge badge-success">1</div>
                                         </td>
                                         <td><a href="#" class="btn btn-secondary">Detail</a></td>
                                     </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Hasan Basri</td>
-                                        <td>2017-01-09</td>
-                                        <td>
-                                            <div class="badge badge-success">Active</div>
-                                        </td>
-                                        <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                                    </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Kusnadi</td>
-                                    <td>2017-01-11</td>
-                                    <td>
-                                        <div class="badge badge-danger">Not Active</div>
-                                    </td>
-                                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Rizal Fakhri</td>
-                                    <td>2017-01-11</td>
-                                    <td>
-                                        <div class="badge badge-success">Active</div>
-                                    </td>
-                                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Isnap Kiswandi</td>
-                                    <td>2017-01-17</td>
-                                    <td>
-                                        <div class="badge badge-success">Active</div>
-                                    </td>
-                                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                                </tr>
-                                </tbody>
-                            </table>
+
+                                </table>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card-footer text-right">
-                        <nav class="d-inline-block">
-                            <ul class="pagination mb-0">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
-                                </li>
-                                <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">2</a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
-                                </li>
-                            </ul>
-                        </nav>
+                        <div class="card-footer text-right">
+                            <nav class="d-inline-block">
+                                <ul class="pagination mb-0">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">2</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
 </div>
 
-</div>
-</section>
+<!-- Modal create organization -->
+<div class="modal fade" id="newOrganization" tabindex="-1" aria-labelledby="newOrganizationLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newOrganizationLabel">Create By Part Of {{ $dataById['name'] ?? '' }} </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{ route('organization.store')}}" method="post">
+                @csrf
+                <div class="modal-body">
+                    <input type="hidden" class="form-control" id="" name="modal" value="modal">
+                    <div class="form-group">
+                        <label for="name">Organization Name<code>*</code></label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="input your organization name">
+                    </div>
+                    <div class="form-group">
+                        <label for="part_of">Part Of</label>
+                        <input type="text" class="form-control" id="part_of" name="part_of" value="{{ $dataById['id'] ?? '' }}" readonly>
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="active" checked>
+                        <label class="form-check-label" for="active">Active</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 @endsection
 
@@ -248,5 +251,66 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/forms-advanced-forms.js') }}"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const itemsPerPage = 6; // Jumlah item per halaman
+        const items = document.querySelectorAll('.table-striped.table-md tr'); // Mengambil semua item
 
+        // Fungsi untuk menampilkan item untuk halaman saat ini
+        function displayItems(page) {
+            items.forEach((item, index) => {
+                if (index >= (page - 1) * itemsPerPage && index < page * itemsPerPage) {
+                    item.style.display = 'table-row';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Inisialisasi dengan menampilkan item untuk halaman pertama
+        displayItems(1);
+
+        // Event listener untuk navigasi ke halaman berikutnya
+        document.querySelector('.pagination .fas.fa-chevron-right').addEventListener('click', function() {
+            const currentPage = parseInt(document.querySelector('.pagination .page-item.active .page-link').innerText);
+            const nextPage = currentPage + 1;
+            const lastPage = parseInt(document.querySelector('.pagination .page-item:last-child .page-link').innerText);
+            
+            if (nextPage <= lastPage) {
+                displayItems(nextPage);
+                updatePagination(nextPage);
+            }
+        });
+
+        // Event listener untuk navigasi ke halaman sebelumnya
+        document.querySelector('.pagination .fas.fa-chevron-left').addEventListener('click', function() {
+            const currentPage = parseInt(document.querySelector('.pagination .page-item.active .page-link').innerText);
+            const prevPage = currentPage - 1;
+
+            if (prevPage >= 1) {
+                displayItems(prevPage);
+                updatePagination(prevPage);
+            }
+        });
+
+        // Event listener untuk navigasi ke halaman tertentu
+        document.querySelectorAll('.pagination .page-item:not(.disabled)').forEach(function(pageItem) {
+            pageItem.addEventListener('click', function() {
+                const pageNumber = parseInt(pageItem.innerText);
+                displayItems(pageNumber);
+                updatePagination(pageNumber);
+            });
+        });
+
+        // Fungsi untuk memperbarui halaman aktif di paginasi
+        function updatePagination(currentPage) {
+            document.querySelectorAll('.pagination .page-item').forEach(function(pageItem) {
+                pageItem.classList.remove('active');
+                if (parseInt(pageItem.innerText) === currentPage) {
+                    pageItem.classList.add('active');
+                }
+            });
+        }
+    });
+</script>
 @endpush

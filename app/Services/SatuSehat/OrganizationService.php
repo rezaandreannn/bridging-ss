@@ -92,16 +92,13 @@ class OrganizationService
                         ]
                     ]
                 ]
-            ],
-            "partOf" => [
-                "reference" => "Organization/" . $body['part_of']
             ]
         ];
 
         $additionalData = [];
 
         // Tambahkan elemen "id" berdasarkan kondisi ke dalam array tambahan
-        if ($body['id']) {
+        if (isset($body['id'])) {
             $additionalData["id"] = $body['id'];
         }
         // Tambahkan elemen "partOf" ke dalam array tambahan
@@ -113,7 +110,7 @@ class OrganizationService
         // Gabungkan array tambahan ke dalam array utama
         $data = array_merge($data, $additionalData);
         // Tambahkan elemen "active" ke dalam array utama
-        $data["active"] = true;
+        $data["active"] = isset($body['id']) ? false : true;
 
         return $data;
     }
@@ -190,6 +187,38 @@ class OrganizationService
                 'Authorization' => 'Bearer ' . $token
             ],
             'json' => $bodyRaw
+        ]);
+
+        $data = $response->getBody()->getContents();
+        return json_decode($data, true);
+    }
+
+    public function patchRequest($endpoint, array $body)
+    {
+        $token = $this->accessToken->token();
+
+        $url = $this->config->setUrl() . $endpoint;
+
+        // $bodyRaw = $this->bodyRaw($body);
+
+
+        $response = $this->httpClient->patch($url, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+                'Content-Type' => 'application/json-patch+json'
+            ],
+            'json' => [
+                [
+                    "op" => "replace",
+                    "path" => "/name",
+                    "value" => $body['name']
+                ],
+                [
+                    "op" => "replace",
+                    "path" => "/partOf/reference",
+                    "value" => "Organization/" . $body['part_of']
+                ]
+            ],
         ]);
 
         $data = $response->getBody()->getContents();

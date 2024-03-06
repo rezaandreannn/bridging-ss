@@ -28,7 +28,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Create Data</h4>
+                                <h4>Form Create</h4>
                             </div>
                             <div class="card-body">
                                 <div class="form-group row mb-4">
@@ -43,7 +43,7 @@
                                         <select class="form-control selectric" name="part_of">
                                             <option>-- Select item --</option>
                                             @foreach($organizations as $organization)
-                                            <option>{{ $organization->name}}</option>
+                                            <option value="{{ $organization->organization_id }}">{{ $organization->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
