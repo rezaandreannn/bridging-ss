@@ -105,23 +105,28 @@
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
-                            <table class="table table-striped table-md">
-                                <tr>
-                                    <th>Organization ID</th>
-                                    <th>Name</th>
-                                    <th>Active</th>
-                                </tr>
-                                @foreach($organizationbyParts['entry'] as $organization)
-                                <tr>
-                                    <td>{{ $organization['resource']['id']}}</td>
-                                    <td>{{ $organization['resource']['name']}}</td>
-                                    <td>
-                                        <div class="badge badge-success">{{ $organization['resource']['active']}}</div>
-                                    </td>
-                                </tr>
-                                @endforeach
+                            <table class="table table-striped table-md" id="table-1">
+                                <thead>
+                                    <tr>
+                                        <th>Organization ID</th>
+                                        <th>Name</th>
+                                        <th>Active</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($organizationbyParts['entry'] as $organization)
+                                    <tr>
+                                        <td>{{ $organization['resource']['id']}}</td>
+                                        <td>{{ $organization['resource']['name']}}</td>
+                                        <td>
+                                            <div class="badge badge-success">{{ $organization['resource']['active']}}</div>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
                             </table>
                         </div>
+                        {{ $organizationbyParts->links() }}
                     </div>
                     <div class="card-footer text-right">
                         <nav class="d-inline-block">
@@ -149,32 +154,35 @@
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
-                            <table class="table table-striped table-md">
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Created At</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Irwansyah Saputra</td>
-                                    <td>2017-01-09</td>
-                                    <td>
-                                        <div class="badge badge-success">Active</div>
-                                    </td>
-                                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Hasan Basri</td>
-                                    <td>2017-01-09</td>
-                                    <td>
-                                        <div class="badge badge-success">Active</div>
-                                    </td>
-                                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                                </tr>
+                            <table class="table table-striped table-md" id="table-1">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Created At</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Irwansyah Saputra</td>
+                                        <td>2017-01-09</td>
+                                        <td>
+                                            <div class="badge badge-success">Active</div>
+                                        </td>
+                                        <td><a href="#" class="btn btn-secondary">Detail</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Hasan Basri</td>
+                                        <td>2017-01-09</td>
+                                        <td>
+                                            <div class="badge badge-success">Active</div>
+                                        </td>
+                                        <td><a href="#" class="btn btn-secondary">Detail</a></td>
+                                    </tr>
                                 <tr>
                                     <td>3</td>
                                     <td>Kusnadi</td>
@@ -202,6 +210,7 @@
                                     </td>
                                     <td><a href="#" class="btn btn-secondary">Detail</a></td>
                                 </tr>
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -239,4 +248,5 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/forms-advanced-forms.js') }}"></script>
+
 @endpush

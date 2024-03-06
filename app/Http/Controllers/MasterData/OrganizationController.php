@@ -65,7 +65,7 @@ class OrganizationController extends Controller
     public function show($organization_id)
     {
         $title = 'Detail' . ' ' . $this->prefix;
-        $organization = Organization::where('organization_id', $organization_id)->first();
+        $organization = Organization::where('organization_id', $organization_id)->first()->paginate(5);
         $dataById =  $this->organization->getRequest('Organization/' . $organization_id);
 
         $organizationbyParts = $this->organization->getRequest('Organization', [
