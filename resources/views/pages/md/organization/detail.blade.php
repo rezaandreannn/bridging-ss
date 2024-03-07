@@ -164,7 +164,7 @@
                         </div>
                         <div class="card-body p-0">
                             <div class="table-responsive">
-                                <table class="table table-striped table-md">
+                                <table class="table table-striped table-mp">
                                     <tr>
                                         <th>Location ID</th>
                                         <th>Name</th>
@@ -185,17 +185,17 @@
                         </div>
                         <div class="card-footer text-right">
                             <nav class="d-inline-block">
-                                <ul class="pagination mb-0">
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
+                                <ul class="pagination-2 mb-0">
+                                    <li class="page-item-2 disabled">
+                                        <a class="page-link-2" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
                                     </li>
-                                    <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">2</a>
+                                    <li class="page-item-2 active"><a class="page-link-2" href="#">1 <span class="sr-only">(current)</span></a></li>
+                                    <li class="page-item-2">
+                                        <a class="page-link-2" href="#">2</a>
                                     </li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
+                                    <li class="page-item-2"><a class="page-link-2" href="#">3</a></li>
+                                    <li class="page-item-2">
+                                        <a class="page-link-2" href="#"><i class="fas fa-chevron-right"></i></a>
                                     </li>
                                 </ul>
                             </nav>
@@ -251,6 +251,7 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/forms-advanced-forms.js') }}"></script>
+<!-- Pagination Javascript -->
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const itemsPerPage = 6; // Jumlah item per halaman
