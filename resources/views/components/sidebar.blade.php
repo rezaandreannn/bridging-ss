@@ -63,7 +63,7 @@
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fa-solid fa-group-arrows-rotate ml-1"></i> <span>Mappings</span></a>
                 <ul class="dropdown-menu">
                     <li class="">
-                        <a class="nav-link" href="">Poliklinik</a>
+                        <a class="nav-link" href="">Encounter</a>
                     </li>
                 </ul>
             </li>
