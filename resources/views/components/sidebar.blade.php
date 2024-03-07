@@ -67,6 +67,21 @@
                     </li>
                 </ul>
             </li>
+            <li class="menu-header">manage</li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-tasks"></i><span>Manage User</span></a>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a class="nav-link" href="">User</a>
+                    </li>
+                    <li class="">
+                        <a class="nav-link" href="">Role</a>
+                    </li>
+                    <li class="">
+                        <a class="nav-link" href="">Permission</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
 
         <div class="hide-sidebar-mini mt-4 mb-4 p-3">

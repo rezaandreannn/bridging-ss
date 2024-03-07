@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     // MASTER DATA 
-    Route::prefix('md')->group(function () {
+    Route::prefix('md')->middleware('auth')->group(function () {
         // ORGANIZATION
         Route::get('/organization', [OrganizationController::class, 'index'])->name('organization.index');
         Route::get('/organization/create', [OrganizationController::class, 'create'])->name('organization.create');
