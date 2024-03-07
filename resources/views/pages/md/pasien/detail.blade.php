@@ -14,7 +14,7 @@
         <div class="section-header">
             <h1>Detail Pasien</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#">Master dokter</a></div>
+                <div class="breadcrumb-item active"><a href="#">Master Data</a></div>
                 <div class="breadcrumb-item"><a href="#">Organization</a></div>
                 <div class="breadcrumb-item">Detail Organization</div>
             </div>
@@ -27,7 +27,7 @@
                         <div class="card-header">
                             <h4>Show/Hide</h4>
                             <div class="card-header-action">
-                                <a dokter-collapse="#mycard-collapse" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
+                                <a data-collapse="#mycard-collapse" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
                             </div>
                         </div>
                         <div class="collapse show" id="mycard-collapse">
@@ -39,26 +39,26 @@
                                                 Pasien ID
                                             </div>
                                             <div class="col-md-8">
-                                                : {{ $dokter['kode_dokter'] ?? ''}}
+                                                : {{ $request['id'] ?? ''}}
                                             </div>
                                             <div class="col-md-4">
                                                 Name
                                             </div>
                                             <div class="col-md-8">
-                                                : {{ $dokter['jenis_profesi'] ?? ''}}
+                                                : {{ $request['no_mr'] ?? ''}}
                                                 
                                             </div>
                                             <div class="col-md-4">
                                                 BPJS
                                             </div>
                                             <div class="col-md-8">
-                                                : {{ $dokter['spesialis'] ?? ''}}
+                                                : {{ $request['no_bpjs'] ?? ''}}
                                             </div>
                                             <div class="col-md-4">
                                                 NIK
                                             </div>
                                             <div class="col-md-8">
-                                                : {{ $dokter['nama_dokter'] ?? ''}}
+                                                : {{ $request['nik'] ?? ''}}
                                             </div>
                                         </div>
                                     </div>
@@ -68,26 +68,26 @@
                                                 No HP
                                             </div>
                                             <div class="col-md-8">
-                                                : {{ $dokter['nik'] ?? ''}}
+                                                : {{ $request['no_hp'] ?? ''}}
                                             </div>
                                             <div class="col-md-4">
                                                 Tanggal Lahir
                                             </div>
                                             <div class="col-md-8">
-                                                : {{ $dokter['email'] ?? ''}}
+                                                : {{ $request['tanggal_lahir'] ?? ''}}
                                             
                                             </div>
                                             <div class="col-md-4">
                                                 Jenis Kelamin
                                             </div>
                                             <div class="col-md-8">
-                                                : {{ $dokter['agama'] ?? ''}}
+                                                : {{ $request['jenis_kelamin'] ?? ''}}
                                             </div>
                                             <div class="col-md-4">
                                                 Postal code
                                             </div>
                                             <div class="col-md-8">
-                                                : {{ $dokter['no_hp'] ?? ''}}
+                                                :
                                             </div>
                                         </div>
                                     </div>
