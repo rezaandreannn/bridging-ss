@@ -5,15 +5,21 @@ namespace App\Http\Controllers\MasterData;
 use App\Models\Dokter;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\SatuSehat\PracticionerService;
 use Illuminate\Support\Facades\Validator;
 
 class DokterController extends Controller
 {
     protected $dokter;
+    protected $practicionerSatuSehat;
+    protected $endpoint;
+
 
     public function __construct(Dokter $dokter)
     {
         $this->dokter = $dokter;
+        $this->practicionerSatuSehat = new PracticionerService();
+        $this->endpoint = 'Practitioner';
     }
 
     public function index(Request $request)
@@ -42,15 +48,21 @@ class DokterController extends Controller
         }
     }
 
-    public function show()
+    public function show($kodeDokter)
     {
         try {
-            $dokterData = $this->byKodeDokter();
+            $params = [
+                'identifier' => $this->dokter->getNik($kodeDokter)
+            ];
+
+            // kirem data ke satu sehat berdasarkan nik
+            $practitionerSatuSehat = $this->practicionerSatuSehat->getRequest($this->endpoint, $params);
             // Assuming you want to return the doctor data as JSON
-            return view('pages.md.dokter.detail', ['data' => $dokterData]);
+            return view('pages.md.dokter.detail');
         } catch (\Exception $e) {
             // Handle any exceptions that occur during the API request
-            return response()->json(['error' => $e->getMessage()], 500);
+            $errorMessage = "Error: " . $e->getMessage();
+            return redirect()->back()->with('error', $errorMessage);
         }
     }
 }

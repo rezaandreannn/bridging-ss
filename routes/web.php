@@ -51,9 +51,10 @@ Route::prefix('md')->group(function () {
     Route::put('/organization{organization_id}', [OrganizationController::class, 'update'])->name('organization.update');
 
     // PASIEN
-    Route::get('/pasien', [PasienController::class, 'index'])->name('pasien.index');
-    Route::get('/pasien/create', [PasienController::class, 'create'])->name('pasien.create');
-    Route::post('/pasien', [PasienController::class, 'store'])->name('pasien.store');
+    Route::get('/patient', [PasienController::class, 'index'])->name('patient.index');
+    Route::get('/patient/create', [PasienController::class, 'create'])->name('patient.create');
+    Route::get('/patient/{noMr}', [PasienController::class, 'show'])->name('patient.show');
+    Route::post('/patient', [PasienController::class, 'store'])->name('patient.store');
 
     // DOKTER
     Route::get('/dokter', [DokterController::class, 'index'])->name('dokter.index');

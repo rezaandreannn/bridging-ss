@@ -17,7 +17,7 @@
         <div class="section-header">
             <h1>Master Patient Index</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('pasien.index') }}">Master Data</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('patient.index') }}">Master Data</a></div>
                 <div class="breadcrumb-item">Patient</div>
             </div>
         </div>
@@ -101,7 +101,7 @@
                                         @endif
                                     </td>
                                     <td width="15%">
-                                        <a href="" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
+                                        <a href="{{ route('patient.show', $item['no_mr'])}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                                         <a href="http://" class="btn btn-primary">sync</a>
                                     </td>
                                 </tr>
@@ -131,8 +131,9 @@
     function resetForm() {
         document.getElementById("filterForm").value = "";
         alert('Filter telah direset!');
-        window.location.href = "{{ route('pasien.index') }}";
+        window.location.href = "{{ route('patient.index') }}";
     }
+
 </script>
 
 <!-- Page Specific JS File -->

@@ -23,8 +23,8 @@
             <li class="nav-item dropdown {{ Request::is('md*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Master Data</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('md/pasien*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('pasien.index') }}">Patient</a>
+                    <li class="{{ Request::is('md/patient*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('patient.index') }}">Patient</a>
                     </li>
                     <li class="{{ Request::is('md/dokter*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('dokter.index') }}">Practitioner</a>
@@ -45,6 +45,25 @@
                     </li>
                     <li class="{{ Request::is('kj/antrean') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('antrean.index') }}">Antrean</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Encounter</span></a>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a class="nav-link" href="">Poliklinik</a>
+                    </li>
+                    <li class="">
+                        <a class="nav-link" href="">IGD</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fa-solid fa-group-arrows-rotate ml-1"></i> <span>Mappings</span></a>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a class="nav-link" href="">Poliklinik</a>
                     </li>
                 </ul>
             </li>
