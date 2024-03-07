@@ -5,7 +5,9 @@ namespace App\Http\Controllers\MasterData;
 use App\Models\Organization;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\OrganizationByParts;
 use App\Services\SatuSehat\OrganizationService;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class OrganizationController extends Controller
 {
@@ -74,15 +76,28 @@ class OrganizationController extends Controller
     public function show($organization_id)
     {
         $title = 'Detail' . ' ' . $this->prefix;
-        
+
         $organization = Organization::where('organization_id', $organization_id)->first();
         $dataById =  $this->organization->getRequest($this->endpoint . '/' . $organization_id);
 
         $organizationbyParts = $this->organization->getRequest($this->endpoint, [
             'partOf' => $organization_id
         ]);
+        $entries =  collect($organizationbyParts['entry']);
 
-        // return $organizationbyParts['entry'];
+        $collection = collect($entries);
+        $perPage = 5;
+
+        // Ambil nomor halaman saat ini
+        $page = request()->input('page', 1);
+
+        // Potong array entri berdasarkan halaman saat ini dan jumlah item per halaman
+        $currentPageItems = $collection->slice(($page - 1) * $perPage, $perPage)->all();
+
+        // Buat objek LengthAwarePaginator
+        $organizationbyParts = new LengthAwarePaginator($currentPageItems, count($collection), $perPage, $page, [
+            'path' => LengthAwarePaginator::resolveCurrentPath(),
+        ]);
 
         return view($this->view . 'detail', compact('dataById', 'title', 'organizationbyParts'));
     }
