@@ -8,7 +8,7 @@
     <ul class="navbar-nav navbar-right">
         <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                 <img alt="image" src="{{ asset('img/avatar/avatar-1.png') }}" class="rounded-circle mr-1">
-                <div class="d-sm-none d-lg-inline-block">Hi, RSUMM</div>
+                <div class="d-sm-none d-lg-inline-block">{{ Auth::user()->name }}</div>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-title">Selamat Datang</div>
@@ -24,7 +24,7 @@
                 <div class="dropdown-divider"></div>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit" class="dropdown-item has-icon"><i class="fas fa-sign-out-alt"></i>Logout</button>
+                    <button type="submit" class="btn-sm dropdown-item has-icon"><i class="fas fa-sign-out-alt mt-1"></i>Logout</button>
                     <!-- <a href="logout" class="dropdown-item has-icon text-danger">
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </a> -->
