@@ -119,7 +119,7 @@
                                         <th>Name</th>
                                         <th>Active</th>
                                     </tr>
-                                    @foreach($organizationbyParts['entry'] as $organization)
+                                    @forelse($organizationbyParts as $organization)
                                     <tr>
                                         <td>{{ $organization['resource']['id']}}</td>
                                         <td>{{ $organization['resource']['name']}}</td>
@@ -131,27 +131,46 @@
                                             @endif
                                         </td>
                                     </tr>
-                                    @endforeach
+                                    @empty
+                                    <tr>
+                                        <td colspan="3" class="text-center">
+                                            Organization data is not available
+                                        </td>
+                                    </tr>
+                                    @endforelse
+
                                 </table>
                             </div>
                         </div>
+                        @if(!empty($organizationbyParts) && count($organizationbyParts) > 1)
                         <div class="card-footer text-right">
                             <nav class="d-inline-block">
                                 <ul class="pagination mb-0">
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
+                                    <!-- Tombol Previous -->
+                                    <li class="page-item {{ $organizationbyParts->previousPageUrl() ? '' : 'disabled' }}">
+                                        <a class="page-link" href="{{ $organizationbyParts->previousPageUrl() ?? '#' }}" tabindex="-1">
+                                            <i class="fas fa-chevron-left"></i>
+                                        </a>
                                     </li>
-                                    <li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">2</a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
-                                    </li>
+
+                                    <!-- Nomor Halaman -->
+                                    @for ($i = 1; $i <= $organizationbyParts->lastPage(); $i++)
+                                        <li class="page-item {{ $i == $organizationbyParts->currentPage() ? 'active' : '' }}">
+                                            <a class="page-link" href="{{ $organizationbyParts->url($i) }}">{{ $i }}</a>
+                                        </li>
+                                        @endfor
+
+                                        <!-- Tombol Next -->
+                                        <li class="page-item {{ $organizationbyParts->nextPageUrl() ? '' : 'disabled' }}">
+                                            <a class="page-link" href="{{ $organizationbyParts->nextPageUrl() ?? '#' }}">
+                                                <i class="fas fa-chevron-right"></i>
+                                            </a>
+                                        </li>
                                 </ul>
                             </nav>
                         </div>
+                        @endif
+
                     </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-6">
@@ -276,7 +295,7 @@
             const currentPage = parseInt(document.querySelector('.pagination .page-item.active .page-link').innerText);
             const nextPage = currentPage + 1;
             const lastPage = parseInt(document.querySelector('.pagination .page-item:last-child .page-link').innerText);
-            
+
             if (nextPage <= lastPage) {
                 displayItems(nextPage);
                 updatePagination(nextPage);
@@ -313,5 +332,6 @@
             });
         }
     });
+
 </script>
 @endpush
