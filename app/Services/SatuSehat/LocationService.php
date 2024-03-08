@@ -131,6 +131,10 @@ class LocationService
             $params['id'] = $params['id'];
         }
 
+        if (isset($params['organization'])) {
+            $params['organization'] = $params['organization'];
+        }
+
         if (isset($params['name'])) {
             $params['name'] = $params['name'];
         }
@@ -153,6 +157,11 @@ class LocationService
         if (!empty($params['partOf'])) {
             $url .= '?' . http_build_query($params);
         }
+
+        if (!empty($params['organization'])) {
+            $url .= '?' . http_build_query($params);
+        }
+
 
         $response = $this->httpClient->get($url, [
             'headers' => [

@@ -185,17 +185,15 @@
                                     <tr>
                                         <th>Location ID</th>
                                         <th>Name</th>
-                                        <th>Active</th>
-                                        <th>Action</th>
+                                        <th>Status</th>
                                     </tr>
                                     @forelse($locationByOrganizationId as $location)
                                     <tr>
                                         <td>{{$location['resource']['id']}}</td>
                                         <td>{{$location['resource']['name']}}</td>
                                         <td>
-                                            <div class="badge badge-success">1</div>
+                                            {{ $location['resource']['status']}}
                                         </td>
-                                        <td><a href="#" class="btn btn-secondary">Detail</a></td>
                                     </tr>
                                     @empty
                                     <tr>
@@ -204,7 +202,6 @@
                                         </td>
                                     </tr>
                                     @endforelse
-
                                 </table>
                             </div>
                         </div>
