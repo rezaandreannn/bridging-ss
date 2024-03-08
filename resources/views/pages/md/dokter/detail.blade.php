@@ -39,7 +39,7 @@
                                                 Pasien ID
                                             </div>
                                             <div class="col-md-8">
-                                                : {{ $dokter['kode_dokter'] ?? ''}}
+                                                : {{ $practitionerSatuSehat['kode_dokter'] ?? ''}}
                                             </div>
                                             <div class="col-md-4">
                                                 Name

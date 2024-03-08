@@ -6,6 +6,7 @@ use App\Http\Controllers\Kunjungan\AntreanController;
 use App\Http\Controllers\MasterData\DokterController;
 use App\Http\Controllers\MasterData\PasienController;
 use App\Http\Controllers\Kunjungan\PendaftaranController;
+use App\Http\Controllers\Manage\UserController;
 use App\Http\Controllers\MasterData\OrganizationController;
 
 /*
@@ -68,6 +69,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/antrean/create', [AntreanController::class, 'create'])->name('antrean.create');
         Route::post('/antrean', [AntreanController::class, 'store'])->name('antrean.store');
     });
+
+    // MANAGE
+    Route::prefix('manage')->group(function () {
+        Route::get('/user', [UserController::class, 'index'])->name('user.index');
+        Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
+        Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
+        Route::post('/user', [UserController::class, 'store'])->name('user.store');
+    });
+
 
     // credits
     Route::get('/credits', function () {

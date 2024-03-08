@@ -69,10 +69,10 @@
             </li>
             <li class="menu-header">manage</li>
             <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-tasks"></i><span>Manage User</span></a>
+                <a href="#" class="nav-link has-dropdown {{ Request::is('manage*') ? 'active' : '' }}" data-toggle="dropdown"><i class="fas fa-tasks"></i><span>Manage User</span></a>
                 <ul class="dropdown-menu">
                     <li class="">
-                        <a class="nav-link" href="">User</a>
+                        <a class="nav-link" href="{{ route('user.index') }}">User</a>
                     </li>
                     <li class="">
                         <a class="nav-link" href="">Role</a>

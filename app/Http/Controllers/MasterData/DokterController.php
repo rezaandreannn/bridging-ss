@@ -60,7 +60,9 @@ class DokterController extends Controller
             // kirem data ke satu sehat berdasarkan nik
             $practitionerSatuSehat = $this->practicionerSatuSehat->getRequest($this->endpoint, $params);
 
+            // Menggunakan model Dokter untuk mencari data berdasarkan kode dokter
             $dokter = $this->dokter->getByKodeDokter($kodeDokter);
+
             return view($this->viewPath . 'detail', compact('dokter'));
         } catch (\Exception $e) {
             // Handle any exceptions that occur during the API request
