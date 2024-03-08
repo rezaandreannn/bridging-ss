@@ -101,7 +101,7 @@ Route::middleware('auth')->group(function () {
 
 
     // credits
-    Route::get('/docs', [DocumentationController::class, 'index'])->name('documentation.index');
+    Route::get('/documentation', [DocumentationController::class, 'index'])->name('documentation.index');
 });
 
 require __DIR__ . '/auth.php';
