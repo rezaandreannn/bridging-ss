@@ -8,6 +8,7 @@ use App\Http\Controllers\MasterData\PasienController;
 use App\Http\Controllers\Kunjungan\PendaftaranController;
 use App\Http\Controllers\Mapping\MappingEncounterController;
 use App\Http\Controllers\Manage\UserController;
+use App\Http\Controllers\MasterData\LocationController;
 use App\Http\Controllers\MasterData\OrganizationController;
 
 
@@ -55,6 +56,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/dokter/create', [DokterController::class, 'create'])->name('dokter.create');
         Route::get('/dokter/{kode_dokter}/edit', [DokterController::class, 'edit'])->name('dokter.edit');
         Route::get('/dokter/{kode_dokter}', [DokterController::class, 'show'])->name('dokter.show');
+
+        // LOCATION
+        Route::get('/location', [LocationController::class, 'index'])->name('location.index');
+        Route::get('/location/create', [LocationController::class, 'create'])->name('location.create');
+        Route::post('/location', [LocationController::class, 'store'])->name('location.store');
     });
 
 
@@ -73,9 +79,9 @@ Route::middleware('auth')->group(function () {
     });
 
 
-    // mapping data
+    // MAPPING DATA
     Route::prefix('mp')->name('mapping.')->group(function () {
-        // Encounter
+        // ENCOUNTER
         Route::get('encounter', [MappingEncounterController::class, 'index'])->name('encounter.index');
         Route::get('encounter/create', [MappingEncounterController::class, 'create'])->name('encounter.create');
     });

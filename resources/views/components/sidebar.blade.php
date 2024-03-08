@@ -33,7 +33,7 @@
                         <a class="nav-link" href="{{ route('organization.index') }}">Organization</a>
                     </li>
                     <li class="{{ Request::is('md/location*') ? 'active' : '' }}">
-                        <a class="nav-link" href="">Location</a>
+                        <a class="nav-link" href="{{ route('location.index') }}">Location</a>
                     </li>
                 </ul>
             </li>
