@@ -59,14 +59,6 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fa-solid fa-group-arrows-rotate ml-1"></i> <span>Mappings</span></a>
-                <ul class="dropdown-menu">
-                    <li class="">
-                        <a class="nav-link" href="">Encounter</a>
-                    </li>
-                </ul>
-            </li>
             <li class="menu-header">manage</li>
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown {{ Request::is('manage*') ? 'active' : '' }}" data-toggle="dropdown"><i class="fas fa-tasks"></i><span>Manage User</span></a>
@@ -79,6 +71,14 @@
                     </li>
                     <li class="">
                         <a class="nav-link" href="">Permission</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown {{ Request::is('mp*') ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fa-solid fa-group-arrows-rotate ml-1"></i> <span>Mappings</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('mp/encounter*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('mapping.encounter.index')}}">Encounter</a>
                     </li>
                 </ul>
             </li>
