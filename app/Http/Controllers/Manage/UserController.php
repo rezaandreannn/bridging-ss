@@ -53,11 +53,52 @@ class UserController extends Controller
                 'password' => Hash::make($validatedData['password']),
             ]);
 
-            // Berikan umpan balik kepada pengguna
-            return redirect()->back()->with('success', 'User berhasil ditambahkan!');
+            $message = 'Data has been Add successfully.';
+            return redirect()->route($this->routeIndex)->with('toast_success', $message);
         } catch (\Exception $e) {
             // Tangani kesalahan
             return redirect()->back()->with('error', 'Terjadi kesalahan saat menambahkan pengguna.');
+        }
+    }
+
+    public function edit($id)
+    {
+        $title = 'Edit' . ' ' . $this->prefix;
+        $user = User::where('id', $id)->first();
+        $users = User::select('name', 'email', 'password')->get();
+        return view($this->view . 'edit', compact('title', 'user', 'users'));
+    }
+
+    public function update($id, Request $request)
+    {
+        $user = User::where('id', $id)->first();
+        $this->validate($request, [
+            'name' => ['required', 'string', 'max:100'],
+            'email' => ['required', 'string', 'email', 'max:100'],
+        ]);
+        try {
+            // send API 
+            // $data = $this->organization->patchRequest($url, $body);
+
+            // Send DB
+            if ($request->input('password')) {
+                $user_data = [
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'password' => bcrypt($request->password)
+                ];
+            } else {
+                $user_data = [
+                    'name' => $request->name,
+                    'email' => $request->email,
+                ];
+            }
+            $user->update($user_data);
+
+            $message = 'Data has been updated successfully.';
+            return redirect()->route($this->routeIndex)->with('toast_success', $message);
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan data');
         }
     }
 
