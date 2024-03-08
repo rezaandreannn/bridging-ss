@@ -60,19 +60,22 @@ class PasienController extends Controller
 
     public function show($noMr)
     {
-        // amibil data nik by pasien
         $request = $this->pasien->getData($noMr);
-        $nik = $request[0]['nik'];
 
-        // parameter buat kirem ke api
+        // Extract 'nik' from the retrieved data
+        $nik = $request[0]['nik'] ?? null;
+
+        // Prepare parameters for the API request
         $params = [
             'identifier' => $nik
         ];
 
-        // search by nik ke api satu sehat
+        // Make request to the API using PatientSatuSehatService
         $pasien = $this->patientSatuSehat->getRequest($this->endpoint, $params);
 
-        return $pasien['entry'][0]['resource']['id'];
+        // Pass the data to the view for rendering
+        return view($this->viewPath . 'detail', compact('pasien'));
+        
     }
 
     public function edit()

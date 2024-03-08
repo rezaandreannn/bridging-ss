@@ -7,6 +7,7 @@ use App\Http\Controllers\MasterData\DokterController;
 use App\Http\Controllers\MasterData\PasienController;
 use App\Http\Controllers\Kunjungan\PendaftaranController;
 use App\Http\Controllers\Mapping\MappingEncounterController;
+use App\Http\Controllers\Manage\UserController;
 use App\Http\Controllers\MasterData\OrganizationController;
 
 
@@ -71,12 +72,24 @@ Route::middleware('auth')->group(function () {
         Route::post('/antrean', [AntreanController::class, 'store'])->name('antrean.store');
     });
 
+
     // mapping data
     Route::prefix('mp')->name('mapping.')->group(function () {
         // Encounter
         Route::get('encounter', [MappingEncounterController::class, 'index'])->name('encounter.index');
         Route::get('encounter/create', [MappingEncounterController::class, 'create'])->name('encounter.create');
     });
+
+
+    // MANAGE
+    Route::prefix('manage')->group(function () {
+        Route::get('/user', [UserController::class, 'index'])->name('user.index');
+        Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
+        Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
+        Route::post('/user', [UserController::class, 'store'])->name('user.store');
+    });
+
+
 
     // credits
     Route::get('/credits', function () {
