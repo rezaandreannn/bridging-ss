@@ -35,27 +35,31 @@
                                     <th class="text-center">
                                         No
                                     </th>
-                                    <th>ID</th>
+                                    <th>Location ID</th>
                                     <th>Name</th>
                                     <th>Organization ID</th>
-                                    <th>Part Of</th>
+                                    <th>Description</th>
                                     <th>Updated At</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($locations as $location)
                                 <tr>
-                                    <td>1</td>
-                                    <td>213131</td>
-                                    <td>Metro</td>
-                                    <td>861b3be1-9a10-4cc1-b34d-8d5d23779d54</td>
-                                    <td>1</td>
-                                    <td>2024-03-07 12:00:51</td>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $location->location_id}}</td>
+                                    <td>{{ $location->name}}</td>
+                                    <td>
+                                        <a href="{{ route('organization.show', $location->organization_id)}}">{{ $location->organization_id}} </a>
+                                    </td>
+                                    <td>{{$location->description}}</td>
+                                    <td>{{$location->updated_at}}</td>
                                     <td width="15%">
                                         <a href="" class="btn btn-warning"><i class="far fa-edit"></i></a>
-                                        <a href="" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
+                                        <a href="{{ route('location.show', $location->location_id) }}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                                     </td>
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

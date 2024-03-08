@@ -4,8 +4,10 @@ namespace App\Http\Controllers\MasterData;
 
 use App\Models\Organization;
 use Illuminate\Http\Request;
+use App\Services\BaseService;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrganizationByParts;
+use App\Services\SatuSehat\LocationService;
 use App\Services\SatuSehat\OrganizationService;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -16,6 +18,8 @@ class OrganizationController extends Controller
     protected $endpoint;
     protected $view;
     protected $routeIndex;
+    protected $locationService;
+    protected $baseService;
 
     public function __construct()
     {
@@ -24,6 +28,8 @@ class OrganizationController extends Controller
         $this->endpoint = 'Organization';
         $this->view = 'pages.md.organization.';
         $this->routeIndex = 'organization.index';
+        $this->locationService = new LocationService();
+        $this->baseService = new BaseService();
     }
     public function index()
     {
@@ -80,26 +86,30 @@ class OrganizationController extends Controller
         $organization = Organization::where('organization_id', $organization_id)->first();
         $dataById =  $this->organization->getRequest($this->endpoint . '/' . $organization_id);
 
+        $locationByOrganizationId = $this->locationService->getRequest(
+            'Location',
+            ['organization' => $organization_id]
+        );
+
+        $locationByOrganizationIdEntries = collect($locationByOrganizationId['entry']);
+
         $organizationbyParts = $this->organization->getRequest($this->endpoint, [
             'partOf' => $organization_id
         ]);
-        $entries =  collect($organizationbyParts['entry']);
 
-        $collection = collect($entries);
+        $organizationEntries =  collect($organizationbyParts['entry']);
+
+        // $collection = collect($organizationEntries);
         $perPage = 5;
 
-        // Ambil nomor halaman saat ini
         $page = request()->input('page', 1);
 
-        // Potong array entri berdasarkan halaman saat ini dan jumlah item per halaman
-        $currentPageItems = $collection->slice(($page - 1) * $perPage, $perPage)->all();
+        $locationByOrganizationId = $this->baseService->paginate($locationByOrganizationIdEntries, $perPage, $page);
 
-        // Buat objek LengthAwarePaginator
-        $organizationbyParts = new LengthAwarePaginator($currentPageItems, count($collection), $perPage, $page, [
-            'path' => LengthAwarePaginator::resolveCurrentPath(),
-        ]);
 
-        return view($this->view . 'detail', compact('dataById', 'title', 'organizationbyParts'));
+        $organizationbyParts = $this->baseService->paginate($organizationEntries, $perPage, $page);
+
+        return view($this->view . 'detail', compact('dataById', 'title', 'organizationbyParts', 'locationByOrganizationId'));
     }
 
     public function edit($organization_id)

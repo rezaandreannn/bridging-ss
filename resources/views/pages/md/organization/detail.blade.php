@@ -188,35 +188,54 @@
                                         <th>Active</th>
                                         <th>Action</th>
                                     </tr>
+                                    @forelse($locationByOrganizationId as $location)
                                     <tr>
-                                        <td>1</td>
-                                        <td>Irwansyah Saputra</td>
+                                        <td>{{$location['resource']['id']}}</td>
+                                        <td>{{$location['resource']['name']}}</td>
                                         <td>
                                             <div class="badge badge-success">1</div>
                                         </td>
                                         <td><a href="#" class="btn btn-secondary">Detail</a></td>
                                     </tr>
+                                    @empty
+                                    <tr>
+                                        <td colspan="3" class="text-center">
+                                            Location data is not available
+                                        </td>
+                                    </tr>
+                                    @endforelse
 
                                 </table>
                             </div>
                         </div>
+                        @if(!empty($locationByOrganizationId) && count($locationByOrganizationId) > 1)
                         <div class="card-footer text-right">
                             <nav class="d-inline-block">
-                                <ul class="pagination-2 mb-0">
-                                    <li class="page-item-2 disabled">
-                                        <a class="page-link-2" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
+                                <ul class="pagination mb-0">
+                                    <!-- Tombol Previous -->
+                                    <li class="page-item {{ $locationByOrganizationId->previousPageUrl() ? '' : 'disabled' }}">
+                                        <a class="page-link" href="{{ $locationByOrganizationId->previousPageUrl() ?? '#' }}" tabindex="-1">
+                                            <i class="fas fa-chevron-left"></i>
+                                        </a>
                                     </li>
-                                    <li class="page-item-2 active"><a class="page-link-2" href="#">1 <span class="sr-only">(current)</span></a></li>
-                                    <li class="page-item-2">
-                                        <a class="page-link-2" href="#">2</a>
-                                    </li>
-                                    <li class="page-item-2"><a class="page-link-2" href="#">3</a></li>
-                                    <li class="page-item-2">
-                                        <a class="page-link-2" href="#"><i class="fas fa-chevron-right"></i></a>
-                                    </li>
+
+                                    <!-- Nomor Halaman -->
+                                    @for ($i = 1; $i <= $locationByOrganizationId->lastPage(); $i++)
+                                        <li class="page-item {{ $i == $locationByOrganizationId->currentPage() ? 'active' : '' }}">
+                                            <a class="page-link" href="{{ $locationByOrganizationId->url($i) }}">{{ $i }}</a>
+                                        </li>
+                                        @endfor
+
+                                        <!-- Tombol Next -->
+                                        <li class="page-item {{ $locationByOrganizationId->nextPageUrl() ? '' : 'disabled' }}">
+                                            <a class="page-link" href="{{ $locationByOrganizationId->nextPageUrl() ?? '#' }}">
+                                                <i class="fas fa-chevron-right"></i>
+                                            </a>
+                                        </li>
                                 </ul>
                             </nav>
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>

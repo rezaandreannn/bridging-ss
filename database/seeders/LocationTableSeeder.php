@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Location;
 use GuzzleHttp\Client;
 use Illuminate\Database\Seeder;
 use App\Services\SatuSehat\AccessToken;
@@ -32,13 +33,13 @@ class LocationTableSeeder extends Seeder
             "resourceType" => "Location",
             "identifier" => [
                 [
-                    "system" => "http://sys-ids.kemkes.go.id/location/861b3be1-9a10-4cc1-b34d-8d5d23779d54",
-                    "value" => "test"
+                    "system" => "http://sys-ids.kemkes.go.id/location/" . env('SATU_SEHAT_ORGANIZATION_ID'),
+                    "value" => "RSU Muhammadiyah Metro"
                 ]
             ],
             "status" => "active",
-            "name" => "test",
-            "description" => "test",
+            "name" => "RSU Muhammadiyah Metro",
+            "description" => "Rumah Sakit Umum Muhammadiyah Metro",
             "mode" => "instance",
             "telecom" => [
                 [
@@ -101,8 +102,8 @@ class LocationTableSeeder extends Seeder
                 "coding" => [
                     [
                         "system" => "http://terminology.hl7.org/CodeSystem/location-physical-type",
-                        "code" => "ro",
-                        "display" => "Room"
+                        "code" => "si",
+                        "display" => "site"
                     ]
                 ]
             ],
@@ -112,7 +113,7 @@ class LocationTableSeeder extends Seeder
                 "altitude" => 21
             ],
             "managingOrganization" => [
-                "reference" => "Organization/861b3be1-9a10-4cc1-b34d-8d5d23779d54"
+                "reference" => "Organization/" . env('SATU_SEHAT_ORGANIZATION_ID')
             ]
         ];
 
@@ -137,6 +138,16 @@ class LocationTableSeeder extends Seeder
         ]);
 
         $data = json_decode($response->getBody()->getContents(), true);
-        dd($data);
+
+        $organizationId = $data['managingOrganization']['reference'];
+        $parts = explode('/', $organizationId);
+
+        Location::create([
+            'location_id' => $data['id'],
+            'name' => $data['name'],
+            'organization_id' => end($parts),
+            'description' => $data['description'],
+            'created_by' => 'seeder'
+        ]);
     }
 }
