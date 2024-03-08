@@ -75,8 +75,6 @@
                                     <th>Name</th>
                                     <th>BPJS</th>
                                     <th>NIK</th>
-                                    <th>No Hp</th>
-                                    <th>Birthdate</th>
                                     <th>Gender</th>
                                     <th>Action</th>
                                 </tr>
@@ -91,8 +89,6 @@
                                     <td width="30%">{{ $item['nama_pasien'] }}</td>
                                     <td>{{ $item['no_bpjs'] }}</td>
                                     <td>{{ $item['nik'] }}</td>
-                                    <td>{{ $item['no_hp'] }}</td>
-                                    <td>{{ date('d-m-Y', strtotime($item['tanggal_lahir'])) }}</td>
                                     <td>
                                         @if ($item['jenis_kelamin'] == 'L')
                                         <div>L</div>

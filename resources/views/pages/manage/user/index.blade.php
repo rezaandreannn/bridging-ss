@@ -50,7 +50,7 @@
                                     <td>{{$user->email}}</td>
                                     <td width="15%">
                                         <a href="{{ route('user.edit', $user->id )}}" class="btn btn-warning"><i class="far fa-edit"></i></a>
-                                        <a href="#" id="delete" data-id="{{ $user->id }}" data-nama="{{ $user->name }}" data-bs-toggle="tooltip" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                        <button id="delete" data-id="{{ $user->id }}" data-nama="{{ $user->name }}" data-bs-toggle="tooltip" class="btn btn-danger"><i class="fas fa-trash"></i></button>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -70,8 +70,34 @@
 <script src="{{ asset('library/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('library/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script>
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+<script>
+    $(document).on('click', '#delete', function() {
+        var user = $(this).attr('data-id');
+        var nama = $(this).attr('data-nama');
+
+        swal({
+                title: "Are You Sure?",
+                text: "Data Will Be Deleted " + nama + " !!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    window.location = "{{ route('user.delete', ['id' => ':id']) }}".replace(':id', user);
+                    swal("Data successfully deleted!", {
+                        icon: "success",
+                    });
+                } else {
+                    swal("Data will not be deleted!");
+                }
+            });
+    });
+</script>
+
 
 @endpush
