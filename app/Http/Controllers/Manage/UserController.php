@@ -102,5 +102,14 @@ class UserController extends Controller
         }
     }
 
+    public function destroy($id)
+    {
+        $user = User::findorfail($id);
+        $user->delete();
+
+        $message = 'Data has been deleted successfully.';
+        return redirect()->route($this->routeIndex)->with('toast_success', $message);
+    }
+
 
 }

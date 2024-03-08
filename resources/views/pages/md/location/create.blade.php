@@ -40,16 +40,12 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Email</label>
-                                        <input type="email" name="email" class="form-control">
+                                        <label>Organization ID</label>
+                                        <select class="form-control selectric">
+                                            <option>Pilih Organization </option>
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Phone</label>
-                                        <input type="text" name="phone" class="form-control">
-                                    </div>
-                                </div>      
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Active</label>
@@ -61,14 +57,20 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Organization ID</label>
-                                        <input type="text" name="organization_id" class="form-control">
+                                        <label>Part Of</label>
+                                        <input type="text" name="part_of" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Part Of</label>
-                                        <input type="text" name="part_of" class="form-control">
+                                        <label>Email</label>
+                                        <input type="email" name="email" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Phone</label>
+                                        <input type="text" name="phone" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -89,7 +91,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="exampleFormControlTextarea1">Identifire</label>
+                                        <label for="exampleFormControlTextarea1">Identifire (Value)</label>
                                         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                                     </div>
                                 </div>

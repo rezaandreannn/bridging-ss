@@ -50,6 +50,7 @@
                                     <td>{{$user->email}}</td>
                                     <td width="15%">
                                         <a href="{{ route('user.edit', $user->id )}}" class="btn btn-warning"><i class="far fa-edit"></i></a>
+                                        <a href="#" id="delete" data-id="{{ $user->id }}" data-nama="{{ $user->name }}" data-bs-toggle="tooltip" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
