@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DocumentationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Kunjungan\AntreanController;
@@ -100,9 +101,7 @@ Route::middleware('auth')->group(function () {
 
 
     // credits
-    Route::get('/credits', function () {
-        return view('pages.forms-advanced-form');
-    });
+    Route::get('/docs', [DocumentationController::class, 'index'])->name('documentation.index');
 });
 
 require __DIR__ . '/auth.php';

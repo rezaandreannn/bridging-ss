@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\MasterData;
 
-use App\Http\Controllers\Controller;
+use App\Models\Organization;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class LocationController extends Controller
 {
@@ -31,7 +32,9 @@ class LocationController extends Controller
     public function create()
     {
         $title = 'Create' . ' ' . $this->prefix;
-        
-        return view($this->view . 'create', compact('title'));
+
+        $organizations = Organization::pluck('name', 'organization_id');
+
+        return view($this->view . 'create', compact('title', 'organizations'));
     }
 }

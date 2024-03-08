@@ -31,78 +31,72 @@
                                 <h4>Form Create</h4>
                             </div>
                             <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Name</label>
-                                        <input type="text" name="name" class="form-control">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Organization ID<code>*</code></label>
+                                            <select class="form-control select2">
+                                                <option disabled selected> -- select item -- </option>
+                                                @foreach($organizations as $id => $name)
+                                                <option>{{ $name}} </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Organization ID</label>
-                                        <select class="form-control selectric">
-                                            <option>Pilih Organization </option>
-                                        </select>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Identifier (Value)<code>*</code></label>
+                                            <input type="text" name="name" class="form-control">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Active</label>
-                                        <select class="form-control selectric">
-                                            <option>Active</option>
-                                            <option>NonActive</option>
-                                        </select>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Name<code>*</code></label>
+                                            <input type="text" name="name" class="form-control">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Part Of</label>
-                                        <input type="text" name="part_of" class="form-control">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Status</label>
+                                            <select class="form-control selectric">
+                                                <option>Active</option>
+                                                <option>Inactive</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Email</label>
-                                        <input type="email" name="email" class="form-control">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Part Of</label>
+                                            <input type="text" name="part_of" class="form-control">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Phone</label>
-                                        <input type="text" name="phone" class="form-control">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input type="email" name="email" class="form-control">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Physical Type</label>
-                                        <select class="form-control selectric">
-                                            <option>Hospital Department</option>
-                                            <option>Room</option>
-                                            <option>Building</option>
-                                        </select>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Phone</label>
+                                            <input type="text" name="phone" class="form-control">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleFormControlTextarea1">Description</label>
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleFormControlTextarea1">Description<code>*</code></label>
+                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                        </div>
                                     </div>
+
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="exampleFormControlTextarea1">Identifire (Value)</label>
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                    </div>
+                                <div class="card-footer text-right">
+                                    <button class="btn btn-secondary mr-1">Back</button>
+                                    <button class="btn btn-primary" type="submit">Submit</button>
                                 </div>
-                            </div>
-                            <div class="card-footer text-right">
-                                <button class="btn btn-primary mr-1" type="submit">Simpan</button>
-                                <button class="btn btn-secondary">Kembali</button>
                             </div>
                         </div>
                     </div>
-                </div>
             </form>
         </div>
     </section>
