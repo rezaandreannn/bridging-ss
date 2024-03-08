@@ -40,8 +40,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Description</label>
-                                        <input type="text" name="description" class="form-control">
+                                        <label>Email</label>
+                                        <input type="email" name="email" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -49,13 +49,7 @@
                                         <label>Phone</label>
                                         <input type="text" name="phone" class="form-control">
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Email</label>
-                                        <input type="email" name="email" class="form-control">
-                                    </div>
-                                </div>
+                                </div>      
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Active</label>
@@ -85,6 +79,12 @@
                                             <option>Room</option>
                                             <option>Building</option>
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Description</label>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
