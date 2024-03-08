@@ -6,7 +6,9 @@ use App\Http\Controllers\Kunjungan\AntreanController;
 use App\Http\Controllers\MasterData\DokterController;
 use App\Http\Controllers\MasterData\PasienController;
 use App\Http\Controllers\Kunjungan\PendaftaranController;
+use App\Http\Controllers\Mapping\MappingEncounterController;
 use App\Http\Controllers\MasterData\OrganizationController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -67,6 +69,13 @@ Route::middleware('auth')->group(function () {
         Route::get('/antrean/{kodeDokter}', [AntreanController::class, 'getByKodeDokter']);
         Route::get('/antrean/create', [AntreanController::class, 'create'])->name('antrean.create');
         Route::post('/antrean', [AntreanController::class, 'store'])->name('antrean.store');
+    });
+
+    // mapping data
+    Route::prefix('mp')->name('mapping.')->group(function () {
+        // Encounter
+        Route::get('encounter', [MappingEncounterController::class, 'index'])->name('encounter.index');
+        Route::get('encounter/create', [MappingEncounterController::class, 'create'])->name('encounter.create');
     });
 
     // credits
