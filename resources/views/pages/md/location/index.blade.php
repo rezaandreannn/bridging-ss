@@ -17,15 +17,15 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('user.index') }}">Master Data</a></div>
-                <div class="breadcrumb-item">User</div>
+                <div class="breadcrumb-item active"><a href="{{ route('location.index') }}">Master Data</a></div>
+                <div class="breadcrumb-item">Location</div>
             </div>
         </div>
 
         <div class="section-body">
             <div class="card">
                 <div class="card-header">
-                    <a href="{{ route('user.create')}}" class="btn btn-primary rounded-0">New Data</a>
+                    <a href="{{ route('location.create')}}" class="btn btn-primary rounded-0">New Data</a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -35,25 +35,27 @@
                                     <th class="text-center">
                                         No
                                     </th>
+                                    <th>ID</th>
                                     <th>Name</th>
-                                    <th>Email</th>
+                                    <th>Organization ID</th>
+                                    <th>Part Of</th>
+                                    <th>Updated At</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($users as $user)
                                 <tr>
-                                    <td class="text-center" width="5%">
-                                        {{ $loop->iteration }}
-                                    </td>
-                                    <td>{{$user->name}}</td>
-                                    <td>{{$user->email}}</td>
+                                    <td>1</td>
+                                    <td>213131</td>
+                                    <td>Metro</td>
+                                    <td>861b3be1-9a10-4cc1-b34d-8d5d23779d54</td>
+                                    <td>1</td>
+                                    <td>2024-03-07 12:00:51</td>
                                     <td width="15%">
-                                        <a href="{{ route('user.edit', $user->id )}}" class="btn btn-warning"><i class="far fa-edit"></i></a>
-                                        <a href="#" id="delete" data-id="{{ $user->id }}" data-nama="{{ $user->name }}" data-bs-toggle="tooltip" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                        <a href="" class="btn btn-warning"><i class="far fa-edit"></i></a>
+                                        <a href="" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                                     </td>
                                 </tr>
-                                @endforeach
                             </tbody>
                         </table>
                     </div>
