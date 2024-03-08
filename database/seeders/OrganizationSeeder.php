@@ -3,11 +3,18 @@
 namespace Database\Seeders;
 
 use App\Models\Organization;
+use App\Services\SatuSehat\OrganizationService;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class OrganizationSeeder extends Seeder
 {
+    protected $organization;
+
+    public function __construct()
+    {
+        $this->organization = new OrganizationService();
+    }
     /**
      * Run the database seeds.
      *
@@ -15,9 +22,14 @@ class OrganizationSeeder extends Seeder
      */
     public function run()
     {
+
+        $organizationId = env('SATU_SEHAT_ORGANIZATION_ID');
+
+        $result = $this->organization->getRequest('Organization/' . $organizationId);
+
         Organization::create([
-            'organization_id' => '861b3be1-9a10-4cc1-b34d-8d5d23779d54',
-            'name' => 'STAGING itrsumm08@gmail.com',
+            'organization_id' => $result['id'],
+            'name' => $result['name'],
             'created_by' => 'seeder'
         ]);
     }
