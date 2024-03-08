@@ -114,13 +114,13 @@ class LocationService
         // Tambahkan elemen "partOf" ke dalam array tambahan
         if ($body['part_of']) {
             $additionalData["partOf"] = [
-                "reference" => "Organization/" . $body['part_of']
+                "reference" => "Location/" . $body['part_of']
             ];
         }
         // Gabungkan array tambahan ke dalam array utama
         $data = array_merge($data, $additionalData);
         // Tambahkan elemen "active" ke dalam array utama
-        $data["active"] = isset($body['id']) ? false : true;
+        $data["active"] = $body['active'];
 
         return $data;
     }
