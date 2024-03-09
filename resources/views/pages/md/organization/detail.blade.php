@@ -6,6 +6,8 @@
 <!-- CSS Libraries -->
 <link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
 <link rel="stylesheet" href="{{ asset('library/selectric/public/selectric.css') }}">
+<link rel="stylesheet" href="{{ asset('library/datatables/datatables.min.css') }}">
+<link rel="stylesheet" href="{{ asset('library/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
 @endpush
 
 @section('main')
@@ -113,62 +115,32 @@
                         </div>
                         <div class="card-body p-0">
                             <div class="table-responsive">
-                                <table class="table table-striped table-md">
-                                    <tr>
-                                        <th>Organization ID</th>
-                                        <th>Name</th>
-                                        <th>Active</th>
-                                    </tr>
-                                    @forelse($organizationbyParts as $organization)
-                                    <tr>
-                                        <td>{{ $organization['resource']['id']}}</td>
-                                        <td>{{ $organization['resource']['name']}}</td>
-                                        <td>
-                                            @if($organization['resource']['active'] == true)
-                                            <div class="badge badge-success">active</div>
-                                            @else
-                                            <div class="badge badge-danger">inactive</div>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                    @empty
-                                    <tr>
-                                        <td colspan="3" class="text-center">
-                                            Organization data is not available
-                                        </td>
-                                    </tr>
-                                    @endforelse
+                                <table class="table table-striped table-md" id="table-1">
+                                    <thead>
+                                        <tr>
+                                            <th>Organization ID</th>
+                                            <th>Name</th>
+                                            <th>Active</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($organizationbyParts as $organization)
+                                        <tr>
+                                            <td>{{ $organization['resource']['id']}}</td>
+                                            <td>{{ $organization['resource']['name']}}</td>
+                                            <td>
+                                                @if($organization['resource']['active'] == true)
+                                                <div class="badge badge-success">active</div>
+                                                @else
+                                                <div class="badge badge-danger">inactive</div>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
-                        @if(!empty($organizationbyParts) && count($organizationbyParts) > 1)
-                        <div class="card-footer text-right">
-                            <nav class="d-inline-block">
-                                <ul class="pagination mb-0">
-                                    <!-- Tombol Previous -->
-                                    <li class="page-item {{ $organizationbyParts->previousPageUrl() ? '' : 'disabled' }}">
-                                        <a class="page-link" href="{{ $organizationbyParts->previousPageUrl() ?? '#' }}" tabindex="-1">
-                                            <i class="fas fa-chevron-left"></i>
-                                        </a>
-                                    </li>
-
-                                    <!-- Nomor Halaman -->
-                                    @for ($i = 1; $i <= $organizationbyParts->lastPage(); $i++)
-                                        <li class="page-item {{ $i == $organizationbyParts->currentPage() ? 'active' : '' }}">
-                                            <a class="page-link" href="{{ $organizationbyParts->url($i) }}">{{ $i }}</a>
-                                        </li>
-                                        @endfor
-
-                                        <!-- Tombol Next -->
-                                        <li class="page-item {{ $organizationbyParts->nextPageUrl() ? '' : 'disabled' }}">
-                                            <a class="page-link" href="{{ $organizationbyParts->nextPageUrl() ?? '#' }}">
-                                                <i class="fas fa-chevron-right"></i>
-                                            </a>
-                                        </li>
-                                </ul>
-                            </nav>
-                        </div>
-                        @endif
                     </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-6">
@@ -181,7 +153,7 @@
                         </div>
                         <div class="card-body p-0">
                             <div class="table-responsive">
-                                <table class="table table-striped table-mp">
+                                <table class="table table-striped table-mp" id="table-1">
                                     <tr>
                                         <th>Location ID</th>
                                         <th>Name</th>
@@ -281,9 +253,15 @@
 <!-- JS Libraies -->
 <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('library/selectric/public/jquery.selectric.min.js') }}"></script>
+<script src="{{ asset('library/datatables/datatables.min.js') }}"></script>
+<script src="{{ asset('library/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('library/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
+<script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/forms-advanced-forms.js') }}"></script>
+<!-- Page Specific JS File -->
+<script src="{{ asset('js/page/modules-datatables.js') }}"></script>
 <!-- Pagination Javascript -->
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -346,6 +324,5 @@
             });
         }
     });
-
 </script>
 @endpush

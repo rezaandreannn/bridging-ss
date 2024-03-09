@@ -28,24 +28,30 @@
                     <div class="card-body">
                         <ul class="nav nav-pills" id="myTab3" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" id="home-tab3" data-toggle="tab" href="#home3" role="tab" aria-controls="home" aria-selected="true">Panduan</a>
+                                <a class="nav-link active" id="panduan-tab3" data-toggle="tab" href="#panduan" role="tab" aria-controls="home" aria-selected="true">Panduan</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="profile-tab3" data-toggle="tab" href="#profile3" role="tab" aria-controls="profile" aria-selected="false">Location</a>
+                                <a class="nav-link" id="location-tab3" data-toggle="tab" href="#location" role="tab" aria-controls="profile" aria-selected="false">Location</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="contact-tab3" data-toggle="tab" href="#contact3" role="tab" aria-controls="contact" aria-selected="false">Organization</a>
+                                <a class="nav-link" id="organization-tab3" data-toggle="tab" href="#organization" role="tab" aria-controls="contact" aria-selected="false">Organization</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="encounter-tab3" data-toggle="tab" href="#encounter" role="tab" aria-controls="contact" aria-selected="false">Encounter</a>
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent2">
-                            <div class="tab-pane fade show active" id="home3" role="tabpanel" aria-labelledby="home-tab3">
+                            <div class="tab-pane fade show active" id="panduan" role="tabpanel" aria-labelledby="panduan-tab3">
                                 <iframe src="{{ asset('docs/Document-SatuSehat.pdf') }}" width="100%" height="600px"></iframe>
                             </div>
-                            <div class="tab-pane fade" id="profile3" role="tabpanel" aria-labelledby="profile-tab3">
+                            <div class="tab-pane fade" id="location" role="tabpanel" aria-labelledby="location-tab3">
                                 <iframe src="{{ asset('docs/Location.pdf') }}" width="100%" height="600px"></iframe>
                             </div>
-                            <div class="tab-pane fade" id="contact3" role="tabpanel" aria-labelledby="contact-tab3">
+                            <div class="tab-pane fade" id="organization" role="tabpanel" aria-labelledby="organization-tab3">
                                 <iframe src="{{ asset('docs/Organization.pdf') }}" width="100%" height="600px"></iframe>
+                            </div>
+                            <div class="tab-pane fade" id="encounter" role="tabpanel" aria-labelledby="encounter-tab3">
+                                <iframe src="{{ asset('docs/Encounter.pdf') }}" width="100%" height="600px"></iframe>
                             </div>
                         </div>
                     </div>
