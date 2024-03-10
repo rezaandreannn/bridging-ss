@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\MasterData;
 
+use App\DTO\LocationDTO;
 use App\Models\Organization;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -43,8 +44,16 @@ class LocationController extends Controller
         $title = 'Create' . ' ' . $this->prefix;
 
         $organizations = Organization::pluck('name', 'organization_id');
+        $statuses = Location::STATUS;
+        $physicalTypes = LocationDTO::getPhysicalTypes();
+        $locationByParts = Location::pluck('name', 'location_id');
 
-        return view($this->view . 'create', compact('title', 'organizations'));
+        return view($this->view . 'create', compact('title', 'organizations', 'statuses', 'physicalTypes', 'locationByParts'));
+    }
+
+    public function store(Request $request)
+    {
+        dd($request);
     }
 
     public function show($locationId)

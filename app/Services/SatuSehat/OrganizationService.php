@@ -17,16 +17,16 @@ class OrganizationService
         $this->config = new ConfigSatuSehat();
     }
 
-    protected function bodyRaw(array $body)
+    protected function bodyPost(array $body)
     {
         $data = [
             "resourceType" => "Organization",
-            "active" => true,
+            "active" => $body['active'],
             "identifier" => [
                 [
                     "use" => "official",
                     "system" => "http://sys-ids.kemkes.go.id/organization/" . $this->config->setOrganizationId(),
-                    "value" => $body['name']
+                    "value" => $body['identifier_value']
                 ]
             ],
             "type" => [
@@ -34,65 +34,13 @@ class OrganizationService
                     "coding" => [
                         [
                             "system" => "http://terminology.hl7.org/CodeSystem/organization-type",
-                            "code" => "dept",
-                            "display" => "Hospital Department"
+                            "code" => $body['coding_code'],
+                            "display" => $body['coding_display']
                         ]
                     ]
                 ]
             ],
-            "name" => $body['name'],
-            "telecom" => [
-                [
-                    "system" => "phone",
-                    "value" => "072549490",
-                    "use" => "work"
-                ],
-                [
-                    "system" => "email",
-                    "value" => "itrsumm08@gmail.com",
-                    "use" => "work"
-                ],
-                [
-                    "system" => "url",
-                    "value" => "https://rsumm.co.id",
-                    "use" => "work"
-                ]
-            ],
-            "address" => [
-                [
-                    "use" => "work",
-                    "type" => "both",
-                    "line" => [
-                        "Jl. Soekarno Hatta No. 42 Mulyojati 16B Metro Barat Kota Metro"
-                    ],
-                    "city" => "Lampung",
-                    "postalCode" => "34125",
-                    "country" => "ID",
-                    "extension" => [
-                        [
-                            "url" => "https://fhir.kemkes.go.id/r4/StructureDefinition/administrativeCode",
-                            "extension" => [
-                                [
-                                    "url" => "province",
-                                    "valueCode" => "18"
-                                ],
-                                [
-                                    "url" => "city",
-                                    "valueCode" => "1872"
-                                ],
-                                [
-                                    "url" => "district",
-                                    "valueCode" => "187203"
-                                ],
-                                [
-                                    "url" => "village",
-                                    "valueCode" => "1872031001"
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+            "name" => $body['name']
         ];
 
         $additionalData = [];
@@ -101,6 +49,7 @@ class OrganizationService
         if (isset($body['id'])) {
             $additionalData["id"] = $body['id'];
         }
+
         // Tambahkan elemen "partOf" ke dalam array tambahan
         if ($body['part_of']) {
             $additionalData["partOf"] = [
@@ -109,8 +58,44 @@ class OrganizationService
         }
         // Gabungkan array tambahan ke dalam array utama
         $data = array_merge($data, $additionalData);
-        // Tambahkan elemen "active" ke dalam array utama
-        $data["active"] = isset($body['id']) ? false : true;
+
+        return $data;
+    }
+
+    protected function bodyPatch(array $body)
+    {
+        $data = [
+            [
+                "op" => "replace",
+                "path" => "/active",
+                "value" => $body['active']
+            ],
+            [
+                "op" => "replace",
+                "path" => "/identifier/0/value",
+                "value" => $body['identifier_value']
+            ],
+            [
+                "op" => "replace",
+                "path" => "/name",
+                "value" => $body['name']
+            ],
+            [
+                "op" => "replace",
+                "path" => "/partOf/reference",
+                "value" => "Organization/" . $body['part_of']
+            ],
+            [
+                "op" => "replace",
+                "path" => "/type/0/coding/0/code",
+                "value" => $body['coding_code']
+            ],
+            [
+                "op" => "replace",
+                "path" => "/type/0/coding/0/display",
+                "value" => $body['coding_display']
+            ],
+        ];
 
         return $data;
     }
@@ -161,7 +146,7 @@ class OrganizationService
 
         $url = $this->config->setUrl() . $endpoint;
 
-        $bodyRaw = $this->bodyRaw($body);
+        $bodyRaw = $this->bodyPost($body);
 
         $response = $this->httpClient->post($url, [
             'headers' => [
@@ -180,7 +165,7 @@ class OrganizationService
 
         $url = $this->config->setUrl() . $endpoint;
 
-        $bodyRaw = $this->bodyRaw($body);
+        $bodyRaw = $this->bodyPost($body);
 
         $response = $this->httpClient->put($url, [
             'headers' => [
@@ -199,7 +184,7 @@ class OrganizationService
 
         $url = $this->config->setUrl() . $endpoint;
 
-        // $bodyRaw = $this->bodyRaw($body);
+        $bodyRaw = $this->bodyPatch($body);
 
 
         $response = $this->httpClient->patch($url, [
@@ -207,18 +192,7 @@ class OrganizationService
                 'Authorization' => 'Bearer ' . $token,
                 'Content-Type' => 'application/json-patch+json'
             ],
-            'json' => [
-                [
-                    "op" => "replace",
-                    "path" => "/name",
-                    "value" => $body['name']
-                ],
-                [
-                    "op" => "replace",
-                    "path" => "/partOf/reference",
-                    "value" => "Organization/" . $body['part_of']
-                ]
-            ],
+            'json' => $bodyRaw
         ]);
 
         $data = $response->getBody()->getContents();

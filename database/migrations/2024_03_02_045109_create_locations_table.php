@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('location_id');
             $table->string('name');
+            $table->string('status');
             $table->string('organization_id');
             $table->text('description')->nullable();
             $table->string('part_of')->nullable();

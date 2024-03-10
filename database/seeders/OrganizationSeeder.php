@@ -29,6 +29,7 @@ class OrganizationSeeder extends Seeder
 
         Organization::create([
             'organization_id' => $result['id'],
+            'active' => true,
             'name' => $result['name'],
             'created_by' => 'seeder'
         ]);

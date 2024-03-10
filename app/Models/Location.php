@@ -10,4 +10,10 @@ class Location extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public const STATUS = [
+        'active',
+        'suspended',
+        'inactive'
+    ];
 }

@@ -21,7 +21,6 @@
         </div>
 
         <div class="section-body">
-
             <form action="{{ route('organization.store')}}" method="post">
                 @csrf
                 <div class="row">
@@ -32,16 +31,33 @@
                             </div>
                             <div class="card-body">
                                 <div class="form-group row mb-4">
-                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Name</label>
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Identifier Value<code>*</code></label>
+                                    <div class="col-sm-12 col-md-7">
+                                        <input type="text" class="form-control" name="identifier_value">
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-4">
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Name<code>*</code></label>
                                     <div class="col-sm-12 col-md-7">
                                         <input type="text" class="form-control" name="name">
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-4">
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Type<code>*</code></label>
+                                    <div class="col-sm-12 col-md-7">
+                                        <select class="form-control selectric" name="type_code">
+                                            <option value="" disabled selected>-- Select item --</option>
+                                            @foreach($organizationType as $type)
+                                            <option value="{{ $type['coding_code']}}">{{ $type['coding_display']}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-4">
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Part Of</label>
                                     <div class="col-sm-12 col-md-7">
                                         <select class="form-control selectric" name="part_of">
-                                            <option>-- Select item --</option>
+                                            <option disabled selected>-- Select item --</option>
                                             @foreach($organizations as $organization)
                                             <option value="{{ $organization->organization_id }}">{{ $organization->name}}</option>
                                             @endforeach
@@ -51,7 +67,16 @@
                                 <div class="form-group row mb-4">
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
                                     <div class="col-sm-12 col-md-7">
-                                        <button type="submit" class="btn btn-primary">submit</button>
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" class="form-check-input" id="active" name="active">
+                                            <label class="form-check-label" for="active">Active</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-4">
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
+                                    <div class="col-sm-12 col-md-7">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
                                     </div>
                                 </div>
                             </div>

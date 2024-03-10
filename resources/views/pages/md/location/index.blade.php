@@ -25,7 +25,7 @@
         <div class="section-body">
             <div class="card">
                 <div class="card-header">
-                    <a href="{{ route('location.create')}}" class="btn btn-primary rounded-0">New Data</a>
+                    <a href="{{ route('location.create')}}" class="btn btn-primary rounded-0">New Location</a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
