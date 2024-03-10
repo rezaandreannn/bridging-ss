@@ -33,4 +33,20 @@ class LocationDTO
             ],
         ];
     }
+
+    public static function getModes()
+    {
+        return [
+            'instance' => [
+                'code_system' => 'http://hl7.org/fhir/location-mode',
+                'mode' => 'instance',
+                'keterangan' => 'Merepresentasikan lokasi spesifik'
+            ],
+            'kind' => [
+                'code_system' => 'http://hl7.org/fhir/location-mode',
+                'mode' => 'kind',
+                'keterangan' => 'Merepresentasikan kelompok/kelas lokasi'
+            ]
+        ];
+    }
 }

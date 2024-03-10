@@ -65,6 +65,17 @@
                                     </div>
                                 </div>
                                 <div class="form-group row mb-4">
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Location Mode<code>*</code></label>
+                                    <div class="col-sm-12 col-md-7">
+                                        <select class="form-control selectric" name="location_mode">
+                                            <option value="" disabled selected>-- Select item --</option>
+                                            @foreach($modes as $mode)
+                                            <option value="{{ $mode['mode']}}">{{ $mode['mode']}} - ({{ $mode['keterangan'] }})</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-4">
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Part Of</label>
                                     <div class="col-sm-12 col-md-7">
                                         <select class="form-control selectric" name="part_of">
