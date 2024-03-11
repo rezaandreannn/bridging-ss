@@ -154,57 +154,27 @@
                         <div class="card-body p-0">
                             <div class="table-responsive">
                                 <table class="table table-striped table-mp" id="table-1">
-                                    <tr>
-                                        <th>Location ID</th>
-                                        <th>Name</th>
-                                        <th>Status</th>
-                                    </tr>
-                                    @forelse($locationByOrganizationId as $location)
-                                    <tr>
-                                        <td>{{$location['resource']['id']}}</td>
-                                        <td>{{$location['resource']['name']}}</td>
-                                        <td>
-                                            {{ $location['resource']['status']}}
-                                        </td>
-                                    </tr>
-                                    @empty
-                                    <tr>
-                                        <td colspan="3" class="text-center">
-                                            Location data is not available
-                                        </td>
-                                    </tr>
-                                    @endforelse
+                                    <thead>
+                                        <tr>
+                                            <th>Location ID</th>
+                                            <th>Name</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($locationByOrganizationId as $location)
+                                        <tr>
+                                            <td>{{$location['resource']['id']}}</td>
+                                            <td>{{$location['resource']['name']}}</td>
+                                            <td>
+                                                {{ $location['resource']['status']}}
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
-                        @if(!empty($locationByOrganizationId) && count($locationByOrganizationId) > 1)
-                        <div class="card-footer text-right">
-                            <nav class="d-inline-block">
-                                <ul class="pagination mb-0">
-                                    <!-- Tombol Previous -->
-                                    <li class="page-item {{ $locationByOrganizationId->previousPageUrl() ? '' : 'disabled' }}">
-                                        <a class="page-link" href="{{ $locationByOrganizationId->previousPageUrl() ?? '#' }}" tabindex="-1">
-                                            <i class="fas fa-chevron-left"></i>
-                                        </a>
-                                    </li>
-
-                                    <!-- Nomor Halaman -->
-                                    @for ($i = 1; $i <= $locationByOrganizationId->lastPage(); $i++)
-                                        <li class="page-item {{ $i == $locationByOrganizationId->currentPage() ? 'active' : '' }}">
-                                            <a class="page-link" href="{{ $locationByOrganizationId->url($i) }}">{{ $i }}</a>
-                                        </li>
-                                        @endfor
-
-                                        <!-- Tombol Next -->
-                                        <li class="page-item {{ $locationByOrganizationId->nextPageUrl() ? '' : 'disabled' }}">
-                                            <a class="page-link" href="{{ $locationByOrganizationId->nextPageUrl() ?? '#' }}">
-                                                <i class="fas fa-chevron-right"></i>
-                                            </a>
-                                        </li>
-                                </ul>
-                            </nav>
-                        </div>
-                        @endif
                     </div>
                 </div>
             </div>
@@ -253,76 +223,17 @@
 <!-- JS Libraies -->
 <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('library/selectric/public/jquery.selectric.min.js') }}"></script>
+
+<!-- DataTable -->
 <script src="{{ asset('library/datatables/datatables.min.js') }}"></script>
 <script src="{{ asset('library/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('library/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
 
 <!-- Page Specific JS File -->
-<script src="{{ asset('js/page/forms-advanced-forms.js') }}"></script>
-<!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+
+<!-- Page Specific JS File -->
+<script src="{{ asset('js/page/forms-advanced-forms.js') }}"></script>
 <!-- Pagination Javascript -->
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const itemsPerPage = 6; // Jumlah item per halaman
-        const items = document.querySelectorAll('.table-striped.table-md tr'); // Mengambil semua item
-
-        // Fungsi untuk menampilkan item untuk halaman saat ini
-        function displayItems(page) {
-            items.forEach((item, index) => {
-                if (index >= (page - 1) * itemsPerPage && index < page * itemsPerPage) {
-                    item.style.display = 'table-row';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        }
-
-        // Inisialisasi dengan menampilkan item untuk halaman pertama
-        displayItems(1);
-
-        // Event listener untuk navigasi ke halaman berikutnya
-        document.querySelector('.pagination .fas.fa-chevron-right').addEventListener('click', function() {
-            const currentPage = parseInt(document.querySelector('.pagination .page-item.active .page-link').innerText);
-            const nextPage = currentPage + 1;
-            const lastPage = parseInt(document.querySelector('.pagination .page-item:last-child .page-link').innerText);
-
-            if (nextPage <= lastPage) {
-                displayItems(nextPage);
-                updatePagination(nextPage);
-            }
-        });
-
-        // Event listener untuk navigasi ke halaman sebelumnya
-        document.querySelector('.pagination .fas.fa-chevron-left').addEventListener('click', function() {
-            const currentPage = parseInt(document.querySelector('.pagination .page-item.active .page-link').innerText);
-            const prevPage = currentPage - 1;
-
-            if (prevPage >= 1) {
-                displayItems(prevPage);
-                updatePagination(prevPage);
-            }
-        });
-
-        // Event listener untuk navigasi ke halaman tertentu
-        document.querySelectorAll('.pagination .page-item:not(.disabled)').forEach(function(pageItem) {
-            pageItem.addEventListener('click', function() {
-                const pageNumber = parseInt(pageItem.innerText);
-                displayItems(pageNumber);
-                updatePagination(pageNumber);
-            });
-        });
-
-        // Fungsi untuk memperbarui halaman aktif di paginasi
-        function updatePagination(currentPage) {
-            document.querySelectorAll('.pagination .page-item').forEach(function(pageItem) {
-                pageItem.classList.remove('active');
-                if (parseInt(pageItem.innerText) === currentPage) {
-                    pageItem.classList.add('active');
-                }
-            });
-        }
-    });
-</script>
 @endpush
