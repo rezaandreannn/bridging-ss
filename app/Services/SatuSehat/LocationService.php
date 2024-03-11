@@ -2,6 +2,7 @@
 
 namespace App\Services\SatuSehat;
 
+use App\Models\Location;
 use GuzzleHttp\Client;
 
 class LocationService
@@ -19,12 +20,15 @@ class LocationService
 
     protected function bodyRaw(array $body)
     {
+        // get id location index
+        $location = Location::where('id', 1)->first();
+        $locationId = $location->location_id;
+
         $data = [
             "resourceType" => "Location",
             "identifier" => [
                 [
-                    "use" => "official",
-                    "system" => "http://sys-ids.kemkes.go.id/location/" . $this->config->setOrganizationId(),
+                    "system" => "http://sys-ids.kemkes.go.id/location/" . $locationId,
                     "value" => $body['identifier_value']
                 ]
             ],
@@ -33,13 +37,11 @@ class LocationService
             "description" => $body['description'],
             "mode" => $body['mode'],
             "physicalType" => [
-                [
-                    "coding" => [
-                        [
-                            "system" => "http://terminology.hl7.org/CodeSystem/location-physical-type",
-                            "code" => $body['coding_code'],
-                            "display" => $body['coding_display']
-                        ]
+                "coding" => [
+                    [
+                        "system" => "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                        "code" => $body['coding_code'],
+                        "display" => $body['coding_display']
                     ]
                 ]
             ],

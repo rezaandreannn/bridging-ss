@@ -71,7 +71,7 @@ class LocationController extends Controller
             'name' => $request->name,
             'status' => $request->status,
             'mode' => $dataMode['mode'],
-            'coding_code' => $dataType['coding_display'],
+            'coding_code' => $dataType['coding_code'],
             'coding_display' => $dataType['coding_display'],
             'organization_id' => $request->organization_id,
             'description' => $request->description,
@@ -80,7 +80,30 @@ class LocationController extends Controller
         if ($request->filled('part_of')) {
             $body['part_of'] = $request->part_of;
         }
-        dd($body);
+
+        // dd($body);
+
+        try {
+            // send API
+            $data = $this->locationService->postRequest($this->endpoint, $body);
+
+            // send DB
+            Location::create([
+                'location_id' => $data['id'],
+                'name' => $body['name'],
+                'status' => $body['status'],
+                'organization_id' => $body['organization_id'],
+                'description' => $body['description'],
+                'part_of' => $request->part_of ?? '',
+                'created_by' => auth()->user()->id
+            ]);
+
+            $message = 'Data has been updated successfully.';
+            return redirect()->route($this->routeIndex)->with('toast_success', $message);
+        } catch (\Throwable $th) {
+            $errorMessage = $th->getMessage();
+            return redirect()->back()->with('error', $errorMessage);
+        }
     }
 
     public function show($locationId)
@@ -91,5 +114,39 @@ class LocationController extends Controller
         return $dataById;
 
         return view($this->view . 'detail', compact('title'));
+    }
+
+    public function edit($location_id)
+    {
+        $title = 'Edit' . ' ' . $this->prefix;
+
+        $location = Location::where('location_id', $location_id)->first();
+        $dataById =  $this->locationService->getRequest($this->endpoint . '/' . $location_id);
+
+        $partOf = $dataById['partOf']['reference'] ?? '';
+        $partOf = explode('/', $partOf);
+
+        $organizationId = $dataById['managingOrganization']['reference'];
+        $organizationId = explode('/', $organizationId);
+
+        $data = [
+            'identifier_value' => $dataById['identifier'][0]['value'],
+            'name' => $dataById['name'],
+            'status' => $dataById['status'],
+            'physical_type' => $dataById['physicalType']['coding'][0]['code'],
+            'mode' => $dataById['mode'],
+            'part_of' => $partOf[1] ?? '',
+            'organization_id' => $organizationId[1],
+            'description' => $dataById['description']
+        ];
+        // dd($data);
+
+        $organizations = Organization::pluck('name', 'organization_id');
+        $statuses = Location::STATUS;
+        $physicalTypes = LocationDTO::getPhysicalTypes();
+        $modes = LocationDTO::getModes();
+        $locationByParts = Location::pluck('name', 'location_id');
+
+        return view($this->view . 'edit', compact('title', 'organizations', 'statuses', 'physicalTypes', 'locationByParts', 'modes', 'data'));
     }
 }
