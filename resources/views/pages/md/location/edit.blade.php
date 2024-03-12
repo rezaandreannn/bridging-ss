@@ -21,25 +21,26 @@
         </div>
 
         <div class="section-body">
-            <form action="{{ route('location.store') }}" method="post">
+            <form action="{{ route('location.update', $data['location_id']) }}" method="post">
                 @csrf
+                @method('patch')
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Form Create</h4>
+                                <h4>Form Edit</h4>
                             </div>
                             <div class="card-body">
                                 <div class="form-group row mb-4">
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Identifier Value<code>*</code></label>
                                     <div class="col-sm-12 col-md-7">
-                                        <input type="text" class="form-control" name="identifier_value">
+                                        <input type="text" class="form-control" name="identifier_value" value="{{ $data['identifier_value']}}">
                                     </div>
                                 </div>
                                 <div class="form-group row mb-4">
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Name<code>*</code></label>
                                     <div class="col-sm-12 col-md-7">
-                                        <input type="text" class="form-control" name="name">
+                                        <input type="text" class="form-control" name="name" value="{{ $data['name']}}">
                                     </div>
                                 </div>
                                 <div class="form-group row mb-4">
@@ -48,7 +49,7 @@
                                         <select class="form-control selectric" name="status">
                                             <option value="" disabled selected>-- Select item --</option>
                                             @foreach($statuses as $status)
-                                            <option value="{{ $status }}">{{ $status}}</option>
+                                            <option value="{{ $status }}" {{ $data['status'] == $status ? 'selected' : ''}}>{{ $status}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -59,7 +60,7 @@
                                         <select class="form-control selectric" name="physical_type">
                                             <option value="" disabled selected>-- Select item --</option>
                                             @foreach($physicalTypes as $type)
-                                            <option value="{{ $type['coding_code']}}">{{ $type['coding_display']}} - ({{ $type['keterangan'] }})</option>
+                                            <option value="{{ $type['coding_code']}}" {{ $data['physical_type'] == $type['coding_code'] ? 'selected' : ''}}>{{ $type['coding_display']}} - ({{ $type['keterangan'] }})</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -70,7 +71,7 @@
                                         <select class="form-control selectric" name="location_mode">
                                             <option value="" disabled selected>-- Select item --</option>
                                             @foreach($modes as $mode)
-                                            <option value="{{ $mode['mode']}}">{{ $mode['mode']}} - ({{ $mode['keterangan'] }})</option>
+                                            <option value="{{ $mode['mode']}}" {{ $data['mode'] == $mode['mode'] ? 'selected' : ''}}>{{ $mode['mode']}} - ({{ $mode['keterangan'] }})</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -81,7 +82,7 @@
                                         <select class="form-control selectric" name="part_of">
                                             <option value="" disabled selected>-- Select item --</option>
                                             @foreach($locationByParts as $id => $name)
-                                            <option value="{{ $id }}">{{ $name }}</option>
+                                            <option value="{{ $id }}" {{ $id == $data['part_of'] ? 'selected' : ''}}>{{ $name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -92,7 +93,7 @@
                                         <select class="form-control selectric" name="organization_id">
                                             <option disabled selected>-- Select item --</option>
                                             @foreach($organizations as $id => $name)
-                                            <option value="{{ $id }}">{{ $name}}</option>
+                                            <option value="{{ $id }}" {{ $data['organization_id'] == $id ? 'selected' : ''}}>{{ $name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -100,7 +101,7 @@
                                 <div class="form-group row mb-4">
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Description<code>*</code></label>
                                     <div class="col-sm-12 col-md-7">
-                                        <textarea class="form-control" name="description"></textarea>
+                                        <textarea class="form-control" name="description"> {{$data['description']}}</textarea>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-4">

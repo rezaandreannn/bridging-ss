@@ -175,7 +175,7 @@ class OrganizationController extends Controller
                 'active' => $data['active'],
                 'name' => $data['name'],
                 'part_of' => $body['part_of'] ?? '',
-                'created_by' => auth()->user()->id ?? 'system'
+                'updated_by' => auth()->user()->id ?? 'system'
             ]);
 
             $message = 'Data has been updated successfully.';

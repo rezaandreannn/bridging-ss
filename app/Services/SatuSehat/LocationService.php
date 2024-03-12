@@ -2,6 +2,7 @@
 
 namespace App\Services\SatuSehat;
 
+use App\Models\Location;
 use GuzzleHttp\Client;
 
 class LocationService
@@ -17,14 +18,17 @@ class LocationService
         $this->config = new ConfigSatuSehat();
     }
 
-    protected function bodyRaw(array $body)
+    protected function bodyRawPost(array $body)
     {
+        // get id location index
+        $location = Location::where('id', 1)->first();
+        $locationId = $location->location_id;
+
         $data = [
             "resourceType" => "Location",
             "identifier" => [
                 [
-                    "use" => "official",
-                    "system" => "http://sys-ids.kemkes.go.id/location/" . $this->config->setOrganizationId(),
+                    "system" => "http://sys-ids.kemkes.go.id/location/" . $locationId,
                     "value" => $body['identifier_value']
                 ]
             ],
@@ -33,13 +37,11 @@ class LocationService
             "description" => $body['description'],
             "mode" => $body['mode'],
             "physicalType" => [
-                [
-                    "coding" => [
-                        [
-                            "system" => "http://terminology.hl7.org/CodeSystem/location-physical-type",
-                            "code" => $body['coding_code'],
-                            "display" => $body['coding_display']
-                        ]
+                "coding" => [
+                    [
+                        "system" => "http://terminology.hl7.org/CodeSystem/location-physical-type",
+                        "code" => $body['coding_code'],
+                        "display" => $body['coding_display']
                     ]
                 ]
             ],
@@ -62,6 +64,54 @@ class LocationService
         }
         // Gabungkan array tambahan ke dalam array utama
         $data = array_merge($data, $additionalData);
+
+        return $data;
+    }
+
+    protected function bodyRawPatch(array $body)
+    {
+        $data = [
+            [
+                "op" => "replace",
+                "path" => "/status",
+                "value" => $body['status']
+            ],
+            [
+                "op" => "replace",
+                "path" => "/identifier/0/value",
+                "value" => $body['identifier_value']
+            ],
+            [
+                "op" => "replace",
+                "path" => "/name",
+                "value" => $body['name']
+            ],
+            [
+                "op" => "replace",
+                "path" => "/description",
+                "value" => $body['description']
+            ],
+            [
+                "op" => "replace",
+                "path" => "/physicalType/coding/0/code",
+                "value" => $body['coding_code']
+            ],
+            [
+                "op" => "replace",
+                "path" => "/physicalType/coding/0/display",
+                "value" => $body['coding_display']
+            ],
+            [
+                "op" => "replace",
+                "path" => "/managingOrganization/reference",
+                "value" => "Organization/" . $body['organization_id']
+            ],
+            [
+                "op" => "replace",
+                "path" => "/partOf/reference",
+                "value" => "Location/" . $body['part_of']
+            ]
+        ];
 
         return $data;
     }
@@ -121,7 +171,7 @@ class LocationService
 
         $url = $this->config->setUrl() . $endpoint;
 
-        $bodyRaw = $this->bodyRaw($body);
+        $bodyRaw = $this->bodyRawPost($body);
 
         $response = $this->httpClient->post($url, [
             'headers' => [
@@ -140,7 +190,7 @@ class LocationService
 
         $url = $this->config->setUrl() . $endpoint;
 
-        $bodyRaw = $this->bodyRaw($body);
+        $bodyRaw = $this->bodyRawPost($body);
 
         $response = $this->httpClient->put($url, [
             'headers' => [
@@ -159,26 +209,14 @@ class LocationService
 
         $url = $this->config->setUrl() . $endpoint;
 
-        // $bodyRaw = $this->bodyRaw($body);
-
+        $bodyRaw = $this->bodyRawPatch($body);
 
         $response = $this->httpClient->patch($url, [
             'headers' => [
                 'Authorization' => 'Bearer ' . $token,
                 'Content-Type' => 'application/json-patch+json'
             ],
-            'json' => [
-                [
-                    "op" => "replace",
-                    "path" => "/name",
-                    "value" => $body['name']
-                ],
-                [
-                    "op" => "replace",
-                    "path" => "/partOf/reference",
-                    "value" => "Organization/" . $body['part_of']
-                ]
-            ],
+            'json' => $bodyRaw
         ]);
 
         $data = $response->getBody()->getContents();

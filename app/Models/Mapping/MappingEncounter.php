@@ -9,6 +9,8 @@ class MappingEncounter extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     const TYPE = [
         'poliklinik',
         'IGD'

@@ -3,15 +3,27 @@
 namespace App\Http\Controllers\Mapping;
 
 use App\Http\Controllers\Controller;
+use App\Models\Dokter;
+use App\Models\Location;
 use App\Models\Mapping\MappingEncounter;
 use App\Models\Organization;
+use App\Services\SatuSehat\LocationService;
+use App\Services\SatuSehat\PracticionerService;
 use Illuminate\Http\Request;
 
 class MappingEncounterController extends Controller
 {
     protected $viewPath;
+    protected $routeIndex;
+    protected $dokter;
+    protected $practitionerService;
+    protected $locationService;
     public function __construct()
     {
+        $this->practitionerService = new PracticionerService();
+        $this->locationService = new LocationService();
+        $this->dokter = new Dokter();
+        $this->routeIndex = 'mapping.encounter.index';
         $this->viewPath = 'pages.mapping.encounter.';
     }
     /**
@@ -21,7 +33,8 @@ class MappingEncounterController extends Controller
      */
     public function index()
     {
-        return view($this->viewPath . 'index');
+        $mappingEncounters = MappingEncounter::all();
+        return view($this->viewPath . 'index', compact('mappingEncounters'));
     }
 
     /**
@@ -35,14 +48,15 @@ class MappingEncounterController extends Controller
 
         $encounterTypes = MappingEncounter::TYPE;
 
+        $dokters = $this->dokter;
+
         $organizations = Organization::where('name', 'like', '%rawat jalan%')
             ->orWhere('name', 'like', '%igd%')
             ->pluck('name', 'organization_id');
 
+        $locations = Location::where('name', 'like', '%ruang%')->get();
 
-        // dd($organization);
-
-        return view($this->viewPath . 'create', compact('title', 'encounterTypes', 'organizations'));
+        return view($this->viewPath . 'create', compact('title', 'encounterTypes', 'organizations', 'locations', 'dokters'));
     }
 
     /**
@@ -53,7 +67,54 @@ class MappingEncounterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            // fetch NIK By Kode Dokter
+            $kodeDokter = $request->kode_dokter;
+            $nik = $this->dokter->getNik($kodeDokter);
+
+            // cek nik ada atau tidak
+            if (empty($nik)) {
+                return redirect()->back()->with('error', 'NIK data is not available');
+            }
+
+            // fetch Pratitioner & display By NIK
+            $params = [
+                'identifier' => $nik
+            ];
+
+            $practitioner = $this->practitionerService->getRequest('Practitioner', $params);
+            $practitionerIhs = $practitioner['entry'][0]['resource']['id'];
+            $practitionerName = $practitioner['entry'][0]['resource']['name'][0]['text'];
+
+            // fetch Location by LocationID 
+            $location = $this->locationService->getRequest('Location/' . $request->location_id);
+
+            // get LocationId & name
+            $locationId = $location['id'];
+            $locationName = $location['name'];
+            // get organizationID 
+            $managingOrganization = $location['managingOrganization']['reference'];
+            $organizationByLocation = explode('/', $managingOrganization);
+            $organizationId = $organizationByLocation[1];
+
+            // insert DB
+            MappingEncounter::create([
+                'kode_dokter' => $kodeDokter,
+                'practitioner_ihs' => $practitionerIhs,
+                'practitioner_display' => $practitionerName,
+                'location_id' => $locationId,
+                'location_display' => $locationName,
+                'organization_id' => $organizationId,
+                'type' => $request->type,
+                'status' => $request->status ? true : false,
+                'created_by' => auth()->user()->id ?? ''
+            ]);
+            $message = 'Data has been created successfully.';
+            return redirect()->route($this->routeIndex)->with('toast_success', $message);
+        } catch (\Throwable $th) {
+            $errorMessage = $th->getMessage();
+            return redirect()->back()->with('error', $errorMessage);
+        }
     }
 
     /**

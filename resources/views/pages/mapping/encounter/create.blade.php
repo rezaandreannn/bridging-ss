@@ -22,7 +22,7 @@
 
         <div class="section-body">
 
-            <form action="" method="post">
+            <form action="{{ route('mapping.encounter.store')}}" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-12">
@@ -32,57 +32,71 @@
                             </div>
                             <div class="card-body">
                                 <div class="form-group row mb-4">
-                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Practitioner Name<code>*</code></label>
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Dokter Name<code>*</code></label>
                                     <div class="col-sm-12 col-md-7">
-                                        <input type="text" class="form-control" name="name">
+                                        <select class="form-control select2" name="kode_dokter">
+                                            <option>-- Select item --</option>
+                                            @foreach($dokters->getSelect() as $dokter)
+                                            <option value="{{ $dokter['kode_dokter']}}">{{ $dokter['nama_dokter']}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="form-group row mb-4">
+                                {{-- <div class="form-group row mb-4">
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Organization Name<code>*</code></label>
                                     <div class="col-sm-12 col-md-7">
                                         <select class="form-control selectric" name="part_of">
                                             <option>-- Select item --</option>
                                             @foreach($organizations as $id => $name)
                                             <option value="{{ $id}}">{{ $name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                @endforeach
+                                </select>
+                            </div>
+                        </div> --}}
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Location Name<code>*</code></label>
+                            <div class="col-sm-12 col-md-7">
+                                <select class="form-control selectric" name="location_id">
+                                    <option>-- Select item --</option>
+                                    @foreach($locations as $location)
+                                    <option value="{{ $location->location_id }}">{{ $location->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Encounter Type<code>*</code></label>
+                            <div class="col-sm-12 col-md-7">
+                                <select class="form-control selectric" name="type">
+                                    <option>-- Select item --</option>
+                                    @foreach($encounterTypes as $type)
+                                    <option value="{{ $type}}">{{ $type}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
+                            <div class="col-sm-12 col-md-7">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" class="form-check-input" id="status" name="status">
+                                    <label class="form-check-label" for="status">Status</label>
                                 </div>
-                                <div class="form-group row mb-4">
-                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Location Name<code>*</code></label>
-                                    <div class="col-sm-12 col-md-7">
-                                        <select class="form-control selectric" name="part_of">
-                                            <option>-- Select item --</option>
-                                            @foreach($encounterTypes as $type)
-                                            <option value="{{ $type}}">{{ $type}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row mb-4">
-                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Encounter Type<code>*</code></label>
-                                    <div class="col-sm-12 col-md-7">
-                                        <select class="form-control selectric" name="part_of">
-                                            <option>-- Select item --</option>
-                                            @foreach($encounterTypes as $type)
-                                            <option value="{{ $type}}">{{ $type}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row mb-4">
-                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
-                                    <div class="col-sm-12 col-md-7">
-                                        <button type="submit" class="btn btn-primary">submit</button>
-                                    </div>
-                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
+                            <div class="col-sm-12 col-md-7">
+                                <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </form>
         </div>
-    </section>
+</div>
+</form>
+</div>
+</section>
 </div>
 @endsection
 

@@ -55,7 +55,7 @@
                                     <td>{{$location->description}}</td>
                                     <td>{{$location->updated_at}}</td>
                                     <td width="15%">
-                                        <a href="" class="btn btn-warning"><i class="far fa-edit"></i></a>
+                                        <a href="{{ route('location.edit', $location->location_id) }}" class="btn btn-warning"><i class="far fa-edit"></i></a>
                                         <a href="{{ route('location.show', $location->location_id) }}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                                     </td>
                                 </tr>
