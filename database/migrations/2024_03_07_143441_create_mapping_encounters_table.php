@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('mapping_encounters', function (Blueprint $table) {
             $table->id();
+            $table->string('kode_dokter');
             $table->string('practitioner_ihs');
             $table->string('practitioner_display');
             $table->string('location_id');

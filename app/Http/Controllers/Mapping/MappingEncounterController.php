@@ -94,6 +94,7 @@ class MappingEncounterController extends Controller
 
             // insert DB
             MappingEncounter::create([
+                'kode_dokter' => $kodeDokter,
                 'practitioner_ihs' => $practitionerIhs,
                 'practitioner_display' => $practitionerName,
                 'location_id' => $locationId,
