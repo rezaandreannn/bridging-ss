@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Case\Encounter\EncounterCreate;
+use App\Http\Controllers\Case\Encounter\EncounterCreateController;
 use App\Http\Controllers\DocumentationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
@@ -65,6 +67,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/location/{location_id}/edit', [LocationController::class, 'edit'])->name('location.edit');
         Route::post('/location', [LocationController::class, 'store'])->name('location.store');
         Route::patch('/location/{location_id}', [LocationController::class, 'update'])->name('location.update');
+    });
+
+    // CASE 
+    Route::prefix('case')->name('case.')->group(function () {
+        Route::get('encounter/create/{noReg}', EncounterCreateController::class)->name('encounter.create');
     });
 
 
