@@ -7,6 +7,9 @@ use App\Http\Controllers\Kunjungan\AntreanController;
 use App\Http\Controllers\MasterData\DokterController;
 use App\Http\Controllers\MasterData\PasienController;
 use App\Http\Controllers\Kunjungan\PendaftaranController;
+use App\Http\Controllers\Manage\PermissionController;
+use App\Http\Controllers\Manage\RoleController;
+use App\Http\Controllers\Manage\RoleHasPermissionController;
 use App\Http\Controllers\Mapping\MappingEncounterController;
 use App\Http\Controllers\Manage\UserController;
 use App\Http\Controllers\MasterData\LocationController;
@@ -89,14 +92,37 @@ Route::middleware('auth')->group(function () {
     });
 
 
-    // MANAGE
-    Route::prefix('manage')->group(function () {
+    // MANAGE USER
+    Route::prefix('mu')->middleware('auth')->group(function () {
+
+        // USERS
         Route::get('/user', [UserController::class, 'index'])->name('user.index');
         Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
         Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
         Route::post('/user', [UserController::class, 'store'])->name('user.store');
         Route::put('/user{id}', [UserController::class, 'update'])->name('user.update');
         Route::get('/user/delete/{id}', [UserController::class, 'destroy'])->name('user.delete');
+
+        // ROLES
+        Route::get('/role', [RoleController::class, 'index'])->name('role.index');
+        Route::get('/role/create', [RoleController::class, 'create'])->name('role.create');
+        Route::get('/role/{id}/edit', [RoleController::class, 'edit'])->name('role.edit');
+        Route::post('/role', [RoleController::class, 'store'])->name('role.store');
+        Route::put('/role{id}', [RoleController::class, 'update'])->name('role.update');
+        Route::get('/role/delete/{id}', [RoleController::class, 'destroy'])->name('role.delete');
+
+        // PERMISSION
+        Route::get('/permission', [PermissionController::class, 'index'])->name('permission.index');
+        Route::get('/permission/create', [PermissionController::class, 'create'])->name('permission.create');
+        Route::get('/permission/{id}/edit', [PermissionController::class, 'edit'])->name('permission.edit');
+        Route::post('/permission', [PermissionController::class, 'store'])->name('permission.store');
+        Route::put('/permission{id}', [PermissionController::class, 'update'])->name('permission.update');
+        Route::get('/permission/delete/{id}', [PermissionController::class, 'destroy'])->name('permission.delete');
+
+        // ROLE-PERMISSION
+        Route::get('/role-permission', [RoleHasPermissionController::class, 'index'])->name('role-permission.index');
+        Route::get('/role-permission/{id}', [RoleHasPermissionController::class, 'getPermission'])->name('role-permission.edit');
+        Route::post('/role-permission/hasPermission', [RoleHasPermissionController::class, 'hasPermission'])->name('rolePermission.postPermission');
     });
 
 

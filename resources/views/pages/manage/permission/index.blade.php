@@ -17,15 +17,15 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('organization.index') }}">Master Data</a></div>
-                <div class="breadcrumb-item">Organization</div>
+                <div class="breadcrumb-item active"><a href="">Manage User</a></div>
+                <div class="breadcrumb-item">Permission</div>
             </div>
         </div>
 
         <div class="section-body">
             <div class="card">
                 <div class="card-header">
-                    <a href="{{ route('organization.create')}}" class="btn btn-primary rounded-0">New Organization</a>
+                    <a href="{{ route('permission.create')}}" class="btn btn-primary rounded-0">New Data</a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -35,28 +35,20 @@
                                     <th class="text-center">
                                         No
                                     </th>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Part Of</th>
-                                    <th>Updated At</th>
+                                    <th>Permission</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($organizations as $organization)
+                                @foreach($permission as $pr)
                                 <tr>
                                     <td class="text-center" width="5%">
                                         {{ $loop->iteration }}
                                     </td>
-                                    <td>{{$organization->organization_id}}</td>
-                                    <td>{{$organization->name}}</td>
-                                    <td>{{$organization->part_of}}</td>
-                                    <td>{{$organization->updated_at}}</td>
+                                    <td>{{$pr->name}}</td>
                                     <td width="15%">
-                                        @if($organization->id != 1)
-                                        <a href="{{ route('organization.edit', $organization->organization_id )}}" class="btn btn-warning"><i class="far fa-edit"></i></a>
-                                        @endif
-                                        <a href="{{ route('organization.show', $organization->organization_id )}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
+                                        <a href="{{ route('permission.edit', $pr->id )}}" class="btn btn-warning"><i class="far fa-edit"></i></a>
+                                        <button id="delete" data-id="{{ $pr->id }}" data-nama="{{ $pr->name }}" data-bs-toggle="tooltip" class="btn btn-danger"><i class="fas fa-trash"></i></button>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -76,8 +68,34 @@
 <script src="{{ asset('library/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('library/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script>
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+<script>
+    $(document).on('click', '#delete', function() {
+        var permission = $(this).attr('data-id');
+        var nama = $(this).attr('data-nama');
+
+        swal({
+                title: "Are You Sure?",
+                text: "Data Will Be Deleted " + nama + " !!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    window.location = "{{ route('permission.delete', ['id' => ':id']) }}".replace(':id', permission);
+                    swal("Data successfully deleted!", {
+                        icon: "success",
+                    });
+                } else {
+                    swal("Data will not be deleted!");
+                }
+            });
+    });
+</script>
+
 
 @endpush

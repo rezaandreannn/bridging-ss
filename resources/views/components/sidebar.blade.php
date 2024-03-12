@@ -61,16 +61,19 @@
             </li>
             <li class="menu-header">manage</li>
             <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown {{ Request::is('manage*') ? 'active' : '' }}" data-toggle="dropdown"><i class="fas fa-tasks"></i><span>Manage User</span></a>
+                <a href="#" class="nav-link has-dropdown {{ Request::is('mu*') ? 'active' : '' }}" data-toggle="dropdown"><i class="fas fa-tasks"></i><span>Manage User</span></a>
                 <ul class="dropdown-menu">
-                    <li class="">
+                    <li class="{{ Request::is('mu/user') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('user.index') }}">User</a>
                     </li>
-                    <li class="">
-                        <a class="nav-link" href="">Role</a>
+                    <li class="{{ Request::is('mu/role') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('role.index') }}">Role</a>
                     </li>
-                    <li class="">
-                        <a class="nav-link" href="">Permission</a>
+                    <li class="{{ Request::is('mu/permission') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('permission.index') }}">Permission</a>
+                    </li>
+                    <li class="{{ Request::is('mu/role-permission') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('role-permission.index') }}">Role Permission</a>
                     </li>
                 </ul>
             </li>

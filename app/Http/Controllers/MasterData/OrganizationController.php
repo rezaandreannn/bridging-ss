@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\MasterData;
 
+use App\DTO\OrganizationDTO;
 use App\Models\Organization;
 use Illuminate\Http\Request;
 use App\Services\BaseService;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrganizationByParts;
+use App\Models\Location;
 use App\Services\SatuSehat\LocationService;
 use App\Services\SatuSehat\OrganizationService;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -46,16 +48,33 @@ class OrganizationController extends Controller
     public function create()
     {
         $title = 'Create' . ' ' . $this->prefix;
+
+        $organizationType = OrganizationDTO::getTypes();
+
         $organizations = Organization::select('organization_id', 'name')->get();
-        return view($this->view . 'create', compact('title', 'organizations'));
+        return view($this->view . 'create', compact('title', 'organizations', 'organizationType'));
     }
 
     public function store(Request $request)
     {
+        // cari data organization type
+        foreach (OrganizationDTO::getTypes() as $type) {
+            if ($type['coding_code'] == $request->type_code) {
+                $dataType = $type;
+            }
+        }
+
         $body = [
+            'identifier_value' => $request->identifier_value,
             'name' => $request->name,
-            'part_of' => $request->part_of
+            'coding_code' => $dataType['coding_code'],
+            'coding_display' => $dataType['coding_display'],
+            'active' => $request->active ? true : false
         ];
+
+        if ($request->filled('part_of')) {
+            $body['part_of'] = $request->part_of;
+        }
 
         try {
             // send API 
@@ -64,9 +83,10 @@ class OrganizationController extends Controller
             // Send DB
             $organization =  Organization::create([
                 'organization_id' => $data['id'],
+                'active' => $data['active'],
                 'name' => $data['name'],
-                'part_of' => $data['partOf']['reference'] ?? '',
-                'created_by' => 'system'
+                'part_of' => $body['part_of'] ?? '',
+                'created_by' => auth()->user()->id ?? 'system'
             ]);
 
             $message = 'New item has been created successfully.';
@@ -83,51 +103,65 @@ class OrganizationController extends Controller
     {
         $title = 'Detail' . ' ' . $this->prefix;
 
-        $organization = Organization::where('organization_id', $organization_id)->first();
-        $dataById =  $this->organization->getRequest($this->endpoint . '/' . $organization_id);
+        $organization = Organization::select('organizations.*', 'users.name as user_name')
+            ->leftJoin('users', 'organizations.created_by', '=', 'users.id')
+            ->where('organizations.organization_id', $organization_id)
+            ->first();
 
-        $locationByOrganizationId = $this->locationService->getRequest(
-            'Location',
-            ['organization' => $organization_id]
-        );
+        $organizationbyParts = Organization::where('part_of', $organization_id)->get();
 
-        $locationByOrganizationIdEntries = collect($locationByOrganizationId['entry']);
+        $locationByOrganization = Location::where('organization_id', $organization_id)->get();
 
-        $organizationbyParts = $this->organization->getRequest($this->endpoint, [
-            'partOf' => $organization_id
-        ]);
+        $organizationType = OrganizationDTO::getTypes();
 
-        $organizationEntries =  collect($organizationbyParts['entry']);
-
-        // $collection = collect($organizationEntries);
-        $perPage = 5;
-
-        $page = request()->input('page', 1);
-
-        $locationByOrganizationId = $this->baseService->paginate($locationByOrganizationIdEntries, $perPage, $page);
-
-
-        $organizationbyParts = $this->baseService->paginate($organizationEntries, $perPage, $page);
-
-        return view($this->view . 'detail', compact('dataById', 'title', 'organizationbyParts', 'locationByOrganizationId'));
+        return view($this->view . 'detail', compact('organization', 'title', 'organizationbyParts', 'locationByOrganization', 'organizationType'));
     }
 
     public function edit($organization_id)
     {
         $title = 'Edit' . ' ' . $this->prefix;
         $organization = Organization::where('organization_id', $organization_id)->first();
+
+        // get identifier value 
+        $data =  $this->organization->getRequest($this->endpoint . '/' . $organization_id);
+        $identifierValue = $data['identifier'][0]['value'];
+        $typeCode = $data['type'][0]['coding'][0]['code'];
+
+        $organizationType = OrganizationDTO::getTypes();
+
         $organizations = Organization::select('organization_id', 'name')->get();
-        return view($this->view . 'edit', compact('title', 'organization', 'organizations'));
+
+        return view($this->view . 'edit', compact('title', 'organization', 'organizations', 'identifierValue', 'organizationType', 'typeCode'));
     }
 
     public function update($organization_id, Request $request)
     {
         $organization = Organization::where('organization_id', $organization_id)->first();
+        // cari data organization type
+        foreach (OrganizationDTO::getTypes() as $type) {
+            if ($type['coding_code'] == $request->type_code) {
+                $dataType = $type;
+            }
+        }
+
         $body = [
             'id' => $organization->organization_id,
+            'identifier_value' => $request->identifier_value,
             'name' => $request->name,
-            'part_of' => $request->part_of ?? ''
+            'coding_code' => $dataType['coding_code'],
+            'coding_display' => $dataType['coding_display'],
+            'active' => $request->active ? true : false
         ];
+
+        if ($request->filled('part_of')) {
+            $body['part_of'] = $request->part_of;
+        }
+
+        // $body = [
+        //     'id' => $organization->organization_id,
+        //     'name' => $request->name,
+        //     'part_of' => $request->part_of ?? ''
+        // ];
 
         $url = $this->endpoint . '/' . $body['id'];
 
@@ -138,9 +172,10 @@ class OrganizationController extends Controller
             // Send DB
             $organization->update([
                 'organization_id' => $data['id'],
+                'active' => $data['active'],
                 'name' => $data['name'],
-                'part_of' => $data['partOf']['reference'] ?? '',
-                'created_by' => 'system'
+                'part_of' => $body['part_of'] ?? '',
+                'created_by' => auth()->user()->id ?? 'system'
             ]);
 
             $message = 'Data has been updated successfully.';

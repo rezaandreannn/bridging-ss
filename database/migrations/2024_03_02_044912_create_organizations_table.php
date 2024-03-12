@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('organizations', function (Blueprint $table) {
             $table->id();
             $table->string('organization_id');
+            $table->boolean('active')->default(0);
             $table->string('name');
             $table->string('part_of')->nullable();
             $table->string('created_by')->nullable();

@@ -63,7 +63,7 @@ class LocationTableSeeder extends Seeder
                 "line" => [
                     "Jl. Soekarno Hatta No. 42 Mulyojati 16B Metro Barat Kota Metro"
                 ],
-                "city" => "Lampung",
+                "city" => "Kota Metro",
                 "postalCode" => "34125",
                 "country" => "ID",
                 "extension" => [
@@ -86,14 +86,6 @@ class LocationTableSeeder extends Seeder
                                 "url" => "village",
                                 "valueCode" => "1872031001"
                             ]
-                            // [
-                            //     "url" => "rt",
-                            //     "valueCode" => "1"
-                            // ],
-                            // [
-                            //     "url" => "rw",
-                            //     "valueCode" => "2"
-                            // ]
                         ]
                     ]
                 ]
@@ -106,11 +98,6 @@ class LocationTableSeeder extends Seeder
                         "display" => "site"
                     ]
                 ]
-            ],
-            "position" => [
-                "longitude" => -5.1349441,
-                "latitude" => 105.2896039,
-                "altitude" => 21
             ],
             "managingOrganization" => [
                 "reference" => "Organization/" . env('SATU_SEHAT_ORGANIZATION_ID')
@@ -145,6 +132,7 @@ class LocationTableSeeder extends Seeder
         Location::create([
             'location_id' => $data['id'],
             'name' => $data['name'],
+            'status' => $data['status'],
             'organization_id' => end($parts),
             'description' => $data['description'],
             'created_by' => 'seeder'

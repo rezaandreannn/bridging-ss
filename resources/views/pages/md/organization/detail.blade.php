@@ -41,29 +41,29 @@
                                                 Organization ID
                                             </div>
                                             <div class="col-md-8">
-                                                {{ $dataById['id'] ?? ''}}
+                                                {{ $organization->organization_id}}
                                             </div>
                                             <div class="col-md-4">
                                                 Name
                                             </div>
                                             <div class="col-md-8">
-                                                {{ $dataById['name'] ?? ''}}
+                                                {{ $organization->name}}
                                             </div>
                                             <div class="col-md-4">
                                                 Status
                                             </div>
                                             <div class="col-md-8">
-                                                @if(isset($dataById['active']) == true)
-                                                <b>Active</b>(true)
+                                                @if($organization->active == true)
+                                                <b>Active</b> (true)
                                                 @else
-                                                <b>Inactive</b>
+                                                <b>Inactive (false)</b>
                                                 @endif
                                             </div>
                                             <div class="col-md-4">
                                                 Part Of
                                             </div>
                                             <div class="col-md-8">
-                                                {{$dataById['partOf']['reference'] ?? ''}}
+                                                {{$organization->part_of ?? ''}}
                                             </div>
                                         </div>
                                     </div>
@@ -73,26 +73,25 @@
                                                 Country
                                             </div>
                                             <div class="col-md-8">
-                                                {{ isset($dataById['address'][0]['country']) && $dataById['address'][0]['country'] == 'ID' ? 'Indonesia' : (isset($dataById['address'][0]['country']) ? $dataById['address'][0]['country'] : '') }}
-
+                                                Indonesia
                                             </div>
                                             <div class="col-md-4">
                                                 City
                                             </div>
                                             <div class="col-md-8">
-                                                {{ $dataById['address'][0]['city'] ?? ''}}
+                                                Kota Metro
                                             </div>
                                             <div class="col-md-4">
-                                                Address
+                                                Created By
                                             </div>
                                             <div class="col-md-8">
-                                                {{ $dataById['address'][0]['line'][0] ?? ''}}
+                                                {{ $organization->user_name ?? 'Seeder System'}}
                                             </div>
                                             <div class="col-md-4">
-                                                Postal code
+                                                Created Date
                                             </div>
                                             <div class="col-md-8">
-                                                {{$dataById['address'][0]['postalCode'] ?? ''}}
+                                                {{$organization->updated_at ?? ''}}
                                             </div>
                                         </div>
                                     </div>
@@ -109,35 +108,31 @@
                             <h4>Part Detail </h4>
                             <div class="card-header-action">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newOrganization">
-                                    New Orgnization
+                                    New Organization
                                 </button>
                             </div>
                         </div>
                         <div class="card-body p-0">
                             <div class="table-responsive">
-                                <table class="table table-striped table-md" id="table-1">
-                                    <thead>
-                                        <tr>
-                                            <th>Organization ID</th>
-                                            <th>Name</th>
-                                            <th>Active</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($organizationbyParts as $organization)
-                                        <tr>
-                                            <td>{{ $organization['resource']['id']}}</td>
-                                            <td>{{ $organization['resource']['name']}}</td>
-                                            <td>
-                                                @if($organization['resource']['active'] == true)
-                                                <div class="badge badge-success">active</div>
-                                                @else
-                                                <div class="badge badge-danger">inactive</div>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
+                                <table class="table-striped table">
+
+                                    <tr>
+                                        <th>Organization ID</th>
+                                        <th>Name</th>
+                                        <th>Active</th>
+                                    </tr>
+
+                                    @foreach($organizationbyParts as $organizationPart)
+                                    <tr>
+                                        <td>{{ $organizationPart->organization_id}}</td>
+                                        <td>{{ $organizationPart->name}}</td>
+                                        <td class="text-center">
+                                            <input type="checkbox" class="form-check-input" {{ $organizationPart->active == true ? 'checked' : ''}}>
+
+                                        </td>
+                                    </tr>
+                                    @endforeach
+
                                 </table>
                             </div>
                         </div>
@@ -153,25 +148,27 @@
                         </div>
                         <div class="card-body p-0">
                             <div class="table-responsive">
-                                <table class="table table-striped table-mp" id="table-1">
-                                    <thead>
-                                        <tr>
-                                            <th>Location ID</th>
-                                            <th>Name</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($locationByOrganizationId as $location)
-                                        <tr>
-                                            <td>{{$location['resource']['id']}}</td>
-                                            <td>{{$location['resource']['name']}}</td>
-                                            <td>
-                                                {{ $location['resource']['status']}}
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th>Location ID</th>
+                                        <th>Name</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    @foreach($locationByOrganization as $location)
+                                    <tr>
+                                        <td>{{$location->location_id}}</td>
+                                        <td>{{$location->name}}</td>
+                                        <td>
+                                            @if($location->status == 'active')
+                                            <div class="badge badge-success">{{$location->status}}</div>
+                                            @elseif($location->status == 'inactive')
+                                            <div class="badge badge-danger">{{$location->status}}</div>
+                                            @else
+                                            <div class="badge badge-warning">{{$location->status}}</div>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    @endforeach
                                 </table>
                             </div>
                         </div>
@@ -184,10 +181,10 @@
 
 <!-- Modal create organization -->
 <div class="modal fade" id="newOrganization" tabindex="-1" aria-labelledby="newOrganizationLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="newOrganizationLabel">Create By Part Of {{ $dataById['name'] ?? '' }} </h5>
+                <h5 class="modal-title" id="newOrganizationLabel">Create By Part Of {{ $organization->name}} </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -196,17 +193,43 @@
                 @csrf
                 <div class="modal-body">
                     <input type="hidden" class="form-control" id="" name="modal" value="modal">
-                    <div class="form-group">
-                        <label for="name">Organization Name<code>*</code></label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="input your organization name">
+                    <div class="form-group row mb-4">
+                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Identifier Value</label>
+                        <div class="col-sm-12 col-md-7">
+                            <input type="text" class="form-control" name="identifier_value">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="part_of">Part Of</label>
-                        <input type="text" class="form-control" id="part_of" name="part_of" value="{{ $dataById['id'] ?? '' }}" readonly>
+                    <div class="form-group row mb-4">
+                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Name</label>
+                        <div class="col-sm-12 col-md-7">
+                            <input type="text" class="form-control" name="name">
+                        </div>
                     </div>
-                    <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" id="active" checked>
-                        <label class="form-check-label" for="active">Active</label>
+                    <div class="form-group row mb-4">
+                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Type</label>
+                        <div class="col-sm-12 col-md-7">
+                            <select class="form-control selectric" name="type_code">
+                                <option value="" disabled selected>-- Select item --</option>
+                                @foreach($organizationType as $type)
+                                <option value="{{ $type['coding_code']}}">{{ $type['coding_display']}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-4">
+                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Part Of</label>
+                        <div class="col-sm-12 col-md-7">
+                            <input type="text" class="form-control" name="part_of" value="{{ $organization->organization_id}}" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-4">
+                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
+                        <div class="col-sm-12 col-md-7">
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="active" name="active">
+                                <label class="form-check-label" for="active">Active</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -223,17 +246,15 @@
 <!-- JS Libraies -->
 <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('library/selectric/public/jquery.selectric.min.js') }}"></script>
-
 <!-- DataTable -->
+
 <script src="{{ asset('library/datatables/datatables.min.js') }}"></script>
 <script src="{{ asset('library/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('library/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
 
 <!-- Page Specific JS File -->
-<script src="{{ asset('js/page/modules-datatables.js') }}"></script>
 
-<!-- Page Specific JS File -->
 <script src="{{ asset('js/page/forms-advanced-forms.js') }}"></script>
-<!-- Pagination Javascript -->
+<script src="{{ asset('js/page/modules-datatables.js') }}"></script>
 @endpush

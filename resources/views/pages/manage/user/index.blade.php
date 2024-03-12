@@ -17,7 +17,7 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('user.index') }}">Master Data</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('user.index') }}">Manage User</a></div>
                 <div class="breadcrumb-item">User</div>
             </div>
         </div>

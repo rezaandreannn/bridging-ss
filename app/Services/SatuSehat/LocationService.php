@@ -24,84 +24,27 @@ class LocationService
             "identifier" => [
                 [
                     "use" => "official",
-                    "system" => "http://sys-ids.kemkes.go.id/organization/" . $this->config->setOrganizationId(),
-                    "value" => $body['name']
+                    "system" => "http://sys-ids.kemkes.go.id/location/" . $this->config->setOrganizationId(),
+                    "value" => $body['identifier_value']
                 ]
             ],
-            "active" => true,
+            "status" => $body['status'],
             "name" => $body['name'],
             "description" => $body['description'],
-            "mode" => "instance",
-            "telecom" => [
-                [
-                    "system" => "phone",
-                    "value" => "072549490",
-                    "use" => "work"
-                ],
-                [
-                    "system" => "email",
-                    "value" => "itrsumm08@gmail.com",
-                    "use" => "work"
-                ],
-                [
-                    "system" => "url",
-                    "value" => "https://rsumm.co.id",
-                    "use" => "work"
-                ]
-            ],
-            "address" => [
-                [
-                    "use" => "work",
-                    "type" => "both",
-                    "line" => [
-                        "Jl. Soekarno Hatta No. 42 Mulyojati 16B Metro Barat Kota Metro"
-                    ],
-                    "city" => "Lampung",
-                    "postalCode" => "34125",
-                    "country" => "ID",
-                    "extension" => [
-                        [
-                            "url" => "https://fhir.kemkes.go.id/r4/StructureDefinition/administrativeCode",
-                            "extension" => [
-                                [
-                                    "url" => "province",
-                                    "valueCode" => "18"
-                                ],
-                                [
-                                    "url" => "city",
-                                    "valueCode" => "1872"
-                                ],
-                                [
-                                    "url" => "district",
-                                    "valueCode" => "187203"
-                                ],
-                                [
-                                    "url" => "village",
-                                    "valueCode" => "1872031001"
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ],
+            "mode" => $body['mode'],
             "physicalType" => [
                 [
                     "coding" => [
                         [
                             "system" => "http://terminology.hl7.org/CodeSystem/location-physical-type",
-                            "code" => "dept",
-                            "display" => "Hospital Department"
+                            "code" => $body['coding_code'],
+                            "display" => $body['coding_display']
                         ]
                     ]
                 ]
             ],
-            "position" => [
-                "longitude" => -6.23115426275766,
-                "latitude" => 106.83239885393944,
-                "altitude" => 0
-            ],
             "managingOrganization" => [
-                "reference" => "Organization/10000004"
+                "reference" => "Organization/" . $body['organization_id']
             ]
         ];
 
@@ -119,8 +62,6 @@ class LocationService
         }
         // Gabungkan array tambahan ke dalam array utama
         $data = array_merge($data, $additionalData);
-        // Tambahkan elemen "active" ke dalam array utama
-        $data["active"] = $body['active'];
 
         return $data;
     }

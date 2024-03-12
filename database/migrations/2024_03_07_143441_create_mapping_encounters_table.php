@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('mapping_encounters', function (Blueprint $table) {
             $table->id();
+            $table->string('dokter_code');
+            $table->string('location_id');
+            $table->string('organization_id');
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }
