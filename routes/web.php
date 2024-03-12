@@ -88,6 +88,7 @@ Route::middleware('auth')->group(function () {
         // ENCOUNTER
         Route::get('encounter', [MappingEncounterController::class, 'index'])->name('encounter.index');
         Route::get('encounter/create', [MappingEncounterController::class, 'create'])->name('encounter.create');
+        Route::post('encounter', [MappingEncounterController::class, 'store'])->name('encounter.store');
     });
 
 

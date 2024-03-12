@@ -56,6 +56,14 @@ class Dokter extends Model
         }
     }
 
+    public function getSelect()
+    {
+        $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/dokter/select');
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
+    }
+
     public function getByKodeDokter($kodeDokter)
     {
         $response = Http::get('https://daftar.rsumm.co.id/api.simrs/dokter/detail/' . $kodeDokter);

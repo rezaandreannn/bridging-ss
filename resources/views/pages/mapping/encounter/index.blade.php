@@ -32,35 +32,38 @@
                         <thead>
                             <tr>
                                 <th scope="col">No</th>
-                                <th scope="col">Kode Practitioner</th>
-                                <th scope="col">Nama Practitioner</th>
-                                <th scope="col">IHS Number</th>
-                                {{-- <th scope="col">Organization ID</th> --}}
-                                <th scope="col">Organization Name</th>
+                                <th scope="col">Practitioner Name</th>
+                                <th scope="col">Organization ID</th>
                                 <th scope="col">Location Name</th>
+                                <th scope="col">Status</th>
                                 <th scope="col">Encounter Type</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($mappingEncounters as $encounter)
                             <tr>
                                 <td class="text-center" width="5%">
-
+                                    {{ $loop->iteration}}
                                 </td>
-                                {{-- <td>
-                                    <div class="badge badge-success"> </div>
-                                </td> --}}
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{$encounter->practitioner_display}}</td>
+                                <td>{{$encounter->organization_id}}</td>
+                                <td>{{ $encounter->location_display}}</td>
+                                <td>
+                                    @if($encounter->status == true)
+                                    <div class="badge badge-success">active</div>
+                                    @else
+                                    <div class="badge badge-danger">inactive</div>
+                                    @endif
+                                </td>
+                                <td>{{$encounter->type}}</td>
                                 <td width="15%">
                                     <a href="" class="btn btn-warning"><i class="far fa-edit"></i></a>
                                     <a href="" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                                 </td>
                             </tr>
+
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
