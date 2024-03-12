@@ -71,19 +71,24 @@ class MappingEncounterController extends Controller
             // fetch NIK By Kode Dokter
             $kodeDokter = $request->kode_dokter;
             $nik = $this->dokter->getNik($kodeDokter);
+
             // cek nik ada atau tidak
             if (empty($nik)) {
                 return redirect()->back()->with('error', 'NIK data is not available');
             }
+
             // fetch Pratitioner & display By NIK
             $params = [
                 'identifier' => $nik
             ];
+
             $practitioner = $this->practitionerService->getRequest('Practitioner', $params);
             $practitionerIhs = $practitioner['entry'][0]['resource']['id'];
             $practitionerName = $practitioner['entry'][0]['resource']['name'][0]['text'];
+
             // fetch Location by LocationID 
             $location = $this->locationService->getRequest('Location/' . $request->location_id);
+
             // get LocationId & name
             $locationId = $location['id'];
             $locationName = $location['name'];
