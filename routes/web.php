@@ -64,6 +64,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/location/{location_id}', [LocationController::class, 'show'])->name('location.show');
         Route::get('/location/{location_id}/edit', [LocationController::class, 'edit'])->name('location.edit');
         Route::post('/location', [LocationController::class, 'store'])->name('location.store');
+        Route::patch('/location/{location_id}', [LocationController::class, 'update'])->name('location.update');
     });
 
 

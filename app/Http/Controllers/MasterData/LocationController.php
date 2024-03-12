@@ -98,7 +98,7 @@ class LocationController extends Controller
                 'created_by' => auth()->user()->id
             ]);
 
-            $message = 'Data has been updated successfully.';
+            $message = 'Data has been created successfully.';
             return redirect()->route($this->routeIndex)->with('toast_success', $message);
         } catch (\Throwable $th) {
             $errorMessage = $th->getMessage();
@@ -130,6 +130,7 @@ class LocationController extends Controller
         $organizationId = explode('/', $organizationId);
 
         $data = [
+            'location_id' => $location_id,
             'identifier_value' => $dataById['identifier'][0]['value'],
             'name' => $dataById['name'],
             'status' => $dataById['status'],
@@ -148,5 +149,62 @@ class LocationController extends Controller
         $locationByParts = Location::pluck('name', 'location_id');
 
         return view($this->view . 'edit', compact('title', 'organizations', 'statuses', 'physicalTypes', 'locationByParts', 'modes', 'data'));
+    }
+
+    public function update(Request $request, $location_id)
+    {
+        foreach (LocationDTO::getPhysicalTypes() as $type) {
+            if ($type['coding_code'] == $request->physical_type) {
+                $dataType = $type;
+            }
+        }
+
+        foreach (LocationDTO::getModes() as $mode) {
+            if ($mode['mode'] == $request->location_mode) {
+                $dataMode = $mode;
+            }
+        }
+
+        $location = Location::where('location_id', $location_id)->first();
+
+        $body = [
+            'location_id' => $location_id,
+            'identifier_value' => $request->identifier_value,
+            'name' => $request->name,
+            'status' => $request->status,
+            'mode' => $dataMode['mode'],
+            'coding_code' => $dataType['coding_code'],
+            'coding_display' => $dataType['coding_display'],
+            'organization_id' => $request->organization_id,
+            'description' => $request->description,
+        ];
+
+        if ($request->filled('part_of')) {
+            $body['part_of'] = $request->part_of;
+        }
+
+        try {
+
+            $url = $this->endpoint . '/' . $body['location_id'];
+            // send API
+            $data = $this->locationService->patchRequest($url, $body);
+
+            // send DB
+            $location->update([
+                'location_id' => $data['id'],
+                'name' => $body['name'],
+                'status' => $body['status'],
+                'organization_id' => $body['organization_id'],
+                'description' => $body['description'],
+                'part_of' => $request->part_of ?? '',
+                'updated_by' => auth()->user()->id ?? ''
+            ]);
+
+            $message = 'Data has been updated successfully.';
+            return redirect()->route($this->routeIndex)->with('toast_success', $message);
+        } catch (\Throwable $th) {
+            $errorMessage = $th->getMessage();
+            return redirect()->back()->with('error', $errorMessage);
+        }
     }
 }

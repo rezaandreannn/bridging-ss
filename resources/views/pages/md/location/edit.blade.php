@@ -21,8 +21,9 @@
         </div>
 
         <div class="section-body">
-            <form action="{{ route('location.store') }}" method="post">
+            <form action="{{ route('location.update', $data['location_id']) }}" method="post">
                 @csrf
+                @method('patch')
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
