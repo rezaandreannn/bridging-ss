@@ -48,6 +48,25 @@
                                         {{ $loop->iteration }}
                                     </td>
                                     <td>{{$role->name}}</td>
+                                    <td>{{$role->guard_name}}</td>
+                                    <td>
+                                        <button type="button" class="badge border-0
+                                             @if($role->permissions->count() > 1)
+                                                    badge-primary
+                                                @elseif($role->permissions->count() == 1)
+                                                    badge-success
+                                                @else
+                                                    badge-danger
+                                                @endif" data-toggle="modal" data-target="#changePermission{{ $role->permissions->count() > 1 ? $role->id : ''}}">
+                                            @if($role->permissions->count() > 1)
+                                            {{$role->permissions->count()}} Permission
+                                            @elseif($role->permissions->count() == 1)
+                                            {{ $role->permissions[0]->name }}
+                                            @else
+                                            Not Permissions
+                                            @endif
+                                        </button>
+                                    </td>
                                     <td width="15%">
                                         <a href="{{ route('role.edit', $role->id )}}" class="btn btn-warning"><i class="far fa-edit"></i></a>
                                         <button id="delete" data-id="{{ $role->id }}" data-nama="{{ $role->name }}" data-bs-toggle="tooltip" class="btn btn-danger"><i class="fas fa-trash"></i></button>

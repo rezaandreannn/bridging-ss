@@ -35,7 +35,8 @@
                                     <th class="text-center">
                                         No
                                     </th>
-                                    <th>Permission</th>
+                                    <th>Permission Name</th>
+                                    <th>Guard Name</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -46,6 +47,7 @@
                                         {{ $loop->iteration }}
                                     </td>
                                     <td>{{$pr->name}}</td>
+                                    <td>{{$pr->guard_name}}</td>
                                     <td width="15%">
                                         <a href="{{ route('permission.edit', $pr->id )}}" class="btn btn-warning"><i class="far fa-edit"></i></a>
                                         <button id="delete" data-id="{{ $pr->id }}" data-nama="{{ $pr->name }}" data-bs-toggle="tooltip" class="btn btn-danger"><i class="fas fa-trash"></i></button>

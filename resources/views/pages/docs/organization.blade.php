@@ -17,8 +17,8 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#">Manage User</a></div>
-                <div class="breadcrumb-item">User</div>
+                <div class="breadcrumb-item active"><a href="#">Documentation</a></div>
+                <div class="breadcrumb-item">Organization</div>
             </div>
         </div>
 
