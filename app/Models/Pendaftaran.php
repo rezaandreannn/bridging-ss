@@ -57,4 +57,12 @@ class Pendaftaran extends Model
         $data = json_decode($response, true);
         return $data['data'];
     }
+
+    public function getByKodeReg($noReg)
+    {
+        $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/pendaftaran/detail/' . $noReg);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
+    }
 }
