@@ -172,7 +172,7 @@ class LocationDTO
     {
         return [
             'C' => [
-                'Status_system' => 'http://terminology.hl7.org/CodeSystem/v2-0116',
+                'code_system' => 'http://terminology.hl7.org/CodeSystem/v2-0116',
                 'Status_code' => 'C',
                 'Status_display' => 'Closed',
                 'keterangan' => 'Tutup'
@@ -387,7 +387,7 @@ class LocationDTO
             '2' => [
                 'serviceClass_system' => 'http://terminology.kemkes.go.id/CodeSystem/locationServiceClass-Inpatient',
                 'serviceClass_code' => '2',
-                'serviceClass_dispay' => 'Kelas 2',
+                'serviceClass_display' => 'Kelas 2',
                 'keterangan' => 'Perawatan Kelas 2'
             ],
             '3' => [

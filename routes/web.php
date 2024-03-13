@@ -101,18 +101,8 @@ Route::middleware('auth')->group(function () {
         Route::post('encounter', [MappingEncounterController::class, 'store'])->name('encounter.store');
     });
 
-    // DOCUMENTATION
-    Route::prefix('dc')->group(function () {
-        // ENCOUNTER
-        Route::get('/docs-location', [DocumentationController::class, 'location'])->name('docs.location');
-        Route::get('/docs-organization', [DocumentationController::class, 'organization'])->name('docs.organization');
-        Route::get('/docs-encounter', [DocumentationController::class, 'encounter'])->name('docs.encounter');
-    });
-
-
     // MANAGE USER
     Route::prefix('mu')->middleware('auth')->group(function () {
-
         // USERS
         Route::get('/user', [UserController::class, 'index'])->name('user.index');
         Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
@@ -141,6 +131,13 @@ Route::middleware('auth')->group(function () {
         Route::get('/role-permission', [RoleHasPermissionController::class, 'index'])->name('role-permission.index');
         Route::get('/role-permission/{id}', [RoleHasPermissionController::class, 'getPermission'])->name('role-permission.edit');
         Route::post('/role-permission/hasPermission', [RoleHasPermissionController::class, 'hasPermission'])->name('rolePermission.postPermission');
+    });
+
+    // DOCUMENTATION
+    Route::prefix('dc')->group(function () {
+        Route::get('/docs-location', [DocumentationController::class, 'location'])->name('docs.location');
+        Route::get('/docs-organization', [DocumentationController::class, 'organization'])->name('docs.organization');
+        Route::get('/docs-encounter', [DocumentationController::class, 'encounter'])->name('docs.encounter');
     });
 
 
