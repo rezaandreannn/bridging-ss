@@ -88,11 +88,19 @@
                     action: action
                 },
                 success: function(data) {
-                    let alert = data.success.alert
+                    let alert = data.success.alert;
                     if (alert == 'success') {
-                        toastr.success(data.success.message);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: data.success.message
+                        });
                     } else {
-                        toastr.error(data.success.message);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: data.success.message
+                        });
                     }
                 }
             });
