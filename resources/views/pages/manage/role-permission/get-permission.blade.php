@@ -88,20 +88,27 @@
                     action: action
                 },
                 success: function(data) {
-                    let alert = data.success.alert;
-                    if (alert == 'success') {
+                    let toast_success = data.toast_success;
+                    if (toast_success) {
                         Swal.fire({
                             icon: 'success',
                             title: 'Success',
-                            text: data.success.message
+                            text: toast_success
                         });
                     } else {
                         Swal.fire({
                             icon: 'error',
                             title: 'Error',
-                            text: data.success.message
+                            text: 'An error occurred while processing your request.'
                         });
                     }
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'An error occurred while processing your request.'
+                    });
                 }
             });
         });

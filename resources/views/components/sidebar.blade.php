@@ -60,8 +60,8 @@
                 </ul>
             </li>
             <li class="menu-header">manage</li>
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown {{ Request::is('mu*') ? 'active' : '' }}" data-toggle="dropdown"><i class="fas fa-tasks"></i><span>Manage User</span></a>
+            <li class="nav-item dropdown {{ Request::is('mu**') ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-tasks"></i><span>Manage User</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('mu/user') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('user.index') }}">User</a>
@@ -82,6 +82,21 @@
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('mp/encounter*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('mapping.encounter.index')}}">Encounter</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="menu-header">Docs</li>
+            <li class="nav-item dropdown  {{ Request::is('dc*') ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-rocket"></i><span>Documentation</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('dc/docs-location') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('docs.location') }}">Location</a>
+                    </li>
+                    <li class="{{ Request::is('dc/docs-organization') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('docs.organization') }}">Organization</a>
+                    </li>
+                    <li class="{{ Request::is('dc/docs-encounter') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('docs.encounter') }}">Encounter</a>
                     </li>
                 </ul>
             </li>

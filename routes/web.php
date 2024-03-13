@@ -101,6 +101,14 @@ Route::middleware('auth')->group(function () {
         Route::post('encounter', [MappingEncounterController::class, 'store'])->name('encounter.store');
     });
 
+    // DOCUMENTATION
+    Route::prefix('dc')->group(function () {
+        // ENCOUNTER
+        Route::get('/docs-location', [DocumentationController::class, 'location'])->name('docs.location');
+        Route::get('/docs-organization', [DocumentationController::class, 'organization'])->name('docs.organization');
+        Route::get('/docs-encounter', [DocumentationController::class, 'encounter'])->name('docs.encounter');
+    });
+
 
     // MANAGE USER
     Route::prefix('mu')->middleware('auth')->group(function () {
