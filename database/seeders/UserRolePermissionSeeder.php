@@ -51,20 +51,20 @@ class UserRolePermissionSeeder extends Seeder
         $role_manager = Role::create(['name' => 'manager']);
 
 
-        Permission::create(['name' => 'read role']);
-        Permission::create(['name' => 'create role']);
-        Permission::create(['name' => 'update role']);
-        Permission::create(['name' => 'delete role']);
+        // Permission::create(['name' => 'read role']);
+        // Permission::create(['name' => 'create role']);
+        // Permission::create(['name' => 'update role']);
+        // Permission::create(['name' => 'delete role']);
 
-        $role_it->givePermissionTo('read role');
-        $role_it->givePermissionTo('create role');
-        $role_it->givePermissionTo('update role');
-        $role_it->givePermissionTo('delete role');
+        // $role_it->givePermissionTo('read role');
+        // $role_it->givePermissionTo('create role');
+        // $role_it->givePermissionTo('update role');
+        // $role_it->givePermissionTo('delete role');
 
-        $role_perawat->givePermissionTo('read antrean');
-        $role_perawat->givePermissionTo('create antrean');
-        $role_perawat->givePermissionTo('update antrean');
-        $role_perawat->givePermissionTo('delete antrean');
+        // $role_perawat->givePermissionTo('read antrean');
+        // $role_perawat->givePermissionTo('create antrean');
+        // $role_perawat->givePermissionTo('update antrean');
+        // $role_perawat->givePermissionTo('delete antrean');
 
 
         $it->assignRole('it');

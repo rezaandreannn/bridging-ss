@@ -4,6 +4,8 @@
 
 @push('style')
 <!-- CSS Libraries -->
+<link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
+<link rel="stylesheet" href="{{ asset('library/selectric/public/selectric.css') }}">
 
 @endpush
 
@@ -39,7 +41,11 @@
                                 <div class="form-group row mb-4">
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Guard Name</label>
                                     <div class="col-sm-12 col-md-7">
-                                        <input type="text" class="form-control" name="guard_name">
+                                        <select class="form-control selectric" name="guard_name">
+                                            <option value="">-- Pilih --</option>
+                                            <option value="web">web</option>
+                                            <option value="api">api</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-4">
@@ -60,6 +66,8 @@
 
 @push('scripts')
 <!-- JS Libraies -->
+<script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('library/selectric/public/jquery.selectric.min.js') }}"></script>
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/forms-advanced-forms.js') }}"></script>

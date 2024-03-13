@@ -51,13 +51,13 @@ class RoleHasPermissionController extends Controller
             $role->givePermissionTo($permission);
             $message = [
                 'message' => 'Created permission succesfully',
-                'alert' => 'success'
+                'toast_success' => 'success'
             ];
         } else {
             $role->revokePermissionTo($permission);
             $message = [
                 'message' => 'Remove permission succesfully',
-                'alert' => 'error'
+                'toast_error' => 'error'
             ];
         }
         return response()->json(['success' => $message]);
