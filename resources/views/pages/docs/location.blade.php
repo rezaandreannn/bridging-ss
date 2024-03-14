@@ -92,28 +92,26 @@
                                     <h4>2.3 Location.operationalStatus</h4>
                                 </div>
                                 <div class="accordion-body collapse" id="panel-body-3" data-parent="#accordion">
-                                    <div class="table-responsive">
-                                        <table class="table-striped table" id="table-1">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-center" width="5%">Location.operationalStatus.system</th>
-                                                    <th class="text-center" width="5%">Location.operationalStatus.code</th>
-                                                    <th class="text-center" width="5%">Location.operationalStatus.display</th>
-                                                    <th class="text-center" width="5%">Keterangan</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach($l_operational as $operational)
-                                                <tr>
-                                                    <td class="text-center" width="5%">{{ $operational['code_system']}}</td>
-                                                    <td class="text-center" width="5%">{{ $operational['Status_code']}}</td>
-                                                    <td class="text-center" width="5%">{{ $operational['Status_display']}}</td>
-                                                    <td class="text-center" width="5%">{{ $operational['keterangan']}}</td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                    <table class="table-striped table">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">Location.operationalStatus.system</th>
+                                                <th class="text-center">Location.operationalStatus.code</th>
+                                                <th class="text-center">Location.operationalStatus.display</th>
+                                                <th class="text-center">Keterangan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($l_operational as $operational)
+                                            <tr>
+                                                <td class="text-center">{{ $operational['code_system']}}</td>
+                                                <td class="text-center">{{ $operational['Status_code']}}</td>
+                                                <td class="text-center">{{ $operational['Status_display']}}</td>
+                                                <td class="text-center">{{ $operational['keterangan']}}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                             <!-- 2.4 -->
@@ -122,26 +120,24 @@
                                     <h4>2.4 Location.mode</h4>
                                 </div>
                                 <div class="accordion-body collapse" id="panel-body-4" data-parent="#accordion">
-                                    <div class="table-responsive">
-                                        <table class="table-striped table" id="table-1">
-                                            <thead>
-                                                <tr>
-                                                    <th>Code System</th>
-                                                    <th>Location.mode</th>
-                                                    <th>Keterangan</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach($l_modes as $modes)
-                                                <tr>
-                                                    <td>{{ $modes['code_system']}}</td>
-                                                    <td>{{ $modes['mode']}}</td>
-                                                    <td>{{ $modes['keterangan']}}</td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                    <table class="table-striped table">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">Code System</th>
+                                                <th class="text-center">Location.mode</th>
+                                                <th class="text-center">Keterangan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($l_modes as $modes)
+                                            <tr>
+                                                <td class="text-center">{{ $modes['code_system']}}</td>
+                                                <td class="text-center">{{ $modes['mode']}}</td>
+                                                <td class="text-center">{{ $modes['keterangan']}}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                             <!-- 2.5 -->
@@ -150,26 +146,24 @@
                                     <h4>2.5 Location.telecom[i].system</h4>
                                 </div>
                                 <div class="accordion-body collapse" id="panel-body-5" data-parent="#accordion">
-                                    <div class="table-responsive">
-                                        <table class="table-striped table" id="table-1">
-                                            <thead>
-                                                <tr>
-                                                    <th>Code System</th>
-                                                    <th>Location.telecom[i].system</th>
-                                                    <th>Keterangan</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach($l_system as $system)
-                                                <tr>
-                                                    <td>{{ $system['coding_system']}}</td>
-                                                    <td>{{ $system['telecom_system']}}</td>
-                                                    <td>{{ $system['keterangan']}}</td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                    <table class="table-striped table">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">Code System</th>
+                                                <th class="text-center">Location.telecom[i].system</th>
+                                                <th class="text-center">Keterangan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($l_system as $system)
+                                            <tr>
+                                                <td>{{ $system['coding_system']}}</td>
+                                                <td>{{ $system['telecom_system']}}</td>
+                                                <td>{{ $system['keterangan']}}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                             <!-- 2.6 -->
@@ -178,26 +172,24 @@
                                     <h4>2.6 Location.telecom[i].use</h4>
                                 </div>
                                 <div class="accordion-body collapse" id="panel-body-6" data-parent="#accordion">
-                                    <div class="table-responsive">
-                                        <table class="table-striped table" id="table-1">
-                                            <thead>
-                                                <tr>
-                                                    <th>Code System</th>
-                                                    <th>Location.telecom[i].use</th>
-                                                    <th>Keterangan</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach($l_use as $use)
-                                                <tr>
-                                                    <td>{{ $use['coding_system']}}</td>
-                                                    <td>{{ $use['telecom_use']}}</td>
-                                                    <td>{{ $use['keterangan']}}</td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                    <table class="table-striped table">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">Code System</th>
+                                                <th class="text-center">Location.telecom[i].use</th>
+                                                <th class="text-center">Keterangan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($l_use as $use)
+                                            <tr>
+                                                <td>{{ $use['coding_system']}}</td>
+                                                <td>{{ $use['telecom_use']}}</td>
+                                                <td>{{ $use['keterangan']}}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                             <!-- 2.7 -->
@@ -206,26 +198,24 @@
                                     <h4>2.7 Location.address.use</h4>
                                 </div>
                                 <div class="accordion-body collapse" id="panel-body-7" data-parent="#accordion">
-                                    <div class="table-responsive">
-                                        <table class="table-striped table" id="table-1">
-                                            <thead>
-                                                <tr>
-                                                    <th>Code System</th>
-                                                    <th>Location.telecom.use</th>
-                                                    <th>Keterangan</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach($l_addressUse as $addressUse)
-                                                <tr>
-                                                    <td>{{ $addressUse['coding_system']}}</td>
-                                                    <td>{{ $addressUse['telecom_use']}}</td>
-                                                    <td>{{ $addressUse['keterangan']}}</td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                    <table class="table-striped table" id="table-1">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">Code System</th>
+                                                <th class="text-center">Location.telecom.use</th>
+                                                <th class="text-center">Keterangan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($l_addressUse as $addressUse)
+                                            <tr>
+                                                <td>{{ $addressUse['coding_system']}}</td>
+                                                <td>{{ $addressUse['telecom_use']}}</td>
+                                                <td>{{ $addressUse['keterangan']}}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                             <!-- 2.8 -->
@@ -234,26 +224,24 @@
                                     <h4>2.8 Location.address.type</h4>
                                 </div>
                                 <div class="accordion-body collapse" id="panel-body-8" data-parent="#accordion">
-                                    <div class="table-responsive">
-                                        <table class="table-striped table" id="table-1">
-                                            <thead>
-                                                <tr>
-                                                    <th>Code System</th>
-                                                    <th>Location.address.type</th>
-                                                    <th>Keterangan</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach($l_addressType as $addressType)
-                                                <tr>
-                                                    <td>{{ $addressType['coding_system']}}</td>
-                                                    <td>{{ $addressType['address_type']}}</td>
-                                                    <td>{{ $addressType['keterangan']}}</td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                    <table class="table-striped table">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">Code System</th>
+                                                <th class="text-center">Location.address.type</th>
+                                                <th class="text-center">Keterangan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($l_addressType as $addressType)
+                                            <tr>
+                                                <td>{{ $addressType['coding_system']}}</td>
+                                                <td>{{ $addressType['address_type']}}</td>
+                                                <td>{{ $addressType['keterangan']}}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                             <!-- 2.9 -->
@@ -263,22 +251,22 @@
                                 </div>
                                 <div class="accordion-body collapse" id="panel-body-9" data-parent="#accordion">
                                     <div class="table-responsive">
-                                        <table class="table-striped table" id="table-1">
+                                        <table class="table-striped table">
                                             <thead>
                                                 <tr>
-                                                    <th>Location.physicalType.coding.system</th>
-                                                    <th>Location.physicalType.coding.code</th>
-                                                    <th>Location.physicalType.coding.display</th>
-                                                    <th>Keterangan</th>
+                                                    <th class="text-center" style="width: 25%;">Location.physicalType.coding.system</th>
+                                                    <th class="text-center" style="width: 25%;">Location.physicalType.coding.code</th>
+                                                    <th class="text-center" style="width: 25%;">Location.physicalType.coding.display</th>
+                                                    <th class="text-center" style="width: 25%;">Keterangan</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach($l_physical as $physical)
                                                 <tr>
-                                                    <td>{{ $physical['coding_system']}}</td>
-                                                    <td>{{ $physical['coding_code']}}</td>
-                                                    <td>{{ $physical['coding_display']}}</td>
-                                                    <td>{{ $physical['keterangan']}}</td>
+                                                    <td class="text-center" style="width: 25%;">{{ $physical['coding_system']}}</td>
+                                                    <td class="text-center" style="width: 25%;">{{ $physical['coding_code']}}</td>
+                                                    <td class="text-center" style="width: 25%;">{{ $physical['coding_display']}}</td>
+                                                    <td class="text-center" style="width: 25%;">{{ $physical['keterangan']}}</td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
@@ -296,16 +284,16 @@
                                         <table class="table-striped table" id="table-1">
                                             <thead>
                                                 <tr>
-                                                    <th>Code System</th>
-                                                    <th>Location.hoursOfOperation[i].daysOfWeek</th>
-                                                    <th>Keterangan</th>
+                                                    <th class="text-center">Code System</th>
+                                                    <th class="text-center">Location.hoursOfOperation[i].daysOfWeek</th>
+                                                    <th class="text-center">Keterangan</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach($l_daysofweek as $daysofweek)
                                                 <tr>
                                                     <td>{{ $daysofweek['coding_system']}}</td>
-                                                    <td>{{ $daysofweek['days_of_week']}}</td>
+                                                    <td class="text-center">{{ $daysofweek['days_of_week']}}</td>
                                                     <td>{{ $daysofweek['keterangan']}}</td>
                                                 </tr>
                                                 @endforeach
@@ -321,22 +309,22 @@
                                 </div>
                                 <div class="accordion-body collapse" id="panel-body-11" data-parent="#accordion">
                                     <div class="table-responsive">
-                                        <table class="table-striped table" id="table-1">
+                                        <table class="table-striped table" style="width: 100%;">
                                             <thead>
                                                 <tr>
-                                                    <th>Location.extension.serviceClass.system</th>
-                                                    <th>Location.extension.serviceClass.code</th>
-                                                    <th>Location.extension.serviceClass.display</th>
-                                                    <th>Keterangan</th>
+                                                    <th class="text-center" style="width: 25%;">Location.extension.serviceClass.system</th>
+                                                    <th class="text-center" style="width: 25%;">Location.extension.serviceClass.code</th>
+                                                    <th class="text-center" style="width: 25%;">Location.extension.serviceClass.display</th>
+                                                    <th class="text-center" style="width: 25%;">Keterangan</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach($l_serviceClass as $serviceClass)
                                                 <tr>
-                                                    <td>{{ $serviceClass['serviceClass_system']}}</td>
-                                                    <td>{{ $serviceClass['serviceClass_code']}}</td>
-                                                    <td>{{ $serviceClass['serviceClass_display']}}</td>
-                                                    <td>{{ $serviceClass['keterangan']}}</td>
+                                                    <td class="text-center">{{ $serviceClass['serviceClass_system']}}</td>
+                                                    <td class="text-center">{{ $serviceClass['serviceClass_code']}}</td>
+                                                    <td class="text-center">{{ $serviceClass['serviceClass_display']}}</td>
+                                                    <td class="text-center">{{ $serviceClass['keterangan']}}</td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
@@ -354,10 +342,10 @@
                                         <table class="table-striped table" id="table-1">
                                             <thead>
                                                 <tr>
-                                                    <th>Location.type.system</th>
-                                                    <th>Location.type.code</th>
-                                                    <th>Location.type.display</th>
-                                                    <th>Keterangan</th>
+                                                    <th class="text-center">Location.type.system</th>
+                                                    <th class="text-center">Location.type.code</th>
+                                                    <th class="text-center">Location.type.display</th>
+                                                    <th class="text-center">Keterangan</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
