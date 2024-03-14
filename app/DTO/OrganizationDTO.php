@@ -4,6 +4,37 @@ namespace App\DTO;
 
 class OrganizationDTO
 {
+    public static function getIdentifierUse()
+    {
+        return [
+            'usual' => [
+                'code_system' => 'http://hl7.org/fhir/identifier_use',
+                'identifier_use' => 'usual',
+                'keterangan' => 'Identifier yang direkomendasikan digunakan untuk interaksi dunia nyata'
+            ],
+            'official' => [
+                'code_system' => 'http://hl7.org/fhir/identifier_use',
+                'identifier_use' => 'official',
+                'keterangan' => 'Identifier yang dianggap paling terpercaya. Terkadang juga dikenal sebagai "primer" dan "utama". Penentuan "resmi" bersifat subyektif dan panduan implementasi seringkali memberikan panduan tambahan untuk digunakan.'
+            ],
+            'temp' => [
+                'code_system' => 'http://hl7.org/fhir/identifier_use',
+                'identifier_use' => 'temp',
+                'keterangan' => 'Identifier sementara'
+            ],
+            'secondary' => [
+                'code_system' => 'http://hl7.org/fhir/identifier_use',
+                'identifier_use' => 'secondary',
+                'keterangan' => 'Identifier yang ditugaskan dalam penggunaan sekunder - ini berfungsi untuk mengidentifikasi objek dalam konteks relatif, tetapi tidak dapat secara konsisten ditugaskan ke objek yang sama lagi dalam konteks yang berbeda'
+            ],
+            'old' => [
+                'code_system' => 'http://hl7.org/fhir/identifier_use',
+                'identifier_use' => 'old',
+                'keterangan' => 'Id identifier sudah dianggap tidak valid, tetapi masih memungkinkan relevan untuk kebutuhan pencarian'
+            ]
+        ];
+    }
+
     public static function getTypes()
     {
         return [
@@ -159,27 +190,27 @@ class OrganizationDTO
         return [
             'home' => [
                 'coding_system' => 'http://hl7.org/fhir/address-use',
-                'telecom_use' => 'home',
+                'address_use' => 'home',
                 'keterangan' => 'Rumah'
             ],
             'work' => [
                 'coding_system' => 'http://hl7.org/fhir/address-use',
-                'telecom_use' => 'work',
+                'address_use' => 'work',
                 'keterangan' => 'Tempat kerja'
             ],
             'temp' => [
                 'coding_system' => 'http://hl7.org/fhir/address-use',
-                'telecom_use' => 'temp',
+                'address_use' => 'temp',
                 'keterangan' => 'Sementara'
             ],
             'old' => [
                 'coding_system' => 'http://hl7.org/fhir/address-use',
-                'telecom_use' => 'old',
+                'address_use' => 'old',
                 'keterangan' => 'Tidak digunakan lagi'
             ],
             'biling' => [
                 'coding_system' => 'http://hl7.org/fhir/address-use',
-                'telecom_use' => 'biling',
+                'address_use' => 'biling',
                 'keterangan' => 'Penagihan'
             ],
         ];
