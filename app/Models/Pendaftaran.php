@@ -21,6 +21,7 @@ class Pendaftaran extends Model
 
     public function getData($kode_dokter = null, $tanggal = null, $status_rawat = null)
     {
+        // $tanggal = date('Y-m-d');
         try {
             // Menyiapkan query parameters
             $queryParams = [];
@@ -28,7 +29,7 @@ class Pendaftaran extends Model
                 $queryParams['kode_dokter'] = $kode_dokter;
             }
             if ($tanggal !== null) {
-                $queryParams['tanggal'] = date('Y-m-d'); // Tanggal sekarang;
+                $queryParams['tanggal'] = $tanggal ?? date('Y-m-d'); // Tanggal sekarang;
             }
             if ($status_rawat !== null) {
                 $queryParams['status_rawat'] = $status_rawat;
@@ -52,7 +53,7 @@ class Pendaftaran extends Model
 
     public function byKodeDokter($kodeDokter = '')
     {
-        $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/dokter/select' . $kodeDokter);
+        $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/dokter/select/' . $kodeDokter);
         $response = $request->getBody()->getContents();
         $data = json_decode($response, true);
         return $data['data'];
