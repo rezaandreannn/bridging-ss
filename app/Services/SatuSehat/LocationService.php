@@ -21,14 +21,14 @@ class LocationService
     protected function bodyRawPost(array $body)
     {
         // get id location index
-        $location = Location::where('id', 1)->first();
-        $locationId = $location->location_id;
+        // $location = Location::where('id', 1)->first();
+        // $locationId = $location->location_id;
 
         $data = [
             "resourceType" => "Location",
             "identifier" => [
                 [
-                    "system" => "http://sys-ids.kemkes.go.id/location/" . $locationId,
+                    "system" => "http://sys-ids.kemkes.go.id/location/" . $this->config->setOrganizationId(),
                     "value" => $body['identifier_value']
                 ]
             ],
