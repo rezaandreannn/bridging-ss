@@ -31,7 +31,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="form-group row mb-4">
-                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Kode Registrasi<code>*</code></label>
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Kode Regiter<code>*</code></label>
                                     <div class="col-sm-12 col-md-7">
                                         <input type="text" class="form-control" name="pasien_name" value="{{$result['kodeReg']}}" readonly>
                                     </div>
@@ -57,7 +57,7 @@
                                 <div class="form-group row mb-4">
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Practitioner Ihs Number<code>*</code></label>
                                     <div class="col-sm-12 col-md-7">
-                                        <input type="text" class="form-control" name="name" value="{{$result['practitionerIhs']}}">
+                                        <input type="text" class="form-control" name="name" value="{{$result['practitionerIhs']}}" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-4">
@@ -69,9 +69,21 @@
                                 <div class="form-group row mb-4">
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Organization ID<code>*</code></label>
                                     <div class="col-sm-12 col-md-7">
-                                        <input type="text" class="form-control" name="name" value="{{$result['organizationId']}}">
+                                        <input type="text" class="form-control" name="name" value="{{$result['organizationId']}}" readonly>
                                     </div>
                                 </div>
+                                {{-- <div class="form-group row mb-4">
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Periode Start<code>*</code></label>
+                                    <div class="col-sm-12 col-md-7">
+                                        <input type="datetime-local" class="form-control" name="periode_start" id="periode_start">
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-4">
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Periode End<code>*</code></label>
+                                    <div class="col-sm-12 col-md-7">
+                                        <input type="datetime-local" class="form-control" name="periode_end">
+                                    </div>
+                                </div> --}}
                                 <div class="form-group row mb-4">
                                     {{-- <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Location Name<code>*</code></label> --}}
                                     <div class="col-sm-12 col-md-7">
@@ -110,4 +122,5 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/forms-advanced-forms.js') }}"></script>
+
 @endpush

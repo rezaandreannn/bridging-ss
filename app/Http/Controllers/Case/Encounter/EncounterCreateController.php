@@ -2,22 +2,27 @@
 
 namespace App\Http\Controllers\Case\Encounter;
 
-use App\Http\Controllers\Controller;
-use App\Models\Mapping\MappingEncounter;
 use App\Models\Pendaftaran;
-use App\Services\SatuSehat\PatientService;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\Encounter;
+use App\Models\Mapping\MappingEncounter;
+use App\Services\SatuSehat\EncounterService;
+use App\Services\SatuSehat\PatientService;
 
 class EncounterCreateController extends Controller
 {
     protected $pendaftaran;
     protected $patientService;
     protected $mappingEncounter;
+    protected $encounterService;
+
     public function __construct()
     {
         $this->pendaftaran = new Pendaftaran();
         $this->patientService = new PatientService();
         $this->mappingEncounter = new MappingEncounter();
+        $this->encounterService = new EncounterService();
     }
     /**
      * Handle the incoming request.
@@ -27,7 +32,7 @@ class EncounterCreateController extends Controller
      */
     public function __invoke(Request $request, $noReg)
     {
-        // dd($noReg);
+
         // fetch detail by no reg
         $detailPendaftaran = $this->pendaftaran->getByKodeReg($noReg);
         //   check nik and kode dokter
@@ -72,18 +77,51 @@ class EncounterCreateController extends Controller
         $locationId = $mapEncounter->location_id;
         $locationName = $mapEncounter->location_display;
 
-        $result = [
+        $body = [
             'kodeReg' => $noReg,
+            'status' => 'arrived',
             'patientId' => $patientId,
             'patientName' => $patientName,
             'practitionerIhs' => $practitionerIhs,
             'practitionerName' => $practitionerName,
             'organizationId' => $organizationId,
             'locationId' => $locationId,
-            'locationName' => $locationName
+            'locationName' => $locationName,
+            'statusHistory' => 'arrived'
         ];
 
+        try {
+            // send API
+            $resultApi = $this->encounterService->postRequest('Encounter', $body);
+
+            $serviceProvider = $resultApi['serviceProvider']['reference'];
+            $serviceProv = explode('/', $serviceProvider);
+
+            // send DB
+            Encounter::create([
+                'encounter_id' => $resultApi['id'],
+                'kode_register' => $body['kodeReg'],
+                'class_code' => $resultApi['class']['code'],
+                'patient_ihs'  => $body['patientId'],
+                'patient_name'  => $body['patientName'],
+                'practitioner_ihs'  => $body['practitionerIhs'],
+                'practitioner_name'  => $body['practitionerName'],
+                'location_id' => $body['locationId'],
+                'service_provider' => end($serviceProv),
+                'status' => $body['status'],
+                'status_history' => $body['statusHistory'],
+                'periode_start' => $resultApi['period']['start'],
+                'created_by' => auth()->user()->id ?? ''
+            ]);
+
+            $message = 'Encounter data has been created successfully.';
+            return redirect()->back()->with('success', $message);
+        } catch (\Throwable $th) {
+            $errorMessage = $th->getMessage();
+            dd($errorMessage);
+        }
+
         //    redirect view
-        return view('pages.encounter.create', compact('result'));
+        // return view('pages.encounter.create', compact('result'));
     }
 }
