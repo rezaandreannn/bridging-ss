@@ -106,19 +106,18 @@ class LocationTableSeeder extends Seeder
     {
         $organizationId = env('SATU_SEHAT_ORGANIZATION_ID');
 
-        $result = $this->location->getRequest('Location', ['organization' =>  $organizationId]);
+        $result = $this->location->getRequest('Location/7aa2e309-1a9f-4620-8433-5e44958f9b6f');
+        // $result = $this->location->getRequest('Location/5788aefe-e721-45b5-abf5-9ea38fb074da'); //prod
 
-        $data = $result['entry'][0]['resource'];
-
-        $organizationId = $data['managingOrganization']['reference'];
+        $organizationId = $result['managingOrganization']['reference'];
         $parts = explode('/', $organizationId);
 
         Location::create([
-            'location_id' => $data['id'],
-            'name' => $data['name'],
-            'status' => $data['status'],
+            'location_id' => $result['id'],
+            'name' => $result['name'],
+            'status' => $result['status'],
             'organization_id' => end($parts),
-            'description' => $data['description'],
+            'description' => $result['description'],
             'created_by' => 'seeder'
         ]);
     }
