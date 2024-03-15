@@ -62,7 +62,7 @@ class RoleController extends Controller
         $title = 'Edit' . ' ' . $this->prefix;
         $role = Role::where('id', $id)->first();
         $roles = Role::select('name', 'guard_name')->get();
-        return view($this->view . 'edit', compact('title', 'role', 'roles', 'permissions'));
+        return view($this->view . 'edit', compact('title', 'role', 'roles'));
     }
 
     public function update($id, Request $request)

@@ -18,6 +18,7 @@ class MappingEncounterController extends Controller
     protected $dokter;
     protected $practitionerService;
     protected $locationService;
+    protected $prefix;
     public function __construct()
     {
         $this->practitionerService = new PracticionerService();
@@ -25,6 +26,7 @@ class MappingEncounterController extends Controller
         $this->dokter = new Dokter();
         $this->routeIndex = 'mapping.encounter.index';
         $this->viewPath = 'pages.mapping.encounter.';
+        $this->prefix = 'Mapping';
     }
     /**
      * Display a listing of the resource.
@@ -134,9 +136,17 @@ class MappingEncounterController extends Controller
      * @param  \App\Models\Mapping\MappingEncounter  $mappingEncounter
      * @return \Illuminate\Http\Response
      */
-    public function edit(MappingEncounter $mappingEncounter)
+    public function edit($id)
     {
-        //
+        $title = 'Edit' . ' ' . $this->prefix;
+        $encouter = MappingEncounter::where('id', $id)->first();
+        $dokters = $this->dokter;
+        $organizations = Organization::where('name', 'like', '%rawat jalan%')
+            ->orWhere('name', 'like', '%igd%')
+            ->pluck('name', 'organization_id');
+
+        $locations = Location::where('name', 'like', '%ruang%')->get();
+        return view($this->viewPath . 'edit', compact('title', 'encouter', 'dokters', 'organizations', 'locations'));
     }
 
     /**

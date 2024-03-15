@@ -79,7 +79,7 @@
             }
 
             $.ajax({
-                url: "{{ route('rolePermission.postPermission')}}",
+                url: "{{ route('rolepermission.postPermission')}}",
                 type: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",

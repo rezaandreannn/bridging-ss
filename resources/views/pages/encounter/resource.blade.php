@@ -17,15 +17,15 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('rolepermission.index') }}">Manage User</a></div>
-                <div class="breadcrumb-item">Role Permission</div>
+                <div class="breadcrumb-item active"><a href="{{ route('user.index') }}">Manage User</a></div>
+                <div class="breadcrumb-item">User</div>
             </div>
         </div>
 
         <div class="section-body">
             <div class="card">
                 <div class="card-header">
-
+                    <a href="{{ route('user.create')}}" class="btn btn-primary rounded-0">New Data</a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -35,21 +35,36 @@
                                     <th class="text-center">
                                         No
                                     </th>
-                                    <th>Role Name</th>
-                                    <th>Action</th>
+                                    <th>Kode Reg</th>
+                                    <th>Patient</th>
+                                    <th>Patient Name</th>
+                                    <th>Practicioner</th>
+                                    <th>Practicioner Name</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($roles as $role)
+                                @foreach($Encounters as $encounter)
                                 <tr>
                                     <td class="text-center" width="5%">
-                                        {{ $loop->iteration }}
+                                        {{ $loop->iteration}}
                                     </td>
-                                    <td>{{$role->name}}</td>
+                                    <td>{{ $encounter->patient }}</td>
+                                    <td>{{ $encounter->organization_id }}</td>
+                                    <td>{{ $encounter->location_display }}</td>
+                                    <td>
+                                        @if($encounter->status == true)
+                                        <div class="badge badge-success">active</div>
+                                        @else
+                                        <div class="badge badge-danger">inactive</div>
+                                        @endif
+                                    </td>
+                                    <td>{{$encounter->type}}</td>
                                     <td width="15%">
-                                        <a href="{{ route('rolepermission.edit', $role->id )}}" class="btn btn-warning"><i class="fas fa-user-lock"></i> Permission</a>
+                                        <a href="{{ route('update.edit', $encounter->id )}}" class="btn btn-warning"><i class="far fa-edit"></i></a>
+                                        <a href="" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                                     </td>
                                 </tr>
+
                                 @endforeach
                             </tbody>
                         </table>

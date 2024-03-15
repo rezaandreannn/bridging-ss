@@ -48,14 +48,11 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown {{ Request::is('ec*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Encounter</span></a>
                 <ul class="dropdown-menu">
-                    <li class="">
-                        <a class="nav-link" href="">Poliklinik</a>
-                    </li>
-                    <li class="">
-                        <a class="nav-link" href="">IGD</a>
+                    <li class="{{ Request::is('ec/encounter-resource') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('encounter.resource') }}">Resource</a>
                     </li>
                 </ul>
             </li>
@@ -63,17 +60,17 @@
             <li class="nav-item dropdown {{ Request::is('mu**') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-tasks"></i><span>Manage User</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('mu/user') ? 'active' : '' }}">
+                    <li class="{{ Request::is('mu/user*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('user.index') }}">User</a>
                     </li>
-                    <li class="{{ Request::is('mu/role') ? 'active' : '' }}">
+                    <li class="{{ Request::is('mu/role*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('role.index') }}">Role</a>
                     </li>
-                    <li class="{{ Request::is('mu/permission') ? 'active' : '' }}">
+                    <li class="{{ Request::is('mu/permission*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('permission.index') }}">Permission</a>
                     </li>
-                    <li class="{{ Request::is('mu/role-permission') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('role-permission.index') }}">Role Permission</a>
+                    <li class="{{ Request::is('mu/rolepermission*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('rolepermission.index') }}">Role Permission</a>
                     </li>
                 </ul>
             </li>
@@ -103,9 +100,7 @@
         </ul>
 
         <div class="hide-sidebar-mini mt-4 mb-4 p-3">
-            <a href="{{ route('documentation.index')}}" class="btn btn-primary btn-lg btn-block btn-icon-split">
-                <i class="fas fa-rocket"></i> Documentation
-            </a>
+
         </div>
     </aside>
 </div>

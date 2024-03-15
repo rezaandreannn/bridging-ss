@@ -28,7 +28,6 @@
         gtag('js', new Date());
 
         gtag('config', 'UA-94034622-3');
-
     </script>
     <!-- END GA -->
 </head>
@@ -58,12 +57,12 @@
     <script src="{{ asset('library/jquery.nicescroll/dist/jquery.nicescroll.min.js') }}"></script>
     <script src="{{ asset('library/moment/min/moment.min.js') }}"></script>
     <script src="{{ asset('js/stisla.js') }}"></script>
-
-    @stack('scripts')
-
     <!-- Template JS File -->
     <script src="{{ asset('js/scripts.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
+    @stack('scripts')
+
+
 
     @include('sweetalert::alert')
 

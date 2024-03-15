@@ -51,6 +51,23 @@
                                     </div>
                                 </div>
                                 <div class="form-group row mb-4">
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Role</label>
+                                    <div class="col-sm-12 col-md-7">
+                                        <select name="roles[]" id="role" class="form-control select2" multiple="multiple" data-placeholder="Select a role" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                            @foreach ($roles as $role)
+                                            @php $Selected = false; @endphp
+                                            @foreach ($user->roles as $userRole)
+                                            @if ($userRole->name == $role->name)
+                                            @php $Selected = true; @endphp
+                                            @break
+                                            @endif
+                                            @endforeach
+                                            <option value="{{ $role->name }}" {{ $Selected ? 'selected' : ''}}>{{ $role->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-4">
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
                                     <div class="col-sm-12 col-md-7">
                                         <button type="submit" class="btn btn-primary">Simpan</button>
