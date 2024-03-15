@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -26,45 +27,43 @@ class UserController extends Controller
     {
         $title = $this->prefix . ' ' . 'Index';
         $roles = Role::all();
+        $permissions = Permission::all();
         $users = User::with('roles')->get();
-        return view($this->view . 'index', compact('title', 'users', 'roles'));
+        return view($this->view . 'index', compact('title', 'users', 'roles', 'permissions'));
     }
 
     public function create()
     {
         $title = 'Create' . ' ' . $this->prefix;
         $roles = Role::all();
+        $permissions = Permission::all();
         $users = User::select('name', 'email', 'password')->get();
-        return view($this->view . 'create', compact('title', 'users', 'roles'));
+        return view($this->view . 'create', compact('title', 'users', 'roles', 'permissions'));
     }
 
     public function store(Request $request)
     {
-        $title = 'Index' . ' ' . $this->prefix;
-        // Validasi input
-        $validatedData = $request->validate([
+        $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
+            'email' => ['nullable', 'string', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed'],
         ]);
 
-        try {
-            // Simpan data pengguna
-            $user = User::create([
-                'name' => $validatedData['name'],
-                'email' => $validatedData['email'],
-                'password' => Hash::make($validatedData['password']),
-            ]);
-            if ($request->roles) {
-                $user->assignRole([$request->roles]);
-            }
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
 
-            $message = 'Data has been Add successfully.';
-            return redirect()->route($this->routeIndex)->with('toast_success', $message);
-        } catch (\Exception $e) {
-            // Tangani kesalahan
-            return redirect()->back()->with('error', 'Terjadi kesalahan saat menambahkan pengguna.');
+        if ($request->roles) {
+            $user->assignRole($request->roles);
         }
+
+        if ($request->permissions) {
+            $user->givePermissionTo($request->permissions);
+        }
+        $message = 'Data has been Add successfully.';
+        return redirect()->route($this->routeIndex)->with('toast_success', $message);
     }
 
     public function edit($id)
@@ -72,8 +71,9 @@ class UserController extends Controller
         $title = 'Edit' . ' ' . $this->prefix;
         $user = User::where('id', $id)->first();
         $roles = Role::all();
+        $permissions = Permission::all();
         $users = User::select('name', 'email', 'password')->get();
-        return view($this->view . 'edit', compact('title', 'user', 'users', 'roles'));
+        return view($this->view . 'edit', compact('title', 'user', 'users', 'roles', 'permissions'));
     }
 
     public function update($id, Request $request)
@@ -102,12 +102,11 @@ class UserController extends Controller
             }
             $user->update($user_data);
             if ($request->roles) {
+                $user->syncRoles($request->roles);
+            }
 
-                if (!$user->hasRole([$request->roles])) {
-
-                    $user->assignRole($request->roles);
-                }
-                $user->syncRoles([$request->roles]);
+            if ($request->permissions) {
+                $user->syncPermissions($request->permissions);
             }
 
             $message = 'Data has been updated successfully.';
