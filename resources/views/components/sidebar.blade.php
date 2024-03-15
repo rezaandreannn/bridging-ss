@@ -20,6 +20,7 @@
                 </ul>
             </li>
             <li class="menu-header">RSUMM</li>
+            @can('read master data')
             <li class="nav-item dropdown {{ Request::is('md*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Master Data</span></a>
                 <ul class="dropdown-menu">
@@ -37,6 +38,8 @@
                     </li>
                 </ul>
             </li>
+            @endcan
+
             <li class="nav-item dropdown {{ Request::is('kj*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Kunjungan</span></a>
                 <ul class="dropdown-menu">
