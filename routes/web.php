@@ -104,7 +104,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('mp')->name('mapping.')->group(function () {
         // ENCOUNTER
         Route::get('encounter', [MappingEncounterController::class, 'index'])->name('encounter.index');
-        Route::get('/encounter/{id}/edit', [MappingEncounterController::class, 'edit']);
+        Route::get('encounter/{id}/edit', [MappingEncounterController::class, 'edit'])->name('encounter.edit');
         Route::get('encounter/create', [MappingEncounterController::class, 'create'])->name('encounter.create');
         Route::post('encounter', [MappingEncounterController::class, 'store'])->name('encounter.store');
     });

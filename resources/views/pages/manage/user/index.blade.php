@@ -38,6 +38,7 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Role</th>
+                                    <th>Permission</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -50,7 +51,6 @@
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
                                     <td>
-
                                         <button type="button" class="badge border-0
                                              @if($user->roles->count() > 1)
                                                     badge-primary
@@ -65,6 +65,24 @@
                                             {{ $user->roles[0]->name }}
                                             @else
                                             Not Role
+                                            @endif
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="badge border-0
+                                             @if($user->permissions->count() > 1)
+                                                    badge-primary
+                                                @elseif($user->permissions->count() == 1)
+                                                    badge-success
+                                                @else
+                                                    badge-danger
+                                                @endif" data-toggle="modal" data-target="#changeRole{{ $user->permissions->count() > 1 ? $user->id : ''}}">
+                                            @if($user->permissions->count() > 1)
+                                            {{$user->permissions->count()}} Role
+                                            @elseif($user->permissions->count() == 1)
+                                            {{ $user->permissions[0]->name }}
+                                            @else
+                                            Not Permission
                                             @endif
                                         </button>
                                     </td>

@@ -58,10 +58,20 @@
                                 <div class="form-group row mb-4">
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Role</label>
                                     <div class="col-sm-12 col-md-7">
-                                        <select name="roles[]" id="role" class="form-control select2" multiple="multiple" data-placeholder="Select a role" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                        <select class="form-control select2" name="roles">
                                             <option value="">-- Select a role --</option>
                                             @foreach ($roles as $role)
                                             <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-4">
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Permission</label>
+                                    <div class="col-sm-12 col-md-7">
+                                        <select name="permissions[]" id="permission" class="form-control select2" multiple="multiple" data-placeholder="Select a permission" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                            @foreach ($permissions as $permission)
+                                            <option value="{{ $permission->name }}">{{ $permission->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
