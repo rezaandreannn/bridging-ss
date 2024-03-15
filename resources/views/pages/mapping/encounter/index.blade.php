@@ -58,7 +58,7 @@
                                 </td>
                                 <td>{{$encounter->type}}</td>
                                 <td width="15%">
-                                    <a href="{{ route('user.edit', $encounter->id )}}" class="btn btn-warning"><i class="far fa-edit"></i></a>
+                                    <a href="{{ route('mapping.encounter.edit', $encounter->id )}}" class="btn btn-warning"><i class="far fa-edit"></i></a>
                                     <a href="" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                                 </td>
                             </tr>
