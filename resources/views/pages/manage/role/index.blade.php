@@ -17,7 +17,7 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="">Manage User</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('roles.index') }}">Manage User</a></div>
                 <div class="breadcrumb-item">Role</div>
             </div>
         </div>
@@ -25,7 +25,7 @@
         <div class="section-body">
             <div class="card">
                 <div class="card-header">
-                    <a href="{{ route('role.create')}}" class="btn btn-primary rounded-0">New Data</a>
+                    <a href="{{ route('roles.create')}}" class="btn btn-primary rounded-0">New Data</a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -68,7 +68,7 @@
                                         </button>
                                     </td>
                                     <td width="15%">
-                                        <a href="{{ route('role.edit', $role->id )}}" class="btn btn-warning"><i class="far fa-edit"></i></a>
+                                        <a href="{{ route('roles.edit', $role->id )}}" class="btn btn-warning"><i class="far fa-edit"></i></a>
                                         <button id="delete" data-id="{{ $role->id }}" data-nama="{{ $role->name }}" data-bs-toggle="tooltip" class="btn btn-danger"><i class="fas fa-trash"></i></button>
                                     </td>
                                 </tr>
@@ -107,7 +107,7 @@
             })
             .then((willDelete) => {
                 if (willDelete) {
-                    window.location = "{{ route('role.delete', ['id' => ':id']) }}".replace(':id', role);
+                    window.location = "{{ route('roles.delete', ['id' => ':id']) }}".replace(':id', role);
                     swal("Data successfully deleted!", {
                         icon: "success",
                     });

@@ -138,15 +138,16 @@ class MappingEncounterController extends Controller
      */
     public function edit($id)
     {
-        $title = 'Edit' . ' ' . $this->prefix;
-        $encouter = MappingEncounter::where('id', $id)->first();
-        $dokters = $this->dokter;
+        $title = 'Edit Mapping Encounter';
+
+        $encounter = MappingEncounter::findOrFail($id);
+        $encounterTypes = MappingEncounter::TYPE;
         $organizations = Organization::where('name', 'like', '%rawat jalan%')
             ->orWhere('name', 'like', '%igd%')
             ->pluck('name', 'organization_id');
-
         $locations = Location::where('name', 'like', '%ruang%')->get();
-        return view($this->viewPath . 'edit', compact('title', 'encouter', 'dokters', 'organizations', 'locations'));
+        $dokters = $this->dokter;
+        return view($this->viewPath . 'edit', compact('title', 'encounterTypes', 'encounter', 'dokters', 'organizations', 'locations'));
     }
 
     /**
@@ -156,9 +157,26 @@ class MappingEncounterController extends Controller
      * @param  \App\Models\Mapping\MappingEncounter  $mappingEncounter
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MappingEncounter $mappingEncounter)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'encounter_type' => 'required',
+            'organization' => 'required',
+            'location' => 'required',
+            'kode_dokter' => 'required',
+            'status' => 'nullable|boolean', // Validate status field as boolean
+        ]);
+
+        $encounter = MappingEncounter::findOrFail($id);
+        $encounter->encounter_type = $request->encounter_type;
+        $encounter->organization_id = $request->organization;
+        $encounter->location_id = $request->location;
+        $encounter->kode_dokter = $request->kode_dokter;
+        $encounter->status = $request->has('status'); // Set status based on checkbox value
+        $encounter->save();
+
+        $message = 'Data has been updated successfully.';
+        return redirect()->route($this->routeIndex)->with('toast_success', $message);
     }
 
     /**

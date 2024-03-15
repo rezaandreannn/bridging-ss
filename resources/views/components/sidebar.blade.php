@@ -63,13 +63,13 @@
                     <li class="{{ Request::is('mu/user*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('user.index') }}">User</a>
                     </li>
-                    <li class="{{ Request::is('mu/role*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('role.index') }}">Role</a>
+                    <li class="{{ Request::is('mu/roles*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('roles.index') }}">Role</a>
                     </li>
                     <li class="{{ Request::is('mu/permission*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('permission.index') }}">Permission</a>
                     </li>
-                    <li class="{{ Request::is('mu/rolepermission*') ? 'active' : '' }}">
+                    <li class="{{ Request::is('mu/role-permission*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('rolepermission.index') }}">Role Permission</a>
                     </li>
                 </ul>

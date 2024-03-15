@@ -13,15 +13,15 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('role.index') }}">Manage User</a></div>
-                <div class="breadcrumb-item"><a href="{{ route('role.index') }}">Role</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('roles.index') }}">Manage User</a></div>
+                <div class="breadcrumb-item"><a href="{{ route('roles.index') }}">Role</a></div>
                 <div class="breadcrumb-item">Create Role</div>
             </div>
         </div>
 
         <div class="section-body">
 
-            <form action="{{ route('role.store') }}" method="post">
+            <form action="{{ route('roles.store') }}" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-12">
