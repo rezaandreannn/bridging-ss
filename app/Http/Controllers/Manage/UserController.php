@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -24,15 +25,17 @@ class UserController extends Controller
     public function index()
     {
         $title = $this->prefix . ' ' . 'Index';
-        $users = User::all();
-        return view($this->view . 'index', compact('title', 'users'));
+        $roles = Role::all();
+        $users = User::with('roles')->get();
+        return view($this->view . 'index', compact('title', 'users', 'roles'));
     }
 
     public function create()
     {
         $title = 'Create' . ' ' . $this->prefix;
-        $users = User::select('name', 'email','password')->get();
-        return view($this->view . 'create', compact('title', 'users'));
+        $roles = Role::all();
+        $users = User::select('name', 'email', 'password')->get();
+        return view($this->view . 'create', compact('title', 'users', 'roles'));
     }
 
     public function store(Request $request)
@@ -41,7 +44,7 @@ class UserController extends Controller
         // Validasi input
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed'],
         ]);
 
@@ -52,6 +55,9 @@ class UserController extends Controller
                 'email' => $validatedData['email'],
                 'password' => Hash::make($validatedData['password']),
             ]);
+            if ($request->roles) {
+                $user->assignRole([$request->roles]);
+            }
 
             $message = 'Data has been Add successfully.';
             return redirect()->route($this->routeIndex)->with('toast_success', $message);
@@ -65,8 +71,9 @@ class UserController extends Controller
     {
         $title = 'Edit' . ' ' . $this->prefix;
         $user = User::where('id', $id)->first();
+        $roles = Role::all();
         $users = User::select('name', 'email', 'password')->get();
-        return view($this->view . 'edit', compact('title', 'user', 'users'));
+        return view($this->view . 'edit', compact('title', 'user', 'users', 'roles'));
     }
 
     public function update($id, Request $request)
@@ -94,6 +101,14 @@ class UserController extends Controller
                 ];
             }
             $user->update($user_data);
+            if ($request->roles) {
+
+                if (!$user->hasRole([$request->roles])) {
+
+                    $user->assignRole($request->roles);
+                }
+                $user->syncRoles([$request->roles]);
+            }
 
             $message = 'Data has been updated successfully.';
             return redirect()->route($this->routeIndex)->with('toast_success', $message);
@@ -110,6 +125,4 @@ class UserController extends Controller
         $message = 'Data has been deleted successfully.';
         return redirect()->route($this->routeIndex)->with('toast_success', $message);
     }
-
-
 }

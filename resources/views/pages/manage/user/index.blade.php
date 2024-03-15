@@ -37,6 +37,7 @@
                                     </th>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Role</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -48,6 +49,25 @@
                                     </td>
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
+                                    <td>
+
+                                        <button type="button" class="badge border-0
+                                             @if($user->roles->count() > 1)
+                                                    badge-primary
+                                                @elseif($user->roles->count() == 1)
+                                                    badge-success
+                                                @else
+                                                    badge-danger
+                                                @endif" data-toggle="modal" data-target="#changeRole{{ $user->roles->count() > 1 ? $user->id : ''}}">
+                                            @if($user->roles->count() > 1)
+                                            {{$user->roles->count()}} Role
+                                            @elseif($user->roles->count() == 1)
+                                            {{ $user->roles[0]->name }}
+                                            @else
+                                            Not Role
+                                            @endif
+                                        </button>
+                                    </td>
                                     <td width="15%">
                                         <a href="{{ route('user.edit', $user->id )}}" class="btn btn-warning"><i class="far fa-edit"></i></a>
                                         <button id="delete" data-id="{{ $user->id }}" data-nama="{{ $user->name }}" data-bs-toggle="tooltip" class="btn btn-danger"><i class="fas fa-trash"></i></button>

@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="{{ asset('library/datatables/datatables.min.css') }}">
 <link rel="stylesheet" href="{{ asset('library/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('library/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
-
 <!-- <link rel="stylesheet" href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}"> -->
 @endpush
 
@@ -409,7 +408,7 @@
                                 </div>
                                 <div class="accordion-body collapse" id="panel-body-14" data-parent="#accordion">
                                     <div class="table-responsive">
-                                        <table class="table-striped table">
+                                        <table class="table-striped table table-width">
                                             <thead>
                                                 <tr>
                                                     <th class="text-center">Encounter.location.extension:serviceClass.upgradeClassIndicator.valueCodeableConcept.coding.system</th>
@@ -421,10 +420,10 @@
                                             <tbody>
                                                 @foreach($e_indicator as $indicator)
                                                 <tr>
-                                                    <td>{{ $indicator['coding_system']}}</td>
-                                                    <td>{{ $indicator['coding_code']}}</td>
-                                                    <td>{{ $indicator['coding_display']}}</td>
-                                                    <td>{{ $indicator['keterangan']}}</td>
+                                                    <td class="text-center">{{ $indicator['coding_system']}}</td>
+                                                    <td class="text-center">{{ $indicator['coding_code']}}</td>
+                                                    <td class="text-center">{{ $indicator['coding_display']}}</td>
+                                                    <td class="text-center">{{ $indicator['keterangan']}}</td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>

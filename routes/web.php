@@ -1,21 +1,22 @@
 <?php
 
-use App\Http\Controllers\Case\Encounter\EncounterCreate;
-use App\Http\Controllers\Case\Encounter\EncounterCreateController;
-use App\Http\Controllers\DocumentationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Manage\RoleController;
+use App\Http\Controllers\Manage\UserController;
+use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\Kunjungan\AntreanController;
+use App\Http\Controllers\Manage\PermissionController;
 use App\Http\Controllers\MasterData\DokterController;
 use App\Http\Controllers\MasterData\PasienController;
+use App\Http\Controllers\Encounter\RecourceController;
+use App\Http\Controllers\MasterData\LocationController;
+use App\Http\Controllers\Case\Encounter\EncounterCreate;
 use App\Http\Controllers\Kunjungan\PendaftaranController;
-use App\Http\Controllers\Manage\PermissionController;
-use App\Http\Controllers\Manage\RoleController;
+use App\Http\Controllers\MasterData\OrganizationController;
 use App\Http\Controllers\Manage\RoleHasPermissionController;
 use App\Http\Controllers\Mapping\MappingEncounterController;
-use App\Http\Controllers\Manage\UserController;
-use App\Http\Controllers\MasterData\LocationController;
-use App\Http\Controllers\MasterData\OrganizationController;
+use App\Http\Controllers\Case\Encounter\EncounterCreateController;
 
 
 /*
@@ -72,6 +73,12 @@ Route::middleware('auth')->group(function () {
         Route::patch('/location/{location_id}', [LocationController::class, 'update'])->name('location.update');
     });
 
+    // ENCOUNTER 
+    Route::prefix('ec')->group(function () {
+        Route::get('/encounter-resource', [RecourceController::class, 'index'])->name('encounter.resource');
+    });
+
+
     // CASE 
     Route::prefix('case')->name('case.')->group(function () {
         Route::get('encounter/create/{noReg}', EncounterCreateController::class)->name('encounter.create');
@@ -97,6 +104,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('mp')->name('mapping.')->group(function () {
         // ENCOUNTER
         Route::get('encounter', [MappingEncounterController::class, 'index'])->name('encounter.index');
+        Route::get('/encounter/{id}/edit', [MappingEncounterController::class, 'edit']);
         Route::get('encounter/create', [MappingEncounterController::class, 'create'])->name('encounter.create');
         Route::post('encounter', [MappingEncounterController::class, 'store'])->name('encounter.store');
     });
@@ -128,9 +136,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/permission/delete/{id}', [PermissionController::class, 'destroy'])->name('permission.delete');
 
         // ROLE-PERMISSION
-        Route::get('/role-permission', [RoleHasPermissionController::class, 'index'])->name('role-permission.index');
-        Route::get('/role-permission/{id}', [RoleHasPermissionController::class, 'getPermission'])->name('role-permission.edit');
-        Route::post('/role-permission/hasPermission', [RoleHasPermissionController::class, 'hasPermission'])->name('rolePermission.postPermission');
+        Route::get('/role-permission', [RoleHasPermissionController::class, 'index'])->name('rolepermission.index');
+        Route::get('/role-permission/{id}', [RoleHasPermissionController::class, 'getPermission'])->name('rolepermission.edit');
+        Route::post('/role-permission/hasPermission', [RoleHasPermissionController::class, 'hasPermission'])->name('rolepermission.postPermission');
     });
 
     // DOCUMENTATION
@@ -139,8 +147,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/docs-organization', [DocumentationController::class, 'organization'])->name('docs.organization');
         Route::get('/docs-encounter', [DocumentationController::class, 'encounter'])->name('docs.encounter');
     });
-
-
 
     // credits
     Route::get('/documentation', [DocumentationController::class, 'index'])->name('documentation.index');

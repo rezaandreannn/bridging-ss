@@ -46,9 +46,9 @@
                                 <td class="text-center" width="5%">
                                     {{ $loop->iteration}}
                                 </td>
-                                <td>{{$encounter->practitioner_display}}</td>
-                                <td>{{$encounter->organization_id}}</td>
-                                <td>{{ $encounter->location_display}}</td>
+                                <td>{{ $encounter->practitioner_display }}</td>
+                                <td>{{ $encounter->organization_id }}</td>
+                                <td>{{ $encounter->location_display }}</td>
                                 <td>
                                     @if($encounter->status == true)
                                     <div class="badge badge-success">active</div>
@@ -58,7 +58,7 @@
                                 </td>
                                 <td>{{$encounter->type}}</td>
                                 <td width="15%">
-                                    <a href="" class="btn btn-warning"><i class="far fa-edit"></i></a>
+                                    <a href="{{ route('update.edit', $encounter->id )}}" class="btn btn-warning"><i class="far fa-edit"></i></a>
                                     <a href="" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                                 </td>
                             </tr>
