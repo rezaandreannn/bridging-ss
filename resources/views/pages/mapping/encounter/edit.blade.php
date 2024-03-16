@@ -14,9 +14,9 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="">Master Data</a></div>
-                <div class="breadcrumb-item"><a href="">Organization</a></div>
-                <div class="breadcrumb-item">Create Organization</div>
+                <div class="breadcrumb-item active"><a href="{{ route('mapping.encounter.index') }}">Mappings</a></div>
+                <div class="breadcrumb-item"><a href="{{ route('mapping.encounter.index') }}">Encounter</a></div>
+                <div class="breadcrumb-item">Edit Mapping Encounter</div>
             </div>
         </div>
 
