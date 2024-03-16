@@ -15,7 +15,7 @@ class RecourceController extends Controller
     public function __construct()
     {
         $this->view = 'pages.encounter.';
-        $this->routeIndex = 'encounter.resource';
+        $this->routeIndex = 'resource.index';
         $this->prefix = 'Encounter';
     }
 
@@ -23,6 +23,13 @@ class RecourceController extends Controller
     {
         $title = $this->prefix . ' ' . 'Index';
         $Encounters = Encounter::all();
-        return view($this->view . 'resource', compact('title', 'Encounters'));
+        return view($this->view . 'index', compact('title', 'Encounters'));
+    }
+
+    public function edit($id)
+    {
+        $title = $this->prefix . ' ' . 'Edit';
+        $encounter = Encounter::findOrFail($id);
+        return view($this->view . 'edit', compact('title'));
     }
 }

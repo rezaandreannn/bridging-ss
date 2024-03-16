@@ -8,17 +8,7 @@
         </div>
         <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Dashboard</span></a>
-                <ul class="dropdown-menu">
-                    <li class='{{ Request::is('dashboard-general-dashboard') ? 'active' : '' }}'>
-                        <a class="nav-link" href="{{ url('dashboard-general-dashboard') }}">General Dashboard</a>
-                    </li>
-                    <li class="{{ Request::is('dashboard-ecommerce-dashboard') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ url('dashboard-ecommerce-dashboard') }}">Ecommerce Dashboard</a>
-                    </li>
-                </ul>
-            </li>
+            <li><a class="nav-link" href="{{ url('dashboard-general-dashboard') }}"><i class="fas fa-dashboard"></i> <span>Dashboard</span></a></li>
             <li class="menu-header">RSUMM</li>
             <li class="nav-item dropdown {{ Request::is('md*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Master Data</span></a>
@@ -52,7 +42,7 @@
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Encounter</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('ec/encounter-resource') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('encounter.resource') }}">Resource</a>
+                        <a class="nav-link" href="{{ route('resource.index') }}">Resource</a>
                     </li>
                 </ul>
             </li>
@@ -84,7 +74,7 @@
             </li>
             <li class="menu-header">Docs</li>
             <li class="nav-item dropdown  {{ Request::is('dc*') ? 'active' : '' }}">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-rocket"></i><span>Documentation</span></a>
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-rocket"></i><span>Terminology</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('dc/docs-location') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('docs.location') }}">Location</a>

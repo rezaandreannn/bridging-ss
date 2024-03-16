@@ -15,8 +15,8 @@
             <h1>Detail Pasien</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="#">Master Data</a></div>
-                <div class="breadcrumb-item"><a href="#">Organization</a></div>
-                <div class="breadcrumb-item">Detail Organization</div>
+                <div class="breadcrumb-item"><a href="#">Patient</a></div>
+                <div class="breadcrumb-item">Detail Patient</div>
             </div>
         </div>
 
@@ -39,14 +39,14 @@
                                                 Pasien ID
                                             </div>
                                             <div class="col-md-8">
-                                                : {{ $request['id'] ?? ''}}
+                                                : {{ $request['data']['no_mr'] ?? ''}}
                                             </div>
                                             <div class="col-md-4">
                                                 Name
                                             </div>
                                             <div class="col-md-8">
                                                 : {{ $request['no_mr'] ?? ''}}
-                                                
+
                                             </div>
                                             <div class="col-md-4">
                                                 BPJS
@@ -75,7 +75,7 @@
                                             </div>
                                             <div class="col-md-8">
                                                 : {{ $request['tanggal_lahir'] ?? ''}}
-                                            
+
                                             </div>
                                             <div class="col-md-4">
                                                 Jenis Kelamin
