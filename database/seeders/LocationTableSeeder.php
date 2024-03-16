@@ -114,9 +114,6 @@ class LocationTableSeeder extends Seeder
             $result = $this->location->getRequest('Location/7aa2e309-1a9f-4620-8433-5e44958f9b6f');
         }
 
-        dd($result);
-
-
         $organizationId = $result['managingOrganization']['reference'];
         $parts = explode('/', $organizationId);
 

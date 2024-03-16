@@ -56,7 +56,8 @@
                                 <td>{{ $item['email'] }}</td>
                                 <td>{{ $item['nik'] }}</td>
                                 <td width="15%">
-                                    <a href="{{ route('dokter.edit', $item['kode_dokter'] )}}" class="btn btn-warning"><i class="far fa-edit"></i></a>
+                                    <button class="btn btn-warning" disabled><i class="far fa-edit"></i></button>
+                                    <!-- <a href="javascript: void(0)" class="btn btn-warning"><i class="far fa-edit"></i></a> -->
                                     <a href="{{ route('dokter.show', $item['kode_dokter'] )}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                                 </td>
                             </tr>
@@ -81,4 +82,12 @@
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
 
 <!-- Page Specific JS File -->
+<script>
+    function disableLink() {
+        // Mengakses elemen tautan menggunakan ID
+        var link = document.getElementById("myLink");
+        // Menghapus atribut 'href' untuk menonaktifkan tautan
+        link.removeAttribute("href");
+    }
+</script>
 @endpush

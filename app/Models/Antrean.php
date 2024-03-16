@@ -27,7 +27,7 @@ class Antrean extends Model
                 $queryParams['kode_dokter'] = $kode_dokter;
             }
             if ($tanggal !== null) {
-                $queryParams['tanggal'] = date('Y-m-d'); // Tanggal sekarang;
+                $queryParams['tanggal'] = $tanggal ?? date('Y-m-d'); // Tanggal sekarang;
             }
             // Mengirim permintaan HTTP dengan query parameters
             $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/antrean?kode_dokter', [

@@ -1,10 +1,10 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="index.html">SIMRS</a>
+            <a href="index.html">SIMRS-BRIDGE</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
-            <a href="index.html">MR</a>
+            <a href="index.html">SB</a>
         </div>
         <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>
