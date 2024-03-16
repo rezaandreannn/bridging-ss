@@ -118,7 +118,7 @@ class EncounterCreateController extends Controller
             return redirect()->back()->with('success', $message);
         } catch (\Throwable $th) {
             $errorMessage = $th->getMessage();
-            return redirect()->back()->with('errro', $errorMessage);
+            return redirect()->back()->with('error', $errorMessage);
         }
 
         //    redirect view
