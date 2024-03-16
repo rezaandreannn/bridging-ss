@@ -105,9 +105,17 @@ class LocationTableSeeder extends Seeder
     public function run()
     {
         $organizationId = env('SATU_SEHAT_ORGANIZATION_ID');
+        $appEnv = env('APP_ENV');
 
-        $result = $this->location->getRequest('Location/7aa2e309-1a9f-4620-8433-5e44958f9b6f');
-        // $result = $this->location->getRequest('Location/5788aefe-e721-45b5-abf5-9ea38fb074da'); //prod
+        if ($appEnv == 'production') {
+            $result = $this->location->getRequest('Location/5788aefe-e721-45b5-abf5-9ea38fb074da'); //prod
+
+        } else {
+            $result = $this->location->getRequest('Location/7aa2e309-1a9f-4620-8433-5e44958f9b6f');
+        }
+
+        dd($result);
+
 
         $organizationId = $result['managingOrganization']['reference'];
         $parts = explode('/', $organizationId);

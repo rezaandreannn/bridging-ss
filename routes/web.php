@@ -92,6 +92,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/pendaftaran', [PendaftaranController::class, 'index'])->name('pendaftaran.index');
         Route::get('/pendaftaran/create', [PendaftaranController::class, 'create'])->name('pendaftaran.create');
         Route::post('/pendaftaran', [PendaftaranController::class, 'store'])->name('pendaftaran.store');
+        Route::get('/pendaftaran/{noReg}', [PendaftaranController::class, 'show'])->name('pendaftaran.show');
 
         // PASIEN
         Route::get('/antrean', [AntreanController::class, 'index'])->name('antrean.index');

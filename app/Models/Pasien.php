@@ -56,7 +56,9 @@ class Pasien extends Model
 
     public function getByNoMR($noMr)
     {
-        $response = Http::get('https://daftar.rsumm.co.id/api.simrs/pasien/' . $noMr);
-        return $response->json();
+        $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/pasien/detail/' . $noMr);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
     }
 }
