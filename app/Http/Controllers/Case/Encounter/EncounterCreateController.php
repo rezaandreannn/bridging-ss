@@ -90,6 +90,13 @@ class EncounterCreateController extends Controller
             'statusHistory' => 'arrived'
         ];
 
+        // cek button is active jika belum send dataa
+        $dbEncounter = new Encounter();
+        $dbWhere = $dbEncounter->where('kode_register', $noReg)->first();
+        if ($dbWhere) {
+            return redirect()->back()->with('error', 'Data already exists.');
+        }
+
         try {
             // send API
             $resultApi = $this->encounterService->postRequest('Encounter', $body);
