@@ -75,7 +75,8 @@ Route::middleware('auth')->group(function () {
 
     // ENCOUNTER 
     Route::prefix('ec')->group(function () {
-        Route::get('/encounter-resource', [RecourceController::class, 'index'])->name('encounter.resource');
+        Route::get('/encounter-resource', [RecourceController::class, 'index'])->name('resource.index');
+        Route::get('/encounter-resource/{id}/edit', [RecourceController::class, 'edit'])->name('resource.edit');
     });
 
 
@@ -91,6 +92,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/pendaftaran', [PendaftaranController::class, 'index'])->name('pendaftaran.index');
         Route::get('/pendaftaran/create', [PendaftaranController::class, 'create'])->name('pendaftaran.create');
         Route::post('/pendaftaran', [PendaftaranController::class, 'store'])->name('pendaftaran.store');
+        Route::get('/pendaftaran/{noReg}', [PendaftaranController::class, 'show'])->name('pendaftaran.show');
 
         // PASIEN
         Route::get('/antrean', [AntreanController::class, 'index'])->name('antrean.index');
@@ -107,6 +109,7 @@ Route::middleware('auth')->group(function () {
         Route::get('encounter/{id}/edit', [MappingEncounterController::class, 'edit'])->name('encounter.edit');
         Route::get('encounter/create', [MappingEncounterController::class, 'create'])->name('encounter.create');
         Route::post('encounter', [MappingEncounterController::class, 'store'])->name('encounter.store');
+        Route::put('/encounter{id}', [MappingEncounterController::class, 'update'])->name('encounter.update');
     });
 
     // MANAGE USER
@@ -120,12 +123,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/user/delete/{id}', [UserController::class, 'destroy'])->name('user.delete');
 
         // ROLES
-        Route::get('/role', [RoleController::class, 'index'])->name('role.index');
-        Route::get('/role/create', [RoleController::class, 'create'])->name('role.create');
-        Route::get('/role/{id}/edit', [RoleController::class, 'edit'])->name('role.edit');
-        Route::post('/role', [RoleController::class, 'store'])->name('role.store');
-        Route::put('/role{id}', [RoleController::class, 'update'])->name('role.update');
-        Route::get('/role/delete/{id}', [RoleController::class, 'destroy'])->name('role.delete');
+        Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
+        Route::get('/roles/create', [RoleController::class, 'create'])->name('roles.create');
+        Route::get('/roles/{id}/edit', [RoleController::class, 'edit'])->name('roles.edit');
+        Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
+        Route::put('/roles{id}', [RoleController::class, 'update'])->name('roles.update');
+        Route::get('/roles/delete/{id}', [RoleController::class, 'destroy'])->name('roles.delete');
 
         // PERMISSION
         Route::get('/permission', [PermissionController::class, 'index'])->name('permission.index');

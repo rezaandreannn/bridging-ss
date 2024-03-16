@@ -12,11 +12,11 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Detail pasiens</h1>
+            <h1>Detail Pendaftaran</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('pasien.index') }}">Kunjungan</a></div>
-                <div class="breadcrumb-item"><a href="{{ route('pasien.index') }}">Pasien</a></div>
-                <div class="breadcrumb-item">Detail Pasien</div>
+                <div class="breadcrumb-item active"><a href="{{ route('pendaftaran.index') }}">Kunjungan</a></div>
+                <div class="breadcrumb-item"><a href="{{ route('pendaftaran.index') }}">Pendaftaran</a></div>
+                <div class="breadcrumb-item">Detail Pendaftaran</div>
             </div>
         </div>
 
@@ -26,9 +26,9 @@
                     <div class="card author-box card-primary">
                         <div class="card-body">
                             <div class="author-box-name">
-                                <a href="#">{{ $pasiens['nama_pasien'] ?? ''}} - ( {{ $pasiens['no_mr'] ?? ''}} )</a>
+                                <a href="#">{{ $pendaftaran['nama_pasien'] ?? ''}} - ( {{ $pendaftaran['no_mr'] ?? ''}} )</a>
                             </div>
-                            <div class="author-box-job"><b>NIK : {{ $pasiens['nik'] ?? ''}}</b></div>
+                            <div class="author-box-job"><b>NIK : {{ $pendaftaran['nik'] ?? ''}}</b></div>
                             <div class="author-box-description">
                                 <div class="row">
                                     <div class="col-12 col-md-6">
@@ -37,26 +37,26 @@
                                                 No Registrasi
                                             </div>
                                             <div class="col-md-8">
-                                                : {{ $pasiens['no_registrasi'] ?? ''}}
+                                                : {{ $pendaftaran['no_registrasi'] ?? ''}}
                                             </div>
                                             <div class="col-md-4">
                                                 Status Rawat
                                             </div>
                                             <div class="col-md-8">
-                                                : {{ $pasiens['status_rawat'] ?? ''}}
+                                                : {{ $pendaftaran['status_rawat'] ?? ''}}
 
                                             </div>
                                             <div class="col-md-4">
                                                 Rekanan
                                             </div>
                                             <div class="col-md-8">
-                                                : {{ $pasiens['nama_rekanan'] ?? ''}}
+                                                : {{ $pendaftaran['nama_rekanan'] ?? ''}}
                                             </div>
                                             <div class="col-md-4">
                                                 Nama Dokter
                                             </div>
                                             <div class="col-md-8">
-                                                : {{ $pasiens['nama_dokter'] ?? ''}}
+                                                : {{ $pendaftaran['nama_dokter'] ?? ''}}
                                             </div>
                                         </div>
                                     </div>
@@ -66,7 +66,7 @@
                                                 Kode Dokter
                                             </div>
                                             <div class="col-md-8">
-                                                : {{ $pasiens['kode_dokter'] ?? ''}}
+                                                : {{ $pendaftaran['kode_dokter'] ?? ''}}
 
                                             </div>
                                             <div class="col-md-4">
@@ -79,13 +79,13 @@
                                                 Daftar By
                                             </div>
                                             <div class="col-md-8">
-                                                : {{ $pasiens['daftar_by'] ?? ''}}
+                                                : {{ $pendaftaran['daftar_by'] ?? ''}}
                                             </div>
                                             <div class="col-md-4">
                                                 Created By
                                             </div>
                                             <div class="col-md-8">
-                                                : {{ $pasiens['created_by'] ?? ''}}
+                                                : {{ $pendaftaran['created_by'] ?? ''}}
                                             </div>
                                         </div>
                                     </div>

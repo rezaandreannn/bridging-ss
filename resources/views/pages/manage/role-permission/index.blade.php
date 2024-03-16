@@ -24,17 +24,12 @@
 
         <div class="section-body">
             <div class="card">
-                <div class="card-header">
-
-                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table-striped table" id="table-1">
                             <thead>
                                 <tr>
-                                    <th class="text-center">
-                                        No
-                                    </th>
+                                    <th class="text-center">No</th>
                                     <th>Role Name</th>
                                     <th>Action</th>
                                 </tr>
@@ -42,9 +37,7 @@
                             <tbody>
                                 @foreach($roles as $role)
                                 <tr>
-                                    <td class="text-center" width="5%">
-                                        {{ $loop->iteration }}
-                                    </td>
+                                    <td class="text-center" width="5%">{{ $loop->iteration }}</td>
                                     <td>{{$role->name}}</td>
                                     <td width="15%">
                                         <a href="{{ route('rolepermission.edit', $role->id )}}" class="btn btn-warning"><i class="fas fa-user-lock"></i> Permission</a>

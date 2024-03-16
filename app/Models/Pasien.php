@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Pasien extends Model
 {
@@ -51,5 +52,13 @@ class Pasien extends Model
             // Tangani kesalahan
             return []; // Mengembalikan array kosong jika terjadi kesalahan
         }
+    }
+
+    public function getByNoMR($noMr)
+    {
+        $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/pasien/detail/' . $noMr);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
     }
 }

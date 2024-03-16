@@ -1,24 +1,14 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="index.html">SIMRS</a>
+            <a href="index.html">SIMRS-BRIDGE</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
-            <a href="index.html">MR</a>
+            <a href="index.html">SB</a>
         </div>
         <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Dashboard</span></a>
-                <ul class="dropdown-menu">
-                    <li class='{{ Request::is('dashboard-general-dashboard') ? 'active' : '' }}'>
-                        <a class="nav-link" href="{{ url('dashboard-general-dashboard') }}">General Dashboard</a>
-                    </li>
-                    <li class="{{ Request::is('dashboard-ecommerce-dashboard') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ url('dashboard-ecommerce-dashboard') }}">Ecommerce Dashboard</a>
-                    </li>
-                </ul>
-            </li>
+            <li><a class="nav-link" href="{{ url('dashboard-general-dashboard') }}"><i class="fas fa-dashboard"></i> <span>Dashboard</span></a></li>
             <li class="menu-header">RSUMM</li>
             @can('read master data')
             <li class="nav-item dropdown {{ Request::is('md*') ? 'active' : '' }}">
@@ -55,7 +45,7 @@
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Encounter</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('ec/encounter-resource') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('encounter.resource') }}">Resource</a>
+                        <a class="nav-link" href="{{ route('resource.index') }}">Resource</a>
                     </li>
                 </ul>
             </li>
@@ -66,13 +56,13 @@
                     <li class="{{ Request::is('mu/user*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('user.index') }}">User</a>
                     </li>
-                    <li class="{{ Request::is('mu/role*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('role.index') }}">Role</a>
+                    <li class="{{ Request::is('mu/roles*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('roles.index') }}">Role</a>
                     </li>
                     <li class="{{ Request::is('mu/permission*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('permission.index') }}">Permission</a>
                     </li>
-                    <li class="{{ Request::is('mu/rolepermission*') ? 'active' : '' }}">
+                    <li class="{{ Request::is('mu/role-permission*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('rolepermission.index') }}">Role Permission</a>
                     </li>
                 </ul>
@@ -87,7 +77,7 @@
             </li>
             <li class="menu-header">Docs</li>
             <li class="nav-item dropdown  {{ Request::is('dc*') ? 'active' : '' }}">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-rocket"></i><span>Documentation</span></a>
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-rocket"></i><span>Terminology</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('dc/docs-location') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('docs.location') }}">Location</a>

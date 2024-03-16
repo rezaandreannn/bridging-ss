@@ -65,7 +65,7 @@ class EncounterCreateController extends Controller
             return redirect()->back()->with('error', $errorMessage);
         }
         if ($mapEncounter->status == false) {
-            $errorMessage = 'Map Encounter By' . $mapEncounter->practitioner_display . 'status is inactive.';
+            $errorMessage = 'Map Encounter By' . $mapEncounter->practitioner_display . ' status is inactive.';
             return redirect()->back()->with('error', $errorMessage);
         }
         // get practitioner

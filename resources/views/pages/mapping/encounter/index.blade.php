@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Dokter')
+@section('title', 'Mappings')
 
 @push('style')
 <!-- CSS Libraries -->
@@ -17,8 +17,8 @@
         <div class="section-header">
             <h1>Mapping Encounter</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('dokter.index') }}">Master Data</a></div>
-                <div class="breadcrumb-item">Practicioner</div>
+                <div class="breadcrumb-item active"><a href="{{ route('mapping.encounter.index') }}">Mappings</a></div>
+                <div class="breadcrumb-item">Encounter</div>
             </div>
         </div>
 
@@ -58,7 +58,7 @@
                                 </td>
                                 <td>{{$encounter->type}}</td>
                                 <td width="15%">
-                                    <a href="{{ route('user.edit', $encounter->id )}}" class="btn btn-warning"><i class="far fa-edit"></i></a>
+                                    <a href="{{ route('mapping.encounter.edit', $encounter->id )}}" class="btn btn-warning"><i class="far fa-edit"></i></a>
                                     <a href="" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                                 </td>
                             </tr>

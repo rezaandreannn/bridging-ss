@@ -69,13 +69,13 @@ class PasienController extends Controller
         $params = [
             'identifier' => $nik
         ];
-
         // Make request to the API using PatientSatuSehatService
         $pasien = $this->patientSatuSehat->getRequest($this->endpoint, $params);
 
+        // Menggunakan model Dokter untuk mencari data berdasarkan kode dokter
+        $pasiens = $this->pasien->getByNoMR($noMr);
         // Pass the data to the view for rendering
-        return view($this->viewPath . 'detail', compact('pasien'));
-        
+        return view($this->viewPath . 'detail', compact('pasien', 'pasiens'));
     }
 
     public function edit()

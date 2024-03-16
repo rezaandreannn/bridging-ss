@@ -16,7 +16,7 @@ class RoleController extends Controller
     public function __construct()
     {
         $this->view = 'pages.manage.role.';
-        $this->routeIndex = 'role.index';
+        $this->routeIndex = 'roles.index';
         $this->prefix = 'Role';
     }
 
@@ -42,19 +42,14 @@ class RoleController extends Controller
             'guard_name' => ['required', 'string'],
         ]);
 
-        try {
-            // Simpan data pengguna
-            $role = Role::create([
-                'name' => $validatedData['name'],
-                'guard_name' => $validatedData['guard_name'],
-            ]);
+        // Simpan data pengguna
+        $role = Role::create([
+            'name' => $validatedData['name'],
+            'guard_name' => $validatedData['guard_name'],
+        ]);
 
-            $message = 'Data has been Add successfully.';
-            return redirect()->route($this->routeIndex)->with('toast_success', $message);
-        } catch (\Exception $e) {
-            // Tangani kesalahan
-            return redirect()->back()->with('error', 'Terjadi kesalahan saat menambahkan pengguna.');
-        }
+        $message = 'Data has been Add successfully.';
+        return redirect()->route($this->routeIndex)->with('toast_success', $message);
     }
 
     public function edit($id)

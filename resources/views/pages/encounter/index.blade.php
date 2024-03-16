@@ -17,16 +17,52 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('user.index') }}">Manage User</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('resource.index') }}">Manage User</a></div>
                 <div class="breadcrumb-item">User</div>
             </div>
         </div>
 
         <div class="section-body">
             <div class="card">
-                <div class="card-header">
-                    <a href="{{ route('user.create')}}" class="btn btn-primary rounded-0">New Data</a>
+                <div class="card-body">
+                    <form id="filterForm" action="" method="get">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="kode_dokter">Pilih Dokter</label>
+                                    <select class="form-control select2" id="kode_dokter" name="kode_dokter">
+                                        <option value="" selected disabled>-- Silahkan pilih --</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="tanggal">Tanggal <small>(kosongkan tanggal saat ini)</small></label>
+                                    <input type="date" class="form-control" id="tanggal" name="tanggal" value="">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="status_rawat">Status Rawat</label>
+                                    <select class="form-control selectric" id="status_rawat" name="status_rawat">
+                                        <option value="" selected disabled>-- Silahkan pilih --</option>
+                                        <option value="RAWAT JALAN">Rawat Jalan</option>
+                                        <option value="RAWAT INAP">Rawat Inap</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3 filter-buttons">
+                                <div class="form-group d-flex align-items-end">
+                                    <button type="submit" class="btn btn-primary mr-2" style="margin-top: 30px;"><i class="fas fa-filter"></i> Filter</button>
+                                    <button type="button" class="btn btn-danger" style="margin-top: 30px;" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
+            </div>
+            <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table-striped table" id="table-1">
@@ -40,6 +76,8 @@
                                     <th>Patient Name</th>
                                     <th>Practicioner</th>
                                     <th>Practicioner Name</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -48,19 +86,20 @@
                                     <td class="text-center" width="5%">
                                         {{ $loop->iteration}}
                                     </td>
-                                    <td>{{ $encounter->patient }}</td>
-                                    <td>{{ $encounter->organization_id }}</td>
-                                    <td>{{ $encounter->location_display }}</td>
+                                    <td>{{ $encounter->kode_register }}</td>
+                                    <td>{{ $encounter->patient_ihs }}</td>
+                                    <td>{{ $encounter->patient_name }}</td>
+                                    <td>{{ $encounter->practitioner_ihs }}</td>
+                                    <td>{{ $encounter->practitioner_name }}</td>
                                     <td>
                                         @if($encounter->status == true)
-                                        <div class="badge badge-success">active</div>
+                                        <div class="badge badge-success">arrived</div>
                                         @else
                                         <div class="badge badge-danger">inactive</div>
                                         @endif
                                     </td>
-                                    <td>{{$encounter->type}}</td>
                                     <td width="15%">
-                                        <a href="{{ route('update.edit', $encounter->id )}}" class="btn btn-warning"><i class="far fa-edit"></i></a>
+                                        <a href="{{ route('resource.edit', $encounter->id )}}" class="btn btn-warning"><i class="far fa-edit"></i></a>
                                         <a href="" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                                     </td>
                                 </tr>

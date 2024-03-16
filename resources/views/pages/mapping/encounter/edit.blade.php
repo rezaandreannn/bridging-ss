@@ -14,16 +14,17 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="">Master Data</a></div>
-                <div class="breadcrumb-item"><a href="">Organization</a></div>
-                <div class="breadcrumb-item">Create Organization</div>
+                <div class="breadcrumb-item active"><a href="{{ route('mapping.encounter.index') }}">Mappings</a></div>
+                <div class="breadcrumb-item"><a href="{{ route('mapping.encounter.index') }}">Encounter</a></div>
+                <div class="breadcrumb-item">Edit Mapping Encounter</div>
             </div>
         </div>
 
         <div class="section-body">
 
-            <form action="{{ route('mapping.encounter.store')}}" method="post">
+            <form action="{{ route('mapping.encounter.update', $encounter->id)}}" method="post">
                 @csrf
+                @method('put')
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
@@ -32,71 +33,57 @@
                             </div>
                             <div class="card-body">
                                 <div class="form-group row mb-4">
-                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Dokter Name<code>*</code></label>
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Docter Name<code>*</code></label>
                                     <div class="col-sm-12 col-md-7">
-                                        <select class="form-control select2" name="kode_dokter">
-                                            <option value="{{ $encouter['kode_dokter']}}">{{ $encouter['kode_dokter']}}</option>
+                                        <select name="doctor" class="form-control select2" id="doctor">
                                             @foreach($dokters->getSelect() as $dokter)
-                                            <option value="{{ $dokter['kode_dokter']}}">{{ $dokter['nama_dokter']}}</option>
+                                            <option value="{{ $dokter['kode_dokter']}}" @if($encounter->kode_dokter == $dokter['kode_dokter']) selected @endif>{{ $dokter['nama_dokter']}}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-                                {{-- <div class="form-group row mb-4">
-                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Organization Name<code>*</code></label>
+                                <div class="form-group row mb-4">
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Location Name<code>*</code></label>
                                     <div class="col-sm-12 col-md-7">
-                                        <select class="form-control selectric" name="part_of">
-                                            <option value="{{ $encouter['kode_dokter']}}">{{ $encouter['kode_dokter']}}</option>
-                                @foreach($organizations as $id => $name)
-                                <option value="{{ $id}}">{{ $name}}</option>
-                                @endforeach
-                                </select>
-                            </div>
-                        </div> --}}
-                        <div class="form-group row mb-4">
-                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Location Name<code>*</code></label>
-                            <div class="col-sm-12 col-md-7">
-                                <select class="form-control selectric" name="location_id">
-                                    <option value="{{ $encouter['location_id']}}">{{ $encouter['name']}}</option>
-                                    @foreach($locations as $location)
-                                    <option value="{{ $location->location_id }}">{{ $location->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row mb-4">
-                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Encounter Type<code>*</code></label>
-                            <div class="col-sm-12 col-md-7">
-                                <select class="form-control selectric" name="type">
-                                    <option>-- Select item --</option>
-                                    @foreach($encounterTypes as $type)
-                                    <option value="{{ $type}}">{{ $type}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row mb-4">
-                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
-                            <div class="col-sm-12 col-md-7">
-                                <div class="form-group form-check">
-                                    <input type="checkbox" class="form-check-input" id="status" name="status" value="">
-                                    <label class="form-check-label" for="status">Status</label>
+                                        <select name="location" class="form-control selectric" id="location">
+                                            @foreach($locations as $location)
+                                            <option value="{{ $location->id }}" @if($encounter->location_id == $location->id) selected @endif>{{ $location->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-group row mb-4">
-                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
-                            <div class="col-sm-12 col-md-7">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <div class="form-group row mb-4">
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Encounter Type<code>*</code></label>
+                                    <div class="col-sm-12 col-md-7">
+                                        <select name="encounter_type" class="form-control selectric" id="encounter_type">
+                                            @foreach($encounterTypes as $type)
+                                            <option value="{{ $type }}" @if($encounter->encounter_type == $type) selected @endif>{{ $type }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-4">
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
+                                    <div class="col-sm-12 col-md-7">
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" class="form-check-input" id="status" name="status" @if($encounter->status) checked @endif>
+                                            <label class="form-check-label" for="status">Status</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-4">
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
+                                    <div class="col-sm-12 col-md-7">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </form>
         </div>
-</div>
-</form>
-</div>
-</section>
+    </section>
 </div>
 @endsection
 
