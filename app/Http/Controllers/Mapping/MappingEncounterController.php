@@ -159,24 +159,76 @@ class MappingEncounterController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'encounter_type' => 'required',
-            'organization' => 'required',
-            'location' => 'required',
-            'kode_dokter' => 'required',
-            'status' => 'nullable|boolean', // Validate status field as boolean
-        ]);
+        try {
+            // Fetch NIK By Kode Dokter
+            $kodeDokter = $request->kode_dokter;
+            $nik = $this->dokter->getNik($kodeDokter);
 
-        $encounter = MappingEncounter::findOrFail($id);
-        $encounter->encounter_type = $request->encounter_type;
-        $encounter->organization_id = $request->organization;
-        $encounter->location_id = $request->location;
-        $encounter->kode_dokter = $request->kode_dokter;
-        $encounter->status = $request->has('status'); // Set status based on checkbox value
-        $encounter->save();
+            // Check if NIK is available
+            if (empty($nik)) {
+                return redirect()->back()->with('error', 'NIK data is not available');
+            }
 
-        $message = 'Data has been updated successfully.';
-        return redirect()->route($this->routeIndex)->with('toast_success', $message);
+            // fetch Practitioner & display By NIK
+            $params = [
+                'identifier' => $nik
+            ];
+
+            $practitioner = $this->practitionerService->getRequest('Practitioner', $params);
+            $practitionerIhs = null;
+            $practitionerName = null;
+
+            if (!empty($practitioner['entry'][0]['resource']['id'])) {
+                $practitionerIhs = $practitioner['entry'][0]['resource']['id'];
+            }
+            if (!empty($practitioner['entry'][0]['resource']['name'][0]['text'])) {
+                $practitionerName = $practitioner['entry'][0]['resource']['name'][0]['text'];
+            }
+
+            // fetch Location by LocationID 
+            $location = $this->locationService->getRequest('Location/' . $request->location_id);
+            $locationId = null;
+            $locationName = null;
+            $organizationId = null;
+
+            if (!empty($location['id'])) {
+                $locationId = $location['id'];
+            }
+            if (!empty($location['name'])) {
+                $locationName = $location['name'];
+            }
+            if (!empty($location['managingOrganization']['reference'])) {
+                $managingOrganization = $location['managingOrganization']['reference'];
+                $organizationByLocation = explode('/', $managingOrganization);
+                if (count($organizationByLocation) > 1) {
+                    $organizationId = $organizationByLocation[1];
+                }
+            }
+
+            // Find the MappingEncounter record by ID
+            $mappingEncounter = MappingEncounter::findOrFail($id);
+
+            // Update the MappingEncounter record with new data
+            $mappingEncounter->update([
+                'kode_dokter' => $kodeDokter,
+                'practitioner_ihs' => $practitionerIhs,
+                'practitioner_display' => $practitionerName,
+                'location_id' => $locationId,
+                'location_display' => $locationName,
+                'organization_id' => $organizationId,
+                'type' => $request->type,
+                'status' => $request->status ? true : false,
+                'created_by' => auth()->user()->id ?? ''
+            ]);
+
+            // Redirect with success message
+            $message = 'Data has been updated successfully.';
+            return redirect()->route($this->routeIndex)->with('toast_success', $message);
+        } catch (\Throwable $th) {
+            // Handle any errors
+            $errorMessage = $th->getMessage();
+            return redirect()->back()->with('error', $errorMessage);
+        }
     }
 
     /**

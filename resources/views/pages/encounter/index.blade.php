@@ -27,7 +27,7 @@
                 <div class="card-body">
                     <form id="filterForm" action="" method="get">
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="kode_dokter">Pilih Dokter</label>
                                     <select class="form-control select2" id="kode_dokter" name="kode_dokter">
@@ -36,20 +36,10 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="tanggal">Tanggal <small>(kosongkan tanggal saat ini)</small></label>
                                     <input type="date" class="form-control" id="tanggal" name="tanggal" value="">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="status_rawat">Status Rawat</label>
-                                    <select class="form-control selectric" id="status_rawat" name="status_rawat">
-                                        <option value="" selected disabled>-- Silahkan pilih --</option>
-                                        <option value="RAWAT JALAN">Rawat Jalan</option>
-                                        <option value="RAWAT INAP">Rawat Inap</option>
-                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-3 filter-buttons">

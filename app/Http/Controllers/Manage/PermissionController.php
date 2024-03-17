@@ -42,7 +42,7 @@ class PermissionController extends Controller
         ]);
 
         // Simpan data pengguna
-        $permission = Permission::create([
+        Permission::create([
             'name' => $validatedData['name'],
             'guard_name' => $validatedData['guard_name'],
         ]);
@@ -61,18 +61,18 @@ class PermissionController extends Controller
 
     public function update($id, Request $request)
     {
-        $roles = Permission::where('id', $id)->first();
+        $permission = Permission::where('id', $id)->first();
         $this->validate($request, [
             'name' => ['required', 'string', 'max:100'],
             'guard_name' => ['required', 'string', 'max:100'],
         ]);
         try {
-            $roles = Permission::findorfail($id);
+            $permission = Permission::findorfail($id);
             $data = [
                 'name' => Request()->name,
                 'guard_name' => Request()->guard_name,
             ];
-            $roles->update($data);
+            $permission->update($data);
 
             $message = 'Data has been updated successfully.';
             return redirect()->route($this->routeIndex)->with('toast_success', $message);

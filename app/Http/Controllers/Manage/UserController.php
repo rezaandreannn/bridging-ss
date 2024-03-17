@@ -47,6 +47,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['nullable', 'string', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed'],
+            'permissions' => ['array'],
         ]);
 
         $user = User::create([
@@ -60,7 +61,9 @@ class UserController extends Controller
         }
 
         if ($request->permissions) {
-            $user->givePermissionTo($request->permissions);
+            foreach ($request->permissions as $permission) {
+                $user->givePermissionTo($permission);
+            }
         }
         $message = 'Data has been Add successfully.';
         return redirect()->route($this->routeIndex)->with('toast_success', $message);
@@ -82,6 +85,7 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:100'],
+            'permissions' => ['array'],
         ]);
         try {
             // send API 
@@ -101,12 +105,24 @@ class UserController extends Controller
                 ];
             }
             $user->update($user_data);
+
             if ($request->roles) {
                 $user->syncRoles($request->roles);
             }
 
             if ($request->permissions) {
-                $user->syncPermissions($request->permissions);
+                // Konversi input izin menjadi array jika diperlukan
+                $permissions = (array) $request->permissions;
+
+                // Berikan izin baru kepada pengguna jika belum dimiliki
+                foreach ($permissions as $permission) {
+                    if (!$user->hasPermissionTo($permission)) {
+                        $user->givePermissionTo($permission);
+                    }
+                }
+
+                // Sinkronisasi izin pengguna dengan izin yang diminta
+                $user->syncPermissions($permissions);
             }
 
             $message = 'Data has been updated successfully.';

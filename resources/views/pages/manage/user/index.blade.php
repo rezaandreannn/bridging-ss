@@ -78,7 +78,7 @@
                                                     badge-danger
                                                 @endif" data-toggle="modal" data-target="#changeRole{{ $user->permissions->count() > 1 ? $user->id : ''}}">
                                             @if($user->permissions->count() > 1)
-                                            {{$user->permissions->count()}} Role
+                                            {{$user->permissions->count()}} Permission
                                             @elseif($user->permissions->count() == 1)
                                             {{ $user->permissions[0]->name }}
                                             @else

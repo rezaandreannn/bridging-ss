@@ -10,7 +10,7 @@
             <li class="menu-header">Dashboard</li>
             <li><a class="nav-link" href="{{ url('dashboard-general-dashboard') }}"><i class="fas fa-dashboard"></i> <span>Dashboard</span></a></li>
             <li class="menu-header">RSUMM</li>
-            @can('read master data')
+            @can('manage user')
             <li class="nav-item dropdown {{ Request::is('md*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Master Data</span></a>
                 <ul class="dropdown-menu">
@@ -49,6 +49,7 @@
                     </li>
                 </ul>
             </li>
+            @can('manage user')
             <li class="menu-header">manage</li>
             <li class="nav-item dropdown {{ Request::is('mu**') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-tasks"></i><span>Manage User</span></a>
@@ -67,6 +68,8 @@
                     </li>
                 </ul>
             </li>
+            @endcan
+            @can('mappings')
             <li class="nav-item dropdown {{ Request::is('mp*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fa-solid fa-group-arrows-rotate ml-1"></i> <span>Mappings</span></a>
                 <ul class="dropdown-menu">
@@ -75,6 +78,7 @@
                     </li>
                 </ul>
             </li>
+            @endcan
             <li class="menu-header">Docs</li>
             <li class="nav-item dropdown  {{ Request::is('dc*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-rocket"></i><span>Terminology</span></a>
