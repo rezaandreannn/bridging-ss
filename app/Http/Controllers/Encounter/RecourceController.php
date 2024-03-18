@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Encounter;
 
+use App\DTO\EncounterDTO;
 use App\Http\Controllers\Controller;
 use App\Models\Dokter;
 use App\Models\Encounter;
@@ -15,6 +16,7 @@ class RecourceController extends Controller
     protected $prefix;
     protected $encounter;
     protected $practitionerService;
+    protected $encounterDTO;
 
     public function __construct(Encounter $encounter)
     {
@@ -23,26 +25,22 @@ class RecourceController extends Controller
         $this->prefix = 'Encounter';
         $this->encounter = $encounter;
         $this->practitionerService = new PracticionerService();
+        $this->encounterDTO = new EncounterDTO();
     }
 
     public function index(Request $request)
     {
         $title = $this->prefix . ' ' . 'Index';
-        // Ambil kode dokter dan tanggal dari request
+
+        // Retrieve parameters from the request
         $kode_dokter = $request->input('dokter_code');
         $created_at = $request->input('created_at');
+        $class_code = $request->input('class_codes');
 
-        $encounters = [];
+        $encounters = Encounter::query();
 
-        // If both kode_dokter and created_at are empty, set created_at to today's date
-        if (empty($kode_dokter) && empty($created_at)) {
-            $created_at = now()->format('Y-m-d');
-        }
-
-        if (empty($kode_dokter)) {
-            // Retrieve all encounters for today if kode_dokter is empty
-            $encounters = Encounter::whereDate('created_at', $created_at)->get();
-        } else {
+        // Add filter for kode_dokter if it's not empty
+        if (!empty($kode_dokter)) {
             // Get nik by kode dokter
             $dokterModel = new Dokter();
             $nik = $dokterModel->getNik($kode_dokter);
@@ -54,16 +52,29 @@ class RecourceController extends Controller
             if (!empty($practitioner['entry'][0]['resource']['id'])) {
                 $ihsPractitioner = $practitioner['entry'][0]['resource']['id'];
 
-                // Retrieve encounters by practitioner IHS and created date
-                $encounters = Encounter::where('practitioner_ihs', $ihsPractitioner)
-                    ->whereDate('created_at', $created_at)
-                    ->get();
+                // Add filter for practitioner IHS
+                $encounters->where('practitioner_ihs', $ihsPractitioner);
             }
         }
+
+        // Add filter for created_at if it's not empty
+        if (!empty($created_at)) {
+            $encounters->whereDate('created_at', $created_at);
+        }
+
+        // Add filter for class_code if it's not empty
+        if (!empty($class_code)) {
+            $encounters->where('class_code', $class_code);
+        }
+
+        // Retrieve encounters based on the applied filters
+        $encounters = $encounters->get();
+
         // Panggil metode model untuk filter data
         $dokters = $this->encounter->byKodeDokter();
+        $getClass = $this->encounterDTO->getClass();
 
-        return view($this->view . 'index', compact('encounters', 'dokters', 'title'));
+        return view($this->view . 'index', compact('encounters', 'dokters', 'title', 'getClass'));
     }
 
     public function edit($id)

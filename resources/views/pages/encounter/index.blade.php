@@ -28,7 +28,7 @@
                 <div class="card-body">
                     <form id="filterForm" action="" method="get">
                         <div class="row">
-                            <div class="col-md-5">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="kode_dokter">Pilih Dokter</label>
                                     <select class="form-control select2" id="kode_dokter" name="dokter_code">
@@ -43,6 +43,17 @@
                                 <div class="form-group">
                                     <label for="tanggal">Tanggal <small>(kosongkan tanggal saat ini)</small></label>
                                     <input type="date" class="form-control" id="tanggal" name="created_at" value="">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="status_rawat">Type Class</label>
+                                    <select class="form-control selectric" id="class_codes" name="class_codes">
+                                        <option value="" selected disabled>-- Silahkan pilih --</option>
+                                        @foreach ($getClass as $class)
+                                        <option value="{{ $class['class_code'] }}" {{ request('class_codes') == $class['class_code'] ? 'selected' : '' }}>{{ $class['class_code'] }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-3 filter-buttons">
@@ -69,6 +80,7 @@
                                     <th>Patient Name</th>
                                     <th>Practicioner</th>
                                     <th>Practicioner Name</th>
+                                    <th>Class</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -84,6 +96,7 @@
                                     <td>{{ $encounter->patient_name }}</td>
                                     <td>{{ $encounter->practitioner_ihs }}</td>
                                     <td>{{ $encounter->practitioner_name }}</td>
+                                    <td>{{ $encounter->class_code }}</td>
                                     <td>
                                         @if($encounter->status == true)
                                         <div class="badge badge-success">arrived</div>
