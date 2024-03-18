@@ -34,7 +34,7 @@
                                     <select class="form-control select2" id="kode_dokter" name="dokter_code">
                                         <option value="" selected disabled>-- Silahkan pilih --</option>
                                         @foreach ($dokters as $dokter)
-                                        <option value="{{ $dokter['kode_dokter'] }}" {{ request('kode_dokter') == $dokter['kode_dokter'] ? 'selected' : '' }}>{{ $dokter['nama_dokter'] }}</option>
+                                        <option value="{{ $dokter['kode_dokter'] }}" {{ request('dokter_code') == $dokter['kode_dokter'] ? 'selected' : '' }}>{{ $dokter['nama_dokter'] }}</option>
                                         @endforeach
                                     </select>
                                 </div>
