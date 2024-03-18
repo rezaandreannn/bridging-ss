@@ -48,10 +48,10 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="status_rawat">Type Class</label>
-                                    <select class="form-control selectric" id="class_codes" name="class_codes">
+                                    <select class="form-control selectric" id="class_code" name="class_code">
                                         <option value="" selected disabled>-- Silahkan pilih --</option>
                                         @foreach ($getClass as $class)
-                                        <option value="{{ $class['class_code'] }}" {{ request('class_codes') == $class['class_code'] ? 'selected' : '' }}>{{ $class['class_code'] }}</option>
+                                        <option value="{{ $class['class_code'] }}" {{ request('class_code') == $class['class_code'] ? 'selected' : '' }}>{{ $class['class_code'] }}</option>
                                         @endforeach
                                     </select>
                                 </div>

@@ -35,10 +35,14 @@ class RecourceController extends Controller
         // Retrieve parameters from the request
         $kode_dokter = $request->input('dokter_code');
         $created_at = $request->input('created_at');
-        $class_code = $request->input('class_codes');
+        $class_code = $request->input('class_code');
 
-        $encounters = Encounter::query();
+        if (empty($created_at)) {
+            $created_at = now()->format('Y-m-d');
+        }
 
+        // $encounters = Encounter::query();
+        $encounters = Encounter::whereDate('created_at', $created_at)->get();
         // Add filter for kode_dokter if it's not empty
         if (!empty($kode_dokter)) {
             // Get nik by kode dokter
@@ -53,14 +57,18 @@ class RecourceController extends Controller
                 $ihsPractitioner = $practitioner['entry'][0]['resource']['id'];
 
                 // Add filter for practitioner IHS
-                $encounters->where('practitioner_ihs', $ihsPractitioner);
+                // Retrieve encounters by practitioner IHS and created date
+                $encounters = Encounter::where('practitioner_ihs', $ihsPractitioner)
+                    ->where('class_code', $class_code)
+                    ->whereDate('created_at', $created_at)
+                    ->get();
             }
         }
 
         // Add filter for created_at if it's not empty
-        if (!empty($created_at)) {
-            $encounters->whereDate('created_at', $created_at);
-        }
+        // if (!empty($created_at)) {
+        //     $encounters->whereDate('created_at', $created_at);
+        // }
 
         // Add filter for class_code if it's not empty
         if (!empty($class_code)) {
@@ -68,8 +76,6 @@ class RecourceController extends Controller
         }
 
         // Retrieve encounters based on the applied filters
-        $encounters = $encounters->get();
-
         // Panggil metode model untuk filter data
         $dokters = $this->encounter->byKodeDokter();
         $getClass = $this->encounterDTO->getClass();
