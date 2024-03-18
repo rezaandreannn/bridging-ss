@@ -7,7 +7,8 @@
 <link rel="stylesheet" href="{{ asset('library/datatables/datatables.min.css') }}">
 <link rel="stylesheet" href="{{ asset('library/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('library/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
-
+<link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
+<link rel="stylesheet" href="{{ asset('library/selectric/public/selectric.css') }}">
 <!-- <link rel="stylesheet" href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}"> -->
 @endpush
 
@@ -17,8 +18,8 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('resource.index') }}">Manage User</a></div>
-                <div class="breadcrumb-item">User</div>
+                <div class="breadcrumb-item active"><a href="{{ route('resource.index') }}">Encounter</a></div>
+                <div class="breadcrumb-item">Resource</div>
             </div>
         </div>
 
@@ -27,19 +28,21 @@
                 <div class="card-body">
                     <form id="filterForm" action="" method="get">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-5">
                                 <div class="form-group">
                                     <label for="kode_dokter">Pilih Dokter</label>
-                                    <select class="form-control select2" id="kode_dokter" name="kode_dokter">
+                                    <select class="form-control select2" id="kode_dokter" name="practitioner_name">
                                         <option value="" selected disabled>-- Silahkan pilih --</option>
-
+                                        @foreach ($dokters as $dokter)
+                                        <option value="{{ $dokter['kode_dokter'] }}" {{ request('kode_dokter') == $dokter['kode_dokter'] ? 'selected' : '' }}>{{ $dokter['nama_dokter'] }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="tanggal">Tanggal <small>(kosongkan tanggal saat ini)</small></label>
-                                    <input type="date" class="form-control" id="tanggal" name="tanggal" value="">
+                                    <input type="date" class="form-control" id="tanggal" name="created_at" value="">
                                 </div>
                             </div>
                             <div class="col-md-3 filter-buttons">
@@ -71,7 +74,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($Encounters as $encounter)
+                                @foreach($encounters as $encounter)
                                 <tr>
                                     <td class="text-center" width="5%">
                                         {{ $loop->iteration}}
@@ -112,9 +115,19 @@
 <script src="{{ asset('library/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script>
+<script src="{{ asset('library/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js') }}"></script>
+
+<script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('library/selectric/public/jquery.selectric.min.js') }}"></script>
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
 
-
+<script>
+    function resetForm() {
+        document.getElementById("filterForm").value = "";
+        alert('Filter telah direset!');
+        window.location.href = "{{ route('resource.index') }}";
+    }
+</script>
 @endpush

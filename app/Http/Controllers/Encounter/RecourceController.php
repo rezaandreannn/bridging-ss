@@ -11,36 +11,31 @@ class RecourceController extends Controller
     protected $view;
     protected $routeIndex;
     protected $prefix;
+    protected $encounter;
 
-    public function __construct()
+    public function __construct(Encounter $encounter)
     {
         $this->view = 'pages.encounter.';
         $this->routeIndex = 'resource.index';
         $this->prefix = 'Encounter';
+        $this->encounter = $encounter;
     }
 
     public function index(Request $request)
     {
+        // Filter
+
         $title = $this->prefix . ' ' . 'Index';
-        $Encounters = Encounter::all();
-        return view($this->view . 'index', compact('title', 'Encounters'));
 
-        try {
-            // Filter
-            // Retrieve query parameters
-            $kode_dokter = $request->input('kode_dokter');
-            $tanggal = $request->input('tanggal');
-            $status_rawat = $request->input('status_rawat');
+        // Ambil kode dokter dan tanggal dari request
+        $kode_dokter = $request->input('kode_dokter');
+        $created_at = $request->input('tanggal');
 
-            $title = 'Pendaftaran';
-            $data = $this->pendaftaran->getData($kode_dokter, $tanggal, $status_rawat);
-            $dokters = $this->pendaftaran->byKodeDokter();
-            return view($this->view . 'index', ['data' => $data, 'dokters' => $dokters]);
-        } catch (\Exception $e) {
-            // Tangani kesalahan
-            return response()->json(['error' => 'Failed to fetch data'], 500);
-            // return view('error-view', ['error' => 'Failed to fetch data']);
-        }
+        // Panggil metode model untuk filter data
+        $dokters = $this->encounter->byKodeDokter();
+        $encounters = Encounter::getData($kode_dokter, $created_at);
+
+        return view($this->view . 'index', compact('encounters', 'dokters', 'title'));
     }
 
     public function edit($id)
