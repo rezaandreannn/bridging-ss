@@ -27,29 +27,33 @@ class RecourceController extends Controller
 
     public function index(Request $request)
     {
-        // Filter
-
         $title = $this->prefix . ' ' . 'Index';
-
         // Ambil kode dokter dan tanggal dari request
         $kode_dokter = $request->input('dokter_code');
+        $created_at = $request->input('created_at');
 
-        if (!empty($kode_dokter)) {
-            // get nik by kode dokter
+        $encounters = [];
+
+        if (!empty($kode_dokter) && !empty($created_at)) {
+            // Get nik by kode dokter
             $dokterModel = new Dokter();
             $nik = $dokterModel->getNik($kode_dokter);
-            // find ihs number by kode dokter
-            $Practitioner = $this->practitionerService->getRequest('Practitioner', ['identifier' => $nik]);
-            $ihsPractitioner = $Practitioner['entry'][0]['resource']['id'];
-            $encounterByDokter = Encounter::where('practitioner_ihs', $ihsPractitioner)->get();
+
+            // Find ihs number by kode dokter
+            $practitioner = $this->practitionerService->getRequest('Practitioner', ['identifier' => $nik]);
+
+            // Check if practitioner data is available
+            if (!empty($practitioner['entry'][0]['resource']['id'])) {
+                $ihsPractitioner = $practitioner['entry'][0]['resource']['id'];
+
+                // Retrieve encounters by practitioner IHS and created date
+                $encounters = Encounter::where('practitioner_ihs', $ihsPractitioner)
+                    ->whereDate('created_at', $created_at)
+                    ->get();
+            }
         }
-
-        $created_at = $request->input('tanggal');
-
-
         // Panggil metode model untuk filter data
         $dokters = $this->encounter->byKodeDokter();
-        $encounters = Encounter::getData($kode_dokter, $created_at);
 
         return view($this->view . 'index', compact('encounters', 'dokters', 'title'));
     }
