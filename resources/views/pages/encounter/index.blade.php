@@ -31,7 +31,7 @@
                             <div class="col-md-5">
                                 <div class="form-group">
                                     <label for="kode_dokter">Pilih Dokter</label>
-                                    <select class="form-control select2" id="kode_dokter" name="practitioner_name">
+                                    <select class="form-control select2" id="kode_dokter" name="dokter_code">
                                         <option value="" selected disabled>-- Silahkan pilih --</option>
                                         @foreach ($dokters as $dokter)
                                         <option value="{{ $dokter['kode_dokter'] }}" {{ request('kode_dokter') == $dokter['kode_dokter'] ? 'selected' : '' }}>{{ $dokter['nama_dokter'] }}</option>
