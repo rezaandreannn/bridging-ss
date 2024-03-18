@@ -34,7 +34,15 @@ class RecourceController extends Controller
 
         $encounters = [];
 
-        if (!empty($kode_dokter) && !empty($created_at)) {
+        // If both kode_dokter and created_at are empty, set created_at to today's date
+        if (empty($kode_dokter) && empty($created_at)) {
+            $created_at = now()->format('Y-m-d');
+        }
+
+        if (empty($kode_dokter)) {
+            // Retrieve all encounters for today if kode_dokter is empty
+            $encounters = Encounter::whereDate('created_at', $created_at)->get();
+        } else {
             // Get nik by kode dokter
             $dokterModel = new Dokter();
             $nik = $dokterModel->getNik($kode_dokter);
