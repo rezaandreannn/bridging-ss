@@ -42,7 +42,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="tanggal">Tanggal <small>(kosongkan tanggal saat ini)</small></label>
-                                    <input type="date" class="form-control" id="tanggal" name="created_at" value="">
+                                    <input type="date" class="form-control" id="tanggal" name="created_at" value="{{ request('created_at') }}">
                                 </div>
                             </div>
                             <div class="col-md-3">
