@@ -24,6 +24,9 @@
 
         <div class="section-body">
             <div class="card">
+                <div class="card-header">
+                    <a href="{{ route('roles.create')}}" class="btn btn-primary rounded-0">New Data</a>
+                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table-striped table" id="table-1">
@@ -60,7 +63,6 @@
 <script src="{{ asset('library/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('library/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
-<script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script>
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>

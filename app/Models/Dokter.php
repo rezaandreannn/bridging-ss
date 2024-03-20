@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Dokter extends Model
 {
     protected $httpClient;
+    protected $guarded = [];
+    protected $table = 'practitioners';
 
     public function __construct()
     {

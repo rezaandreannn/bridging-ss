@@ -8,7 +8,7 @@
         </div>
         <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>
-            <li><a class="nav-link" href="{{ url('dashboard-general-dashboard') }}"><i class="fas fa-dashboard"></i> <span>Dashboard</span></a></li>
+            <li class="{{ Request::is('dashboard') ? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-dashboard"></i> <span>Dashboard</span></a></li>
             <li class="menu-header">RSUMM</li>
             @can('manage user')
             <li class="nav-item dropdown {{ Request::is('md*') ? 'active' : '' }}">
