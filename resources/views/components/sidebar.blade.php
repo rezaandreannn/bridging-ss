@@ -12,7 +12,7 @@
             <li class="menu-header">RSUMM</li>
             @can('manage user')
             <li class="nav-item dropdown {{ Request::is('md*') ? 'active' : '' }}">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Master Data</span></a>
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-database"></i> <span>Master Data</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('md/patient*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('patient.index') }}">Patient</a>
@@ -31,7 +31,7 @@
             @endcan
 
             <li class="nav-item dropdown {{ Request::is('kj*') ? 'active' : '' }}">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Kunjungan</span></a>
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-hand-holding-medical"></i> <span>Kunjungan</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('kj/pendaftaran') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('pendaftaran.index') }}">Pendaftaran</a>
@@ -41,18 +41,19 @@
                     </li>
                 </ul>
             </li>
+            <li class="menu-header">Bridge</li>
             <li class="nav-item dropdown {{ Request::is('ec*') ? 'active' : '' }}">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Encounter</span></a>
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Satu Sehat</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('ec/encounter-resource') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('resource.index') }}">Resource</a>
+                    <li class="{{ Request::is('ec/resource') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('resource.index') }}">Encounter</a>
                     </li>
                 </ul>
             </li>
             @can('manage user')
             <li class="menu-header">manage</li>
             <li class="nav-item dropdown {{ Request::is('mu**') ? 'active' : '' }}">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-tasks"></i><span>Manage User</span></a>
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-users"></i><span>Manage User</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('mu/user*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('user.index') }}">User</a>

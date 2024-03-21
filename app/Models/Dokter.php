@@ -11,7 +11,7 @@ class Dokter extends Model
 {
     protected $httpClient;
     protected $guarded = [];
-    protected $table = 'practitioners';
+    protected $table = 'simrs_dokters';
 
     public function __construct()
     {

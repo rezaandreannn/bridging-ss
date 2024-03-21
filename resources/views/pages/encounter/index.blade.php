@@ -76,10 +76,9 @@
                                         No
                                     </th>
                                     <th>Kode Reg</th>
-                                    <th>Patient</th>
                                     <th>Patient Name</th>
-                                    <th>Practicioner</th>
                                     <th>Practicioner Name</th>
+                                    <th>Priode Start</th>
                                     <th>Class</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -92,10 +91,9 @@
                                         {{ $loop->iteration}}
                                     </td>
                                     <td>{{ $encounter->kode_register }}</td>
-                                    <td>{{ $encounter->patient_ihs }}</td>
                                     <td>{{ $encounter->patient_name }}</td>
-                                    <td>{{ $encounter->practitioner_ihs }}</td>
                                     <td>{{ $encounter->practitioner_name }}</td>
+                                    <td>{{ $encounter->periode_start }}</td>
                                     <td>{{ $encounter->class_code }}</td>
                                     <td>
                                         @if($encounter->status == true)
