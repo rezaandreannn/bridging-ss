@@ -76,9 +76,9 @@ Route::middleware('auth')->group(function () {
     });
 
     // ENCOUNTER 
-    Route::prefix('ec')->group(function () {
-        Route::get('/resource', [RecourceController::class, 'index'])->name('resource.index');
-        Route::get('/resource/{id}/edit', [RecourceController::class, 'edit'])->name('resource.edit');
+    Route::prefix('ss')->group(function () {
+        Route::get('/encounter', [RecourceController::class, 'index'])->name('resource.index');
+        Route::get('/encounter/{id}/edit', [RecourceController::class, 'edit'])->name('resource.edit');
     });
 
 

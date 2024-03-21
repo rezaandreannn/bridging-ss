@@ -42,10 +42,10 @@
                 </ul>
             </li>
             <li class="menu-header">Bridge</li>
-            <li class="nav-item dropdown {{ Request::is('ec*') ? 'active' : '' }}">
+            <li class="nav-item dropdown {{ Request::is('ss*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Satu Sehat</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('ec/resource') ? 'active' : '' }}">
+                    <li class="{{ Request::is('ss/encounter') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('resource.index') }}">Encounter</a>
                     </li>
                 </ul>
