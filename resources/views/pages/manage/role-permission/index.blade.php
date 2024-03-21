@@ -32,16 +32,24 @@
                         <table class="table-striped table" id="table-1">
                             <thead>
                                 <tr>
-                                    <th class="text-center">No</th>
+                                    <th class="text-center">
+                                        No
+                                    </th>
                                     <th>Role Name</th>
+                                    <th>Guard Name</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($roles as $role)
                                 <tr>
-                                    <td class="text-center" width="5%">{{ $loop->iteration }}</td>
+                                    <td class="text-center" width="5%">
+                                        {{ $loop->iteration }}
+                                    </td>
                                     <td>{{$role->name}}</td>
+                                    <td>
+                                        {{$role->guard_name}}
+                                    </td>
                                     <td width="15%">
                                         <a href="{{ route('rolepermission.edit', $role->id )}}" class="btn btn-warning"><i class="fas fa-user-lock"></i> Permission</a>
                                     </td>
@@ -63,9 +71,11 @@
 <script src="{{ asset('library/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('library/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script>
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+
 
 
 @endpush
