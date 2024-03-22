@@ -10,7 +10,7 @@
             <li class="menu-header">Dashboard</li>
             <li class="{{ Request::is('dashboard') ? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-dashboard"></i> <span>Dashboard</span></a></li>
             <li class="menu-header">RSUMM</li>
-            @can('manage user')
+            @can('master data')
             <li class="nav-item dropdown {{ Request::is('md*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-database"></i> <span>Master Data</span></a>
                 <ul class="dropdown-menu">
@@ -29,7 +29,7 @@
                 </ul>
             </li>
             @endcan
-
+            @can('kunjungan')
             <li class="nav-item dropdown {{ Request::is('kj*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-hand-holding-medical"></i> <span>Kunjungan</span></a>
                 <ul class="dropdown-menu">
@@ -41,15 +41,29 @@
                     </li>
                 </ul>
             </li>
+            @endcan
+            @can('bridge')
             <li class="menu-header">Bridge</li>
             <li class="nav-item dropdown {{ Request::is('ss*') ? 'active' : '' }}">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Satu Sehat</span></a>
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-clinic-medical"></i> <span>Satu Sehat</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('ss/encounter') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('resource.index') }}">Encounter</a>
                     </li>
                 </ul>
             </li>
+            @endcan
+            @can('fisio')
+            <li class="menu-header">Fisioterapi</li>
+            <li class="nav-item dropdown {{ Request::is('fisiotarapi*') ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Fisioterapi</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('fisioterapi/fisio') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('cppt.index') }}">CPPT Fisioterapi</a>
+                    </li>
+                </ul>
+            </li>
+            @endcan
             @can('manage user')
             <li class="menu-header">manage</li>
             <li class="nav-item dropdown {{ Request::is('mu**') ? 'active' : '' }}">

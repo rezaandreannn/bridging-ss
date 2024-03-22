@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Fisio\FisioController;
 use App\Http\Controllers\Manage\RoleController;
 use App\Http\Controllers\Manage\UserController;
 use App\Http\Controllers\DocumentationController;
@@ -11,13 +13,11 @@ use App\Http\Controllers\MasterData\DokterController;
 use App\Http\Controllers\MasterData\PasienController;
 use App\Http\Controllers\Encounter\RecourceController;
 use App\Http\Controllers\MasterData\LocationController;
-use App\Http\Controllers\Case\Encounter\EncounterCreate;
 use App\Http\Controllers\Kunjungan\PendaftaranController;
 use App\Http\Controllers\MasterData\OrganizationController;
 use App\Http\Controllers\Manage\RoleHasPermissionController;
 use App\Http\Controllers\Mapping\MappingEncounterController;
 use App\Http\Controllers\Case\Encounter\EncounterCreateController;
-use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -114,8 +114,13 @@ Route::middleware('auth')->group(function () {
         Route::put('/encounter{id}', [MappingEncounterController::class, 'update'])->name('encounter.update');
     });
 
+    Route::prefix('fisioterapi')->group(function () {
+        Route::get('list_pasien', [FisioController::class, 'index'])->name('cppt.index');
+        Route::get('transaksi_fisio', [FisioController::class, 'edit'])->name('cppt.edit');
+    });
+
     // MANAGE USER
-    Route::prefix('mu')->middleware('auth')->group(function () {
+    Route::prefix('mu')->group(function () {
         // USERS
         Route::get('/user', [UserController::class, 'index'])->name('user.index');
         Route::get('/user/create', [UserController::class, 'create'])->name('user.create');

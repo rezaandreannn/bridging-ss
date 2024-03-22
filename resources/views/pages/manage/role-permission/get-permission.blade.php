@@ -16,7 +16,7 @@
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="#">Manage User</a></div>
                 <div class="breadcrumb-item"><a href="#">Role Permission</a></div>
-                <div class="breadcrumb-item">Edit Role</div>
+                <div class="breadcrumb-item">Edit Role Permission</div>
             </div>
         </div>
 
@@ -61,7 +61,6 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
-<script src="{{ asset('js/page/forms-advanced-forms.js') }}"></script>
 
 <script>
     $(document).ready(function() {
