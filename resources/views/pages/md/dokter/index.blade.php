@@ -28,42 +28,44 @@
                     <h4>Data Practitioner</h4>
                 </div>
                 <div class="card-body">
-                    <table class="table-striped table" id="table-1">
-                        <thead>
-                            <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Kode Dokter</th>
-                                <th scope="col">Profesi</th>
-                                <th scope="col">Spesialis</th>
-                                <th scope="col">Nama Dokter</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">NIK</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($data as $item)
-                            <tr>
-                                <td class="text-center" width="5%">
-                                    {{ $loop->iteration }}
-                                </td>
-                                <td>
-                                    <div class="badge badge-success"> {{ $item['kode_dokter'] }}</div>
-                                </td>
-                                <td>{{ $item['jenis_profesi'] }}</td>
-                                <td>{{ $item['spesialis'] }}</td>
-                                <td>{{ $item['nama_dokter'] }}</td>
-                                <td>{{ $item['email'] }}</td>
-                                <td>{{ $item['nik'] }}</td>
-                                <td width="15%">
-                                    <button class="btn btn-warning" disabled><i class="far fa-edit"></i></button>
-                                    <!-- <a href="javascript: void(0)" class="btn btn-warning"><i class="far fa-edit"></i></a> -->
-                                    <a href="{{ route('dokter.show', $item['kode_dokter'] )}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table-striped table" id="table-1">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Kode Dokter</th>
+                                    <th scope="col">Profesi</th>
+                                    <th scope="col">Spesialis</th>
+                                    <th scope="col">Nama Dokter</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">NIK</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($data as $item)
+                                <tr>
+                                    <td class="text-center" width="5%">
+                                        {{ $loop->iteration }}
+                                    </td>
+                                    <td>
+                                        <div class="badge badge-success"> {{ $item['kode_dokter'] }}</div>
+                                    </td>
+                                    <td>{{ $item['jenis_profesi'] }}</td>
+                                    <td>{{ $item['spesialis'] }}</td>
+                                    <td>{{ $item['nama_dokter'] }}</td>
+                                    <td>{{ $item['email'] }}</td>
+                                    <td>{{ $item['nik'] }}</td>
+                                    <td width="15%">
+                                        <button class="btn btn-warning" disabled><i class="far fa-edit"></i></button>
+                                        <!-- <a href="javascript: void(0)" class="btn btn-warning"><i class="far fa-edit"></i></a> -->
+                                        <a href="{{ route('dokter.show', $item['kode_dokter'] )}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

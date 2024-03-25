@@ -72,45 +72,47 @@
                     <h4>Pendaftaran</h4>
                 </div>
                 <div class="card-body">
-                    <table class="table-striped table" id="table-1">
-                        <thead>
-                            <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">No Reg</th>
-                                <th scope="col">No MR</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">NIK</th>
-                                <th scope="col">Jenis Pasien</th>
-                                <th scope="col">Rekanan</th>
-                                <th scope="col">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($data as $item)
-                            <tr>
-                                <td class="text-center" width="5%">
-                                    {{ $loop->iteration }}
-                                </td>
-                                <td>{{ $item['no_registrasi'] }}</td>
-                                <td>{{ $item['no_mr'] }}</td>
-                                <td>{{ $item['nama_pasien'] }}</td>
-                                <td>{{ $item['nik'] }}</td>
-                                <td>
-                                    @if ($item['status_rawat'] == 'RAWAT JALAN')
-                                    <div class="badge badge-success">RJ</div>
-                                    @else
-                                    <div class="badge badge-info">RI</div>
-                                    @endif
-                                </td>
-                                <td>{{ $item['nama_rekanan'] }}</td>
-                                <td width="15%">
-                                    <a href="{{ route('pendaftaran.show', $item['no_registrasi'] )}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
-                                    <a href="{{ route('case.encounter.create', $item['no_registrasi'])}}" class="btn btn-primary">sync</a>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table-striped table" id="table-1">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">No Reg</th>
+                                    <th scope="col">No MR</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">NIK</th>
+                                    <th scope="col">Jenis Pasien</th>
+                                    <th scope="col">Rekanan</th>
+                                    <th scope="col">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($data as $item)
+                                <tr>
+                                    <td class="text-center" width="5%">
+                                        {{ $loop->iteration }}
+                                    </td>
+                                    <td>{{ $item['no_registrasi'] }}</td>
+                                    <td>{{ $item['no_mr'] }}</td>
+                                    <td>{{ $item['nama_pasien'] }}</td>
+                                    <td>{{ $item['nik'] }}</td>
+                                    <td>
+                                        @if ($item['status_rawat'] == 'RAWAT JALAN')
+                                        <div class="badge badge-success">RJ</div>
+                                        @else
+                                        <div class="badge badge-info">RI</div>
+                                        @endif
+                                    </td>
+                                    <td>{{ $item['nama_rekanan'] }}</td>
+                                    <td width="15%">
+                                        <a href="{{ route('pendaftaran.show', $item['no_registrasi'] )}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
+                                        <a href="{{ route('case.encounter.create', $item['no_registrasi'])}}" class="btn btn-primary">sync</a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

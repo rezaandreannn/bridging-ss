@@ -60,43 +60,45 @@
                     <h4>Antrean</h4>
                 </div>
                 <div class="card-body">
-                    <table class="table-striped table" id="table-1">
-                        <thead>
-                            <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">No Antrean</th>
-                                <th scope="col">Nama Pasien</th>
-                                <th scope="col">No MR</th>
-                                <th scope="col">No HP</th>
-                                <th scope="col">Jenis Pasien</th>
-                                <th scope="col">Daftar Dari</th>
-                                <th scope="col">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($data as $item)
-                            <tr>
-                                <td class="text-center" width="5%">
-                                    {{ $loop->iteration }}
-                                </td>
-                                <td>
-                                    <div class="badge badge-success"> {{ $item['nomor_antrean'] }}</div>
-                                </td>
-                                <td>{{ $item['nama_pasien'] }}</td>
-                                <td>{{ $item['no_mr'] }}</td>
-                                <td>{{ $item['no_hp'] }}</td>
-                                <td>{{ $item['jenis_pasien'] }}</td>
-                                <td>{{ $item['created_by'] }}</td>
-                                <td width="15%">
-                                    <button class="btn btn-warning" disabled><i class="fas fa-info-circle"></i></button>
-                                    <button class="btn btn-primary" disabled>sync</button>
-                                    <!-- <a href="javascript: void(0)" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
+                    <div class="table-responsive">
+                        <table class="table-striped table" id="table-1">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">No Antrean</th>
+                                    <th scope="col">Nama Pasien</th>
+                                    <th scope="col">No MR</th>
+                                    <th scope="col">No HP</th>
+                                    <th scope="col">Jenis Pasien</th>
+                                    <th scope="col">Daftar Dari</th>
+                                    <th scope="col">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($data as $item)
+                                <tr>
+                                    <td class="text-center" width="5%">
+                                        {{ $loop->iteration }}
+                                    </td>
+                                    <td>
+                                        <div class="badge badge-success"> {{ $item['nomor_antrean'] }}</div>
+                                    </td>
+                                    <td>{{ $item['nama_pasien'] }}</td>
+                                    <td>{{ $item['no_mr'] }}</td>
+                                    <td>{{ $item['no_hp'] }}</td>
+                                    <td>{{ $item['jenis_pasien'] }}</td>
+                                    <td>{{ $item['created_by'] }}</td>
+                                    <td width="15%">
+                                        <button class="btn btn-warning" disabled><i class="fas fa-info-circle"></i></button>
+                                        <button class="btn btn-primary" disabled>sync</button>
+                                        <!-- <a href="javascript: void(0)" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                                     <a href="javascript: void(0)" class="btn btn-primary">sync</a> -->
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

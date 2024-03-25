@@ -18,6 +18,7 @@ use App\Http\Controllers\MasterData\OrganizationController;
 use App\Http\Controllers\Manage\RoleHasPermissionController;
 use App\Http\Controllers\Mapping\MappingEncounterController;
 use App\Http\Controllers\Case\Encounter\EncounterCreateController;
+use App\Http\Controllers\Rj\RawatJalanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -119,6 +120,10 @@ Route::middleware('auth')->group(function () {
         Route::get('transaksi_fisio', [FisioController::class, 'edit'])->name('cppt.fisio');
         Route::get('cppt', [FisioController::class, 'create'])->name('cppt.create');
         Route::get('edit_cppt', [FisioController::class, 'edit_cppt'])->name('cppt.edit');
+    });
+
+    Route::prefix('rj')->group(function () {
+        Route::get('rawat_jalan', [RawatJalanController::class, 'index'])->name('rj.index');
     });
 
     // MANAGE USER
