@@ -177,6 +177,37 @@
                             </div>
                         </form>
                     </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table-striped table" id="table-1">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Tanggal & Jam</th>
+                                        <th width="15%">Anamnesa & Pemeriksaan</th>
+                                        <th>Diagnosa</th>
+                                        <th>Terapi</th>
+                                        <th>Dokter</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>12-13-2024</td>
+                                        <td>Gangguan Jiwa</td>
+                                        <td>Minus</td>
+                                        <td>Kosong</td>
+                                        <td>Dr Yusuf</td>
+                                        <td width="20%">
+                                            <a href="{{ route('cppt.edit') }}" class="btn btn-sm btn-warning"><i class="fa fa-edit"> Edit</i></a>
+                                            <a href="" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus?')"><i class="fa fa-trash"> Hapus</i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

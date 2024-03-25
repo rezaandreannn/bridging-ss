@@ -27,6 +27,18 @@ class FisioController extends Controller
     public function edit()
     {
         $title = $this->prefix . ' ' . 'Form CPPT';
+        return view($this->view . 'fisio', compact('title'));
+    }
+
+    public function create()
+    {
+        $title = $this->prefix . ' ' . 'CPPT';
+        return view($this->view . 'create', compact('title'));
+    }
+
+    public function edit_cppt()
+    {
+        $title = $this->prefix . ' ' . 'CPPT';
         return view($this->view . 'edit', compact('title'));
     }
 }

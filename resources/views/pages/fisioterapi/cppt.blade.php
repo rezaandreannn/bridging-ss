@@ -44,7 +44,7 @@
                     </div>
                     <div class="card-footer">
                         <!-- <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Cari Pasien</button> -->
-                        <a href="{{ route('cppt.edit') }}" class="btn btn-primary"><i class="fas fa-search"></i> Cari Pasien</a>
+                        <a href="{{ route('cppt.fisio') }}" class="btn btn-primary"><i class="fas fa-search"></i> Cari Pasien</a>
                     </div>
                 </form>
             </div>
@@ -60,7 +60,6 @@
 <script src="{{ asset('library/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
 <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
-<script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script>
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>

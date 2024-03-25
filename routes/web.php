@@ -116,7 +116,9 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('fisioterapi')->group(function () {
         Route::get('list_pasien', [FisioController::class, 'index'])->name('cppt.index');
-        Route::get('transaksi_fisio', [FisioController::class, 'edit'])->name('cppt.edit');
+        Route::get('transaksi_fisio', [FisioController::class, 'edit'])->name('cppt.fisio');
+        Route::get('cppt', [FisioController::class, 'create'])->name('cppt.create');
+        Route::get('edit_cppt', [FisioController::class, 'edit_cppt'])->name('cppt.edit');
     });
 
     // MANAGE USER
