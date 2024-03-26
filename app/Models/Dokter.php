@@ -21,7 +21,7 @@ class Dokter extends Model
                 'Content-Type' => 'application/json'
             ],
         ]);
-        $this->simrsUrlApi = env('SIMRS_URL_API');
+        $this->simrsUrlApi = env('SIMRS_BASE_URL');
     }
 
     public function getData()

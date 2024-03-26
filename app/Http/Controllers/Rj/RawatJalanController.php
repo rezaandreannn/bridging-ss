@@ -13,8 +13,8 @@ class RawatJalanController extends Controller
 
     public function __construct()
     {
-        $this->view = 'pages.rawatjalan.';
-        $this->routeIndex = 'rawatjalan.index';
+        $this->view = 'pages.rj.';
+        $this->routeIndex = 'rj.index';
         $this->prefix = 'Rawat Jalan';
     }
 

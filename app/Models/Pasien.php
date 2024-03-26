@@ -19,7 +19,7 @@ class Pasien extends Model
                 'Content-Type' => 'application/json'
             ],
         ]);
-        $this->simrsUrlApi = env('SIMRS_URL_API');
+        $this->simrsUrlApi = env('SIMRS_BASE_URL');
     }
 
     public function getData($no_mr = null, $no_bpjs = null, $nik = null, $nama = null)

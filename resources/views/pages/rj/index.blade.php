@@ -18,8 +18,9 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('cppt.index') }}">Rawat Jalan</a></div>
-                <div class="breadcrumb-item">Nurse Record</div>
+                <div class="breadcrumb-item active"><a href="{{ route('rj.index') }}">Rawat Jalan</a></div>
+                <div class="breadcrumb-item"><a href="{{ route('rj.index') }}">Nurse Record</a></div>
+                <div class="breadcrumb-item">Pasien</div>
             </div>
         </div>
 
@@ -27,16 +28,16 @@
             <div class="card card-primary">
                 <form id="filterForm" action="" method="get">
                     <div class="card-header">
-                        <h4>Fisioterapi</h4>
+                        <h4>Rawat Jalan</h4>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-8">
-                                <label for="kode_dokter">Nama Pasien</label>
+                                <label for="kode_dokter">Dokter</label>
                                 <div class="input-group">
                                     <select name="pasien" id="" class="form-control select2">
-                                        <option value="" selected disabled>-- Pilih Pasien --</option>
-                                        <option value="">Yusuf</option>
+                                        <option value="" selected disabled>-- Pilih Dokter --</option>
+                                        <option value="">Dr Yusuf</option>
                                     </select>
                                 </div>
                             </div>
@@ -44,9 +45,43 @@
                     </div>
                     <div class="card-footer">
                         <!-- <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Cari Pasien</button> -->
-                        <a href="{{ route('cppt.fisio') }}" class="btn btn-primary"><i class="fas fa-search"></i> Cari Pasien</a>
+                        <a href="{{ route('cppt.fisio') }}" class="btn btn-primary"><i class="fas fa-search"></i> Tampilkan</a>
+                        <button type="button" class="btn btn-danger" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
                     </div>
                 </form>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h4>Antrean</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table-striped table" id="table-1">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">No MR</th>
+                                    <th scope="col">Nama Pasien</th>
+                                    <th scope="col">Alamat</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>123456</td>
+                                    <td>Dimas</td>
+                                    <td>Jl Way Dadi</td>
+                                    <td>Periksa Perawat</td>
+                                    <td>
+                                        <button class="btn btn-primary"><i class="fas fa-notes-medical"></i>Entry</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

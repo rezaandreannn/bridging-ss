@@ -3,5 +3,5 @@
 
 
 return [
-    'SIMRS_URL_API' => env('SIMRS_URL_API', 'https://daftar.rsumm.co.id/api.simrs/')
+    'SIMRS_BASE_URL' => env('SIMRS_BASE_URL', 'https://daftar.rsumm.co.id/api.simrs/')
 ];

@@ -53,15 +53,15 @@
                 </ul>
             </li>
             @endcan
-            <!-- <li class="menu-header">Rawat Jalan</li>
+            <li class="menu-header">Rawat Jalan</li>
             <li class="nav-item dropdown {{ Request::is('rj*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-clinic-medical"></i> <span>Nurse Record</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('rj/encounter') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('resource.index') }}">List Pasien RJ</a>
+                    <li class="{{ Request::is('rj/rawatjalan') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('rj.index') }}">Patient</a>
                     </li>
                 </ul>
-            </li> -->
+            </li>
             @can('fisio')
             <li class="menu-header">Fisioterapi</li>
             <li class="nav-item dropdown {{ Request::is('fisiotarapi*') ? 'active' : '' }}">
