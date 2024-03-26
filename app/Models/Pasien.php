@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Pasien extends Model
 {
     protected $httpClient;
+    protected $simrsUrlApi;
 
     public function __construct()
     {
@@ -18,6 +19,7 @@ class Pasien extends Model
                 'Content-Type' => 'application/json'
             ],
         ]);
+        $this->simrsUrlApi = env('SIMRS_URL_API');
     }
 
     public function getData($no_mr = null, $no_bpjs = null, $nik = null, $nama = null)
@@ -38,7 +40,7 @@ class Pasien extends Model
                 $queryParams['nama'] = $nama;
             }
             // Mengirim permintaan HTTP dengan query parameters
-            $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/pasien', [
+            $request = $this->httpClient->get($this->simrsUrlApi . 'pasien', [
                 'query' => $queryParams,
             ]);
 

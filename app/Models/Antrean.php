@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Antrean extends Model
 {
     protected $httpClient;
+    protected $simrsUrlApi;
 
     public function __construct()
     {
@@ -16,6 +17,7 @@ class Antrean extends Model
                 'Content-Type' => 'application/json'
             ],
         ]);
+        $this->simrsUrlApi = env('SIMRS_URL_API');
     }
 
     public function getData($kode_dokter = null, $tanggal = null)
@@ -30,7 +32,7 @@ class Antrean extends Model
                 $queryParams['tanggal'] = $tanggal ?? date('Y-m-d'); // Tanggal sekarang;
             }
             // Mengirim permintaan HTTP dengan query parameters
-            $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/antrean?kode_dokter', [
+            $request = $this->httpClient->get($this->simrsUrlApi . 'antrean?kode_dokter', [
                 'query' => $queryParams,
             ]);
 
@@ -48,7 +50,7 @@ class Antrean extends Model
 
     public function byKodeDokter($kodeDokter = '')
     {
-        $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/dokter/select' . $kodeDokter);
+        $request = $this->httpClient->get($this->simrsUrlApi . 'dokter/select' . $kodeDokter);
         $response = $request->getBody()->getContents();
         $data = json_decode($response, true);
         return $data['data'];

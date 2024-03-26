@@ -12,6 +12,7 @@ class Dokter extends Model
     protected $httpClient;
     protected $guarded = [];
     protected $table = 'simrs_dokters';
+    protected $simrsUrlApi;
 
     public function __construct()
     {
@@ -20,12 +21,13 @@ class Dokter extends Model
                 'Content-Type' => 'application/json'
             ],
         ]);
+        $this->simrsUrlApi = env('SIMRS_URL_API');
     }
 
     public function getData()
     {
         try {
-            $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/dokter');
+            $request = $this->httpClient->get($this->simrsUrlApi . 'dokter');
             $response = $request->getBody()->getContents();
             $data = json_decode($response, true);
             return $data['data']; // Mengambil bagian 'data' dari respons
@@ -60,7 +62,7 @@ class Dokter extends Model
 
     public function getSelect()
     {
-        $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/dokter/select');
+        $request = $this->httpClient->get($this->simrsUrlApi . 'dokter/select');
         $response = $request->getBody()->getContents();
         $data = json_decode($response, true);
         return $data['data'];
@@ -68,13 +70,13 @@ class Dokter extends Model
 
     public function getByKodeDokter($kodeDokter)
     {
-        $response = Http::get('https://daftar.rsumm.co.id/api.simrs/dokter/detail/' . $kodeDokter);
+        $response = Http::get($this->simrsUrlApi . 'dokter/detail/' . $kodeDokter);
         return $response->json();
     }
 
     public function getNik($kodeDokter)
     {
-        $request = Http::get('https://daftar.rsumm.co.id/api.simrs/dokter/detail/' . $kodeDokter);
+        $request = Http::get($this->simrsUrlApi . 'dokter/detail/' . $kodeDokter);
         $response = $request->getBody()->getContents();
         $result = json_decode($response, true);
         return $result['data']['nik'];

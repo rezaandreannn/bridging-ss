@@ -9,6 +9,7 @@ use GuzzleHttp\Client;
 class Pendaftaran extends Model
 {
     protected $httpClient;
+    protected $simrsUrlApi;
 
     public function __construct()
     {
@@ -17,6 +18,7 @@ class Pendaftaran extends Model
                 'Content-Type' => 'application/json'
             ],
         ]);
+        $this->simrsUrlApi = env('SIMRS_URL_API');
     }
 
     public function getData($kode_dokter = null, $tanggal = null, $status_rawat = null)
@@ -35,7 +37,7 @@ class Pendaftaran extends Model
                 $queryParams['status_rawat'] = $status_rawat;
             }
             // Mengirim permintaan HTTP dengan query parameters
-            $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/pendaftaran', [
+            $request = $this->httpClient->get($this->simrsUrlApi . 'pendaftaran', [
                 'query' => $queryParams,
             ]);
 
@@ -53,7 +55,7 @@ class Pendaftaran extends Model
 
     public function byKodeDokter($kodeDokter = '')
     {
-        $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/dokter/select/' . $kodeDokter);
+        $request = $this->httpClient->get($this->simrsUrlApi . 'dokter/select/' . $kodeDokter);
         $response = $request->getBody()->getContents();
         $data = json_decode($response, true);
         return $data['data'];
@@ -61,7 +63,7 @@ class Pendaftaran extends Model
 
     public function getByKodeReg($noReg)
     {
-        $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/pendaftaran/detail/' . $noReg);
+        $request = $this->httpClient->get($this->simrsUrlApi . 'pendaftaran/detail/' . $noReg);
         $response = $request->getBody()->getContents();
         $data = json_decode($response, true);
         return $data['data'];

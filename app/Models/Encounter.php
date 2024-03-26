@@ -14,6 +14,7 @@ class Encounter extends Model
     protected $guarded = [];
 
     protected $httpClient;
+    protected $simrsUrlApi;
 
     public function __construct()
     {
@@ -22,11 +23,12 @@ class Encounter extends Model
                 'Content-Type' => 'application/json'
             ],
         ]);
+        $this->simrsUrlApi = env('SIMRS_URL_API');
     }
 
     public function byKodeDokter($kodeDokter = '')
     {
-        $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/dokter/select/' . $kodeDokter);
+        $request = $this->httpClient->get($this->simrsUrlApi . 'dokter/select/' . $kodeDokter);
         $response = $request->getBody()->getContents();
         $data = json_decode($response, true);
         return $data['data'];
