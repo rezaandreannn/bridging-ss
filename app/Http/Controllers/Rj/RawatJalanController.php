@@ -23,4 +23,16 @@ class RawatJalanController extends Controller
         $title = $this->prefix . ' ' . 'Index';
         return view($this->view . 'index', compact('title'));
     }
+
+    public function history()
+    {
+        $title = $this->prefix . ' ' . 'History';
+        return view($this->view . 'history', compact('title'));
+    }
+
+    public function add()
+    {
+        $title = $this->prefix . ' ' . 'Add Data';
+        return view($this->view . 'add', compact('title'));
+    }
 }

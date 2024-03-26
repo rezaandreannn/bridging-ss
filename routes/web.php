@@ -116,6 +116,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('fisioterapi')->group(function () {
+        // Fisioterapi
         Route::get('list_pasien', [FisioController::class, 'index'])->name('cppt.index');
         Route::get('transaksi_fisio', [FisioController::class, 'edit'])->name('cppt.fisio');
         Route::get('cppt', [FisioController::class, 'create'])->name('cppt.create');
@@ -123,7 +124,10 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('rj')->group(function () {
+        //Rawat Jalan
         Route::get('rawat_jalan', [RawatJalanController::class, 'index'])->name('rj.index');
+        Route::get('rawat_jalan/history', [RawatJalanController::class, 'history'])->name('rj.history');
+        Route::get('rawat_jalan/add', [RawatJalanController::class, 'add'])->name('rj.add');
     });
 
     // MANAGE USER

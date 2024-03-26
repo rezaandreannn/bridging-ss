@@ -41,19 +41,17 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-md-4 filter-buttons">
+                                <div class="form-group d-flex align-items-end">
+                                    <button type="submit" class="btn btn-primary mr-2" style="margin-top: 30px;"><i class="fas fa-search"></i> Search</button>
+                                    <button type="button" class="btn btn-danger" style="margin-top: 30px;" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card-footer">
-                        <!-- <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Cari Pasien</button> -->
-                        <a href="{{ route('cppt.fisio') }}" class="btn btn-primary"><i class="fas fa-search"></i> Tampilkan</a>
-                        <button type="button" class="btn btn-danger" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
                     </div>
                 </form>
             </div>
             <div class="card">
-                <div class="card-header">
-                    <h4>Antrean</h4>
-                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table-striped table" id="table-1">
@@ -73,9 +71,11 @@
                                     <td>123456</td>
                                     <td>Dimas</td>
                                     <td>Jl Way Dadi</td>
-                                    <td>Periksa Perawat</td>
                                     <td>
-                                        <button class="btn btn-primary"><i class="fas fa-notes-medical"></i>Entry</button>
+                                        <span class="badge badge-success">Periksa Perawat</span>
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('rj.history') }}" class="btn btn-primary"><i class="fas fa-notes-medical"></i> History</a>
                                     </td>
                                 </tr>
                             </tbody>

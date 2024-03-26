@@ -33,10 +33,10 @@
             <li class="nav-item dropdown {{ Request::is('kj*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-hand-holding-medical"></i> <span>Kunjungan</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('kj/pendaftaran') ? 'active' : '' }}">
+                    <li class="{{ Request::is('kj/pendaftaran*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('pendaftaran.index') }}">Pendaftaran</a>
                     </li>
-                    <li class="{{ Request::is('kj/antrean') ? 'active' : '' }}">
+                    <li class="{{ Request::is('kj/antrean*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('antrean.index') }}">Antrean</a>
                     </li>
                 </ul>
@@ -57,17 +57,17 @@
             <li class="nav-item dropdown {{ Request::is('rj*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-clinic-medical"></i> <span>Nurse Record</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('rj/rawatjalan') ? 'active' : '' }}">
+                    <li class="{{ Request::is('rj*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('rj.index') }}">Patient</a>
                     </li>
                 </ul>
             </li>
             @can('fisio')
             <li class="menu-header">Fisioterapi</li>
-            <li class="nav-item dropdown {{ Request::is('fisiotarapi*') ? 'active' : '' }}">
+            <li class="nav-item dropdown {{ Request::is('fisioterapi*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Fisioterapi</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('fisioterapi/fisio') ? 'active' : '' }}">
+                    <li class="{{ Request::is('fisioterapi*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('cppt.index') }}">CPPT Fisioterapi</a>
                     </li>
                 </ul>
