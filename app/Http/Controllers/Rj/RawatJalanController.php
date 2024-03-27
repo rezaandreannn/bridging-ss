@@ -21,11 +21,13 @@ class RawatJalanController extends Controller
         $this->prefix = 'Rawat Jalan';
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $title = $this->prefix . ' ' . 'Index';
+        $kode_dokter = $request->input('kode_dokter');
         $dokters = $this->rajal->byKodeDokter();
-        return view($this->view . 'index', compact('title', 'dokters'));
+        $data = $this->rajal->getData($kode_dokter);
+        return view($this->view . 'index', compact('title', 'dokters', 'data'));
     }
 
     public function add()

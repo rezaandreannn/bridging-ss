@@ -37,6 +37,7 @@
                                     </th>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Image</th>
                                     <th>Role</th>
                                     <th>Permission</th>
                                     <th>Action</th>
@@ -50,6 +51,12 @@
                                     </td>
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
+                                    <td>@if ($user->image)
+                                        <img src="{{ asset('storage/images/'. $user->image ) }}" style="max-width: 100%;" alt="Gambar Pengguna">
+                                        @else
+                                        <img src="{{ asset('img/avatar/avatar-1.png') }}" style="max-width: 100%;" alt="Gambar Default">
+                                        @endif
+                                    </td>
                                     <td>
                                         <button type="button" class="badge border-0
                                              @if($user->roles->count() > 1)

@@ -57,26 +57,28 @@
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
+                                    <th scope="col">No Antrean</th>
                                     <th scope="col">No MR</th>
                                     <th scope="col">Nama Pasien</th>
-                                    <th scope="col">Alamat</th>
-                                    <th scope="col">Periksa</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($data as $item)
                                 <tr>
-                                    <td>1</td>
-                                    <td>123456</td>
-                                    <td>Dimas</td>
-                                    <td>Jl Way Dadi</td>
-                                    <td>
-                                        <span class="badge badge-success">Periksa Perawat</span>
+                                    <td class="text-center" width="5%">
+                                        {{ $loop->iteration }}
                                     </td>
                                     <td>
+                                        <div class="badge badge-success"> {{ $item['nomor_antrean'] }}</div>
+                                    </td>
+                                    <td>{{ $item['no_mr'] }}</td>
+                                    <td>{{ $item['nama_pasien'] }}</td>
+                                    <td width="15%">
                                         <a href="{{ route('rj.add') }}" class="btn btn-primary"><i class="fas fa-notes-medical"></i> Entry</a>
                                     </td>
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -97,5 +99,13 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+
+<script>
+    function resetForm() {
+        document.getElementById("filterForm").value = "";
+        alert('Filter telah direset!');
+        window.location.href = "{{ route('rj.index') }}";
+    }
+</script>
 
 @endpush

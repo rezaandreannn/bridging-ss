@@ -29,4 +29,29 @@ class Rajal extends Model
         $data = json_decode($response, true);
         return $data['data'];
     }
+
+    public function getData($kode_dokter = null)
+    {
+        try {
+            // Menyiapkan query parameters
+            $queryParams = [];
+            if ($kode_dokter !== null) {
+                $queryParams['kode_dokter'] = $kode_dokter;
+            }
+            // Mengirim permintaan HTTP dengan query parameters
+            $request = $this->httpClient->get($this->simrsUrlApi . 'antrean?kode_dokter', [
+                'query' => $queryParams,
+            ]);
+
+            // Mengambil respons dari API
+            $response = $request->getBody()->getContents();
+            $data = json_decode($response, true);
+
+            // Mengembalikan data pasien
+            return $data['data']; // Mengambil bagian 'data' dari respons
+        } catch (\Exception $e) {
+            // Tangani kesalahan
+            return []; // Mengembalikan array kosong jika terjadi kesalahan
+        }
+    }
 }

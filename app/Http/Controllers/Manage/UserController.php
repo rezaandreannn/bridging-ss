@@ -46,15 +46,32 @@ class UserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['nullable', 'string', 'email', 'max:255', 'unique:' . User::class],
+            'image' => ['image', 'file', 'max:2048'],
             'password' => ['required', 'confirmed'],
             'permissions' => ['array'],
         ]);
+
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        if ($request->file('image')) {
+            $imagePath = $request->file('image')->store('public/images');
+
+            // Ambil nama file
+            $imageName = basename($imagePath);
+
+            // Update field gambar pada user
+            $user->image = $imageName;
+            $user->save();
+        } elseif (!$user->image) {
+            // Jika pengguna tidak mengunggah gambar baru dan tidak ada gambar sebelumnya, gunakan gambar default
+            $user->image = 'public/img/avatar-1.png';
+            $user->save();
+        }
 
         if ($request->roles) {
             $user->assignRole($request->roles);
