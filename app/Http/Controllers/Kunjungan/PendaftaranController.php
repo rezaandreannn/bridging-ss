@@ -59,6 +59,7 @@ class PendaftaranController extends Controller
             } else {
                 $dataEncounter = NULL;
             }
+            // dd($dataEncounter);
             return view($this->viewPath . 'detail', compact('pendaftaran', 'dataEncounter'));
         } catch (\Exception $e) {
             // Handle any exceptions that occur during the API request
