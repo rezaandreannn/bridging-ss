@@ -20,24 +20,23 @@
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{ route('rj.index') }}">Rawat Jalan</a></div>
                 <div class="breadcrumb-item"><a href="{{ route('rj.index') }}">Nurse Record</a></div>
-                <div class="breadcrumb-item">Pasien</div>
+                <div class="breadcrumb-item">Patient</div>
             </div>
         </div>
 
         <div class="section-body">
             <div class="card card-primary">
                 <form id="filterForm" action="" method="get">
-                    <div class="card-header">
-                        <h4>Rawat Jalan</h4>
-                    </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-8">
-                                <label for="kode_dokter">Dokter</label>
-                                <div class="input-group">
-                                    <select name="pasien" id="" class="form-control select2">
-                                        <option value="" selected disabled>-- Pilih Dokter --</option>
-                                        <option value="">Dr Yusuf</option>
+                                <div class="form-group">
+                                    <label for="kode_dokter">Pilih Dokter</label>
+                                    <select class="form-control select2" id="kode_dokter" name="kode_dokter">
+                                        <option value="" selected disabled>-- silahkan pillih --</option>
+                                        @foreach ($dokters as $dokter)
+                                        <option value="{{ $dokter['kode_dokter'] }}" {{ request('kode_dokter') == $dokter['kode_dokter'] ? 'selected' : '' }}>{{ $dokter['nama_dokter'] }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -61,7 +60,7 @@
                                     <th scope="col">No MR</th>
                                     <th scope="col">Nama Pasien</th>
                                     <th scope="col">Alamat</th>
-                                    <th scope="col">Status</th>
+                                    <th scope="col">Periksa</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
@@ -75,7 +74,7 @@
                                         <span class="badge badge-success">Periksa Perawat</span>
                                     </td>
                                     <td>
-                                        <a href="{{ route('rj.history') }}" class="btn btn-primary"><i class="fas fa-notes-medical"></i> History</a>
+                                        <a href="{{ route('rj.add') }}" class="btn btn-primary"><i class="fas fa-notes-medical"></i> Entry</a>
                                     </td>
                                 </tr>
                             </tbody>

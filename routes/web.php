@@ -126,7 +126,6 @@ Route::middleware('auth')->group(function () {
     Route::prefix('rj')->group(function () {
         //Rawat Jalan
         Route::get('rawat_jalan', [RawatJalanController::class, 'index'])->name('rj.index');
-        Route::get('rawat_jalan/history', [RawatJalanController::class, 'history'])->name('rj.history');
         Route::get('rawat_jalan/add', [RawatJalanController::class, 'add'])->name('rj.add');
     });
 

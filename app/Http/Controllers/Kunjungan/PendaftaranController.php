@@ -51,18 +51,15 @@ class PendaftaranController extends Controller
             $encounterByKdReg = Encounter::where('kode_register', $noReg)->first();
 
             if ($pendaftaran['status_rawat'] == 'RAWAT INAP') {
-                $dataEncounter = 'rawat inap belum tersedia untuk bridge ke satu sehat';
+                $dataEncounter = $pendaftaran['status_rawat'];
             } else if ($encounterByKdReg) {
                 $encounterId = $encounterByKdReg['encounter_id'];
                 $apiEncounter = $this->encounterService->getRequest('Encounter/' . $encounterId);
-                return $apiEncounter;
+                $dataEncounter = $apiEncounter;
             } else {
-                $dataEncounter = 'data not found';
+                $dataEncounter = NULL;
             }
-
-
-            dd($dataEncounter);
-            return view($this->viewPath . 'detail', compact('pendaftaran'));
+            return view($this->viewPath . 'detail', compact('pendaftaran', 'dataEncounter'));
         } catch (\Exception $e) {
             // Handle any exceptions that occur during the API request
             $errorMessage = "Error: " . $e->getMessage();
