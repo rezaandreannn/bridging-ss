@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -67,9 +68,9 @@ class UserController extends Controller
             // Update field gambar pada user
             $user->image = $imageName;
             $user->save();
-        } elseif (!$user->image) {
+        } elseif ($user->image) {
             // Jika pengguna tidak mengunggah gambar baru dan tidak ada gambar sebelumnya, gunakan gambar default
-            $user->image = 'public/img/avatar-1.png';
+            $user->image = asset('img/avatar/avatar-1.png');
             $user->save();
         }
 
@@ -102,6 +103,7 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:100'],
+            'image' => ['image', 'file', 'max:2048'],
             'permissions' => ['array'],
         ]);
         try {
@@ -121,7 +123,23 @@ class UserController extends Controller
                     'email' => $request->email,
                 ];
             }
+            //Update Data
             $user->update($user_data);
+
+            //Upload Image
+            if ($request->file('image')) {
+                if ($request->oldImage) {
+                    Storage::delete('public/images/' . $request->oldImage);
+                }
+                $imagePath = $request->file('image')->store('public/images');
+
+                // Ambil nama file
+                $imageName = basename($imagePath);
+
+                // Update field gambar pada user
+                $user->image = $imageName;
+                $user->save();
+            }
 
             if ($request->roles) {
                 $user->syncRoles($request->roles);
@@ -149,11 +167,13 @@ class UserController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy(User $user, $id)
     {
         $user = User::findorfail($id);
+        if ($user->image) {
+            Storage::delete('public/images/' . $user->image);
+        }
         $user->delete();
-
         $message = 'Data has been deleted successfully.';
         return redirect()->route($this->routeIndex)->with('toast_success', $message);
     }

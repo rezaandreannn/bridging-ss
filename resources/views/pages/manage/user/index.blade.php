@@ -52,9 +52,9 @@
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
                                     <td>@if ($user->image)
-                                        <img src="{{ asset('storage/images/'. $user->image ) }}" style="max-width: 100%;" alt="Gambar Pengguna">
+                                        <img src="{{ asset('storage/images/'. $user->image ) }}" width="25%" alt="Gambar Pengguna">
                                         @else
-                                        <img src="{{ asset('img/avatar/avatar-1.png') }}" style="max-width: 100%;" alt="Gambar Default">
+                                        <img src="{{ asset('img/avatar/avatar-1.png') }}" width="25%" alt="Gambar Default">
                                         @endif
                                     </td>
                                     <td>

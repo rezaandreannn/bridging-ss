@@ -79,7 +79,8 @@
                                 <div class="form-group row mb-4">
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Image</label>
                                     <div class="col-sm-12 col-md-7">
-                                        <input type="file" class="form-control" name="image">
+                                        <input type="file" class="form-control" id="image" name="image" onchange="previewImage()">
+                                        <img class="img-preview img-fluid mt-2" width="25%" alt="">
                                     </div>
                                 </div>
                                 <div class="form-group row mb-4">
@@ -105,4 +106,20 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/forms-advanced-forms.js') }}"></script>
+
+<script>
+    function previewImage() {
+        const image = document.querySelector('#image');
+        const imgPreview = document.querySelector('.img-preview');
+
+        imgPreview.style.display = 'block';
+
+        const oFReader = new FileReader();
+        oFReader.readAsDataURL(image.files[0]);
+
+        oFReader.onload = function(oFREvent) {
+            imgPreview.src = oFREvent.target.result;
+        }
+    }
+</script>
 @endpush
