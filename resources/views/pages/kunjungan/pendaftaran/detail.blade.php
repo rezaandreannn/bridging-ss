@@ -101,28 +101,39 @@
                         <div class="card-body">
                             <div id="accordion">
                                 <!-- 1.1 -->
+                                @if($dataEncounter == 'RAWAT INAP')
+                                <p>rawat inap</p>
+                                @elseif($dataEncounter == NULL)
+                                <p>null</p>
+                                @else
                                 <div class="accordion">
                                     <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-1" aria-expanded="true">
-                                        <h4>Kode</h4>
+                                        <h4>Class</h4>
                                     </div>
                                     <div class="accordion-body collapse" id="panel-body-1" data-parent="#accordion">
                                         <div class="table-responsive">
-                                            <table class="table-striped table" id="table-1">
+                                            <table class="table-striped table">
                                                 <thead>
                                                     <tr>
-                                                        <th>No</th>
-                                                        <th class="text-center w-25">Code System</th>
-                                                        <th class="text-center">Location.identifier[i].use</th>
-                                                        <th class="text-center w-50">Keterangan</th>
+                                                        <th class="text-center w-25">Code</th>
+                                                        <th class="text-center w-25">Display</th>
+                                                        <th class="text-center">System</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-
+                                                    @foreach($dataEncounter['class'][0] as $class)
+                                                    <tr>
+                                                        <td>{{ $class['code'] }}</td>
+                                                        <td>{{ $class['display'] }}</td>
+                                                        <td>{{ $class['system'] }}</td>
+                                                    </tr>
+                                                    @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
+                                @endif
                             </div>
                         </div>
                     </div>
