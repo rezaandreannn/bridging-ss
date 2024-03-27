@@ -99,6 +99,30 @@ class EncounterService
 
     public function getRequest($endpoint, $params = [])
     {
+        $token = $this->accessToken->token();
+
+        $url = $this->config->setUrl() . $endpoint;
+
+        // $params = $this->processParams($params);
+
+        // if (!empty($params['partOf'])) {
+        //     $url .= '?' . http_build_query($params);
+        // }
+
+        // if (!empty($params['organization'])) {
+        //     $url .= '?' . http_build_query($params);
+        // }
+
+
+        $response = $this->httpClient->get($url, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+                'Accept' => 'application/json',
+            ],
+        ]);
+
+        $data = $response->getBody()->getContents();
+        return json_decode($data, true);
     }
 
     public function postRequest($endpoint, array $body)
