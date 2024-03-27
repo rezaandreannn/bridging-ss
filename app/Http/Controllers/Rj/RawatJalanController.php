@@ -3,16 +3,19 @@
 namespace App\Http\Controllers\Rj;
 
 use App\Http\Controllers\Controller;
+use App\Models\Rajal;
 use Illuminate\Http\Request;
 
 class RawatJalanController extends Controller
 {
     protected $view;
+    protected $rajal;
     protected $routeIndex;
     protected $prefix;
 
-    public function __construct()
+    public function __construct(Rajal $rajal)
     {
+        $this->rajal = $rajal;
         $this->view = 'pages.rj.';
         $this->routeIndex = 'rj.index';
         $this->prefix = 'Rawat Jalan';
@@ -21,13 +24,8 @@ class RawatJalanController extends Controller
     public function index()
     {
         $title = $this->prefix . ' ' . 'Index';
-        return view($this->view . 'index', compact('title'));
-    }
-
-    public function history()
-    {
-        $title = $this->prefix . ' ' . 'History';
-        return view($this->view . 'history', compact('title'));
+        $dokters = $this->rajal->byKodeDokter();
+        return view($this->view . 'index', compact('title', 'dokters'));
     }
 
     public function add()

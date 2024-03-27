@@ -87,25 +87,11 @@
                     </div>
                 </div>
             </div>
-            <button class="btn btn-sm btn-primary mb-2 "><i class="fas fa-download"></i> Profil Ringkas Medis Rawat Jalan</button>
-            <div class="card">
-                <!-- include form -->
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h4 class="card-title">High Risk : -</h4>
-                        </div>
-
-                        <div class="col-md-12">
-                            <h4 class="card-title">Alergi : - (-)</h5>
-                        </div>
-                    </div>
-                </div>
-                <!-- include form -->
-            </div>
+            <button class="btn btn-sm btn-primary mb-2"><i class="fas fa-download"></i> Profil Ringkas Medis Rawat Jalan</button>
+            <button class="btn btn-sm btn-primary mb-2" data-toggle="modal" data-target="#modal-histori"><i class="fas fa-history"></i> History</button>
             <!-- form -->
             <form action="#" method="post">
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-header">
                         <h4 class="card-title">Allowanamnesa dan Pemeriksaan Fisik</h4>
                     </div>
@@ -129,7 +115,7 @@
                     </div>
                     <!-- include form -->
                 </div>
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-header card-success">
                         <h4 class="card-title">Vital Sign</h4>
                     </div>
@@ -201,7 +187,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-header">
                         <h4 class="card-title">Asasmen Nyeri</h4>
                     </div>
@@ -301,7 +287,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-header">
                         <h4 class="card-title">Asesmen Jatuh</h4>
                     </div>
@@ -370,7 +356,7 @@
                     </div>
                     <!-- include form -->
                 </div>
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-header">
                         <h4 class="card-title">Riwayat Kesehatan & Alergi</h4>
                     </div>
@@ -405,7 +391,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-header card-success">
                         <h4 class="card-title">Status Psikologis, Sosial dan Fungsional </h4>
                     </div>
@@ -488,7 +474,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-header card-success">
                         <h4 class="card-title">Skrining Nutrisi </h4>
                     </div>
@@ -529,7 +515,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-header card-success">
                         <h4 class="card-title">Spiritual dan Kultural pasien</h4>
                     </div>
@@ -573,7 +559,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-header card-success">
                         <h4 class="card-title">Keperawatan </h4>
                     </div>
@@ -622,6 +608,77 @@
                 <!-- form -->
             </form>
     </section>
+    <!-- modal histori -->
+    <div class="modal fade" id="modal-histori" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Histori (SUPARNO BIN SUPARJO ) - (124411)</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="example1">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10px">Tgl Kunjungan</th>
+                                        <th style="width: 30px">Dokter</th>
+                                        <th style="width: 20px">Layanan</th>
+                                        <th style="width: 20px">Catatan</th>
+                                        <th style="width: 10px">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>26-03-2024</td>
+                                        <td>dr. Agung B Prasetiyono, Sp.PD</td>
+                                        <td>
+                                            SPESIALIS PENYAKIT DALAM </td>
+                                        <td> -</td>
+                                        <td>
+                                            <div class="badge badge-primary">
+                                                Rawat Jalan
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>26-03-2024</td>
+                                        <td>dr. Agung B Prasetiyono, Sp.PD</td>
+                                        <td>
+                                            SPESIALIS PENYAKIT DALAM </td>
+                                        <td> -</td>
+                                        <td>
+                                            <div class="badge badge-primary">
+                                                Rawat Jalan
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>26-03-2024</td>
+                                        <td>dr. Agung B Prasetiyono, Sp.PD</td>
+                                        <td>
+                                            SPESIALIS PENYAKIT DALAM </td>
+                                        <td> -</td>
+                                        <td>
+                                            <div class="badge badge-primary">
+                                                Rawat Jalan
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
 

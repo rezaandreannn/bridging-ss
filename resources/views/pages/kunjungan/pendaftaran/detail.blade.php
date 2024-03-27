@@ -94,6 +94,38 @@
                             <div class="w-100 d-sm-none"></div>
                         </div>
                     </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Encounter</h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="accordion">
+                                <!-- 1.1 -->
+                                <div class="accordion">
+                                    <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-1" aria-expanded="true">
+                                        <h4>Kode</h4>
+                                    </div>
+                                    <div class="accordion-body collapse" id="panel-body-1" data-parent="#accordion">
+                                        <div class="table-responsive">
+                                            <table class="table-striped table" id="table-1">
+                                                <thead>
+                                                    <tr>
+                                                        <th>No</th>
+                                                        <th class="text-center w-25">Code System</th>
+                                                        <th class="text-center">Location.identifier[i].use</th>
+                                                        <th class="text-center w-50">Keterangan</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

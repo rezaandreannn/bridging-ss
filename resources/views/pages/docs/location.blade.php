@@ -273,20 +273,20 @@
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
-                                                    <th class="text-center w-25">Location.physicalType.coding.system</th>
-                                                    <th class="text-center w-25">Location.physicalType.coding.code</th>
-                                                    <th class="text-center w-25">Location.physicalType.coding.display</th>
-                                                    <th class="text-center w-50">Keterangan</th>
+                                                    <th class="text-center">Location.physicalType.coding.system</th>
+                                                    <th class="text-center">Location.physicalType.coding.code</th>
+                                                    <th class="text-center">Location.physicalType.coding.display</th>
+                                                    <th class="text-centerw-50">Keterangan</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach($l_physical as $physical)
                                                 <tr>
                                                     <td> {{ $loop->iteration }}</td>
-                                                    <td class="text-center w-25">{{ $physical['coding_system']}}</td>
-                                                    <td class="text-center w-25">{{ $physical['coding_code']}}</td>
-                                                    <td class="text-center w-25">{{ $physical['coding_display']}}</td>
-                                                    <td class="text-center w-50">{{ $physical['keterangan']}}</td>
+                                                    <td class="text-center">{{ $physical['coding_system']}}</td>
+                                                    <td class="text-center">{{ $physical['coding_code']}}</td>
+                                                    <td class="text-center">{{ $physical['coding_display']}}</td>
+                                                    <td>{{ $physical['keterangan']}}</td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
