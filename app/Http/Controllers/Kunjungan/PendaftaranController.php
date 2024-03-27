@@ -3,18 +3,22 @@
 namespace App\Http\Controllers\Kunjungan;
 
 use App\Http\Controllers\Controller;
+use App\Models\Encounter;
 use Illuminate\Http\Request;
 use App\Models\Pendaftaran;
+use App\Services\SatuSehat\EncounterService;
 
 class PendaftaranController extends Controller
 {
     protected $pendaftaran;
     protected $viewPath;
+    protected $encounterService;
 
     public function __construct(Pendaftaran $pendaftaran)
     {
         $this->pendaftaran = $pendaftaran;
         $this->viewPath = 'pages.kunjungan.pendaftaran.';
+        $this->encounterService = new EncounterService();
     }
 
     public function index(Request $request)
@@ -42,6 +46,22 @@ class PendaftaranController extends Controller
         try {
             // Menggunakan model Dokter untuk mencari data berdasarkan kode dokter
             $pendaftaran = $this->pendaftaran->getByKodeReg($noReg);
+
+            // get encounter by no reg
+            $encounterByKdReg = Encounter::where('kode_register', $noReg)->first();
+
+            if ($pendaftaran['status_rawat'] == 'RAWAT INAP') {
+                $dataEncounter = 'rawat inap belum tersedia untuk bridge ke satu sehat';
+            } else if ($encounterByKdReg) {
+                $encounterId = $encounterByKdReg['encounter_id'];
+                $apiEncounter = $this->encounterService->getRequest('Encounter/' . $encounterId);
+                return $apiEncounter;
+            } else {
+                $dataEncounter = 'data not found';
+            }
+
+
+            dd($dataEncounter);
             return view($this->viewPath . 'detail', compact('pendaftaran'));
         } catch (\Exception $e) {
             // Handle any exceptions that occur during the API request
