@@ -6,8 +6,11 @@
 <!-- CSS Libraries -->
 <link rel="stylesheet" href="{{ asset('library/datatables/datatables.min.css') }}">
 <link rel="stylesheet" href="{{ asset('library/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
-<link rel="stylesheet" href="{{ asset('library/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
+<!-- Select -->
+<link rel="stylesheet" href="{{ asset('library/selectric/public/selectric.css') }}">
 <link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
+
+
 
 <!-- <link rel="stylesheet" href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}"> -->
 @endpush
@@ -33,52 +36,60 @@
                     <div class="author-box-job"><b></div>
                     <div class="author-box-description">
                         <div class="row">
-                            <div class="col-12 col-md-6">
+                            <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-md-3">
-                                        No MR
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">No MR</h6>
                                     </div>
-                                    <div class="col-md-9">
+                                    <div class="col-sm-9">
                                         : 123456
                                     </div>
-                                    <div class="col-md-3">
-                                        Jenis Kelamin
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Jenis Kelamin</h6>
                                     </div>
-                                    <div class="col-md-9">
+                                    <div class="col-sm-9">
                                         : Laki-Laki
                                     </div>
-                                    <div class="col-md-3">
-                                        Rekanan
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Rekanan</h6>
                                     </div>
-                                    <div class="col-md-9">
+                                    <div class="col-sm-9">
                                         : PT.BPJS
                                     </div>
-                                    <div class="col-md-3">
-                                        Dokter
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Dokter</h6>
                                     </div>
-                                    <div class="col-md-9">
+                                    <div class="col-sm-9">
                                         : dr. Agung B Prasetiyono, Sp.PD
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-12 col-md-6">
                                 <div class="row">
-                                    <div class="col-md-3">
-                                        Nama
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Nama</h6>
                                     </div>
-                                    <div class="col-md-9">
+                                    <div class="col-sm-9">
                                         : SUPARNO BIN SUPARJO
                                     </div>
-                                    <div class="col-md-3">
-                                        Tanggal Lahir
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Tanggal Lahir</h6>
                                     </div>
-                                    <div class="col-md-9">
+                                    <div class="col-sm-9">
                                         : 1968-10-06 00:00:00.000
                                     </div>
-                                    <div class="col-md-3">
-                                        Alamat
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Alamat</h6>
                                     </div>
-                                    <div class="col-md-9">
+                                    <div class="col-sm-9">
                                         : DUSUN IV RT/RW 010/006 SIDO MULYO PUNGGUR LAMPUNG TENGAH
                                     </div>
                                 </div>
@@ -215,8 +226,7 @@
                                 <div class="form-group">
                                     <label>Quality</label>
                                     <div class="input-group mb-3">
-                                        <select name="FS_NYERIQ" id="" class="form-control">
-
+                                        <select name="FS_NYERIQ" id="" class="form-control select2">
                                             <option value="0">Tidak Ada</option>
                                             <option value="1">Seperti Di Tusuk-Tusuk</option>
                                             <option value="2">Seperti Terbakar</option>
@@ -230,8 +240,7 @@
                                 <div class="form-group">
                                     <label>Provokatif</label>
                                     <div class="input-group mb-3">
-                                        <select name="FS_NYERIP" id="" class="form-control">
-
+                                        <select name="FS_NYERIP" id="" class="form-control select2">
                                             <option value="0">Tidak Ada Nyeri</option>
                                             <option value="2">Biologik</option>
                                             <option value="3">Kimiawi</option>
@@ -244,8 +253,7 @@
                                 <div class="form-group">
                                     <label>Severity</label>
                                     <div class="input-group mb-3">
-                                        <select name="FS_NYERIS" id="" class="form-control">
-
+                                        <select name="FS_NYERIS" id="" class="form-control select2">
                                             <option value="0">0</option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
@@ -273,8 +281,7 @@
                                 <div class="form-group">
                                     <label>Time</label>
                                     <div class="input-group mb-3">
-                                        <select name="FS_NYERIT" id="" class="form-control">
-
+                                        <select name="FS_NYERIT" id="" class="form-control select2">
                                             <option value="0">Tidak Ada</option>
                                             <option value="1">Kadang-Kadang</option>
                                             <option value="2">Sering</option>
@@ -297,7 +304,7 @@
                             <div class="col-md-6">
                                 <div class="form-group clearfix">
                                     <label>Pasien berjalan tidak seimbang / sempoyongan</label>
-                                    <select name="FS_CARA_BERJALAN1" class="form-control" onchange="click1(this)">
+                                    <select name="FS_CARA_BERJALAN1" class="form-control select2" onchange="click1(this)">
                                         <option value="">--Pilih Data--</option>
                                         <option value="0">TIDAK</option>
                                         <option value="1">YA</option>
@@ -307,7 +314,7 @@
                                     <label>
                                         Pasien berjalan menggunakan alat bantu
                                     </label>
-                                    <select name="FS_CARA_BERJALAN2" class="form-control" onchange="click2(this)">
+                                    <select name="FS_CARA_BERJALAN2" class="form-control select2" onchange="click2(this)">
                                         <option value="">--Pilih Data--</option>
                                         <option value="0">TIDAK</option>
                                         <option value="1">YA</option>
@@ -318,7 +325,7 @@
                                     <label for="check3">
                                         Pada saat akan duduk pasien memegang benda untuk menopang
                                     </label>
-                                    <select name="FS_CARA_DUDUK" class="form-control" onchange="click3(this)">
+                                    <select name="FS_CARA_DUDUK" class="form-control select2" onchange="click3(this)">
                                         <option value="">--Pilih Data--</option>
                                         <option value="0">TIDAK</option>
                                         <option value="1">YA</option>
@@ -401,7 +408,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Status Psikologis</label>
-                                    <select name="FS_STATUS_PSIK" id="" class="form-control">
+                                    <select name="FS_STATUS_PSIK" id="" class="form-control select2">
                                         <option value="">-- pilih --</option>
                                         <option value="1" onclick='document.getElementById("civstaton3").disabled = true' selected>Tenang</option>
                                         <option value="2" onclick='document.getElementById("civstaton3").disabled = true'>Cemas</option>
@@ -416,7 +423,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Hubungan Dengan Anggota Keluarga</label>
-                                    <select name="FS_HUB_KELUARGA" id="" class="form-control">
+                                    <select name="FS_HUB_KELUARGA" id="" class="form-control select2">
                                         <option value="">-- pilih --</option>
                                         <option value="1" selected>Baik</option>
                                         <option value="2">Tidak Baik</option>
@@ -426,7 +433,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Status fungssional</label>
-                                    <select name="FS_ST_FUNGSIONAL" id="" class="form-control">
+                                    <select name="FS_ST_FUNGSIONAL" id="" class="form-control select2">
                                         <option value="">-- pilih --</option>
                                         <option value="1" selected>Mandiri</option>
                                         <option value="2">Perlu Bantuan</option>
@@ -436,7 +443,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Penglihatan</label>
-                                    <select name="FS_PENGELIHATAN" id="" class="form-control">
+                                    <select name="FS_PENGELIHATAN" id="" class="form-control select2">
                                         <option value="">-- pilih --</option>
                                         <option value="1" selected>Normal</option>
                                         <option value="2">Kabur</option>
@@ -448,7 +455,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Penciuman</label>
-                                    <select name="FS_PENCIUMAN" id="" class="form-control">
+                                    <select name="FS_PENCIUMAN" id="" class="form-control select2">
                                         <option value="">-- pilih --</option>
                                         <option value="1" selected>Normal</option>
                                         <option value="2">Tidak Normal</option>
@@ -458,7 +465,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Pendengaran</label>
-                                    <select name="FS_PENDENGARAN" id="" class="form-control">
+                                    <select name="FS_PENDENGARAN" id="" class="form-control select2">
                                         <option value="">-- pilih --</option>
                                         <option value="1" selected>Normal</option>
                                         <option value="2">Tidak Normal (Kanan)</option>
@@ -484,7 +491,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Penurunan berat badan yang tidak diinginkan selama 6 bulan terakhir</label>
-                                    <select name="FS_NUTRISI1" class="form-control" onchange="sn1(this)">
+                                    <select name="FS_NUTRISI1" class="form-control select2" onchange="sn1(this)">
                                         <option value="">-- pilih --</option>
                                         <option value="0">Tidak</option>
                                         <option value="1">Tidak Yakin</option>
@@ -499,7 +506,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Asupan makanan menurun dikarenakan adanya penurunan nafsu makan</label>
-                                    <select name="FS_NUTRISI2" class="form-control" onchange="sn2(this)">
+                                    <select name="FS_NUTRISI2" class="form-control select2" onchange="sn2(this)">
                                         <option value="">-- pilih --</option>
                                         <option value="0">Tidak</option>
                                         <option value="1">Ya</option>
@@ -525,8 +532,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Agama</label>
-                                    <select name="FS_AGAMA" id="" class="form-control">
-
+                                    <select name="FS_AGAMA" id="" class="form-control select2">
+                                        <option value="">-- Pilih Agama --</option>
                                         <option value="1">Islam</option>
                                         <option value="2">Kristen</option>
                                         <option value="3">Katholik</option>
@@ -569,16 +576,22 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Masalah Keperawatan</label>
-                                    <select multiple="" name="tujuan[]" id="" class="form-control select2bs4">
+                                    <select name="tujuan[]" id="masalah_perawatan" class="form-control select2" multiple="multiple" data-placeholder="Pilih Masalah Keperawatan" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                         <option value="">-- pilih --</option>
+                                        @foreach ($masalah_perawatan as $mk)
+                                        <option value="{{ $mk['FS_KD_DAFTAR_DIAGNOSA'] }}" {{ request('tujuan') == $mk['FS_KD_DAFTAR_DIAGNOSA'] ? 'selected' : '' }}>{{ $mk['FS_NM_DIAGNOSA'] }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Rencana Keperawatan</label>
-                                    <select multiple name="tembusan[]" id="" class="form-control select2bs4">
+                                    <select multiple name="tembusan[]" id="rencana_perawatan" class="form-control select2" multiple="multiple" data-placeholder="Pilih Rencana Keperawatan" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                         <option value="">-- pilih --</option>
+                                        @foreach ($rencana_perawatan as $rp)
+                                        <option value="{{ $rp['FS_KD_TRS'] }}" {{ request('tembusan') == $rp['FS_KD_TRS'] ? 'selected' : '' }}>{{ $rp['FS_NM_REN_KEP'] }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -686,8 +699,9 @@
 <!-- JS Libraies -->
 <script src="{{ asset('library/datatables/datatables.min.js') }}"></script>
 <script src="{{ asset('library/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('library/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
+
 <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('library/selectric/public/jquery.selectric.min.js') }}"></script>
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
 
 <!-- Page Specific JS File -->

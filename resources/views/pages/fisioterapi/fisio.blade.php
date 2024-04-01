@@ -34,63 +34,70 @@
                             <div class="author-box-job"><b></div>
                             <div class="author-box-description">
                                 <div class="row">
-                                    <div class="col-12 col-md-6">
+                                    <div class="col-md-12">
                                         <div class="row">
-                                            <div class="col-md-4">
-                                                NIK
+                                            <div class="col-sm-4">
+                                                <h6 class="mb-0">NIK</h6>
                                             </div>
-                                            <div class="col-md-8">
+                                            <div class="col-sm-8">
                                                 : 1872022402020001
                                             </div>
-                                            <div class="col-md-4">
-                                                Email
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h6 class="mb-0">Email</h6>
                                             </div>
-                                            <div class="col-md-8">
+                                            <div class="col-sm-8">
                                                 : Fiki@gmail.com
-
                                             </div>
-                                            <div class="col-md-4">
-                                                Tanggal Lahir
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h6 class="mb-0">Tanggal Lahir</h6>
                                             </div>
-                                            <div class="col-md-8">
+                                            <div class="col-sm-8">
                                                 : 24-02-2002
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
                                         <div class="row">
-                                            <div class="col-md-4">
-                                                Jenis Kelamin
+                                            <div class="col-sm-4">
+                                                <h6 class="mb-0">Jenis Kelamin</h6>
                                             </div>
-                                            <div class="col-md-8">
+                                            <div class="col-sm-8">
                                                 : Laki-Laki
                                             </div>
-                                            <div class="col-md-4">
-                                                No Hp
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h6 class="mb-0">No Hp</h6>
                                             </div>
-                                            <div class="col-md-8">
+                                            <div class="col-sm-8">
                                                 :
                                             </div>
-                                            <div class="col-md-4">
-                                                Alamat
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h6 class="mb-0">Alamat</h6>
                                             </div>
-                                            <div class="col-md-8">
+                                            <div class="col-sm-8">
                                                 : 23A KARANGREJO 25/07 METRO UTARA
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="w-100 d-sm-none"></div>
                         </div>
+                        <div class="w-100 d-sm-none"></div>
                     </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add-tranksasi">
-                                <i class="fas fa-plus"></i> Add Data
-                            </button>
-                        </div>
-                        <div class="card-body">
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add-tranksasi">
+                            <i class="fas fa-plus"></i> Add Data
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
                             <table class="table-striped table" id="table-1">
                                 <thead>
                                     <tr>
@@ -131,7 +138,8 @@
                 </div>
             </div>
         </div>
-    </section>
+</div>
+</section>
 </div>
 <!-- Tambah Data -->
 <div class="modal fade" id="modal-add-tranksasi">

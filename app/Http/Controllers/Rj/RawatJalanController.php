@@ -33,6 +33,8 @@ class RawatJalanController extends Controller
     public function add()
     {
         $title = $this->prefix . ' ' . 'Add Data';
-        return view($this->view . 'add', compact('title'));
+        $masalah_perawatan = $this->rajal->masalah_perawatan();
+        $rencana_perawatan = $this->rajal->rencana_perawatan();
+        return view($this->view . 'add', compact('title', 'masalah_perawatan', 'rencana_perawatan'));
     }
 }

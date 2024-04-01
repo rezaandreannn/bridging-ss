@@ -54,4 +54,20 @@ class Rajal extends Model
             return []; // Mengembalikan array kosong jika terjadi kesalahan
         }
     }
+
+    public function masalah_perawatan()
+    {
+        $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/api/rawatjalan/perawat/masalah_keperawatan');
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
+    }
+
+    public function rencana_perawatan()
+    {
+        $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/api/rawatjalan/perawat/rencana_keperawatan');
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
+    }
 }

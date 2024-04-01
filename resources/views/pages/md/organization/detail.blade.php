@@ -25,73 +25,69 @@
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Show/Hide</h4>
-                            <div class="card-header-action">
-                                <a data-collapse="#mycard-collapse" class="btn btn-icon btn-info" href="#"><i class="fas fa-minus"></i></a>
+                    <div class="card author-box card-primary">
+                        <div class="card-body">
+                            <div class="author-box-name">
+                                <a href="#">
+                                    <h6 class="mb-0">{{ $organization->name}}</h6>
+                                </a>
                             </div>
-                        </div>
-                        <div class="collapse show" id="mycard-collapse">
-                            <div class="card-body">
+                            <div class="author-box-job">
+                                <b>{{ $organization->organization_id}}</b>
+                            </div>
+                            <div class="author-box-description">
                                 <div class="row">
-                                    <div class="col-12 col-md-6">
+                                    <div class="col-md-12">
                                         <div class="row">
-                                            <div class="col-md-4">
-                                                Organization ID
+                                            <div class="col-sm-4">
+                                                <h6 class="mb-0">Status</h6>
                                             </div>
-                                            <div class="col-md-8">
-                                                {{ $organization->organization_id}}
-                                            </div>
-                                            <div class="col-md-4">
-                                                Name
-                                            </div>
-                                            <div class="col-md-8">
-                                                {{ $organization->name}}
-                                            </div>
-                                            <div class="col-md-4">
-                                                Status
-                                            </div>
-                                            <div class="col-md-8">
-                                                @if($organization->active == true)
+                                            <div class="col-sm-8">
+                                                : @if($organization->active == true)
                                                 <b>Active</b> (true)
                                                 @else
                                                 <b>Inactive (false)</b>
                                                 @endif
                                             </div>
-                                            <div class="col-md-4">
-                                                Part Of
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h6 class="mb-0">Part Of</h6>
                                             </div>
-                                            <div class="col-md-8">
-                                                {{$organization->part_of ?? ''}}
+                                            <div class="col-sm-8">
+                                                : {{$organization->part_of ?? ''}}
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
                                         <div class="row">
-                                            <div class="col-md-4">
-                                                Country
+                                            <div class="col-sm-4">
+                                                <h6 class="mb-0">Country</h6>
                                             </div>
-                                            <div class="col-md-8">
-                                                Indonesia
+                                            <div class="col-sm-8">
+                                                : Indonesia
                                             </div>
-                                            <div class="col-md-4">
-                                                City
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h6 class="mb-0">City</h6>
                                             </div>
-                                            <div class="col-md-8">
-                                                Kota Metro
+                                            <div class="col-sm-8">
+                                                : Kota Metro
                                             </div>
-                                            <div class="col-md-4">
-                                                Created By
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h6 class="mb-0">Created By</h6>
                                             </div>
-                                            <div class="col-md-8">
-                                                {{ $organization->user_name ?? 'Seeder System'}}
+                                            <div class="col-sm-8">
+                                                : {{ $organization->user_name ?? 'Seeder System'}}
                                             </div>
-                                            <div class="col-md-4">
-                                                Created Date
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h6 class="mb-0">Created Date</h6>
                                             </div>
-                                            <div class="col-md-8">
-                                                {{$organization->updated_at ?? ''}}
+                                            <div class="col-sm-8">
+                                                : {{$organization->updated_at ?? ''}}
                                             </div>
                                         </div>
                                     </div>
@@ -101,82 +97,83 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12 col-md-6 col-lg-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Part Detail </h4>
-                            <div class="card-header-action">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newOrganization">
-                                    New Organization
-                                </button>
-                            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Part Detail </h4>
+                        <div class="card-header-action">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newOrganization">
+                                New Organization
+                            </button>
                         </div>
-                        <div class="card-body p-0">
-                            <div class="table-responsive">
-                                <table class="table-striped table">
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table-striped table">
 
-                                    <tr>
-                                        <th>Organization ID</th>
-                                        <th>Name</th>
-                                        <th>Active</th>
-                                    </tr>
+                                <tr>
+                                    <th>Organization ID</th>
+                                    <th>Name</th>
+                                    <th>Active</th>
+                                </tr>
 
-                                    @foreach($organizationbyParts as $organizationPart)
-                                    <tr>
-                                        <td>{{ $organizationPart->organization_id}}</td>
-                                        <td>{{ $organizationPart->name}}</td>
-                                        <td class="text-center">
-                                            <input type="checkbox" class="form-check-input" {{ $organizationPart->active == true ? 'checked' : ''}}>
+                                @foreach($organizationbyParts as $organizationPart)
+                                <tr>
+                                    <td>{{ $organizationPart->organization_id}}</td>
+                                    <td>{{ $organizationPart->name}}</td>
+                                    <td class="text-center">
+                                        <input type="checkbox" class="form-check-input" {{ $organizationPart->active == true ? 'checked' : ''}}>
 
-                                        </td>
-                                    </tr>
-                                    @endforeach
+                                    </td>
+                                </tr>
+                                @endforeach
 
-                                </table>
-                            </div>
+                            </table>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 col-lg-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Location By Organization </h4>
-                            <div class="card-header-action">
-                                <a href="#" class="btn btn-primary">New Location</a>
-                            </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Location By Organization </h4>
+                        <div class="card-header-action">
+                            <a href="#" class="btn btn-primary">New Location</a>
                         </div>
-                        <div class="card-body p-0">
-                            <div class="table-responsive">
-                                <table class="table table-striped">
-                                    <tr>
-                                        <th>Location ID</th>
-                                        <th>Name</th>
-                                        <th>Status</th>
-                                    </tr>
-                                    @foreach($locationByOrganization as $location)
-                                    <tr>
-                                        <td>{{$location->location_id}}</td>
-                                        <td>{{$location->name}}</td>
-                                        <td>
-                                            @if($location->status == 'active')
-                                            <div class="badge badge-success">{{$location->status}}</div>
-                                            @elseif($location->status == 'inactive')
-                                            <div class="badge badge-danger">{{$location->status}}</div>
-                                            @else
-                                            <div class="badge badge-warning">{{$location->status}}</div>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </table>
-                            </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <tr>
+                                    <th>Location ID</th>
+                                    <th>Name</th>
+                                    <th>Status</th>
+                                </tr>
+                                @foreach($locationByOrganization as $location)
+                                <tr>
+                                    <td>{{$location->location_id}}</td>
+                                    <td>{{$location->name}}</td>
+                                    <td>
+                                        @if($location->status == 'active')
+                                        <div class="badge badge-success">{{$location->status}}</div>
+                                        @elseif($location->status == 'inactive')
+                                        <div class="badge badge-danger">{{$location->status}}</div>
+                                        @else
+                                        <div class="badge badge-warning">{{$location->status}}</div>
+                                        @endif
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+</div>
+</section>
 </div>
 
 <!-- Modal create organization -->
