@@ -15,16 +15,16 @@
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-database"></i> <span>Master Data</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('md/patient*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('patient.index') }}">Patient</a>
+                        <a class="nav-link" href="{{ route('patient.index') }}">Pasien</a>
                     </li>
                     <li class="{{ Request::is('md/dokter*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('dokter.index') }}">Practitioner</a>
+                        <a class="nav-link" href="{{ route('dokter.index') }}">Dokter</a>
                     </li>
                     <li class="{{ Request::is('md/organization*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('organization.index') }}">Organization</a>
+                        <a class="nav-link" href="{{ route('organization.index') }}">Organisasi</a>
                     </li>
                     <li class="{{ Request::is('md/location*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('location.index') }}">Location</a>
+                        <a class="nav-link" href="{{ route('location.index') }}">Lokasi</a>
                     </li>
                 </ul>
             </li>
@@ -55,15 +55,14 @@
             @endcan
             <li class="menu-header">Rawat Jalan</li>
             <li class="nav-item dropdown {{ Request::is('rj*') ? 'active' : '' }}">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-clinic-medical"></i> <span>Nurse Record</span></a>
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-clinic-medical"></i> <span>Catatan Perawat</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('rj*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('rj.index') }}">Patient</a>
+                        <a class="nav-link" href="{{ route('rj.index') }}">Pasien</a>
                     </li>
                 </ul>
             </li>
             @can('fisio')
-            <li class="menu-header">Fisioterapi</li>
             <li class="nav-item dropdown {{ Request::is('fisioterapi*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Fisioterapi</span></a>
                 <ul class="dropdown-menu">
@@ -74,21 +73,21 @@
             </li>
             @endcan
             @can('manage user')
-            <li class="menu-header">manage</li>
+            <li class="menu-header">Mengelola</li>
             <li class="nav-item dropdown {{ Request::is('mu**') ? 'active' : '' }}">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-users"></i><span>Manage User</span></a>
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-users"></i><span>Kelola Pengguna</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('mu/user*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('user.index') }}">User</a>
+                        <a class="nav-link" href="{{ route('user.index') }}">Pengguna</a>
                     </li>
                     <li class="{{ Request::is('mu/roles*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('roles.index') }}">Role</a>
+                        <a class="nav-link" href="{{ route('roles.index') }}">Peran</a>
                     </li>
                     <li class="{{ Request::is('mu/permission*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('permission.index') }}">Permission</a>
+                        <a class="nav-link" href="{{ route('permission.index') }}">Perizinan</a>
                     </li>
                     <li class="{{ Request::is('mu/role-permission*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('rolepermission.index') }}">Role Permission</a>
+                        <a class="nav-link" href="{{ route('rolepermission.index') }}">Peran Perizinan</a>
                     </li>
                 </ul>
             </li>
