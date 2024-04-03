@@ -50,6 +50,9 @@
                     </div>
                 </form>
             </div>
+            <!-- @php
+            use App\Models\Rajal;
+            @endphp -->
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
@@ -60,11 +63,26 @@
                                     <th scope="col">No Antrean</th>
                                     <th scope="col">No MR</th>
                                     <th scope="col">Nama Pasien</th>
+                                    <th scope="col">Alamat</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($data as $item)
+                                @php
+                                $noReg = $item['No_Reg'];
+                                $rajal = new Rajal();
+                                try {
+                                $rad = $rajal->cek_rad($noReg);
+                                } catch (\Exception $e) {
+                                $rad = false;
+                                }
+                                try {
+                                $lab = $rajal->cek_lab($noReg);
+                                } catch (\Exception $e) {
+                                $lab = false;
+                                }
+                                @endphp
                                 <tr>
                                     <td class="text-center" width="5%">
                                         {{ $loop->iteration }}
@@ -74,8 +92,38 @@
                                     </td>
                                     <td>{{ $item['no_mr'] }}</td>
                                     <td>{{ $item['nama_pasien'] }}</td>
-                                    <td width="15%">
-                                        <a href="{{ route('rj.add') }}" class="btn btn-primary"><i class="fas fa-notes-medical"></i> Entry</a>
+                                    <td>{{ $item['Alamat'] }}</td>
+                                    <td width="40%">
+                                        <a href="{{ route('rj.add', $item['No_Reg'] )}}" class="btn btn-primary"><i class="fas fa-notes-medical"></i> Entry</a>
+                                        <!-- pasien kontrol -->
+                                        @if($item['FS_CARA_PULANG'] == 2)
+                                        <a href="{{ route('rj.add', $noReg) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> SKDP</a>
+                                        <a href="{{ route('rj.add', $noReg) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i>Edit SKDP</a>
+                                        <!-- pasien rujuk luar rs -->
+                                        @elseif ($item['FS_CARA_PULANG'] == 4)
+                                        <a href="{{ route('rj.add', $noReg) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> Rujukan RS</a>
+                                        <!-- pasien dengan rujuk internal -->
+                                        @elseif ($item['FS_CARA_PULANG'] == 6)
+                                        <a href="{{ route('rj.add', $noReg) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> Rujukan Internal</a>
+                                        <!-- pasien dikembalikan ke faskes primer -->
+                                        @elseif ($item['FS_CARA_PULANG'] == 7)
+                                        <a href="{{ route('rj.add', $noReg) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> Faskes</a>
+                                        @elseif ($item['FS_CARA_PULANG'] == 8)
+                                        <a href="{{ route('rj.add', $noReg) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> PRB</a>
+                                        @endif
+
+                                        <!-- Radiologi -->
+                                        @if($rad)
+                                        <a href="{{ route('rj.add', $noReg) }}" class="btn btn-xs btn-success"><i class="fas fa-download"></i> Radiologi</a>
+                                        @endif
+                                        <!-- Laboratiorium -->
+                                        @if($lab)
+                                        <a href="{{ route('rj.add', $noReg) }}" class="btn btn-xs btn-success"><i class="fas fa-download"></i> Lab</a>
+                                        @endif
+                                        <!-- Resep -->
+                                        @if($item['FS_TERAPI'] != '')
+                                        <a href="{{ route('rj.add', $noReg) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> Resep</a>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach

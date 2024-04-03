@@ -24,73 +24,63 @@
 
         <div class="section-body">
             <div class="row">
-                <div class="col-12">
-                    <div class="card author-box card-primary">
+                <div class="col-md-12">
+                    <div class="card">
                         <div class="card-body">
                             <div class="author-box-name">
                                 <a href="#">
-                                    <h6 class="mb-0">{{ $organization->name}}</h6>
+                                    <h6 class="mt-1">{{ $organization->name}}</h6>
                                 </a>
                             </div>
                             <div class="author-box-job">
-                                <b>{{ $organization->organization_id}}</b>
+                                <p class="text-font"><b>{{ $organization->organization_id}}</b></p>
+                                <hr>
                             </div>
-                            <div class="author-box-description">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <h6 class="mb-0">Status</h6>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="media">
+                                            <div class="media-title">Status :</div>
+                                            <div class="media-body">
+                                                <div class="media-title ml-3 mb-1">@if($organization->active == true)
+                                                    <b>Active</b> (true)
+                                                    @else
+                                                    <b>Inactive (false)</b>
+                                                    @endif
+                                                </div>
                                             </div>
-                                            <div class="col-sm-8">
-                                                : @if($organization->active == true)
-                                                <b>Active</b> (true)
-                                                @else
-                                                <b>Inactive (false)</b>
-                                                @endif
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-title">Part Of :</div>
+                                            <div class="media-body">
+                                                <div class="media-title ml-3 mb-1"> {{$organization->part_of ?? ''}}</div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <h6 class="mb-0">Part Of</h6>
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-title">Country :</div>
+                                            <div class="media-body">
+                                                <div class="media-title ml-3 mb-1"> Indonesia</div>
                                             </div>
-                                            <div class="col-sm-8">
-                                                : {{$organization->part_of ?? ''}}
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-title mb-0">City :</div>
+                                            <div class="media-body">
+                                                <div class="media-title ml-3 mb-1">Kota Metro</div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <h6 class="mb-0">Country</h6>
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-title mb-0">Created By :</div>
+                                            <div class="media-body">
+                                                <div class="media-title ml-3 mb-1"> {{ $organization->user_name ?? 'Seeder System'}}</div>
                                             </div>
-                                            <div class="col-sm-8">
-                                                : Indonesia
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-title mb-0">Created Date :</div>
+                                            <div class="media-body">
+                                                <div class="media-title ml-3 mb-1"> {{$organization->updated_at ?? ''}}</div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <h6 class="mb-0">City</h6>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                : Kota Metro
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <h6 class="mb-0">Created By</h6>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                : {{ $organization->user_name ?? 'Seeder System'}}
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <h6 class="mb-0">Created Date</h6>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                : {{$organization->updated_at ?? ''}}
-                                            </div>
-                                        </div>
-                                    </div>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>

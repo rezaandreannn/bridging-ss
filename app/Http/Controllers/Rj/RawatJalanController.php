@@ -27,14 +27,18 @@ class RawatJalanController extends Controller
         $kode_dokter = $request->input('kode_dokter');
         $dokters = $this->rajal->byKodeDokter();
         $data = $this->rajal->getData($kode_dokter);
+
         return view($this->view . 'index', compact('title', 'dokters', 'data'));
     }
 
-    public function add()
+    public function add($noReg)
     {
         $title = $this->prefix . ' ' . 'Add Data';
         $masalah_perawatan = $this->rajal->masalah_perawatan();
         $rencana_perawatan = $this->rajal->rencana_perawatan();
-        return view($this->view . 'add', compact('title', 'masalah_perawatan', 'rencana_perawatan'));
+        $rajal = $this->rajal->pasien_bynoreg($noReg);
+
+
+        return view($this->view . 'add', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'rajal'));
     }
 }

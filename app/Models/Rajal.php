@@ -55,6 +55,47 @@ class Rajal extends Model
         }
     }
 
+    public function skdp_bynoreg($noReg)
+    {
+
+        $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/berkas/skdp/' . $noReg);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        // Memeriksa apakah ada data SKDP yang dikembalikan
+        if (isset($data['data']) && !empty($data['data'])) {
+            return true; // Jika ada data SKDP
+        } else {
+            return false; // Jika tidak ada data SKDP
+        }
+    }
+
+    public function cek_lab($noReg)
+    {
+        $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/berkas/laboratorium/' . $noReg);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        // Memeriksa apakah ada data SKDP yang dikembalikan
+        if (isset($data['data']) && !empty($data['data'])) {
+            return true; // Jika ada data SKDP
+        } else {
+            return false; // Jika tidak ada data SKDP
+        }
+    }
+
+    public function cek_rad($noReg)
+    {
+        $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/berkas/cekRadiologi/' . $noReg);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        // Memeriksa apakah ada data SKDP yang dikembalikan
+        if (isset($data['data']) && !empty($data['data'])) {
+            return true; // Jika ada data SKDP
+        } else {
+            return false; // Jika tidak ada data SKDP
+        }
+        var_dump($data);
+    }
+
     public function masalah_perawatan()
     {
         $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/api/rawatjalan/perawat/masalah_keperawatan');
@@ -68,6 +109,17 @@ class Rajal extends Model
         $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/api/rawatjalan/perawat/rencana_keperawatan');
         $response = $request->getBody()->getContents();
         $data = json_decode($response, true);
+        return $data['data'];
+    }
+
+    public function pasien_bynoreg($noReg)
+    {
+        $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/pasien/biodatabynoreg/' . $noReg);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        // Mengganti kunci NO_REG menjadi no_registrasi
+        $data['data']['No_Reg'] = $data['data']['NO_REG'];
+        unset($data['data']['NO_REG']);
         return $data['data'];
     }
 }

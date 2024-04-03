@@ -22,89 +22,73 @@
 
         <div class="section-body">
             <div class="row">
-                <div class="col-12">
-                    <div class="card author-box card-primary">
+                <div class="col-md-12">
+                    <div class="card">
                         <div class="card-body">
                             <div class="author-box-name">
-                                <a href="#">{{ $pendaftaran['nama_pasien'] ?? ''}} - ( {{ $pendaftaran['no_mr'] ?? ''}} )</a>
+                                <a href="#">
+                                    <h6 class="mt-1">{{ $pendaftaran['nama_pasien'] ?? ''}} - ( {{ $pendaftaran['no_mr'] ?? ''}} )</h6>
+                                </a>
                             </div>
                             <div class="author-box-job">
                                 <h6 class="mb-0"><b>NIK : {{ $pendaftaran['nik'] ?? ''}}</b></h6>
+                                <hr>
                             </div>
-                            <div class="author-box-description">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <h6 class="mb-0">No Registrasi</h6>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="media">
+                                            <div class="media-title">No Registrasi :</div>
+                                            <div class="media-body">
+                                                <div class="media-title ml-3 mb-1"> {{ $pendaftaran['no_registrasi'] ?? ''}}</div>
                                             </div>
-                                            <div class="col-sm-8">
-                                                : {{ $pendaftaran['no_registrasi'] ?? ''}}
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-title">Status Rawat :</div>
+                                            <div class="media-body">
+                                                <div class="media-title ml-3 mb-1"> {{ $pendaftaran['status_rawat'] ?? ''}}</div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <h6 class="mb-0">Status Rawat </h6>
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-title">Rekanan :</div>
+                                            <div class="media-body">
+                                                <div class="media-title ml-3 mb-1"> {{ $pendaftaran['nama_rekanan'] ?? ''}}</div>
                                             </div>
-                                            <div class="col-sm-8">
-                                                : {{ $pendaftaran['status_rawat'] ?? ''}}
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-title mb-0">Nama Dokter :</div>
+                                            <div class="media-body">
+                                                <div class="media-title ml-3 mb-1"> {{ $pendaftaran['nama_dokter'] ?? ''}}</div>
+                                            </div>
+                                        </li>
 
+                                    </ul>
+                                </div>
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="media">
+                                            <div class="media-title mb-0">Kode Dokter :</div>
+                                            <div class="media-body">
+                                                <div class="media-title ml-3 mb-1 badge badge-info"> {{ $pendaftaran['kode_dokter'] ?? ''}}</div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <h6 class="mb-0">Rekanan</h6>
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-title mb-0">Daftar By :</div>
+                                            <div class="media-body">
+                                                <div class="media-title ml-3 mb-1"> {{ $pendaftaran['daftar_by'] ?? ''}}</div>
                                             </div>
-                                            <div class="col-sm-8">
-                                                : {{ $pendaftaran['nama_rekanan'] ?? ''}}
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-title mb-0">Created By :</div>
+                                            <div class="media-body">
+                                                <div class="media-title ml-3 mb-1"> {{ $pendaftaran['created_by'] ?? ''}}</div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <h6 class="mb-0">Nama Dokter</h6>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                : {{ $pendaftaran['nama_dokter'] ?? ''}}
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <h6 class="mb-0">Kode Dokter</h6>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                : <div class="badge badge-info">{{ $pendaftaran['kode_dokter'] ?? ''}}</div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <h6 class="mb-0"></h6>
-                                            </div>
-                                            <div class="col-sm-8">
-
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <h6 class="mb-0">Daftar By</h6>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                : {{ $pendaftaran['daftar_by'] ?? ''}}
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <h6 class="mb-0">Created By</h6>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                : {{ $pendaftaran['created_by'] ?? ''}}
-                                            </div>
-                                        </div>
-                                    </div>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="w-100 d-sm-none"></div>
                 </div>
             </div>
             <div class="card">

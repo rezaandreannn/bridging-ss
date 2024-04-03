@@ -22,97 +22,95 @@
 
         <div class="section-body">
             <div class="row">
-                <div class="col-12">
-                    <div class="card author-box card-primary">
+                <div class="col-md-12">
+                    <div class="card">
                         <div class="card-body">
                             <div class="author-box-name">
                                 <a href="#">
-                                    <h6 class="mb-0">{{ $dokter['data']['nama_dokter'] ?? ''}} - ( {{ $dokter['data']['kode_dokter'] ?? ''}} )</h6>
+                                    <h6 class="mt-1">{{ $dokter['data']['nama_dokter'] ?? ''}}</h6>
                                 </a>
                             </div>
                             <div class="author-box-job">
-                                <h6 class="mb-0"><b>{{ $dokter['data']['jenis_profesi'] ?? ''}}</b> ({{ $dokter['data']['spesialis'] ?? ''}})</h6>
+                                <h6 class="mb-0"><b>{{ $dokter['data']['jenis_profesi'] ?? ''}}</b></h6>
+                                <hr>
                             </div>
-                            <div class="author-box-description">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0">NIK</h6>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="media">
+                                            <div class="media-title">Kode Dokter :</div>
+                                            <div class="media-body">
+                                                <div class="media-title ml-3 mb-1"> {{ $dokter['data']['kode_dokter'] ?? ''}}</div>
                                             </div>
-                                            <div class="col-sm-9">
-                                                : {{ $dokter['data']['nik'] ?? ''}}
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-title">Spesialis :</div>
+                                            <div class="media-body">
+                                                <div class="media-title ml-3 mb-1"> {{ $dokter['data']['spesialis'] ?? ''}}</div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0">Email</h6>
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-title">NIK :</div>
+                                            <div class="media-body">
+                                                <div class="media-title ml-3 mb-1"> {{ $dokter['data']['nik'] ?? ''}}</div>
                                             </div>
-                                            <div class="col-sm-9">
-                                                : {{ $dokter['data']['email'] ?? ''}}
-
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-title mb-0">Email :</div>
+                                            <div class="media-body">
+                                                <div class="media-title ml-3 mb-1"> {{ $dokter['data']['email'] ?? ''}}</div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0">Tanggal Lahir</h6>
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-title mb-0">Tanggal Lahir :</div>
+                                            <div class="media-body">
+                                                <div class="media-title ml-3 mb-1"> {{ date('d-m-Y', strtotime($dokter['data']['tgl_lahir'] ?? ''))  }}</div>
                                             </div>
-                                            <div class="col-sm-9">
-                                                : {{ date('d-m-Y', strtotime($dokter['data']['tgl_lahir'] ?? ''))  }}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="media">
+                                            <div class="media-title mb-0">Agama :</div>
+                                            <div class="media-body">
+                                                <div class="media-title ml-3 mb-1"> {{ $dokter['data']['agama'] ?? ''}}</div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0">Agama</h6>
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-title mb-0">Provinsi :</div>
+                                            <div class="media-body">
+                                                <div class="media-title ml-3 mb-1"> {{ $dokter['data']['provinsi'] ?? ''}}</div>
                                             </div>
-                                            <div class="col-sm-9">
-                                                : {{ $dokter['data']['agama'] ?? ''}}
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-title mb-0">Kota :</div>
+                                            <div class="media-body">
+                                                <div class="media-title ml-3 mb-1"> {{ $dokter['data']['kota'] ?? ''}}</div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0">Provinsi</h6>
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-title mb-0">Kode Pos :</div>
+                                            <div class="media-body">
+                                                <div class="media-title ml-3 mb-1"> {{ $dokter['data']['kota'] ?? ''}}</div>
                                             </div>
-                                            <div class="col-sm-9">
-                                                : {{ $dokter['data']['provinsi'] ?? ''}}
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-title mb-0">Alamat :</div>
+                                            <div class="media-body">
+                                                <div class="media-title ml-3 mb-1"> {{ $dokter['data']['alamat'] ?? ''}}</div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0">Kota</h6>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                : {{ $dokter['data']['kota'] ?? ''}}
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0">Kode Pos</h6>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                : {{ $dokter['data']['kode_pos'] ?? ''}}
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0">Alamat</h6>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                : {{ $dokter['data']['alamat'] ?? ''}}
-                                            </div>
-                                        </div>
-                                    </div>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="w-100 d-sm-none"></div>
                 </div>
             </div>
         </div>
-</div>
-</div>
-</section>
+
+    </section>
 </div>
 @endsection
 
