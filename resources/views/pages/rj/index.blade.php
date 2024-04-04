@@ -65,9 +65,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
-                                $rajal = new Rajal();
-                                @endphp
                                 @foreach ($data as $item)
                                 <tr>
                                     <td class="text-center" width="5%">
@@ -109,11 +106,11 @@
                                         @endif
 
                                         <!-- Radiologi -->
-                                        @if($rajal->cek_rad($item['No_Reg']) == true)
+                                        @if($rajalModel->cek_rad($item['No_Reg']) == true)
                                         <a href="{{ route('rj.add', $item['No_Reg']) }}" class="btn btn-xs btn-success"><i class="fas fa-download"></i> Radiologi</a>
                                         @endif
                                         <!-- Laboratiorium -->
-                                        @if($rajal->cek_lab($item['No_Reg']) == true)
+                                        @if($rajalModel->cek_lab($item['No_Reg']) == true)
                                         <a href="{{ route('rj.add', $item['No_Reg']) }}" class="btn btn-xs btn-success"><i class="fas fa-download"></i> Lab</a>
                                         @endif
                                         <!-- Resep -->
