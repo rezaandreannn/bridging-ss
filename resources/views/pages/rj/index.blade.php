@@ -50,9 +50,6 @@
                     </div>
                 </form>
             </div>
-            <!-- @php
-            use App\Models\Rajal;
-            @endphp -->
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
@@ -60,10 +57,10 @@
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
-                                    <th scope="col">No Antrean</th>
                                     <th scope="col">No MR</th>
                                     <th scope="col">Nama Pasien</th>
                                     <th scope="col">Alamat</th>
+                                    <th scope="col">Periksa</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
@@ -76,12 +73,22 @@
                                     <td class="text-center" width="5%">
                                         {{ $loop->iteration }}
                                     </td>
-                                    <td>
-                                        <div class="badge badge-success"> {{ $item['nomor_antrean'] }}</div>
-                                    </td>
                                     <td>{{ $item['no_mr'] }}</td>
                                     <td>{{ $item['nama_pasien'] }}</td>
                                     <td>{{ $item['Alamat'] }}</td>
+                                    <td>
+                                        @if($item['FS_STATUS'] == '')
+                                        <div class="badge badge-warning text-white">Perawat</div>
+                                        @elseif($item['FS_STATUS'] == '1')
+                                        <div class="badge badge-danger">Dokter</div>
+                                        @elseif($item['FS_STATUS'] == '2')
+                                        @if($item['FS_TERAPI'] == '' or $item['FS_TERAPI'] == '<p>-</p>')
+                                        <div class="badge badge-success">Selesai</div>
+                                        @else
+                                        <div class="badge badge-info">Farmasi</div>
+                                        @endif
+                                        @endif
+                                    </td>
                                     <td width="40%">
                                         <a href="{{ route('rj.add', $item['No_Reg'] )}}" class="btn btn-primary"><i class="fas fa-notes-medical"></i> Entry</a>
                                         <!-- pasien kontrol -->

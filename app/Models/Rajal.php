@@ -117,4 +117,12 @@ class Rajal extends Model
         unset($data['data']['NO_REG']);
         return $data['data'];
     }
+
+    public function profil($noMR)
+    {
+        $request = $this->httpClient->get($this->simrsUrlApi . 'berkas/resumeRawatJalan/' . $noMR);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
+    }
 }

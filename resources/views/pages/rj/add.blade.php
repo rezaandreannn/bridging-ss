@@ -81,7 +81,7 @@
                     </div>
                 </div>
             </div>
-            <button class="btn btn-sm btn-primary mb-2"><i class="fas fa-download"></i> Profil Ringkas Medis Rawat Jalan</button>
+            <a href="{{ route('rj.resume', $rajal['NO_MR'] )}}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-primary mb-2"><i class="fas fa-download"></i>Profil Ringkas Medis Rawat Jalan</a>
             <button class="btn btn-sm btn-primary mb-2" data-toggle="modal" data-target="#modal-histori"><i class="fas fa-history"></i> History</button>
             <!-- form -->
             <form action="#" method="post">
