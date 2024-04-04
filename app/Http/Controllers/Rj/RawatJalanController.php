@@ -29,12 +29,9 @@ class RawatJalanController extends Controller
     public function index(Request $request)
     {
         $title = $this->prefix . ' ' . 'Index';
-        $kode_dokter = $request->input('kode_dokter');
-        $dokters = $this->rajal->byKodeDokter();
 
         $kode_dokter = $request->input('kode_dokter');
         $data = $this->antrean->getData($kode_dokter);
-        // dd($data);
 
         return view($this->view . 'index', compact('title', 'dokters', 'data'));
     }

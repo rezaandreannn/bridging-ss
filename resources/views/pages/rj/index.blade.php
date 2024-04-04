@@ -65,9 +65,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @php
-                                $rajal = new Rajal();
-                                @endphp
                                 @foreach ($data as $item)
                                 <tr>
                                     <td class="text-center" width="5%">
@@ -150,7 +147,6 @@
         alert('Filter telah direset!');
         window.location.href = "{{ route('rj.index') }}";
     }
-
 </script>
 
 @endpush

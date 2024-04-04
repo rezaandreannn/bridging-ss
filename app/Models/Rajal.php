@@ -22,13 +22,13 @@ class Rajal extends Model
         $this->simrsUrlApi = env('SIMRS_BASE_URL');
     }
 
-    public function byKodeDokter()
-    {
-        $request = $this->httpClient->get($this->simrsUrlApi . 'dokter/select');
-        $response = $request->getBody()->getContents();
-        $data = json_decode($response, true);
-        return $data['data'];
-    }
+    // public function byKodeDokter()
+    // {
+    //     $request = $this->httpClient->get($this->simrsUrlApi . 'dokter/select');
+    //     $response = $request->getBody()->getContents();
+    //     $data = json_decode($response, true);
+    //     return $data['data'];
+    // }
 
     public function getData($kode_dokter = null)
     {
