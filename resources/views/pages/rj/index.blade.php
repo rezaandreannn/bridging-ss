@@ -68,21 +68,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($data as $item)
                                 @php
-                                $noReg = $item['No_Reg'];
                                 $rajal = new Rajal();
-                                try {
-                                $rad = $rajal->cek_rad($noReg);
-                                } catch (\Exception $e) {
-                                $rad = false;
-                                }
-                                try {
-                                $lab = $rajal->cek_lab($noReg);
-                                } catch (\Exception $e) {
-                                $lab = false;
-                                }
                                 @endphp
+                                @foreach ($data as $item)
                                 <tr>
                                     <td class="text-center" width="5%">
                                         {{ $loop->iteration }}
@@ -97,32 +86,32 @@
                                         <a href="{{ route('rj.add', $item['No_Reg'] )}}" class="btn btn-primary"><i class="fas fa-notes-medical"></i> Entry</a>
                                         <!-- pasien kontrol -->
                                         @if($item['FS_CARA_PULANG'] == 2)
-                                        <a href="{{ route('rj.add', $noReg) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> SKDP</a>
-                                        <a href="{{ route('rj.add', $noReg) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i>Edit SKDP</a>
+                                        <a href="{{ route('rj.add', $item['No_Reg']) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> SKDP</a>
+                                        <a href="{{ route('rj.add', $item['No_Reg']) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i>Edit SKDP</a>
                                         <!-- pasien rujuk luar rs -->
                                         @elseif ($item['FS_CARA_PULANG'] == 4)
-                                        <a href="{{ route('rj.add', $noReg) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> Rujukan RS</a>
+                                        <a href="{{ route('rj.add', $item['No_Reg']) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> Rujukan RS</a>
                                         <!-- pasien dengan rujuk internal -->
                                         @elseif ($item['FS_CARA_PULANG'] == 6)
-                                        <a href="{{ route('rj.add', $noReg) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> Rujukan Internal</a>
+                                        <a href="{{ route('rj.add', $item['No_Reg']) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> Rujukan Internal</a>
                                         <!-- pasien dikembalikan ke faskes primer -->
                                         @elseif ($item['FS_CARA_PULANG'] == 7)
-                                        <a href="{{ route('rj.add', $noReg) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> Faskes</a>
+                                        <a href="{{ route('rj.add', $item['No_Reg']) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> Faskes</a>
                                         @elseif ($item['FS_CARA_PULANG'] == 8)
-                                        <a href="{{ route('rj.add', $noReg) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> PRB</a>
+                                        <a href="{{ route('rj.add', $item['No_Reg']) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> PRB</a>
                                         @endif
 
                                         <!-- Radiologi -->
-                                        @if($rad)
-                                        <a href="{{ route('rj.add', $noReg) }}" class="btn btn-xs btn-success"><i class="fas fa-download"></i> Radiologi</a>
+                                        @if($rajal->cek_rad($item['No_Reg']) == true)
+                                        <a href="{{ route('rj.add', $item['No_Reg']) }}" class="btn btn-xs btn-success"><i class="fas fa-download"></i> Radiologi</a>
                                         @endif
                                         <!-- Laboratiorium -->
-                                        @if($lab)
-                                        <a href="{{ route('rj.add', $noReg) }}" class="btn btn-xs btn-success"><i class="fas fa-download"></i> Lab</a>
+                                        @if($rajal->cek_lab($item['No_Reg']) == true)
+                                        <a href="{{ route('rj.add', $item['No_Reg']) }}" class="btn btn-xs btn-success"><i class="fas fa-download"></i> Lab</a>
                                         @endif
                                         <!-- Resep -->
                                         @if($item['FS_TERAPI'] != '')
-                                        <a href="{{ route('rj.add', $noReg) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> Resep</a>
+                                        <a href="{{ route('rj.add', $item['No_Reg']) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> Resep</a>
                                         @endif
                                     </td>
                                 </tr>
@@ -154,6 +143,7 @@
         alert('Filter telah direset!');
         window.location.href = "{{ route('rj.index') }}";
     }
+
 </script>
 
 @endpush

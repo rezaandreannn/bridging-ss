@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Database\Eloquent\Model;
 
 class Rajal extends Model
 {
@@ -22,9 +22,9 @@ class Rajal extends Model
         $this->simrsUrlApi = env('SIMRS_BASE_URL');
     }
 
-    public function byKodeDokter($kodeDokter = '')
+    public function byKodeDokter()
     {
-        $request = $this->httpClient->get($this->simrsUrlApi . 'dokter/select' . $kodeDokter);
+        $request = $this->httpClient->get($this->simrsUrlApi . 'dokter/select');
         $response = $request->getBody()->getContents();
         $data = json_decode($response, true);
         return $data['data'];
@@ -71,29 +71,24 @@ class Rajal extends Model
 
     public function cek_lab($noReg)
     {
-        $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/berkas/laboratorium/' . $noReg);
-        $response = $request->getBody()->getContents();
-        $data = json_decode($response, true);
-        // Memeriksa apakah ada data SKDP yang dikembalikan
-        if (isset($data['data']) && !empty($data['data'])) {
-            return true; // Jika ada data SKDP
+        $request = Http::get($this->simrsUrlApi . '/berkas/cekLaboratorium/' . $noReg);
+        $code = $request->status();
+        if ($code == 200) {
+            return true;
         } else {
-            return false; // Jika tidak ada data SKDP
+            return false;
         }
     }
 
     public function cek_rad($noReg)
     {
-        $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/berkas/cekRadiologi/' . $noReg);
-        $response = $request->getBody()->getContents();
-        $data = json_decode($response, true);
-        // Memeriksa apakah ada data SKDP yang dikembalikan
-        if (isset($data['data']) && !empty($data['data'])) {
-            return true; // Jika ada data SKDP
+        $request = Http::get($this->simrsUrlApi . '/berkas/cekRadiologi/' . $noReg);
+        $code = $request->status();
+        if ($code == 200) {
+            return true;
         } else {
-            return false; // Jika tidak ada data SKDP
+            return false;
         }
-        var_dump($data);
     }
 
     public function masalah_perawatan()
