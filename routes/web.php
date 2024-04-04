@@ -127,6 +127,7 @@ Route::middleware('auth')->group(function () {
         //Rawat Jalan
         Route::get('rawat_jalan', [RawatJalanController::class, 'index'])->name('rj.index');
         Route::get('rawat_jalan/{noReg}', [RawatJalanController::class, 'add'])->name('rj.add');
+        Route::get('rawat_jalan/{noReg}/resume', [RawatJalanController::class, 'resume'])->name('rj.resume');
     });
 
     // MANAGE USER
