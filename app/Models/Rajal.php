@@ -22,13 +22,13 @@ class Rajal extends Model
         $this->simrsUrlApi = env('SIMRS_BASE_URL');
     }
 
-    // public function byKodeDokter()
-    // {
-    //     $request = $this->httpClient->get($this->simrsUrlApi . 'dokter/select');
-    //     $response = $request->getBody()->getContents();
-    //     $data = json_decode($response, true);
-    //     return $data['data'];
-    // }
+    public function byKodeDokter()
+    {
+        $request = $this->httpClient->get($this->simrsUrlApi . 'dokter/select');
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
+    }
 
     public function getData($kode_dokter = null)
     {
@@ -93,7 +93,7 @@ class Rajal extends Model
 
     public function masalah_perawatan()
     {
-        $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/api/rawatjalan/perawat/masalah_keperawatan');
+        $request = $this->httpClient->get($this->simrsUrlApi . 'api/rawatjalan/perawat/masalah_keperawatan');
         $response = $request->getBody()->getContents();
         $data = json_decode($response, true);
         return $data['data'];
@@ -101,7 +101,7 @@ class Rajal extends Model
 
     public function rencana_perawatan()
     {
-        $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/api/rawatjalan/perawat/rencana_keperawatan');
+        $request = $this->httpClient->get($this->simrsUrlApi . 'api/rawatjalan/perawat/rencana_keperawatan');
         $response = $request->getBody()->getContents();
         $data = json_decode($response, true);
         return $data['data'];
@@ -109,18 +109,26 @@ class Rajal extends Model
 
     public function pasien_bynoreg($noReg)
     {
-        $request = $this->httpClient->get('https://daftar.rsumm.co.id/api.simrs/pasien/biodatabynoreg/' . $noReg);
+        $request = $this->httpClient->get($this->simrsUrlApi . 'pasien/biodatabynoreg/' . $noReg);
         $response = $request->getBody()->getContents();
         $data = json_decode($response, true);
-        // Mengganti kunci NO_REG menjadi no_registrasi
+        // Mengganti kunci NO_REG menjadi No_Reg
         $data['data']['No_Reg'] = $data['data']['NO_REG'];
         unset($data['data']['NO_REG']);
         return $data['data'];
     }
 
-    public function profil($noMR)
+    public function resumeMedisPasienByMR($noMR)
     {
         $request = $this->httpClient->get($this->simrsUrlApi . 'berkas/resumeRawatJalan/' . $noMR);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
+    }
+
+    public function profilMR($noMR)
+    {
+        $request = $this->httpClient->get($this->simrsUrlApi . 'pasien/biodatabymr/' . $noMR);
         $response = $request->getBody()->getContents();
         $data = json_decode($response, true);
         return $data['data'];

@@ -17,7 +17,7 @@
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{ route('rj.index') }}">Rawat Jalan</a></div>
                 <div class="breadcrumb-item"><a href="{{ route('rj.index') }}">Nurse Record</a></div>
-                <div class="breadcrumb-item">Patient</div>
+                <div class="breadcrumb-item">Resume</div>
             </div>
         </div>
 
@@ -28,7 +28,7 @@
                         <div class="card-body">
                             <div class="author-box-name">
                                 <a href="#">
-                                    <h6 class="mt-1">{{ $profil['NAMA_PASIEN'] ?? ''}} - ({{ $profil['NO_MR'] ?? ''}})</h6>
+                                    <h6 class="mt-1">{{ $pasien['NAMA_PASIEN'] ?? ''}} - ({{ $pasien['NO_MR'] ?? ''}})</h6>
                                 </a>
                             </div>
                             <div class="author-box-job">
@@ -36,30 +36,30 @@
                                 <hr>
                             </div>
                             <div class="row">
-                                <div class="col-sm-6">
+                                <div class="col-sm-12">
                                     <ul class="list-unstyled mb-0">
                                         <li class="media">
                                             <div class="media-title">No Registrasi :</div>
                                             <div class="media-body">
-                                                <div class="media-title ml-3 mb-1"> {{ $profil['NO_REG'] ?? ''}}</div>
+                                                <div class="media-title ml-3 mb-1"> {{ $pasien['No_Reg'] ?? ''}}</div>
                                             </div>
                                         </li>
                                         <li class="media">
                                             <div class="media-title">Jenis Kelamin :</div>
                                             <div class="media-body">
-                                                <div class="media-title ml-3 mb-1"> {{ $profil['JENIS_KELAMIN'] ?? ''}}</div>
+                                                <div class="media-title ml-3 mb-1"> {{ $pasien['JENIS_KELAMIN'] ?? ''}}</div>
                                             </div>
                                         </li>
                                         <li class="media">
                                             <div class="media-title mb-0">Tanggal Lahir :</div>
                                             <div class="media-body">
-                                                <div class="media-title ml-3 mb-1"> {{ $profil['TGL_LAHIR'] ?? ''}}</div>
+                                                <div class="media-title ml-3 mb-1"> {{ date('d-m-Y', strtotime($pasien['TGL_LAHIR'])) }}</div>
                                             </div>
                                         </li>
                                         <li class="media">
                                             <div class="media-title mb-0">Alamat :</div>
                                             <div class="media-body">
-                                                <div class="media-title ml-3 mb-1"> {{ $profil['ALAMAT'] ?? ''}}</div>
+                                                <div class="media-title ml-3 mb-1"> {{ $pasien['ALAMAT'] ?? ''}}</div>
                                             </div>
                                         </li>
                                     </ul>
@@ -69,6 +69,7 @@
                     </div>
                 </div>
             </div>
+            <a href="{{ route('rj.cetak', $pasien['NO_MR'] )}}" class="btn btn-sm btn-primary mb-2"><i class="fas fa-download"></i> Download</a>
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
@@ -85,30 +86,19 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($data as $item)
                                 <tr>
-                                    <td width="15%">04-04-2024</td>
-                                    <td width="20%">4 dr. Toumi Shiddiqi,
-                                        Sp. PD.
-                                        ( Spesialis
-                                        Penyakit Dalam)
+                                    <td width="15%">{{ date('d-m-Y', strtotime($item['TANGGAL'])) }}</td>
+                                    <td width="20%">{{ $item['NAMA_DOKTER'] }}({{ $item['SPESIALIS'] }})
                                     </td>
-                                    <td width="25%">TD : 127/89 mmHg
-                                        Keluhan : kontrol
-                                        dengan HT, OA Genu,
-                                        post ranap di RSAY
-                                        dengan DHF, keluhan
-                                        tidak nafsu makan
-                                        :</td>
+                                    <td width="25%">TD: {{ str_replace("-", "", $item['FS_TD']) }} mmHg
+                                        keluhan: {{ str_replace("-", "", $item['FS_ANAMNESA']) }}</td>
+                                    <td>{{ $item['FS_DIAGNOSA'] }}</td>
                                     <td></td>
                                     <td></td>
-                                    <td></td>
-                                    <td width="40%">/R Lansoprazol 30mg XXX
-                                        S 1-0-0
-                                        ----------------------------------------
-                                        /R Sucralfat syrup No III
-                                        S 3ddC1 ac
-                                        ----------------------------------------</td>
+                                    <td width="40%">{{ $item['FS_TERAPI'] }}</td>
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

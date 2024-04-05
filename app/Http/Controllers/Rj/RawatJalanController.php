@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Rj;
 
 use App\Models\Rajal;
 use GuzzleHttp\Client;
+use App\Models\Antrean;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Antrean;
 use Illuminate\Support\Facades\Http;
 
 class RawatJalanController extends Controller
@@ -30,10 +32,13 @@ class RawatJalanController extends Controller
     {
         $title = $this->prefix . ' ' . 'Index';
 
+        $rajalModel = new Rajal();
         $kode_dokter = $request->input('kode_dokter');
+        $dokters = $this->rajal->byKodeDokter();
         $data = $this->antrean->getData($kode_dokter);
 
-        return view($this->view . 'index', compact('title', 'dokters', 'data'));
+
+        return view($this->view . 'index', compact('title', 'dokters', 'data', 'rajalModel'));
     }
 
     public function add($noReg)
@@ -49,7 +54,22 @@ class RawatJalanController extends Controller
     public function resume($noMR)
     {
         $title = $this->prefix . ' ' . 'Resume Pasien';
-        $profil = $this->rajal->profil($noMR);
-        return view($this->view . 'resume', compact('title', 'profil'));
+        $data = $this->rajal->resumeMedisPasienByMR($noMR);
+        $pasien = $this->rajal->profilMR($noMR);
+        return view($this->view . 'resume', compact('title', 'data', 'pasien'));
+    }
+
+    public function profilPDF($noMR)
+    {
+        // Fetch data using the model
+        $data = $this->rajal->resumeMedisPasienByMR($noMR);
+        $pasien = $this->rajal->profilMR($noMR);
+
+        $date = date('dMY');
+
+        $filename = 'resumeMedis - ' . $date . '-' . $noMR;
+
+        $pdf = PDF::loadview('pages.rj.profil', ['data' => $data, 'pasien' => $pasien]);
+        return $pdf->download($filename . '.pdf');
     }
 }
