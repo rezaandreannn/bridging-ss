@@ -15,17 +15,17 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Master Practicioner Index</h1>
+            <h1>Indeks Dokter Utama</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{ route('dokter.index') }}">Master Data</a></div>
-                <div class="breadcrumb-item">Practicioner</div>
+                <div class="breadcrumb-item">Dokter</div>
             </div>
         </div>
 
         <div class="section-body">
             <div class="card">
                 <div class="card-header">
-                    <h4>Data Practitioner</h4>
+                    <h4>Data Dokter</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">

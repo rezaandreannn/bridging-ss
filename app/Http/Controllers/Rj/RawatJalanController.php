@@ -67,7 +67,7 @@ class RawatJalanController extends Controller
 
         $date = date('dMY');
 
-        $filename = 'resumeMedis - ' . $date . '-' . $noMR;
+        $filename = 'resumeMedis-' . $date . '-' . $noMR;
 
         $pdf = PDF::loadview('pages.rj.profil', ['data' => $data, 'pasien' => $pasien]);
         return $pdf->download($filename . '.pdf');

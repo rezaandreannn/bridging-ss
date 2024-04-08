@@ -80,7 +80,7 @@
                                     <th>Dokter</th>
                                     <th>Uraian Klinis</th>
                                     <th>Dianogsa</th>
-                                    <th>Hasil EKG</th>
+                                    <th>Hasil ECHO</th>
                                     <th>Rencana</th>
                                     <th>Terapi</th>
                                 </tr>
@@ -94,8 +94,8 @@
                                     <td width="25%">TD: {{ str_replace("-", "", $item['FS_TD']) }} mmHg
                                         keluhan: {{ str_replace("-", "", $item['FS_ANAMNESA']) }}</td>
                                     <td>{{ $item['FS_DIAGNOSA'] }}</td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{{ $item['HASIL_ECHO'] }}</td>
+                                    <td>{{ $item['FS_PLANNING'] }}</td>
                                     <td width="40%">{{ $item['FS_TERAPI'] }}</td>
                                 </tr>
                                 @endforeach

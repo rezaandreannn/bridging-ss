@@ -15,8 +15,8 @@
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{ route('location.index') }}">Master Data</a></div>
-                <div class="breadcrumb-item"><a href="{{ route('location.index') }}">Location</a></div>
-                <div class="breadcrumb-item">Create Location</div>
+                <div class="breadcrumb-item"><a href="{{ route('location.index') }}">Lokasi</a></div>
+                <div class="breadcrumb-item">Ubah Lokasi</div>
             </div>
         </div>
 
@@ -32,13 +32,13 @@
                             </div>
                             <div class="card-body">
                                 <div class="form-group row mb-4">
-                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Identifier Value<code>*</code></label>
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Nilai Pengidentifikasi<code>*</code></label>
                                     <div class="col-sm-12 col-md-7">
                                         <input type="text" class="form-control" name="identifier_value" value="{{ $data['identifier_value']}}">
                                     </div>
                                 </div>
                                 <div class="form-group row mb-4">
-                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Name<code>*</code></label>
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Nama<code>*</code></label>
                                     <div class="col-sm-12 col-md-7">
                                         <input type="text" class="form-control" name="name" value="{{ $data['name']}}">
                                     </div>
@@ -47,7 +47,7 @@
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Status<code>*</code></label>
                                     <div class="col-sm-12 col-md-7">
                                         <select class="form-control selectric" name="status">
-                                            <option value="" disabled selected>-- Select item --</option>
+                                            <option value="" disabled selected>-- Pilih Status --</option>
                                             @foreach($statuses as $status)
                                             <option value="{{ $status }}" {{ $data['status'] == $status ? 'selected' : ''}}>{{ $status}}</option>
                                             @endforeach
@@ -55,10 +55,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group row mb-4">
-                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Pysical Type<code>*</code></label>
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Tipe Fisik<code>*</code></label>
                                     <div class="col-sm-12 col-md-7">
                                         <select class="form-control selectric" name="physical_type">
-                                            <option value="" disabled selected>-- Select item --</option>
+                                            <option value="" disabled selected>-- Pilih Tipe --</option>
                                             @foreach($physicalTypes as $type)
                                             <option value="{{ $type['coding_code']}}" {{ $data['physical_type'] == $type['coding_code'] ? 'selected' : ''}}>{{ $type['coding_display']}} - ({{ $type['keterangan'] }})</option>
                                             @endforeach
@@ -66,10 +66,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group row mb-4">
-                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Location Mode<code>*</code></label>
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Lokasi Mode<code>*</code></label>
                                     <div class="col-sm-12 col-md-7">
                                         <select class="form-control selectric" name="location_mode">
-                                            <option value="" disabled selected>-- Select item --</option>
+                                            <option value="" disabled selected>-- Pilih Mode --</option>
                                             @foreach($modes as $mode)
                                             <option value="{{ $mode['mode']}}" {{ $data['mode'] == $mode['mode'] ? 'selected' : ''}}>{{ $mode['mode']}} - ({{ $mode['keterangan'] }})</option>
                                             @endforeach
@@ -77,10 +77,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group row mb-4">
-                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Part Of</label>
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Bagian dari</label>
                                     <div class="col-sm-12 col-md-7">
                                         <select class="form-control selectric" name="part_of">
-                                            <option value="" disabled selected>-- Select item --</option>
+                                            <option value="" disabled selected>-- Pilih Bagian --</option>
                                             @foreach($locationByParts as $id => $name)
                                             <option value="{{ $id }}" {{ $id == $data['part_of'] ? 'selected' : ''}}>{{ $name }}</option>
                                             @endforeach
@@ -88,10 +88,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group row mb-4">
-                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Organization</label>
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Organisasi</label>
                                     <div class="col-sm-12 col-md-7">
                                         <select class="form-control selectric" name="organization_id">
-                                            <option disabled selected>-- Select item --</option>
+                                            <option disabled selected>-- Pilih Organisasi --</option>
                                             @foreach($organizations as $id => $name)
                                             <option value="{{ $id }}" {{ $data['organization_id'] == $id ? 'selected' : ''}}>{{ $name}}</option>
                                             @endforeach
@@ -99,7 +99,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row mb-4">
-                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Description<code>*</code></label>
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Deskripsi<code>*</code></label>
                                     <div class="col-sm-12 col-md-7">
                                         <textarea class="form-control" name="description"> {{$data['description']}}</textarea>
                                     </div>
@@ -107,7 +107,7 @@
                                 <div class="form-group row mb-4">
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
                                     <div class="col-sm-12 col-md-7">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="submit" class="btn btn-primary">Kirim</button>
                                     </div>
                                 </div>
                             </div>
