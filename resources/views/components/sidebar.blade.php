@@ -72,6 +72,42 @@
                 </ul>
             </li>
             @endcan
+            <li class="menu-header">vclaim bpjs</li>
+            <li class="nav-item dropdown ">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-clinic-medical"></i> <span>SEP</span></a>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a class="nav-link" href="">Finger Peserta</a>
+                    </li>
+                    <li class="">
+                        <a class="nav-link" href="">Aproval Pengajuan</a>
+                    </li>
+                    <li class="">
+                        <a class="nav-link" href="">List Data Persetujuan</a>
+                    </li>
+                    <li class="">
+                        <a class="nav-link" href="">Update Tanggal Pulang</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Monitoring</span></a>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a class="nav-link" href="">Kunjungan</a>
+                    </li>
+                    <li class="">
+                        <a class="nav-link" href="">Klaim</a>
+                    </li>
+                    <li class="">
+                        <a class="nav-link" href="">Histori Peserta</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="{{ Request::is('dashboard') ? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-dashboard"></i> <span>E-Klaim</span></a></li>
+
             @can('manage user')
             <li class="menu-header">Mengelola</li>
             <li class="nav-item dropdown {{ Request::is('mu**') ? 'active' : '' }}">
