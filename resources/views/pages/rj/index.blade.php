@@ -147,7 +147,6 @@
         alert('Filter telah direset!');
         window.location.href = "{{ route('rj.index') }}";
     }
-
 </script>
 
 @endpush

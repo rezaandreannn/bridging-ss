@@ -65,7 +65,7 @@
                                         <li class="media">
                                             <div class="media-title mb-0">Tanggal Lahir :</div>
                                             <div class="media-body">
-                                                <div class="media-title ml-3 mb-1"> {{ $rajal['TGL_LAHIR'] ?? ''}}</div>
+                                                <div class="media-title ml-3 mb-1">{{ date('d-m-Y', strtotime($rajal['TGL_LAHIR'] ?? '')) }}</div>
                                             </div>
                                         </li>
                                         <li class="media">
