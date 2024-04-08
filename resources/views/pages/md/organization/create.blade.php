@@ -15,8 +15,8 @@
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{ route('organization.index') }}">Master Data</a></div>
-                <div class="breadcrumb-item"><a href="{{ route('organization.index') }}">Organization</a></div>
-                <div class="breadcrumb-item">Create Organization</div>
+                <div class="breadcrumb-item"><a href="{{ route('organization.index') }}">Organisasi</a></div>
+                <div class="breadcrumb-item">Buat Organisasi</div>
             </div>
         </div>
 
@@ -31,22 +31,22 @@
                             </div>
                             <div class="card-body">
                                 <div class="form-group row mb-4">
-                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Identifier Value<code>*</code></label>
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Nilai Pengidentifikasi<code>*</code></label>
                                     <div class="col-sm-12 col-md-7">
                                         <input type="text" class="form-control" name="identifier_value">
                                     </div>
                                 </div>
                                 <div class="form-group row mb-4">
-                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Name<code>*</code></label>
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Nama<code>*</code></label>
                                     <div class="col-sm-12 col-md-7">
                                         <input type="text" class="form-control" name="name">
                                     </div>
                                 </div>
                                 <div class="form-group row mb-4">
-                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Type<code>*</code></label>
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Tipe<code>*</code></label>
                                     <div class="col-sm-12 col-md-7">
                                         <select class="form-control selectric" name="type_code">
-                                            <option value="" disabled selected>-- Select item --</option>
+                                            <option value="" disabled selected>-- Pilih Tipe --</option>
                                             @foreach($organizationType as $type)
                                             <option value="{{ $type['coding_code']}}">{{ $type['coding_display']}}</option>
                                             @endforeach
@@ -54,10 +54,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group row mb-4">
-                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Part Of</label>
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Bagian dari</label>
                                     <div class="col-sm-12 col-md-7">
                                         <select class="form-control selectric" name="part_of">
-                                            <option disabled selected>-- Select item --</option>
+                                            <option disabled selected>-- Pilih Bagian --</option>
                                             @foreach($organizations as $organization)
                                             <option value="{{ $organization->organization_id }}">{{ $organization->name}}</option>
                                             @endforeach
@@ -69,14 +69,14 @@
                                     <div class="col-sm-12 col-md-7">
                                         <div class="form-group form-check">
                                             <input type="checkbox" class="form-check-input" id="active" name="active">
-                                            <label class="form-check-label" for="active">Active</label>
+                                            <label class="form-check-label" for="active">Aktif</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-4">
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
                                     <div class="col-sm-12 col-md-7">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="submit" class="btn btn-primary">Kirim</button>
                                     </div>
                                 </div>
                             </div>

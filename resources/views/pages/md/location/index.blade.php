@@ -18,14 +18,14 @@
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{ route('location.index') }}">Master Data</a></div>
-                <div class="breadcrumb-item">Location</div>
+                <div class="breadcrumb-item">Lokasi</div>
             </div>
         </div>
 
         <div class="section-body">
             <div class="card">
                 <div class="card-header">
-                    <a href="{{ route('location.create')}}" class="btn btn-primary rounded-0">New Location</a>
+                    <a href="{{ route('location.create')}}" class="btn btn-primary rounded-0">Lokasi Baru</a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -35,11 +35,11 @@
                                     <th class="text-center">
                                         No
                                     </th>
-                                    <th>Location ID</th>
-                                    <th>Name</th>
-                                    <th>Organization ID</th>
-                                    <th>Description</th>
-                                    <th>Updated At</th>
+                                    <th>ID Lokasi</th>
+                                    <th>Nama</th>
+                                    <th>ID Organisasi</th>
+                                    <th>Deksripsi</th>
+                                    <th>Diperbarui pada</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>

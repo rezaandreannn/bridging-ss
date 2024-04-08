@@ -12,11 +12,11 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Detail Practitioner</h1>
+            <h1>Detail Dokter</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('dokter.index') }}">Master dokter</a></div>
-                <div class="breadcrumb-item"><a href="{{ route('dokter.index') }}">Practitioner</a></div>
-                <div class="breadcrumb-item">Detail Organization</div>
+                <div class="breadcrumb-item active"><a href="{{ route('dokter.index') }}">Master Dokter</a></div>
+                <div class="breadcrumb-item"><a href="{{ route('dokter.index') }}">Dokter</a></div>
+                <div class="breadcrumb-item">Detail Dokter</div>
             </div>
         </div>
 

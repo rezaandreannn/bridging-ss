@@ -15,10 +15,10 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Master Patient Index</h1>
+            <h1>Indeks Pasien Utama</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{ route('patient.index') }}">Master Data</a></div>
-                <div class="breadcrumb-item">Patient</div>
+                <div class="breadcrumb-item">Pasien</div>
             </div>
         </div>
 
@@ -47,14 +47,14 @@
                             </div>
                             <div class="col-sm-12 col-md-2">
                                 <div class="form-group">
-                                    <label for="nama">Name</label>
+                                    <label for="nama">Nama</label>
                                     <input type="text" class="form-control" id="nama" name="nama" value="{{ request('nama') }}">
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-2 filter-buttons">
                                 <div class="form-group d-flex align-items-end">
-                                    <button type="submit" class="btn btn-primary mr-2" style="margin-top: 30px;">Filter</button>
-                                    <button type="button" class="btn btn-danger" style="margin-top: 30px;" onclick="resetForm()"> Reset</button>
+                                    <button type="submit" class="btn btn-primary mr-2" style="margin-top: 30px;">Cari</button>
+                                    <button type="button" class="btn btn-danger" style="margin-top: 30px;" onclick="resetForm()"> Hapus</button>
                                 </div>
                             </div>
                         </div>
@@ -63,7 +63,7 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    <a href="" class="btn btn-primary rounded-0">New Data</a>
+                    <a href="" class="btn btn-primary rounded-0">Data Baru</a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -72,10 +72,10 @@
                                 <tr>
                                     <th>No</th>
                                     <th>No MR</th>
-                                    <th>Name</th>
+                                    <th>Nama</th>
                                     <th>BPJS</th>
                                     <th>NIK</th>
-                                    <th>Gender</th>
+                                    <th>Jenis Kelamin</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -129,7 +129,6 @@
         alert('Filter telah direset!');
         window.location.href = "{{ route('patient.index') }}";
     }
-
 </script>
 
 <!-- Page Specific JS File -->

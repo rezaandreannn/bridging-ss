@@ -80,27 +80,27 @@
         </table>
         <table width="100%" style="border: none">
             <tr>
-                <th class="text3" colspan="6" style="background-color: black; color: white; text-align:center">PROFIL RINGKAS MEDIS RAWAT JALAN</th>
+                <th class="text3" colspan="7" style="background-color: black; color: white; text-align:center">PROFIL RINGKAS MEDIS RAWAT JALAN</th>
             </tr>
             <tr style="text-align: center;">
                 <th width="50">Tanggal</th>
-                <th width="100">Dokter</th>
-                <th width="50">Urain Klinis</th>
+                <th width="70">Dokter</th>
+                <th width="80">Urain Klinis</th>
                 <th width="50">Diagnosa</th>
                 <th width="50">Hasil Echo</th>
                 <th width="50">Rencana</th>
-                <th width="100">Terapi</th>
+                <th width="120">Terapi</th>
             </tr>
             @foreach ($data as $item)
             <tr>
-                <td width="10%">{{ date('d-m-Y', strtotime($item['TANGGAL'])) }}</td>
-                <td width="20%">{{ $item['NAMA_DOKTER'] }}({{ $item['SPESIALIS'] }})</td>
-                <td width="30%">TD: {{ str_replace("-", "", $item['FS_TD']) }} mmHg
+                <td>{{ date('d-m-Y', strtotime($item['TANGGAL'])) }}</td>
+                <td>{{ $item['NAMA_DOKTER'] }}({{ $item['SPESIALIS'] }})</td>
+                <td>TD: {{ str_replace("-", "", $item['FS_TD']) }} mmHg
                     keluhan: {{ str_replace("-", "", $item['FS_ANAMNESA']) }}</td>
                 <td>{{ $item['FS_DIAGNOSA'] }}</td>
-                <td></td>
-                <td></td>
-                <td width="40%">{{ $item['FS_TERAPI'] }}</td>
+                <td>{{ $item['HASIL_ECHO'] }}</td>
+                <td>{{ $item['FS_PLANNING'] }}</td>
+                <td>{{ $item['FS_TERAPI'] }}</td>
             </tr>
             @endforeach
         </table>

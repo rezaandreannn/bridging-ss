@@ -18,14 +18,14 @@
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{ route('organization.index') }}">Master Data</a></div>
-                <div class="breadcrumb-item">Organization</div>
+                <div class="breadcrumb-item">Organisasi</div>
             </div>
         </div>
 
         <div class="section-body">
             <div class="card">
                 <div class="card-header">
-                    <a href="{{ route('organization.create')}}" class="btn btn-primary rounded-0">New Organization</a>
+                    <a href="{{ route('organization.create')}}" class="btn btn-primary rounded-0">Organisasi Baru</a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -36,9 +36,9 @@
                                         No
                                     </th>
                                     <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Part Of</th>
-                                    <th>Updated At</th>
+                                    <th>Nama</th>
+                                    <th>Bagian dari</th>
+                                    <th>Diperbarui Pada</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
