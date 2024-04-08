@@ -115,7 +115,7 @@
                                         @endif
                                         <!-- Resep -->
                                         @if($item['FS_TERAPI'] != '')
-                                        <a href="{{ route('rj.add', $item['No_Reg']) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> Resep</a>
+                                        <a href="{{ route('rj.resep', $item['No_Reg']) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> Resep</a>
                                         @endif
                                     </td>
                                 </tr>

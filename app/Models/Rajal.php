@@ -69,6 +69,7 @@ class Rajal extends Model
         }
     }
 
+    // Button Cek Laboratori
     public function cek_lab($noReg)
     {
         $request = Http::get($this->simrsUrlApi . '/berkas/cekLaboratorium/' . $noReg);
@@ -80,6 +81,7 @@ class Rajal extends Model
         }
     }
 
+    // Button Cek Radiologi
     public function cek_rad($noReg)
     {
         $request = Http::get($this->simrsUrlApi . '/berkas/cekRadiologi/' . $noReg);
@@ -107,6 +109,7 @@ class Rajal extends Model
         return $data['data'];
     }
 
+
     public function pasien_bynoreg($noReg)
     {
         $request = $this->httpClient->get($this->simrsUrlApi . 'pasien/biodatabynoreg/' . $noReg);
@@ -118,6 +121,7 @@ class Rajal extends Model
         return $data['data'];
     }
 
+    // Resume Medis Pasien
     public function resumeMedisPasienByMR($noMR)
     {
         $request = $this->httpClient->get($this->simrsUrlApi . 'berkas/resumeRawatJalan/' . $noMR);
@@ -126,6 +130,7 @@ class Rajal extends Model
         return $data['data'];
     }
 
+    // Profil Resume Medis Pasien
     public function profilMR($noMR)
     {
         $request = $this->httpClient->get($this->simrsUrlApi . 'pasien/biodatabymr/' . $noMR);

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Berkas\Berkas_rm_controller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
@@ -129,6 +130,7 @@ Route::middleware('auth')->group(function () {
         Route::get('rawat_jalan/{noReg}', [RawatJalanController::class, 'add'])->name('rj.add');
         Route::get('rawat_jalan/resume/{noMR}', [RawatJalanController::class, 'resume'])->name('rj.resume');
         Route::get('resumePDF/{noMR}', [RawatJalanController::class, 'profilPDF'])->name('rj.cetak');
+        Route::get('rawat_jalan/resep/{noReg}', [Berkas_rm_controller::class, 'cetakResep'])->name('rj.resep');
     });
 
     // MANAGE USER
