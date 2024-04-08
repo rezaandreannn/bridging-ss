@@ -85,7 +85,7 @@
             <tr style="text-align: center;">
                 <th width="50">Tanggal</th>
                 <th width="70">Dokter</th>
-                <th width="80">Urain Klinis</th>
+                <th width="80">Uraian Klinis</th>
                 <th width="50">Diagnosa</th>
                 <th width="50">Hasil Echo</th>
                 <th width="50">Rencana</th>
