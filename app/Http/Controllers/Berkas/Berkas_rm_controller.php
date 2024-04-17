@@ -17,18 +17,18 @@ class Berkas_rm_controller extends Controller
     public function __construct(Rekam_medis $rekam_medis)
     {
         $this->rekam_medis = $rekam_medis;
-        $this->view = 'pages.rekam_medis.';
-        $this->routeIndex = 'rj.index';
     }
-    public function cetakResep($noReg)
+
+    public function cetakResep($noReg, $kode_transaksi)
     {
-        // Fetch data using the model
-        // $data = $this->rekam_medis->cetakResep($noReg);
+        $data = $this->rekam_medis->cetakResep($noReg, $kode_transaksi);
         $date = date('dMY');
 
-        $filename = 'resep-' . $date . '-' . '123456';
+        $filename = 'resep-' . $date . '-' . $kode_transaksi;
 
-        $pdf = PDF::loadview('pages.rekam_medis.resep');
-        return $pdf->download($filename . '.pdf');
+        $pdf = PDF::loadview('pages.rekam_medis.resep', ['data' => $data]);
+        // Set paper size to A4
+        $pdf->setPaper('A5');
+        return $pdf->stream($filename . '.pdf');
     }
 }

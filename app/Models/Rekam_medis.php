@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Http;
 
 class Rekam_medis extends Model
 {
@@ -23,9 +24,9 @@ class Rekam_medis extends Model
     }
 
     // Cetak Resep
-    public function cetakResep($noReg)
+    public function cetakResep($noReg, $kode_transaksi)
     {
-        $request = $this->httpClient->get($this->simrsUrlApi . 'berkas/resep/' . $noReg);
+        $request = $this->httpClient->get($this->simrsUrlApi . 'berkas/resep/' . $noReg . '/' .  $kode_transaksi);
         $response = $request->getBody()->getContents();
         $data = json_decode($response, true);
         return $data['data'];

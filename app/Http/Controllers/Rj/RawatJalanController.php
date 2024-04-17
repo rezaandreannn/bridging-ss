@@ -59,14 +59,14 @@ class RawatJalanController extends Controller
         return view($this->view . 'resume', compact('title', 'data', 'pasien'));
     }
 
+
+    // Cetak PDF Profil Ringkas Medis Rawat Jalan
     public function profilPDF($noMR)
     {
-        // Fetch data using the model
         $data = $this->rajal->resumeMedisPasienByMR($noMR);
         $pasien = $this->rajal->profilMR($noMR);
 
         $date = date('dMY');
-
         $filename = 'resumeMedis-' . $date . '-' . $noMR;
 
         $pdf = PDF::loadview('pages.rj.profil', ['data' => $data, 'pasien' => $pasien]);

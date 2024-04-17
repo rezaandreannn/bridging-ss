@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Fisio;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class FisioController extends Controller
 {
@@ -40,5 +41,27 @@ class FisioController extends Controller
     {
         $title = $this->prefix . ' ' . 'CPPT';
         return view($this->view . 'edit', compact('title'));
+    }
+
+    public function cetak_cppt()
+    {
+        $date = date('dMY');
+        $title = $this->prefix . ' ' . 'Cetak CPPT';
+
+        $filename = 'resep-' . $date;
+
+        $pdf = PDF::loadview($this->view . 'cetak/cppt', ['title' => $title]);
+        return $pdf->stream($filename . '.pdf');
+    }
+
+    public function bukti_layanan()
+    {
+        $date = date('dMY');
+        $title = $this->prefix . ' ' . 'Bukti Layanan CPPT';
+
+        $filename = 'resep-' . $date;
+
+        $pdf = PDF::loadview($this->view . 'cetak/bukti_pelayanan', ['title' => $title]);
+        return $pdf->stream($filename . '.pdf');
     }
 }
