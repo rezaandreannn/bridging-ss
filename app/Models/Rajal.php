@@ -121,7 +121,7 @@ class Rajal extends Model
         return $data['data'];
     }
 
-    // Resume Medis Pasien
+    //  View Profil Resume Medis Pasien
     public function resumeMedisPasienByMR($noMR)
     {
         $request = $this->httpClient->get($this->simrsUrlApi . 'berkas/resumeRawatJalan/' . $noMR);
@@ -130,7 +130,7 @@ class Rajal extends Model
         return $data['data'];
     }
 
-    // Profil Resume Medis Pasien
+    // Cetak Profil Resume Medis Pasien
     public function profilMR($noMR)
     {
         $request = $this->httpClient->get($this->simrsUrlApi . 'pasien/biodatabymr/' . $noMR);

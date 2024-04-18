@@ -122,7 +122,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/transaksi_fisio', [FisioController::class, 'edit'])->name('cppt.fisio');
         Route::post('/cppt', [FisioController::class, 'create'])->name('cppt.create');
         Route::get('edit_cppt', [FisioController::class, 'edit_cppt'])->name('cppt.edit');
+<<<<<<< HEAD
 
+=======
+        Route::get('cetak_cppt', [FisioController::class, 'cetak_cppt'])->name('cppt.cetakCPPT');
+        Route::get('bukti_layanan', [FisioController::class, 'bukti_layanan'])->name('cppt.buktiLayanan');
+>>>>>>> 721192305dd348702bb38aec97fa325a7b8a8de2
     });
 
     Route::prefix('rj')->group(function () {
@@ -131,7 +136,7 @@ Route::middleware('auth')->group(function () {
         Route::get('rawat_jalan/{noReg}', [RawatJalanController::class, 'add'])->name('rj.add');
         Route::get('rawat_jalan/resume/{noMR}', [RawatJalanController::class, 'resume'])->name('rj.resume');
         Route::get('resumePDF/{noMR}', [RawatJalanController::class, 'profilPDF'])->name('rj.cetak');
-        Route::get('rawat_jalan/resep/{noReg}', [Berkas_rm_controller::class, 'cetakResep'])->name('rj.resep');
+        Route::get('rawat_jalan/resep/{kode_transaksi}/{noReg}', [Berkas_rm_controller::class, 'cetakResep'])->name('rj.resep');
     });
 
     // MANAGE USER

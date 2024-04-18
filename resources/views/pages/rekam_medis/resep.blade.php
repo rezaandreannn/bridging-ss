@@ -62,7 +62,7 @@
             </table>
             <table width="100%">
                 <tr>
-                    <td class="text5">Toumi</td>
+                    <td class="text5">{{ $data['NAMA_DOKTER'] ?? ''}}</td>
                 </tr>
                 <tr>
                     <td class="text5">SIP : </td>
@@ -76,16 +76,14 @@
             <table width="100%">
                 <tr>
                     <td class="text">
-                        <b>08-04-2024</b>
+                        <b></b>
                     </td>
                 </tr>
             </table>
             <table width="100%">
                 <tr>
-                    <td>Terapi</td>
+                    <td>{{ $data['FS_TERAPI'] ?? ''}}</td>
                 </tr>
-
-
             </table>
             <table width="100%">
                 <tr>
@@ -95,28 +93,38 @@
                 </tr>
                 <tr>
                     <td>No RM</td>
-                    <td>: 1231313</td>
+                    <td>: 123456</td>
                     <td>Tgl Lahir</td>
                     <td>: 10-02-2000</td>
                 </tr>
                 <tr>
                     <td>Nama</td>
-                    <td>: Dimas</td>
+                    <td>: Dimas Budi Pratama</td>
                 </tr>
                 <tr>
                     <td>Alamat</td>
-                    <td>: Jl Pulau Damar</td>
+                    <td>: LK TOTOKATON RT 0</td>
                 </tr>
                 <tr>
                     <td>Jenis Kelamin</td>
-                    <td>: L </td>
+                    <td>: l</td>
+                </tr>
+                <tr>
+                    <td>TB</td>
+                    <td>: </td>
+                    <td>BB</td>
+                    <td>: </td>
                 </tr>
 
                 <tr>
                     <td>Diagnosa</td>
-                    <td>Sakit</td>
+                    <td>: {{ $data['FS_DIAGNOSA'] ?? ''}}</td>
                     <td>Alergi</td>
                     <td>: Kosong</td>
+                </tr>
+                <tr>
+                    <td>Diagnosa Sekunder</td>
+                    <td>: {{ $data['FS_DIAGNOSA_SEKUNDER'] ?? ''}}</td>
                 </tr>
             </table>
             <table width="100%">
