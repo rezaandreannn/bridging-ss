@@ -4,12 +4,9 @@ namespace App\Http\Controllers\Fisio;
 
 use App\Models\Fisioterapi;
 use Illuminate\Http\Request;
-<<<<<<< HEAD
 use App\Http\Controllers\Controller;
 use App\Models\Pasien;
-=======
 use Barryvdh\DomPDF\Facade\Pdf;
->>>>>>> 721192305dd348702bb38aec97fa325a7b8a8de2
 
 class FisioController extends Controller
 {
@@ -18,7 +15,7 @@ class FisioController extends Controller
     protected $prefix;
     protected $fisio;
     protected $pasien;
-    
+
     public function __construct(Fisioterapi $fisio)
     {
 
@@ -32,19 +29,19 @@ class FisioController extends Controller
     public function index()
     {
         $listpasien = $this->fisio->pasienCpptdanFisioterapi();
-        
+
         $title = $this->prefix . ' ' . 'Index';
-        return view($this->view . 'cppt', compact('title','listpasien'));
+        return view($this->view . 'cppt', compact('title', 'listpasien'));
     }
 
     public function edit(Request $request)
     {
-        
-        
+
+
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
 
         $title = $this->prefix . ' ' . 'Form CPPT';
-        return view($this->view . 'transaksiFisio', compact('title','biodatas'));
+        return view($this->view . 'transaksiFisio', compact('title', 'biodatas'));
     }
 
     public function create()
