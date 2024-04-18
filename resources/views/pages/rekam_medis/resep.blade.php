@@ -48,7 +48,6 @@
                 <tr>
                     <td class="text">
                         Rekanan : 231
-
                     </td>
                 </tr>
             </table>
@@ -82,7 +81,8 @@
             </table>
             <table width="100%">
                 <tr>
-                    <td>{{ $data['FS_TERAPI'] ?? ''}}</td>
+                    <td> {!! str_replace("\n", "<br>", $data['FS_TERAPI']) !!}</td>
+
                 </tr>
             </table>
             <table width="100%">

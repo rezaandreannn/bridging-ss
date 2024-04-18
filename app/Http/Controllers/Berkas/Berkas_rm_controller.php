@@ -27,7 +27,7 @@ class Berkas_rm_controller extends Controller
         $filename = 'resep-' . $date . '-' . $kode_transaksi;
 
         $pdf = PDF::loadview('pages.rekam_medis.resep', ['data' => $data]);
-        // Set paper size to A4
+        // Set paper size to A5
         $pdf->setPaper('A5');
         return $pdf->stream($filename . '.pdf');
     }
