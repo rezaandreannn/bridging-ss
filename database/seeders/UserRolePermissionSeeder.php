@@ -45,7 +45,7 @@ class UserRolePermissionSeeder extends Seeder
             'name'  => 'MANAGER RSUMM',
         ], $default_user_value));
 
-        $role_it = Role::create(['name' => 'it']);
+        $role_it = Role::create(['name' => 'Super Admin']);
         $role_perawat = Role::create(['name' => 'perawat']);
         $role_dokter = Role::create(['name' => 'dokter']);
         $role_manager = Role::create(['name' => 'manager']);
@@ -67,7 +67,7 @@ class UserRolePermissionSeeder extends Seeder
         // $role_perawat->givePermissionTo('delete antrean');
 
 
-        $it->assignRole('it');
+        $it->assignRole('Super Admin');
         $perawat->assignRole('perawat');
         $dokter->assignRole('dokter');
         $manager->assignRole('manager');

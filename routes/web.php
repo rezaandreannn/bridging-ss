@@ -119,11 +119,12 @@ Route::middleware('auth')->group(function () {
     Route::prefix('fisioterapi')->group(function () {
         // Fisioterapi
         Route::get('list_pasien', [FisioController::class, 'index'])->name('cppt.index');
-        Route::get('transaksi_fisio', [FisioController::class, 'edit'])->name('cppt.fisio');
-        Route::get('cppt', [FisioController::class, 'create'])->name('cppt.create');
+        Route::get('/transaksi_fisio', [FisioController::class, 'edit'])->name('cppt.fisio');
+        Route::post('/cppt', [FisioController::class, 'create'])->name('cppt.create');
         Route::get('edit_cppt', [FisioController::class, 'edit_cppt'])->name('cppt.edit');
         Route::get('cetak_cppt', [FisioController::class, 'cetak_cppt'])->name('cppt.cetakCPPT');
         Route::get('bukti_layanan', [FisioController::class, 'bukti_layanan'])->name('cppt.buktiLayanan');
+
     });
 
     Route::prefix('rj')->group(function () {

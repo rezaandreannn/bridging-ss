@@ -63,4 +63,12 @@ class Pasien extends Model
         $data = json_decode($response, true);
         return $data['data'];
     }
+
+    public function biodataPasienByMr($no_mr)
+    {
+        $request = $this->httpClient->get($this->simrsUrlApi . 'pasien/biodatabymr/'.$no_mr);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
+    }
 }
