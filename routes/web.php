@@ -124,13 +124,13 @@ Route::middleware('auth')->group(function () {
         Route::get('edit_cppt', [FisioController::class, 'edit_cppt'])->name('cppt.edit');
         Route::get('cetak_cppt', [FisioController::class, 'cetak_cppt'])->name('cppt.cetakCPPT');
         Route::get('bukti_layanan', [FisioController::class, 'bukti_layanan'])->name('cppt.buktiLayanan');
-
     });
 
     Route::prefix('rj')->group(function () {
         //Rawat Jalan
         Route::get('rawat_jalan', [RawatJalanController::class, 'index'])->name('rj.index');
         Route::get('rawat_jalan/{noReg}', [RawatJalanController::class, 'add'])->name('rj.add');
+        Route::get('rawat_jalan/edit/{noReg}', [RawatJalanController::class, 'edit'])->name('rj.edit');
         Route::get('rawat_jalan/resume/{noMR}', [RawatJalanController::class, 'resume'])->name('rj.resume');
         Route::get('resumePDF/{noMR}', [RawatJalanController::class, 'profilPDF'])->name('rj.cetak');
         Route::get('rawat_jalan/resep/{kode_transaksi}/{noReg}', [Berkas_rm_controller::class, 'cetakResep'])->name('rj.resep');

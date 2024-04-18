@@ -87,7 +87,11 @@
                                         @endif
                                     </td>
                                     <td width="40%">
+                                        @if($item['FS_STATUS'] != '')
+                                        <a href="{{ route('rj.edit', $item['No_Reg'] )}}" class="btn btn-primary"><i class="fas fa-notes-medical"></i> Edit</a>
+                                        @else
                                         <a href="{{ route('rj.add', $item['No_Reg'] )}}" class="btn btn-primary"><i class="fas fa-notes-medical"></i> Entry</a>
+                                        @endif
                                         <!-- pasien kontrol -->
                                         @if($item['FS_CARA_PULANG'] == 2)
                                         <a href="{{ route('rj.add', $item['No_Reg']) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> SKDP</a>

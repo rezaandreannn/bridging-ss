@@ -28,6 +28,7 @@
         </div>
 
         <div class="section-body">
+            <!-- Detail Pasien -->
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -81,6 +82,7 @@
                     </div>
                 </div>
             </div>
+            <!-- Tutup Detail Pasien -->
             <a href="{{ route('rj.resume', $rajal['NO_MR'] )}}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-primary mb-2"><i class="fas fa-download"></i>Profil Ringkas Medis Rawat Jalan</a>
             <button class="btn btn-sm btn-primary mb-2" data-toggle="modal" data-target="#modal-histori"><i class="fas fa-history"></i> History</button>
             <!-- form -->

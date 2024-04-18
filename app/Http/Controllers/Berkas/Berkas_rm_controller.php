@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Berkas;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Pasien;
 use App\Models\Rekam_medis;
+use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Http\Controllers\Controller;
 
 class Berkas_rm_controller extends Controller
 {
@@ -22,11 +23,12 @@ class Berkas_rm_controller extends Controller
     public function cetakResep($noReg, $kode_transaksi)
     {
         $data = $this->rekam_medis->cetakResep($noReg, $kode_transaksi);
+        $biodata = $this->rekam_medis->getBiodataResep($noReg);
         $date = date('dMY');
 
         $filename = 'resep-' . $date . '-' . $kode_transaksi;
 
-        $pdf = PDF::loadview('pages.rekam_medis.resep', ['data' => $data]);
+        $pdf = PDF::loadview('pages.rekam_medis.resep', ['data' => $data, 'biodata' => $biodata]);
         // Set paper size to A5
         $pdf->setPaper('A5');
         return $pdf->stream($filename . '.pdf');

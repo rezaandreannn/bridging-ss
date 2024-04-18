@@ -51,6 +51,18 @@ class RawatJalanController extends Controller
         return view($this->view . 'add', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'rajal'));
     }
 
+    public function edit(Request $request, $noReg)
+    {
+        $title = $this->prefix . ' ' . 'Edit Data';
+        $masalah_perawatan = $this->rajal->masalah_perawatan();
+        $rencana_perawatan = $this->rajal->rencana_perawatan();
+        $rajal = $this->rajal->pasien_bynoreg($noReg);
+
+        return view($this->view . 'edit', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'rajal'));
+    }
+
+
+
     public function resume($noMR)
     {
         $title = $this->prefix . ' ' . 'Resume Pasien';

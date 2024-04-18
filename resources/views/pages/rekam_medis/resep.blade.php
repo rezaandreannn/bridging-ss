@@ -47,7 +47,7 @@
             <table width="100%">
                 <tr>
                     <td class="text">
-                        Rekanan : 231
+                        Rekanan : {{ $biodata['NAMAREKANAN'] ?? ''}}
                     </td>
                 </tr>
             </table>
@@ -61,7 +61,7 @@
             </table>
             <table width="100%">
                 <tr>
-                    <td class="text5">{{ $data['NAMA_DOKTER'] ?? ''}}</td>
+                    <td class="text5">{{ $data['NAMALENGKAP'] ?? ''}}</td>
                 </tr>
                 <tr>
                     <td class="text5">SIP : </td>
@@ -92,22 +92,22 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>No RM</td>
-                    <td>: 123456</td>
-                    <td>Tgl Lahir</td>
-                    <td>: 10-02-2000</td>
+                    <td width="10%">No RM</td>
+                    <td width="25%">: {{ $biodata['NO_MR'] ?? ''}}</td>
+                    <td width="15%">Tgl Lahir</td>
+                    <td width="25%">: {{ date('d-m-Y', strtotime($biodata['TGL_LAHIR'])) }}</td>
                 </tr>
                 <tr>
-                    <td>Nama</td>
-                    <td>: Dimas Budi Pratama</td>
+                    <td width="10%">Nama</td>
+                    <td width="30%">: {{ $biodata['NAMA_PASIEN'] ?? ''}}</td>
                 </tr>
                 <tr>
-                    <td>Alamat</td>
-                    <td>: LK TOTOKATON RT 0</td>
+                    <td width="10%">Alamat</td>
+                    <td width="40%">: {{ $biodata['ALAMAT'] ?? ''}}</td>
                 </tr>
                 <tr>
                     <td>Jenis Kelamin</td>
-                    <td>: l</td>
+                    <td>: {{ $biodata['JENIS_KELAMIN'] ?? ''}}</td>
                 </tr>
                 <tr>
                     <td>TB</td>
@@ -120,7 +120,7 @@
                     <td>Diagnosa</td>
                     <td>: {{ $data['FS_DIAGNOSA'] ?? ''}}</td>
                     <td>Alergi</td>
-                    <td>: Kosong</td>
+                    <td>: {{ $data['FS_ALERGI'] ?? ''}}</td>
                 </tr>
                 <tr>
                     <td>Diagnosa Sekunder</td>

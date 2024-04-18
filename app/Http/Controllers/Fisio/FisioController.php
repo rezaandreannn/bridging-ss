@@ -36,8 +36,6 @@ class FisioController extends Controller
 
     public function edit(Request $request)
     {
-
-
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
 
         $title = $this->prefix . ' ' . 'Form CPPT';
