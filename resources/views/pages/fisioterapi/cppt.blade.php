@@ -25,7 +25,7 @@
 
         <div class="section-body">
             <div class="card card-primary">
-                <form id="filterForm" action="" method="get">
+                <form id="filterForm" action="{{ route('cppt.fisio') }}" method="get">
                     <div class="card-header">
                         <h4>Fisioterapi</h4>
                     </div>
@@ -34,17 +34,19 @@
                             <div class="col-md-8">
                                 <label for="kode_dokter">Nama Pasien</label>
                                 <div class="input-group">
-                                    <select name="pasien" id="" class="form-control select2">
+                                    <select name="no_mr" id="" class="form-control select2">
                                         <option value="" selected disabled>-- Pilih Pasien --</option>
-                                        <option value="">Yusuf</option>
+                                        @foreach ($listpasien as $pasien)
+                                        <option value="{{ $pasien['NO_MR'] }}">{{ $pasien['NAMA_PASIEN'] }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="card-footer">
-                        <!-- <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Cari Pasien</button> -->
-                        <a href="{{ route('cppt.fisio') }}" class="btn btn-primary"><i class="fas fa-search"></i> Cari Pasien</a>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Cari Pasien</button>
+                        <!-- <a href="{{ route('cppt.fisio') }}" class="btn btn-primary"><i class="fas fa-search"></i> Cari Pasien</a> -->
                     </div>
                 </form>
             </div>

@@ -29,7 +29,7 @@
                     <div class="card author-box card-primary">
                         <div class="card-body">
                             <div class="author-box-name">
-                                <a href="#">FIKI Hidayat - ( 164820 )</a>
+                                <a href="#">{{ $biodatas['NAMA_PASIEN']}}</a>
                             </div>
                             <div class="author-box-job"><b></div>
                             <div class="author-box-description">
@@ -40,23 +40,16 @@
                                                 <h6 class="mb-0">NIK</h6>
                                             </div>
                                             <div class="col-sm-8">
-                                                : 1872022402020001
+                                                : {{ $biodatas['HP2']}}
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <h6 class="mb-0">Email</h6>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                : Fiki@gmail.com
-                                            </div>
-                                        </div>
+                        
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <h6 class="mb-0">Tanggal Lahir</h6>
                                             </div>
                                             <div class="col-sm-8">
-                                                : 24-02-2002
+                                                : {{ date('d-m-Y', strtotime($biodatas['TGL_LAHIR']))}}
                                             </div>
                                         </div>
                                         <div class="row">
@@ -64,7 +57,7 @@
                                                 <h6 class="mb-0">Jenis Kelamin</h6>
                                             </div>
                                             <div class="col-sm-8">
-                                                : Laki-Laki
+                                                : {{ $biodatas['JENIS_KELAMIN']}}
                                             </div>
                                         </div>
                                         <div class="row">
@@ -72,7 +65,7 @@
                                                 <h6 class="mb-0">No Hp</h6>
                                             </div>
                                             <div class="col-sm-8">
-                                                :
+                                                : {{ $biodatas['HP1']}}
                                             </div>
                                         </div>
                                         <div class="row">
@@ -80,7 +73,7 @@
                                                 <h6 class="mb-0">Alamat</h6>
                                             </div>
                                             <div class="col-sm-8">
-                                                : 23A KARANGREJO 25/07 METRO UTARA
+                                                : {{ $biodatas['ALAMAT']}}
                                             </div>
                                         </div>
                                     </div>
