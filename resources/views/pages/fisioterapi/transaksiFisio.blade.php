@@ -105,14 +105,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                @foreach ($transaksis as $transaksi)
                                     <tr>
-                                        <td>1</td>
-                                        <td>12-13-2024</td>
-                                        <td>FISIO-24-00008</td>
-                                        <td>111111</td>
-                                        <td>8</td>
-                                        <td>3</td>
-                                        <td>Aktif</td>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{$transaksi['CREATE_AT']}}</td>
+                                        <td>{{$transaksi['KODE_TRANSAKSI_FISIO']}}</td>
+                                        <td>{{$transaksi['NO_MR_PASIEN']}}</td>
+                                        <td>{{$transaksi['JUMLAH_TOTAL_FISIO']}}</td>
+                                        <td>{{$fisioModel->countCpptByKodeTr($transaksi['KODE_TRANSAKSI_FISIO'])}}</td>
+                                        <td>
+                                        @if($fisioModel->countCpptByKodeTr($transaksi['KODE_TRANSAKSI_FISIO'])>=$transaksi['JUMLAH_TOTAL_FISIO'])    
+                                        <span class="badge badge-pill badge-success">Selesai</span>
+                                        @else
+                                        <span class="badge badge-pill badge-warning">Belum selesai</span>
+                                        @endif
+
+                                    </td>
                                         <td width="20%">
                                             <a href="{{ route('cppt.create')}}" class="btn btn-sm btn-info"><i class="fa fa-plus"> Tambah Cppt</i></a>
                                             <a href="{{ route('cppt.cetakCPPT')}}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-secondary"><i class="fa fa-print"> CPPT</i></a>
@@ -122,6 +130,7 @@
                                             <a href="" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus?')"><i class="fa fa-trash"> Hapus</i></a>
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
