@@ -95,14 +95,13 @@
             </tr>
             <tr>
                 <td>Pemeriksaan Penunjangan yang diminta</td>
-                <td width="180">: @foreach ($data as $rad)
-                    @if ($rad['fs_bagian'] ! = '')
+                <td width="180">:
+                    @if ($rad['fs_bagian'] != '')
                     @php $radiologi = " ( " . $rad['fs_bagian'] . " ) <br>"; @endphp
                     @else
                     @php $radiologi = ""; @endphp
                     @endif
                     {{ $rad['KET_TINDAKAN'] . $radiologi . ',' }}
-                    @endforeach
                 </td>
             </tr>
         </table>
