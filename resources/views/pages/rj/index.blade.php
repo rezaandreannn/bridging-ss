@@ -87,10 +87,18 @@
                                         @endif
                                     </td>
                                     <td width="40%">
+                                        @if($item['FS_STATUS'] != '')
+                                        <a href="{{ route('rj.edit', $item['No_Reg'] )}}" class="btn btn-primary"><i class="fas fa-notes-medical"></i> Edit</a>
+                                        @else
                                         <a href="{{ route('rj.add', $item['No_Reg'] )}}" class="btn btn-primary"><i class="fas fa-notes-medical"></i> Entry</a>
+                                        @endif
                                         <!-- pasien kontrol -->
                                         @if($item['FS_CARA_PULANG'] == 2)
-                                        <a href="{{ route('rj.add', $item['No_Reg']) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> SKDP</a>
+                                        <a href="{{ route('rj.skdp', [
+                                            'noReg' => $item['No_Reg'],
+                                            'kode_transaksi' => $item['FS_KD_TRS']
+                                            ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-xs btn-info"><i class="fas fa-download"></i> SKDP</a>
+
                                         <a href="{{ route('rj.add', $item['No_Reg']) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i>Edit SKDP</a>
                                         <!-- pasien rujuk luar rs -->
                                         @elseif ($item['FS_CARA_PULANG'] == 4)
@@ -107,7 +115,10 @@
 
                                         <!-- Radiologi -->
                                         @if($rajalModel->cek_rad($item['No_Reg']) == true)
-                                        <a href="{{ route('rj.add', $item['No_Reg']) }}" class="btn btn-xs btn-success"><i class="fas fa-download"></i> Radiologi</a>
+                                        <a href="{{ route('rj.radiologi', [
+                                            'noReg' => $item['No_Reg'],
+                                            'kode_transaksi' => $item['FS_KD_TRS']
+                                            ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-xs btn-success"><i class="fas fa-download"></i> Radiologi</a>
                                         @endif
                                         <!-- Laboratiorium -->
                                         @if($rajalModel->cek_lab($item['No_Reg']) == true)

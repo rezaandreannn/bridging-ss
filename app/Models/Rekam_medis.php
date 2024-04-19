@@ -31,4 +31,31 @@ class Rekam_medis extends Model
         $data = json_decode($response, true);
         return $data['data'];
     }
+
+    // Cetak SKDP
+    public function cetakSKDP($noReg)
+    {
+        $request = $this->httpClient->get($this->simrsUrlApi . 'berkas/skdp/' . $noReg);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
+    }
+
+    // Cetak Radiologi
+    public function cetakRAD($noReg)
+    {
+        $request = $this->httpClient->get($this->simrsUrlApi . 'berkas/radiologi/' . $noReg);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
+    }
+
+    //Biodata By No Reg
+    public function getBiodata($noReg)
+    {
+        $request = $this->httpClient->get($this->simrsUrlApi . 'pasien/biodatabynoreg/' . $noReg);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
+    }
 }

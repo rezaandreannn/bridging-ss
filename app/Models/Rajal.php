@@ -109,7 +109,7 @@ class Rajal extends Model
         return $data['data'];
     }
 
-
+    // Get Data Pasien Rawat Jalan
     public function pasien_bynoreg($noReg)
     {
         $request = $this->httpClient->get($this->simrsUrlApi . 'pasien/biodatabynoreg/' . $noReg);
@@ -134,6 +134,15 @@ class Rajal extends Model
     public function profilMR($noMR)
     {
         $request = $this->httpClient->get($this->simrsUrlApi . 'pasien/biodatabymr/' . $noMR);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
+    }
+
+    // Edit Data Rawat Jalan
+    public function editData($noMR)
+    {
+        $request = $this->httpClient->get($this->simrsUrlApi . 'api/rawatjalan/perawat/asasmen_perawat/' . $noMR);
         $response = $request->getBody()->getContents();
         $data = json_decode($response, true);
         return $data['data'];

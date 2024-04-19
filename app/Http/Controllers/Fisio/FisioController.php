@@ -36,8 +36,11 @@ class FisioController extends Controller
 
     public function edit(Request $request)
     {
+<<<<<<< HEAD
+=======
 
         $fisioModel = new Fisioterapi();
+>>>>>>> ea238abe77eece1a0ef3c70a2b250fd63ab79581
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
         $transaksis = $this->fisio->transaksiFisioByMr($request->no_mr);
         $title = $this->prefix . ' ' . 'Form CPPT';
