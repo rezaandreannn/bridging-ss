@@ -19,6 +19,7 @@ use App\Http\Controllers\MasterData\OrganizationController;
 use App\Http\Controllers\Manage\RoleHasPermissionController;
 use App\Http\Controllers\Mapping\MappingEncounterController;
 use App\Http\Controllers\Case\Encounter\EncounterCreateController;
+use App\Http\Controllers\RawatJalan\Perawat\AssesmenController;
 use App\Http\Controllers\Rj\RawatJalanController;
 
 /*
@@ -128,14 +129,15 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('rj')->group(function () {
         //Rawat Jalan
-        Route::get('rawat_jalan', [RawatJalanController::class, 'index'])->name('rj.index');
-        Route::get('rawat_jalan/{noReg}', [RawatJalanController::class, 'add'])->name('rj.add');
-        Route::get('rawat_jalan/edit/{noReg}', [RawatJalanController::class, 'edit'])->name('rj.edit');
-        Route::get('rawat_jalan/resume/{noMR}', [RawatJalanController::class, 'resume'])->name('rj.resume');
-        Route::get('resumePDF/{noMR}', [RawatJalanController::class, 'profilPDF'])->name('rj.cetak');
+        Route::get('rawat_jalan', [AssesmenController::class, 'index'])->name('rj.index');
+        Route::get('rawat_jalan/{noReg}', [AssesmenController::class, 'add'])->name('rj.add');
+        Route::get('rawat_jalan/edit/{noReg}', [AssesmenController::class, 'edit'])->name('rj.edit');
+        Route::get('rawat_jalan/resume/{noMR}', [AssesmenController::class, 'resume'])->name('rj.resume');
+        Route::get('resumePDF/{noMR}', [AssesmenController::class, 'profilPDF'])->name('rj.cetak');
         // Report PDF
         Route::get('rawat_jalan/resep/{kode_transaksi}/{noReg}', [Berkas_rm_controller::class, 'cetakResep'])->name('rj.resep');
-        Route::get('rawat_jalan/skdp/{noReg}', [Berkas_rm_controller::class, 'cetakSKDP'])->name('rj.skdp');
+        Route::get('rawat_jalan/skdp/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakSKDP'])->name('rj.skdp');
+        Route::get('rawat_jalan/radiologi/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakRAD'])->name('rj.radiologi');
     });
 
     // MANAGE USER

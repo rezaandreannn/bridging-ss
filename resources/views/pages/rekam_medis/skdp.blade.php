@@ -46,7 +46,7 @@ $dayList = array(
     <center>
         <table width="100%">
             <tr>
-                <td><img src="" width="50" height="50" /></td>
+                <td><img src="img/logo.png" width="50" height="50" /></td>
                 <td>
                     <center>
                         <font size="2"><b>MAJELIS PEMBINA KESEHATAN UMUM</b></font><br />
@@ -55,7 +55,7 @@ $dayList = array(
                         <font style="font-size: 8px;">Email : info.rsumm@gmail.com , Telp: (0721) 49490-7850378 , Website : www.rsumm.co.id</font>
                     </center>
                 </td>
-                <td><img src="" width="50" height="50" /></td>
+                <td><img src="img/larsibaru.png" width="50" height="50" /></td>
             </tr>
             <tr>
                 <td colspan="3">
@@ -66,9 +66,18 @@ $dayList = array(
         <table width="100%">
             <tr>
                 <td class="text" style="font-size: 12px;">
+                    @php
+                    $kers = new DateTime($data['FS_SKDP_KONTROL']);
+                    $rujukannya = new DateTime($data['FS_SKDP_FASKES']);
+                    @endphp
 
-
-                    <hr />
+                    @if ($data['FS_SKDP_FASKES'] == '')
+                    <u><b>SURAT KETERANGAN KONTROL KEMBALI KE RSUMM</b></u>
+                    @elseif ($kers < $rujukannya) <u><b>SURAT KETERANGAN KONTROL KEMBALI KE RSUMM</b></u>
+                        @else
+                        <u><b>SURAT KETERANGAN KONTROL KEMBALI KE RSUMM SETELAH DARI FASKES PRIMER</b></u>
+                        @endif
+                        <hr />
                 </td>
             </tr>
         </table>
@@ -83,8 +92,14 @@ $dayList = array(
             </tr>
             <tr>
                 <td width="100" style="font-size: 10px;">Diagnosa</td>
-                <td width="175" style="font-size: 10px;">: Tidak Ada</td>
+                <td width="175" style="font-size: 10px;">: {{ $resep['FS_DIAGNOSA'] ?? ''}}</td>
             </tr>
+            @if($resep['KODE_DOKTER'] == '140')
+            <tr>
+                <td width="100" style="font-size: 10px;">Diagnosa Sekunder</td>
+                <td width="175" style="font-size: 10px;">: {{ $resep['FS_DIAGNOSA_SEKUNDER'] ?? ''}}</td>
+            </tr>
+            @endif
             <tr>
                 <td width="100" style="font-size: 10px;">Terapi</td>
                 <td width="175" style="font-size: 10px;">:</td>
@@ -95,17 +110,70 @@ $dayList = array(
         </table>
         <table width="100%" style="border: 1px solid">
             <tr>
-                <td style="font-size: 10px;">Terapi</td>
+                <td style="font-size: 10px;">{!! str_replace("\n", "<br>", $resep['FS_TERAPI']) !!}</td>
             </tr>
-
         </table>
         <table width="100%">
-
+            @if ($data['FS_SKDP_FASKES'] == '')
+            <tr>
+                <td class="text3" style="font-size: 12px;"><br>
+                    @if ($data['FS_SKDP_KONTROL'] == '')
+                <td class="text3" style="font-size: 12px;">Pasien dapat kontrol ke Rumah Sakit dengan catatan : <b> {{ $resep['FS_PESAN'] ?? ''}}</b></td>
+                @else
+                <td class="text3" style="font-size: 12px;"> <br>
+                    Pasien dapat kontrol kembali ke Rumah Sakit pada hari <b>
+                        {{ $dayList[date('D', strtotime($data['FS_SKDP_KONTROL']))] . ',' . date('d M Y', strtotime($data['FS_SKDP_KONTROL'])) }}
+                    </b>
+                </td>
+                <br>
+                @if ($data['FS_PESAN'] != null || $data['FS_PESAN'] != '')
+                <p>catatan : {{ $data['FS_PESAN'] ?? ''}}</p>
+                @endif
+                @endif
+            </tr>
+            <tr>
+                <td class="text3" style="font-size: 12px;">Demikian hal ini kami sampaikan untuk dapat dipergunakan sebagaimana perlu, Terimakasih.</td>
+            </tr>
+            @elseif ($kers < $rujukannya) <tr>
+                <td class="text3" style="font-size: 12px;"><br>Belum dapat dikembalikan ke Fasilitas Perujuk dengan alasan:</td>
+                </tr>
+                <tr>
+                    <td class="text3" style="font-size: 12px;"><b>{{ $data['FS_NM_SKDP_ALASAN'] ?? ''}}</b></td>
+                </tr>
+                <tr>
+                    <td class="text3" style="font-size: 12px;">Rencana tindak lanjut yang akan dilakukan pada kunjungan selanjutnya :</td>
+                </tr>
+                <tr>
+                    <td class="text3" style="font-size: 12px;"><b>{{ $data['FS_NM_SKDP_RENCANA'] ?? ''}} {{ $data['FS_SKDP_KET'] ?? ''}}</b></td>
+                </tr>
+                <tr>
+                    <td class="text3" style="font-size: 12px;">Pasien dapat kontrol kembali pada <b> hari {{ $dayList[date('D', strtotime($data['FS_SKDP_KONTROL']))] . ', Tanggal ' . date('d M Y', strtotime($data['FS_SKDP_KONTROL'])) }}</b>
+                        @if ($data['FS_PESAN'] != null || $data['FS_PESAN'] != '')
+                        <p>catatan : {{ $data['FS_PESAN'] ?? ''}}</p>
+                        @endif
+                </tr>
+                @if ($data['FS_SKDP_FASKES'] != '')
+                <tr>
+                    <td class="text3" style="font-size: 12px;">Adapun tanggal expired/batas masa surat rujuk faskes sampai <b> hari {{ $dayList[date('D', strtotime($data['FS_SKDP_FASKES']))] . ', Tanggal ' . date('d M Y', strtotime($data['FS_SKDP_FASKES'])) }}</b></td>
+                </tr>
+                @endif
+                @else
+                <tr>
+                    <td>
+                        Pasien dapat kontrol kembali ke Rumah Sakit setelah dari Faskes Primer pada hari <b> {{ $dayList[date('D', strtotime($data['FS_SKDP_KONTROL']))] . ', Tanggal ' . date('d M Y', strtotime($data['FS_SKDP_KONTROL'])) }}. </b>
+                        <br>
+                        @if ($data['FS_PESAN'] != null || $data['FS_PESAN'] != '')
+                        <p>catatan : {{ $data['FS_PESAN'] ?? ''}}</p>
+                        @endif
+                        Demikian hal ini kami sampaikan untuk dapat dipergunakan sebagaimana perlu, Terimakasih.
+                    </td>
+                </tr>
+                @endif
         </table>
         <table width="100%" style="text-align:right">
             <tr>
                 <td width="100"></td>
-                <td class="ttd">Bandar Lampung, 111</td>
+                <td class="ttd">Metro, {{ $data['mdd'] ?? ''}}</td>
             </tr>
             <tr>
                 <td width="100"></td>
@@ -113,7 +181,7 @@ $dayList = array(
             </tr>
             <tr>
                 <td width="100"></td>
-                <td>Dr KK</td>
+                <td>{{ $resep['NAMALENGKAP'] ?? ''}}</td>
             </tr>
         </table>
     </center>
