@@ -32,6 +32,15 @@ class Rekam_medis extends Model
         return $data['data'];
     }
 
+    // Cetak SKDP
+    public function cetakSKDP($noReg)
+    {
+        $request = $this->httpClient->get($this->simrsUrlApi . 'berkas/skdp/' . $noReg);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
+    }
+
     //Biodata By No Reg
     public function getBiodataResep($noReg)
     {

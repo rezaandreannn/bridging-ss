@@ -29,7 +29,7 @@
 
         <div class="section-body">
             <!-- Detail Pasien -->
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
@@ -81,9 +81,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- Tutup Detail Pasien -->
-            <a href="{{ route('rj.resume', $rajal['NO_MR'] )}}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-primary mb-2"><i class="fas fa-download"></i>Profil Ringkas Medis Rawat Jalan</a>
+            <a href="" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-primary mb-2"><i class="fas fa-download"></i>Profil Ringkas Medis Rawat Jalan</a>
             <button class="btn btn-sm btn-primary mb-2" data-toggle="modal" data-target="#modal-histori"><i class="fas fa-history"></i> History</button>
             <!-- form -->
             <form action="#" method="post">
@@ -99,7 +99,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Anamnesa / Allow Anamnesa <code>*</code></label>
-                                    <textarea class="form-control" rows="3" name="FS_ANAMNESA" value="" placeholder="Masukan ..."></textarea>
+                                    <textarea class="form-control" rows="3" name="FS_ANAMNESA" value="{{ $data->FS_ANAMNESA }}" placeholder="Masukan ..."></textarea>
                                 </div>
                             </div>
 

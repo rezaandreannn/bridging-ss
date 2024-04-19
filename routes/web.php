@@ -133,7 +133,9 @@ Route::middleware('auth')->group(function () {
         Route::get('rawat_jalan/edit/{noReg}', [RawatJalanController::class, 'edit'])->name('rj.edit');
         Route::get('rawat_jalan/resume/{noMR}', [RawatJalanController::class, 'resume'])->name('rj.resume');
         Route::get('resumePDF/{noMR}', [RawatJalanController::class, 'profilPDF'])->name('rj.cetak');
+        // Report PDF
         Route::get('rawat_jalan/resep/{kode_transaksi}/{noReg}', [Berkas_rm_controller::class, 'cetakResep'])->name('rj.resep');
+        Route::get('rawat_jalan/skdp/{noReg}', [Berkas_rm_controller::class, 'cetakSKDP'])->name('rj.skdp');
     });
 
     // MANAGE USER

@@ -94,7 +94,7 @@
                                         @endif
                                         <!-- pasien kontrol -->
                                         @if($item['FS_CARA_PULANG'] == 2)
-                                        <a href="{{ route('rj.add', $item['No_Reg']) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> SKDP</a>
+                                        <a href="{{ route('rj.skdp', $item['No_Reg']) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-xs btn-info"><i class="fas fa-download"></i> SKDP</a>
                                         <a href="{{ route('rj.add', $item['No_Reg']) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i>Edit SKDP</a>
                                         <!-- pasien rujuk luar rs -->
                                         @elseif ($item['FS_CARA_PULANG'] == 4)

@@ -30,4 +30,20 @@ class Fisioterapi extends Model
         $data = json_decode($response, true);
         return $data['data'];
     }
+
+    public function transaksiFisioByMr($no_mr)
+    {
+        $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/transaksi/'.$no_mr);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
+    }
+
+    public function countCpptByKodeTr($kode_tr)
+    {
+        $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/cpptcount/'.$kode_tr);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['total'];
+    }
 }

@@ -51,7 +51,7 @@ class RawatJalanController extends Controller
         return view($this->view . 'add', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'rajal'));
     }
 
-    public function edit(Request $request, $noReg)
+    public function edit($noReg)
     {
         $title = $this->prefix . ' ' . 'Edit Data';
         $masalah_perawatan = $this->rajal->masalah_perawatan();

@@ -33,4 +33,18 @@ class Berkas_rm_controller extends Controller
         $pdf->setPaper('A5');
         return $pdf->stream($filename . '.pdf');
     }
+
+    public function cetakSKDP($noReg)
+    {
+        $data = $this->rekam_medis->cetakSKDP($noReg);
+        $biodata = $this->rekam_medis->getBiodataResep($noReg);
+        $date = date('dMY');
+
+        $filename = 'resep-' . $date . '-' . $noReg;
+
+        $pdf = PDF::loadview('pages.rekam_medis.skdp', ['data' => $data, 'biodata' => $biodata]);
+        // Set paper size to A5
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
+    }
 }
