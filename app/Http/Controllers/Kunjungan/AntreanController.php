@@ -5,14 +5,17 @@ namespace App\Http\Controllers\Kunjungan;
 use App\Models\Antrean;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\BPJS\Vclaim\FingerPrintService;
 
 class AntreanController extends Controller
 {
-    protected $antrean;
+    protected $antrean, $fingerPrintService;
+
 
     public function __construct(Antrean $antrean)
     {
         $this->antrean = $antrean;
+        $this->fingerPrintService = new FingerPrintService();
     }
 
     public function index(Request $request)
@@ -21,12 +24,19 @@ class AntreanController extends Controller
             // Filter
             // Retrieve query parameters
             $kode_dokter = $request->input('kode_dokter');
-            $tanggal = $request->input('tanggal');
+            $tanggal = $request->input('tanggal') ?? date('Y-m-d');
 
             $title = 'Antrean';
-            $data = $this->antrean->getData($kode_dokter, $tanggal);
             $dokters = $this->antrean->byKodeDokter();
-            return view('pages.kunjungan.antrean.index', ['data' => $data, 'dokters' => $dokters]);
+            $data = $this->antrean->getData($kode_dokter, $tanggal);
+
+            $fingerSEP = $this->fingerPrintService->byTanggal($tanggal);
+            $listSEP = $fingerSEP['response']['list'];
+            return view('pages.kunjungan.antrean.index', [
+                'data' => $data,
+                'dokters' => $dokters,
+                'listSEP' => $listSEP
+            ]);
         } catch (\Exception $e) {
             // Tangani kesalahan
             return response()->json(['error' => 'Failed to fetch data'], 500);

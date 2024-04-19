@@ -86,7 +86,16 @@
                                     <td>{{ $item['nama_pasien'] }}</td>
                                     <td>{{ $item['no_mr'] }}</td>
                                     <td>{{ $item['no_hp'] }}</td>
-                                    <td>{{ $item['jenis_pasien'] }}</td>
+                                    <td>{{ $item['jenis_pasien'] }} @if($item['jenis_pasien'] == 'BPJS')
+                                        <br>
+                                        @foreach($listSEP as $sep)
+                                        @if($item['No_Identitas'] != NULL)
+                                        @if($sep['noKartu'] == $item['No_Identitas'])
+                                        <a href="">{{$sep['noSEP']}}</a>
+                                        @endif
+                                        @endif
+                                        @endforeach
+                                        @endif</td>
                                     <td>{{ $item['created_by'] }}</td>
                                     <td width="15%">
                                         <button class="btn btn-warning" disabled><i class="fas fa-info-circle"></i></button>
@@ -123,6 +132,7 @@
         alert('Filter telah direset!');
         window.location.href = "{{ route('pendaftaran.index') }}";
     }
+
 </script>
 <!-- Page Specific JS File -->
 @endpush
