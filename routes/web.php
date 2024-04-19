@@ -124,7 +124,6 @@ Route::middleware('auth')->group(function () {
         Route::get('edit_cppt', [FisioController::class, 'edit_cppt'])->name('cppt.edit');
         Route::get('cetak_cppt', [FisioController::class, 'cetak_cppt'])->name('cppt.cetakCPPT');
         Route::get('bukti_layanan', [FisioController::class, 'bukti_layanan'])->name('cppt.buktiLayanan');
-
     });
 
     Route::prefix('rj')->group(function () {
@@ -180,3 +179,4 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+require __DIR__ . '/vclaim.php';
