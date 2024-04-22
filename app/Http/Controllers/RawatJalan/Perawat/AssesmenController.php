@@ -68,6 +68,14 @@ class AssesmenController extends Controller
         return $pdf->download($filename . '.pdf');
     }
 
+    public function editSKDP($noReg)
+    {
+        $title = $this->prefix . ' ' . 'Edit SKDP';
+        $rajal = $this->rajal->pasien_bynoreg($noReg);
+
+        return view($this->view . 'editSKDP', compact('title', 'rajal'));
+    }
+
 
     /**
      * Show the form for creating a new resource.

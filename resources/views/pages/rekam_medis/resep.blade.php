@@ -129,7 +129,7 @@
             </table>
             <table width="100%">
                 <tr>
-                    barcode</td>
+                    {!! DNS1D::getBarcodeHTML($biodata['FS_KD_TRS'], 'C39') !!}
                 </tr>
             </table>
         </center>

@@ -50,6 +50,24 @@ class Rekam_medis extends Model
         return $data['data'];
     }
 
+    // Cetak Rujukan
+    public function cetakRujukan($noReg)
+    {
+        $request = $this->httpClient->get($this->simrsUrlApi . 'berkas/rujukanRs/' . $noReg);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
+    }
+
+    // Cetak LAB
+    public function cetakLAB($noReg)
+    {
+        $request = $this->httpClient->get($this->simrsUrlApi . 'berkas/laboratorium/' . $noReg);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
+    }
+
     //Biodata By No Reg
     public function getBiodata($noReg)
     {

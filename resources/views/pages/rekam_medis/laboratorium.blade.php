@@ -58,6 +58,7 @@
             <tr>
                 <td width="80" style="font-size: 11px;">Nama</td>
                 <td width="300" style="font-size: 11px;">: {{ $biodata['NAMA_PASIEN'] ?? ''}}</td>
+
             </tr>
             <tr>
                 <td width="80" style="font-size: 11px;">No RM</td>
@@ -75,12 +76,12 @@
                     @else
                     Perempuan
                     @endif</td>
-
             </tr>
             <tr>
                 <td width="80" style="font-size: 11px;">Alamat</td>
                 <td width="300" style="font-size: 11px;">: {{ $biodata['ALAMAT'] ?? ''}}</td>
             </tr>
+
         </table>
         <table width="100%">
             <tr>
@@ -98,12 +99,9 @@
             <tr>
                 <td>Pemeriksaan Penunjangan yang diminta</td>
                 <td width="180">:
-                    @if ($data['fs_bagian'] != '')
-                    @php $radiologi = " ( " . $data['fs_bagian'] . " )"; @endphp
-                    @else
-                    @php $radiologi = ""; @endphp
-                    @endif
-                    {{ $data['KET_TINDAKAN'] . $radiologi . ',' }}
+                    @foreach($data as $lab)
+                    {{ $lab }},
+                    @endforeach
                 </td>
             </tr>
         </table>

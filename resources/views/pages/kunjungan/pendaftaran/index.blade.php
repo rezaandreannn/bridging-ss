@@ -79,7 +79,7 @@
                                     <th scope="col">No</th>
                                     <th scope="col">No Reg</th>
                                     <th scope="col">No MR</th>
-                                    <th scope="col">Name</th>
+                                    <th scope="col">Nama</th>
                                     <th scope="col">NIK</th>
                                     <th scope="col">Jenis Pasien</th>
                                     <th scope="col">Rekanan</th>

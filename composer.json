@@ -11,6 +11,7 @@
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
+        "milon/barcode": "^11.0",
         "realrashid/sweet-alert": "^7.1",
         "spatie/laravel-permission": "^6.4",
         "virusphp/bridging-bpjs": "^2.1"

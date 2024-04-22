@@ -99,10 +99,13 @@
                                             'kode_transaksi' => $item['FS_KD_TRS']
                                             ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-xs btn-info"><i class="fas fa-download"></i> SKDP</a>
 
-                                        <a href="{{ route('rj.add', $item['No_Reg']) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i>Edit SKDP</a>
+                                        <a href="{{ route('rj.editSKDP', $item['No_Reg']) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i>Edit SKDP</a>
                                         <!-- pasien rujuk luar rs -->
                                         @elseif ($item['FS_CARA_PULANG'] == 4)
-                                        <a href="{{ route('rj.add', $item['No_Reg']) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> Rujukan RS</a>
+                                        <a href="{{ route('rj.rujukanRS', [
+                                            'noReg' => $item['No_Reg'],
+                                            'kode_transaksi' => $item['FS_KD_TRS']
+                                            ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-xs btn-info"><i class="fas fa-download"></i> Rujukan RS</a>
                                         <!-- pasien dengan rujuk internal -->
                                         @elseif ($item['FS_CARA_PULANG'] == 6)
                                         <a href="{{ route('rj.add', $item['No_Reg']) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> Rujukan Internal</a>
@@ -122,7 +125,10 @@
                                         @endif
                                         <!-- Laboratiorium -->
                                         @if($rajalModel->cek_lab($item['No_Reg']) == true)
-                                        <a href="{{ route('rj.add', $item['No_Reg']) }}" class="btn btn-xs btn-success"><i class="fas fa-download"></i> Lab</a>
+                                        <a href="{{ route('rj.lab', [
+                                            'noReg' => $item['No_Reg'],
+                                            'kode_transaksi' => $item['FS_KD_TRS']
+                                            ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-xs btn-success"><i class="fas fa-download"></i> Lab</a>
                                         @endif
                                         <!-- Resep -->
                                         @if($item['FS_TERAPI'] != '')

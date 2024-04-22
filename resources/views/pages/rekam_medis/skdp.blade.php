@@ -39,6 +39,10 @@ $dayList = array(
         table .ttd {
             padding-top: 100px;
         }
+
+        table .barcode {
+            float: right;
+        }
     </style>
 </head>
 
@@ -170,18 +174,21 @@ $dayList = array(
                 </tr>
                 @endif
         </table>
-        <table width="100%" style="text-align:right">
+        <table width="100%">
             <tr>
-                <td width="100"></td>
-                <td class="ttd">Metro, {{ $data['mdd'] ?? ''}}</td>
+                <td></td>
+                <td class="ttd" style="text-align: left;">Metro, {{ $tanggal->format('d-m-Y') }}</td>
             </tr>
             <tr>
-                <td width="100"></td>
-                <td><img src="barcode.png" alt="" width="70" height="70" /></td>
+                <td></td>
+                <td style="float: left;">
+                    <!-- Menampilkan barcode dengan lebar 200px dan tinggi 200px -->
+                    {!! DNS2D::getBarcodeHTML($resep['NAMALENGKAP'], 'QRCODE', 2, 2) !!}
+                </td>
             </tr>
             <tr>
-                <td width="100"></td>
-                <td>{{ $resep['NAMALENGKAP'] ?? ''}}</td>
+                <td></td>
+                <td style="text-align: left;">{{ $resep['NAMALENGKAP'] ?? ''}}</td>
             </tr>
         </table>
     </center>
