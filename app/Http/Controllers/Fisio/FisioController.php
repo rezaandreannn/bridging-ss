@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Fisio;
 
+use App\Models\Pasien;
 use App\Models\Fisioterapi;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\Pasien;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 
 class FisioController extends Controller
 {
@@ -21,7 +22,7 @@ class FisioController extends Controller
 
         $this->fisio = $fisio;
         $this->view = 'pages.fisioterapi.';
-        $this->routeIndex = 'fisio.index';
+        $this->routeIndex = 'cppt.fisio';
         $this->prefix = 'Fisioterapi';
         $this->pasien = new Pasien;
     }
@@ -36,23 +37,39 @@ class FisioController extends Controller
 
     public function edit(Request $request)
     {
-<<<<<<< HEAD
-=======
-
         $fisioModel = new Fisioterapi();
->>>>>>> ea238abe77eece1a0ef3c70a2b250fd63ab79581
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
         $transaksis = $this->fisio->transaksiFisioByMr($request->no_mr);
         $title = $this->prefix . ' ' . 'Form CPPT';
-        return view($this->view . 'transaksiFisio', compact('title', 'biodatas','transaksis','fisioModel'));
+        return view($this->view . 'transaksiFisio', compact('title', 'biodatas', 'transaksis', 'fisioModel'));
     }
 
-    public function create()
+    public function store(Request $request)
     {
-        var_dump('ok');
-        die;
         $title = $this->prefix . ' ' . 'CPPT';
-        return view($this->view . 'create', compact('title'));
+        $kode_transaksi = $this->fisio->generateRandomCode(); // Generate random transaction code
+        $jumlah_total_fisio = $request->input('JUMLAH_TOTAL_FISIO');
+
+        $request->validate([
+            'JUMLAH_TOTAL_FISIO' => 'required|numeric',
+        ]);
+
+        if ($jumlah_total_fisio > 8) {
+            Session::flash('warning', 'Pastikan jumlah maksimal fisioterapi adalah 8 kali');
+            return redirect()->route($this->routeIndex, $request->input('NO_MR_PASIEN'));
+        }
+
+        $transaksi_fisio = new Fisioterapi();
+        $transaksi_fisio->kode_transaksi = $kode_transaksi;
+        $transaksi_fisio->NO_MR_PASIEN = $request->input('NO_MR_PASIEN');
+        $transaksi_fisio->JUMLAH_TOTAL_FISIO = $jumlah_total_fisio;
+        $transaksi_fisio->tanggal_transaksi = now();
+        $transaksi_fisio->users = auth()->user()->name;
+
+        $transaksi_fisio->save();
+
+        Session::flash('success', 'Data telah berhasil ditambahkan');
+        return redirect()->route($this->routeIndex, $request->input('NO_MR_PASIEN'));
     }
 
     public function edit_cppt()

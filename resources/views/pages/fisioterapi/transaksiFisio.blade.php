@@ -29,7 +29,7 @@
                     <div class="card author-box card-primary">
                         <div class="card-body">
                             <div class="author-box-name">
-                                <a href="#">{{ $biodatas['NAMA_PASIEN']}}</a>
+                                <a href="#">{{ $biodatas['NAMA_PASIEN']}} - ({{ $biodatas['NO_MR']}})</a>
                             </div>
                             <div class="author-box-job"><b></div>
                             <div class="author-box-description">
@@ -43,7 +43,7 @@
                                                 : {{ $biodatas['HP2']}}
                                             </div>
                                         </div>
-                        
+
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <h6 class="mb-0">Tanggal Lahir</h6>
@@ -57,7 +57,11 @@
                                                 <h6 class="mb-0">Jenis Kelamin</h6>
                                             </div>
                                             <div class="col-sm-8">
-                                                : {{ $biodatas['JENIS_KELAMIN']}}
+                                                : @if ($biodatas['JENIS_KELAMIN'] == 'L')
+                                                Laki-Laki
+                                                @else
+                                                Perempuan
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="row">
@@ -105,7 +109,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($transaksis as $transaksi)
+                                    @foreach ($transaksis as $transaksi)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{$transaksi['CREATE_AT']}}</td>
@@ -114,15 +118,14 @@
                                         <td>{{$transaksi['JUMLAH_TOTAL_FISIO']}}</td>
                                         <td>{{$fisioModel->countCpptByKodeTr($transaksi['KODE_TRANSAKSI_FISIO'])}}</td>
                                         <td>
-                                        @if($fisioModel->countCpptByKodeTr($transaksi['KODE_TRANSAKSI_FISIO'])>=$transaksi['JUMLAH_TOTAL_FISIO'])    
-                                        <span class="badge badge-pill badge-success">Selesai</span>
-                                        @else
-                                        <span class="badge badge-pill badge-warning">Belum selesai</span>
-                                        @endif
+                                            @if($fisioModel->countCpptByKodeTr($transaksi['KODE_TRANSAKSI_FISIO'])>=$transaksi['JUMLAH_TOTAL_FISIO'])
+                                            <span class="badge badge-pill badge-success">Selesai</span>
+                                            @else
+                                            <span class="badge badge-pill badge-warning">Belum selesai</span>
+                                            @endif
 
-                                    </td>
+                                        </td>
                                         <td width="20%">
-                                            <a href="{{ route('cppt.create')}}" class="btn btn-sm btn-info"><i class="fa fa-plus"> Tambah Cppt</i></a>
                                             <a href="{{ route('cppt.cetakCPPT')}}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-secondary"><i class="fa fa-print"> CPPT</i></a>
                                             <a href="{{ route('cppt.buktiLayanan')}}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-secondary"><i class="fa fa-print"> Bukti Pelayanan</i></a>
                                             <button class="btn btn-sm btn-warning"><i class="fa fa-edit" data-toggle="modal" data-target="#modal-edit-tranksasi18"> Edit</i></button>
@@ -151,14 +154,15 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="" method="POST">
+            <form action="{{ route('cppt.store') }}" method="POST">
+                @csrf
                 <div class="modal-body">
                     <div class="card-body">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>No MR Pasien </label>
-                                <input type="hidden" name="NO_MR_PASIEN" class="form-control" value="205967">
-                                <input type="text" name="NO_MR_PASIEN" class="form-control" value="205967" readonly>
+                                <input type="hidden" name="NO_MR_PASIEN" class="form-control" value="{{ $biodatas['NO_MR']}}">
+                                <input type="text" name="NO_MR_PASIEN" class="form-control" value="{{ $biodatas['NO_MR']}}" readonly>
                             </div>
                         </div>
                         <div class="col-md-12">
