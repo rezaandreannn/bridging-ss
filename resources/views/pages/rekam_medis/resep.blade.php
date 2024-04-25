@@ -60,6 +60,9 @@
                     <td class="text5">SIP : </td>
                 </tr>
                 <tr>
+                    <td class="text5" style="text-align: right;">{{ $tanggal->format('d-m-Y') }}</td>
+                </tr>
+                <tr>
                     <td colspan="4" style="padding: 0;">
                         <hr style="margin: 0;" />
                     </td>
@@ -88,7 +91,11 @@
                 </tr>
                 <tr>
                     <td>Jenis Kelamin</td>
-                    <td>: {{ $biodata['JENIS_KELAMIN'] ?? ''}}</td>
+                    <td>: @if ($biodata['JENIS_KELAMIN'] == 'L')
+                        Laki-Laki
+                        @else
+                        Perempuan
+                        @endif</td>
                 </tr>
                 <tr>
                     <td>TB</td>

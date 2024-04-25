@@ -26,10 +26,11 @@ class Berkas_rm_controller extends Controller
         $data = $this->rekam_medis->cetakResep($noReg, $kode_transaksi);
         $biodata = $this->rekam_medis->getBiodata($noReg);
         $date = date('dMY');
+        $tanggal = Carbon::now();
 
         $filename = 'resep-' . $date . '-' . $kode_transaksi;
 
-        $pdf = PDF::loadview('pages.rekam_medis.resep', ['data' => $data, 'biodata' => $biodata]);
+        $pdf = PDF::loadview('pages.rekam_medis.resep', ['data' => $data, 'biodata' => $biodata, 'tanggal' => $tanggal]);
         // Set paper size to A5
         $pdf->setPaper('A5');
         return $pdf->stream($filename . '.pdf');
@@ -108,7 +109,7 @@ class Berkas_rm_controller extends Controller
 
         $filename = 'Rujukan-' . $date . '-' . $noReg;
 
-        $pdf = PDF::loadview('pages.rekam_medis.rujukanRS', ['data' => $data, 'biodata' => $biodata, 'resep' => $resep, 'tanggal' => $tanggal, 'noPRB' => $noPRB]);
+        $pdf = PDF::loadview('pages.rekam_medis.rujukanInternal', ['data' => $data, 'biodata' => $biodata, 'resep' => $resep, 'tanggal' => $tanggal, 'noPRB' => $noPRB]);
         // Set paper size to A5
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
@@ -117,7 +118,7 @@ class Berkas_rm_controller extends Controller
     public function cetakPRB($noReg, $kode_transaksi)
     {
         $resep = $this->rekam_medis->cetakResep($noReg, $kode_transaksi);
-        $data = $this->rekam_medis->cetakPRB_Faskes($noReg);
+        $data = $this->rekam_medis->getNoPRB($noReg);
         $biodata = $this->rekam_medis->getBiodata($noReg);
         $date = date('dMY');
         $tanggal = Carbon::now();
