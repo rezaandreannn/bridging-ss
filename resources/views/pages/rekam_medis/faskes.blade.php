@@ -1,10 +1,22 @@
 <!DOCTYPE html>
+<?php
+date_default_timezone_set('Asia/Jakarta');
+$dayList = array(
+    'Sun' => 'Minggu',
+    'Mon' => 'Senin',
+    'Tue' => 'Selasa',
+    'Wed' => 'Rabu',
+    'Thu' => 'Kamis',
+    'Fri' => 'Jumat',
+    'Sat' => 'Sabtu'
+);
+?>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rujukan RS</title>
+    <title>Faskes</title>
     <style>
         table tr td {
             font-size: 13px;
@@ -20,7 +32,7 @@
         }
 
         table .ttd {
-            padding-top: 50px;
+            padding-top: 100px;
         }
     </style>
 </head>
@@ -49,57 +61,47 @@
         <table width="100%">
             <tr>
                 <td class="text">
-                    <b>SURAT RUJUKAN</b>
+                    <b>SURAT KETERANGAN KEMBALI KE FASKES PRIMER</b>
                     <hr />
                 </td>
             </tr>
         </table>
-        <p style="font-size: 12px; text-align:left;"> <b>Yth,</b></p>
-        <p style="font-size: 12px; text-align:left;"> <b>{{ $data['FS_TUJUAN_RUJUKAN'] ?? ''}}</b></p>
-        <p style="font-size: 12px; text-align:left;"> <b>{{ $data['FS_TUJUAN_RUJUKAN2'] ?? ''}}</b></p>
-        <p style="font-size: 12px; text-align:left;"> Assalamu'alaikum Wr Wb</p>
-        <p style="font-size: 12px; text-align:left;"> Dengan hormat, bersama ini kami kirimkan pasien :</p>
         <table width="100%">
             <tr>
                 <td width="80" style="font-size: 11px;">Nama</td>
                 <td width="300" style="font-size: 11px;">: {{ $biodata['NAMA_PASIEN'] ?? ''}}</td>
+
             </tr>
             <tr>
                 <td width="80" style="font-size: 11px;">No RM</td>
                 <td width="300" style="font-size: 11px;">: {{ $biodata['NO_MR'] ?? ''}}</td>
             </tr>
             <tr>
-                <td width="80" style="font-size: 11px;">Tanggal Lahir</td>
-                <td width="300" style="font-size: 11px;">: {{ date('d-m-Y', strtotime($biodata['TGL_LAHIR'])) }}</td>
-            </tr>
-            <tr>
-                <td width="80" style="font-size: 11px;">Alamat</td>
-                <td width="300" style="font-size: 11px;">: {{ $biodata['ALAMAT'] ?? ''}}</td>
-            </tr>
-            <tr>
-                <td width="80" style="font-size: 11px;">Jenis Kelamin</td>
-                <td width="300" style="font-size: 11px;">: @if ($biodata['JENIS_KELAMIN'] == 'L')
-                    Laki-Laki
-                    @else
-                    Perempuan
-                    @endif</td>
-            </tr>
-            <tr>
                 <td width="80" style="font-size: 11px;">Diagnosa</td>
                 <td width="300" style="font-size: 11px;">: {{ $resep['FS_DIAGNOSA'] ?? ''}}</td>
             </tr>
             <tr>
-                <td width="80" style="font-size: 11px;">Terapi</td>
-                <td width="300" style="font-size: 11px;">: {{ $resep['FS_TERAPI'] ?? ''}}</td>
-            </tr>
-            <tr>
-                <td width="80" style="font-size: 11px;">Alasan dirujuk</td>
-                <td width="300" style="font-size: 11px;">: {{ $data['FS_ALASAN_RUJUK'] ?? ''}}</td>
+                <td width="80" style="font-size: 11px;">Diagnosa</td>
+                <td width="300" style="font-size: 11px;">: </td>
             </tr>
         </table>
-        <p style="font-size: 12px; text-align:left;"> Demikian harap menjadi maklum adanya dan terimakasih atas perhatian teman sejawat</p>
-        <p style="font-size: 12px; text-align:left;"> Wassalamu'alaikum Wr Wb</p>
-
+        <p style="font-size: 12px; text-align:left; padding-left:160px;">{!! nl2br(trim($resep['FS_TERAPI'] ?? '')) !!}</p>
+        <table width="100%">
+            <tr>
+                <td colspan="3">
+                    <hr />
+                </td>
+            </tr>
+        </table>
+        <table width="100%">
+            <tr>
+                <td>
+                    <font size="2">Pasien dapat kontrol kembali ke Rumah Sakit setelah dari FKTP pada hari & tanggal
+                        : <b> {{ $dayList[date('D', strtotime($data['FS_TGL_PRB']))] . ', ' . date('d M Y', strtotime($data['FS_TGL_PRB'])) }}</b> Demikian hal ini kami sampaikan untuk dapat dipergunakan
+                        sebagaimana perlu, Terimakasih.</font>
+                </td>
+            </tr>
+        </table>
         <table width="100%">
             <tr>
                 <td></td>
@@ -109,7 +111,7 @@
                 <td></td>
                 <td style="float: left;">
                     <!-- Menampilkan barcode dengan lebar 200px dan tinggi 200px -->
-                    {!! DNS1D::getBarcodeHTML($resep['KODE_DOKTER'], 'C39') !!}
+                    {!! DNS2D::getBarcodeHTML($resep['NAMALENGKAP'], 'QRCODE', 2, 2) !!}
                 </td>
             </tr>
             <tr>
