@@ -190,7 +190,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('cppt.update', ['id' => $fisioModel['ID_TRANSAKSI']]) }}" method="POST">
+            <form action="#" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">

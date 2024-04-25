@@ -58,24 +58,22 @@ class FisioController extends Controller
     {
         // Validate the incoming request data
         // $kode_transaksi = $this->fisio->generateRandomCode();
-        $transaksis = $this->fisio->getLastTransaksiFisio();
-        dd($transaksis);
-        die;
+        $lastKodeTransaksi = $this->fisio->getLastTransaksiFisio();
 
-        // $transaksis = Transaksi::where('tanggal_transaksi', date('Y-m-d'))->latest()->first();
-        // $kode = 'TR';
-        // $tahun = date('ymd');
-        // if ($transaksis == null) {
-        //     $nomorUrut = "1";
-        // } else {
-        //     $nomorUrut = substr($transaksis->kode_transaksi, 9) + 1;
-        //     // var_dump($nomorUrut);
-        //     // die;
-        // }
-        // $kode_transaksi = $kode . $tahun . '-' . $nomorUrut;
 
-        $date = date('dmY');
-        $kode_transaksi = 'F-' . $date;
+        $kode = 'F';
+        if ($lastKodeTransaksi == null) {
+            $nomorUrut = "000001";
+        } else {
+            $noTerakhir = substr($lastKodeTransaksi['KODE_TRANSAKSI_FISIO'], 2)+1;
+            $nomorUrut=sprintf('%06s', $noTerakhir);
+            // var_dump($nomorUrut);
+            // die;
+        }
+
+        $kode_transaksi = $kode .'-' . $nomorUrut;
+
+
         $validatedData = $request->validate([
             'NO_MR_PASIEN' => 'required',
             'JUMLAH_TOTAL_FISIO' => 'required|numeric',
