@@ -48,6 +48,14 @@ class Fisioterapi extends Model
         return $data['total'];
     }
 
+    public function getLastTransaksiFisio()
+    {
+        $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/transaksis');
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
+    }
+
     public function addCpptByKodeTr()
     {
         $request = $this->httpClient->get($this->simrsUrlApi . 'api/fisioterapi/cppt/transaksi_fisioterapi');
