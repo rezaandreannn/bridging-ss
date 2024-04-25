@@ -37,7 +37,7 @@ $dayList = array(
         }
 
         table .ttd {
-            padding-top: 100px;
+            padding-top: 50px;
         }
 
         table .barcode {
@@ -112,11 +112,7 @@ $dayList = array(
                 <td colspan="4"></td>
             </tr>
         </table>
-        <table width="100%" style="border: 1px solid">
-            <tr>
-                <td style="font-size: 10px;">{!! str_replace("\n", "<br>", $resep['FS_TERAPI']) !!}</td>
-            </tr>
-        </table>
+        <p style="font-size: 12px; text-align:left; border: 1px solid">{!! str_replace("\n", "<br>", $resep['FS_TERAPI']) !!}</p>
         <table width="100%">
             @if ($data['FS_SKDP_FASKES'] == '')
             <tr>

@@ -96,4 +96,51 @@ class Berkas_rm_controller extends Controller
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
     }
+
+    public function cetakRujukanInternal($noReg, $kode_transaksi)
+    {
+        $resep = $this->rekam_medis->cetakResep($noReg, $kode_transaksi);
+        $data = $this->rekam_medis->cetakRujukan($noReg);
+        $noPRB = $this->rekam_medis->getNoPRB($noReg);
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+
+        $filename = 'Rujukan-' . $date . '-' . $noReg;
+
+        $pdf = PDF::loadview('pages.rekam_medis.rujukanRS', ['data' => $data, 'biodata' => $biodata, 'resep' => $resep, 'tanggal' => $tanggal, 'noPRB' => $noPRB]);
+        // Set paper size to A5
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
+    }
+
+    public function cetakPRB($noReg, $kode_transaksi)
+    {
+        $resep = $this->rekam_medis->cetakResep($noReg, $kode_transaksi);
+        $data = $this->rekam_medis->cetakPRB_Faskes($noReg);
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+
+        $filename = 'PRB-' . $date . '-' . $noReg;
+        $pdf = PDF::loadview('pages.rekam_medis.prb', ['data' => $data, 'biodata' => $biodata, 'resep' => $resep, 'tanggal' => $tanggal]);
+        // Set paper size to A5
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
+    }
+
+    public function cetakFaskes($noReg, $kode_transaksi)
+    {
+        $resep = $this->rekam_medis->cetakResep($noReg, $kode_transaksi);
+        $data = $this->rekam_medis->cetakPRB_Faskes($noReg);
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+
+        $filename = 'Faskes-' . $date . '-' . $noReg;
+        $pdf = PDF::loadview('pages.rekam_medis.faskes', ['data' => $data, 'biodata' => $biodata, 'resep' => $resep, 'tanggal' => $tanggal]);
+        // Set paper size to A5
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
+    }
 }

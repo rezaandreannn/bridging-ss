@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rujukan RS</title>
+    <title>PRB</title>
     <style>
         table tr td {
             font-size: 13px;
@@ -49,77 +49,71 @@
         <table width="100%">
             <tr>
                 <td class="text">
-                    <b>SURAT RUJUKAN</b>
+                    <b>PERMINTAAN PEMERIKSAAN PENUNJANGAN</b>
                     <hr />
                 </td>
             </tr>
         </table>
         <table width="100%">
             <tr>
-                <td><b>Yth,</b></td>
-            </tr>
-            <tr>
-                <td><b>{{ $data['FS_TUJUAN_RUJUKAN'] ?? ''}}</b></td>
-            </tr>
-            <tr>
-                <td><b>{{ $data['FS_TUJUAN_RUJUKAN2'] ?? ''}}</b></td>
-            </tr>
-            <tr>
-                <td>
-                    Assalamu'alaikum Wr Wb
+                <td>Terimakasih atas kepercayaan sejawat dokter yang telah merujuk pasien kepada kami atas
+                    nama :
                 </td>
             </tr>
             <tr>
-                <td>
-                    Dengan hormat, bersama ini kami kirimkan pasien :
-                </td>
-            </tr>
-            <tr>
-                <td>Nama</td>
-                <td>: {{ $biodata['NAMA_PASIEN'] ?? ''}}</td>
-            </tr>
-            <tr>
-                <td>No RM</td>
-                <td>: {{ $biodata['NO_MR'] ?? ''}}</td>
-            </tr>
-            <tr>
-                <td>Tanggal Lahir</td>
-                <td>: {{ date('d-m-Y', strtotime($biodata['TGL_LAHIR'])) }}</td>
+                <td width="80" style="font-size: 11px;">Nama</td>
+                <td width="300" style="font-size: 11px;">: {{ $biodata['NAMA_PASIEN'] ?? ''}}</td>
 
             </tr>
             <tr>
-                <td>Alamat</td>
-                <td>: {{ $biodata['ALAMAT'] ?? ''}}</td>
+                <td width="80" style="font-size: 11px;">No RM</td>
+                <td width="300" style="font-size: 11px;">: {{ $biodata['NO_MR'] ?? ''}}</td>
             </tr>
             <tr>
-                <td>Jenis Kelamin</td>
-                <td>: @if ($biodata['JENIS_KELAMIN'] == 'L')
+                <td width="80" style="font-size: 11px;">Tanggal Lahir</td>
+                <td width="300" style="font-size: 11px;">: {{ date('d-m-Y', strtotime($biodata['TGL_LAHIR'])) }}</td>
+
+            </tr>
+            <tr>
+                <td width="80" style="font-size: 11px;">Jenis Kelamin</td>
+                <td width="300" style="font-size: 11px;">: @if ($biodata['JENIS_KELAMIN'] == 'L')
                     Laki-Laki
                     @else
                     Perempuan
                     @endif</td>
-
             </tr>
             <tr>
-                <td>Diagnosa</td>
+                <td width="80" style="font-size: 11px;">Alamat</td>
+                <td width="300" style="font-size: 11px;">: {{ $biodata['ALAMAT'] ?? ''}}</td>
+            </tr>
+
+        </table>
+        <table width="100%">
+            <tr>
+                <td colspan="3">
+                    <hr />
+                </td>
+            </tr>
+        </table>
+        <table width="100%">
+            <tr>
+                <td>Berikut kami sampaikan kesimpulan selama dalam perawatan kami :</td>
+            </tr>
+            <tr>
+                <td width="165">Diagnosa</td>
                 <td>: {{ $resep['FS_DIAGNOSA'] ?? ''}}</td>
             </tr>
             <tr>
-                <td>Terapi</td>
-                <td>: {{ $resep['FS_TERAPI'] ?? ''}}</td>
+                <td width="165">Alergi</td>
+                <td>: {{ $biodata['FS_ALERGI'] ?? ''}}</td>
             </tr>
             <tr>
-                <td>Alasan dirujuk</td>
-                <td>: {{ $data['FS_ALASAN_RUJUK'] ?? ''}}</td>
-            </tr>
-            <tr>
-                <td>
-                    Demikian harap menjadi maklum adanya dan terimakasih atas perhatian teman sejawat
-                </td>
+                <td width="165">High Risk</td>
+                <td>: {{ $biodata['FS_HIGH_RISK'] ?? ''}}</td>
             </tr>
             <tr>
                 <td>
-                    Wassalamu'alaikum Wr Wb
+                    <font size="2">Wassalamu'alaikum Wr Wb</font>
                 </td>
             </tr>
         </table>
@@ -132,7 +126,7 @@
                 <td></td>
                 <td style="float: left;">
                     <!-- Menampilkan barcode dengan lebar 200px dan tinggi 200px -->
-                    {!! DNS1D::getBarcodeHTML($resep['KODE_DOKTER'], 'C39') !!}
+                    {!! DNS2D::getBarcodeHTML($resep['NAMALENGKAP'], 'QRCODE', 2, 2) !!}
                 </td>
             </tr>
             <tr>

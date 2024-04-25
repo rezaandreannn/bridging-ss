@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
+use GuzzleHttp\Client;
 
 class FisioController extends Controller
 {
@@ -16,6 +17,8 @@ class FisioController extends Controller
     protected $prefix;
     protected $fisio;
     protected $pasien;
+    protected $httpClient;
+    protected $simrsUrlApi;
 
     public function __construct(Fisioterapi $fisio)
     {
@@ -25,6 +28,13 @@ class FisioController extends Controller
         $this->routeIndex = 'cppt.fisio';
         $this->prefix = 'Fisioterapi';
         $this->pasien = new Pasien;
+
+        $this->httpClient = new Client([
+            'headers' => [
+                'Content-Type' => 'application/json'
+            ],
+        ]);
+        $this->simrsUrlApi = env('SIMRS_BASE_URL');
     }
 
     public function index()
@@ -46,30 +56,65 @@ class FisioController extends Controller
 
     public function store(Request $request)
     {
-        $title = $this->prefix . ' ' . 'CPPT';
-        $kode_transaksi = $this->fisio->generateRandomCode(); // Generate random transaction code
-        $jumlah_total_fisio = $request->input('JUMLAH_TOTAL_FISIO');
-
-        $request->validate([
+        // Validate the incoming request data
+        // $kode_transaksi = $this->fisio->generateRandomCode();
+        $date = date('dmY');
+        $kode_transaksi = 'F-' . $date;
+        $validatedData = $request->validate([
+            'NO_MR_PASIEN' => 'required',
             'JUMLAH_TOTAL_FISIO' => 'required|numeric',
         ]);
 
+        $no_mr_pasien = $request->input('NO_MR_PASIEN');
+        $jumlah_total_fisio = $request->input('JUMLAH_TOTAL_FISIO');
+
         if ($jumlah_total_fisio > 8) {
-            Session::flash('warning', 'Pastikan jumlah maksimal fisioterapi adalah 8 kali');
-            return redirect()->route($this->routeIndex, $request->input('NO_MR_PASIEN'));
+            return redirect()->back()->with('warning', 'Pastikan jumlah maksimal fisioterapi adalah 8 kali');
         }
 
-        $transaksi_fisio = new Fisioterapi();
-        $transaksi_fisio->kode_transaksi = $kode_transaksi;
-        $transaksi_fisio->NO_MR_PASIEN = $request->input('NO_MR_PASIEN');
-        $transaksi_fisio->JUMLAH_TOTAL_FISIO = $jumlah_total_fisio;
-        $transaksi_fisio->tanggal_transaksi = now();
-        $transaksi_fisio->users = auth()->user()->name;
+        // Make a POST request to the API endpoint
+        $response = $this->httpClient->post($this->simrsUrlApi . 'api/fisioterapi/cppt/transaksi_fisioterapi', [
+            'json' => [
+                'KODE_TRANSAKSI_FISIO' => $kode_transaksi,
+                'NO_MR_PASIEN' => $no_mr_pasien,
+                'JUMLAH_TOTAL_FISIO' => $jumlah_total_fisio,
+                'CREATE_AT' => now(),
+                'CREATE_BY' => auth()->user()->name,
+            ]
+        ]);
 
-        $transaksi_fisio->save();
+        // Get the response body
+        $responseData = $response->getBody()->getContents();
+        // Redirect the user back or to a different page after successful submission
+        return redirect()->back()->with('success', 'Transaction added successfully!');
+    }
 
-        Session::flash('success', 'Data telah berhasil ditambahkan');
-        return redirect()->route($this->routeIndex, $request->input('NO_MR_PASIEN'));
+    public function update(Request $request, $id)
+    {
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'NO_MR_PASIEN' => 'required',
+            'JUMLAH_TOTAL_FISIO' => 'required|numeric',
+        ]);
+
+        $no_mr_pasien = $request->input('NO_MR_PASIEN');
+        $jumlah_total_fisio = $request->input('JUMLAH_TOTAL_FISIO');
+
+        if ($jumlah_total_fisio > 8) {
+            return redirect()->back()->with('warning', 'Pastikan jumlah maksimal fisioterapi adalah 8 kali');
+        }
+
+        // Make a PUT or PATCH request to the API endpoint to update the data
+        $response = $this->httpClient->put($this->simrsUrlApi . 'api/fisioterapi/cppt/transaksi_fisioterapi/' . $id, [
+            'json' => [
+                'NO_MR_PASIEN' => $no_mr_pasien,
+                'JUMLAH_TOTAL_FISIO' => $jumlah_total_fisio,
+                // Add other fields you want to update here
+            ]
+        ]);
+
+        // Redirect the user back or to a different page after successful submission
+        return redirect()->back()->with('success', 'Transaction updated successfully!');
     }
 
     public function edit_cppt()

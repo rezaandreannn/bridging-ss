@@ -190,26 +190,28 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="" method="POST">
+            <form action="{{ route('cppt.update', ['id' => $fisioModel['ID_TRANSAKSI']]) }}" method="POST">
+                @csrf
+                @method('PUT')
                 <div class="modal-body">
                     <div class="card-body">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Kode Transaksi </label>
-                                <input type="hidden" name="ID_TRANSAKSI" class="form-control" value="18" readonly>
-                                <input type="text" name="KODE_TRANSAKSI_FISIO" class="form-control" value="FISIO-24-00008" readonly>
+                                <input type="hidden" name="ID_TRANSAKSI" class="form-control" value="{{ $fisioModel['ID_TRANSAKSI'] }}" readonly>
+                                <input type="text" name="KODE_TRANSAKSI_FISIO" class="form-control" value="{{ $fisioModel['KODE_TRANSAKSI_FISIO'] }}" readonly>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>No MR Pasien </label>
-                                <input type="text" name="NO_MR_PASIEN" class="form-control" value="205967" readonly>
+                                <input type="text" name="NO_MR_PASIEN" class="form-control" value="{{ $fisioModel['NO_MR_PASIEN'] }}" readonly>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Jumlah Maksimal Fisio </label>
-                                <input type="number" name="JUMLAH_TOTAL_FISIO" class="form-control" value="3">
+                                <input type="number" name="JUMLAH_TOTAL_FISIO" class="form-control" value="{{ $fisioModel['JUMLAH_TOTAL_FISIO'] }}">
                             </div>
                         </div>
                     </div>

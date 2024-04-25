@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Surat</title>
+    <title>Resep Obat</title>
     <style>
         table tr td {
             font-size: 13px;
@@ -28,15 +28,9 @@
             text-align: right;
         }
 
-        table tr .img {
-            padding-bottom: 100px;
-        }
-
-
         .page {
             width: 100mm;
             min-height: 210mm;
-
         }
     </style>
 </head>
@@ -55,7 +49,6 @@
                 <tr>
                     <td class="text">
                         <b>No Antrian Obat : 1</b>
-
                     </td>
                 </tr>
             </table>
@@ -67,24 +60,12 @@
                     <td class="text5">SIP : </td>
                 </tr>
                 <tr>
-                    <td colspan="4">
-                        <hr />
+                    <td colspan="4" style="padding: 0;">
+                        <hr style="margin: 0;" />
                     </td>
                 </tr>
             </table>
-            <table width="100%">
-                <tr>
-                    <td class="text">
-                        <b></b>
-                    </td>
-                </tr>
-            </table>
-            <table width="100%">
-                <tr>
-                    <td> {!! str_replace("\n", "<br>", $data['FS_TERAPI']) !!}</td>
-
-                </tr>
-            </table>
+            <p style="font-size: 12px; text-align:left;">{!! nl2br(trim($data['FS_TERAPI'] ?? '')) !!}</p>
             <table width="100%">
                 <tr>
                     <td colspan="4">
@@ -129,7 +110,7 @@
             </table>
             <table width="100%">
                 <tr>
-                    {!! DNS1D::getBarcodeHTML($biodata['FS_KD_TRS'], 'C39') !!}
+                    {!! DNS1D::getBarcodeHTML($data['KODE_DOKTER'], 'C39',2,40) !!}
                 </tr>
             </table>
         </center>

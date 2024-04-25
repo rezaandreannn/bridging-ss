@@ -111,9 +111,15 @@
                                         <a href="{{ route('rj.add', $item['No_Reg']) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> Rujukan Internal</a>
                                         <!-- pasien dikembalikan ke faskes primer -->
                                         @elseif ($item['FS_CARA_PULANG'] == 7)
-                                        <a href="{{ route('rj.add', $item['No_Reg']) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> Faskes</a>
+                                        <a href="{{ route('rj.faskes', [
+                                            'noReg' => $item['No_Reg'],
+                                            'kode_transaksi' => $item['FS_KD_TRS']
+                                            ]) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> Faskes</a>
                                         @elseif ($item['FS_CARA_PULANG'] == 8)
-                                        <a href="{{ route('rj.add', $item['No_Reg']) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> PRB</a>
+                                        <a href="{{ route('rj.prb', [
+                                            'noReg' => $item['No_Reg'],
+                                            'kode_transaksi' => $item['FS_KD_TRS']
+                                            ]) }}" class="btn btn-xs btn-info"><i class="fas fa-download"></i> PRB</a>
                                         @endif
 
                                         <!-- Radiologi -->
