@@ -126,11 +126,11 @@
 
                                         </td>
                                         <td width="20%">
-                                            <a href="{{ route('cppt.cetakCPPT')}}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-secondary"><i class="fa fa-print"> CPPT</i></a>
-                                            <a href="{{ route('cppt.buktiLayanan')}}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-secondary"><i class="fa fa-print"> Bukti Pelayanan</i></a>
-                                            <button class="btn btn-sm btn-warning"><i class="fa fa-edit" data-toggle="modal" data-target="#modal-edit-tranksasi18"> Edit</i></button>
+                                            <a href="{{ route('cppt.cetakCPPT')}}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-secondary"><i class="fa fa-print"></i> CPPT</a>
+                                            <a href="{{ route('cppt.buktiLayanan')}}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-secondary"><i class="fa fa-print"></i> Bukti Pelayanan</a>
+                                            <button class="btn btn-sm btn-warning"><i class="fa fa-edit" data-toggle="modal" data-target="#modal-edit-tranksasi18"> </i> Edit</button>
 
-                                            <a href="" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus?')"><i class="fa fa-trash"> Hapus</i></a>
+                                            <a href="" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus?')"><i class="fa fa-trash"> </i> Hapus</a>
                                         </td>
                                     </tr>
                                     @endforeach
