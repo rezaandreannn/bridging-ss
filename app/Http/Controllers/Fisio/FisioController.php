@@ -56,8 +56,6 @@ class FisioController extends Controller
 
     public function store(Request $request)
     {
-        // Validate the incoming request data
-        // $kode_transaksi = $this->fisio->generateRandomCode();
         $lastKodeTransaksi = $this->fisio->getLastTransaksiFisio();
 
 
@@ -65,14 +63,13 @@ class FisioController extends Controller
         if ($lastKodeTransaksi == null) {
             $nomorUrut = "000001";
         } else {
-            $noTerakhir = substr($lastKodeTransaksi['KODE_TRANSAKSI_FISIO'], 2)+1;
-            $nomorUrut=sprintf('%06s', $noTerakhir);
+            $noTerakhir = substr($lastKodeTransaksi['KODE_TRANSAKSI_FISIO'], 2) + 1;
+            $nomorUrut = sprintf('%06s', $noTerakhir);
             // var_dump($nomorUrut);
             // die;
         }
 
-        $kode_transaksi = $kode .'-' . $nomorUrut;
-
+        $kode_transaksi = $kode . '-' . $nomorUrut;
 
         $validatedData = $request->validate([
             'NO_MR_PASIEN' => 'required',
