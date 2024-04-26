@@ -18,7 +18,7 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('cppt.index') }}">Fisioterapi</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('list-pasien.index') }}">Fisioterapi</a></div>
                 <div class="breadcrumb-item">CPPT Fisioterapi</div>
             </div>
         </div>
@@ -128,9 +128,9 @@
                                         <td width="20%">
                                             <a href="{{ route('cppt.cetakCPPT')}}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-secondary"><i class="fa fa-print"></i> CPPT</a>
                                             <a href="{{ route('cppt.buktiLayanan')}}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-secondary"><i class="fa fa-print"></i> Bukti Pelayanan</a>
-                                            <button class="btn btn-sm btn-warning"><i class="fa fa-edit" data-toggle="modal" data-target="#modal-edit-tranksasi18"> </i> Edit</button>
+                                            <button data-toggle="modal" data-target="#modal-edit-tranksasi18{{$transaksi['ID_TRANSAKSI']}}" class="btn btn-sm btn-warning"><i class="fa fa-edit" ></i> Edit</button>
 
-                                            <a href="" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus?')"><i class="fa fa-trash"> </i> Hapus</a>
+                                            <a href="{{ route('transaksi_fisio.delete',$transaksi['ID_TRANSAKSI'])}}" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus?')"><i class="fa fa-trash"> </i> Hapus</a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -154,7 +154,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('cppt.store') }}" method="POST">
+            <form action="{{ route('transaksi_fisio.store') }}" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="card-body">
@@ -181,7 +181,8 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="modal-edit-tranksasi18">
+@foreach ($transaksis as $transaksi)
+<div class="modal fade" id="modal-edit-tranksasi18{{$transaksi['ID_TRANSAKSI']}}">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -190,7 +191,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="#" method="POST">
+            <form action="{{ route('transaksi_fisio.update',$transaksi['ID_TRANSAKSI'])}}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">
@@ -198,20 +199,20 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Kode Transaksi </label>
-                                <input type="hidden" name="ID_TRANSAKSI" class="form-control" value="{{ $fisioModel['ID_TRANSAKSI'] }}" readonly>
-                                <input type="text" name="KODE_TRANSAKSI_FISIO" class="form-control" value="{{ $fisioModel['KODE_TRANSAKSI_FISIO'] }}" readonly>
+                                <input type="hidden" name="ID_TRANSAKSI" class="form-control" value="{{ $transaksi['ID_TRANSAKSI'] }}" readonly>
+                                <input type="text" name="KODE_TRANSAKSI_FISIO" class="form-control" value="{{ $transaksi['KODE_TRANSAKSI_FISIO'] }}" readonly>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>No MR Pasien </label>
-                                <input type="text" name="NO_MR_PASIEN" class="form-control" value="{{ $fisioModel['NO_MR_PASIEN'] }}" readonly>
+                                <input type="text" name="NO_MR_PASIEN" class="form-control" value="{{ $transaksi['NO_MR_PASIEN'] }}" readonly>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Jumlah Maksimal Fisio </label>
-                                <input type="number" name="JUMLAH_TOTAL_FISIO" class="form-control" value="{{ $fisioModel['JUMLAH_TOTAL_FISIO'] }}">
+                                <input type="number" name="JUMLAH_TOTAL_FISIO" class="form-control" value="{{ $transaksi['JUMLAH_TOTAL_FISIO'] }}">
                             </div>
                         </div>
                     </div>
@@ -224,6 +225,8 @@
         </div>
     </div>
 </div>
+@endforeach
+
 @endsection
 
 @push('scripts')

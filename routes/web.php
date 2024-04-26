@@ -119,10 +119,11 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('fisioterapi')->group(function () {
         // Fisioterapi
-        Route::get('list_pasien', [FisioController::class, 'index'])->name('cppt.index');
-        Route::get('/transaksi_fisio', [FisioController::class, 'edit'])->name('cppt.fisio');
-        Route::post('/transaksi_fisio', [FisioController::class, 'store'])->name('cppt.store');
-        Route::put('/transaksi_fisio/{id}', [FisioController::class, 'update'])->name('cppt.update');
+        Route::get('list_pasien', [FisioController::class, 'index'])->name('list-pasien.index');
+        Route::get('/transaksi_fisio', [FisioController::class, 'edit'])->name('transaksi_fisio.fisio');
+        Route::post('/transaksi_fisio', [FisioController::class, 'store'])->name('transaksi_fisio.store');
+        Route::put('/transaksi_fisio/{id}', [FisioController::class, 'update'])->name('transaksi_fisio.update');
+        Route::delete('/transaksi_fisio/{id}', [FisioController::class, 'delete'])->name('transaksi_fisio.delete');
         Route::get('edit_cppt', [FisioController::class, 'edit_cppt'])->name('cppt.edit');
         Route::get('cetak_cppt', [FisioController::class, 'cetak_cppt'])->name('cppt.cetakCPPT');
         Route::get('bukti_layanan', [FisioController::class, 'bukti_layanan'])->name('cppt.buktiLayanan');

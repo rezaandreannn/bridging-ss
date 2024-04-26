@@ -18,14 +18,14 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('cppt.index') }}">Fisioterapi</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('list-pasien.index') }}">Fisioterapi</a></div>
                 <div class="breadcrumb-item">CPPT Fisioterapi</div>
             </div>
         </div>
 
         <div class="section-body">
             <div class="card card-primary">
-                <form id="filterForm" action="{{ route('cppt.fisio') }}" method="get">
+                <form id="filterForm" action="{{ route('transaksi_fisio.fisio') }}" method="get">
                     <div class="card-header">
                         <h4>Fisioterapi</h4>
                     </div>
@@ -46,7 +46,7 @@
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Cari Pasien</button>
-                        <!-- <a href="{{ route('cppt.fisio') }}" class="btn btn-primary"><i class="fas fa-search"></i> Cari Pasien</a> -->
+
                     </div>
                 </form>
             </div>

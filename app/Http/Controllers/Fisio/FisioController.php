@@ -103,32 +103,42 @@ class FisioController extends Controller
         return redirect()->back()->with('success', 'Transaction added successfully!');
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_transaksi)
     {
+
         // Validate the incoming request data
         $validatedData = $request->validate([
             'NO_MR_PASIEN' => 'required',
             'JUMLAH_TOTAL_FISIO' => 'required|numeric',
         ]);
 
-        $no_mr_pasien = $request->input('NO_MR_PASIEN');
-        $jumlah_total_fisio = $request->input('JUMLAH_TOTAL_FISIO');
-
-        if ($jumlah_total_fisio > 8) {
+        if ($request->input('JUMLAH_TOTAL_FISIO') > 8) {
             return redirect()->back()->with('warning', 'Pastikan jumlah maksimal fisioterapi adalah 8 kali');
         }
 
         // Make a PUT or PATCH request to the API endpoint to update the data
-        $response = $this->httpClient->put($this->simrsUrlApi . 'api/fisioterapi/cppt/transaksi_fisioterapi/' . $id, [
+        $response = $this->httpClient->put($this->simrsUrlApi . 'api/fisioterapi/cppt/transaksi_fisioterapi/' . $id_transaksi, [
             'json' => [
-                'NO_MR_PASIEN' => $no_mr_pasien,
-                'JUMLAH_TOTAL_FISIO' => $jumlah_total_fisio,
+                'KODE_TRANSAKSI_FISIO' => $request->input('KODE_TRANSAKSI_FISIO'),
+                'NO_MR_PASIEN' => $request->input('NO_MR_PASIEN'),
+                'JUMLAH_TOTAL_FISIO' => $request->input('JUMLAH_TOTAL_FISIO'),
                 // Add other fields you want to update here
             ]
         ]);
 
         // Redirect the user back or to a different page after successful submission
         return redirect()->back()->with('success', 'Transaction updated successfully!');
+    }
+
+    public function delete($id_transaksi){
+
+        dd($id_transaksi);
+        
+                // Make a PUT or PATCH request to the API endpoint to update the data
+                $response = $this->httpClient->put($this->simrsUrlApi . 'api/fisioterapi/cppt/transaksi_fisioterapi/' . $id_transaksi);
+        
+                // Redirect the user back or to a different page after successful submission
+                return redirect()->back()->with('success', 'Transaction updated successfully!');
     }
 
     public function edit_cppt()
