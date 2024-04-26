@@ -90,7 +90,7 @@
                 <div class="card">
                     <div class="card-header">
                         <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add-tranksasi">
-                            <i class="fas fa-plus"></i> Add Data
+                            <i class="fas fa-plus"></i> Tambah Transaksi
                         </button>
                     </div>
                     <div class="card-body">
@@ -126,11 +126,16 @@
 
                                         </td>
                                         <td width="20%">
-                                            <a href="{{ route('cppt.cetakCPPT')}}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-secondary"><i class="fa fa-print"></i> CPPT</a>
+                                            <a href="{{ route('cppt.tambah', ['no_mr' => $transaksi['NO_MR_PASIEN']
+                                            ]) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i>Tambah CPPT</a>
+                                            <a href="{{ route('cppt.cetakCPPT', [
+                                            'kode_transaksi' => $transaksi['KODE_TRANSAKSI_FISIO'],
+                                            'no_mr' => $transaksi['NO_MR_PASIEN']
+                                            ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-secondary"><i class="fa fa-print"></i> CPPT</a>
                                             <a href="{{ route('cppt.buktiLayanan')}}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-secondary"><i class="fa fa-print"></i> Bukti Pelayanan</a>
-                                            <button data-toggle="modal" data-target="#modal-edit-tranksasi18{{$transaksi['ID_TRANSAKSI']}}" class="btn btn-sm btn-warning"><i class="fa fa-edit" ></i> Edit</button>
+                                            <button data-toggle="modal" data-target="#modal-edit-tranksasi18{{$transaksi['ID_TRANSAKSI']}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</button>
 
-                                            <a href="{{ route('transaksi_fisio.delete',$transaksi['ID_TRANSAKSI'])}}" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus?')"><i class="fa fa-trash"> </i> Hapus</a>
+                                            <button id="delete" data-id="{{ $transaksi['ID_TRANSAKSI'] }}" data-nama="{{ $transaksi['NO_MR_PASIEN'] }}" data-bs-toggle="tooltip" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</button>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -234,8 +239,32 @@
 <script src="{{ asset('library/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('library/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script>
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+
+<!-- Delete Data -->
+<script>
+    $(document).on('click', '#delete', function() {
+        var fisio = $(this).attr('data-id');
+        var nama = $(this).attr('data-nama');
+
+        swal({
+                title: "Are You Sure?",
+                text: "Data Will Be Deleted " + nama + " !!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    window.location = "{{ route('transaksi_fisio.delete', ['id' => ':id']) }}".replace(':id', fisio);
+                } else {
+                    swal("Data will not be deleted!");
+                }
+            });
+    });
+</script>
 
 @endpush

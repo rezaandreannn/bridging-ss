@@ -64,8 +64,12 @@ class Fisioterapi extends Model
         return $data['data'];
     }
 
-    public function generateRandomCode()
+    // Cetak CPPT
+    public function cetakCPPT($kode_transaksi)
     {
-        return $this->prefix . '-' . Str::random(8); // Change 8 to the desired length of your random code
+        $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/berkas/cppt/' . $kode_transaksi);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
     }
 }

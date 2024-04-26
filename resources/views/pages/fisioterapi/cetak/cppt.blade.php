@@ -46,15 +46,15 @@
                 <table>
                     <tr>
                         <td>No. RM </td>
-                        <td>: 12345</td>
+                        <td>: {{ $biodatas['NO_MR'] ?? ''}}</td>
                     </tr>
                     <tr>
                         <td>Nama</td>
-                        <td>: Dimas Budi Pratama</td>
+                        <td>: {{ $biodatas['NAMA_PASIEN'] ?? ''}}</td>
                     </tr>
                     <tr>
                         <td>Tanggal Lahir</td>
-                        <td>: 10-02-2000</td>
+                        <td>: {{ date('d-m-Y', strtotime($biodatas['TGL_LAHIR']))}}</td>
                     </tr>
                 </table>
             </td>
@@ -73,13 +73,20 @@
             <th width="20%">Terapi</th>
             <th width="20%">Dokter</th>
         </tr>
+        @foreach ($data as $item)
         <tr>
-            <td>17-04-2024 11.56</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>dr. Agung B Prasetiyono, Sp.PD</td>
+            <td>{{ $item['TANGGAL_FISIO'] }} & {{ date('G:i', strtotime($item['JAM_FISIO'])) }}</td>
+            <td>S = {{ $item['ANAMNESA'] }} <br>O = TD = {{ $item['TEKANAN_DARAH'] }}, N = {{ $item['NADI'] }}, T = {{ $item['SUHU'] }}</td>
+            <td>{{ $item['DIAGNOSA'] }}</td>
+            <td>{{ $item['JENIS_FISIO'] }}</td>
+            <td> @if($item['KODE_DOKTER'] != '')
+                {{ $dokter['Nama_Dokter'] }}
+                @else
+
+                @endif
+            </td>
         </tr>
+        @endforeach
     </table>
 </body>
 

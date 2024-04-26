@@ -123,9 +123,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/transaksi_fisio', [FisioController::class, 'edit'])->name('transaksi_fisio.fisio');
         Route::post('/transaksi_fisio', [FisioController::class, 'store'])->name('transaksi_fisio.store');
         Route::put('/transaksi_fisio/{id}', [FisioController::class, 'update'])->name('transaksi_fisio.update');
-        Route::delete('/transaksi_fisio/{id}', [FisioController::class, 'delete'])->name('transaksi_fisio.delete');
+        Route::get('/transaksi_fisio/{id}', [FisioController::class, 'delete'])->name('transaksi_fisio.delete');
+        Route::get('fisioterapi/cppt/{no_mr}', [FisioController::class, 'tambah_cppt'])->name('cppt.tambah');
         Route::get('edit_cppt', [FisioController::class, 'edit_cppt'])->name('cppt.edit');
-        Route::get('cetak_cppt', [FisioController::class, 'cetak_cppt'])->name('cppt.cetakCPPT');
+        Route::get('cetak_cppt/{kode_transaksi}/{no_mr}', [FisioController::class, 'cetak_cppt'])->name('cppt.cetakCPPT');
         Route::get('bukti_layanan', [FisioController::class, 'bukti_layanan'])->name('cppt.buktiLayanan');
     });
 

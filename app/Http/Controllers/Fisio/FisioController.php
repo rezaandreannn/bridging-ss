@@ -7,6 +7,7 @@ use App\Models\Fisioterapi;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
+use App\Models\Rekam_medis;
 use Illuminate\Support\Facades\Session;
 use GuzzleHttp\Client;
 
@@ -127,15 +128,20 @@ class FisioController extends Controller
         return redirect()->back()->with('success', 'Transaction updated successfully!');
     }
 
-    public function delete($id_transaksi){
+    public function delete($id_transaksi)
+    {
 
-        dd($id_transaksi);
-        
-                // Make a PUT or PATCH request to the API endpoint to update the data
-                $response = $this->httpClient->put($this->simrsUrlApi . 'api/fisioterapi/cppt/transaksi_fisioterapi/' . $id_transaksi);
-        
-                // Redirect the user back or to a different page after successful submission
-                return redirect()->back()->with('success', 'Transaction updated successfully!');
+        // Make a PUT or PATCH request to the API endpoint to update the data
+        $response = $this->httpClient->delete($this->simrsUrlApi . 'api/fisioterapi/cppt/transaksi_fisioterapi/' . $id_transaksi);
+        // Redirect the user back or to a different page after successful submission
+        return redirect()->back()->with('success', 'Transaction deleted successfully!');
+    }
+
+    public function tambah_cppt(Request $request)
+    {
+        $title = $this->prefix . 'Tambah CPPT';
+        $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
+        return view($this->view . 'tambah', compact('title', 'biodatas'));
     }
 
     public function edit_cppt()
@@ -144,14 +150,16 @@ class FisioController extends Controller
         return view($this->view . 'edit', compact('title'));
     }
 
-    public function cetak_cppt()
+    public function cetak_cppt(Request $request, $kode_transaksi)
     {
-        $date = date('dMY');
         $title = $this->prefix . ' ' . 'Cetak CPPT';
 
-        $filename = 'resep-' . $date;
+        $data = $this->fisio->cetakCPPT($kode_transaksi);
+        $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
+        $date = date('dMY');
+        $filename = 'CPPT-' . $date . '-' . $kode_transaksi;
 
-        $pdf = PDF::loadview($this->view . 'cetak/cppt', ['title' => $title]);
+        $pdf = PDF::loadview($this->view . 'cetak/cppt', ['title' => $title, 'data' => $data, 'biodatas' => $biodatas]);
         return $pdf->stream($filename . '.pdf');
     }
 
