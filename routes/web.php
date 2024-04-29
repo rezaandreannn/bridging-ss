@@ -1,13 +1,15 @@
 <?php
 
-use App\Http\Controllers\Berkas\Berkas_rm_controller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Fisio\FisioController;
 use App\Http\Controllers\Manage\RoleController;
 use App\Http\Controllers\Manage\UserController;
+use App\Http\Controllers\TandaTanganController;
 use App\Http\Controllers\DocumentationController;
+use App\Http\Controllers\Rj\RawatJalanController;
+use App\Http\Controllers\Berkas\Berkas_rm_controller;
 use App\Http\Controllers\Kunjungan\AntreanController;
 use App\Http\Controllers\Manage\PermissionController;
 use App\Http\Controllers\MasterData\DokterController;
@@ -18,9 +20,8 @@ use App\Http\Controllers\Kunjungan\PendaftaranController;
 use App\Http\Controllers\MasterData\OrganizationController;
 use App\Http\Controllers\Manage\RoleHasPermissionController;
 use App\Http\Controllers\Mapping\MappingEncounterController;
-use App\Http\Controllers\Case\Encounter\EncounterCreateController;
 use App\Http\Controllers\RawatJalan\Perawat\AssesmenController;
-use App\Http\Controllers\Rj\RawatJalanController;
+use App\Http\Controllers\Case\Encounter\EncounterCreateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -128,6 +129,14 @@ Route::middleware('auth')->group(function () {
         Route::get('edit_cppt', [FisioController::class, 'edit_cppt'])->name('cppt.edit');
         Route::get('cetak_cppt/{kode_transaksi}/{no_mr}', [FisioController::class, 'cetak_cppt'])->name('cppt.cetakCPPT');
         Route::get('bukti_layanan', [FisioController::class, 'bukti_layanan'])->name('cppt.buktiLayanan');
+    });
+
+    Route::prefix('ttd')->group(function () {
+        // Fisioterapi
+        Route::get('petugas', [TandaTanganController::class, 'index'])->name('list-ttd.index');
+        Route::get('petugas/edit', [TandaTanganController::class, 'edit'])->name('list-ttd.edit');
+        Route::get('petugas/delete/{id}', [TandaTanganController::class, 'delete'])->name('list-ttd.delete');
+
     });
 
     Route::prefix('rj')->group(function () {

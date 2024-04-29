@@ -107,6 +107,7 @@
             </li>
 
             <li class="{{ Request::is('dashboard') ? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-dashboard"></i> <span>E-Klaim</span></a></li>
+            <li class="{{ Request::is('ttd') ? 'active' : '' }}"><a class="nav-link" href="{{ route('list-ttd.index') }}"><i class="fas fa-signature"></i> <span>Tanda Tangan Petugas</span></a></li>
 
             @can('manage user')
             <li class="menu-header">Mengelola</li>
