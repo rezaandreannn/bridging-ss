@@ -168,7 +168,8 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>No MR Pasien </label>
-                                <input type="text" name="NO_MR_PASIEN" class="form-control">
+                                <input type="hidden" name="NO_MR_PASIEN" class="form-control" value="{{ $biodatas['NO_MR']}}">
+                                <input type="text" name="NO_MR_PASIEN" class="form-control" value="{{ $biodatas['NO_MR']}}" readonly>
                             </div>
                         </div>
                         <div class="col-md-12">

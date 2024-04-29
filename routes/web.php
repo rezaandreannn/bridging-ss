@@ -121,15 +121,16 @@ Route::middleware('auth')->group(function () {
     Route::prefix('fisioterapi')->group(function () {
         // Fisioterapi
         Route::get('list_pasien', [FisioController::class, 'index'])->name('list-pasien.index');
-        Route::get('/transaksi_fisio', [FisioController::class, 'edit'])->name('transaksi_fisio.fisio');
+        Route::get('/transaksi_fisio', [FisioController::class, 'transaksi'])->name('transaksi_fisio.fisio');
         Route::post('/transaksi_fisio', [FisioController::class, 'store'])->name('transaksi_fisio.store');
         Route::put('/transaksi_fisio/{id}', [FisioController::class, 'update'])->name('transaksi_fisio.update');
         Route::get('/transaksi_fisio/{id}', [FisioController::class, 'delete'])->name('transaksi_fisio.delete');
 
         // Tambah Data CPPT Fisioterapi
-        Route::get('fisioterapi/cppt/{no_mr}/{kode_transaksi}', [FisioController::class, 'tambah_cppt'])->name('cppt.tambah');
-        Route::post('fisioterapi/cppt', [FisioController::class, 'tambahDataCPPT'])->name('cppt.tambahData');
-        Route::get('edit_cppt', [FisioController::class, 'edit_cppt'])->name('cppt.edit');
+        Route::get('/cppt/{no_mr}/{kode_transaksi}', [FisioController::class, 'tambah_cppt'])->name('cppt.tambah');
+        Route::post('/cppt', [FisioController::class, 'tambahDataCPPT'])->name('cppt.tambahData');
+        Route::get('/cppt/{id}', [FisioController::class, 'deleteDataCPPT'])->name('cppt.deleteData');
+        Route::get('edit_cppt/{id}', [FisioController::class, 'edit_cppt'])->name('cppt.edit');
         Route::get('cetak_cppt/{kode_transaksi}/{no_mr}', [FisioController::class, 'cetak_cppt'])->name('cppt.cetakCPPT');
         Route::get('bukti_layanan', [FisioController::class, 'bukti_layanan'])->name('cppt.buktiLayanan');
     });
@@ -139,7 +140,6 @@ Route::middleware('auth')->group(function () {
         Route::get('petugas', [TandaTanganController::class, 'index'])->name('list-ttd.index');
         Route::get('petugas/edit', [TandaTanganController::class, 'edit'])->name('list-ttd.edit');
         Route::get('petugas/delete/{id}', [TandaTanganController::class, 'delete'])->name('list-ttd.delete');
-
     });
 
     Route::prefix('rj')->group(function () {

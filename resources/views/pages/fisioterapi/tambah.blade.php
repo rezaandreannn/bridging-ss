@@ -166,19 +166,6 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <!-- <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Jenis Fisio </label>
-                                            <select name="JENIS_FISIO" id="" class="form-control select2">
-                                                <option value="" selected disabled>--Pilih--</option>
-                                                <option value="TENS">TENS</option>
-                                                <option value="ES">ES</option>
-                                                <option value="INFRARED">INFRARED</option>
-                                                <option value="MWD">MWD</option>
-                                                <option value="SWD">SWD</option>
-                                            </select>
-                                        </div>
-                                    </div> -->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Cara Pulang </label>
@@ -231,7 +218,9 @@
                                                 @endif
                                             </td>
                                             <td width="20%">
-                                                <a href="#" class="btn btn-sm btn-info"><i class="fa fa-edit"></i>Edit</a>
+                                                <a href="{{ route('cppt.edit', [
+                                            'id' => $cppt['ID_CPPT_FISIO']
+                                            ]) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i>Edit</a>
                                                 <button id="delete" data-id="{{ $cppt['ID_CPPT_FISIO'] }}" data-nama="{{ $cppt['NO_MR'] }}" data-bs-toggle="tooltip" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</button>
                                             </td>
                                         </tr>
@@ -277,7 +266,7 @@
             })
             .then((willDelete) => {
                 if (willDelete) {
-                    window.location = "{{ route('transaksi_fisio.delete', ['id' => ':id']) }}".replace(':id', cppt);
+                    window.location = "{{ route('cppt.deleteData', ['id' => ':id']) }}".replace(':id', cppt);
                 } else {
                     swal("Data will not be deleted!");
                 }

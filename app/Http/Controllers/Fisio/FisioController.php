@@ -47,8 +47,8 @@ class FisioController extends Controller
         return view($this->view . 'cppt', compact('title', 'listpasien'));
     }
 
-    // Detail Pasien Fisioterapi
-    public function edit(Request $request)
+    // Detail Pasien Transaksi Fisioterapi
+    public function transaksi(Request $request)
     {
         $fisioModel = new Fisioterapi();
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
@@ -87,7 +87,6 @@ class FisioController extends Controller
             return redirect()->back()->with('warning', 'Pastikan jumlah maksimal fisioterapi adalah 8 kali');
         }
 
-        // Make a POST request to the API endpoint
         $response = $this->httpClient->post($this->simrsUrlApi . 'api/fisioterapi/cppt/transaksi_fisioterapi', [
             'json' => [
                 'KODE_TRANSAKSI_FISIO' => $kode_transaksi,
@@ -98,9 +97,9 @@ class FisioController extends Controller
             ]
         ]);
 
-        // Get the response body
+
         $responseData = $response->getBody()->getContents();
-        // Redirect the user back or to a different page after successful submission
+
         return redirect()->back()->with('success', 'Transaction added successfully!');
     }
 
@@ -108,7 +107,7 @@ class FisioController extends Controller
     public function update(Request $request, $id_transaksi)
     {
 
-        // Validate the incoming request data
+
         $validatedData = $request->validate([
             'NO_MR_PASIEN' => 'required',
             'JUMLAH_TOTAL_FISIO' => 'required|numeric',
@@ -118,17 +117,14 @@ class FisioController extends Controller
             return redirect()->back()->with('warning', 'Pastikan jumlah maksimal fisioterapi adalah 8 kali');
         }
 
-        // Make a PUT or PATCH request to the API endpoint to update the data
         $response = $this->httpClient->put($this->simrsUrlApi . 'api/fisioterapi/cppt/transaksi_fisioterapi/' . $id_transaksi, [
             'json' => [
                 'KODE_TRANSAKSI_FISIO' => $request->input('KODE_TRANSAKSI_FISIO'),
                 'NO_MR_PASIEN' => $request->input('NO_MR_PASIEN'),
                 'JUMLAH_TOTAL_FISIO' => $request->input('JUMLAH_TOTAL_FISIO'),
-                // Add other fields you want to update here
             ]
         ]);
 
-        // Redirect the user back or to a different page after successful submission
         return redirect()->back()->with('success', 'Transaction updated successfully!');
     }
 
@@ -136,7 +132,7 @@ class FisioController extends Controller
     public function delete($id_transaksi)
     {
         $response = $this->httpClient->delete($this->simrsUrlApi . 'api/fisioterapi/cppt/transaksi_fisioterapi/' . $id_transaksi);
-        // Redirect the user back or to a different page after successful submission
+
         return redirect()->back()->with('success', 'Transaction deleted successfully!');
     }
 
@@ -155,14 +151,13 @@ class FisioController extends Controller
         return view($this->view . 'tambah', compact('title', 'biodatas', 'data', 'cppt'));
     }
 
+    //Proses Tambah Data CPPT Fisioterapi
     public function tambahDataCPPT(Request $request)
     {
-        // Validate the incoming request data
         $validatedData = $request->validate([
             'ANAMNESA' => 'required',
         ]);
 
-        // Make a POST request to the API endpoint
         $response = $this->httpClient->post($this->simrsUrlApi . 'fisioterapi/cppt/add', [
             'json' => [
                 'KD_TRANSAKSI_FISIO' => $request->input('KD_TRANSAKSI_FISIO'),
@@ -178,20 +173,25 @@ class FisioController extends Controller
                 'ANAMNESA' => $request->input('ANAMNESA'),
                 'CREATE_AT' => now(),
                 'CREATE_BY' => auth()->user()->name,
-                // Add other fields you want to update here
             ]
         ]);
 
-        // Redirect the user back or to a different page after successful submission
         return redirect()->back()->with('success', 'Data CPPT Added successfully!');
     }
 
-
-
-    public function edit_cppt()
+    public function edit_cppt($id)
     {
         $title = $this->prefix . ' ' . 'CPPT';
-        return view($this->view . 'edit', compact('title'));
+        $data = $this->fisio->dataEditPasienCPPT($id);
+        return view($this->view . 'edit', compact('title', 'data'));
+    }
+
+    // Delete Data CPPT Fisioterapi
+    public function deleteDataCPPT($id_cppt)
+    {
+        $response = $this->httpClient->delete($this->simrsUrlApi . 'fisioterapi/cppt/delete/' . $id_cppt);
+
+        return redirect()->back()->with('success', 'CPPT deleted successfully!');
     }
 
     public function cetak_cppt(Request $request, $kode_transaksi)

@@ -89,4 +89,12 @@ class Fisioterapi extends Model
         $data = json_decode($response, true);
         return $data['data'];
     }
+
+    public function dataEditPasienCPPT($id)
+    {
+        $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/cppt/listByid/' . $id);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
+    }
 }
