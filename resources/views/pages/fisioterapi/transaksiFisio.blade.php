@@ -126,7 +126,9 @@
 
                                         </td>
                                         <td width="20%">
-                                            <a href="{{ route('cppt.tambah', ['no_mr' => $transaksi['NO_MR_PASIEN']
+                                            <a href="{{ route('cppt.tambah', [
+                                            'kode_transaksi' => $transaksi['KODE_TRANSAKSI_FISIO'],
+                                            'no_mr' => $transaksi['NO_MR_PASIEN']
                                             ]) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i>Tambah CPPT</a>
                                             <a href="{{ route('cppt.cetakCPPT', [
                                             'kode_transaksi' => $transaksi['KODE_TRANSAKSI_FISIO'],
@@ -166,8 +168,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>No MR Pasien </label>
-                                <input type="hidden" name="NO_MR_PASIEN" class="form-control" value="{{ $biodatas['NO_MR']}}">
-                                <input type="text" name="NO_MR_PASIEN" class="form-control" value="{{ $biodatas['NO_MR']}}" readonly>
+                                <input type="text" name="NO_MR_PASIEN" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-12">

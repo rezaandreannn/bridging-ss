@@ -90,6 +90,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-12">
                     <div class="card card-primary">
@@ -97,13 +98,14 @@
                             <h4 class="card-title">Tambah Data CPPT Fisioterapi</h4>
                         </div>
                         <div class="card-body">
-                            <form action="#" method="POST">
-                                <input type="hidden" name="NO_MR" class="form-control" value="059197">
+                            <form action="{{ route('cppt.tambahData') }}" method="POST">
+                                @csrf
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Kode Transaksi </label>
-                                            <input type="text" name="KD_TRANSAKSI_FISIO" class="form-control" value="F-000006" readonly>
+                                            <input type="hidden" name="NO_MR" class="form-control" value="{{ $cppt['NO_MR_PASIEN']}}" readonly>
+                                            <input type="text" name="KD_TRANSAKSI_FISIO" class="form-control" value="{{ $cppt['KODE_TRANSAKSI_FISIO']}}" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -111,7 +113,7 @@
                                             <label>Tanggal dan jam Terapi </label>
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <input type="date" name="TANGGAL_FISIO" class="form-control" value="2024-04-26" readonly>
+                                                    <input type="date" name="TANGGAL_FISIO" class="form-control" value="{{ $cppt['CREATE_AT']}}" readonly>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <input type="time" name="JAM_FISIO" class="form-control" id="jam_keperawatan">
@@ -146,7 +148,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Jenis Fisio</label>
-                                            <select name="jenis[]" id="jenis_fisio" class="form-control select2" multiple="multiple" data-placeholder="Pilih Jenis Fisio" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                            <select name="JENIS_FISIO" class="form-control select2" multiple="multiple" data-placeholder="Pilih Jenis Fisio" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                                 <option value="" disabled>--Pilih--</option>
                                                 <option value="TENS">TENS</option>
                                                 <option value="ES">ES</option>
@@ -164,7 +166,19 @@
                                             </select>
                                         </div>
                                     </div>
-
+                                    <!-- <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Jenis Fisio </label>
+                                            <select name="JENIS_FISIO" id="" class="form-control select2">
+                                                <option value="" selected disabled>--Pilih--</option>
+                                                <option value="TENS">TENS</option>
+                                                <option value="ES">ES</option>
+                                                <option value="INFRARED">INFRARED</option>
+                                                <option value="MWD">MWD</option>
+                                                <option value="SWD">SWD</option>
+                                            </select>
+                                        </div>
+                                    </div> -->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Cara Pulang </label>
@@ -184,7 +198,6 @@
                             </div>
                         </div>
                         </form>
-
                     </div>
                 </div>
             </div>
@@ -196,7 +209,6 @@
                                 <table class="table-striped table" id="table-1">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
                                             <th>Tanggal & Jam</th>
                                             <th>Anamnesa & Pemeriksaaan</th>
                                             <th>Diagnosa</th>
@@ -206,15 +218,24 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($data as $cppt)
                                         <tr>
-                                            <td>1</td>
-                                            <td>12-02-2024</td>
-                                            <td>kejhgkdjg</td>
-                                            <td>12-02-2024</td>
-                                            <td>12-02-2024</td>
-                                            <td>12-02-2024</td>
-                                            <td> <a href="#" class="btn btn-sm btn-warning"><i class="fa fa-edit"> Edit</i></a></td>
+                                            <td>{{$cppt['TANGGAL_FISIO']}} & {{ date('G:i', strtotime($cppt['JAM_FISIO']))}} WIB</td>
+                                            <td>S = {{$cppt['ANAMNESA']}} <br>O = TD = {{$cppt['TEKANAN_DARAH']}}, N = {{$cppt['NADI']}}, T = {{$cppt['SUHU']}}</td>
+                                            <td>{{$cppt['DIAGNOSA']}}</td>
+                                            <td>{{$cppt['JENIS_FISIO']}}</td>
+                                            <td>@if($cppt['KODE_DOKTER'] != '')
+                                                {{ $dokter['Nama_Dokter'] }}
+                                                @else
+
+                                                @endif
+                                            </td>
+                                            <td width="20%">
+                                                <a href="#" class="btn btn-sm btn-info"><i class="fa fa-edit"></i>Edit</a>
+                                                <button id="delete" data-id="{{ $cppt['ID_CPPT_FISIO'] }}" data-nama="{{ $cppt['NO_MR'] }}" data-bs-toggle="tooltip" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</button>
+                                            </td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -236,8 +257,32 @@
 <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('library/selectric/public/jquery.selectric.min.js') }}"></script>
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script>
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+
+<!-- Delete Data -->
+<script>
+    $(document).on('click', '#delete', function() {
+        var cppt = $(this).attr('data-id');
+        var nama = $(this).attr('data-nama');
+
+        swal({
+                title: "Are You Sure?",
+                text: "Data Will Be Deleted (" + nama + ") !!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    window.location = "{{ route('transaksi_fisio.delete', ['id' => ':id']) }}".replace(':id', cppt);
+                } else {
+                    swal("Data will not be deleted!");
+                }
+            });
+    });
+</script>
 
 @endpush

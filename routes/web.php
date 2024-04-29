@@ -124,7 +124,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/transaksi_fisio', [FisioController::class, 'store'])->name('transaksi_fisio.store');
         Route::put('/transaksi_fisio/{id}', [FisioController::class, 'update'])->name('transaksi_fisio.update');
         Route::get('/transaksi_fisio/{id}', [FisioController::class, 'delete'])->name('transaksi_fisio.delete');
-        Route::get('fisioterapi/cppt/{no_mr}', [FisioController::class, 'tambah_cppt'])->name('cppt.tambah');
+
+        // Tambah Data CPPT Fisioterapi
+        Route::get('fisioterapi/cppt/{no_mr}/{kode_transaksi}', [FisioController::class, 'tambah_cppt'])->name('cppt.tambah');
+        Route::post('fisioterapi/cppt', [FisioController::class, 'tambahDataCPPT'])->name('cppt.tambahData');
         Route::get('edit_cppt', [FisioController::class, 'edit_cppt'])->name('cppt.edit');
         Route::get('cetak_cppt/{kode_transaksi}/{no_mr}', [FisioController::class, 'cetak_cppt'])->name('cppt.cetakCPPT');
         Route::get('bukti_layanan', [FisioController::class, 'bukti_layanan'])->name('cppt.buktiLayanan');
