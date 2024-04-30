@@ -270,14 +270,16 @@ class FisioController extends Controller
         return $pdf->stream($filename . '.pdf');
     }
 
-    public function bukti_layanan()
+    public function bukti_layanan(Request $request, $kode_transaksi)
     {
-        $date = date('dMY');
         $title = $this->prefix . ' ' . 'Bukti Layanan CPPT';
 
-        $filename = 'resep-' . $date;
+        $data = $this->fisio->cetakCPPT($kode_transaksi);
+        $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
+        $date = date('dMY');
+        $filename = 'BuktiLayanan-' . $date . '-' . $kode_transaksi;
 
-        $pdf = PDF::loadview($this->view . 'cetak/bukti_pelayanan', ['title' => $title]);
+        $pdf = PDF::loadview($this->view . 'cetak/bukti_pelayanan', ['title' => $title, 'data' => $data, 'biodatas' => $biodatas]);
         return $pdf->stream($filename . '.pdf');
     }
 }
