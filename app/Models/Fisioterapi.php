@@ -54,6 +54,14 @@ class Fisioterapi extends Model
         return $data['total'];
     }
 
+    public function jumlahMaxFisioByKodeTr($kode_tr)
+    {
+        $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/transaksiByKodeTr/' . $kode_tr);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
+    }
+
 
     // Get Kode Transaksi
     public function getLastTransaksiFisio()
