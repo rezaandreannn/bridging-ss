@@ -179,11 +179,40 @@ class FisioController extends Controller
         return redirect()->back()->with('success', 'Data CPPT Added successfully!');
     }
 
+    // Edit Data CPPT Fisioterapi
     public function edit_cppt($id)
     {
         $title = $this->prefix . ' ' . 'CPPT';
         $data = $this->fisio->dataEditPasienCPPT($id);
         return view($this->view . 'edit', compact('title', 'data'));
+    }
+
+    // Proses Edit Data CPPT Fisioterapi
+    public function editDataCPPT(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'ANAMNESA' => 'required',
+        ]);
+
+        $response = $this->httpClient->put($this->simrsUrlApi . 'fisioterapi/cppt/add' . $id, [
+            'json' => [
+                'KD_TRANSAKSI_FISIO' => $request->input('KD_TRANSAKSI_FISIO'),
+                'NO_MR' => $request->input('NO_MR'),
+                'TEKANAN_DARAH' => $request->input('TEKANAN_DARAH'),
+                'NADI' => $request->input('NADI'),
+                'SUHU' => $request->input('SUHU'),
+                'TERAPI' => $request->input('TERAPI'),
+                'JENIS_FISIO' => $request->input('JENIS_FISIO'),
+                'TANGGAL_FISIO' => $request->input('TANGGAL_FISIO'),
+                'JAM_FISIO' => $request->input('JAM_FISIO'),
+                'CARA_PULANG' => $request->input('CARA_PULANG'),
+                'ANAMNESA' => $request->input('ANAMNESA'),
+                'CREATE_AT' => now(),
+                'CREATE_BY' => auth()->user()->name,
+            ]
+        ]);
+
+        return redirect()->back()->with('success', 'Data CPPT Added successfully!');
     }
 
     // Delete Data CPPT Fisioterapi
