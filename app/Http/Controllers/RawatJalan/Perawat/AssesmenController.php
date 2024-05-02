@@ -146,7 +146,6 @@ class AssesmenController extends Controller
                 'FS_NILAI_KHUSUS' => $request->input('FS_NILAI_KHUSUS'),
                 'FS_SKDP_FASKES' => $request->input('FS_SKDP_FASKES'),
                 'FS_KD_MEDIS' => $request->input('FS_KD_MEDIS'),
-                'FS_JAM_TRS' => $request->input('FS_JAM_TRS'),
                 'mdd_jatuh' => $request->input('mdd_jatuh'),
                 'mdb_jatuh' => $request->input('mdb_jatuh'),
                 'mdb' => $request->input('mdb'),
