@@ -321,6 +321,7 @@
                             <input type="hidden" id="hasil_check1">
                             <input type="hidden" id="hasil_check2">
                             <input type="hidden" id="hasil_check3">
+
                             <div class="col-md-6">
                                 <div class="form-group clearfix">
                                     <div class="icheck-primary d-inline">
@@ -691,5 +692,64 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+
+<script type="text/javascript">
+    function click1(selected) {
+        var checkbox1 = selected.value
+        $("#hasil_check1").html(checkbox1);
+        score_skrining_asasmen_jatuh();
+    }
+
+    function click2(selected) {
+        var checkbox2 = selected.value
+        $("#hasil_check2").html(checkbox2);
+        score_skrining_asasmen_jatuh();
+    }
+
+    function click3(selected) {
+        var checkbox3 = selected.value
+        $("#hasil_check3").html(checkbox3);
+        score_skrining_asasmen_jatuh();
+    }
+
+    function sn1(selected) {
+        var value1 = selected.value
+        $("#hasil_sn1").html(value1);
+        score_skrining_nutrisi();
+    };
+
+    function sn2(selected) {
+        var value2 = selected.value
+        $("#hasil_sn2").html(value2);
+        score_skrining_nutrisi();
+    };
+</script>
+
+<script type="text/javascript">
+    // score skrining nutrisi
+    function score_skrining_nutrisi() {
+        var sn = parseInt($("#hasil_sn1").text()) + parseInt($("#hasil_sn2").text());
+        $("#totalsn").html(sn);
+        if (sn >= 2) {
+            $("#kesimpulan_skrining_nutrisi").val("LAPORKAN KE DOKTER");
+        } else if (sn < 2) {
+            $("#kesimpulan_skrining_nutrisi").val("NORMAL");
+        }
+    }
+
+    // score skrining asesmen jatuh
+    function score_skrining_asasmen_jatuh() {
+        var score_jatuh = parseInt($("#hasil_check1").text()) + parseInt($("#hasil_check2").text()) + parseInt($("#hasil_check3").text());
+        $("#totalscore_jatuh").html(score_jatuh);
+
+        if (score_jatuh >= 3) {
+            $("#kesimpulan_asesmen_jatuh").val("RISIKO TINGGI");
+        } else if (score_jatuh == 2) {
+            $("#kesimpulan_asesmen_jatuh").val("RISIKO SEDANG");
+        } else if (score_jatuh <= 1) {
+            $("#kesimpulan_asesmen_jatuh").val("RISIKO RENDAH");
+        }
+    }
+</script>
 
 @endpush
