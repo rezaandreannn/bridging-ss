@@ -95,10 +95,13 @@
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Monitoring</span></a>
                 <ul class="dropdown-menu">
                     <li class="">
-                        <a class="nav-link" href="">Kunjungan</a>
+                        <a class="nav-link" href="{{ route('monitoring.kunjungan')}}">Kunjungan</a>
                     </li>
                     <li class="">
-                        <a class="nav-link" href="">Klaim</a>
+                        <a class="nav-link" href="{{ route('monitoring.klaim')}}">Klaim</a>
+                    </li>
+                    <li class="">
+                        <a class="nav-link" href="">Klaim Jasa Raharja</a>
                     </li>
                     <li class="">
                         <a class="nav-link" href="">Histori Peserta</a>
