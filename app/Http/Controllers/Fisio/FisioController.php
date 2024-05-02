@@ -138,19 +138,19 @@ class FisioController extends Controller
 
 
 
-    // -------------------------------------------
-    // Data Pasien CPPT Fisioterapi
+    // ------------------------------------------//
+    // ----- Data Pasien CPPT Fisioterapi ----- //
 
     // Tambah Data CPPT Pasien Fisioterapi
-    public function tambah_cppt(Request $request)
+    public function tambah_cppt(Request $request, $id)
     {
         $title = $this->prefix . ' Tambah CPPT';
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
         $data = $this->fisio->dataPasienCPPT($request->no_mr, $request->kode_transaksi);
-        $cppt = $this->fisio->getLastTransaksiFisio();
+        $cppt = $this->fisio->getDataTransaksiByID($id);
         return view($this->view . 'tambah', compact('title', 'biodatas', 'data', 'cppt'));
     }
-    
+
     //Proses Tambah Data CPPT Fisioterapi
     public function tambahDataCPPT(Request $request)
     {
@@ -158,24 +158,22 @@ class FisioController extends Controller
         $jumlahmax = $this->fisio->jumlahMaxFisioByKodeTr($request->input('KD_TRANSAKSI_FISIO'));
         $jumlahMaxFisio = $jumlahmax['JUMLAH_TOTAL_FISIO'];
 
-        // dd($jumlahMaxFisio);
-        // die;
         $validatedData = $request->validate([
             'ANAMNESA' => 'required',
         ]);
 
-        if($cppt>=$jumlahMaxFisio){
-    
+        if ($cppt >= $jumlahMaxFisio) {
+
             return redirect()->back()->with('error', 'Data CPPT Tidak Melebihi batas yang telah ditentukan!');
-        }else {
+        } else {
             $jenis_terapi = $request->input('JENIS_FISIO');
-            $terapi='';
+            $terapi = '';
             if (!empty($jenis_terapi)) {
                 foreach ($jenis_terapi as  $value) {
-                    $terapi=$value.', '.$terapi;
+                    $terapi = $value . ', ' . $terapi;
                 }
             }
-    
+
             $response = $this->httpClient->post($this->simrsUrlApi . 'fisioterapi/cppt/add', [
                 'json' => [
                     'KD_TRANSAKSI_FISIO' => $request->input('KD_TRANSAKSI_FISIO'),
@@ -192,12 +190,9 @@ class FisioController extends Controller
                     'CREATE_BY' => auth()->user()->name,
                 ]
             ]);
-    
+
             return redirect()->back()->with('success', 'Data CPPT Added successfully!');
         }
-
-
-      
     }
 
     // Edit Data CPPT Fisioterapi
@@ -206,8 +201,6 @@ class FisioController extends Controller
         $title = $this->prefix . ' ' . 'CPPT';
         $data = $this->fisio->dataEditPasienCPPT($id);
 
-        // dd($data);
-        // die;
         return view($this->view . 'edit', compact('title', 'data'));
     }
 
@@ -219,10 +212,10 @@ class FisioController extends Controller
         ]);
 
         $jenis_terapi = $request->input('JENIS_FISIO');
-        $terapi='';
+        $terapi = '';
         if (!empty($jenis_terapi)) {
             foreach ($jenis_terapi as  $value) {
-                $terapi=$value.', '.$terapi;
+                $terapi = $value . ', ' . $terapi;
             }
         }
 
@@ -243,10 +236,7 @@ class FisioController extends Controller
             ]
         ]);
 
-        // dd($response);
-        // die;
-     
-        return redirect()->route('cppt.tambah',[$request->input('NO_MR'),$request->input('KD_TRANSAKSI_FISIO')])->with('success', 'Data CPPT Update successfully!');
+        return redirect()->route('cppt.tambah', [$request->input('NO_MR'), $request->input('KD_TRANSAKSI_FISIO')])->with('success', 'Data CPPT Update successfully!');
     }
 
     // Delete Data CPPT Fisioterapi

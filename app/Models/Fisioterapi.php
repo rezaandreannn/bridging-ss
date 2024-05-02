@@ -72,6 +72,14 @@ class Fisioterapi extends Model
         return $data['data'];
     }
 
+    public function getDataTransaksiByID($id)
+    {
+        $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/transaksiById/' . $id);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
+    }
+
     public function addCpptByKodeTr()
     {
         $request = $this->httpClient->get($this->simrsUrlApi . 'api/fisioterapi/cppt/transaksi_fisioterapi');

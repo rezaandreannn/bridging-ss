@@ -127,7 +127,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/transaksi_fisio/{id}', [FisioController::class, 'delete'])->name('transaksi_fisio.delete');
 
         // Tambah Data CPPT Fisioterapi
-        Route::get('/cppt/{no_mr}/{kode_transaksi}', [FisioController::class, 'tambah_cppt'])->name('cppt.tambah');
+        Route::get('/cppt/{id}/{no_mr}/{kode_transaksi}', [FisioController::class, 'tambah_cppt'])->name('cppt.tambah');
         Route::post('/cppt', [FisioController::class, 'tambahDataCPPT'])->name('cppt.tambahData');
         Route::get('/cppt/{id}', [FisioController::class, 'deleteDataCPPT'])->name('cppt.deleteData');
         Route::put('/cppt/{id}', [FisioController::class, 'editDataCPPT'])->name('cppt.updateData');
@@ -148,6 +148,7 @@ Route::middleware('auth')->group(function () {
         //Rawat Jalan
         Route::get('rawat_jalan', [AssesmenController::class, 'index'])->name('rj.index');
         Route::get('rawat_jalan/{noReg}', [AssesmenController::class, 'add'])->name('rj.add');
+        Route::post('rawat_jalan', [AssesmenController::class, 'store'])->name('rj.store');
         Route::get('rawat_jalan/edit/{noReg}', [AssesmenController::class, 'edit'])->name('rj.edit');
         Route::get('rawat_jalan/resume/{noMR}', [AssesmenController::class, 'resume'])->name('rj.resume');
         Route::get('resumePDF/{noMR}', [AssesmenController::class, 'profilPDF'])->name('rj.cetak');

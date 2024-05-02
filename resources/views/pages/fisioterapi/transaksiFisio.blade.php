@@ -86,66 +86,66 @@
                         </div>
                         <div class="w-100 d-sm-none"></div>
                     </div>
-                </div>
-                <div class="card">
-                    <div class="card-header">
-                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add-tranksasi">
-                            <i class="fas fa-plus"></i> Tambah Transaksi
-                        </button>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table-striped table" id="table-1">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Tanggal</th>
-                                        <th>Kode Transaksi</th>
-                                        <th>No MR</th>
-                                        <th width="15%">Jumlah Max Fisioterapi</th>
-                                        <th width="15%">Fisioterapi yang sudah dilakukan</th>
-                                        <th>Status</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($transaksis as $transaksi)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{$transaksi['CREATE_AT']}}</td>
-                                        <td>{{$transaksi['KODE_TRANSAKSI_FISIO']}}</td>
-                                        <td>{{$transaksi['NO_MR_PASIEN']}}</td>
-                                        <td>{{$transaksi['JUMLAH_TOTAL_FISIO']}}</td>
-                                        <td>{{$fisioModel->countCpptByKodeTr($transaksi['KODE_TRANSAKSI_FISIO'])}}</td>
-                                        <td>
-                                            @if($fisioModel->countCpptByKodeTr($transaksi['KODE_TRANSAKSI_FISIO'])>=$transaksi['JUMLAH_TOTAL_FISIO'])
-                                            <span class="badge badge-pill badge-success">Selesai</span>
-                                            @else
-                                            <span class="badge badge-pill badge-warning">Belum selesai</span>
-                                            @endif
+                    <div class="card">
+                        <div class="card-header">
+                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add-tranksasi">
+                                <i class="fas fa-plus"></i> Tambah Transaksi
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table-striped table" id="table-1">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Tanggal</th>
+                                            <th>Kode Transaksi</th>
+                                            <th>No MR</th>
+                                            <th width="15%">Jumlah Max Fisioterapi</th>
+                                            <th width="15%">Fisioterapi yang sudah dilakukan</th>
+                                            <th>Status</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($transaksis as $transaksi)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{$transaksi['CREATE_AT']}}</td>
+                                            <td>{{$transaksi['KODE_TRANSAKSI_FISIO']}}</td>
+                                            <td>{{$transaksi['NO_MR_PASIEN']}}</td>
+                                            <td>{{$transaksi['JUMLAH_TOTAL_FISIO']}}</td>
+                                            <td>{{$fisioModel->countCpptByKodeTr($transaksi['KODE_TRANSAKSI_FISIO'])}}</td>
+                                            <td>
+                                                @if($fisioModel->countCpptByKodeTr($transaksi['KODE_TRANSAKSI_FISIO'])>=$transaksi['JUMLAH_TOTAL_FISIO'])
+                                                <span class="badge badge-pill badge-success">Selesai</span>
+                                                @else
+                                                <span class="badge badge-pill badge-warning">Belum selesai</span>
+                                                @endif
 
-                                        </td>
-                                        <td width="20%">
-                                            <a href="{{ route('cppt.tambah', [
-                                            'kode_transaksi' => $transaksi['KODE_TRANSAKSI_FISIO'],
-                                            'no_mr' => $transaksi['NO_MR_PASIEN']
+                                            </td>
+                                            <td width="20%">
+                                                <a href="{{ route('cppt.tambah', [
+                                            'id' => $transaksi['ID_TRANSAKSI'],
+                                            'no_mr' => $transaksi['NO_MR_PASIEN'],'kode_transaksi' => $transaksi['KODE_TRANSAKSI_FISIO']
                                             ]) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i>Tambah CPPT</a>
-                                            <a href="{{ route('cppt.cetakCPPT', [
+                                                <a href="{{ route('cppt.cetakCPPT', [
                                             'kode_transaksi' => $transaksi['KODE_TRANSAKSI_FISIO'],
                                             'no_mr' => $transaksi['NO_MR_PASIEN']
                                             ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-secondary"><i class="fa fa-print"></i> CPPT</a>
-                                            <a href="{{ route('cppt.buktiLayanan', [
+                                                <a href="{{ route('cppt.buktiLayanan', [
                                             'kode_transaksi' => $transaksi['KODE_TRANSAKSI_FISIO'],
                                             'no_mr' => $transaksi['NO_MR_PASIEN']
                                             ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-secondary"><i class="fa fa-print"></i> Bukti Pelayanan</a>
-                                            <button data-toggle="modal" data-target="#modal-edit-tranksasi18{{$transaksi['ID_TRANSAKSI']}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</button>
+                                                <button data-toggle="modal" data-target="#modal-edit-tranksasi18{{$transaksi['ID_TRANSAKSI']}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</button>
 
-                                            <button id="delete" data-id="{{ $transaksi['ID_TRANSAKSI'] }}" data-nama="{{ $transaksi['NO_MR_PASIEN'] }}" data-bs-toggle="tooltip" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</button>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                                <button id="delete" data-id="{{ $transaksi['ID_TRANSAKSI'] }}" data-nama="{{ $transaksi['NO_MR_PASIEN'] }}" data-bs-toggle="tooltip" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</button>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
