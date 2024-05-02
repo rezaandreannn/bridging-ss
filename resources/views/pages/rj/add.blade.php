@@ -122,7 +122,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Suhu</label>
-                                    <input type="text" name="FS_SUHU" class="form-control" name="FS_SUHU" value="">
+                                    <input type="text" class="form-control" name="FS_SUHU" value="">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -321,7 +321,6 @@
                             <input type="hidden" id="hasil_check1">
                             <input type="hidden" id="hasil_check2">
                             <input type="hidden" id="hasil_check3">
-
                             <div class="col-md-6">
                                 <div class="form-group clearfix">
                                     <div class="icheck-primary d-inline">

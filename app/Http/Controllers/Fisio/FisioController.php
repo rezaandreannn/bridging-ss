@@ -7,7 +7,6 @@ use App\Models\Fisioterapi;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
-use App\Models\Rekam_medis;
 use Illuminate\Support\Facades\Session;
 use GuzzleHttp\Client;
 
@@ -99,6 +98,7 @@ class FisioController extends Controller
 
 
         $responseData = $response->getBody()->getContents();
+        dd($responseData);
 
         return redirect()->back()->with('success', 'Transaction added successfully!');
     }
