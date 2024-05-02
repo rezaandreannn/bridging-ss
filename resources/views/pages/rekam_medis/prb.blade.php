@@ -1,10 +1,22 @@
 <!DOCTYPE html>
+<?php
+date_default_timezone_set('Asia/Jakarta');
+$dayList = array(
+    'Sun' => 'Minggu',
+    'Mon' => 'Senin',
+    'Tue' => 'Selasa',
+    'Wed' => 'Rabu',
+    'Thu' => 'Kamis',
+    'Fri' => 'Jumat',
+    'Sat' => 'Sabtu'
+);
+?>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rujukan RS</title>
+    <title>Faskes</title>
     <style>
         table tr td {
             font-size: 13px;
@@ -49,24 +61,18 @@
         <table width="100%">
             <tr>
                 <td class="text">
-                    <b>SURAT RUJUKAN</b>
+                    <b style="text-decoration:underline">SURAT KETERANGAN PESERTA RUJUK BALIK</b><br>
+                    NO {{ $data['FS_KD_TRS'] ?? ''}}/PRB/{{ $tanggal->format('m') }}/{{ $tanggal->format('Y') }}
                     <hr />
                 </td>
             </tr>
         </table>
-        <p style="font-size: 12px; text-align:left;"> <b>Yth,</b></p>
-        <p style="font-size: 12px; text-align:left;"> <b>{{ $data['FS_TUJUAN_RUJUKAN'] ?? ''}}</b></p>
-        <p style="font-size: 12px; text-align:left;"> <b>{{ $data['FS_TUJUAN_RUJUKAN2'] ?? ''}}</b></p>
-        <p style="font-size: 12px; text-align:left;"> Assalamu'alaikum Wr Wb</p>
-        <p style="font-size: 12px; text-align:left;"> Dengan hormat, bersama ini kami kirimkan pasien :</p>
+        <p style="font-size: 12px; text-align:left;">Terimakasih atas kepercayaan sejawat dokter yang telah merujuk pasien kepada :</p>
         <table width="100%">
             <tr>
                 <td width="80" style="font-size: 11px;">Nama</td>
                 <td width="300" style="font-size: 11px;">: {{ $biodata['NAMA_PASIEN'] ?? ''}}</td>
-            </tr>
-            <tr>
-                <td width="80" style="font-size: 11px;">No RM</td>
-                <td width="300" style="font-size: 11px;">: {{ $biodata['NO_MR'] ?? ''}}</td>
+
             </tr>
             <tr>
                 <td width="80" style="font-size: 11px;">Tanggal Lahir</td>
@@ -84,22 +90,21 @@
                     Perempuan
                     @endif</td>
             </tr>
+        </table>
+        <p style="font-size: 12px; text-align:left;">Berikut kami sampaikan kesimpulan selama dalam perawatan kami :</p>
+        <table width="100%">
             <tr>
                 <td width="80" style="font-size: 11px;">Diagnosa</td>
                 <td width="300" style="font-size: 11px;">: {{ $resep['FS_DIAGNOSA'] ?? ''}}</td>
             </tr>
             <tr>
                 <td width="80" style="font-size: 11px;">Terapi</td>
-                <td width="300" style="font-size: 11px;">: {{ $resep['FS_TERAPI'] ?? ''}}</td>
-            </tr>
-            <tr>
-                <td width="80" style="font-size: 11px;">Alasan dirujuk</td>
-                <td width="300" style="font-size: 11px;">: {{ $data['FS_ALASAN_RUJUK'] ?? ''}}</td>
+                <td width="300" style="font-size: 11px;">: </td>
             </tr>
         </table>
-        <p style="font-size: 12px; text-align:left;"> Demikian harap menjadi maklum adanya dan terimakasih atas perhatian teman sejawat</p>
-        <p style="font-size: 12px; text-align:left;"> Wassalamu'alaikum Wr Wb</p>
-
+        <p style="font-size: 12px; text-align:left; padding-left:160px;">{!! nl2br(trim($resep['FS_TERAPI'] ?? '')) !!}</p>
+        <p style="font-size: 12px; text-align:left;">Pasien dapat kembali kontrol ke Rumah Sakit setelah 3 bulan. Demikian hal ini kami
+            sampaikan untuk dapat dipergunakan sebagaimana perlu, Terimakasih.</p>
         <table width="100%">
             <tr>
                 <td></td>
@@ -109,7 +114,7 @@
                 <td></td>
                 <td style="float: left;">
                     <!-- Menampilkan barcode dengan lebar 200px dan tinggi 200px -->
-                    {!! DNS1D::getBarcodeHTML($resep['KODE_DOKTER'], 'C39') !!}
+                    {!! DNS2D::getBarcodeHTML($resep['NAMALENGKAP'], 'QRCODE', 2, 2) !!}
                 </td>
             </tr>
             <tr>

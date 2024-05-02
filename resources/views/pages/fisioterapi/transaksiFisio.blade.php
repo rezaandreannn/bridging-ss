@@ -18,7 +18,7 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('cppt.index') }}">Fisioterapi</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('list-pasien.index') }}">Fisioterapi</a></div>
                 <div class="breadcrumb-item">CPPT Fisioterapi</div>
             </div>
         </div>
@@ -90,7 +90,7 @@
                 <div class="card">
                     <div class="card-header">
                         <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add-tranksasi">
-                            <i class="fas fa-plus"></i> Add Data
+                            <i class="fas fa-plus"></i> Tambah Transaksi
                         </button>
                     </div>
                     <div class="card-body">
@@ -126,11 +126,21 @@
 
                                         </td>
                                         <td width="20%">
-                                            <a href="{{ route('cppt.cetakCPPT')}}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-secondary"><i class="fa fa-print"> CPPT</i></a>
-                                            <a href="{{ route('cppt.buktiLayanan')}}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-secondary"><i class="fa fa-print"> Bukti Pelayanan</i></a>
-                                            <button class="btn btn-sm btn-warning"><i class="fa fa-edit" data-toggle="modal" data-target="#modal-edit-tranksasi18"> Edit</i></button>
+                                            <a href="{{ route('cppt.tambah', [
+                                            'kode_transaksi' => $transaksi['KODE_TRANSAKSI_FISIO'],
+                                            'no_mr' => $transaksi['NO_MR_PASIEN']
+                                            ]) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i>Tambah CPPT</a>
+                                            <a href="{{ route('cppt.cetakCPPT', [
+                                            'kode_transaksi' => $transaksi['KODE_TRANSAKSI_FISIO'],
+                                            'no_mr' => $transaksi['NO_MR_PASIEN']
+                                            ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-secondary"><i class="fa fa-print"></i> CPPT</a>
+                                            <a href="{{ route('cppt.buktiLayanan', [
+                                            'kode_transaksi' => $transaksi['KODE_TRANSAKSI_FISIO'],
+                                            'no_mr' => $transaksi['NO_MR_PASIEN']
+                                            ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-secondary"><i class="fa fa-print"></i> Bukti Pelayanan</a>
+                                            <button data-toggle="modal" data-target="#modal-edit-tranksasi18{{$transaksi['ID_TRANSAKSI']}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</button>
 
-                                            <a href="" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus?')"><i class="fa fa-trash"> Hapus</i></a>
+                                            <button id="delete" data-id="{{ $transaksi['ID_TRANSAKSI'] }}" data-nama="{{ $transaksi['NO_MR_PASIEN'] }}" data-bs-toggle="tooltip" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</button>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -154,7 +164,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('cppt.store') }}" method="POST">
+            <form action="{{ route('transaksi_fisio.store') }}" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="card-body">
@@ -181,7 +191,8 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="modal-edit-tranksasi18">
+@foreach ($transaksis as $transaksi)
+<div class="modal fade" id="modal-edit-tranksasi18{{$transaksi['ID_TRANSAKSI']}}">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -190,26 +201,28 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="" method="POST">
+            <form action="{{ route('transaksi_fisio.update',$transaksi['ID_TRANSAKSI'])}}" method="POST">
+                @csrf
+                @method('PUT')
                 <div class="modal-body">
                     <div class="card-body">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Kode Transaksi </label>
-                                <input type="hidden" name="ID_TRANSAKSI" class="form-control" value="18" readonly>
-                                <input type="text" name="KODE_TRANSAKSI_FISIO" class="form-control" value="FISIO-24-00008" readonly>
+                                <input type="hidden" name="ID_TRANSAKSI" class="form-control" value="{{ $transaksi['ID_TRANSAKSI'] }}" readonly>
+                                <input type="text" name="KODE_TRANSAKSI_FISIO" class="form-control" value="{{ $transaksi['KODE_TRANSAKSI_FISIO'] }}" readonly>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>No MR Pasien </label>
-                                <input type="text" name="NO_MR_PASIEN" class="form-control" value="205967" readonly>
+                                <input type="text" name="NO_MR_PASIEN" class="form-control" value="{{ $transaksi['NO_MR_PASIEN'] }}" readonly>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Jumlah Maksimal Fisio </label>
-                                <input type="number" name="JUMLAH_TOTAL_FISIO" class="form-control" value="3">
+                                <input type="number" name="JUMLAH_TOTAL_FISIO" class="form-control" value="{{ $transaksi['JUMLAH_TOTAL_FISIO'] }}">
                             </div>
                         </div>
                     </div>
@@ -222,6 +235,8 @@
         </div>
     </div>
 </div>
+@endforeach
+
 @endsection
 
 @push('scripts')
@@ -229,8 +244,32 @@
 <script src="{{ asset('library/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('library/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script>
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+
+<!-- Delete Data -->
+<script>
+    $(document).on('click', '#delete', function() {
+        var fisio = $(this).attr('data-id');
+        var nama = $(this).attr('data-nama');
+
+        swal({
+                title: "Are You Sure?",
+                text: "Data Will Be Deleted " + nama + " !!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    window.location = "{{ route('transaksi_fisio.delete', ['id' => ':id']) }}".replace(':id', fisio);
+                } else {
+                    swal("Data will not be deleted!");
+                }
+            });
+    });
+</script>
 
 @endpush

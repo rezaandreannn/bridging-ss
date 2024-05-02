@@ -67,7 +67,7 @@
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Fisioterapi</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('fisioterapi*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('cppt.index') }}">CPPT Fisioterapi</a>
+                        <a class="nav-link" href="{{ route('list-pasien.index') }}">CPPT Fisioterapi</a>
                     </li>
                 </ul>
             </li>
@@ -110,6 +110,7 @@
             </li>
 
             <li class="{{ Request::is('dashboard') ? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-dashboard"></i> <span>E-Klaim</span></a></li>
+            <li class="{{ Request::is('ttd') ? 'active' : '' }}"><a class="nav-link" href="{{ route('list-ttd.index') }}"><i class="fas fa-signature"></i> <span>Tanda Tangan Petugas</span></a></li>
 
             @can('manage user')
             <li class="menu-header">Mengelola</li>

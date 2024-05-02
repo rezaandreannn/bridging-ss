@@ -24,6 +24,8 @@ class Fisioterapi extends Model
     }
     use HasFactory;
 
+
+    // List Pasien Fisioterapi
     public function pasienCpptdanFisioterapi()
     {
         $request = $this->httpClient->get($this->simrsUrlApi . 'pendaftaran/listfisioterapi');
@@ -32,6 +34,8 @@ class Fisioterapi extends Model
         return $data['data'];
     }
 
+
+    // Data Table Pasien Fisioterapi
     public function transaksiFisioByMr($no_mr)
     {
         $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/transaksi/' . $no_mr);
@@ -40,6 +44,8 @@ class Fisioterapi extends Model
         return $data['data'];
     }
 
+
+    // Menghitung Jumlah Fisio yang sudah dilakukan
     public function countCpptByKodeTr($kode_tr)
     {
         $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/cpptcount/' . $kode_tr);
@@ -48,16 +54,55 @@ class Fisioterapi extends Model
         return $data['total'];
     }
 
-    // public function addCpptByKodeTr()
-    // {
-    //     $request = $this->httpClient->get($this->simrsUrlApi . 'api/fisioterapi/cppt/transaksi_fisioterapi');
-    //     $response = $request->getBody()->getContents();
-    //     $data = json_decode($response, true);
-    //     return $data['data'];
-    // }
-
-    public function generateRandomCode()
+    public function jumlahMaxFisioByKodeTr($kode_tr)
     {
-        return $this->prefix . '-' . Str::random(8); // Change 8 to the desired length of your random code
+        $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/transaksiByKodeTr/' . $kode_tr);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
+    }
+
+
+    // Get Kode Transaksi
+    public function getLastTransaksiFisio()
+    {
+        $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/transaksis');
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
+    }
+
+    public function addCpptByKodeTr()
+    {
+        $request = $this->httpClient->get($this->simrsUrlApi . 'api/fisioterapi/cppt/transaksi_fisioterapi');
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
+    }
+
+    // Cetak CPPT
+    public function cetakCPPT($kode_transaksi)
+    {
+        $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/berkas/cppt/' . $kode_transaksi);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
+    }
+
+    // Get Data Pasien CPPT
+    public function dataPasienCPPT($no_mr, $kode_transaksi)
+    {
+        $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/cppt/list/' . $no_mr . '/' .  $kode_transaksi);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
+    }
+
+    public function dataEditPasienCPPT($id)
+    {
+        $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/cppt/listByid/' . $id);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
     }
 }

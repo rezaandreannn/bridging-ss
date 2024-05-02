@@ -79,7 +79,7 @@
     <table class="header-row" width="100%">
         <tr>
             <td class="logo-cell">
-                <img src="assets/images/logo.png" width="50" height="50" />
+                <img src="img/logo.png" width="50" height="50" />
             </td>
             <td class="info-cell">
                 <h5>MAJELIS PEMBINAAN KESEHATAN UMUM<br /></h5>
@@ -100,21 +100,21 @@
                 </table>
             </td>
             <td class="logo-cell-2">
-                <img src="assets/images/larsibaru.png" width="50" height="50" />
+                <img src="img/larsibaru.png" width="50" height="50" />
             </td>
             <td class="patient-info">
                 <table>
                     <tr>
                         <td>No. RM </td>
-                        <td>: 123456</td>
+                        <td>: {{ $biodatas['NO_MR'] ?? ''}}</td>
                     </tr>
                     <tr>
                         <td>Nama</td>
-                        <td>: Dimas Budi Pratama</td>
+                        <td>: {{ $biodatas['NAMA_PASIEN'] ?? ''}}</td>
                     </tr>
                     <tr>
                         <td>Tanggal Lahir</td>
-                        <td>: 10-02-2000</td>
+                        <td>: {{ date('d-m-Y', strtotime($biodatas['TGL_LAHIR']))}}</td>
                     </tr>
                 </table>
             </td>
@@ -125,15 +125,16 @@
             <td class="text3" colspan="3" style="text-align: center; border: 1px solid black"><b>BUKTI PELAYANAN KEDOKTERAN FISIK DAN REHABILITASI</b></td>
         </tr>
         <tr>
-            <td class="text3" colspan="3" style="border: 1px solid black">No. Telp / HP : 082282323700</td>
+            <td class="text3" colspan="3" style="border: 1px solid black">No. Telp / HP : {{ $biodatas['HP1'] ?? ''}}</td>
         </tr>
-
+        @foreach ($data as $item)
         <tr>
-            <td class="text3" colspan="3" style="border: 1px solid black">Diagnosa : -</td>
+            <td class="text3" colspan="3" style="border: 1px solid black">Diagnosa : {{ $item['DIAGNOSA'] }}</td>
         </tr>
         <tr>
-            <td class="text3" colspan="3" style="border: 1px solid black">Perminatan Terapi : Terapi Rutin</td>
+            <td class="text3" colspan="3" style="border: 1px solid black">Permintaan Terapi : {{ $item['JENIS_FISIO'] }}</td>
         </tr>
+        @endforeach
     </table>
     <table border="1" width="100%">
         <tr>
@@ -147,10 +148,11 @@
             <td style="text-align: center;">Dokter</td>
             <td style="text-align: center;">Terapis</td>
         </tr>
+        @foreach ($data as $item)
         <tr>
-            <td style="text-align: center">1</td>
-            <td style="text-align: center">Terapi Rutin</td>
-            <td style="text-align: center">17-04-2024</td>
+            <td style="text-align: center">{{ $loop->iteration }}</td>
+            <td style="text-align: center">{{ $item['JENIS_FISIO'] }}</td>
+            <td style="text-align: center">{{ $item['TANGGAL_FISIO'] }}</td>
             <td style="text-align: center">
                 <img src="" width="35" height="35" />
             </td>
@@ -161,6 +163,7 @@
 
             </td>
         </tr>
+        @endforeach
     </table>
     <br />
     <table width="100%">

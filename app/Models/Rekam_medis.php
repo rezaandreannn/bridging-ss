@@ -59,10 +59,30 @@ class Rekam_medis extends Model
         return $data['data'];
     }
 
+
+
     // Cetak LAB
     public function cetakLAB($noReg)
     {
         $request = $this->httpClient->get($this->simrsUrlApi . 'berkas/laboratorium/' . $noReg);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
+    }
+
+    // Cetak PRB & Faskes
+    public function cetakPRB_Faskes($noReg)
+    {
+        $request = $this->httpClient->get($this->simrsUrlApi . 'berkas/prb/' . $noReg);
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
+    }
+
+    // Get No PRB
+    public function getNoPRB($noReg)
+    {
+        $request = $this->httpClient->get($this->simrsUrlApi . 'berkas/noPrb/' . $noReg);
         $response = $request->getBody()->getContents();
         $data = json_decode($response, true);
         return $data['data'];
