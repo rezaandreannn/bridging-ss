@@ -33,8 +33,9 @@
                             <h4 class="card-title">Edit Data CPPT Fisioterapi</h4>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('cppt.tambahData') }}" method="POST">
+                            <form action="{{ route('cppt.updateData',$data['ID_CPPT_FISIO']) }}" method="POST">
                                 @csrf
+                                @method('PUT')
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -43,15 +44,19 @@
                                             <input type="text" name="KD_TRANSAKSI_FISIO" class="form-control" value="{{ $data['KD_TRANSAKSI_FISIO']}}" readonly>
                                         </div>
                                     </div>
+                                    @php
+                                        $date=date('Y-m-d');        
+                                    @endphp
+                                    
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tanggal dan jam Terapi </label>
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <input type="date" name="TANGGAL_FISIO" class="form-control" value="{{ $cppt['CREATE_AT']}}" readonly>
+                                                    <input type="date" name="TANGGAL_FISIO" class="form-control" value="{{ $date}}" readonly>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <input type="time" name="JAM_FISIO" class="form-control" id="jam_keperawatan">
+                                                    <input type="time" name="JAM_FISIO" class="form-control" id="jam_keperawatan" readonly>
                                                 </div>
                                             </div>
                                         </div>
@@ -59,7 +64,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Anamnesa / Allow Anamnesa <code>*</code></label>
-                                            <textarea class="form-control" rows="2" name="ANAMNESA" value="{{ $data['ANAMNESA']}}" placeholder="Masukan ..."></textarea>
+                                            <textarea class="form-control" rows="2" name="ANAMNESA">{{ $data['ANAMNESA']}}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -83,7 +88,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Jenis Fisio</label>
-                                            <select name="JENIS_FISIO" class="form-control select2" multiple="multiple" data-placeholder="Pilih Jenis Fisio" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                            <select name="JENIS_FISIO[]" class="form-control select2" multiple="multiple" data-placeholder="Pilih Jenis Fisio" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                                 <option value="" disabled>--Pilih--</option>
                                                 <option value="TENS">TENS</option>
                                                 <option value="ES">ES</option>
@@ -140,5 +145,26 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+
+<script>
+         // Mendapatkan elemen input waktu
+         const inputWaktu = document.getElementById('jam_keperawatan');
+  
+  // Mengatur waktu awal
+  updateTime();
+
+  // Fungsi untuk memperbarui waktu pada input
+  function updateTime() {
+    const waktuSekarang = new Date();
+    const jam = waktuSekarang.getHours();
+    const menit = waktuSekarang.getMinutes();
+    const detik = waktuSekarang.getSeconds();
+    const waktuDefault = jam.toString().padStart(2, '0') + ':' + menit.toString().padStart(2, '0');
+    inputWaktu.value = waktuDefault;
+  }
+
+  // Memperbarui waktu setiap menit
+  setInterval(updateTime, 1000);
+</script>
 
 @endpush
