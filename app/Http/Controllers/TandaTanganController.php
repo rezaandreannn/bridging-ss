@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use GuzzleHttp\Client;
 use App\Models\TandaTangan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class TandaTanganController extends Controller
 {
 
-  
+
 
     protected $ttd;
     protected $prefix;
@@ -20,7 +22,7 @@ class TandaTanganController extends Controller
 
     public function __construct(TandaTangan $ttd)
     {
-       
+
 
         $this->ttd = $ttd;
         $this->viewPath = 'pages.ttd.';
@@ -43,9 +45,9 @@ class TandaTanganController extends Controller
         //
         $title = 'Index Tanda Tangan Petugas';
         $ttdPasien = $this->ttd->tandaTanganGet();
-     
 
-        return view($this->viewPath . 'index', compact( 'title','ttdPasien'));
+
+        return view($this->viewPath . 'index', compact('title', 'ttdPasien'));
     }
 
     /**
@@ -66,7 +68,20 @@ class TandaTanganController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $folderPath = "assets/images/ttd/";
+        if (!$request->has('signed') || empty($request->signed)) {
+            return redirect()->route('list-ttd')->with('warning', 'Tanda tangan harus diisi');
+        } else {
+
+            $response = $this->httpClient->post($this->simrsUrlApi . 'fisioterapi/ttd/petugas', [
+                'json' => [
+                    'USERNAME' => auth()->user()->name,
+                    'STATUS' => auth()->user()->role_id, // Pastikan Anda mengelola peran pengguna dengan benar di aplikasi Anda
+                ]
+            ]);
+
+            return redirect()->back()->with('success', 'Tanda tangan berhasil ditambahkan');
+        }
     }
 
     /**
@@ -89,11 +104,11 @@ class TandaTanganController extends Controller
     public function edit()
     {
         //
-             //
-             $title = 'Index Tanda Tangan Petugas';
-     
+        //
+        $title = 'Index Tanda Tangan Petugas';
 
-             return view($this->viewPath . 'edit', compact( 'title'));
+
+        return view($this->viewPath . 'edit', compact('title'));
     }
 
     /**
@@ -114,13 +129,13 @@ class TandaTanganController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
+
     public function delete($id_ttd)
     {
         //
-     // Make a PUT or PATCH request to the API endpoint to update the data
+        // Make a PUT or PATCH request to the API endpoint to update the data
         $response = $this->httpClient->delete($this->simrsUrlApi . 'fisioterapi/ttd/petugas/delete/' . $id_ttd);
         // Redirect the user back or to a different page after successful submission
-        return redirect()->back()->with('success', 'Transaction deleted successfully!');
+        return redirect()->back()->with('success', 'Tanda Tangan Berhasil Dihapus!');
     }
 }

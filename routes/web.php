@@ -138,6 +138,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('ttd')->group(function () {
         // Fisioterapi
         Route::get('petugas', [TandaTanganController::class, 'index'])->name('list-ttd.index');
+        Route::post('petugas', [TandaTanganController::class, 'store'])->name('list-ttd.store');
         Route::get('petugas/edit', [TandaTanganController::class, 'edit'])->name('list-ttd.edit');
         Route::get('petugas/delete/{id}', [TandaTanganController::class, 'delete'])->name('list-ttd.delete');
     });

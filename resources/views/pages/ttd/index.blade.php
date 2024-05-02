@@ -23,12 +23,12 @@
         </div>
 
         <div class="section-body">
-        
+
             <div class="card">
                 <div class="card-header">
-                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add-tranksasi">
-                <i class="fas fa-plus"></i> TAMBAH TTD
-            </button>
+                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add-tranksasi">
+                        <i class="fas fa-plus"></i> TAMBAH TTD
+                    </button>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -40,12 +40,12 @@
                                     <th>Status</th>
                                     <th>Tanda tangan</th>
                                     <th>Action</th>
-                             
+
                                 </tr>
                             </thead>
                             <tbody>
-                                
-                            @foreach ($ttdPasien as $ttd)
+
+                                @foreach ($ttdPasien as $ttd)
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>
@@ -53,15 +53,15 @@
                                     </td>
                                     <td width="30%">{{$ttd['STATUS']}}</td>
                                     <td>{{$ttd['IMAGE']}}</td>
-                            
+
                                     <td width="15%">
                                         <a href="{{ route('list-ttd.edit') }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
                                         <button id="delete" data-id="{{ $ttd['ID_TTD'] }}" data-nama="{{ $ttd['USERNAME'] }}" data-bs-toggle="tooltip" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                                        
+
                                     </td>
                                 </tr>
-                             @endforeach
-                              
+                                @endforeach
+
                             </tbody>
                         </table>
                     </div>
@@ -83,26 +83,24 @@
                 </button>
             </div>
             <div class="modal-body">
-     
+
                 <div class="card-body">
-                    
-                <div class="container">
-                    <form method="POST" action="#">
-  
-                        <div class="col-md-12">
-                            <label class="" for="">Tanda Tangan:</label>
-                            <br/>
-                                <div id="signat" ></div>
-                                <br/>
+
+                    <div class="container">
+                        <form method="POST" action="{{ route('list-ttd.store') }}">
+                            @csrf
+                            <div class="col-md-12">
+                                <label class="" for="">Tanda Tangan:</label>
+                                <br />
+                                <div id="signat"></div>
+                                <br />
                                 <button id="clear">Hapus Tanda Tangan</button>
-                            <textarea id="signature64" name="signed" style="display: none"></textarea>
-                        </div>
-  
-                        <br/>
-                        
-                  
-                </div>
-                
+                                <textarea id="signature64" name="signed" style="display: none"></textarea>
+                            </div>
+
+                            <br />
+                    </div>
+
                 </div>
 
             </div>
@@ -110,7 +108,7 @@
                 <button type="submit" class="btn btn-primary"><i class="fa fa-print"></i> Simpan</button>
                 <button type="button" class="btn btn-info" data-dismiss="modal">Tutup</button>
             </div>
-        </form>
+            </form>
         </div>
     </div>
 </div>
@@ -131,21 +129,15 @@
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
 
 <script type="text/javascript">
-    var sig =  $("#signat").signature({syncField: "#signature64", syncFormat: "PNG"});
+    var sig = $("#signat").signature({
+        syncField: "#signature64",
+        syncFormat: "PNG"
+    });
     $('#clear').click(function(e) {
         e.preventDefault();
         sig.signature('clear');
         $("#signature64").val('');
     });
-</script>
-
-
-<script>
-    function resetForm() {
-        document.getElementById("filterForm").value = "";
-        alert('Filter telah direset!');
-        window.location.href = "{{ route('patient.index') }}";
-    }
 </script>
 
 <!-- Delete Data -->

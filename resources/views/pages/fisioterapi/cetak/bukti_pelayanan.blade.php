@@ -127,14 +127,12 @@
         <tr>
             <td class="text3" colspan="3" style="border: 1px solid black">No. Telp / HP : {{ $biodatas['HP1'] ?? ''}}</td>
         </tr>
-        @foreach ($data as $item)
         <tr>
-            <td class="text3" colspan="3" style="border: 1px solid black">Diagnosa : {{ $item['DIAGNOSA'] }}</td>
+            <td class="text3" colspan="3" style="border: 1px solid black">Diagnosa : {{ $data['DIAGNOSA'] }}</td>
         </tr>
         <tr>
-            <td class="text3" colspan="3" style="border: 1px solid black">Permintaan Terapi : {{ $item['JENIS_FISIO'] }}</td>
+            <td class="text3" colspan="3" style="border: 1px solid black">Permintaan Terapi : {{ $data['JENIS_FISIO'] }}</td>
         </tr>
-        @endforeach
     </table>
     <table border="1" width="100%">
         <tr>
