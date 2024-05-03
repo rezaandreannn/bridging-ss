@@ -149,20 +149,10 @@
                                         <div class="form-group">
                                             <label>Jenis Fisio</label>
                                             <select name="JENIS_FISIO[]" class="form-control select2" multiple="multiple" data-placeholder="Pilih Jenis Fisio" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                                                <option value="" disabled>--Pilih--</option>
-                                                <option value="TENS">TENS</option>
-                                                <option value="ES">ES</option>
-                                                <option value="INFRARED">INFRARED</option>
-                                                <option value="MWD">MWD</option>
-                                                <option value="SWD">SWD</option>
-                                                <option value="ULTRASOND">ULTRASOND</option>
-                                                <option value="ICING">ICING</option>
-                                                <option value="KINESIOTAPING">KINESIOTAPING</option>
-                                                <option value="EXERCISE">EXERCISE</option>
-                                                <option value="FASILITASI & STIMULASI">FASILITASI & STIMULASI</option>
-                                                <option value="ROM EXERCISE">ROM EXERCISE</option>
-                                                <option value="STRENGTHNING">STRENGTHNING</option>
-                                                <option value="CHEST THERAPY">CHEST THERAPY</option>
+                                                <option value="" disabled>-- Pilih Jenis Fisio --</option>
+                                                @foreach ($jenisfisio as $jenis)
+                                                <option value="{{ $jenis['NAMA_TERAPI'] }}">{{ $jenis['NAMA_TERAPI'] }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>

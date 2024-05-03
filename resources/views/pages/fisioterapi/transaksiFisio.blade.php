@@ -191,6 +191,8 @@
         </div>
     </div>
 </div>
+
+<!-- Edit Data -->
 @foreach ($transaksis as $transaksi)
 <div class="modal fade" id="modal-edit-tranksasi18{{$transaksi['ID_TRANSAKSI']}}">
     <div class="modal-dialog">

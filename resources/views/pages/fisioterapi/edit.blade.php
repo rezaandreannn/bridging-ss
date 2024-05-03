@@ -45,9 +45,9 @@
                                         </div>
                                     </div>
                                     @php
-                                        $date=date('Y-m-d');        
+                                    $date=date('Y-m-d');
                                     @endphp
-                                    
+
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tanggal dan jam Terapi </label>
@@ -89,20 +89,10 @@
                                         <div class="form-group">
                                             <label>Jenis Fisio</label>
                                             <select name="JENIS_FISIO[]" class="form-control select2" multiple="multiple" data-placeholder="Pilih Jenis Fisio" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                                                <option value="" disabled>--Pilih--</option>
-                                                <option value="TENS">TENS</option>
-                                                <option value="ES">ES</option>
-                                                <option value="INFRARED">INFRARED</option>
-                                                <option value="MWD">MWD</option>
-                                                <option value="SWD">SWD</option>
-                                                <option value="ULTRASOND">ULTRASOND</option>
-                                                <option value="ICING">ICING</option>
-                                                <option value="KINESIOTAPING">KINESIOTAPING</option>
-                                                <option value="EXERCISE">EXERCISE</option>
-                                                <option value="FASILITASI & STIMULASI">FASILITASI & STIMULASI</option>
-                                                <option value="ROM EXERCISE">ROM EXERCISE</option>
-                                                <option value="STRENGTHNING">STRENGTHNING</option>
-                                                <option value="CHEST THERAPY">CHEST THERAPY</option>
+                                                <option value="" disabled>-- Pilih Jenis Fisio --</option>
+                                                @foreach($jenisfisio as $jenis)
+                                                <option value="{{ $jenis['ID_JENIS_FISIO']}}"> {{$jenis['NAMA_TERAPI']}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -110,9 +100,9 @@
                                         <div class="form-group">
                                             <label>Cara Pulang </label>
                                             <select name="CARA_PULANG" id="" class="form-control select2">
-                                                <option value="" selected disabled>--Pilih--</option>
-                                                <option value="KONSULTASI">KONSULTASI</option>
-                                                <option value="RUJUK">RUJUK</option>
+                                                <option value="" disabled>--Pilih--</option>
+                                                <option value="KONSULTASI" {{ $data['CARA_PULANG'] == 'KONSULTASI' ? 'selected' : '' }}>KONSULTASI</option>
+                                                <option value="RUJUK" {{ $data['CARA_PULANG'] == 'RUJUK' ? 'selected' : '' }}>RUJUK</option>
                                             </select>
                                         </div>
                                     </div>
@@ -147,24 +137,24 @@
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
 
 <script>
-         // Mendapatkan elemen input waktu
-         const inputWaktu = document.getElementById('jam_keperawatan');
-  
-  // Mengatur waktu awal
-  updateTime();
+    // Mendapatkan elemen input waktu
+    const inputWaktu = document.getElementById('jam_keperawatan');
 
-  // Fungsi untuk memperbarui waktu pada input
-  function updateTime() {
-    const waktuSekarang = new Date();
-    const jam = waktuSekarang.getHours();
-    const menit = waktuSekarang.getMinutes();
-    const detik = waktuSekarang.getSeconds();
-    const waktuDefault = jam.toString().padStart(2, '0') + ':' + menit.toString().padStart(2, '0');
-    inputWaktu.value = waktuDefault;
-  }
+    // Mengatur waktu awal
+    updateTime();
 
-  // Memperbarui waktu setiap menit
-  setInterval(updateTime, 1000);
+    // Fungsi untuk memperbarui waktu pada input
+    function updateTime() {
+        const waktuSekarang = new Date();
+        const jam = waktuSekarang.getHours();
+        const menit = waktuSekarang.getMinutes();
+        const detik = waktuSekarang.getSeconds();
+        const waktuDefault = jam.toString().padStart(2, '0') + ':' + menit.toString().padStart(2, '0');
+        inputWaktu.value = waktuDefault;
+    }
+
+    // Memperbarui waktu setiap menit
+    setInterval(updateTime, 1000);
 </script>
 
 @endpush

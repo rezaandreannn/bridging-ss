@@ -7,6 +7,7 @@ use App\Models\Fisioterapi;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
+use App\Models\JenisFisio;
 use Illuminate\Support\Facades\Session;
 use GuzzleHttp\Client;
 
@@ -17,6 +18,7 @@ class FisioController extends Controller
     protected $prefix;
     protected $fisio;
     protected $pasien;
+    protected $jenisFisio;
     protected $httpClient;
     protected $simrsUrlApi;
 
@@ -28,6 +30,7 @@ class FisioController extends Controller
         $this->routeIndex = 'cppt.fisio';
         $this->prefix = 'Fisioterapi';
         $this->pasien = new Pasien;
+        $this->jenisFisio = new JenisFisio;
 
         $this->httpClient = new Client([
             'headers' => [
@@ -96,11 +99,9 @@ class FisioController extends Controller
             ]
         ]);
 
-
         $responseData = $response->getBody()->getContents();
-        dd($responseData);
 
-        return redirect()->back()->with('success', 'Transaction added successfully!');
+        return redirect()->back()->with('success', 'Transaksi Berhasil Ditambahkan!');
     }
 
     // Update Data Transaksi Fisioterapi
@@ -125,7 +126,7 @@ class FisioController extends Controller
             ]
         ]);
 
-        return redirect()->back()->with('success', 'Transaction updated successfully!');
+        return redirect()->back()->with('success', 'Transaksi Berhasil Diperbarui!');
     }
 
     // Delete Data Transaksi Fisioterapi
@@ -133,7 +134,7 @@ class FisioController extends Controller
     {
         $response = $this->httpClient->delete($this->simrsUrlApi . 'api/fisioterapi/cppt/transaksi_fisioterapi/' . $id_transaksi);
 
-        return redirect()->back()->with('success', 'Transaction deleted successfully!');
+        return redirect()->back()->with('success', 'Transaksi Berhasil Dihapus!');
     }
 
 
@@ -145,10 +146,11 @@ class FisioController extends Controller
     public function tambah_cppt(Request $request, $id)
     {
         $title = $this->prefix . ' Tambah CPPT';
+        $jenisfisio = $this->jenisFisio->getDataJenisFisio();
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
         $data = $this->fisio->dataPasienCPPT($request->no_mr, $request->kode_transaksi);
         $cppt = $this->fisio->getDataTransaksiByID($id);
-        return view($this->view . 'tambah', compact('title', 'biodatas', 'data', 'cppt'));
+        return view($this->view . 'tambah', compact('title', 'biodatas', 'data', 'cppt', 'jenisfisio'));
     }
 
     //Proses Tambah Data CPPT Fisioterapi
@@ -199,9 +201,10 @@ class FisioController extends Controller
     public function edit_cppt($id)
     {
         $title = $this->prefix . ' ' . 'CPPT';
+        $jenisfisio = $this->jenisFisio->getDataJenisFisio();
         $data = $this->fisio->dataEditPasienCPPT($id);
 
-        return view($this->view . 'edit', compact('title', 'data'));
+        return view($this->view . 'edit', compact('title', 'data', 'jenisfisio'));
     }
 
     // Proses Edit Data CPPT Fisioterapi

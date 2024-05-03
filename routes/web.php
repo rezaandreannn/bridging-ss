@@ -22,6 +22,7 @@ use App\Http\Controllers\Manage\RoleHasPermissionController;
 use App\Http\Controllers\Mapping\MappingEncounterController;
 use App\Http\Controllers\RawatJalan\Perawat\AssesmenController;
 use App\Http\Controllers\Case\Encounter\EncounterCreateController;
+use App\Http\Controllers\MasterData\JenisFisioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
     // MASTER DATA 
     Route::prefix('md')->middleware('auth')->group(function () {
         // ORGANIZATION
@@ -77,6 +79,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/location/{location_id}/edit', [LocationController::class, 'edit'])->name('location.edit');
         Route::post('/location', [LocationController::class, 'store'])->name('location.store');
         Route::patch('/location/{location_id}', [LocationController::class, 'update'])->name('location.update');
+
+        // Jenis Fisioterapi
+        Route::get('/jenisFisio', [JenisFisioController::class, 'index'])->name('jenisFisio.index');
+        Route::post('/jenisFisio', [JenisFisioController::class, 'store'])->name('jenisFisio.store');
+        Route::put('/jenisFisio/{id}', [JenisFisioController::class, 'update'])->name('jenisFisio.update');
+        Route::get('/jenisFisio/{id}', [JenisFisioController::class, 'destroy'])->name('jenisFisio.delete');
     });
 
     // ENCOUNTER 
