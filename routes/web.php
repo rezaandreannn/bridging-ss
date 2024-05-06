@@ -23,6 +23,7 @@ use App\Http\Controllers\Mapping\MappingEncounterController;
 use App\Http\Controllers\RawatJalan\Perawat\AssesmenController;
 use App\Http\Controllers\Case\Encounter\EncounterCreateController;
 use App\Http\Controllers\MasterData\JenisFisioController;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -216,6 +217,12 @@ Route::middleware('auth')->group(function () {
     // credits
     Route::get('/documentation', [DocumentationController::class, 'index'])->name('documentation.index');
 });
+
+Route::get('/server', function () {
+    $data = DB::connection('sqlsrv')->table('TUSER')->get();
+    dd($data);
+});
+
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/vclaim.php';
