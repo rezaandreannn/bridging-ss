@@ -7,6 +7,7 @@ use App\Models\TandaTangan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class TandaTanganController extends Controller
 {
@@ -60,23 +61,29 @@ class TandaTanganController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $folderPath = "assets/images/ttd/";
+        if (auth()->user()->hasSignature()) {
+            return redirect()->back()->with('warning', 'Anda sudah memiliki tanda tangan sebelumnya');
+        }
+
         if (!$request->has('signed') || empty($request->signed)) {
-            return redirect()->route('list-ttd')->with('warning', 'Tanda tangan harus diisi');
+            return redirect()->back()->with('warning', 'Tanda tangan harus diisi');
         } else {
+            $image_parts = explode(";base64,", $request->signed);
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+            $image_base64 = base64_decode($image_parts[1]);
+            $file_name = auth()->user()->name . '-' . date('Y-m-d') . '.' . $image_type;
+            // Simpan gambar ke storage
+            Storage::put('public/ttd/' . $file_name, $image_base64);
 
             $response = $this->httpClient->post($this->simrsUrlApi . 'fisioterapi/ttd/petugas', [
                 'json' => [
                     'USERNAME' => auth()->user()->name,
                     'STATUS' => auth()->user()->role_id, // Pastikan Anda mengelola peran pengguna dengan benar di aplikasi Anda
+                    'IMAGE' => $file_name,
+                    'CREATE_AT' => now()
                 ]
             ]);
 
@@ -92,50 +99,56 @@ class TandaTanganController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit()
+    public function edit($id)
     {
-        //
-        //
         $title = 'Index Tanda Tangan Petugas';
+        $ttdPetugasById = $this->ttd->tandaTanganGetById($id);
 
-
-        return view($this->viewPath . 'edit', compact('title'));
+        return view($this->viewPath . 'edit', compact('title', 'ttdPetugasById'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
-    }
+        if (!$request->has('signed') || empty($request->signed)) {
+            return redirect()->back()->with('warning', 'Tanda tangan harus diisi');
+        } else {
+            $image_parts = explode(";base64,", $request->signed);
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+            $image_base64 = base64_decode($image_parts[1]);
+            $file_name = auth()->user()->name . '-' . date('Y-m-d') . '.' . $image_type;
+            // Simpan gambar ke storage
+            if ($file_name) {
+                Storage::delete('public/ttd/' . $file_name);
+            }
+            Storage::put('public/ttd/' . $file_name, $image_base64);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+            $response = $this->httpClient->put($this->simrsUrlApi . 'fisioterapi/ttd/petugas/update/' . $request->ID_TTD, [
+                'json' => [
+                    'USERNAME' => auth()->user()->name,
+                    'STATUS' => auth()->user()->role_id, // Pastikan Anda mengelola peran pengguna dengan benar di aplikasi Anda
+                    'IMAGE' => $file_name,
+                    'CREATE_AT'  => now()
+                ]
+            ]);
+
+            return redirect()->route('list-ttd.index')->with('success', 'Tanda tangan berhasil ditambahkan');
+        }
+    }
 
     public function delete($id_ttd)
     {
-        //
-        // Make a PUT or PATCH request to the API endpoint to update the data
+
+        $ttdPetugasById = $this->ttd->tandaTanganGetById($id_ttd);
+        $namaTtd = $ttdPetugasById['IMAGE'];
+
+        if ($namaTtd) {
+            Storage::delete('public/images/' . $namaTtd);
+        }
         $response = $this->httpClient->delete($this->simrsUrlApi . 'fisioterapi/ttd/petugas/delete/' . $id_ttd);
-        // Redirect the user back or to a different page after successful submission
+
         return redirect()->back()->with('success', 'Tanda Tangan Berhasil Dihapus!');
     }
 }

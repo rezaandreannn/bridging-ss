@@ -10,12 +10,16 @@
 <link rel="stylesheet" href="{{ asset('ttd/css/jquery.signature.css') }}">
 
 <style>
-        .kbw-signature { width: 250px; height: 250px;}
-        #sig canvas{
-            width: 100% !important;
-            height: auto;
-        }
-    </style>
+    .kbw-signature {
+        width: 250px;
+        height: 250px;
+    }
+
+    #sig canvas {
+        width: 100% !important;
+        height: auto;
+    }
+</style>
 <!-- <link rel="stylesheet" href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}"> -->
 @endpush
 
@@ -31,26 +35,28 @@
         </div>
 
         <div class="section-body">
-        
+
             <div class="card">
                 <div class="card-body">
-                <form action="#" method="post">
-                <div class="card-body">
-                <div class="col-md-12">
-                <input type="hidden" name="ID_TTD" value="" />
-                            <label class="" for="">Tanda Tangan:</label>
-                            <br/>
-                                <div id="signat" ></div>
-                                <br/>
+                    <form action="{{ route('list-ttd.update', $ttdPetugasById['ID_TTD']) }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <input type="hidden" name="ID_TTD" value="{{ $ttdPetugasById['ID_TTD'] }}" />
+                                <label class="" for="">Tanda Tangan:</label>
+                                <br />
+                                <div id="signat"></div>
+                                <br />
                                 <button id="clear">Hapus Tanda Tangan</button>
-                            <textarea id="signature64" name="signed" style="display: none"></textarea>
+                                <textarea id="signature64" name="signed" style="display: none"></textarea>
+                            </div>
                         </div>
-                </div>
-                <div class="card-footer text-left">
-                <button type="submit" class="btn btn-primary"><i class="fa fa-print"></i> Simpan</button>
-            
-            </div>
-            </form>
+                        <div class="card-footer text-left">
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-print"></i> Simpan</button>
+
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -69,26 +75,26 @@
                 </button>
             </div>
             <div class="modal-body">
-     
+
                 <div class="card-body">
-                    
-                <div class="container">
-                    <form method="POST" action="#">
-  
-                        <div class="col-md-12">
-                            <label class="" for="">Tanda Tangan:</label>
-                            <br/>
-                                <div id="signat" ></div>
-                                <br/>
+
+                    <div class="container">
+                        <form method="POST" action="#">
+
+                            <div class="col-md-12">
+                                <label class="" for="">Tanda Tangan:</label>
+                                <br />
+                                <div id="signat"></div>
+                                <br />
                                 <button id="clear">Hapus Tanda Tangan</button>
-                            <textarea id="signature64" name="signed" style="display: none"></textarea>
-                        </div>
-  
-                        <br/>
-                        
-                  
-                </div>
-                
+                                <textarea id="signature64" name="signed" style="display: none"></textarea>
+                            </div>
+
+                            <br />
+
+
+                    </div>
+
                 </div>
 
             </div>
@@ -96,7 +102,7 @@
                 <button type="submit" class="btn btn-primary"><i class="fa fa-print"></i> Simpan</button>
                 <button type="button" class="btn btn-info" data-dismiss="modal">Tutup</button>
             </div>
-        </form>
+            </form>
         </div>
     </div>
 </div>
@@ -116,7 +122,10 @@
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
 
 <script type="text/javascript">
-    var sig =  $("#signat").signature({syncField: "#signature64", syncFormat: "PNG"});
+    var sig = $("#signat").signature({
+        syncField: "#signature64",
+        syncFormat: "PNG"
+    });
     $('#clear').click(function(e) {
         e.preventDefault();
         sig.signature('clear');

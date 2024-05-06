@@ -33,7 +33,7 @@
                             <h4 class="card-title">Edit Data CPPT Fisioterapi</h4>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('cppt.updateData',$data['ID_CPPT_FISIO']) }}" method="POST">
+                            <form action="{{ route('cppt.updateData', $data['ID_CPPT_FISIO']) }}" method="POST">
                                 @csrf
                                 @method('PUT')
                                 <div class="row">
@@ -91,7 +91,7 @@
                                             <select name="JENIS_FISIO[]" class="form-control select2" multiple="multiple" data-placeholder="Pilih Jenis Fisio" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                                 <option value="" disabled>-- Pilih Jenis Fisio --</option>
                                                 @foreach($jenisfisio as $jenis)
-                                                <option value="{{ $jenis['ID_JENIS_FISIO']}}"> {{$jenis['NAMA_TERAPI']}}</option>
+                                                <option value="{{ $jenis['NAMA_TERAPI']}}"> {{$jenis['NAMA_TERAPI']}}</option>
                                                 @endforeach
                                             </select>
                                         </div>

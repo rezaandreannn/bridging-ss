@@ -137,8 +137,8 @@ Route::middleware('auth')->group(function () {
         // Tambah Data CPPT Fisioterapi
         Route::get('/cppt/{id}/{no_mr}/{kode_transaksi}', [FisioController::class, 'tambah_cppt'])->name('cppt.tambah');
         Route::post('/cppt', [FisioController::class, 'tambahDataCPPT'])->name('cppt.tambahData');
-        Route::get('/cppt/{id}', [FisioController::class, 'deleteDataCPPT'])->name('cppt.deleteData');
         Route::put('/cppt/{id}', [FisioController::class, 'editDataCPPT'])->name('cppt.updateData');
+        Route::get('/cppt/{id}', [FisioController::class, 'deleteDataCPPT'])->name('cppt.deleteData');
         Route::get('edit_cppt/{id}', [FisioController::class, 'edit_cppt'])->name('cppt.edit');
         Route::get('cetak_cppt/{kode_transaksi}/{no_mr}', [FisioController::class, 'cetak_cppt'])->name('cppt.cetakCPPT');
         Route::get('bukti_layanan/{kode_transaksi}/{no_mr}', [FisioController::class, 'bukti_layanan'])->name('cppt.buktiLayanan');
@@ -148,7 +148,8 @@ Route::middleware('auth')->group(function () {
         // Fisioterapi
         Route::get('petugas', [TandaTanganController::class, 'index'])->name('list-ttd.index');
         Route::post('petugas', [TandaTanganController::class, 'store'])->name('list-ttd.store');
-        Route::get('petugas/edit', [TandaTanganController::class, 'edit'])->name('list-ttd.edit');
+        Route::get('petugas/edit/{id}', [TandaTanganController::class, 'edit'])->name('list-ttd.edit');
+        Route::put('petugas/edit/{id}', [TandaTanganController::class, 'update'])->name('list-ttd.update');
         Route::get('petugas/delete/{id}', [TandaTanganController::class, 'delete'])->name('list-ttd.delete');
     });
 

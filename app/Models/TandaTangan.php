@@ -17,7 +17,7 @@ class TandaTangan extends Model
         ]);
         $this->simrsUrlApi = env('SIMRS_BASE_URL');
     }
-    
+
     use HasFactory;
     protected $httpClient;
     protected $guarded = [];
@@ -26,6 +26,14 @@ class TandaTangan extends Model
     public function tandaTanganGet()
     {
         $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/ttd/petugas');
+        $response = $request->getBody()->getContents();
+        $data = json_decode($response, true);
+        return $data['data'];
+    }
+
+    public function tandaTanganGetById($id)
+    {
+        $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/ttd/petugas/' . $id);
         $response = $request->getBody()->getContents();
         $data = json_decode($response, true);
         return $data['data'];

@@ -40,11 +40,9 @@
                                     <th>Status</th>
                                     <th>Tanda tangan</th>
                                     <th>Action</th>
-
                                 </tr>
                             </thead>
                             <tbody>
-
                                 @foreach ($ttdPasien as $ttd)
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
@@ -52,10 +50,12 @@
                                         {{$ttd['USERNAME']}}
                                     </td>
                                     <td width="30%">{{$ttd['STATUS']}}</td>
-                                    <td>{{$ttd['IMAGE']}}</td>
+                                    <td><img src="{{ asset('storage/ttd/'. $ttd['IMAGE'] ) }}" width="25%" alt="Gambar Pengguna"></td>
 
                                     <td width="15%">
-                                        <a href="{{ route('list-ttd.edit') }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                                        <a href="{{ route('list-ttd.edit', [
+                                            'id' => $ttd['ID_TTD']
+                                            ]) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
                                         <button id="delete" data-id="{{ $ttd['ID_TTD'] }}" data-nama="{{ $ttd['USERNAME'] }}" data-bs-toggle="tooltip" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
 
                                     </td>
@@ -87,7 +87,7 @@
                 <div class="card-body">
 
                     <div class="container">
-                        <form method="POST" action="{{ route('list-ttd.store') }}">
+                        <form method="POST" action="{{ route('list-ttd.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="col-md-12">
                                 <label class="" for="">Tanda Tangan:</label>
@@ -97,12 +97,9 @@
                                 <button id="clear">Hapus Tanda Tangan</button>
                                 <textarea id="signature64" name="signed" style="display: none"></textarea>
                             </div>
-
                             <br />
                     </div>
-
                 </div>
-
             </div>
             <div class="card-footer text-left">
                 <button type="submit" class="btn btn-primary"><i class="fa fa-print"></i> Simpan</button>

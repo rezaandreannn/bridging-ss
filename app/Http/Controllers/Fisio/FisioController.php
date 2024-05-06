@@ -193,7 +193,7 @@ class FisioController extends Controller
                 ]
             ]);
 
-            return redirect()->back()->with('success', 'Data CPPT Added successfully!');
+            return redirect()->back()->with('success', 'CPPT Berhasil Ditambahkan!');
         }
     }
 
@@ -239,7 +239,7 @@ class FisioController extends Controller
             ]
         ]);
 
-        return redirect()->route('cppt.tambah', [$request->input('NO_MR'), $request->input('KD_TRANSAKSI_FISIO')])->with('success', 'Data CPPT Update successfully!');
+        return redirect()->route('cppt.tambah', [$request->input('NO_MR'), $request->input('KD_TRANSAKSI_FISIO')])->with('success', 'CPPT Berhasil Diperbarui!');
     }
 
     // Delete Data CPPT Fisioterapi
@@ -247,7 +247,7 @@ class FisioController extends Controller
     {
         $response = $this->httpClient->delete($this->simrsUrlApi . 'fisioterapi/cppt/delete/' . $id_cppt);
 
-        return redirect()->back()->with('success', 'CPPT deleted successfully!');
+        return redirect()->back()->with('success', 'CPPT Berhasil Dihapus!');
     }
 
     public function cetak_cppt(Request $request, $kode_transaksi)
