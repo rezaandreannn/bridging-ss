@@ -271,7 +271,6 @@ class FisioController extends Controller
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
         $date = date('dMY');
         $filename = 'BuktiLayanan-' . $date . '-' . $kode_transaksi;
-
         $pdf = PDF::loadview($this->view . 'cetak/bukti_pelayanan', ['title' => $title, 'data' => $data, 'biodatas' => $biodatas]);
         return $pdf->stream($filename . '.pdf');
     }

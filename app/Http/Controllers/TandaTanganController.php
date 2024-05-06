@@ -11,9 +11,6 @@ use Illuminate\Support\Facades\Storage;
 
 class TandaTanganController extends Controller
 {
-
-
-
     protected $ttd;
     protected $prefix;
     protected $routeIndex;
@@ -23,8 +20,6 @@ class TandaTanganController extends Controller
 
     public function __construct(TandaTangan $ttd)
     {
-
-
         $this->ttd = $ttd;
         $this->viewPath = 'pages.ttd.';
         $this->prefix = 'ttd';
@@ -43,11 +38,8 @@ class TandaTanganController extends Controller
      */
     public function index()
     {
-        //
         $title = 'Index Tanda Tangan Petugas';
         $ttdPasien = $this->ttd->tandaTanganGet();
-
-
         return view($this->viewPath . 'index', compact('title', 'ttdPasien'));
     }
 
@@ -63,10 +55,6 @@ class TandaTanganController extends Controller
 
     public function store(Request $request)
     {
-        if (auth()->user()->hasSignature()) {
-            return redirect()->back()->with('warning', 'Anda sudah memiliki tanda tangan sebelumnya');
-        }
-
         if (!$request->has('signed') || empty($request->signed)) {
             return redirect()->back()->with('warning', 'Tanda tangan harus diisi');
         } else {
@@ -91,12 +79,6 @@ class TandaTanganController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
     }
