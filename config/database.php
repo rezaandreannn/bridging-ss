@@ -79,13 +79,28 @@ return [
         ],
 
         'sqlsrv' => [
+            'driver'    => env('DB_CONNECTION_SQLSRV'),
+            'url' => env('DATABASE_URL_SQLSRV'),
+            'host' => env('DB_HOST_SQLSRV', 'localhost'),
+            'port' => env('DB_PORT_SQLSRV', '1433'),
+            'database' => env('DB_DATABASE_SQLSRV', 'forge'),
+            'username' => env('DB_USERNAME_SQLSRV', 'forge'),
+            'password' => env('DB_PASSWORD_SQLSRV', ''),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            // 'encrypt' => env('DB_ENCRYPT', 'yes'),
+            // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
+        ],
+
+        'sqlsrvpku' => [
             'driver' => 'sqlsrv',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', 'localhost'),
-            'port' => env('DB_PORT', '1433'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'host' => env('DB_HOST_PKU', 'localhost'),
+            'port' => env('DB_PORT_PKU', '1433'),
+            'database' => env('DB_DATABASE_PKU', 'forge'),
+            'username' => env('DB_USERNAME_PKU', 'forge'),
+            'password' => env('DB_PASSWORD_PKU', ''),
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
@@ -125,7 +140,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'),
         ],
 
         'default' => [
