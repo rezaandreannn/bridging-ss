@@ -93,15 +93,9 @@ return [
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 
-<<<<<<< HEAD
-        'sqlsrvpku' => [
-            'driver' => 'sqlsrv',
-            'url' => env('DATABASE_URL'),
-=======
         'pku' => [
             'driver' => 'sqlsrv',
             'url' => env('DATABASE_URL_PKU'),
->>>>>>> 0929babb732d72c9b9da805201c22386999de4ca
             'host' => env('DB_HOST_PKU', 'localhost'),
             'port' => env('DB_PORT_PKU', '1433'),
             'database' => env('DB_DATABASE_PKU', 'forge'),

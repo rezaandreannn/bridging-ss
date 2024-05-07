@@ -148,7 +148,6 @@ class FisioController extends Controller
     {
         $title = $this->prefix . ' Tambah CPPT';
         $jenisfisio = DB::connection('pku')->table('TAC_COM_FISIOTERAPI_MASTER')->get();
-
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
         $data = $this->fisio->dataPasienCPPT($request->no_mr, $request->kode_transaksi);
         $cppt = $this->fisio->getDataTransaksiByID($id);
@@ -219,6 +218,7 @@ class FisioController extends Controller
         if (!empty($string)) {
             $jenis_fisio = explode(', ', $string);
         }
+
         $title = $this->prefix . ' ' . 'CPPT';
 
         $jenisfisio = $this->jenisFisio->getDataJenisFisio();
