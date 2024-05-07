@@ -151,7 +151,7 @@
                                             <select name="JENIS_FISIO[]" class="form-control select2" multiple="multiple" data-placeholder="Pilih Jenis Fisio" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                                 <option value="" disabled>-- Pilih Jenis Fisio --</option>
                                                 @foreach ($jenisfisio as $jenis)
-                                                <option value="{{ $jenis['NAMA_TERAPI'] }}">{{ $jenis['NAMA_TERAPI'] }}</option>
+                                                <option value="{{ $jenis->NAMA_TERAPI }}">{{ $jenis->NAMA_TERAPI }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
