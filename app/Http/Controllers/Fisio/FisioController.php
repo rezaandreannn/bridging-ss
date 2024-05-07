@@ -147,7 +147,7 @@ class FisioController extends Controller
     public function tambah_cppt(Request $request, $id)
     {
         $title = $this->prefix . ' Tambah CPPT';
-        $jenisfisio = DB::connection('sqlsrv')->table('TAC_COM_FISIOTERAPI_MASTER')->get();
+        $jenisfisio = DB::connection('sqlsrvpku')->table('TAC_COM_FISIOTERAPI_MASTER')->get();
      
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
         $data = $this->fisio->dataPasienCPPT($request->no_mr, $request->kode_transaksi);
@@ -195,7 +195,7 @@ class FisioController extends Controller
                 ]
             ]);
 
-            $cek_ttd_pasien =  DB::connection('sqlsrv')->table('TTD_PASIEN_MASTER')->where('NO_MR_PASIEN', $request->input('NO_MR'))->count();
+            $cek_ttd_pasien =  DB::connection('sqlsrvpku')->table('TTD_PASIEN_MASTER')->where('NO_MR_PASIEN', $request->input('NO_MR'))->count();
 
           
             if($cek_ttd_pasien<'1'){
@@ -215,7 +215,7 @@ class FisioController extends Controller
 
               // Memecah string menjadi array
     
-              $jenis_terapi_fisio =  DB::connection('sqlsrv')->table('TR_CPPT_FISIOTERAPI')->where('ID_CPPT_FISIO', $id)->first();
+              $jenis_terapi_fisio =  DB::connection('sqlsrvpku')->table('TR_CPPT_FISIOTERAPI')->where('ID_CPPT_FISIO', $id)->first();
 
       
               $data = array();
