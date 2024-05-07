@@ -93,14 +93,14 @@ return [
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 
-        'sqlsrv' => [
+        'pku' => [
             'driver' => 'sqlsrv',
-            'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', 'localhost'),
-            'port' => env('DB_PORT', '1433'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'url' => env('DATABASE_URL_PKU'),
+            'host' => env('DB_HOST_PKU', 'localhost'),
+            'port' => env('DB_PORT_PKU', '1433'),
+            'database' => env('DB_DATABASE_PKU', 'forge'),
+            'username' => env('DB_USERNAME_PKU', 'forge'),
+            'password' => env('DB_PASSWORD_PKU', ''),
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
