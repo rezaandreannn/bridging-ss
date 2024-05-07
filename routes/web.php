@@ -22,7 +22,10 @@ use App\Http\Controllers\Manage\RoleHasPermissionController;
 use App\Http\Controllers\Mapping\MappingEncounterController;
 use App\Http\Controllers\RawatJalan\Perawat\AssesmenController;
 use App\Http\Controllers\Case\Encounter\EncounterCreateController;
+use App\Http\Controllers\MasterData\Icd10Controller;
 use App\Http\Controllers\MasterData\JenisFisioController;
+use App\Models\Simrs\Antrean;
+use App\Models\Simrs\Icd10;
 use Illuminate\Support\Facades\DB;
 
 /*
@@ -80,6 +83,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/location/{location_id}/edit', [LocationController::class, 'edit'])->name('location.edit');
         Route::post('/location', [LocationController::class, 'store'])->name('location.store');
         Route::patch('/location/{location_id}', [LocationController::class, 'update'])->name('location.update');
+
+        // ICD10
+        Route::resource('icd10', Icd10Controller::class);
 
         // Jenis Fisioterapi
         Route::get('/jenisFisio', [JenisFisioController::class, 'index'])->name('jenisFisio.index');
@@ -219,7 +225,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/server', function () {
-    $data = DB::connection('sqlsrv')->table('TUSER')->get();
+    $data = Icd10::all();
     dd($data);
 });
 

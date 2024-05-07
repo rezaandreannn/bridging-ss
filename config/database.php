@@ -78,7 +78,7 @@ return [
             'sslmode' => 'prefer',
         ],
 
-        'sqlsrv' => [
+        'db_rsmm' => [
             'driver'    => env('DB_CONNECTION_SQLSRV'),
             'url' => env('DATABASE_URL_SQLSRV'),
             'host' => env('DB_HOST_SQLSRV', 'localhost'),
