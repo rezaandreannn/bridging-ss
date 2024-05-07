@@ -26,6 +26,9 @@
                     <li class="{{ Request::is('md/location*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('location.index') }}">Lokasi</a>
                     </li>
+                    <li class="{{ Request::is('md/icd10*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('icd10.index') }}">ICD 10</a>
+                    </li>
                     <li class="{{ Request::is('md/jenisFisio*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('jenisFisio.index') }}">Jenis Fisio</a>
                     </li>
