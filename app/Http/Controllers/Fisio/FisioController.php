@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Fisio;
 
 use App\Models\Pasien;
+use GuzzleHttp\Client;
+use App\Models\JenisFisio;
 use App\Models\Fisioterapi;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\JenisFisio;
 use Illuminate\Support\Facades\Session;
-use GuzzleHttp\Client;
 
 class FisioController extends Controller
 {
@@ -146,7 +147,8 @@ class FisioController extends Controller
     public function tambah_cppt(Request $request, $id)
     {
         $title = $this->prefix . ' Tambah CPPT';
-        $jenisfisio = $this->jenisFisio->getDataJenisFisio();
+        $jenisfisio = DB::connection('sqlsrv')->table('TAC_COM_FISIOTERAPI_MASTER')->get();
+     
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
         $data = $this->fisio->dataPasienCPPT($request->no_mr, $request->kode_transaksi);
         $cppt = $this->fisio->getDataTransaksiByID($id);
@@ -200,11 +202,26 @@ class FisioController extends Controller
     // Edit Data CPPT Fisioterapi
     public function edit_cppt($id)
     {
+
+              // Memecah string menjadi array
+    
+              $jenis_terapi_fisio =  DB::connection('sqlsrv')->table('TR_CPPT_FISIOTERAPI')->where('ID_CPPT_FISIO', $id)->first();
+
+      
+              $data = array();
+              $string = $jenis_terapi_fisio->JENIS_FISIO;
+              $string = trim($string, ','); // Menghapus koma di awal dan akhir string (jika ada)
+             $jenis_fisio=array();
+              if (!empty($string)) {
+                  $jenis_fisio = explode(', ', $string);
+              }
+
         $title = $this->prefix . ' ' . 'CPPT';
+
         $jenisfisio = $this->jenisFisio->getDataJenisFisio();
         $data = $this->fisio->dataEditPasienCPPT($id);
 
-        return view($this->view . 'edit', compact('title', 'data', 'jenisfisio'));
+        return view($this->view . 'edit', compact('title', 'data', 'jenisfisio','jenis_fisio'));
     }
 
     // Proses Edit Data CPPT Fisioterapi
@@ -239,7 +256,9 @@ class FisioController extends Controller
             ]
         ]);
 
-        return redirect()->route('cppt.tambah', [$request->input('NO_MR'), $request->input('KD_TRANSAKSI_FISIO')])->with('success', 'CPPT Berhasil Diperbarui!');
+       
+
+        return redirect()->route('cppt.tambah',  [$request->input('NO_MR'), $request->input('KD_TRANSAKSI_FISIO')])->with('success', 'CPPT Berhasil Diperbarui!');
     }
 
     // Delete Data CPPT Fisioterapi
