@@ -181,6 +181,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
+                        <div class="card-header card-success">
+                            <a href="{{ route('transaksi_fisio.fisio', ['no_mr' => $biodatas['NO_MR']])}}" class="btn btn-sm btn-primary"><i class="fas fa-arrow-rotate-back"></i> Kembali</a>
+                        </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table-striped table" id="table-1">
