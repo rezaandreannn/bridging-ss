@@ -195,7 +195,17 @@ class FisioController extends Controller
                 ]
             ]);
 
-            return redirect()->back()->with('success', 'CPPT Berhasil Ditambahkan!');
+            $cek_ttd_pasien =  DB::connection('sqlsrv')->table('TTD_PASIEN_MASTER')->where('NO_MR_PASIEN', $request->input('NO_MR'))->count();
+
+          
+            if($cek_ttd_pasien<'1'){
+           
+              var_dump('ok');
+            }
+            else {
+                return redirect()->back()->with('success', 'CPPT Berhasil Ditambahkan!');
+            }
+           
         }
     }
 
