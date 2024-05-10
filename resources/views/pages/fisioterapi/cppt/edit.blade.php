@@ -33,15 +33,16 @@
                             <h4 class="card-title">Edit Data CPPT Fisioterapi</h4>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('cppt.updateData', $data['ID_CPPT_FISIO']) }}" method="POST">
+                            <form action="{{ route('cppt.updateData', $data->ID_CPPT_FISIO) }}" method="POST">
                                 @csrf
                                 @method('PUT')
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Kode Transaksi </label>
-                                            <input type="hidden" name="NO_MR" class="form-control" value="{{ $data['NO_MR']}}" readonly>
-                                            <input type="text" name="KD_TRANSAKSI_FISIO" class="form-control" value="{{ $data['KD_TRANSAKSI_FISIO']}}" readonly>
+                                            <input type="hidden" name="NO_MR_PASIEN" class="form-control" readonly>
+                                            <input type="hidden" class="form-control" value="{{ $data->ID_TRANSAKSI }}" name="ID_TRANSAKSI" readonly>
+                                            <input type="text" name="kode_transaksi" class="form-control" value="{{ $data->KODE_TRANSAKSI_FISIO}}" readonly>
                                         </div>
                                     </div>
                                     @php
@@ -53,7 +54,7 @@
                                             <label>Tanggal dan jam Terapi </label>
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <input type="date" name="TANGGAL_FISIO" class="form-control" value="{{ $date}}" readonly>
+                                                    <input type="date" name="TANGGAL_FISIO" class="form-control" value="{{ $date }}" readonly>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <input type="time" name="JAM_FISIO" class="form-control" id="jam_keperawatan" readonly>
@@ -64,25 +65,25 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Anamnesa / Allow Anamnesa <code>*</code></label>
-                                            <textarea class="form-control" rows="2" name="ANAMNESA">{{ $data['ANAMNESA']}}</textarea>
+                                            <textarea class="form-control" rows="2" name="ANAMNESA">{{ $data->ANAMNESA}}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tekanan Darah</label>
-                                            <input type="text" name="TEKANAN_DARAH" value="{{ $data['TEKANAN_DARAH']}}" class="form-control">
+                                            <input type="text" name="TEKANAN_DARAH" value="{{ $data->TEKANAN_DARAH}}" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Nadi</label>
-                                            <input type="text" name="NADI" value="{{ $data['NADI']}}" class="form-control">
+                                            <input type="text" name="NADI" value="{{ $data->NADI}}" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Suhu</label>
-                                            <input type="text" name="SUHU" value="{{ $data['SUHU']}}" class="form-control">
+                                            <input type="text" name="SUHU" value="{{ $data->SUHU}}" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -101,8 +102,8 @@
                                             <label>Cara Pulang </label>
                                             <select name="CARA_PULANG" id="" class="form-control select2">
                                                 <option value="" disabled>--Pilih--</option>
-                                                <option value="KONSULTASI" {{ $data['CARA_PULANG'] == 'KONSULTASI' ? 'selected' : '' }}>KONSULTASI</option>
-                                                <option value="RUJUK" {{ $data['CARA_PULANG'] == 'RUJUK' ? 'selected' : '' }}>RUJUK</option>
+                                                <option value="KONSULTASI" {{ $data->CARA_PULANG == 'KONSULTASI' ? 'selected' : '' }}>KONSULTASI</option>
+                                                <option value="RUJUK" {{ $data->CARA_PULANG == 'RUJUK' ? 'selected' : '' }}>RUJUK</option>
                                             </select>
                                         </div>
                                     </div>

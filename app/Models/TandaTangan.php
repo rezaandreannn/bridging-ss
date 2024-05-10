@@ -18,7 +18,6 @@ class TandaTangan extends Model
         $this->simrsUrlApi = env('SIMRS_BASE_URL');
     }
 
-    use HasFactory;
     protected $httpClient;
     protected $guarded = [];
     protected $simrsUrlApi;

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use GuzzleHttp\Client;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -46,20 +47,16 @@ class Fisioterapi extends Model
 
 
     // Menghitung Jumlah Fisio yang sudah dilakukan
-    public function countCpptByKodeTr($kode_tr)
+    public function countCpptByKodeTr($id)
     {
-        $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/cpptcount/' . $kode_tr);
-        $response = $request->getBody()->getContents();
-        $data = json_decode($response, true);
-        return $data['total'];
+        $data = DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')->where('ID_TRANSAKSI_FISIO', $id)->count();
+        return $data;
     }
 
-    public function jumlahMaxFisioByKodeTr($kode_tr)
+    public function jumlahMaxFisioByKodeTr($id)
     {
-        $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/transaksiByKodeTr/' . $kode_tr);
-        $response = $request->getBody()->getContents();
-        $data = json_decode($response, true);
-        return $data['data'];
+        $data = DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')->where('ID_TRANSAKSI_FISIO', $id)->count();
+        return $data;
     }
 
 
@@ -89,28 +86,32 @@ class Fisioterapi extends Model
     }
 
     // Cetak CPPT
-    public function cetakCPPT($kode_transaksi)
+    public function cetakCPPT($id)
     {
-        $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/berkas/cppt/' . $kode_transaksi);
-        $response = $request->getBody()->getContents();
-        $data = json_decode($response, true);
-        return $data['data'];
+        $data = DB::connection('pku')
+            ->table('TR_CPPT_FISIOTERAPI')
+            ->join('TRANSAKSI_FISIOTERAPI', 'TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
+            ->where('TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', $id)
+            ->get();
+        return $data;
     }
 
     // Get Data Pasien CPPT
-    public function dataPasienCPPT($no_mr, $kode_transaksi)
+    public function dataPasienCPPT()
     {
-        $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/cppt/list/' . $no_mr . '/' .  $kode_transaksi);
-        $response = $request->getBody()->getContents();
-        $data = json_decode($response, true);
-        return $data['data'];
+        $data = DB::connection('pku')
+            ->table('TR_CPPT_FISIOTERAPI')
+            ->get();
+        return $data;
     }
 
     public function dataEditPasienCPPT($id)
     {
-        $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/cppt/listByid/' . $id);
-        $response = $request->getBody()->getContents();
-        $data = json_decode($response, true);
-        return $data['data'];
+        $data = DB::connection('pku')
+            ->table('TR_CPPT_FISIOTERAPI')
+            ->join('TRANSAKSI_FISIOTERAPI', 'TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
+            ->where('TR_CPPT_FISIOTERAPI.ID_CPPT_FISIO', $id)
+            ->first();
+        return $data;
     }
 }

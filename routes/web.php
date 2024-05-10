@@ -142,17 +142,21 @@ Route::middleware('auth')->group(function () {
         Route::get('/transaksi_fisio/{id}', [FisioController::class, 'delete'])->name('transaksi_fisio.delete');
 
         // Tambah Data CPPT Fisioterapi
-        Route::get('/cppt/{id}/{no_mr}/{kode_transaksi}', [FisioController::class, 'tambah_cppt'])->name('cppt.tambah');
+        Route::get('/cppt/{id}/{no_mr}/{kode_transaksi}', [FisioController::class, 'detail_cppt'])->name('cppt.detail');
+        Route::get('/cppt/tambah/{no_mr}/{kode_transaksi}', [FisioController::class, 'tambah_cppt'])->name('cppt.tambah');
         Route::post('/cppt', [FisioController::class, 'tambahDataCPPT'])->name('cppt.tambahData');
         Route::put('/cppt/{id}', [FisioController::class, 'editDataCPPT'])->name('cppt.updateData');
         Route::get('/cppt/{id}', [FisioController::class, 'deleteDataCPPT'])->name('cppt.deleteData');
         Route::get('edit_cppt/{id}', [FisioController::class, 'edit_cppt'])->name('cppt.edit');
+
         Route::get('cetak_cppt/{kode_transaksi}/{no_mr}', [FisioController::class, 'cetak_cppt'])->name('cppt.cetakCPPT');
         Route::get('bukti_layanan/{kode_transaksi}/{no_mr}', [FisioController::class, 'bukti_layanan'])->name('cppt.buktiLayanan');
+        // Tanda Tangan Pasien
+        Route::get('/cppt/ttd_pasien/{no_mr}', [TandaTanganController::class, 'ttdPasien'])->name('ttd.pasien');
     });
 
     Route::prefix('ttd')->group(function () {
-        // Fisioterapi
+        // Tanda Tangan Petugas
         Route::get('petugas', [TandaTanganController::class, 'index'])->name('list-ttd.index');
         Route::post('petugas', [TandaTanganController::class, 'store'])->name('list-ttd.store');
         Route::get('petugas/edit/{id}', [TandaTanganController::class, 'edit'])->name('list-ttd.edit');

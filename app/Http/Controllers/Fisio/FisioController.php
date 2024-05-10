@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\TandaTangan;
 use Illuminate\Support\Facades\Session;
 
 class FisioController extends Controller
@@ -20,6 +21,7 @@ class FisioController extends Controller
     protected $fisio;
     protected $pasien;
     protected $jenisFisio;
+    protected $ttd;
     protected $httpClient;
     protected $simrsUrlApi;
 
@@ -32,6 +34,7 @@ class FisioController extends Controller
         $this->prefix = 'Fisioterapi';
         $this->pasien = new Pasien;
         $this->jenisFisio = new JenisFisio;
+        $this->ttd = new TandaTangan;
 
         $this->httpClient = new Client([
             'headers' => [
@@ -53,6 +56,7 @@ class FisioController extends Controller
     // Detail Pasien Transaksi Fisioterapi
     public function transaksi(Request $request)
     {
+
         $fisioModel = new Fisioterapi();
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
         $transaksis = $this->fisio->transaksiFisioByMr($request->no_mr);
@@ -72,8 +76,6 @@ class FisioController extends Controller
         } else {
             $noTerakhir = substr($lastKodeTransaksi['KODE_TRANSAKSI_FISIO'], 2) + 1;
             $nomorUrut = sprintf('%06s', $noTerakhir);
-            // var_dump($nomorUrut);
-            // die;
         }
 
         $kode_transaksi = $kode . '-' . $nomorUrut;
@@ -144,28 +146,37 @@ class FisioController extends Controller
     // ----- Data Pasien CPPT Fisioterapi ----- //
 
     // Tambah Data CPPT Pasien Fisioterapi
+    public function detail_cppt(Request $request, $id)
+    {
+        $title = $this->prefix . ' Tambah CPPT';
+
+        $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
+        $data = $this->fisio->dataPasienCPPT($id);
+        $cppt =  DB::connection('pku')->table('TRANSAKSI_FISIOTERAPI')->where('ID_TRANSAKSI', $id)->first();
+        $jenisfisio = DB::connection('pku')->table('TAC_COM_FISIOTERAPI_MASTER')->get();
+        return view($this->view . 'cppt.detail', compact('title', 'biodatas', 'data', 'cppt', 'jenisfisio'));
+    }
+
     public function tambah_cppt(Request $request, $id)
     {
         $title = $this->prefix . ' Tambah CPPT';
         $jenisfisio = DB::connection('pku')->table('TAC_COM_FISIOTERAPI_MASTER')->get();
-        $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
-        $data = $this->fisio->dataPasienCPPT($request->no_mr, $request->kode_transaksi);
-        $cppt = $this->fisio->getDataTransaksiByID($id);
-        return view($this->view . 'tambah', compact('title', 'biodatas', 'data', 'cppt', 'jenisfisio'));
+        $data = $this->fisio->getDataTransaksiByID($id);
+        return view($this->view . 'cppt.tambah', compact('title', 'data', 'jenisfisio'));
     }
 
     //Proses Tambah Data CPPT Fisioterapi
     public function tambahDataCPPT(Request $request)
     {
-        $cppt = $this->fisio->countCpptByKodeTr($request->input('KD_TRANSAKSI_FISIO'));
-        $jumlahmax = $this->fisio->jumlahMaxFisioByKodeTr($request->input('KD_TRANSAKSI_FISIO'));
-        $jumlahMaxFisio = $jumlahmax['JUMLAH_TOTAL_FISIO'];
+        $cekJumlahFisio = DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')->where('ID_TRANSAKSI_FISIO', $request->input('ID_TRANSAKSI'))->count();
+        $transaksisById = DB::connection('pku')->table('TRANSAKSI_FISIOTERAPI')->where('ID_TRANSAKSI', $request->input('ID_TRANSAKSI'))->get()->first();
+        $jumlahMaxFisio = $transaksisById->JUMLAH_TOTAL_FISIO;
 
         $validatedData = $request->validate([
             'ANAMNESA' => 'required',
         ]);
 
-        if ($cppt >= $jumlahMaxFisio) {
+        if ($cekJumlahFisio >= $jumlahMaxFisio) {
 
             return redirect()->back()->with('error', 'Data CPPT Tidak Melebihi batas yang telah ditentukan!');
         } else {
@@ -177,31 +188,31 @@ class FisioController extends Controller
                 }
             }
 
-            $response = $this->httpClient->post($this->simrsUrlApi . 'fisioterapi/cppt/add', [
-                'json' => [
-                    'KD_TRANSAKSI_FISIO' => $request->input('KD_TRANSAKSI_FISIO'),
-                    'NO_MR' => $request->input('NO_MR'),
-                    'TEKANAN_DARAH' => $request->input('TEKANAN_DARAH'),
-                    'NADI' => $request->input('NADI'),
-                    'SUHU' => $request->input('SUHU'),
-                    'JENIS_FISIO' => $terapi,
-                    'TANGGAL_FISIO' => $request->input('TANGGAL_FISIO'),
-                    'JAM_FISIO' => $request->input('JAM_FISIO'),
-                    'CARA_PULANG' => $request->input('CARA_PULANG'),
-                    'ANAMNESA' => $request->input('ANAMNESA'),
-                    'CREATE_AT' => now(),
-                    'CREATE_BY' => auth()->user()->name,
-                ]
+            $data = DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')->insert([
+
+                'ID_TRANSAKSI_FISIO' => $request->input('ID_TRANSAKSI'),
+                'TEKANAN_DARAH' => $request->input('TEKANAN_DARAH'),
+                'NADI' => $request->input('NADI'),
+                'SUHU' => $request->input('SUHU'),
+                'JENIS_FISIO' => $terapi,
+                'TANGGAL_FISIO' => $request->input('TANGGAL_FISIO'),
+                'JAM_FISIO' => $request->input('JAM_FISIO'),
+                'CARA_PULANG' => $request->input('CARA_PULANG'),
+                'ANAMNESA' => $request->input('ANAMNESA'),
+                'CREATE_AT' => now(),
+                'CREATE_BY' => auth()->user()->name,
+
             ]);
+
+
 
             $cek_ttd_pasien =  DB::connection('pku')->table('TTD_PASIEN_MASTER')->where('NO_MR_PASIEN', $request->input('NO_MR'))->count();
 
-
             if ($cek_ttd_pasien < '1') {
-
-                var_dump('ok');
+                return redirect()->route('ttd.pasien', ['no_mr' => $request->input('NO_MR_PASIEN')]);
             } else {
-                return redirect()->back()->with('success', 'CPPT Berhasil Ditambahkan!');
+                return redirect()->back()->with('success', 'CPPT Berhasil Diperbarui!');
+                // return redirect()->route('cppt.detail', ['no_mr' => $request->input('NO_MR'), 'kode_transaksi' => $request->input('KD_TRANSAKSI_FISIO')])->with('success', 'CPPT Berhasil Diperbarui!');
             }
         }
     }
@@ -211,6 +222,7 @@ class FisioController extends Controller
     {
         // Memecah string menjadi array
         $jenis_terapi_fisio =  DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')->where('ID_CPPT_FISIO', $id)->first();
+
         $data = array();
         $string = $jenis_terapi_fisio->JENIS_FISIO;
         $string = trim($string, ','); // Menghapus koma di awal dan akhir string (jika ada)
@@ -218,13 +230,12 @@ class FisioController extends Controller
         if (!empty($string)) {
             $jenis_fisio = explode(', ', $string);
         }
-
         $title = $this->prefix . ' ' . 'CPPT';
 
         $jenisfisio = $this->jenisFisio->getDataJenisFisio();
         $data = $this->fisio->dataEditPasienCPPT($id);
 
-        return view($this->view . 'edit', compact('title', 'data', 'jenisfisio', 'jenis_fisio'));
+        return view($this->view . 'cppt.edit', compact('title', 'data', 'jenisfisio', 'jenis_fisio'));
     }
 
     // Proses Edit Data CPPT Fisioterapi
@@ -242,24 +253,24 @@ class FisioController extends Controller
             }
         }
 
-        $response = $this->httpClient->put($this->simrsUrlApi . 'fisioterapi/cppt/update/' . $id, [
-            'json' => [
-                'KD_TRANSAKSI_FISIO' => $request->input('KD_TRANSAKSI_FISIO'),
-                'NO_MR' => $request->input('NO_MR'),
-                'TEKANAN_DARAH' => $request->input('TEKANAN_DARAH'),
-                'NADI' => $request->input('NADI'),
-                'SUHU' => $request->input('SUHU'),
-                'JENIS_FISIO' => $terapi,
-                'TANGGAL_FISIO' => $request->input('TANGGAL_FISIO'),
-                'JAM_FISIO' => $request->input('JAM_FISIO'),
-                'CARA_PULANG' => $request->input('CARA_PULANG'),
-                'ANAMNESA' => $request->input('ANAMNESA'),
-                'CREATE_AT' => now(),
-                'CREATE_BY' => auth()->user()->name,
-            ]
+        $data = DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')->where('ID_CPPT_FISIO', $id)->update([
+            'TEKANAN_DARAH' => $request->input('TEKANAN_DARAH'),
+            'NADI' => $request->input('NADI'),
+            'SUHU' => $request->input('SUHU'),
+            'JENIS_FISIO' => $terapi,
+            'TANGGAL_FISIO' => $request->input('TANGGAL_FISIO'),
+            'JAM_FISIO' => $request->input('JAM_FISIO'),
+            'CARA_PULANG' => $request->input('CARA_PULANG'),
+            'ANAMNESA' => $request->input('ANAMNESA'),
+            'CREATE_AT' => now(),
+            'CREATE_BY' => auth()->user()->name,
         ]);
+
+
+
+
         // return redirect()->back()->with('success', 'CPPT Berhasil Ditambahkan!');
-        return redirect()->route('cppt.tambah', ['id' => $id, 'no_mr' => $request->input('NO_MR'), 'kode_transaksi' => $request->input('KD_TRANSAKSI_FISIO')])->with('success', 'CPPT Berhasil Diperbarui!');
+        return redirect()->route('cppt.detail', ['id' => $id, 'no_mr' => $request->input('NO_MR_PASIEN'), 'kode_transaksi' => $request->input('kode_transaksi')])->with('success', 'CPPT Berhasil Diperbarui!');
     }
 
     // Delete Data CPPT Fisioterapi
@@ -270,14 +281,15 @@ class FisioController extends Controller
         return redirect()->back()->with('success', 'CPPT Berhasil Dihapus!');
     }
 
-    public function cetak_cppt(Request $request, $kode_transaksi)
+    public function cetak_cppt(Request $request, $id)
     {
         $title = $this->prefix . ' ' . 'Cetak CPPT';
 
-        $data = $this->fisio->cetakCPPT($kode_transaksi);
+        $data = $this->fisio->dataPasienCPPT();
+
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
         $date = date('dMY');
-        $filename = 'CPPT-' . $date . '-' . $kode_transaksi;
+        $filename = 'CPPT-' . $date;
 
         $pdf = PDF::loadview($this->view . 'cetak/cppt', ['title' => $title, 'data' => $data, 'biodatas' => $biodatas]);
         return $pdf->stream($filename . '.pdf');

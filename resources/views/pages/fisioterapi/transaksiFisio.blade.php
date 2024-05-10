@@ -115,9 +115,9 @@
                                             <td>{{$transaksi['KODE_TRANSAKSI_FISIO']}}</td>
                                             <td>{{$transaksi['NO_MR_PASIEN']}}</td>
                                             <td>{{$transaksi['JUMLAH_TOTAL_FISIO']}}</td>
-                                            <td>{{$fisioModel->countCpptByKodeTr($transaksi['KODE_TRANSAKSI_FISIO'])}}</td>
+                                            <td>{{$fisioModel->countCpptByKodeTr($transaksi['ID_TRANSAKSI'])}}</td>
                                             <td>
-                                                @if($fisioModel->countCpptByKodeTr($transaksi['KODE_TRANSAKSI_FISIO'])>=$transaksi['JUMLAH_TOTAL_FISIO'])
+                                                @if($fisioModel->countCpptByKodeTr($transaksi['ID_TRANSAKSI'])>=$transaksi['JUMLAH_TOTAL_FISIO'])
                                                 <span class="badge badge-pill badge-success">Selesai</span>
                                                 @else
                                                 <span class="badge badge-pill badge-warning">Belum selesai</span>
@@ -125,7 +125,7 @@
 
                                             </td>
                                             <td width="20%">
-                                                <a href="{{ route('cppt.tambah', [
+                                                <a href="{{ route('cppt.detail', [
                                             'id' => $transaksi['ID_TRANSAKSI'],
                                             'no_mr' => $transaksi['NO_MR_PASIEN'],'kode_transaksi' => $transaksi['KODE_TRANSAKSI_FISIO']
                                             ]) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i>Tambah CPPT</a>

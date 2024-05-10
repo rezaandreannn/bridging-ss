@@ -75,12 +75,12 @@
         </tr>
         @foreach ($data as $item)
         <tr>
-            <td>{{ $item['TANGGAL_FISIO'] }} & {{ date('G:i', strtotime($item['JAM_FISIO'])) }}</td>
-            <td>S = {{ $item['ANAMNESA'] }} <br>O = TD = {{ $item['TEKANAN_DARAH'] }}, N = {{ $item['NADI'] }}, T = {{ $item['SUHU'] }}</td>
-            <td>{{ $item['DIAGNOSA'] }}</td>
-            <td>{{ $item['JENIS_FISIO'] }}</td>
-            <td> @if($item['KODE_DOKTER'] != '')
-                {{ $dokter['Nama_Dokter'] }}
+            <td>{{ $item->TANGGAL_FISIO }} & {{ date('G:i', strtotime($item->JAM_FISIO)) }}</td>
+            <td>S = {{ $item->ANAMNESA }} <br>O = TD = {{ $item->TEKANAN_DARAH }}, N = {{ $item->NADI }}, T = {{ $item->SUHU }}</td>
+            <td>{{ $item->DIAGNOSA }}</td>
+            <td>{{ $item->JENIS_FISIO }}</td>
+            <td> @if($item->KODE_DOKTER != '')
+                {{ $dokter->Nama_Dokter }}
                 @else
 
                 @endif

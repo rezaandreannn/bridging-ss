@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fisioterapi;
 use GuzzleHttp\Client;
 use App\Models\TandaTangan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -17,10 +19,12 @@ class TandaTanganController extends Controller
     protected $viewPath;
     protected $httpClient;
     protected $simrsUrlApi;
+    protected $fisio;
 
     public function __construct(TandaTangan $ttd)
     {
         $this->ttd = $ttd;
+        $this->fisio = new Fisioterapi;
         $this->viewPath = 'pages.ttd.';
         $this->prefix = 'ttd';
         $this->routeIndex = 'ttd.index';
@@ -51,6 +55,25 @@ class TandaTanganController extends Controller
     public function create()
     {
         //
+    }
+
+    public function ttdPasien(Request $request, $id)
+    {
+        $title = $this->prefix . ' Tambah CPPT';
+        $cppt = $this->fisio->getDataTransaksiByID($id);
+
+        return view($this->viewPath . 'ttdPasien', compact('title', 'cppt'));
+    }
+
+    public function ttdPasienStore(Request $request)
+    {
+        $data = DB::connection('pku')->table('TTD_PASIEN_MASTER')->insert([
+
+            'ID_TTD_PASIEN' => $request->input('ID_TTD_PASIEN'),
+            'NO_MR_PASIEN' => $request->input('NO_MR_PASIEN'),
+            'CREATE_AT' => $request->input('CREATE_AT'),
+            'IMAGE' => $request->input('IMAGE'),
+        ]);
     }
 
     public function store(Request $request)

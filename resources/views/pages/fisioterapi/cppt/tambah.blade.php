@@ -28,71 +28,6 @@
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
-                    <div class="card author-box card-primary">
-                        <div class="card-body">
-                            <div class="author-box-name">
-                                <a href="#">{{ $biodatas['NAMA_PASIEN']}} - ({{ $biodatas['NO_MR']}})</a>
-                            </div>
-                            <div class="author-box-job"><b></div>
-                            <div class="author-box-description">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <h6 class="mb-0">NIK</h6>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                : {{ $biodatas['HP2']}}
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <h6 class="mb-0">Tanggal Lahir</h6>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                : {{ date('d-m-Y', strtotime($biodatas['TGL_LAHIR']))}}
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <h6 class="mb-0">Jenis Kelamin</h6>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                : @if ($biodatas['JENIS_KELAMIN'] == 'L')
-                                                Laki-Laki
-                                                @else
-                                                Perempuan
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <h6 class="mb-0">No Hp</h6>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                : {{ $biodatas['HP1']}}
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <h6 class="mb-0">Alamat</h6>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                : {{ $biodatas['ALAMAT']}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="w-100 d-sm-none"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
                     <div class="card card-primary">
                         <div class="card-header card-success">
                             <h4 class="card-title">Tambah Data CPPT Fisioterapi</h4>
@@ -104,8 +39,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Kode Transaksi </label>
-                                            <input type="hidden" name="NO_MR" class="form-control" value="{{ $cppt['NO_MR_PASIEN']}}" readonly>
-                                            <input type="text" name="KD_TRANSAKSI_FISIO" class="form-control" value="{{ $cppt['KODE_TRANSAKSI_FISIO']}}" readonly>
+                                            <input type="hidden" name="NO_MR" class="form-control" value="{{ $data['NO_MR_PASIEN'] ?? ''}}" readonly>
+                                            <input type="text" name="KD_TRANSAKSI_FISIO" class="form-control" value="{{ $data['KODE_TRANSAKSI_FISIO'] ?? ''}}" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -113,7 +48,7 @@
                                             <label>Tanggal dan jam Terapi </label>
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <input type="date" name="TANGGAL_FISIO" class="form-control" value="{{ $cppt['CREATE_AT']}}" readonly>
+                                                    <input type="date" name="TANGGAL_FISIO" class="form-control" value="{{ $data['CREATE_AT'] ?? ''}}" readonly>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <input type="time" name="JAM_FISIO" class="form-control" id="jam_keperawatan">
@@ -175,53 +110,6 @@
                             </div>
                         </div>
                         </form>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header card-success">
-                            <a href="{{ route('transaksi_fisio.fisio', ['no_mr' => $biodatas['NO_MR']])}}" class="btn btn-sm btn-primary"><i class="fas fa-arrow-rotate-back"></i> Kembali</a>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table-striped table" id="table-1">
-                                    <thead>
-                                        <tr>
-                                            <th>Tanggal & Jam</th>
-                                            <th>Anamnesa & Pemeriksaaan</th>
-                                            <th>Diagnosa</th>
-                                            <th>Terapi</th>
-                                            <th>Dokter</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($data as $cppt)
-                                        <tr>
-                                            <td>{{$cppt['TANGGAL_FISIO']}} & {{ date('G:i', strtotime($cppt['JAM_FISIO']))}} WIB</td>
-                                            <td>S = {{$cppt['ANAMNESA']}} <br>O = TD = {{$cppt['TEKANAN_DARAH']}}, N = {{$cppt['NADI']}}, T = {{$cppt['SUHU']}}</td>
-                                            <td>{{$cppt['DIAGNOSA']}}</td>
-                                            <td>{{$cppt['JENIS_FISIO']}}</td>
-                                            <td>@if($cppt['KODE_DOKTER'] != '')
-                                                {{ $dokter['Nama_Dokter'] }}
-                                                @else
-
-                                                @endif
-                                            </td>
-                                            <td width="20%">
-                                                <a href="{{ route('cppt.edit', [
-                                            'id' => $cppt['ID_CPPT_FISIO']
-                                            ]) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i>Edit</a>
-                                                <button id="delete" data-id="{{ $cppt['ID_CPPT_FISIO'] }}" data-nama="{{ $cppt['NO_MR'] }}" data-bs-toggle="tooltip" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</button>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

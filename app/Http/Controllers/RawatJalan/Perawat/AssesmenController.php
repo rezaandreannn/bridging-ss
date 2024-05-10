@@ -107,6 +107,33 @@ class AssesmenController extends Controller
     public function store(Request $request)
     {
         // Make a POST request to the API endpoint
+        $request->validate([
+            'FS_ANAMNESA' => 'required',
+            'FS_EDUKASI' => 'required',
+            'FS_SUHU' => 'required',
+            'FS_NADI' => 'required',
+            'FS_R' => 'required',
+            'FS_TD' => 'required',
+            'FS_TB' => 'required',
+            'FS_BB' => 'required',
+            'FS_NYERIP' => 'required',
+            'FS_NYERIQ' => 'required',
+            'FS_NYERIR' => 'required',
+            'FS_NYERIS' => 'required',
+            'FS_NYERIT' => 'required',
+            'FS_NYERI' => 'required',
+            'FS_CARA_BERJALAN1' => 'required',
+            'FS_CARA_BERJALAN2' => 'required',
+            'FS_CARA_DUDUK' => 'required',
+            'intervensi1' => 'required',
+            'intervensi2' => 'required',
+            'FS_RIW_PENYAKIT_DAHULU' => 'required',
+            'FS_RIW_PENYAKIT_DAHULU2' => 'required',
+            'FS_ALERGI' => 'required',
+            'FS_REAK_ALERGI' => 'required',
+            'FS_STATUS_PSIK' => 'required',
+            'FS_STATUS_PSIK2' => 'required',
+        ]);
 
         $response = $this->httpClient->post('http://192.168.40.166:8080/api.simrs/rawatjalan/perawat/asasmen_perawat', [
             'json' => [
