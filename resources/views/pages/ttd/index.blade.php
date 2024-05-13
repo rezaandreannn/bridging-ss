@@ -8,6 +8,13 @@
 <link rel="stylesheet" href="{{ asset('library/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('library/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('ttd/css/jquery.signature.css') }}">
+<style>
+    .modal-body img {
+        display: block;
+        margin: 0 auto;
+        max-width: 100%;
+    }
+</style>
 <!-- <link rel="stylesheet" href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}"> -->
 @endpush
 
@@ -50,7 +57,7 @@
                                         {{$ttd['USERNAME']}}
                                     </td>
                                     <td width="30%">{{$ttd['STATUS']}}</td>
-                                    <td><img src="{{ asset('storage/ttd/'. $ttd['IMAGE'] ) }}" width="25%" alt="Gambar Pengguna"></td>
+                                    <td> <a href="#" data-toggle="modal" data-target="#gambarModal{{$ttd['ID_TTD']}}">Lihat Tanda Tangan</a></td>
 
                                     <td width="15%">
                                         <a href="{{ route('list-ttd.edit', [
@@ -69,6 +76,25 @@
             </div>
         </div>
     </section>
+</div>
+
+<div class="modal fade" id="gambarModal{{$ttd['ID_TTD']}}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Tanda Tangan Pengguna</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    Dibuat: {{$ttd['CREATE_AT']}}
+                    <img src="{{ asset('storage/ttd/' . $ttd['IMAGE'] ) }}" width="50%" alt="Gambar Pengguna">
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
