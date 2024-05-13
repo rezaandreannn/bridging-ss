@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -71,4 +72,31 @@ class Pasien extends Model
         $data = json_decode($response, true);
         return $data['data'];
     }
+
+    // public function biodataPasienByMr($no_mr)
+    // {
+    //     $data = DB::connection('db_rsmm')
+    //         ->table('REGISTER_PASIEN as a')
+    //         ->select(
+    //             'a.NAMA_PASIEN',
+    //             'a.NO_MR',
+    //             'a.HP2',
+    //             'a.HP1',
+    //             'a.ALAMAT',
+    //             'a.KOTA',
+    //             'a.PROVINSI',
+    //             'a.JENIS_KELAMIN',
+    //             'a.TGL_LAHIR',
+    //             'a.FS_ALERGI',
+    //             'a.FS_REAK_ALERGI',
+    //             'a.FS_RIW_PENYAKIT_DAHULU',
+    //             'a.FS_RIW_PENYAKIT_DAHULU2',
+    //             'b.No_Reg'
+    //         )
+    //         ->join('PENDAFTARAN as b', 'a.NO_MR', '=', 'b.NO_MR')
+    //         ->where('a.NO_MR', $no_mr)
+    //         ->first();
+
+    //     return $data;
+    // }
 }

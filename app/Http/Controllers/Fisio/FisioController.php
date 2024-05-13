@@ -201,7 +201,6 @@ class FisioController extends Controller
                 'ANAMNESA' => $request->input('ANAMNESA'),
                 'CREATE_AT' => now(),
                 'CREATE_BY' => auth()->user()->name,
-
             ]);
 
 
@@ -266,11 +265,8 @@ class FisioController extends Controller
             'CREATE_BY' => auth()->user()->name,
         ]);
 
-
-
-
-        // return redirect()->back()->with('success', 'CPPT Berhasil Ditambahkan!');
-        return redirect()->route('cppt.detail', ['id' => $id, 'no_mr' => $request->input('NO_MR_PASIEN'), 'kode_transaksi' => $request->input('kode_transaksi')])->with('success', 'CPPT Berhasil Diperbarui!');
+        return redirect()->back()->with('success', 'CPPT Berhasil Ditambahkan!');
+        // return redirect()->route('cppt.detail', ['id' => $id,  'no_mr' => $request->input('NO_MR_PASIEN'), 'kode_transaksi' => $request->input('kode_transaksi')])->with('success', 'CPPT Berhasil Diperbarui!');
     }
 
     // Delete Data CPPT Fisioterapi

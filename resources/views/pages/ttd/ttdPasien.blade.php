@@ -29,7 +29,7 @@
         <div class="section-header">
             <h1>Tanda Tangan Pasien</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('patient.index') }}">CPPT</a></div>
+                <div class="breadcrumb-item active"><a href="">CPPT</a></div>
                 <div class="breadcrumb-item">Tanda Tangan Pasien</div>
             </div>
         </div>
@@ -38,10 +38,10 @@
 
             <div class="card">
                 <div class="card-body">
-                    <form action="" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('ttd.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
-                        @method('PUT')
                         <div class="card-body">
+                            <input type="hidden" class="form-control" name="NO_MR_PASIEN" value="{{ $biodatas['NO_MR'] }}" readonly>
                             <div class="col-md-12">
                                 <label class="" for="">Tanda Tangan:</label>
                                 <br />
@@ -85,15 +85,6 @@
         sig.signature('clear');
         $("#signature64").val('');
     });
-</script>
-
-
-<script>
-    function resetForm() {
-        document.getElementById("filterForm").value = "";
-        alert('Filter telah direset!');
-        window.location.href = "{{ route('patient.index') }}";
-    }
 </script>
 
 <!-- Page Specific JS File -->

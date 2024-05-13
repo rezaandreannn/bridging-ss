@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Fisioterapi;
+use App\Models\Pasien;
 use GuzzleHttp\Client;
+use App\Models\Fisioterapi;
 use App\Models\TandaTangan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,12 +20,14 @@ class TandaTanganController extends Controller
     protected $viewPath;
     protected $httpClient;
     protected $simrsUrlApi;
+    protected $pasien;
     protected $fisio;
 
     public function __construct(TandaTangan $ttd)
     {
         $this->ttd = $ttd;
         $this->fisio = new Fisioterapi;
+        $this->pasien = new Pasien;
         $this->viewPath = 'pages.ttd.';
         $this->prefix = 'ttd';
         $this->routeIndex = 'ttd.index';
@@ -47,6 +50,13 @@ class TandaTanganController extends Controller
         return view($this->viewPath . 'index', compact('title', 'ttdPasien'));
     }
 
+    public function ttdPasienDetail()
+    {
+        $title = 'Index Tanda Tangan Pasien';
+        $ttdDetail =  DB::connection('pku')->table('TTD_PASIEN_MASTER')->get();
+        return view($this->viewPath . 'detailPasien', compact('title', 'ttdDetail'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -60,20 +70,31 @@ class TandaTanganController extends Controller
     public function ttdPasien(Request $request, $id)
     {
         $title = $this->prefix . ' Tambah CPPT';
-        $cppt = $this->fisio->getDataTransaksiByID($id);
-
-        return view($this->viewPath . 'ttdPasien', compact('title', 'cppt'));
+        $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
+        return view($this->viewPath . 'ttdPasien', compact('title', 'biodatas'));
     }
 
     public function ttdPasienStore(Request $request)
     {
-        $data = DB::connection('pku')->table('TTD_PASIEN_MASTER')->insert([
+        if (!$request->has('signed') || empty($request->signed)) {
+            return redirect()->back()->with('warning', 'Tanda tangan harus diisi');
+        } else {
+            $image_parts = explode(";base64,", $request->signed);
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+            $image_base64 = base64_decode($image_parts[1]);
+            $file_name = auth()->user()->name . '-' . date('Y-m-d') . '.' . $image_type;
+            // Simpan gambar ke storage
+            Storage::put('public/ttd/' . $file_name, $image_base64);
 
-            'ID_TTD_PASIEN' => $request->input('ID_TTD_PASIEN'),
-            'NO_MR_PASIEN' => $request->input('NO_MR_PASIEN'),
-            'CREATE_AT' => $request->input('CREATE_AT'),
-            'IMAGE' => $request->input('IMAGE'),
-        ]);
+            $data = DB::connection('pku')->table('TTD_PASIEN_MASTER')->insert([
+                'NO_MR_PASIEN' => $request->input('NO_MR_PASIEN'),
+                'IMAGE' => $file_name,
+                'CREATE_AT' => now()
+            ]);
+            return redirect()->back()->with('success', 'Tanda Tangan Berhasil Ditambahkan!');
+            // return redirect()->route('transaksi_fisio.fisio')->with('success', 'Tanda Tangan Berhasil Ditambahkan!');
+        }
     }
 
     public function store(Request $request)
