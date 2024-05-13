@@ -98,6 +98,11 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Anamnesa / Allow Anamnesa <code>*</code></label>
+                                    <input type="hidden" name="FS_KD_REG" value="{{ $noReg }}" />
+                                    <input type="hidden" name="KODE_DOKTER" value="{{ $rajal['Kode_Dokter']}}" />
+                                    <input type="hidden" name="NO_MR" value="{{ $rajal['NO_MR']}}" />
+
+                                  
                                     <textarea class="form-control" rows="3" name="FS_ANAMNESA" value="" placeholder="Masukan ..."></textarea>
                                 </div>
                             </div>
