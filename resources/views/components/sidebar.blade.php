@@ -116,7 +116,17 @@
             </li>
 
             <li class="{{ Request::is('dashboard') ? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-dashboard"></i> <span>E-Klaim</span></a></li>
-            <li class="{{ Request::is('ttd') ? 'active' : '' }}"><a class="nav-link" href="{{ route('list-ttd.index') }}"><i class="fas fa-signature"></i> <span>Tanda Tangan Petugas</span></a></li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown {{ Request::is('ttd') ? 'active' : '' }}" data-toggle="dropdown"><i class="fas fa-signature"></i> <span>Tanda Tangan</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('ttd/petugas') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('list-ttd.index') }}">Petugas</a>
+                    </li>
+                    <li class="">
+                        <a class="nav-link" href="{{ route('ttd.pasien.detail') }}">Pasien</a>
+                    </li>
+                </ul>
+            </li>
 
             @can('manage user')
             <li class="menu-header">Mengelola</li>

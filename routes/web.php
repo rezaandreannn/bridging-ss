@@ -151,8 +151,6 @@ Route::middleware('auth')->group(function () {
 
         Route::get('cetak_cppt/{kode_transaksi}/{no_mr}', [FisioController::class, 'cetak_cppt'])->name('cppt.cetakCPPT');
         Route::get('bukti_layanan/{kode_transaksi}/{no_mr}', [FisioController::class, 'bukti_layanan'])->name('cppt.buktiLayanan');
-        // Tanda Tangan Pasien
-        Route::get('/cppt/ttd_pasien/{no_mr}', [TandaTanganController::class, 'ttdPasien'])->name('ttd.pasien');
     });
 
     Route::prefix('ttd')->group(function () {
@@ -162,6 +160,14 @@ Route::middleware('auth')->group(function () {
         Route::get('petugas/edit/{id}', [TandaTanganController::class, 'edit'])->name('list-ttd.edit');
         Route::put('petugas/edit/{id}', [TandaTanganController::class, 'update'])->name('list-ttd.update');
         Route::get('petugas/delete/{id}', [TandaTanganController::class, 'delete'])->name('list-ttd.delete');
+
+        // Tanda Tangan Pasien
+        Route::get('/cppt/ttd_pasien/{no_mr}', [TandaTanganController::class, 'ttdPasien'])->name('ttd.pasien');
+        Route::post('/cppt/ttd_pasien', [TandaTanganController::class, 'ttdPasienStore'])->name('ttd.store');
+
+        // Edit Tanda Tangan Pasien
+        Route::get('/pasienTTD/detail', [TandaTanganController::class, 'ttdPasienDetail'])->name('ttd.pasien.detail');
+        Route::put('/pasienTTD/edit/{id}', [TandaTanganController::class, 'update'])->name('ttd.pasien.update');
     });
 
     Route::prefix('rj')->group(function () {

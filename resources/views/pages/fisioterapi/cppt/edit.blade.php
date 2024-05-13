@@ -40,7 +40,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Kode Transaksi </label>
-                                            <input type="hidden" name="NO_MR_PASIEN" class="form-control" readonly>
+                                            <input type="hidden" name="NO_MR_PASIEN" class="form-control" value="{{ $data->NO_MR_PASIEN}}" readonly>
                                             <input type="hidden" class="form-control" value="{{ $data->ID_TRANSAKSI }}" name="ID_TRANSAKSI" readonly>
                                             <input type="text" name="kode_transaksi" class="form-control" value="{{ $data->KODE_TRANSAKSI_FISIO}}" readonly>
                                         </div>
