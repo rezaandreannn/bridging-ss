@@ -408,7 +408,7 @@
                                         <option value="5" onclick='document.getElementById("civstaton3").disabled = true'>Sedih</option>
                                         <option VALUE="6" onclick='document.getElementById("civstaton3").disabled = false'>Lainnya</option>
                                     </select>
-                                    <input type="hidden" name="FS_STATUS_PSIK2" id="civstaton3" size="32">
+                                    <input type="hidden" name="FS_STATUS_PSIK2" value="" id="civstaton3" size="32">
                                 </div>
                             </div>
                             <div class="col-md-6">

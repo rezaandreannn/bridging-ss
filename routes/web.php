@@ -175,6 +175,7 @@ Route::middleware('auth')->group(function () {
         Route::get('rawat_jalan', [AssesmenController::class, 'index'])->name('rj.index');
         Route::get('rawat_jalan/{noReg}', [AssesmenController::class, 'add'])->name('rj.add');
         Route::post('/rawat_jalan', [AssesmenController::class, 'store'])->name('rj.store');
+        Route::put('/rawat_jalan/{kode_reg}', [AssesmenController::class, 'update'])->name('rj.update');
         Route::get('rawat_jalan/edit/{noReg}', [AssesmenController::class, 'edit'])->name('rj.edit');
         Route::get('rawat_jalan/resume/{noMR}', [AssesmenController::class, 'resume'])->name('rj.resume');
         Route::get('resumePDF/{noMR}', [AssesmenController::class, 'profilPDF'])->name('rj.cetak');

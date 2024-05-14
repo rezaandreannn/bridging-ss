@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Database\Eloquent\Model;
 
@@ -67,6 +68,17 @@ class Rajal extends Model
         } else {
             return false; // Jika tidak ada data SKDP
         }
+    }
+
+    public function asasmenPerawatGet($noReg)
+    {
+        $data = DB::connection('pku')->table('TAC_ASES_PER2')->where('FS_KD_REG', $noReg)->first();
+        // $data = DB::connection('pku')
+        //     ->table('TR_CPPT_FISIOTERAPI')
+        //     ->join('TRANSAKSI_FISIOTERAPI', 'TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
+        //     ->where('TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', $id)
+        //     ->get();
+        return $data;
     }
 
     // Button Cek Laboratori
