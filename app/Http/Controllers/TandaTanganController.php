@@ -71,7 +71,8 @@ class TandaTanganController extends Controller
     {
         $title = $this->prefix . ' Tambah CPPT';
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
-        return view($this->viewPath . 'ttdPasien', compact('title', 'biodatas'));
+        $data = DB::connection('pku')->table('TRANSAKSI_FISIOTERAPI')->get()->first();
+        return view($this->viewPath . 'ttdPasien', compact('title', 'biodatas', 'data'));
     }
 
     public function ttdPasienStore(Request $request)
@@ -92,7 +93,8 @@ class TandaTanganController extends Controller
                 'IMAGE' => $file_name,
                 'CREATE_AT' => now()
             ]);
-            return redirect()->back()->with('success', 'Tanda Tangan Berhasil Ditambahkan!');
+            // return redirect()->back()->with('success', 'Tanda Tangan Berhasil Ditambahkan!');
+            return redirect()->route('cppt.detail', ['id' => $request->input('ID_TRANSAKSI'), 'no_mr' => $request->input('NO_MR_PASIEN'), 'kode_transaksi' => $request->input('KODE_TRANSAKSI_FISIO')]);
             // return redirect()->route('transaksi_fisio.fisio')->with('success', 'Tanda Tangan Berhasil Ditambahkan!');
         }
     }

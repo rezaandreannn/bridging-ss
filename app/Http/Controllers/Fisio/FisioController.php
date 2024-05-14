@@ -169,6 +169,7 @@ class FisioController extends Controller
     public function tambahDataCPPT(Request $request)
     {
         $cekJumlahFisio = DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')->where('ID_TRANSAKSI_FISIO', $request->input('ID_TRANSAKSI'))->count();
+
         $transaksisById = DB::connection('pku')->table('TRANSAKSI_FISIOTERAPI')->where('ID_TRANSAKSI', $request->input('ID_TRANSAKSI'))->get()->first();
         $jumlahMaxFisio = $transaksisById->JUMLAH_TOTAL_FISIO;
 
@@ -205,7 +206,7 @@ class FisioController extends Controller
 
 
 
-            $cek_ttd_pasien =  DB::connection('pku')->table('TTD_PASIEN_MASTER')->where('NO_MR_PASIEN', $request->input('NO_MR'))->count();
+            $cek_ttd_pasien =  DB::connection('pku')->table('TTD_PASIEN_MASTER')->where('NO_MR_PASIEN', $request->input('NO_MR_PASIEN'))->count();
 
             if ($cek_ttd_pasien < '1') {
                 return redirect()->route('ttd.pasien', ['no_mr' => $request->input('NO_MR_PASIEN')]);
@@ -265,7 +266,8 @@ class FisioController extends Controller
             'CREATE_BY' => auth()->user()->name,
         ]);
 
-        return redirect()->back()->with('success', 'CPPT Berhasil Ditambahkan!');
+        // return redirect()->back()->with('success', 'CPPT Berhasil Ditambahkan!');
+        return redirect()->route('cppt.detail', ['id' => $request->input('ID_TRANSAKSI'), 'kode_transaksi' => $request->input('KODE_TRANSAKSI_FISIO'), 'no_mr' => $request->input('NO_MR_PASIEN')]);
         // return redirect()->route('cppt.detail', ['id' => $id,  'no_mr' => $request->input('NO_MR_PASIEN'), 'kode_transaksi' => $request->input('kode_transaksi')])->with('success', 'CPPT Berhasil Diperbarui!');
     }
 
