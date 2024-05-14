@@ -105,6 +105,14 @@ class Fisioterapi extends Model
         return $data;
     }
 
+    public function dataPasienTransaksi()
+    {
+        $data = DB::connection('pku')
+            ->table('TRANSAKSI_FISIOTERAPI')
+            ->get();
+        return $data;
+    }
+
     public function dataEditPasienCPPT($id)
     {
         $data = DB::connection('pku')

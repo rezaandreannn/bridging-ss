@@ -125,10 +125,14 @@
 
                                             </td>
                                             <td width="20%">
+                                                @if($fisioModel->countCpptByKodeTr($transaksi['ID_TRANSAKSI']) >= $transaksi['JUMLAH_TOTAL_FISIO'])
+
+                                                @else
                                                 <a href="{{ route('cppt.detail', [
                                             'id' => $transaksi['ID_TRANSAKSI'],
                                             'no_mr' => $transaksi['NO_MR_PASIEN'],'kode_transaksi' => $transaksi['KODE_TRANSAKSI_FISIO']
                                             ]) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i>Tambah CPPT</a>
+                                                @endif
                                                 <a href="{{ route('cppt.cetakCPPT', [
                                             'kode_transaksi' => $transaksi['KODE_TRANSAKSI_FISIO'],
                                             'no_mr' => $transaksi['NO_MR_PASIEN']
