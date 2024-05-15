@@ -88,6 +88,10 @@ class FisioController extends Controller
         $no_mr_pasien = $request->input('NO_MR_PASIEN');
         $jumlah_total_fisio = $request->input('JUMLAH_TOTAL_FISIO');
 
+        if ($jumlah_total_fisio < 0) {
+            return redirect()->back()->with('warning', 'Inputan tidak boleh minus');
+        }
+
         if ($jumlah_total_fisio > 8) {
             return redirect()->back()->with('warning', 'Pastikan jumlah maksimal fisioterapi adalah 8 kali');
         }

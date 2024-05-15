@@ -255,6 +255,8 @@
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
 
+<!-- Batasan inputan transaksi Fisioterapi -->
+
 <!-- Delete Data -->
 <script>
     $(document).on('click', '#delete', function() {
