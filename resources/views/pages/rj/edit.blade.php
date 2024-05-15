@@ -86,7 +86,8 @@
             <a href="" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-primary mb-2"><i class="fas fa-download"></i>Profil Ringkas Medis Rawat Jalan</a>
             <button class="btn btn-sm btn-primary mb-2" data-toggle="modal" data-target="#modal-histori"><i class="fas fa-history"></i> History</button>
             <!-- form -->
-            <form action="#" method="post">
+   
+            <form action="{{ route('rj.update', $asasmen_perawat->FS_KD_REG) }}" method="POST">
                 @csrf
                 @method('put')
                 <div class="card mb-3">
@@ -99,14 +100,14 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Anamnesa / Allow Anamnesa <code>*</code></label>
-                                    <textarea class="form-control" rows="3" name="FS_ANAMNESA" value="{{ $data->FS_ANAMNESA }}" placeholder="Masukan ..."></textarea>
+                                    <textarea class="form-control" rows="3" name="FS_ANAMNESA" placeholder="Masukan ...">{{ $asasmen_perawat->FS_ANAMNESA }}</textarea>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Pemeriksaan Fisik</label>
-                                    <textarea class="form-control" rows="3" name="FS_EDUKASI" value="" placeholder="Masukan ..."></textarea>
+                                    <textarea class="form-control" rows="3" name="FS_EDUKASI" value="" placeholder="Masukan ...">{{ $asasmen_perawat->FS_EDUKASI }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -360,13 +361,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Riwayat Penyakit Dahulu</label>
-                                    <input type="text" class="form-control" name="FS_RIW_PENYAKIT_DAHULU" value="">
+                                    <input type="text" class="form-control" name="FS_RIW_PENYAKIT_DAHULU" value="{{$asasmen_perawat->FS_RIW_PENYAKIT_DAHULU}}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Riwayat Penyakit keluarga</label>
-                                    <input type="text" class="form-control" name="FS_RIW_PENYAKIT_DAHULU2" value="">
+                                    <input type="text" class="form-control" name="FS_RIW_PENYAKIT_DAHULU2" value="{{$asasmen_perawat->FS_RIW_PENYAKIT_DAHULU2}}">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -397,14 +398,14 @@
                                     <label>Status Psikologis</label>
                                     <select name="FS_STATUS_PSIK" id="" class="form-control select2">
                                         <option value="">-- pilih --</option>
-                                        <option value="1" onclick='document.getElementById("civstaton3").disabled = true' selected>Tenang</option>
-                                        <option value="2" onclick='document.getElementById("civstaton3").disabled = true'>Cemas</option>
-                                        <option value="3" onclick='document.getElementById("civstaton3").disabled = true'>Takut</option>
-                                        <option value="4" onclick='document.getElementById("civstaton3").disabled = true'>Marah</option>
-                                        <option value="5" onclick='document.getElementById("civstaton3").disabled = true'>Sedih</option>
-                                        <option VALUE="6" onclick='document.getElementById("civstaton3").disabled = false'>Lainnya</option>
+                                        <option value="1" {{ ($asasmen_perawat->FS_STATUS_PSIK=='1') ? 'selected' : ''}} onclick='document.getElementById("civstaton3").disabled = true' selected>Tenang</option>
+                                        <option value="2" {{ ($asasmen_perawat->FS_STATUS_PSIK=='2') ? 'selected' : ''}} onclick='document.getElementById("civstaton3").disabled = true'>Cemas</option>
+                                        <option value="3" {{ ($asasmen_perawat->FS_STATUS_PSIK=='3') ? 'selected' : ''}} onclick='document.getElementById("civstaton3").disabled = true'>Takut</option>
+                                        <option value="4" {{ ($asasmen_perawat->FS_STATUS_PSIK=='4') ? 'selected' : ''}} onclick='document.getElementById("civstaton3").disabled = true'>Marah</option>
+                                        <option value="5" {{ ($asasmen_perawat->FS_STATUS_PSIK=='5') ? 'selected' : ''}} onclick='document.getElementById("civstaton3").disabled = true'>Sedih</option>
+                                        <option VALUE="6" {{ ($asasmen_perawat->FS_STATUS_PSIK=='6') ? 'selected' : ''}} onclick='document.getElementById("civstaton3").disabled = false'>Lainnya</option>
                                     </select>
-                                    <input type="hidden" name="FS_STATUS_PSIK2" id="civstaton3" size="32">
+                                    <input type="hidden" name="FS_STATUS_PSIK2" value="" id="civstaton3" size="32">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -412,8 +413,8 @@
                                     <label>Hubungan Dengan Anggota Keluarga</label>
                                     <select name="FS_HUB_KELUARGA" id="" class="form-control select2">
                                         <option value="">-- pilih --</option>
-                                        <option value="1" selected>Baik</option>
-                                        <option value="2">Tidak Baik</option>
+                                        <option value="1" {{ ($asasmen_perawat->FS_HUB_KELUARGA=='1') ? 'selected' : ''}}>Baik</option>
+                                        <option value="2" {{ ($asasmen_perawat->FS_HUB_KELUARGA=='2') ? 'selected' : ''}}>Tidak Baik</option>
                                     </select>
                                 </div>
                             </div>
@@ -422,8 +423,8 @@
                                     <label>Status fungssional</label>
                                     <select name="FS_ST_FUNGSIONAL" id="" class="form-control select2">
                                         <option value="">-- pilih --</option>
-                                        <option value="1" selected>Mandiri</option>
-                                        <option value="2">Perlu Bantuan</option>
+                                        <option value="1" {{ ($asasmen_perawat->FS_ST_FUNGSIONAL=='1') ? 'selected' : ''}}>Mandiri</option>
+                                        <option value="2" {{ ($asasmen_perawat->FS_ST_FUNGSIONAL=='2') ? 'selected' : ''}}>Perlu Bantuan</option>
                                     </select>
                                 </div>
                             </div>
@@ -432,10 +433,10 @@
                                     <label>Penglihatan</label>
                                     <select name="FS_PENGELIHATAN" id="" class="form-control select2">
                                         <option value="">-- pilih --</option>
-                                        <option value="1" selected>Normal</option>
-                                        <option value="2">Kabur</option>
-                                        <option value="3">Kaca Mata</option>
-                                        <option value="4">Lensa Kontak</option>
+                                        <option value="1" {{ ($asasmen_perawat->FS_PENGELIHATAN=='1') ? 'selected' : ''}}>Normal</option>
+                                        <option value="2" {{ ($asasmen_perawat->FS_PENGELIHATAN=='2') ? 'selected' : ''}}>Kabur</option>
+                                        <option value="3" {{ ($asasmen_perawat->FS_PENGELIHATAN=='3') ? 'selected' : ''}}>Kaca Mata</option>
+                                        <option value="4"  {{ ($asasmen_perawat->FS_PENGELIHATAN=='4') ? 'selected' : ''}}>Lensa Kontak</option>
                                     </select>
                                 </div>
                             </div>
@@ -444,8 +445,8 @@
                                     <label>Penciuman</label>
                                     <select name="FS_PENCIUMAN" id="" class="form-control select2">
                                         <option value="">-- pilih --</option>
-                                        <option value="1" selected>Normal</option>
-                                        <option value="2">Tidak Normal</option>
+                                        <option value="1" {{ ($asasmen_perawat->FS_PENCIUMAN=='1') ? 'selected' : ''}}>Normal</option>
+                                        <option value="2" {{ ($asasmen_perawat->FS_PENCIUMAN=='2') ? 'selected' : ''}}>Tidak Normal</option>
                                     </select>
                                 </div>
                             </div>
@@ -454,13 +455,13 @@
                                     <label>Pendengaran</label>
                                     <select name="FS_PENDENGARAN" id="" class="form-control select2">
                                         <option value="">-- pilih --</option>
-                                        <option value="1" selected>Normal</option>
-                                        <option value="2">Tidak Normal (Kanan)</option>
-                                        <option value="3">Tidak Normal (Kiri)</option>
-                                        <option value="4">Tidak Normal (Kanan & Kiri)</option>
-                                        <option value="5">Alat Bantu Dengar (Kanan)</option>
-                                        <option value="6">Alat Bantu Dengar (Kiri)</option>
-                                        <option value="7">Alat Bantu Dengar (Kanan & Kiri)</option>
+                                        <option value="1" {{ ($asasmen_perawat->FS_PENCIUMAN=='1') ? 'selected' : ''}}>Normal</option>
+                                        <option value="2" {{ ($asasmen_perawat->FS_PENCIUMAN=='2') ? 'selected' : ''}}>Tidak Normal (Kanan)</option>
+                                        <option value="3" {{ ($asasmen_perawat->FS_PENCIUMAN=='3') ? 'selected' : ''}}>Tidak Normal (Kiri)</option>
+                                        <option value="4" {{ ($asasmen_perawat->FS_PENCIUMAN=='4') ? 'selected' : ''}}>Tidak Normal (Kanan & Kiri)</option>
+                                        <option value="5" {{ ($asasmen_perawat->FS_PENCIUMAN=='5') ? 'selected' : ''}}>Alat Bantu Dengar (Kanan)</option>
+                                        <option value="6" {{ ($asasmen_perawat->FS_PENCIUMAN=='6') ? 'selected' : ''}}>Alat Bantu Dengar (Kiri)</option>
+                                        <option value="7" {{ ($asasmen_perawat->FS_PENCIUMAN=='7') ? 'selected' : ''}}>Alat Bantu Dengar (Kanan & Kiri)</option>
                                     </select>
                                 </div>
                             </div>
@@ -480,12 +481,12 @@
                                     <label>Penurunan berat badan yang tidak diinginkan selama 6 bulan terakhir</label>
                                     <select name="FS_NUTRISI1" class="form-control select2" onchange="sn1(this)">
                                         <option value="">-- pilih --</option>
-                                        <option value="0">Tidak</option>
-                                        <option value="1">Tidak Yakin</option>
-                                        <option value="2">Ya (1-5 Kg)</option>
-                                        <option value="3">Ya (6-10 Kg)</option>
-                                        <option value="4">Ya (11-15 Kg)</option>
-                                        <option value="5">Ya (>15 Kg)</option>
+                                        <option value="0" {{ ($asasmen_perawat->FS_PENCIUMAN=='0') ? 'selected' : ''}}>Tidak</option>
+                                        <option value="1" {{ ($asasmen_perawat->FS_PENCIUMAN=='1') ? 'selected' : ''}}>Tidak Yakin</option>
+                                        <option value="2" {{ ($asasmen_perawat->FS_PENCIUMAN=='2') ? 'selected' : ''}}>Ya (1-5 Kg)</option>
+                                        <option value="3" {{ ($asasmen_perawat->FS_PENCIUMAN=='3') ? 'selected' : ''}}>Ya (6-10 Kg)</option>
+                                        <option value="4" {{ ($asasmen_perawat->FS_PENCIUMAN=='4') ? 'selected' : ''}}>Ya (11-15 Kg)</option>
+                                        <option value="5" {{ ($asasmen_perawat->FS_PENCIUMAN=='5') ? 'selected' : ''}}>Ya (>15 Kg)</option>
                                     </select>
                                     <input type="hidden" id="hasil_sn1">
                                 </div>
@@ -521,12 +522,12 @@
                                     <label>Agama</label>
                                     <select name="FS_AGAMA" id="" class="form-control select2">
                                         <option value="">-- Pilih Agama --</option>
-                                        <option value="1">Islam</option>
-                                        <option value="2">Kristen</option>
-                                        <option value="3">Katholik</option>
-                                        <option value="4">Hindu</option>
-                                        <option value="5">Buda</option>
-                                        <option value="6">Konghucu</option>
+                                        <option value="1" {{ ($asasmen_perawat->FS_AGAMA=='1') ? 'selected' : ''}}>Islam</option>
+                                        <option value="2" {{ ($asasmen_perawat->FS_AGAMA=='2') ? 'selected' : ''}}>Kristen</option>
+                                        <option value="3" {{ ($asasmen_perawat->FS_AGAMA=='3') ? 'selected' : ''}}>Katholik</option>
+                                        <option value="4" {{ ($asasmen_perawat->FS_AGAMA=='4') ? 'selected' : ''}}>Hindu</option>
+                                        <option value="5" {{ ($asasmen_perawat->FS_AGAMA=='5') ? 'selected' : ''}}>Budha</option>
+                                        <option value="6" {{ ($asasmen_perawat->FS_AGAMA=='6') ? 'selected' : ''}}>Konghucu</option>
                                     </select>
                                 </div>
                             </div>
@@ -535,13 +536,13 @@
                                     <label>Nilai/Kepercayaan khusus</label>
                                     <!-- <input type="text" class="form-control" name="FS_NILAI_KHUSUS" value=""> -->
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="FS_NILAI_KHUSUS" id="exampleRadios1" value="2" onclick='document.getElementById("civstaton4").disabled = true'>
+                                        <input class="form-check-input" type="radio" name="FS_NILAI_KHUSUS" id="exampleRadios1" value="2" {{ ($asasmen_perawat->FS_NILAI_KHUSUS=='2') ? 'checked' : ''}} onclick='document.getElementById("civstaton4").disabled = true'>
                                         <label class="form-check-label" for="exampleRadios1">
                                             Ya
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="FS_NILAI_KHUSUS" id="exampleRadios2" value="1" checked onclick='document.getElementById("civstaton4").disabled = true'>
+                                        <input class="form-check-input" type="radio" name="FS_NILAI_KHUSUS" id="exampleRadios2" value="1"{{ ($asasmen_perawat->FS_NILAI_KHUSUS=='1') ? 'checked' : ''}} onclick='document.getElementById("civstaton4").disabled = true'>
                                         <label class="form-check-label" for="exampleRadios2">
                                             Tidak
                                         </label>
@@ -593,7 +594,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Tanggal Expired Rujukan (jika pasien BPJS)</label>
-                                    <input type="date" name="FS_SKDP_FASKES" id="" class="form-control" value="">
+                                    <input type="date" name="FS_SKDP_FASKES" id="" class="form-control" value="{{$asasmen_perawat->FS_SKDP_FASKES}}">
                                 </div>
                             </div>
                             <!-- include form -->

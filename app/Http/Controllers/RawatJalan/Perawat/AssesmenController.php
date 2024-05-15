@@ -360,7 +360,9 @@ class AssesmenController extends Controller
         $rencana_perawatan = $this->rajal->rencana_perawatan();
         $rajal = $this->rajal->pasien_bynoreg($noReg);
 
-        return view($this->view . 'edit', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'rajal'));
+        $asasmen_perawat = $this->rajal->asasmenPerawatGet($noReg);
+
+        return view($this->view . 'edit', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'rajal', 'asasmen_perawat'));
     }
 
     /**
@@ -370,8 +372,38 @@ class AssesmenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,  $kode_reg)
     {
+
+
+        $data = DB::connection('pku')->table('TAC_ASES_PER2')->where('FS_KD_REG', $kode_reg)->update([
+            'FS_RIW_PENYAKIT_DAHULU' => $request->input('FS_RIW_PENYAKIT_DAHULU'),
+            'FS_RIW_PENYAKIT_DAHULU2' => $request->input('FS_RIW_PENYAKIT_DAHULU2'),
+            'FS_RIW_PENYAKIT_KEL' => '',
+            'FS_RIW_PENYAKIT_KEL2' => '',
+            'FS_STATUS_PSIK' => $request->input('FS_STATUS_PSIK'),
+            'FS_STATUS_PSIK2' => $request->input('FS_STATUS_PSIK2') ? $request->input('FS_STATUS_PSIK2') : '',
+            'FS_HUB_KELUARGA' => $request->input('FS_HUB_KELUARGA'),
+            'FS_ST_FUNGSIONAL' => $request->input('FS_ST_FUNGSIONAL'),
+            'FS_AGAMA' => $request->input('FS_AGAMA'),
+            'FS_NILAI_KHUSUS' => $request->input('FS_NILAI_KHUSUS'),
+            'FS_NILAI_KHUSUS2' => $request->input('FS_NILAI_KHUSUS'),
+            'FS_ANAMNESA' => $request->input('FS_ANAMNESA'),
+            'FS_PENGELIHATAN' => $request->input('FS_PENGELIHATAN'),
+            'FS_PENCIUMAN' => $request->input('FS_PENCIUMAN'),
+            'FS_PENDENGARAN' => $request->input('FS_PENDENGARAN'),
+            'FS_RIW_IMUNISASI' => $request->input('FS_RIW_IMUNISASI') ? $request->input('FS_RIW_IMUNISASI') : '0',
+            'FS_RIW_IMUNISASI_KET' => $request->input('FS_RIW_IMUNISASI_KET') ? $request->input('FS_RIW_IMUNISASI_KET') : '0',
+            'FS_RIW_TUMBUH' => $request->input('FS_RIW_TUMBUH')  ? $request->input('FS_RIW_TUMBUH') : '0',
+            'FS_RIW_TUMBUH_KET' => $request->input('FS_RIW_TUMBUH_KET')  ? $request->input('FS_RIW_TUMBUH_KET') : '0',
+            'FS_HIGH_RISK' => '',
+            'FS_EDUKASI' => $request->input('FS_EDUKASI'),
+            'FS_SKDP_FASKES' => $request->input('FS_SKDP_FASKES'),
+            'mdb' => auth()->user()->name,
+            'mdd' => date('Y-m-d'),
+        ]);
+        var_dump('ok');
+    
         //
     }
 
