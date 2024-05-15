@@ -89,11 +89,11 @@ class FisioController extends Controller
         $jumlah_total_fisio = $request->input('JUMLAH_TOTAL_FISIO');
 
         if ($jumlah_total_fisio < 0) {
-            return redirect()->back()->with('warning', 'Inputan tidak boleh minus');
+            return redirect()->back()->with('warning', 'Inputan tidak boleh Minus !!');
         }
 
         if ($jumlah_total_fisio > 8) {
-            return redirect()->back()->with('warning', 'Pastikan jumlah maksimal fisioterapi adalah 8 kali');
+            return redirect()->back()->with('warning', 'Pastikan jumlah maksimal fisioterapi adalah 8 kali !!');
         }
 
         $response = $this->httpClient->post($this->simrsUrlApi . 'api/fisioterapi/cppt/transaksi_fisioterapi', [
@@ -121,6 +121,9 @@ class FisioController extends Controller
             'JUMLAH_TOTAL_FISIO' => 'required|numeric',
         ]);
 
+        if ($request->input('JUMLAH_TOTAL_FISIO') < 0) {
+            return redirect()->back()->with('warning', 'Inputan tidak boleh Minus !!');
+        }
         if ($request->input('JUMLAH_TOTAL_FISIO') > 8) {
             return redirect()->back()->with('warning', 'Pastikan jumlah maksimal fisioterapi adalah 8 kali');
         }

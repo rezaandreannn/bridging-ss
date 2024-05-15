@@ -97,10 +97,13 @@ class Fisioterapi extends Model
     }
 
     // Get Data Pasien CPPT
-    public function dataPasienCPPT()
+    public function dataPasienCPPT($id)
     {
         $data = DB::connection('pku')
             ->table('TR_CPPT_FISIOTERAPI')
+            ->join('TRANSAKSI_FISIOTERAPI', 'TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
+            ->where('TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', $id)
+            ->orderBy('ID_CPPT_FISIO', 'DESC')
             ->get();
         return $data;
     }
