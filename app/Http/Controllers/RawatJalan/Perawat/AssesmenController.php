@@ -197,8 +197,8 @@ class AssesmenController extends Controller
             $asasmen_perawat = DB::connection('pku')->table('TAC_ASES_PER2')->insert([
                 
                 'FS_KD_REG' => $request->input('FS_KD_REG'),
-                'FS_RIW_PENYAKIT_DAHULU' => $request->input('FS_RIW_PENYAKIT_DAHULU'),
-                'FS_RIW_PENYAKIT_DAHULU2' => $request->input('FS_RIW_PENYAKIT_DAHULU2'),
+                'FS_RIW_PENYAKIT_DAHULU' => '',
+                'FS_RIW_PENYAKIT_DAHULU2' => '',
                 'FS_RIW_PENYAKIT_KEL' => '',
                 'FS_RIW_PENYAKIT_KEL2' => '',
                 'FS_STATUS_PSIK' => $request->input('FS_STATUS_PSIK'),
@@ -225,7 +225,7 @@ class AssesmenController extends Controller
             ]);
             
             
-            $asasmen_perawat = DB::connection('db_rsmm')->table('REGISTER_PASIEN')->where('NO_MR', $request->input('FS_ALERGI'))->update([
+            $alergi = DB::connection('db_rsmm')->table('REGISTER_PASIEN')->where('NO_MR', $request->input('NO_MR'))->update([
 
                 'FS_ALERGI' => $request->input('FS_ALERGI'),
                 'FS_REAK_ALERGI' => $request->input('FS_REAK_ALERGI'),
@@ -283,53 +283,6 @@ class AssesmenController extends Controller
             return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
         }
 
-        // $response = $this->httpClient->post('http://192.168.40.166:8080/api.simrs/rawatjalan/perawat/asasmen_perawat', [
-        //     'json' => [
-        //         'FS_ANAMNESA' => $request->input('FS_ANAMNESA'),
-        //         'FS_EDUKASI' => $request->input('FS_EDUKASI'),
-        //         'FS_SUHU' => $request->input('FS_SUHU'),
-        //         'FS_NADI' => $request->input('FS_NADI'),
-        //         'FS_R' => $request->input('FS_R'),
-        //         'FS_TD' => $request->input('FS_TD'),
-        //         'FS_TB' => $request->input('FS_TB'),
-        //         'FS_BB' => $request->input('FS_BB'),
-        //         'FS_NYERIP' => $request->input('FS_NYERIP'),
-        //         'FS_NYERIQ' => $request->input('FS_NYERIQ'),
-        //         'FS_NYERIR' => $request->input('FS_NYERIR'),
-        //         'FS_NYERIS' => $request->input('FS_NYERIS'),
-        //         'FS_NYERIT' => $request->input('FS_NYERIT'),
-        //         'FS_NYERI' => $request->input('FS_NYERI'),
-        //         'FS_CARA_BERJALAN1' => $request->input('FS_CARA_BERJALAN1'),
-        //         'FS_CARA_BERJALAN2' => $request->input('FS_CARA_BERJALAN2'),
-        //         'FS_CARA_DUDUK' => $request->input('FS_CARA_DUDUK'),
-        //         'intervensi1' => $request->input('intervensi1') ? 'Ya' : 'Tidak',
-        //         'intervensi2' => $request->input('intervensi2') ? 'Ya' : 'Tidak',
-        //         'FS_RIW_PENYAKIT_DAHULU' => $request->input('FS_RIW_PENYAKIT_DAHULU'),
-        //         'FS_RIW_PENYAKIT_DAHULU2' => $request->input('FS_RIW_PENYAKIT_DAHULU2'),
-        //         'FS_ALERGI' => $request->input('FS_ALERGI'),
-        //         'FS_REAK_ALERGI' => $request->input('FS_REAK_ALERGI'),
-        //         'FS_STATUS_PSIK' => $request->input('FS_STATUS_PSIK'),
-        //         'FS_STATUS_PSIK2' => $request->input('FS_STATUS_PSIK2'),
-        //         'FS_HUB_KELUARGA' => $request->input('FS_HUB_KELUARGA'),
-        //         'FS_ST_FUNGSIONAL' => $request->input('FS_ST_FUNGSIONAL'),
-        //         'FS_PENGELIHATAN' => $request->input('FS_PENGELIHATAN'),
-        //         'FS_PENCIUMAN' => $request->input('FS_PENCIUMAN'),
-        //         'FS_PENDENGARAN' => $request->input('FS_PENDENGARAN'),
-        //         'FS_NUTRISI1' => $request->input('FS_NUTRISI1'),
-        //         'FS_NUTRISI2' => $request->input('FS_NUTRISI2'),
-        //         'FS_AGAMA' => $request->input('FS_AGAMA'),
-        //         'FS_NILAI_KHUSUS' => $request->input('FS_NILAI_KHUSUS'),
-        //         'FS_SKDP_FASKES' => $request->input('FS_SKDP_FASKES'),
-        //         'FS_KD_MEDIS' => $request->input('FS_KD_MEDIS'),
-        //         'mdd_jatuh' => $request->input('mdd_jatuh'),
-        //         'mdb_jatuh' => $request->input('mdb_jatuh'),
-        //         'mdb' => $request->input('mdb'),
-        //         'mdd' => $request->input('mdd'),
-        //         'FS_KD_MASALAH_KEP' => $request->input('FS_KD_MASALAH_KEP'),
-        //         'FS_KD_REN_KEP' => $request->input('FS_KD_REN_KEP'),
-        //     ]
-        // ]);
-        // $responseData = $response->getBody()->getContents();
 
      
 
@@ -358,11 +311,20 @@ class AssesmenController extends Controller
         $title = $this->prefix . ' ' . 'Edit Data';
         $masalah_perawatan = $this->rajal->masalah_perawatan();
         $rencana_perawatan = $this->rajal->rencana_perawatan();
+
+        $masalah_perGet = $this->rajal->masalahPerawatanGetByNoreg($noReg);
+        $rencana_perGet = $this->rajal->rencanaPerawatanGetByNoreg($noReg);
         $rajal = $this->rajal->pasien_bynoreg($noReg);
 
         $asasmen_perawat = $this->rajal->asasmenPerawatGet($noReg);
+        $riwayat = $this->rajal->riwayatGet($noReg);
 
-        return view($this->view . 'edit', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'rajal', 'asasmen_perawat'));
+        
+
+        // dd($rencana_perGet);
+        // die;
+
+        return view($this->view . 'edit', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'rajal', 'asasmen_perawat','riwayat','masalah_perGet','rencana_perGet'));
     }
 
     /**
@@ -376,9 +338,9 @@ class AssesmenController extends Controller
     {
 
 
-        $data = DB::connection('pku')->table('TAC_ASES_PER2')->where('FS_KD_REG', $kode_reg)->update([
-            'FS_RIW_PENYAKIT_DAHULU' => $request->input('FS_RIW_PENYAKIT_DAHULU'),
-            'FS_RIW_PENYAKIT_DAHULU2' => $request->input('FS_RIW_PENYAKIT_DAHULU2'),
+        $asasmen_perawat = DB::connection('pku')->table('TAC_ASES_PER2')->where('FS_KD_REG', $kode_reg)->update([
+            'FS_RIW_PENYAKIT_DAHULU' => '',
+            'FS_RIW_PENYAKIT_DAHULU2' => '',
             'FS_RIW_PENYAKIT_KEL' => '',
             'FS_RIW_PENYAKIT_KEL2' => '',
             'FS_STATUS_PSIK' => $request->input('FS_STATUS_PSIK'),
@@ -402,6 +364,67 @@ class AssesmenController extends Controller
             'mdb' => auth()->user()->name,
             'mdd' => date('Y-m-d'),
         ]);
+
+        $vital_sign = DB::connection('pku')->table('TAC_RJ_VITAL_SIGN')->where('FS_KD_REG', $kode_reg)->update([
+            'FS_SUHU' => $request->input('FS_SUHU'),
+            'FS_NADI' => $request->input('FS_NADI'),
+            'FS_R' => $request->input('FS_R'),
+            'FS_TD' => $request->input('FS_TD'),
+            'FS_TB' => $request->input('FS_TB'),
+            'FS_BB' => $request->input('FS_BB'),
+            'mdb' => auth()->user()->name,
+            'mdd' => date('Y-m-d'),
+
+        ]);
+
+
+        $nyeri = DB::connection('pku')->table('TAC_RJ_NYERI')->where('FS_KD_REG', $kode_reg)->update([
+            'FS_NYERIP' => $request->input('FS_NYERIP'),
+            'FS_NYERIQ' => $request->input('FS_NYERIQ'),
+            'FS_NYERIR' => $request->input('FS_NYERIR'),
+            'FS_NYERIS' => $request->input('FS_NYERIS'),
+            'FS_NYERIT' => $request->input('FS_NYERIT'),
+            'mdb' => auth()->user()->name,
+            'mdd' => date('Y-m-d'),
+            'FS_NYERI' => $request->input('FS_NYERI'),
+
+        ]);
+        
+        $asasmen_jatuh = DB::connection('pku')->table('TAC_RJ_JATUH')->where('FS_KD_REG', $kode_reg)->update([
+            'FS_CARA_BERJALAN1' => $request->input('FS_CARA_BERJALAN1'),
+            'FS_CARA_BERJALAN2' => $request->input('FS_CARA_BERJALAN2'),
+            'FS_CARA_DUDUK' => $request->input('FS_CARA_DUDUK'),
+            'mdd' => auth()->user()->name,
+            'mdb' => date('Y-m-d'),
+            'intervensi1' => $request->input('intervensi1')  ? 'Ya' : 'Tidak',
+            'intervensi2' => $request->input('intervensi2')  ? 'Ya' : 'Tidak',
+            
+        ]);
+        
+        
+        // $alergi = DB::connection('db_rsmm')->table('REGISTER_PASIEN')->where('NO_MR', $request->input('NO_MR'))->update([
+        //     'FS_ALERGI' => $request->input('FS_ALERGI'),
+        //     'FS_REAK_ALERGI' => $request->input('FS_REAK_ALERGI'),
+        //     'FS_RIW_PENYAKIT_DAHULU' => $request->input('FS_RIW_PENYAKIT_DAHULU'),
+        //     'FS_RIW_PENYAKIT_DAHULU2' => $request->input('FS_RIW_PENYAKIT_DAHULU2'),
+            
+            
+        // ]);
+   
+        $nutrisi = DB::connection('pku')->table('TAC_RJ_NUTRISI')->where('FS_KD_REG', $kode_reg)->update([
+            'FS_NUTRISI1' => $request->input('FS_NUTRISI1'),
+            'FS_NUTRISI2' => $request->input('FS_NUTRISI2'),
+            'FS_NUTRISI_ANAK1' => $request->input('FS_NUTRISI_ANAK1') ? $request->input('FS_NUTRISI_ANAK1') : '',
+            'FS_NUTRISI_ANAK2' => $request->input('FS_NUTRISI_ANAK2')  ? $request->input('FS_NUTRISI_ANAK2') : '',
+            'FS_NUTRISI_ANAK3' => $request->input('FS_NUTRISI_ANAK3')  ? $request->input('FS_NUTRISI_ANAK3') : '',
+            'FS_NUTRISI_ANAK4' => $request->input('FS_NUTRISI_ANAK4')  ? $request->input('FS_NUTRISI_ANAK4') : '',
+            'mdb' => auth()->user()->name,
+            'mdd' => date('Y-m-d'),
+
+            
+        ]);
+
+
         var_dump('ok');
     
         //

@@ -72,7 +72,52 @@ class Rajal extends Model
 
     public function asasmenPerawatGet($noReg)
     {
-        $data = DB::connection('pku')->table('TAC_ASES_PER2')->where('FS_KD_REG', $noReg)->first();
+        $data = DB::connection('pku')->table('TAC_ASES_PER2')
+        ->join('TAC_RJ_VITAL_SIGN', 'TAC_ASES_PER2.FS_KD_REG', '=', 'TAC_RJ_VITAL_SIGN.FS_KD_REG')
+        ->join('TAC_RJ_NYERI', 'TAC_ASES_PER2.FS_KD_REG', '=', 'TAC_RJ_NYERI.FS_KD_REG')
+        ->join('TAC_RJ_JATUH', 'TAC_ASES_PER2.FS_KD_REG', '=', 'TAC_RJ_JATUH.FS_KD_REG')
+        ->join('TAC_RJ_NUTRISI', 'TAC_ASES_PER2.FS_KD_REG', '=', 'TAC_RJ_NUTRISI.FS_KD_REG')
+        ->where('TAC_ASES_PER2.FS_KD_REG', $noReg)->first();
+
+        // $data = DB::connection('pku')
+        //     ->table('TR_CPPT_FISIOTERAPI')
+        //     ->join('TRANSAKSI_FISIOTERAPI', 'TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
+        //     ->where('TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', $id)
+        //     ->get();
+        return $data;
+    }
+
+    public function riwayatGet($noReg)
+    {
+        $data = DB::connection('db_rsmm')->table('REGISTER_PASIEN')
+        ->join('PENDAFTARAN', 'REGISTER_PASIEN.NO_MR', '=', 'PENDAFTARAN.NO_MR')
+        ->where('PENDAFTARAN.NO_REG', $noReg)->first();
+
+        // $data = DB::connection('pku')
+        //     ->table('TR_CPPT_FISIOTERAPI')
+        //     ->join('TRANSAKSI_FISIOTERAPI', 'TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
+        //     ->where('TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', $id)
+        //     ->get();
+        return $data;
+    }
+
+    public function masalahPerawatanGetByNoreg($noReg)
+    {
+        $data = DB::connection('pku')->table('TAC_RJ_MASALAH_KEP')
+        ->where('FS_KD_REG', $noReg)->get();
+
+        // $data = DB::connection('pku')
+        //     ->table('TR_CPPT_FISIOTERAPI')
+        //     ->join('TRANSAKSI_FISIOTERAPI', 'TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
+        //     ->where('TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', $id)
+        //     ->get();
+        return $data;
+    }
+    public function rencanaPerawatanGetByNoreg($noReg)
+    {
+        $data = DB::connection('pku')->table('TAC_RJ_REN_KEP')
+        ->where('FS_KD_REG', $noReg)->get();
+
         // $data = DB::connection('pku')
         //     ->table('TR_CPPT_FISIOTERAPI')
         //     ->join('TRANSAKSI_FISIOTERAPI', 'TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')

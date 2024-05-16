@@ -124,14 +124,14 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Suhu</label>
-                                    <input type="text" name="FS_SUHU" class="form-control" name="FS_SUHU" value="">
+                                    <input type="text" name="FS_SUHU" class="form-control" name="FS_SUHU" value="{{ $asasmen_perawat->FS_SUHU }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Nadi</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" onkeypress="return hanyaAngka(event)" name="FS_NADI" value="">
+                                        <input type="text" class="form-control" onkeypress="return hanyaAngka(event)" name="FS_NADI" value="{{ $asasmen_perawat->FS_NADI }}">
                                         <div class="input-group-append">
                                             <span class="input-group-text">x/menit</span>
                                         </div>
@@ -142,7 +142,7 @@
                                 <div class="form-group">
                                     <label>Respirasi</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" name="FS_R" value="">
+                                        <input type="text" class="form-control" name="FS_R" value="{{ $asasmen_perawat->FS_R }}">
                                         <div class="input-group-append">
                                             <span class="input-group-text">x/menit</span>
                                         </div>
@@ -153,7 +153,7 @@
                                 <div class="form-group">
                                     <label>Tekanan Darah</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" name="FS_TD" value="">
+                                        <input type="text" class="form-control" name="FS_TD" value="{{ $asasmen_perawat->FS_TD }}">
                                         <div class="input-group-append">
                                             <span class="input-group-text">mmHg</span>
                                         </div>
@@ -164,7 +164,7 @@
                                 <div class="form-group">
                                     <label>Tinggi Badan</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" onkeypress="return hanyaAngka(event)" name="FS_TB" value="">
+                                        <input type="text" class="form-control" onkeypress="return hanyaAngka(event)" name="FS_TB" value="{{ $asasmen_perawat->FS_TB }}">
                                         <div class="input-group-append">
                                             <span class="input-group-text">cm</span>
                                         </div>
@@ -175,7 +175,7 @@
                                 <div class="form-group">
                                     <label>Berat Badan</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" onkeypress="return hanyaAngka(event)" name="FS_BB" value="">
+                                        <input type="text" class="form-control" onkeypress="return hanyaAngka(event)" name="FS_BB" value="{{ $asasmen_perawat->FS_BB }}">
                                         <div class="input-group-append">
                                             <span class="input-group-text">kg</span>
                                         </div>
@@ -197,13 +197,13 @@
                                 <div class="form-group">
                                     <label>Ada Nyeri?</label>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="FS_NYERI" id="exampleRadios1" value="1">
+                                        <input class="form-check-input" type="radio" name="FS_NYERI" id="exampleRadios1" value="1" {{ ($asasmen_perawat->FS_NYERI=='1') ? 'checked' : '' }}>
                                         <label class="form-check-label" for="exampleRadios1">
                                             Ya
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="FS_NYERI" id="exampleRadios2" value="0" checked>
+                                        <input class="form-check-input" type="radio" name="FS_NYERI" id="exampleRadios2" value="0" {{ ($asasmen_perawat->FS_NYERI=='0') ? 'checked' : '' }}>
                                         <label class="form-check-label" for="exampleRadios2">
                                             Tidak
                                         </label>
@@ -215,11 +215,11 @@
                                     <label>Quality</label>
                                     <div class="input-group mb-3">
                                         <select name="FS_NYERIQ" id="" class="form-control select2">
-                                            <option value="0">Tidak Ada</option>
-                                            <option value="1">Seperti Di Tusuk-Tusuk</option>
-                                            <option value="2">Seperti Terbakar</option>
-                                            <option value="3">Seperti Tertimpa Beban</option>
-                                            <option value="4">Ngilu</option>
+                                            <option value="0" {{ ($asasmen_perawat->FS_NYERIQ=='0') ? 'selected' : '' }}>Tidak Ada</option>
+                                            <option value="1" {{ ($asasmen_perawat->FS_NYERIQ=='1') ? 'selected' : '' }}>Seperti Di Tusuk-Tusuk</option>
+                                            <option value="2" {{ ($asasmen_perawat->FS_NYERIQ=='2') ? 'selected' : '' }}>Seperti Terbakar</option>
+                                            <option value="3" {{ ($asasmen_perawat->FS_NYERIQ=='3') ? 'selected' : '' }}>Seperti Tertimpa Beban</option>
+                                            <option value="4" {{ ($asasmen_perawat->FS_NYERIQ=='4') ? 'selected' : '' }}>Ngilu</option>
                                         </select>
                                     </div>
                                 </div>
@@ -229,10 +229,10 @@
                                     <label>Provokatif</label>
                                     <div class="input-group mb-3">
                                         <select name="FS_NYERIP" id="" class="form-control select2">
-                                            <option value="0">Tidak Ada Nyeri</option>
-                                            <option value="2">Biologik</option>
-                                            <option value="3">Kimiawi</option>
-                                            <option value="4">Mekanik / Rudapaksa</option>
+                                            <option value="0" {{ ($asasmen_perawat->FS_NYERIP=='0') ? 'selected' : '' }}>Tidak Ada Nyeri</option>
+                                            <option value="2" {{ ($asasmen_perawat->FS_NYERIP=='2') ? 'selected' : '' }}>Biologik</option>
+                                            <option value="3" {{ ($asasmen_perawat->FS_NYERIP=='3') ? 'selected' : '' }}>Kimiawi</option>
+                                            <option value="4" {{ ($asasmen_perawat->FS_NYERIP=='4') ? 'selected' : '' }}>Mekanik / Rudapaksa</option>
                                         </select>
                                     </div>
                                 </div>
@@ -242,17 +242,17 @@
                                     <label>Severity</label>
                                     <div class="input-group mb-3">
                                         <select name="FS_NYERIS" id="" class="form-control select2">
-                                            <option value="0">0</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                            <option value="7">7</option>
-                                            <option value="8">8</option>
-                                            <option value="9">9</option>
-                                            <option value="10">10</option>
+                                            <option value="0" {{ ($asasmen_perawat->FS_NYERIS=='0') ? 'selected' : '' }}>0</option>
+                                            <option value="1" {{ ($asasmen_perawat->FS_NYERIS=='1') ? 'selected' : '' }}>1</option>
+                                            <option value="2" {{ ($asasmen_perawat->FS_NYERIS=='2') ? 'selected' : '' }}>2</option>
+                                            <option value="3" {{ ($asasmen_perawat->FS_NYERIS=='3') ? 'selected' : '' }}>3</option>
+                                            <option value="4" {{ ($asasmen_perawat->FS_NYERIS=='4') ? 'selected' : '' }}>4</option>
+                                            <option value="5" {{ ($asasmen_perawat->FS_NYERIS=='5') ? 'selected' : '' }}>5</option>
+                                            <option value="6" {{ ($asasmen_perawat->FS_NYERIS=='6') ? 'selected' : '' }}>6</option>
+                                            <option value="7" {{ ($asasmen_perawat->FS_NYERIS=='7') ? 'selected' : '' }}>7</option>
+                                            <option value="8" {{ ($asasmen_perawat->FS_NYERIS=='8') ? 'selected' : '' }}>8</option>
+                                            <option value="9" {{ ($asasmen_perawat->FS_NYERIS=='9') ? 'selected' : '' }}>9</option>
+                                            <option value="10" {{ ($asasmen_perawat->FS_NYERIS=='10') ? 'selected' : '' }}>10</option>
                                         </select>
                                     </div>
                                 </div>
@@ -261,7 +261,7 @@
                                 <div class="form-group">
                                     <label>Regio</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" name="FS_NYERIR" value="-">
+                                        <input type="text" class="form-control" name="FS_NYERIR" value="{{$asasmen_perawat->FS_NYERIR}}">
                                     </div>
                                 </div>
                             </div>
@@ -270,10 +270,10 @@
                                     <label>Time</label>
                                     <div class="input-group mb-3">
                                         <select name="FS_NYERIT" id="" class="form-control select2">
-                                            <option value="0">Tidak Ada</option>
-                                            <option value="1">Kadang-Kadang</option>
-                                            <option value="2">Sering</option>
-                                            <option value="3">Menetap</option>
+                                            <option value="0" {{ ($asasmen_perawat->FS_NYERIT=='0') ? 'selected' : '' }}>Tidak Ada</option>
+                                            <option value="1" {{ ($asasmen_perawat->FS_NYERIT=='1') ? 'selected' : '' }}>Kadang-Kadang</option>
+                                            <option value="2" {{ ($asasmen_perawat->FS_NYERIT=='2') ? 'selected' : '' }}>Sering</option>
+                                            <option value="3" {{ ($asasmen_perawat->FS_NYERIT=='3') ? 'selected' : '' }}>Menetap</option>
                                         </select>
                                     </div>
                                 </div>
@@ -292,20 +292,20 @@
                             <div class="col-md-6">
                                 <div class="form-group clearfix">
                                     <label>Pasien berjalan tidak seimbang / sempoyongan</label>
-                                    <select name="FS_CARA_BERJALAN1" class="form-control select2" onchange="click1(this)">
+                                    <select name="FS_CARA_BERJALAN1" class="form-control" onchange="click1(this)">
                                         <option value="">--Pilih Data--</option>
-                                        <option value="0">TIDAK</option>
-                                        <option value="1">YA</option>
+                                        <option value="0" {{ ($asasmen_perawat->FS_CARA_BERJALAN1=='0') ? 'selected' : '' }}>TIDAK</option>
+                                        <option value="1" {{ ($asasmen_perawat->FS_CARA_BERJALAN1=='1') ? 'selected' : '' }}>YA</option>
                                     </select>
                                 </div>
                                 <div class="form-group clearfix">
                                     <label>
                                         Pasien berjalan menggunakan alat bantu
                                     </label>
-                                    <select name="FS_CARA_BERJALAN2" class="form-control select2" onchange="click2(this)">
+                                    <select name="FS_CARA_BERJALAN2" class="form-control" onchange="click2(this)">
                                         <option value="">--Pilih Data--</option>
-                                        <option value="0">TIDAK</option>
-                                        <option value="1">YA</option>
+                                        <option value="0" {{ ($asasmen_perawat->FS_CARA_BERJALAN2=='0') ? 'selected' : '' }}>TIDAK</option>
+                                        <option value="1" {{ ($asasmen_perawat->FS_CARA_BERJALAN2=='1') ? 'selected' : '' }}>YA</option>
                                     </select>
 
                                 </div>
@@ -313,10 +313,10 @@
                                     <label for="check3">
                                         Pada saat akan duduk pasien memegang benda untuk menopang
                                     </label>
-                                    <select name="FS_CARA_DUDUK" class="form-control select2" onchange="click3(this)">
+                                    <select name="FS_CARA_DUDUK" class="form-control" onchange="click3(this)">
                                         <option value="">--Pilih Data--</option>
-                                        <option value="0">TIDAK</option>
-                                        <option value="1">YA</option>
+                                        <option value="0" {{ ($asasmen_perawat->FS_CARA_DUDUK=='0') ? 'selected' : '' }}>TIDAK</option>
+                                        <option value="1" {{ ($asasmen_perawat->FS_CARA_DUDUK=='1') ? 'selected' : '' }}>YA</option>
                                     </select>
                                 </div>
                             </div>
@@ -327,7 +327,7 @@
                             <div class="col-md-6">
                                 <div class="form-group clearfix">
                                     <div class="icheck-primary d-inline">
-                                        <input type="checkbox" id="checkboxPrimary4" name="intervensi1" value="Ya">
+                                        <input type="checkbox" id="checkboxPrimary4" name="intervensi1" value="Ya" {{ ($asasmen_perawat->intervensi1=='Ya') ? 'checked' : '' }}>
                                         <label for="checkboxPrimary4">
                                             Edukasi
                                         </label>
@@ -335,7 +335,7 @@
                                 </div>
                                 <div class="form-group clearfix">
                                     <div class="icheck-primary d-inline">
-                                        <input type="checkbox" id="checkboxPrimary5" name="intervensi2" value="Ya">
+                                        <input type="checkbox" id="checkboxPrimary5" name="intervensi2" value="Ya" {{ ($asasmen_perawat->intervensi2=='Ya') ? 'checked' : '' }}>
                                         <label for="checkboxPrimary5">
                                             Pasang Stiker Resiko Jatuh (*resiko tinggi)
                                         </label>
@@ -361,13 +361,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Riwayat Penyakit Dahulu</label>
-                                    <input type="text" class="form-control" name="FS_RIW_PENYAKIT_DAHULU" value="{{$asasmen_perawat->FS_RIW_PENYAKIT_DAHULU}}">
+                                    <input type="text" class="form-control" name="FS_RIW_PENYAKIT_DAHULU" value="">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Riwayat Penyakit keluarga</label>
-                                    <input type="text" class="form-control" name="FS_RIW_PENYAKIT_DAHULU2" value="{{$asasmen_perawat->FS_RIW_PENYAKIT_DAHULU2}}">
+                                    <input type="text" class="form-control" name="FS_RIW_PENYAKIT_DAHULU2" value="">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -481,12 +481,12 @@
                                     <label>Penurunan berat badan yang tidak diinginkan selama 6 bulan terakhir</label>
                                     <select name="FS_NUTRISI1" class="form-control select2" onchange="sn1(this)">
                                         <option value="">-- pilih --</option>
-                                        <option value="0" {{ ($asasmen_perawat->FS_PENCIUMAN=='0') ? 'selected' : ''}}>Tidak</option>
-                                        <option value="1" {{ ($asasmen_perawat->FS_PENCIUMAN=='1') ? 'selected' : ''}}>Tidak Yakin</option>
-                                        <option value="2" {{ ($asasmen_perawat->FS_PENCIUMAN=='2') ? 'selected' : ''}}>Ya (1-5 Kg)</option>
-                                        <option value="3" {{ ($asasmen_perawat->FS_PENCIUMAN=='3') ? 'selected' : ''}}>Ya (6-10 Kg)</option>
-                                        <option value="4" {{ ($asasmen_perawat->FS_PENCIUMAN=='4') ? 'selected' : ''}}>Ya (11-15 Kg)</option>
-                                        <option value="5" {{ ($asasmen_perawat->FS_PENCIUMAN=='5') ? 'selected' : ''}}>Ya (>15 Kg)</option>
+                                        <option value="0" {{ ($asasmen_perawat->FS_NUTRISI1=='0') ? 'selected' : ''}}>Tidak</option>
+                                        <option value="1" {{ ($asasmen_perawat->FS_NUTRISI1=='1') ? 'selected' : ''}}>Tidak Yakin</option>
+                                        <option value="2" {{ ($asasmen_perawat->FS_NUTRISI1=='2') ? 'selected' : ''}}>Ya (1-5 Kg)</option>
+                                        <option value="3" {{ ($asasmen_perawat->FS_NUTRISI1=='3') ? 'selected' : ''}}>Ya (6-10 Kg)</option>
+                                        <option value="4" {{ ($asasmen_perawat->FS_NUTRISI1=='4') ? 'selected' : ''}}>Ya (11-15 Kg)</option>
+                                        <option value="5" {{ ($asasmen_perawat->FS_NUTRISI1=='5') ? 'selected' : ''}}>Ya (>15 Kg)</option>
                                     </select>
                                     <input type="hidden" id="hasil_sn1">
                                 </div>
@@ -496,8 +496,8 @@
                                     <label>Asupan makanan menurun dikarenakan adanya penurunan nafsu makan</label>
                                     <select name="FS_NUTRISI2" class="form-control select2" onchange="sn2(this)">
                                         <option value="">-- pilih --</option>
-                                        <option value="0">Tidak</option>
-                                        <option value="1">Ya</option>
+                                        <option value="0" {{ ($asasmen_perawat->FS_NUTRISI2=='0') ? 'selected' : ''}}>Tidak</option>
+                                        <option value="1" {{ ($asasmen_perawat->FS_NUTRISI2=='1') ? 'selected' : ''}}>Ya</option>
                                     </select>
                                     <input type="hidden" id="hasil_sn2">
                                 </div>
@@ -565,9 +565,12 @@
                                 <div class="form-group">
                                     <label>Masalah Keperawatan</label>
                                     <select name="tujuan[]" id="masalah_perawatan" class="form-control select2" multiple="multiple" data-placeholder="Pilih Masalah Keperawatan" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                              
                                         <option value="">-- pilih --</option>
+                                        @foreach ($masalah_perGet as $mp)
                                         @foreach ($masalah_perawatan as $mk)
-                                        <option value="{{ $mk['FS_KD_DAFTAR_DIAGNOSA'] }}" {{ request('tujuan') == $mk['FS_KD_DAFTAR_DIAGNOSA'] ? 'selected' : '' }}>{{ $mk['FS_NM_DIAGNOSA'] }}</option>
+                                        <option value="{{ $mk['FS_KD_DAFTAR_DIAGNOSA'] }}" {{ $mp->FS_KD_MASALAH_KEP == $mk['FS_KD_DAFTAR_DIAGNOSA'] ? 'selected' : '' }}>{{ $mk['FS_NM_DIAGNOSA'] }}</option>
+                                        @endforeach
                                         @endforeach
                                     </select>
                                 </div>
@@ -577,8 +580,10 @@
                                     <label>Rencana Keperawatan</label>
                                     <select multiple name="tembusan[]" id="rencana_perawatan" class="form-control select2" multiple="multiple" data-placeholder="Pilih Rencana Keperawatan" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                         <option value="">-- pilih --</option>
+                                        @foreach ($rencana_perGet as $rpp)
                                         @foreach ($rencana_perawatan as $rp)
-                                        <option value="{{ $rp['FS_KD_TRS'] }}" {{ request('tembusan') == $rp['FS_KD_TRS'] ? 'selected' : '' }}>{{ $rp['FS_NM_REN_KEP'] }}</option>
+                                        <option value="{{ $rp['FS_KD_TRS'] }}" {{ $rpp->FS_KD_REN_KEP == $rp['FS_KD_TRS'] ? 'selected' : '' }}>{{ $rp['FS_NM_REN_KEP'] }}</option>
+                                        @endforeach
                                         @endforeach
                                     </select>
                                 </div>
@@ -694,5 +699,64 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+
+<script type="text/javascript">
+    function click1(selected) {
+        var checkbox1 = selected.value
+        $("#hasil_check1").html(checkbox1);
+        score_skrining_asasmen_jatuh();
+    }
+
+    function click2(selected) {
+        var checkbox2 = selected.value
+        $("#hasil_check2").html(checkbox2);
+        score_skrining_asasmen_jatuh();
+    }
+
+    function click3(selected) {
+        var checkbox3 = selected.value
+        $("#hasil_check3").html(checkbox3);
+        score_skrining_asasmen_jatuh();
+    }
+
+    function sn1(selected) {
+        var value1 = selected.value
+        $("#hasil_sn1").html(value1);
+        score_skrining_nutrisi();
+    };
+
+    function sn2(selected) {
+        var value2 = selected.value
+        $("#hasil_sn2").html(value2);
+        score_skrining_nutrisi();
+    };
+</script>
+
+<script type="text/javascript">
+    // score skrining nutrisi
+    function score_skrining_nutrisi() {
+        var sn = parseInt($("#hasil_sn1").text()) + parseInt($("#hasil_sn2").text());
+        $("#totalsn").html(sn);
+        if (sn >= 2) {
+            $("#kesimpulan_skrining_nutrisi").val("LAPORKAN KE DOKTER");
+        } else if (sn < 2) {
+            $("#kesimpulan_skrining_nutrisi").val("NORMAL");
+        }
+    }
+
+    // score skrining asesmen jatuh
+    function score_skrining_asasmen_jatuh() {
+        var score_jatuh = parseInt($("#hasil_check1").text()) + parseInt($("#hasil_check2").text()) + parseInt($("#hasil_check3").text());
+        $("#totalscore_jatuh").html(score_jatuh);
+
+        if (score_jatuh >= 3) {
+            $("#kesimpulan_asesmen_jatuh").val("RISIKO TINGGI");
+        } else if (score_jatuh == 2) {
+            $("#kesimpulan_asesmen_jatuh").val("RISIKO SEDANG");
+        } else if (score_jatuh <= 1) {
+            $("#kesimpulan_asesmen_jatuh").val("RISIKO RENDAH");
+        }
+    }
+</script>
 
 @endpush
