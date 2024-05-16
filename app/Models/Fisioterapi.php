@@ -108,6 +108,15 @@ class Fisioterapi extends Model
         return $data;
     }
 
+    public function PasienCPPTID($id)
+    {
+        $data = DB::connection('pku')
+            ->table('TR_CPPT_FISIOTERAPI')
+            ->where('ID_CPPT_FISIO', $id)
+            ->first();
+        return $data;
+    }
+
     public function dataPasienTransaksi()
     {
         $data = DB::connection('pku')

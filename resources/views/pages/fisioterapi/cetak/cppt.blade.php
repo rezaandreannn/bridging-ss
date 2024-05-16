@@ -79,10 +79,11 @@
             <td>S = {{ $item->ANAMNESA }} <br>O = TD = {{ $item->TEKANAN_DARAH }}, N = {{ $item->NADI }}, T = {{ $item->SUHU }}</td>
             <td>{{ $item->DIAGNOSA }}</td>
             <td>{{ $item->JENIS_FISIO }}</td>
-            <td> @if($item->KODE_DOKTER != '')
+            <td>
+                @if($item->KODE_DOKTER != '')
                 {{ $dokter->Nama_Dokter }}
                 @else
-
+                <!-- Handle case when KODE_DOKTER is empty -->
                 @endif
             </td>
         </tr>

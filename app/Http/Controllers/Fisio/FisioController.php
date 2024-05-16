@@ -274,7 +274,7 @@ class FisioController extends Controller
         ]);
 
         // return redirect()->back()->with('success', 'CPPT Berhasil Ditambahkan!');
-        return redirect()->route('cppt.detail', ['id' => $request->input('ID_TRANSAKSI'), 'kode_transaksi' => $request->input('KODE_TRANSAKSI_FISIO'), 'no_mr' => $request->input('NO_MR_PASIEN')]);
+        return redirect()->route('cppt.detail', ['id' => $request->input('ID_TRANSAKSI'), 'kode_transaksi' => $request->input('KODE_TRANSAKSI_FISIO'), 'no_mr' => $request->input('NO_MR_PASIEN')])->with('success', 'CPPT Berhasil Diperbarui!');
         // return redirect()->route('cppt.detail', ['id' => $id,  'no_mr' => $request->input('NO_MR_PASIEN'), 'kode_transaksi' => $request->input('kode_transaksi')])->with('success', 'CPPT Berhasil Diperbarui!');
     }
 
@@ -290,7 +290,11 @@ class FisioController extends Controller
     {
         $title = $this->prefix . ' ' . 'Cetak CPPT';
 
-        $data = $this->fisio->dataPasienCPPT();
+        $data = DB::connection('pku')
+            ->table('TR_CPPT_FISIOTERAPI')
+            ->join('TRANSAKSI_FISIOTERAPI', 'TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
+            ->where('TRANSAKSI_FISIOTERAPI.KODE_TRANSAKSI_FISIO', '=', $id)
+            ->get();
 
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
         $date = date('dMY');

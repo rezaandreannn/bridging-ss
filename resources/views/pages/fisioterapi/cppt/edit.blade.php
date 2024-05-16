@@ -71,19 +71,19 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tekanan Darah</label>
-                                            <input type="text" name="TEKANAN_DARAH" value="{{ $data->TEKANAN_DARAH}}" class="form-control">
+                                            <input type="text" name="TEKANAN_DARAH" id="tekananDarah" value="{{ $data->TEKANAN_DARAH}}" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Nadi</label>
-                                            <input type="text" name="NADI" value="{{ $data->NADI}}" class="form-control">
+                                            <input type="text" name="NADI" id="nadi" value="{{ $data->NADI}}" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Suhu</label>
-                                            <input type="text" name="SUHU" value="{{ $data->SUHU}}" class="form-control">
+                                            <input type="text" name="SUHU" id="suhu" value="{{ $data->SUHU}}" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -156,6 +156,35 @@
 
     // Memperbarui waktu setiap menit
     setInterval(updateTime, 1000);
+</script>
+
+<!-- Membatasi inputan huruf -->
+<!-- Membatasi inputan huruf -->
+<script>
+    document.getElementById('tekananDarah').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('suhu').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('nadi').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
 </script>
 
 @endpush
