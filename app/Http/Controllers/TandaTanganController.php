@@ -94,7 +94,7 @@ class TandaTanganController extends Controller
                 'CREATE_AT' => now()
             ]);
             // return redirect()->back()->with('success', 'Tanda Tangan Berhasil Ditambahkan!');
-            return redirect()->route('cppt.detail', ['id' => $request->input('ID_TRANSAKSI'), 'no_mr' => $request->input('NO_MR_PASIEN'), 'kode_transaksi' => $request->input('KODE_TRANSAKSI_FISIO')]);
+            return redirect()->route('cppt.detail', ['id' => $request->input('ID_TRANSAKSI'), 'no_mr' => $request->input('NO_MR_PASIEN'), 'kode_transaksi' => $request->input('KODE_TRANSAKSI_FISIO')])->with('success', 'Tanda Tangan Berhasil Ditambahkan!');
             // return redirect()->route('transaksi_fisio.fisio')->with('success', 'Tanda Tangan Berhasil Ditambahkan!');
         }
     }
