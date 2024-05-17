@@ -218,7 +218,7 @@ class FisioController extends Controller
             if ($cek_ttd_pasien < '1') {
                 return redirect()->route('ttd.pasien', ['no_mr' => $request->input('NO_MR_PASIEN')]);
             } else {
-                return redirect()->back()->with('success', 'CPPT Berhasil Diperbarui!');
+                return redirect()->route('cppt.detail', ['id' => $request->input('ID_TRANSAKSI'), 'kode_transaksi' => $request->input('KODE_TRANSAKSI_FISIO'), 'no_mr' => $request->input('NO_MR_PASIEN')])->with('success', 'CPPT Berhasil Ditambahkan!');
                 // return redirect()->route('cppt.detail', ['no_mr' => $request->input('NO_MR'), 'kode_transaksi' => $request->input('KD_TRANSAKSI_FISIO')])->with('success', 'CPPT Berhasil Diperbarui!');
             }
         }
@@ -295,7 +295,6 @@ class FisioController extends Controller
             ->join('TRANSAKSI_FISIOTERAPI', 'TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
             ->where('TRANSAKSI_FISIOTERAPI.KODE_TRANSAKSI_FISIO', '=', $id)
             ->get();
-
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
         $date = date('dMY');
         $filename = 'CPPT-' . $date;

@@ -104,9 +104,9 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Kode Transaksi </label>
-                                            <input type="hidden" class="form-control" name="NO_MR_PASIEN" value="{{ $cppt->NO_MR_PASIEN }}" readonly>
                                             <input type="hidden" class="form-control" value="{{ $cppt->ID_TRANSAKSI }}" name="ID_TRANSAKSI" readonly>
-                                            <input type="text" class="form-control" value="{{ $cppt->KODE_TRANSAKSI_FISIO}}" name="kode_transaksi" readonly>
+                                            <input type="text" class="form-control" value="{{ $cppt->KODE_TRANSAKSI_FISIO}}" name="KODE_TRANSAKSI_FISIO" readonly>
+                                            <input type="hidden" class="form-control" name="NO_MR_PASIEN" value="{{ $cppt->NO_MR_PASIEN }}" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
