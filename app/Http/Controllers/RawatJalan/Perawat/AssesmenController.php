@@ -424,6 +424,32 @@ class AssesmenController extends Controller
             
         ]);
 
+        $masalah_kep = $request->input('tujuan');
+        DB::connection('pku')->table('TAC_RJ_MASALAH_KEP')->where('FS_KD_REG', $kode_reg)->delete();
+        if (!empty($masalah_kep)) {
+            foreach ($masalah_kep as $value) {
+                $insert_masalah_kep = DB::connection('pku')->table('TAC_RJ_MASALAH_KEP')->insert([
+
+                    'FS_KD_REG' => $kode_reg,
+                    'FS_KD_MASALAH_KEP' => $value,
+                    
+                ]);
+            }
+        }
+
+        $rencana_kep = $request->input('tembusan');
+        DB::connection('pku')->table('TAC_RJ_REN_KEP')->where('FS_KD_REG', $kode_reg)->delete();
+        if (!empty($rencana_kep)) {
+            foreach ($rencana_kep as $value) {
+                $insert_rencana_kep = DB::connection('pku')->table('TAC_RJ_REN_KEP')->insert([
+
+                    'FS_KD_REG' => $kode_reg,
+                    'FS_KD_REN_KEP' => $value,
+           
+                ]);
+            }
+        }
+
 
         var_dump('ok');
     
