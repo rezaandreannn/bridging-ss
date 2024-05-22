@@ -200,6 +200,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @php
+                                        use Carbon\Carbon;
+                                        @endphp
                                         @foreach ($data as $cppt)
                                         <tr>
                                             <td>{{$cppt->TANGGAL_FISIO}} & {{ date('G:i', strtotime($cppt->JAM_FISIO))}} WIB</td>
@@ -213,10 +216,16 @@
                                                 @endif
                                             </td>
                                             <td width="20%">
+                                                @php
+                                                $tanggalFisio = Carbon::parse($cppt->TANGGAL_FISIO)->toDateString();
+                                                $tanggalSekarang = Carbon::now()->toDateString();
+                                                @endphp
+                                                @if ($tanggalFisio === $tanggalSekarang)
                                                 <a href="{{ route('cppt.edit', [
                                             'id' => $cppt->ID_CPPT_FISIO
                                             ]) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i>Edit</a>
                                                 <button id="delete" data-id="{{ $cppt->ID_CPPT_FISIO }}" data-nama="{{ $cppt->ANAMNESA }}" data-bs-toggle="tooltip" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</button>
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach

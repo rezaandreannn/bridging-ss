@@ -141,9 +141,12 @@
                                             'kode_transaksi' => $transaksi['KODE_TRANSAKSI_FISIO'],
                                             'no_mr' => $transaksi['NO_MR_PASIEN']
                                             ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-secondary"><i class="fa fa-print"></i> Bukti Pelayanan</a>
-                                                <button data-toggle="modal" data-target="#modal-edit-tranksasi18{{$transaksi['ID_TRANSAKSI']}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</button>
+                                                @if($fisioModel->countCpptByKodeTr($transaksi['ID_TRANSAKSI']) >= $transaksi['JUMLAH_TOTAL_FISIO'])
 
+                                                @else
+                                                <button data-toggle="modal" data-target="#modal-edit-tranksasi18{{$transaksi['ID_TRANSAKSI']}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</button>
                                                 <button id="delete" data-id="{{ $transaksi['ID_TRANSAKSI'] }}" data-nama="{{ $transaksi['NO_MR_PASIEN'] }}" data-bs-toggle="tooltip" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</button>
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach
