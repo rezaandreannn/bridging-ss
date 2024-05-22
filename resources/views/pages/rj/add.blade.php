@@ -104,6 +104,11 @@
 
                                   
                                     <textarea class="form-control" rows="3" name="FS_ANAMNESA" value="" placeholder="Masukan ..."></textarea>
+                                    @error('FS_ANAMNESA')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
                                 </div>
                             </div>
 

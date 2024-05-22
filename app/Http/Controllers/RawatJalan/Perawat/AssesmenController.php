@@ -225,13 +225,13 @@ class AssesmenController extends Controller
             ]);
             
             
-            $alergi = DB::connection('db_rsmm')->table('REGISTER_PASIEN')->where('NO_MR', $request->input('NO_MR'))->update([
+            // $alergi = DB::connection('db_rsmm')->table('REGISTER_PASIEN')->where('NO_MR', $request->input('NO_MR'))->update([
 
-                'FS_ALERGI' => $request->input('FS_ALERGI'),
-                'FS_REAK_ALERGI' => $request->input('FS_REAK_ALERGI'),
-                'FS_RIW_PENYAKIT_DAHULU' => $request->input('FS_RIW_PENYAKIT_DAHULU'),
-                'FS_RIW_PENYAKIT_DAHULU2' => $request->input('FS_RIW_PENYAKIT_DAHULU2'),
-            ]);
+            //     'FS_ALERGI' => $request->input('FS_ALERGI'),
+            //     'FS_REAK_ALERGI' => $request->input('FS_REAK_ALERGI'),
+            //     'FS_RIW_PENYAKIT_DAHULU' => $request->input('FS_RIW_PENYAKIT_DAHULU'),
+            //     'FS_RIW_PENYAKIT_DAHULU2' => $request->input('FS_RIW_PENYAKIT_DAHULU2'),
+            // ]);
             
             $jatuh = DB::connection('pku')->table('TAC_RJ_NUTRISI')->insert([
 
@@ -270,23 +270,17 @@ class AssesmenController extends Controller
                     ]);
                 }
             }
-        
-
             DB::commit();
-            var_dump('ok');
-            die;
+            return redirect('rj/rawat_jalan?kode_dokter='.$request->input('KODE_DOKTER'))->with('success', 'Data Pasien Added successfully!');
         }
 
         catch (\Exception $e) {
             //throw $th;
             DB::rollBack();
-            return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
+            // return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
         }
 
-
      
-
-        return redirect()->back()->with('success', 'Data Pasien Added successfully!');
     }
 
     /**
@@ -451,7 +445,7 @@ class AssesmenController extends Controller
         }
 
 
-        var_dump('ok');
+        return redirect('rj/rawat_jalan?kode_dokter='.$request->input('KODE_DOKTER'))->with('success', 'Edit successfully!');
     
         //
     }
