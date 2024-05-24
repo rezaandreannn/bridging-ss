@@ -39,10 +39,18 @@ class Fisioterapi extends Model
     // Data Table Pasien Fisioterapi
     public function transaksiFisioByMr($no_mr)
     {
-        $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/transaksi/' . $no_mr);
-        $response = $request->getBody()->getContents();
-        $data = json_decode($response, true);
-        return $data['data'];
+        // $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/transaksi/' . $no_mr);
+        // $response = $request->getBody()->getContents();
+        // $data = json_decode($response, true);
+        // return $data['data'];
+
+        $data = DB::connection('pku')
+            ->table('TR_CPPT_FISIOTERAPI')
+            ->join('TRANSAKSI_FISIOTERAPI', 'TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
+            ->where('NO_MR_PASIEN', $no_mr)
+            ->orderBy('ID_CPPT_FISIO', 'DESC')
+            ->get();
+        return $data;
     }
 
 

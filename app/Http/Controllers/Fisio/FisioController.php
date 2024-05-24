@@ -164,13 +164,13 @@ class FisioController extends Controller
         return view($this->view . 'cppt.detail', compact('title', 'biodatas', 'data', 'cppt', 'jenisfisio'));
     }
 
-    public function tambah_cppt(Request $request, $id)
-    {
-        $title = $this->prefix . ' Tambah CPPT';
-        $jenisfisio = DB::connection('pku')->table('TAC_COM_FISIOTERAPI_MASTER')->get();
-        $data = $this->fisio->getDataTransaksiByID($id);
-        return view($this->view . 'cppt.tambah', compact('title', 'data', 'jenisfisio'));
-    }
+    // public function tambah_cppt(Request $request, $id)
+    // {
+    //     $title = $this->prefix . ' Tambah CPPT';
+    //     $jenisfisio = DB::connection('pku')->table('TAC_COM_FISIOTERAPI_MASTER')->get();
+    //     $data = $this->fisio->getDataTransaksiByID($id);
+    //     return view($this->view . 'cppt.tambah', compact('title', 'data', 'jenisfisio'));
+    // }
 
     //Proses Tambah Data CPPT Fisioterapi
     public function tambahDataCPPT(Request $request)
