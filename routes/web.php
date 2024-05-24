@@ -180,6 +180,7 @@ Route::middleware('auth')->group(function () {
         Route::get('rawat_jalan/resume/{noMR}', [AssesmenController::class, 'resume'])->name('rj.resume');
         Route::get('resumePDF/{noMR}', [AssesmenController::class, 'profilPDF'])->name('rj.cetak');
         Route::get('rawat_jalan/editSKDP/{noReg}', [AssesmenController::class, 'editSKDP'])->name('rj.editSKDP');
+        Route::post('rawat_jalan/skdpRencanaKontrol/', [AssesmenController::class, 'skdp_ren_kontrol'])->name('rj.skdp_rencana_kontrol');
 
         // Report PDF
         Route::get('rawat_jalan/resep/{kode_transaksi}/{noReg}', [Berkas_rm_controller::class, 'cetakResep'])->name('rj.resep');

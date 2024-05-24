@@ -84,8 +84,20 @@ class AssesmenController extends Controller
     {
         $title = $this->prefix . ' ' . 'Edit SKDP';
         $rajal = $this->rajal->pasien_bynoreg($noReg);
+        $alasanSkdp = $this->rajal->getAlesanSkdp();
 
-        return view($this->view . 'editSKDP', compact('title', 'rajal'));
+        return view($this->view . 'editSKDP', compact('title', 'rajal','alasanSkdp'));
+    }
+
+    public function skdp_ren_kontrol(Request $request)
+    {
+        $id = $request->input('FS_SKDP_1');
+   
+        $rs_skdp_rencana = $this->rajal->get_rencana_skdp($id);
+        
+        //$data .= "<option>--Pilih Alasan--</option>";
+        // return json_encode($rs_skdp_rencana);
+        return response()->json($rs_skdp_rencana);
     }
 
 
