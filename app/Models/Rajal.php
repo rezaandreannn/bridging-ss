@@ -204,4 +204,20 @@ class Rajal extends Model
         $data = json_decode($response, true);
         return $data['data'];
     }
+    // alasan skdp
+    public function getAlesanSkdp()
+    {
+
+        $data = DB::connection('pku')->table('TAC_COM_PARAMETER_SKDP_ALASAN')->get();
+        return $data;
+    }
+
+    public function get_rencana_skdp()
+    {
+
+        $data = DB::connection('pku')->table('TAC_COM_PARAMETER_SKDP_RENCANA')->get();
+        return $data;
+    }
+
+    
 }

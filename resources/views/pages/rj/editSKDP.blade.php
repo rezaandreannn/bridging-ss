@@ -102,14 +102,12 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <select class="form-control selectric">
-                                        <option value='1'>--Pilih Alasan--</option>
-                                        <option value="1" selected="">Untuk Melihat Perkembangan Penyakit</option>
-                                        <option value="2">Memerlukan Pemantauan Efektifitas Pengobatan</option>
-                                        <option value="3">Memerlukan Pantauan Hasil Tindakan</option>
-                                        <option value="4">Memerlukan Tindakan Lanjutan</option>
-                                        <option value="5">Follow Up Lanjutan</option>
-                                        <option value="6">Follow Up Proses Kehamilan</option>
+                                    <select class="form-control selectric" name="FS_SKDP_1" id="FS_SKDP_1" onchange="click_alasan_skdp(this)">
+                                        <option value=''>--Pilih Alasan--</option>
+                                        @foreach ($alasanSkdp as $skdpalasan)
+                                        <option value="{{$skdpalasan->FS_KD_TRS}}">{{$skdpalasan->FS_NM_SKDP_ALASAN}}</option>
+
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -120,17 +118,15 @@
                             </div>
                             <div class="col-md-5">
                                 <div class="form-group">
-                                    <select class="form-control selectric">
-                                        <option value='1'>--Pilih Rencana Tindakan--</option>
-                                        <option value="1" selected="">Menegakkan Diagnosis dan Memberikan Terapi Definitif</option>
-                                        <option value="2">Evalusai Hasil Pengobatan</option>
-                                        <option value="3">Evalusai Hasil Tindakan</option>
+                                    <select class="form-control selectric" name="FS_SKDP_2" id="rencana_skdp">
+                                        <option value=''>--Pilih Rencana Tindakan--</option>
+                       
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <input type="text" name="FS_SUHU" class="form-control" name="FS_SUHU" value="">
+                                    <input type="text" name="FS_SKDP_KET" class="form-control" value="" placeholder="keterangan">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -138,13 +134,44 @@
                                     <label>Rencana Kontrol Berikutnya :</label>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <select class="form-control selectric">
+                                    <select class="form-control selectric" name="FS_RENCANA_KONTROL">
                                         <option value="1 Minggu Kedepan">1 Minggu Kedepan</option>
                                         <option value="2 Minggu Kedepan">2 Minggu Kedepan</option>
                                         <option value="Sebulan Kedepan" selected="">Sebulan Kedepan</option>
                                     </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Tanggal Kontrol Berikutnya : </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="date" name="FS_SKDP_KONTROL" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Tanggal Expired rujukan faskes : </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="date" name="FS_SKDP_FASKES" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Keterangan atau pesan : </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <textarea name="FS_PESAN" id="" cols="55" rows="5"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -173,5 +200,39 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+
+<script type="text/javascript">
+    function click_alasan_skdp(selected) {
+
+        var FS_SKDP_1 = $("#FS_SKDP_1").val();
+
+        
+    
+      
+        $.ajax({
+            type: "POST",
+            url: "{{ route('rj.skdp_rencana_kontrol') }}",
+            data : {FS_SKDP_1:FS_SKDP_1},
+            async : false,
+            dataType : 'json',
+
+            success: function(data) {
+                //jika data sukses diambil dari server kita tampilkan
+                //di <select id=kota
+                alert(data);
+                die;
+                var html = '';
+                    var i;
+
+                    
+                    for(i=0; i<data.length; i++){
+                        html += '<option value='+data[i].FS_KD_TRS+'>'+data[i].FS_NM_SKDP_RENCANA+'</option>';
+                    }
+                    $('#rencana_skdp').html(html);
+            
+            }
+        });
+    }
+</script>
 
 @endpush
