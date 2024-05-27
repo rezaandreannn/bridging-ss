@@ -55,7 +55,7 @@ class AssesmenController extends Controller
         $rencana_perawatan = $this->rajal->rencana_perawatan();
         $rajal = $this->rajal->pasien_bynoreg($noReg);
 
-        return view($this->view . 'add', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'rajal','noReg'));
+        return view($this->view . 'add', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'rajal', 'noReg'));
     }
 
     //Tampilan Report PDF Resume Pasien
@@ -86,15 +86,15 @@ class AssesmenController extends Controller
         $rajal = $this->rajal->pasien_bynoreg($noReg);
         $alasanSkdp = $this->rajal->getAlesanSkdp();
 
-        return view($this->view . 'editSKDP', compact('title', 'rajal','alasanSkdp'));
+        return view($this->view . 'editSKDP', compact('title', 'rajal', 'alasanSkdp'));
     }
 
     public function skdp_ren_kontrol(Request $request)
     {
         $id = $request->input('FS_SKDP_1');
-   
+
         $rs_skdp_rencana = $this->rajal->get_rencana_skdp($id);
-        
+
         //$data .= "<option>--Pilih Alasan--</option>";
         // return json_encode($rs_skdp_rencana);
         return response()->json($rs_skdp_rencana);
@@ -148,9 +148,9 @@ class AssesmenController extends Controller
         //     'FS_STATUS_PSIK2' => 'required',
         // ]);
 
-   
+
         try {
-            
+
             DB::beginTransaction();
             $status_rj = DB::connection('pku')->table('TAC_RJ_STATUS')->insert([
 
@@ -160,7 +160,7 @@ class AssesmenController extends Controller
                 'FS_JNS_ASESMEN' => 'A',
                 'mdb' => auth()->user()->name,
                 'mdd' => now(),
-    
+
             ]);
 
             $vital_sign = DB::connection('pku')->table('TAC_RJ_VITAL_SIGN')->insert([
@@ -176,7 +176,7 @@ class AssesmenController extends Controller
                 'mdb' => auth()->user()->name,
                 'mdd' => date('Y-m-d'),
                 'FS_JAM_TRS' => date('H:i:s'),
-    
+
             ]);
 
             $nyeri = DB::connection('pku')->table('TAC_RJ_NYERI')->insert([
@@ -188,9 +188,9 @@ class AssesmenController extends Controller
                 'FS_NYERIS' => $request->input('FS_NYERIS'),
                 'FS_NYERIT' => $request->input('FS_NYERIT'),
                 'mdb' => auth()->user()->name,
-                'mdd' => date('Y-m-d'), 
+                'mdd' => date('Y-m-d'),
                 'FS_NYERI' => $request->input('FS_NYERI'),
-    
+
             ]);
 
             $jatuh = DB::connection('pku')->table('TAC_RJ_JATUH')->insert([
@@ -202,12 +202,12 @@ class AssesmenController extends Controller
                 'intervensi1' => $request->input('intervensi1')  ? 'Ya' : 'Tidak',
                 'intervensi2' => $request->input('intervensi2')  ? 'Ya' : 'Tidak',
                 'mdd' => auth()->user()->name,
-                'mdb' => date('Y-m-d'), 
-          
+                'mdb' => date('Y-m-d'),
+
             ]);
-            
+
             $asasmen_perawat = DB::connection('pku')->table('TAC_ASES_PER2')->insert([
-                
+
                 'FS_KD_REG' => $request->input('FS_KD_REG'),
                 'FS_RIW_PENYAKIT_DAHULU' => '',
                 'FS_RIW_PENYAKIT_DAHULU2' => '',
@@ -232,11 +232,11 @@ class AssesmenController extends Controller
                 'FS_EDUKASI' => $request->input('FS_EDUKASI'),
                 'FS_SKDP_FASKES' => $request->input('FS_SKDP_FASKES'),
                 'mdb' => auth()->user()->name,
-                'mdd' => date('Y-m-d'), 
-                
+                'mdd' => date('Y-m-d'),
+
             ]);
-            
-            
+
+
             // $alergi = DB::connection('db_rsmm')->table('REGISTER_PASIEN')->where('NO_MR', $request->input('NO_MR'))->update([
 
             //     'FS_ALERGI' => $request->input('FS_ALERGI'),
@@ -244,7 +244,7 @@ class AssesmenController extends Controller
             //     'FS_RIW_PENYAKIT_DAHULU' => $request->input('FS_RIW_PENYAKIT_DAHULU'),
             //     'FS_RIW_PENYAKIT_DAHULU2' => $request->input('FS_RIW_PENYAKIT_DAHULU2'),
             // ]);
-            
+
             $jatuh = DB::connection('pku')->table('TAC_RJ_NUTRISI')->insert([
 
                 'FS_KD_REG' => $request->input('FS_KD_REG'),
@@ -255,8 +255,8 @@ class AssesmenController extends Controller
                 'FS_NUTRISI_ANAK3' => $request->input('FS_NUTRISI_ANAK3')  ? $request->input('FS_NUTRISI_ANAK3') : '',
                 'FS_NUTRISI_ANAK4' => $request->input('FS_NUTRISI_ANAK4')  ? $request->input('FS_NUTRISI_ANAK4') : '',
                 'mdb' => auth()->user()->name,
-                'mdd' => date('Y-m-d'), 
-          
+                'mdd' => date('Y-m-d'),
+
             ]);
 
             $masalah_kep = $request->input('tujuan');
@@ -266,11 +266,11 @@ class AssesmenController extends Controller
 
                         'FS_KD_REG' => $request->input('FS_KD_REG'),
                         'FS_KD_MASALAH_KEP' => $value,
-                        
+
                     ]);
                 }
             }
-    
+
             $rencana_kep = $request->input('tembusan');
             if (!empty($rencana_kep)) {
                 foreach ($rencana_kep as $value) {
@@ -278,21 +278,17 @@ class AssesmenController extends Controller
 
                         'FS_KD_REG' => $request->input('FS_KD_REG'),
                         'FS_KD_REN_KEP' => $value,
-               
+
                     ]);
                 }
             }
             DB::commit();
-            return redirect('rj/rawat_jalan?kode_dokter='.$request->input('KODE_DOKTER'))->with('success', 'Data Pasien Added successfully!');
-        }
-
-        catch (\Exception $e) {
+            return redirect('rj/rawat_jalan?kode_dokter=' . $request->input('KODE_DOKTER'))->with('success', 'Data Pasien Added successfully!');
+        } catch (\Exception $e) {
             //throw $th;
             DB::rollBack();
             // return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
         }
-
-     
     }
 
     /**
@@ -325,12 +321,12 @@ class AssesmenController extends Controller
         $asasmen_perawat = $this->rajal->asasmenPerawatGet($noReg);
         $riwayat = $this->rajal->riwayatGet($noReg);
 
-        
+
 
         // dd($rencana_perGet);
         // die;
 
-        return view($this->view . 'edit', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'rajal', 'asasmen_perawat','riwayat','masalah_perGet','rencana_perGet'));
+        return view($this->view . 'edit', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'rajal', 'asasmen_perawat', 'riwayat', 'masalah_perGet', 'rencana_perGet'));
     }
 
     /**
@@ -395,7 +391,7 @@ class AssesmenController extends Controller
             'FS_NYERI' => $request->input('FS_NYERI'),
 
         ]);
-        
+
         $asasmen_jatuh = DB::connection('pku')->table('TAC_RJ_JATUH')->where('FS_KD_REG', $kode_reg)->update([
             'FS_CARA_BERJALAN1' => $request->input('FS_CARA_BERJALAN1'),
             'FS_CARA_BERJALAN2' => $request->input('FS_CARA_BERJALAN2'),
@@ -404,19 +400,19 @@ class AssesmenController extends Controller
             'mdb' => date('Y-m-d'),
             'intervensi1' => $request->input('intervensi1')  ? 'Ya' : 'Tidak',
             'intervensi2' => $request->input('intervensi2')  ? 'Ya' : 'Tidak',
-            
+
         ]);
-        
-        
+
+
         // $alergi = DB::connection('db_rsmm')->table('REGISTER_PASIEN')->where('NO_MR', $request->input('NO_MR'))->update([
         //     'FS_ALERGI' => $request->input('FS_ALERGI'),
         //     'FS_REAK_ALERGI' => $request->input('FS_REAK_ALERGI'),
         //     'FS_RIW_PENYAKIT_DAHULU' => $request->input('FS_RIW_PENYAKIT_DAHULU'),
         //     'FS_RIW_PENYAKIT_DAHULU2' => $request->input('FS_RIW_PENYAKIT_DAHULU2'),
-            
-            
+
+
         // ]);
-   
+
         $nutrisi = DB::connection('pku')->table('TAC_RJ_NUTRISI')->where('FS_KD_REG', $kode_reg)->update([
             'FS_NUTRISI1' => $request->input('FS_NUTRISI1'),
             'FS_NUTRISI2' => $request->input('FS_NUTRISI2'),
@@ -427,7 +423,7 @@ class AssesmenController extends Controller
             'mdb' => auth()->user()->name,
             'mdd' => date('Y-m-d'),
 
-            
+
         ]);
 
         $masalah_kep = $request->input('tujuan');
@@ -438,7 +434,7 @@ class AssesmenController extends Controller
 
                     'FS_KD_REG' => $kode_reg,
                     'FS_KD_MASALAH_KEP' => $value,
-                    
+
                 ]);
             }
         }
@@ -451,14 +447,14 @@ class AssesmenController extends Controller
 
                     'FS_KD_REG' => $kode_reg,
                     'FS_KD_REN_KEP' => $value,
-           
+
                 ]);
             }
         }
 
 
-        return redirect('rj/rawat_jalan?kode_dokter='.$request->input('KODE_DOKTER'))->with('success', 'Edit successfully!');
-    
+        return redirect('rj/rawat_jalan?kode_dokter=' . $request->input('KODE_DOKTER'))->with('success', 'Edit successfully!');
+
         //
     }
 

@@ -120,7 +120,7 @@
                                 <div class="form-group">
                                     <select class="form-control selectric" name="FS_SKDP_2" id="rencana_skdp">
                                         <option value=''>--Pilih Rencana Tindakan--</option>
-                       
+
                                     </select>
                                 </div>
                             </div>
@@ -206,15 +206,17 @@
 
         var FS_SKDP_1 = $("#FS_SKDP_1").val();
 
-        
-    
-      
+
+
+
         $.ajax({
             type: "POST",
             url: "{{ route('rj.skdp_rencana_kontrol') }}",
-            data : {FS_SKDP_1:FS_SKDP_1},
-            async : false,
-            dataType : 'json',
+            data: {
+                FS_SKDP_1: FS_SKDP_1
+            },
+            async: false,
+            dataType: 'json',
 
             success: function(data) {
                 //jika data sukses diambil dari server kita tampilkan
@@ -222,14 +224,14 @@
                 alert(data);
                 die;
                 var html = '';
-                    var i;
+                var i;
 
-                    
-                    for(i=0; i<data.length; i++){
-                        html += '<option value='+data[i].FS_KD_TRS+'>'+data[i].FS_NM_SKDP_RENCANA+'</option>';
-                    }
-                    $('#rencana_skdp').html(html);
-            
+
+                for (i = 0; i < data.length; i++) {
+                    html += '<option value=' + data[i].FS_KD_TRS + '>' + data[i].FS_NM_SKDP_RENCANA + '</option>';
+                }
+                $('#rencana_skdp').html(html);
+
             }
         });
     }
