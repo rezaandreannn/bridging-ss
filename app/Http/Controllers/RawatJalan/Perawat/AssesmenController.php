@@ -95,9 +95,20 @@ class AssesmenController extends Controller
 
         $rs_skdp_rencana = $this->rajal->get_rencana_skdp($id);
 
+<<<<<<< HEAD
+=======
+        
+>>>>>>> c4a5c09f29826b2a88a9dfee795f3b521a3602ff
         //$data .= "<option>--Pilih Alasan--</option>";
         // return json_encode($rs_skdp_rencana);
-        return response()->json($rs_skdp_rencana);
+        return response()->json([
+            'data' => $rs_skdp_rencana
+            ]);
+
+    }
+
+    public function mencoba(){
+        var_dump('ok');
     }
 
 
