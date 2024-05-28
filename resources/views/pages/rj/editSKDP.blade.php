@@ -205,13 +205,9 @@
     function click_alasan_skdp(selected) {
 
         var FS_SKDP_1 = $("#FS_SKDP_1").val();
-
-        
-    
-      
         $.ajax({
-            type: "POST",
-            url: "{{ route('rj.skdp_rencana_kontrol') }}",
+            type: "get",
+            url: "{{ route('rj.tes') }}",
             data : {FS_SKDP_1:FS_SKDP_1},
             async : false,
             dataType : 'json',
@@ -219,14 +215,15 @@
             success: function(data) {
                 //jika data sukses diambil dari server kita tampilkan
                 //di <select id=kota
-                alert(data);
-                die;
+     
+                console.log(data.data);
+           
                 var html = '';
                     var i;
 
                     
                     for(i=0; i<data.length; i++){
-                        html += '<option value='+data[i].FS_KD_TRS+'>'+data[i].FS_NM_SKDP_RENCANA+'</option>';
+                        html += '<option value='+data[i].data.FS_KD_TRS+'>'+data[i].data.FS_NM_SKDP_RENCANA+'</option>';
                     }
                     $('#rencana_skdp').html(html);
             
