@@ -54,16 +54,16 @@
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>
-                                        {{$ttd['USERNAME']}}
+                                        {{$ttd->USERNAME}}
                                     </td>
-                                    <td width="30%">{{$ttd['STATUS']}}</td>
-                                    <td> <a href="#" data-toggle="modal" data-target="#gambarModal{{$ttd['ID_TTD']}}">Lihat Tanda Tangan</a></td>
+                                    <td width="30%">{{$ttd->STATUS}}</td>
+                                    <td> <a href="#" data-toggle="modal" data-target="#gambarModal{{$ttd->ID_TTD}}">Lihat Tanda Tangan</a></td>
 
                                     <td width="15%">
                                         <a href="{{ route('list-ttd.edit', [
-                                            'id' => $ttd['ID_TTD']
+                                            'id' => $ttd->ID_TTD
                                             ]) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                                        <button id="delete" data-id="{{ $ttd['ID_TTD'] }}" data-nama="{{ $ttd['USERNAME'] }}" data-bs-toggle="tooltip" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                        <button id="delete" data-id="{{ $ttd->ID_TTD }}" data-nama="{{ $ttd->USERNAME }}" data-bs-toggle="tooltip" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
 
                                     </td>
                                 </tr>
@@ -78,7 +78,7 @@
     </section>
 </div>
 
-<div class="modal fade" id="gambarModal{{$ttd['ID_TTD']}}">
+<div class="modal fade" id="gambarModal{{$ttd->ID_TTD}}">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -89,8 +89,8 @@
             </div>
             <div class="modal-body">
                 <div class="col-md-12">
-                    Dibuat: {{$ttd['CREATE_AT']}}
-                    <img src="{{ asset('storage/ttd/' . $ttd['IMAGE'] ) }}" width="50%" alt="Gambar Pengguna">
+                    Dibuat: {{$ttd->CREATE_AT}}
+                    <img src="{{ asset('storage/ttd/' . $ttd->IMAGE ) }}" width="50%" alt="Gambar Pengguna">
                 </div>
             </div>
         </div>

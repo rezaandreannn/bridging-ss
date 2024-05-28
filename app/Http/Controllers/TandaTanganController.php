@@ -116,13 +116,11 @@ class TandaTanganController extends Controller
             // Simpan gambar ke storage
             Storage::put('public/ttd/' . $file_name, $image_base64);
 
-            $response = $this->httpClient->post($this->simrsUrlApi . 'fisioterapi/ttd/petugas', [
-                'json' => [
-                    'USERNAME' => auth()->user()->name,
-                    'STATUS' => auth()->user()->role_id, // Pastikan Anda mengelola peran pengguna dengan benar di aplikasi Anda
-                    'IMAGE' => $file_name,
-                    'CREATE_AT' => now()
-                ]
+            $data = DB::connection('pku')->table('TTD_PETUGAS_MASTER')->insert([
+                'USERNAME' => auth()->user()->name,
+                'STATUS' => auth()->user()->role_id, // Pastikan Anda mengelola peran pengguna dengan benar di aplikasi Anda
+                'IMAGE' => $file_name,
+                'CREATE_AT' => now()
             ]);
 
             return redirect()->back()->with('success', 'Tanda tangan berhasil ditambahkan');
@@ -137,7 +135,6 @@ class TandaTanganController extends Controller
     {
         $title = 'Index Tanda Tangan Petugas';
         $ttdPetugasById = $this->ttd->tandaTanganGetById($id);
-
         return view($this->viewPath . 'edit', compact('title', 'ttdPetugasById'));
     }
 
@@ -157,13 +154,11 @@ class TandaTanganController extends Controller
             }
             Storage::put('public/ttd/' . $file_name, $image_base64);
 
-            $response = $this->httpClient->put($this->simrsUrlApi . 'fisioterapi/ttd/petugas/update/' . $request->ID_TTD, [
-                'json' => [
-                    'USERNAME' => auth()->user()->name,
-                    'STATUS' => auth()->user()->role_id, // Pastikan Anda mengelola peran pengguna dengan benar di aplikasi Anda
-                    'IMAGE' => $file_name,
-                    'CREATE_AT'  => now()
-                ]
+            $data = DB::connection('pku')->table('TTD_PETUGAS_MASTER')->where('ID_TTD', $request->ID_TTD)->update([
+                'USERNAME' => auth()->user()->name,
+                'STATUS' => auth()->user()->role_id, // Pastikan Anda mengelola peran pengguna dengan benar di aplikasi Anda
+                'IMAGE' => $file_name,
+                'CREATE_AT'  => now()
             ]);
 
             return redirect()->route('list-ttd.index')->with('success', 'Tanda tangan berhasil ditambahkan');

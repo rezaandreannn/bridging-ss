@@ -69,12 +69,12 @@ class FisioController extends Controller
     {
         $lastKodeTransaksi = $this->fisio->getLastTransaksiFisio();
 
-
         $kode = 'F';
         if ($lastKodeTransaksi == null) {
             $nomorUrut = "000001";
         } else {
-            $noTerakhir = substr($lastKodeTransaksi['KODE_TRANSAKSI_FISIO'], 2) + 1;
+            $noTerakhir = substr($lastKodeTransaksi['KODE_TRANSAKSI_FISIO'], 2);
+            $noTerakhir += 1;
             $nomorUrut = sprintf('%06s', $noTerakhir);
         }
 
@@ -96,17 +96,13 @@ class FisioController extends Controller
             return redirect()->back()->with('warning', 'Pastikan jumlah maksimal fisioterapi adalah 8 kali !!');
         }
 
-        $response = $this->httpClient->post($this->simrsUrlApi . 'api/fisioterapi/cppt/transaksi_fisioterapi', [
-            'json' => [
-                'KODE_TRANSAKSI_FISIO' => $kode_transaksi,
-                'NO_MR_PASIEN' => $no_mr_pasien,
-                'JUMLAH_TOTAL_FISIO' => $jumlah_total_fisio,
-                'CREATE_AT' => now(),
-                'CREATE_BY' => auth()->user()->name,
-            ]
+        $data = DB::connection('pku')->table('TRANSAKSI_FISIOTERAPI')->insert([
+            'KODE_TRANSAKSI_FISIO' => $kode_transaksi,
+            'NO_MR_PASIEN' => $no_mr_pasien,
+            'JUMLAH_TOTAL_FISIO' => $jumlah_total_fisio,
+            'CREATE_AT' => now(),
+            'CREATE_BY' => auth()->user()->name,
         ]);
-
-        $responseData = $response->getBody()->getContents();
 
         return redirect()->back()->with('success', 'Transaksi Berhasil Ditambahkan!');
     }
@@ -114,8 +110,6 @@ class FisioController extends Controller
     // Update Data Transaksi Fisioterapi
     public function update(Request $request, $id_transaksi)
     {
-
-
         $validatedData = $request->validate([
             'NO_MR_PASIEN' => 'required',
             'JUMLAH_TOTAL_FISIO' => 'required|numeric',
@@ -128,12 +122,10 @@ class FisioController extends Controller
             return redirect()->back()->with('warning', 'Pastikan jumlah maksimal fisioterapi adalah 8 kali');
         }
 
-        $response = $this->httpClient->put($this->simrsUrlApi . 'api/fisioterapi/cppt/transaksi_fisioterapi/' . $id_transaksi, [
-            'json' => [
-                'KODE_TRANSAKSI_FISIO' => $request->input('KODE_TRANSAKSI_FISIO'),
-                'NO_MR_PASIEN' => $request->input('NO_MR_PASIEN'),
-                'JUMLAH_TOTAL_FISIO' => $request->input('JUMLAH_TOTAL_FISIO'),
-            ]
+        $data = DB::connection('pku')->table('TRANSAKSI_FISIOTERAPI')->where('ID_TRANSAKSI', $id_transaksi)->update([
+            'KODE_TRANSAKSI_FISIO' => $request->input('KODE_TRANSAKSI_FISIO'),
+            'NO_MR_PASIEN' => $request->input('NO_MR_PASIEN'),
+            'JUMLAH_TOTAL_FISIO' => $request->input('JUMLAH_TOTAL_FISIO'),
         ]);
 
         return redirect()->back()->with('success', 'Transaksi Berhasil Diperbarui!');
@@ -142,8 +134,7 @@ class FisioController extends Controller
     // Delete Data Transaksi Fisioterapi
     public function delete($id_transaksi)
     {
-        $response = $this->httpClient->delete($this->simrsUrlApi . 'api/fisioterapi/cppt/transaksi_fisioterapi/' . $id_transaksi);
-
+        $data = DB::connection('pku')->table('TRANSAKSI_FISIOTERAPI')->where('ID_TRANSAKSI', $id_transaksi)->delete();
         return redirect()->back()->with('success', 'Transaksi Berhasil Dihapus!');
     }
 
@@ -281,8 +272,7 @@ class FisioController extends Controller
     // Delete Data CPPT Fisioterapi
     public function deleteDataCPPT($id_cppt)
     {
-        $response = $this->httpClient->delete($this->simrsUrlApi . 'fisioterapi/cppt/delete/' . $id_cppt);
-
+        $data = DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')->where('ID_CPPT_FISIO', $id_cppt)->delete();
         return redirect()->back()->with('success', 'CPPT Berhasil Dihapus!');
     }
 

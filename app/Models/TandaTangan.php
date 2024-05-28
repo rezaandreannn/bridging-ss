@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -24,17 +25,18 @@ class TandaTangan extends Model
 
     public function tandaTanganGet()
     {
-        $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/ttd/petugas');
-        $response = $request->getBody()->getContents();
-        $data = json_decode($response, true);
-        return $data['data'];
+        $data = DB::connection('pku')
+            ->table('TTD_PETUGAS_MASTER')
+            ->get();
+        return $data;
     }
 
     public function tandaTanganGetById($id)
     {
-        $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/ttd/petugas/' . $id);
-        $response = $request->getBody()->getContents();
-        $data = json_decode($response, true);
-        return $data['data'];
+        $data = DB::connection('pku')
+            ->table('TTD_PETUGAS_MASTER')
+            ->where('ID_TTD', $id)
+            ->get();
+        return $data;
     }
 }

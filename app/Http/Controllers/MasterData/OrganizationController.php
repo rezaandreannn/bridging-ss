@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\MasterData;
 
+use App\Models\Location;
 use App\DTO\OrganizationDTO;
 use App\Models\Organization;
 use Illuminate\Http\Request;
 use App\Services\BaseService;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrganizationByParts;
-use App\Models\Location;
 use App\Services\SatuSehat\LocationService;
 use App\Services\SatuSehat\OrganizationService;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -22,8 +23,9 @@ class OrganizationController extends Controller
     protected $routeIndex;
     protected $locationService;
     protected $baseService;
+    protected $organizations;
 
-    public function __construct()
+    public function __construct(Organization $organization)
     {
         $this->organization = new OrganizationService();
         $this->prefix = 'Organization';
@@ -32,6 +34,7 @@ class OrganizationController extends Controller
         $this->routeIndex = 'organization.index';
         $this->locationService = new LocationService();
         $this->baseService = new BaseService();
+        $this->organizations = new Organization;
     }
     public function index()
     {
@@ -41,7 +44,9 @@ class OrganizationController extends Controller
         //     ->get();
         // dd($organizations);
         $title = $this->prefix . ' ' . 'Index';
-        $organizations = Organization::all();
+        // $organizations = Organization::all();
+
+        $organizations = $this->organizations->getData();
         return view($this->view . 'index', compact('title', 'organizations'));
     }
 
@@ -81,7 +86,15 @@ class OrganizationController extends Controller
             $data = $this->organization->postRequest($this->endpoint, $body);
 
             // Send DB
-            $organization =  Organization::create([
+            // $organization =  Organization::create([
+            //     'organization_id' => $data['id'],
+            //     'active' => $data['active'],
+            //     'name' => $data['name'],
+            //     'part_of' => $body['part_of'] ?? '',
+            //     'created_by' => auth()->user()->id ?? 'system'
+            // ]);
+
+            $data = DB::connection('bridging')->table('satusehat_organization')->insert([
                 'organization_id' => $data['id'],
                 'active' => $data['active'],
                 'name' => $data['name'],
@@ -170,8 +183,15 @@ class OrganizationController extends Controller
             $data = $this->organization->patchRequest($url, $body);
 
             // Send DB
-            $organization->update([
-                'organization_id' => $data['id'],
+            // $organization->update([
+            //     'organization_id' => $data['id'],
+            //     'active' => $data['active'],
+            //     'name' => $data['name'],
+            //     'part_of' => $body['part_of'] ?? '',
+            //     'updated_by' => auth()->user()->id ?? 'system'
+            // ]);
+
+            $data = DB::connection('bridging')->table('satusehat_organization')->where('organization_id', $organization_id)->update([
                 'active' => $data['active'],
                 'name' => $data['name'],
                 'part_of' => $body['part_of'] ?? '',

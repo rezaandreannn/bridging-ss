@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -35,6 +36,19 @@ class Dokter extends Model
             // Tangani kesalahan
             return []; // Mengembalikan array kosong jika terjadi kesalahan
         }
+
+        // $data = DB::connection('db_rsmm')
+        //     ->table('DOKTER')
+        //     ->select('Kode_Dokter', 'Nama_Dokter')
+        //     ->where(function ($query) {
+        //         $query->where('Jenis_Profesi', 'DOKTER UMUM')
+        //             ->orWhere('Jenis_Profesi', 'DOKTER SPESIALIS');
+        //     })
+        //     ->whereNotIn('Kode_Dokter', ['140s', 'TM140'])
+        //     ->orderBy('Nama_Dokter', 'ASC')
+        //     ->get();
+
+        // return $data;
     }
 
     // Method to fetch data for a specific doctor

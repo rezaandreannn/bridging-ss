@@ -38,12 +38,12 @@
 
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('list-ttd.update', $ttdPetugasById['ID_TTD']) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('list-ttd.update', $ttdPetugasById->ID_TTD) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="card-body">
                             <div class="col-md-12">
-                                <input type="hidden" name="ID_TTD" value="{{ $ttdPetugasById['ID_TTD'] }}" />
+                                <input type="hidden" name="ID_TTD" value="{{ $ttdPetugasById->ID_TTD }}" />
                                 <label class="" for="">Tanda Tangan:</label>
                                 <br />
                                 <div id="signat"></div>

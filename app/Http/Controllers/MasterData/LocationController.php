@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\MasterData;
 
 use App\DTO\LocationDTO;
+use App\Models\Location;
 use App\Models\Organization;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\Location;
 use App\Services\BaseService;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use App\Services\SatuSehat\LocationService;
 
 class LocationController extends Controller
@@ -19,12 +20,14 @@ class LocationController extends Controller
     protected $routeIndex;
     protected $locationService;
     protected $baseService;
+    protected $location;
 
-    public function __construct()
+    public function __construct(Location $location)
     {
         $this->prefix = 'Location';
         $this->endpoint = 'Location';
         $this->view = 'pages.md.location.';
+        $this->location = new Location;
         $this->routeIndex = 'location.index';
         $this->locationService = new LocationService();
         $this->baseService = new BaseService();
@@ -34,7 +37,7 @@ class LocationController extends Controller
     {
         $title = $this->prefix . ' ' . 'Index';
 
-        $locations = Location::all();
+        $locations = $this->location->getData();
 
         return view($this->view . 'index', compact('title', 'locations'));
     }
@@ -88,7 +91,7 @@ class LocationController extends Controller
             $data = $this->locationService->postRequest($this->endpoint, $body);
 
             // send DB
-            Location::create([
+            $data = DB::connection('bridging')->table('satusehat_location')->insert([
                 'location_id' => $data['id'],
                 'name' => $body['name'],
                 'status' => $body['status'],
@@ -97,6 +100,15 @@ class LocationController extends Controller
                 'part_of' => $request->part_of ?? '',
                 'created_by' => auth()->user()->id
             ]);
+            // Location::create([
+            //     'location_id' => $data['id'],
+            //     'name' => $body['name'],
+            //     'status' => $body['status'],
+            //     'organization_id' => $body['organization_id'],
+            //     'description' => $body['description'],
+            //     'part_of' => $request->part_of ?? '',
+            //     'created_by' => auth()->user()->id
+            // ]);
 
             $message = 'Data has been created successfully.';
             return redirect()->route($this->routeIndex)->with('toast_success', $message);
@@ -189,9 +201,7 @@ class LocationController extends Controller
             // send API
             $data = $this->locationService->patchRequest($url, $body);
 
-            // send DB
-            $location->update([
-                'location_id' => $data['id'],
+            $data = DB::connection('bridging')->table('satusehat_location')->where('location_id', $location_id)->update([
                 'name' => $body['name'],
                 'status' => $body['status'],
                 'organization_id' => $body['organization_id'],
@@ -199,6 +209,17 @@ class LocationController extends Controller
                 'part_of' => $request->part_of ?? '',
                 'updated_by' => auth()->user()->id ?? ''
             ]);
+
+            // send DB
+            // $location->update([
+            //     'location_id' => $data['id'],
+            //     'name' => $body['name'],
+            //     'status' => $body['status'],
+            //     'organization_id' => $body['organization_id'],
+            //     'description' => $body['description'],
+            //     'part_of' => $request->part_of ?? '',
+            //     'updated_by' => auth()->user()->id ?? ''
+            // ]);
 
             $message = 'Data has been updated successfully.';
             return redirect()->route($this->routeIndex)->with('toast_success', $message);

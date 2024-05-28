@@ -45,10 +45,9 @@ class Fisioterapi extends Model
         // return $data['data'];
 
         $data = DB::connection('pku')
-            ->table('TR_CPPT_FISIOTERAPI')
-            ->join('TRANSAKSI_FISIOTERAPI', 'TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
+            ->table('TRANSAKSI_FISIOTERAPI')
             ->where('NO_MR_PASIEN', $no_mr)
-            ->orderBy('ID_CPPT_FISIO', 'DESC')
+            ->orderBy('ID_TRANSAKSI', 'DESC')
             ->get();
         return $data;
     }
@@ -67,8 +66,18 @@ class Fisioterapi extends Model
         return $data;
     }
 
+    // public function getLastTransaksiFisio()
+    // {
+    //     $data = DB::connection('pku')
+    //         ->table('TRANSAKSI_FISIOTERAPI')
+    //         ->orderBy('ID_TRANSAKSI', 'DESC')
+    //         ->limit('1')
+    //         ->get();
+    //     return $data;
+    // }
 
-    // Get Kode Transaksi
+
+    // // Get Kode Transaksi
     public function getLastTransaksiFisio()
     {
         $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/transaksis');
