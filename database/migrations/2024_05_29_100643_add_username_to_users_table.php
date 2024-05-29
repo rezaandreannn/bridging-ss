@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::connection('emr_new')->table('users', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
             $table->string('username')->nullable();
         });
@@ -26,7 +26,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::connection('emr_new')->table('users', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
         });
     }

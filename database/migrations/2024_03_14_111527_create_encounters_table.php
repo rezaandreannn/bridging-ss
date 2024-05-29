@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::connection('emr_new')->create('encounters', function (Blueprint $table) {
+        Schema::create('encounters', function (Blueprint $table) {
             $table->id();
             $table->string('encounter_id');
             $table->string('kode_register');
@@ -41,6 +41,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::connection('emr_new')->dropIfExists('encounters');
+        Schema::dropIfExists('encounters');
     }
 };
