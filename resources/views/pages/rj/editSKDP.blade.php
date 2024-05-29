@@ -205,10 +205,6 @@
     function click_alasan_skdp(selected) {
 
         var FS_SKDP_1 = $("#FS_SKDP_1").val();
-<<<<<<< HEAD
-
-
-
 
         $.ajax({
             type: "POST",
@@ -218,14 +214,6 @@
             },
             async: false,
             dataType: 'json',
-=======
-        $.ajax({
-            type: "get",
-            url: "{{ route('rj.tes') }}",
-            data : {FS_SKDP_1:FS_SKDP_1},
-            async : false,
-            dataType : 'json',
->>>>>>> c4a5c09f29826b2a88a9dfee795f3b521a3602ff
 
             success: function(data) {
                 //jika data sukses diambil dari server kita tampilkan
@@ -242,15 +230,6 @@
                 }
                 $('#rencana_skdp').html(html);
 
-<<<<<<< HEAD
-=======
-                    
-                    for(i=0; i<data.length; i++){
-                        html += '<option value='+data[i].data.FS_KD_TRS+'>'+data[i].data.FS_NM_SKDP_RENCANA+'</option>';
-                    }
-                    $('#rencana_skdp').html(html);
-            
->>>>>>> c4a5c09f29826b2a88a9dfee795f3b521a3602ff
             }
         });
     }

@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::connection('emr_new')->table('users', function (Blueprint $table) {
-            $table->string('image')->nullable();
+            //
+            $table->string('username')->nullable();
         });
     }
 
