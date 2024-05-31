@@ -276,6 +276,8 @@ class FisioController extends Controller
         return redirect()->back()->with('success', 'CPPT Berhasil Dihapus!');
     }
 
+
+    // Cetak CPPT Perawat
     public function cetak_cppt(Request $request, $id)
     {
         $title = $this->prefix . ' ' . 'Cetak CPPT';
@@ -293,6 +295,7 @@ class FisioController extends Controller
         return $pdf->stream($filename . '.pdf');
     }
 
+    // Cetak Bukti Layanan Perawat
     public function bukti_layanan(Request $request, $kode_transaksi)
     {
         $title = $this->prefix . ' ' . 'Bukti Layanan CPPT';
@@ -303,5 +306,23 @@ class FisioController extends Controller
         $filename = 'BuktiLayanan-' . $date . '-' . $kode_transaksi;
         $pdf = PDF::loadview($this->view . 'cetak/bukti_pelayanan', ['title' => $title, 'data' => $data, 'biodatas' => $biodatas]);
         return $pdf->stream($filename . '.pdf');
+    }
+
+    // ---------------------
+    // Fisioterapi Dokter
+    // ---------------------
+    public function fisioDokter()
+    {
+        $listpasien = $this->fisio->pasienCpptdanFisioterapi();
+
+        $title = $this->prefix . ' ' . 'Dokter';
+        return view($this->view . 'dokter.cppt', compact('title', 'listpasien'));
+    }
+    public function formDokter(Request $request)
+    {
+        $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
+
+        $title = $this->prefix . ' ' . 'Dokter';
+        return view($this->view . 'dokter.form', compact('title', 'biodatas'));
     }
 }

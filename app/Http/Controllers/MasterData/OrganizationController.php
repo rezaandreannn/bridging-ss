@@ -144,7 +144,7 @@ class OrganizationController extends Controller
 
         $organizations = Organization::select('organization_id', 'name')->get();
 
-        return view($this->view . 'edit', compact('title', 'organization', 'organizations', 'identifierValue', 'organizationType', 'typeCode'));
+        return view($this->view . 'edit', compact('title', 'organization', 'organizations', 'identifierValue', 'organizationType', 'typeCode', 'data'));
     }
 
     public function update($organization_id, Request $request)

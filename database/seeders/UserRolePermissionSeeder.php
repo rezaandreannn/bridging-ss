@@ -25,30 +25,30 @@ class UserRolePermissionSeeder extends Seeder
             'remember_token'    => Str::random(10),
         ];
 
-        $it = User::connection('emr_new')->create(array_merge([
+        $it = User::create(array_merge([
             'email' => 'itrsumm08@gmail.com',
             'name'  => 'IT RSUMM',
         ], $default_user_value));
 
-        $perawat = User::connection('emr_new')->create(array_merge([
+        $perawat = User::create(array_merge([
             'email' => 'perawat@gmail.com',
             'name'  => 'PERAWAT RSUMM',
         ], $default_user_value));
 
-        $dokter = User::connection('emr_new')->create(array_merge([
+        $dokter = User::create(array_merge([
             'email' => 'dokter@gmail.com',
             'name'  => 'DOKTER RSUMM',
         ], $default_user_value));
 
-        $manager = User::connection('emr_new')->create(array_merge([
+        $manager = User::create(array_merge([
             'email' => 'manager@gmail.com',
             'name'  => 'MANAGER RSUMM',
         ], $default_user_value));
 
-        $role_it = Role::connection('emr_new')->create(['name' => 'Super Admin']);
-        $role_perawat = Role::connection('emr_new')->create(['name' => 'perawat']);
-        $role_dokter = Role::connection('emr_new')->create(['name' => 'dokter']);
-        $role_manager = Role::connection('emr_new')->create(['name' => 'manager']);
+        $role_it = Role::create(['name' => 'Super Admin']);
+        $role_perawat = Role::create(['name' => 'perawat']);
+        $role_dokter = Role::create(['name' => 'dokter']);
+        $role_manager = Role::create(['name' => 'manager']);
 
 
         // Permission::create(['name' => 'read role']);
