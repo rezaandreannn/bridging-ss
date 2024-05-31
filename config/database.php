@@ -109,7 +109,7 @@ return [
         ],
 
         'bridging' => [
-            'driver'    => env('DB_CONNECTION_BRIDGING'),
+            'driver'  => 'sqlsrv',
             'url' => env('DATABASE_URL_BRIDGING'),
             'host' => env('DB_HOST_BRIDGING', 'localhost'),
             'port' => env('DB_PORT_BRIDGING', '1433'),
@@ -138,8 +138,8 @@ return [
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 
-        'emr_new' => [
-            'driver' => 'sqlsrv',
+        'emr' => [
+            'driver' => env('DB_CONNECTION_EMR'),
             'url' => env('DATABASE_URL_EMR'),
             'host' => env('DB_HOST_EMR', 'localhost'),
             'port' => env('DB_PORT_EMR', '1433'),

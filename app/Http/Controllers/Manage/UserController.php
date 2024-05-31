@@ -50,6 +50,7 @@ class UserController extends Controller
             'image' => ['image', 'file', 'max:2048'],
             'password' => ['required', 'confirmed'],
             'permissions' => ['array'],
+            'username' => ['required'],
         ]);
 
 
@@ -57,6 +58,7 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'username' => $request->username,
         ]);
 
         if ($request->file('image')) {
@@ -105,6 +107,7 @@ class UserController extends Controller
             'email' => ['required', 'string', 'email', 'max:100'],
             'image' => ['image', 'file', 'max:2048'],
             'permissions' => ['array'],
+            'username' => ['required'],
         ]);
         try {
             // send API 
@@ -115,12 +118,14 @@ class UserController extends Controller
                 $user_data = [
                     'name' => $request->name,
                     'email' => $request->email,
-                    'password' => bcrypt($request->password)
+                    'password' => bcrypt($request->password),
+                    'username' => $request->username,
                 ];
             } else {
                 $user_data = [
                     'name' => $request->name,
                     'email' => $request->email,
+                    'username' => $request->username,
                 ];
             }
             //Update Data

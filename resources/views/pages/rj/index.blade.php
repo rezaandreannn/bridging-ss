@@ -145,7 +145,7 @@
                                         @endif
                                   
 
-                                        <a href="{{ route('rj.editSKDP', $item['No_Reg']) }}" class="btn btn-sm btn-info"><i class="fas fa-edit"></i>Edit SKDP</a>
+                               
                                     </td>
                                 </tr>
                                 @endforeach

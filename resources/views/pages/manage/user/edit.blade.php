@@ -39,6 +39,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group row mb-4">
+                                    <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Username</label>
+                                    <div class="col-sm-12 col-md-7">
+                                        <input type="text" class="form-control" name="username" value="{{ $user->username }}">
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-4">
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Email</label>
                                     <div class="col-sm-12 col-md-7">
                                         <input type="email" class="form-control" name="email" value="{{ $user->email }}">
