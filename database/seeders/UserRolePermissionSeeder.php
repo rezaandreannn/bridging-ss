@@ -30,6 +30,11 @@ class UserRolePermissionSeeder extends Seeder
             'name'  => 'IT RSUMM',
         ], $default_user_value));
 
+        $admin = User::create(array_merge([
+            'email' => 'yusufmuhammad690@gmail.com',
+            'name'  => 'Muhammad Yusuf',
+        ], $default_user_value));
+
         $perawat = User::create(array_merge([
             'email' => 'perawat@gmail.com',
             'name'  => 'PERAWAT RSUMM',
@@ -67,6 +72,7 @@ class UserRolePermissionSeeder extends Seeder
         // $role_perawat->givePermissionTo('delete antrean');
 
 
+        $admin->assignRole('super-admin');
         $it->assignRole('super-admin');
         $perawat->assignRole('perawat');
         $dokter->assignRole('dokter');

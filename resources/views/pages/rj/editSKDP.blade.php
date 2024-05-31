@@ -87,7 +87,9 @@
                 </div>
             </div>
             <!-- form -->
-            <form action="#" method="post">
+            <form action="{{ route('rj.updateSkdp',$rajal['No_Reg']) }}" method="POST">
+            @csrf
+                @method('put')
                 <div class="card mb-3">
                     <div class="card-header">
                         <h4 class="card-title">Surat Keterangan Dalam Perawatan</h4>
@@ -96,6 +98,8 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4">
+                                <input type="hidden" name="FS_KD_REG" class="form-control" value="{{ $rajal['No_Reg']}}" placeholder="keterangan">
+                                <input type="hidden" name="Kode_Dokter" class="form-control" value="{{ $rajal['Kode_Dokter']}}" placeholder="keterangan">
                                 <div class="form-group">
                                     <label>Belum dapat dikembalikan ke Fasilitas Perujuk dengan alasan</label>
                                 </div>
@@ -105,7 +109,7 @@
                                     <select class="form-control selectric" name="FS_SKDP_1" id="FS_SKDP_1" onchange="click_alasan_skdp(this)">
                                         <option value=''>--Pilih Alasan--</option>
                                         @foreach ($alasanSkdp as $skdpalasan)
-                                        <option value="{{$skdpalasan->FS_KD_TRS}}">{{$skdpalasan->FS_NM_SKDP_ALASAN}}</option>
+                                        <option value="{{$skdpalasan->FS_KD_TRS}}" {{ ($skdp->FS_SKDP_1 == $skdpalasan->FS_KD_TRS ) ? 'selected' : '' }}>{{$skdpalasan->FS_NM_SKDP_ALASAN}}</option>
 
                                         @endforeach
                                     </select>
@@ -118,15 +122,17 @@
                             </div>
                             <div class="col-md-5">
                                 <div class="form-group">
-                                    <select class="form-control selectric" name="FS_SKDP_2" id="rencana_skdp">
+                                    <select id="rencana_skdp" class="form-control" name="FS_SKDP_2" >
                                         <option value=''>--Pilih Rencana Tindakan--</option>
-
+                                        @foreach ($rencanaSkdp as $renSkdp)
+                                        <option value="{{$renSkdp->FS_KD_TRS}}" {{ ($skdp->FS_SKDP_2 == $renSkdp->FS_KD_TRS ) ? 'selected' : '' }}>{{$renSkdp->FS_NM_SKDP_RENCANA}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <input type="text" name="FS_SKDP_KET" class="form-control" value="" placeholder="keterangan">
+                                    <input type="text" name="FS_SKDP_KET" class="form-control" value="{{$skdp->FS_SKDP_KET}}" placeholder="keterangan">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -137,9 +143,9 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <select class="form-control selectric" name="FS_RENCANA_KONTROL">
-                                        <option value="1 Minggu Kedepan">1 Minggu Kedepan</option>
-                                        <option value="2 Minggu Kedepan">2 Minggu Kedepan</option>
-                                        <option value="Sebulan Kedepan" selected="">Sebulan Kedepan</option>
+                                        <option value="1 Minggu Kedepan"  {{ ($skdp->FS_RENCANA_KONTROL == '1 Minggu Kedepan' ) ? 'selected' : '' }}>1 Minggu Kedepan</option>
+                                        <option value="2 Minggu Kedepan" {{ ($skdp->FS_RENCANA_KONTROL == '2 Minggu Kedepan' ) ? 'selected' : '' }}>2 Minggu Kedepan</option>
+                                        <option value="Sebulan Kedepan" {{ ($skdp->FS_RENCANA_KONTROL == 'Sebulan Kedepan' ) ? 'selected' : '' }}>Sebulan Kedepan</option>
                                     </select>
                                 </div>
                             </div>
@@ -150,7 +156,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="date" name="FS_SKDP_KONTROL" class="form-control">
+                                    <input type="date" name="FS_SKDP_KONTROL" class="form-control" value="{{$skdp->FS_SKDP_KONTROL}}">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -160,7 +166,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="date" name="FS_SKDP_FASKES" class="form-control">
+                                    <input type="date" name="FS_SKDP_FASKES" class="form-control" value="{{$skdp->FS_SKDP_FASKES}}">
                                 </div>
                             </div>
 
@@ -171,7 +177,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <textarea name="FS_PESAN" id="" cols="55" rows="5"></textarea>
+                                    <textarea name="FS_PESAN" id="" cols="55" rows="5">{{$skdp->FS_PESAN}}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -202,12 +208,13 @@
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
 
 <script type="text/javascript">
+
     function click_alasan_skdp(selected) {
 
         var FS_SKDP_1 = $("#FS_SKDP_1").val();
 
         $.ajax({
-            type: "POST",
+            type: "GET",
             url: "{{ route('rj.skdp_rencana_kontrol') }}",
             data: {
                 FS_SKDP_1: FS_SKDP_1
@@ -219,14 +226,18 @@
                 //jika data sukses diambil dari server kita tampilkan
                 //di <select id=kota
      
-                console.log(data.data);
+      
            
                 var html = '';
                 var i;
+                let array = data.data;
 
 
-                for (i = 0; i < data.length; i++) {
-                    html += '<option value=' + data[i].FS_KD_TRS + '>' + data[i].FS_NM_SKDP_RENCANA + '</option>';
+                for (i = 0; i < array.length; i++) {
+                    
+                  
+                    html += '<option value=' + array[i].FS_KD_TRS + '>' + array[i].FS_NM_SKDP_RENCANA + '</option>';
+                    
                 }
                 $('#rencana_skdp').html(html);
 

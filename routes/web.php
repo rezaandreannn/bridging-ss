@@ -180,16 +180,12 @@ Route::middleware('auth')->group(function () {
         Route::get('rawat_jalan/resume/{noMR}', [AssesmenController::class, 'resume'])->name('rj.resume');
         Route::get('resumePDF/{noMR}', [AssesmenController::class, 'profilPDF'])->name('rj.cetak');
         Route::get('rawat_jalan/editSKDP/{noReg}', [AssesmenController::class, 'editSKDP'])->name('rj.editSKDP');
-<<<<<<< HEAD
-        Route::post('rawat_jalan/skdpRencanaKontrol/{noReg}', [AssesmenController::class, 'skdp_ren_kontrol'])->name('rj.skdp_rencana_kontrol');
 
-=======
-        Route::get('skdprencana', [AssesmenController::class, 'skdp_ren_kontrol'])->name('rj.tes');
+
+        Route::get('skdprencana', [AssesmenController::class, 'skdp_ren_kontrol'])->name('rj.skdp_rencana_kontrol');
         
-        
-        
-        
->>>>>>> c4a5c09f29826b2a88a9dfee795f3b521a3602ff
+        Route::put('rawat_jalan/update_skdp/{noReg}', [AssesmenController::class, 'updateSKDP'])->name('rj.updateSkdp');
+
         // Report PDF
         Route::get('rawat_jalan/resep/{kode_transaksi}/{noReg}', [Berkas_rm_controller::class, 'cetakResep'])->name('rj.resep');
         Route::get('rawat_jalan/skdp/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakSKDP'])->name('rj.skdp');

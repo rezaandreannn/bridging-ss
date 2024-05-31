@@ -212,6 +212,19 @@ class Rajal extends Model
         return $data;
     }
 
+    public function getSkdp($NoReg)
+    {
+
+        $data = DB::connection('pku')->table('TAC_RJ_SKDP')->where('FS_KD_REG', $NoReg)->get()->first();
+        return $data;
+    }
+
+    public function get_rencana_skdp_by_noreg()
+    {
+
+        $data = DB::connection('pku')->table('TAC_COM_PARAMETER_SKDP_RENCANA')->get()->toArray();
+        return $data;
+    }
     public function get_rencana_skdp($id)
     {
 

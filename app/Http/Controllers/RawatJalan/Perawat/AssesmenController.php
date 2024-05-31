@@ -85,8 +85,30 @@ class AssesmenController extends Controller
         $title = $this->prefix . ' ' . 'Edit SKDP';
         $rajal = $this->rajal->pasien_bynoreg($noReg);
         $alasanSkdp = $this->rajal->getAlesanSkdp();
+        $skdp = $this->rajal->getSkdp($noReg);
+        $rencanaSkdp = $this->rajal->get_rencana_skdp_by_noreg();
+        // dd($rajal);
+        // die;
 
-        return view($this->view . 'editSKDP', compact('title', 'rajal', 'alasanSkdp'));
+        return view($this->view . 'editSKDP', compact('title', 'rajal', 'alasanSkdp','skdp','rencanaSkdp'));
+    }
+
+    public function updateSKDP(Request $request, $noReg){
+    
+        $skdp_update = DB::connection('pku')->table('TAC_RJ_SKDP')->where('FS_KD_REG', $noReg)->update([
+            'FS_SKDP_1' => $request->input('FS_SKDP_1'),
+            'FS_SKDP_2' => $request->input('FS_SKDP_2'),
+            'FS_SKDP_KET' => $request->input('FS_SKDP_KET') ?? '',
+            'FS_SKDP_KONTROL' => $request->input('FS_SKDP_KONTROL'),
+            'FS_SKDP_FASKES' => $request->input('FS_SKDP_FASKES'),
+            'FS_PESAN' => $request->input('FS_PESAN'),
+            'FS_RENCANA_KONTROL' => $request->input('FS_RENCANA_KONTROL')
+    
+        ]);
+
+    
+
+        return redirect('rj/rawat_jalan?kode_dokter=' . $request->input('Kode_Dokter'))->with('success', 'Data Pasien Added successfully!');
     }
 
     public function skdp_ren_kontrol(Request $request)
@@ -102,9 +124,6 @@ class AssesmenController extends Controller
 
     }
 
-    public function mencoba(){
-        var_dump('ok');
-    }
 
 
     /**
