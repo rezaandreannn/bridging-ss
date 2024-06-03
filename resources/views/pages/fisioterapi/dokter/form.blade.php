@@ -93,7 +93,7 @@
                             <h4 class="card-title">Form Dokter Fisioterapi</h4>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('cppt.tambahData') }}" method="POST">
+                            <form action="#" method="POST">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6">
@@ -119,6 +119,29 @@
                                         <div class="form-group">
                                             <label>Anamnesa / Allow Anamnesa <code>*</code></label>
                                             <textarea class="form-control" rows="3" name="ANAMNESA" value="" placeholder="Masukan ..."></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Keadaan Umum</label>
+                                            <select name="KEADAAN_UMUM" id="" class="form-control select2">
+                                                <option value="" selected disabled>-- Pilih --</option>
+                                                <option value="Baik">Baik</option>
+                                                <option value="Sedang">Sedang</option>
+                                                <option value="Buruk">Buruk</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Keadaan</label>
+                                            <select name="KEADAAN" id="" class="form-control select2">
+                                                <option value="" selected disabled>-- Pilih --</option>
+                                                <option value="GCS">GCS</option>
+                                                <option value="E">E</option>
+                                                <option value="M">M</option>
+                                                <option value="V">V</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -349,7 +372,8 @@
                         <div class="card-body">
                             <label>*Bismillahirohmanirrohim, saya dengan sadar dan penuh tanggung jawab mengisikan formulir ini dengan data yang benar </label>
                             <div class="text-left">
-                                <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button>
+                                <!-- <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button> -->
+                                <a href="{{ route('tindakan.dokter', ['no_mr' => $request->input('no_mr')]) }}" class="btn btn-primary mb-2"><i class="fas fa-save"></i> Simpan</a>
                             </div>
                         </div>
                         </form>

@@ -6,11 +6,12 @@ use App\Models\Pasien;
 use GuzzleHttp\Client;
 use App\Models\JenisFisio;
 use App\Models\Fisioterapi;
+use App\Models\TandaTangan;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use App\Models\TandaTangan;
 use Illuminate\Support\Facades\Session;
 
 class FisioController extends Controller
@@ -287,6 +288,7 @@ class FisioController extends Controller
             ->join('TRANSAKSI_FISIOTERAPI', 'TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
             ->where('TRANSAKSI_FISIOTERAPI.KODE_TRANSAKSI_FISIO', '=', $id)
             ->get();
+
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
         $date = date('dMY');
         $filename = 'CPPT-' . $date;
@@ -296,14 +298,32 @@ class FisioController extends Controller
     }
 
     // Cetak Bukti Layanan Perawat
-    public function bukti_layanan(Request $request, $kode_transaksi)
+    public function bukti_layanan(Request $request, $id)
     {
         $title = $this->prefix . ' ' . 'Bukti Layanan CPPT';
 
-        $data = $this->fisio->cetakCPPT($kode_transaksi);
+        $data = DB::connection('pku')
+            ->table('TR_CPPT_FISIOTERAPI as a')
+            ->join('TRANSAKSI_FISIOTERAPI', 'a.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
+            ->leftJoin('TTD_PETUGAS_MASTER as b', 'a.CREATE_BY', '=', 'b.USERNAME')
+            ->leftJoin('TTD_PASIEN_MASTER as c', 'a.CREATE_BY', '=', 'c.USERNAME')
+            ->select(
+                'a.*',
+                'TRANSAKSI_FISIOTERAPI.*',
+                'b.USERNAME as PETUGAS_USERNAME',
+                'b.NAMA as PETUGAS_NAMA',
+                'c.USERNAME as PASIEN_USERNAME',
+                'c.NAMA as PASIEN_NAMA'
+            )
+            ->where('TRANSAKSI_FISIOTERAPI.KODE_TRANSAKSI_FISIO', '=', $id)
+            ->get();
+
+        dd($data);
+        die;
+
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
         $date = date('dMY');
-        $filename = 'BuktiLayanan-' . $date . '-' . $kode_transaksi;
+        $filename = 'BuktiLayanan-' . $date;
         $pdf = PDF::loadview($this->view . 'cetak/bukti_pelayanan', ['title' => $title, 'data' => $data, 'biodatas' => $biodatas]);
         return $pdf->stream($filename . '.pdf');
     }
@@ -323,6 +343,21 @@ class FisioController extends Controller
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
 
         $title = $this->prefix . ' ' . 'Dokter';
-        return view($this->view . 'dokter.form', compact('title', 'biodatas'));
+        return view($this->view . 'dokter.form', compact('title', 'biodatas', 'request'));
+    }
+
+    public function tindakanDokter(Request $request)
+    {
+        $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
+
+        $title = $this->prefix . ' ' . 'Tindakan';
+        return view($this->view . 'dokter.tindakan', compact('title', 'biodatas', 'request'));
+    }
+
+    public function diagnosaDokter(Request $request)
+    {
+        $title = $this->prefix . ' ' . 'Tindakan';
+        $jenisfisio = DB::connection('pku')->table('TAC_COM_FISIOTERAPI_MASTER')->get();
+        return view($this->view . 'dokter.diagnosa', compact('title', 'jenisfisio'));
     }
 }

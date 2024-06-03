@@ -147,6 +147,7 @@
                                                 <button data-toggle="modal" data-target="#modal-edit-tranksasi18{{$transaksi->ID_TRANSAKSI}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</button>
                                                 <button id="delete" data-id="{{ $transaksi->ID_TRANSAKSI }}" data-nama="{{ $transaksi->NO_MR_PASIEN }}" data-bs-toggle="tooltip" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</button>
                                                 @endif
+                                                <a href="{{ route('form.dokter', ['no_mr' => $transaksi->NO_MR_PASIEN]) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i>CPPT Dokter</a>
                                             </td>
                                         </tr>
                                         @endforeach

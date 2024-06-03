@@ -154,7 +154,9 @@ Route::middleware('auth')->group(function () {
 
         // Fisioterapi Dokter
         Route::get('list_pasiens', [FisioController::class, 'fisioDokter'])->name('list-pasiens.dokter');
-        Route::get('/form_fisioterapi', [FisioController::class, 'formDokter'])->name('form.dokter');
+        Route::get('/form_fisioterapi/{no_mr}', [FisioController::class, 'formDokter'])->name('form.dokter');
+        Route::get('/hasil_tindakan/{no_mr}', [FisioController::class, 'tindakanDokter'])->name('tindakan.dokter');
+        Route::get('/diagnosa_fisioterapi', [FisioController::class, 'diagnosaDokter'])->name('diagnosa.dokter');
     });
 
     Route::prefix('ttd')->group(function () {
@@ -172,6 +174,9 @@ Route::middleware('auth')->group(function () {
         // Edit Tanda Tangan Pasien
         Route::get('/pasienTTD/detail', [TandaTanganController::class, 'ttdPasienDetail'])->name('ttd.pasien.detail');
         Route::put('/pasienTTD/edit/{id}', [TandaTanganController::class, 'update'])->name('ttd.pasien.update');
+
+        // Tanda Tangan Dokter
+        Route::get('/cppt/ttd_dokter', [TandaTanganController::class, 'ttdDokter'])->name('ttd.dokter');
     });
 
     Route::prefix('rj')->group(function () {

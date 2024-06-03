@@ -178,4 +178,14 @@ class TandaTanganController extends Controller
 
         return redirect()->back()->with('success', 'Tanda Tangan Berhasil Dihapus!');
     }
+
+
+    // -------------------------
+    // -- TANDA TANGAN DOKTER --
+    // -------------------------
+    public function ttdDokter(Request $request)
+    {
+        $title = $this->prefix . ' Tambah CPPT';
+        return view($this->viewPath . 'ttdDokter', compact('title'));
+    }
 }
