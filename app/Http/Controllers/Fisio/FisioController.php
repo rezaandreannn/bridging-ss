@@ -305,21 +305,15 @@ class FisioController extends Controller
         $data = DB::connection('pku')
             ->table('TR_CPPT_FISIOTERAPI as a')
             ->join('TRANSAKSI_FISIOTERAPI', 'a.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
-            ->leftJoin('TTD_PETUGAS_MASTER as b', 'a.CREATE_BY', '=', 'b.USERNAME')
-            ->leftJoin('TTD_PASIEN_MASTER as c', 'a.CREATE_BY', '=', 'c.USERNAME')
+            ->leftJoin('TTD_PASIEN_MASTER as b', 'TRANSAKSI_FISIOTERAPI.NO_MR_PASIEN', '=', 'b.NO_MR_PASIEN')
             ->select(
                 'a.*',
                 'TRANSAKSI_FISIOTERAPI.*',
-                'b.USERNAME as PETUGAS_USERNAME',
-                'b.NAMA as PETUGAS_NAMA',
-                'c.USERNAME as PASIEN_USERNAME',
-                'c.NAMA as PASIEN_NAMA'
+                'b.NO_MR_PASIEN as PASIEN_USERNAME',
+                'b.IMAGE as IMAGE_PASIEN',
             )
             ->where('TRANSAKSI_FISIOTERAPI.KODE_TRANSAKSI_FISIO', '=', $id)
             ->get();
-
-        dd($data);
-        die;
 
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
         $date = date('dMY');

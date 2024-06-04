@@ -149,10 +149,10 @@
         @foreach ($data as $item)
         <tr>
             <td style="text-align: center">{{ $loop->iteration }}</td>
-            <td style="text-align: center">{{ $item['JENIS_FISIO'] }}</td>
-            <td style="text-align: center">{{ $item['TANGGAL_FISIO'] }}</td>
+            <td style="text-align: center">{{ $item->JENIS_FISIO }}</td>
+            <td style="text-align: center">{{ $item->TANGGAL_FISIO }}</td>
             <td style="text-align: center">
-                <img src="{{ asset('storage/ttd/'. $item['IMAGE'] ) }}" width="35" height="35" />
+                <img src="{{ asset('storage/ttd/' . $item->IMAGE_PASIEN ) }}" width="35" height="35" />
             </td>
             <td style="text-align: center">
 
