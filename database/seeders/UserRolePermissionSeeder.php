@@ -30,14 +30,13 @@ class UserRolePermissionSeeder extends Seeder
             'name'  => 'IT RSUMM',
         ], $default_user_value));
 
-<<<<<<< HEAD
-=======
+
         $admin = User::create(array_merge([
             'email' => 'yusufmuhammad690@gmail.com',
             'name'  => 'Muhammad Yusuf',
         ], $default_user_value));
 
->>>>>>> 3e5451c996c6dc0f965a04780a77eaf66daa48bf
+
         $perawat = User::create(array_merge([
             'email' => 'perawat@gmail.com',
             'name'  => 'PERAWAT RSUMM',
@@ -53,11 +52,10 @@ class UserRolePermissionSeeder extends Seeder
             'name'  => 'MANAGER RSUMM',
         ], $default_user_value));
 
-<<<<<<< HEAD
-        $role_it = Role::create(['name' => 'Super Admin']);
-=======
+
+
         $role_it = Role::create(['name' => 'super-admin']);
->>>>>>> 3e5451c996c6dc0f965a04780a77eaf66daa48bf
+
         $role_perawat = Role::create(['name' => 'perawat']);
         $role_dokter = Role::create(['name' => 'dokter']);
         $role_manager = Role::create(['name' => 'manager']);
