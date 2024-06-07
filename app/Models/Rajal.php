@@ -101,6 +101,19 @@ class Rajal extends Model
         return $data;
     }
 
+    public function getUserEmr($username)
+    {
+        $data = DB::connection('pku')->table('TAC_COM_USER')
+            ->where('user_name', $username)->first();
+
+        // $data = DB::connection('pku')
+        //     ->table('TR_CPPT_FISIOTERAPI')
+        //     ->join('TRANSAKSI_FISIOTERAPI', 'TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
+        //     ->where('TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', $id)
+        //     ->get();
+        return $data;
+    }
+
     public function masalahPerawatanGetByNoreg($noReg)
     {
         $data = DB::connection('pku')->table('TAC_RJ_MASALAH_KEP')

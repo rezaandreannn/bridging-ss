@@ -44,6 +44,8 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+
+    
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['nullable', 'string', 'email', 'max:255', 'unique:' . User::class],
@@ -58,8 +60,14 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'username' => $request->username,
+         
         ]);
+
+        if($request->username){
+            $user->username=$request->username;
+            $user->save();
+        }
+
 
         if ($request->file('image')) {
             $imagePath = $request->file('image')->store('public/images');
@@ -119,17 +127,22 @@ class UserController extends Controller
                     'name' => $request->name,
                     'email' => $request->email,
                     'password' => bcrypt($request->password),
-                    'username' => $request->username,
+               
                 ];
             } else {
                 $user_data = [
                     'name' => $request->name,
                     'email' => $request->email,
-                    'username' => $request->username,
+                 
                 ];
             }
             //Update Data
             $user->update($user_data);
+
+            if($request->username){
+                $user->username=$request->username;
+                $user->save();
+            }
 
             //Upload Image
             if ($request->file('image')) {
