@@ -135,6 +135,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('fisioterapi')->group(function () {
         // Fisioterapi
+        Route::get('asesmen_pasien', [AssesmenController::class, 'index'])->name('asesmen_pasien.index');
         Route::get('list_pasien', [FisioController::class, 'index'])->name('list-pasien.index');
         Route::get('/transaksi_fisio', [FisioController::class, 'transaksi'])->name('transaksi_fisio.fisio');
         Route::post('/transaksi_fisio', [FisioController::class, 'store'])->name('transaksi_fisio.store');
@@ -170,7 +171,9 @@ Route::middleware('auth')->group(function () {
 
         // Tanda Tangan Pasien
         Route::get('/cppt/ttd_pasien/{no_mr}', [TandaTanganController::class, 'ttdPasien'])->name('ttd.pasien');
+        Route::get('/cppt/ttd_pasien2/{no_mr}/{kode_dokter}', [TandaTanganController::class, 'ttdPasien2'])->name('ttd.pasien2');
         Route::post('/cppt/ttd_pasien', [TandaTanganController::class, 'ttdPasienStore'])->name('ttd.store');
+        Route::post('/cppt/ttd_pasien2', [TandaTanganController::class, 'ttdPasienStore2'])->name('ttd.store2');
 
         // Edit Tanda Tangan Pasien
         Route::get('/pasienTTD/detail', [TandaTanganController::class, 'ttdPasienDetail'])->name('ttd.pasien.detail');
