@@ -76,11 +76,6 @@
                         <a class="nav-link" href="{{ route('list-pasien.index') }}">CPPT Fisioterapi</a>
                     </li>
                 </ul>
-                <ul class="dropdown-menu">
-                    <li class="{{ Request::is('fisioterapi*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('list-pasiens.dokter') }}">Dokter Fisioterapi</a>
-                    </li>
-                </ul>
             </li>
             @endcan
             <li class="menu-header">vclaim bpjs</li>

@@ -373,7 +373,7 @@
                             <label>*Bismillahirohmanirrohim, saya dengan sadar dan penuh tanggung jawab mengisikan formulir ini dengan data yang benar </label>
                             <div class="text-left">
                                 <!-- <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button> -->
-                                <a href="{{ route('tindakan.dokter', ['no_mr' => $request->input('no_mr')]) }}" class="btn btn-primary mb-2"><i class="fas fa-save"></i> Simpan</a>
+                                <a href="{{ route('tindakan.dokter', ['no_mr' => $biodatas['NO_MR']]) }}" class="btn btn-primary mb-2"><i class="fas fa-save"></i> Simpan</a>
                             </div>
                         </div>
                         </form>

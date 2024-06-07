@@ -354,4 +354,15 @@ class FisioController extends Controller
         $jenisfisio = DB::connection('pku')->table('TAC_COM_FISIOTERAPI_MASTER')->get();
         return view($this->view . 'dokter.diagnosa', compact('title', 'jenisfisio'));
     }
+
+    public function cetakFormulir(Request $request)
+    {
+        $title = $this->prefix . ' ' . 'Bukti Layanan CPPT';
+
+        $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
+        $date = date('dMY');
+        $filename = 'Formulir-' . $date;
+        $pdf = PDF::loadview($this->view . 'cetak/formulir', ['title' => $title, 'biodatas' => $biodatas]);
+        return $pdf->stream($filename . '.pdf');
+    }
 }
