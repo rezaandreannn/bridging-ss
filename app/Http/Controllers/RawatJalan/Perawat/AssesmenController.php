@@ -40,17 +40,20 @@ class AssesmenController extends Controller
     public function index(Request $request)
     {
         $title = $this->prefix . ' ' . 'Index';
-    
+
 
         $rajalModel = new Rajal();
         $kode_dokter = $request->input('kode_dokter');
         $dokters = $this->rajal->byKodeDokter();
-        $data = $this->antrean->getData($kode_dokter);
-     
-        
+
+
+        $data = $this->antrean->getDataPasienRajal($kode_dokter);
+        // dd($data);
+        // die;
+
         // dd($users->roles[0]->name);
         // die;
-        
+
 
         return view($this->view . 'index', compact('title', 'dokters', 'data', 'rajalModel'));
     }
@@ -96,12 +99,13 @@ class AssesmenController extends Controller
         $rencanaSkdp = $this->rajal->get_rencana_skdp_by_noreg();
         // dd($rajal);
         // die;
-        
-        return view($this->view . 'editSKDP', compact('title', 'rajal', 'alasanSkdp','skdp','rencanaSkdp'));
+
+        return view($this->view . 'editSKDP', compact('title', 'rajal', 'alasanSkdp', 'skdp', 'rencanaSkdp'));
     }
-    
-    public function updateSKDP(Request $request, $noReg){
-        
+
+    public function updateSKDP(Request $request, $noReg)
+    {
+
         $skdp_update = DB::connection('pku')->table('TAC_RJ_SKDP')->where('FS_KD_REG', $noReg)->update([
             'FS_SKDP_1' => $request->input('FS_SKDP_1'),
             'FS_SKDP_2' => $request->input('FS_SKDP_2'),
@@ -110,29 +114,28 @@ class AssesmenController extends Controller
             'FS_SKDP_FASKES' => $request->input('FS_SKDP_FASKES'),
             'FS_PESAN' => $request->input('FS_PESAN'),
             'FS_RENCANA_KONTROL' => $request->input('FS_RENCANA_KONTROL')
-            
+
         ]);
-        
-        
-        
+
+
+
         return redirect('rj/rawat_jalan?kode_dokter=' . $request->input('Kode_Dokter'))->with('success', 'Data Pasien Added successfully!');
     }
-    
+
     public function skdp_ren_kontrol(Request $request)
     {
         $id = $request->input('FS_SKDP_1');
-        
+
         $rs_skdp_rencana = $this->rajal->get_rencana_skdp($id);
         //$data .= "<option>--Pilih Alasan--</option>";
         // return json_encode($rs_skdp_rencana);
         return response()->json([
             'data' => $rs_skdp_rencana
         ]);
-        
     }
-    
-    
-    
+
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -142,7 +145,7 @@ class AssesmenController extends Controller
     {
         //
     }
-    
+
     /**
      * Store a newly created resource in storage.
      *
@@ -153,45 +156,45 @@ class AssesmenController extends Controller
     {
         // Make a POST request to the API endpoint
         // $request->validate([
-            //     'FS_ANAMNESA' => 'required',
-            //     'FS_EDUKASI' => 'required',
-            //     'FS_SUHU' => 'required',
-            //     'FS_NADI' => 'required',
-            //     'FS_R' => 'required',
-            //     'FS_TD' => 'required',
-            //     'FS_TB' => 'required',
-            //     'FS_BB' => 'required',
-            //     'FS_NYERIP' => 'required',
-            //     'FS_NYERIQ' => 'required',
-            //     'FS_NYERIR' => 'required',
-            //     'FS_NYERIS' => 'required',
-            //     'FS_NYERIT' => 'required',
-            //     'FS_NYERI' => 'required',
-            //     'FS_CARA_BERJALAN1' => 'required',
-            //     'FS_CARA_BERJALAN2' => 'required',
-            //     'FS_CARA_DUDUK' => 'required',
-            //     'intervensi1' => 'required',
-            //     'intervensi2' => 'required',
-            //     'FS_RIW_PENYAKIT_DAHULU' => 'required',
-            //     'FS_RIW_PENYAKIT_DAHULU2' => 'required',
-            //     'FS_ALERGI' => 'required',
-            //     'FS_REAK_ALERGI' => 'required',
-            //     'FS_STATUS_PSIK' => 'required',
-            //     'FS_STATUS_PSIK2' => 'required',
-            // ]);
+        //     'FS_ANAMNESA' => 'required',
+        //     'FS_EDUKASI' => 'required',
+        //     'FS_SUHU' => 'required',
+        //     'FS_NADI' => 'required',
+        //     'FS_R' => 'required',
+        //     'FS_TD' => 'required',
+        //     'FS_TB' => 'required',
+        //     'FS_BB' => 'required',
+        //     'FS_NYERIP' => 'required',
+        //     'FS_NYERIQ' => 'required',
+        //     'FS_NYERIR' => 'required',
+        //     'FS_NYERIS' => 'required',
+        //     'FS_NYERIT' => 'required',
+        //     'FS_NYERI' => 'required',
+        //     'FS_CARA_BERJALAN1' => 'required',
+        //     'FS_CARA_BERJALAN2' => 'required',
+        //     'FS_CARA_DUDUK' => 'required',
+        //     'intervensi1' => 'required',
+        //     'intervensi2' => 'required',
+        //     'FS_RIW_PENYAKIT_DAHULU' => 'required',
+        //     'FS_RIW_PENYAKIT_DAHULU2' => 'required',
+        //     'FS_ALERGI' => 'required',
+        //     'FS_REAK_ALERGI' => 'required',
+        //     'FS_STATUS_PSIK' => 'required',
+        //     'FS_STATUS_PSIK2' => 'required',
+        // ]);
 
-            $users_role = User::with('roles')->where('id',auth()->user()->id)->first();
-            
-            
-            try {
-                
-                $userEmr = $this->rajal->getUserEmr(auth()->user()->username);
-         
-                
-                DB::beginTransaction();
-                $status_rj = DB::connection('pku')->table('TAC_RJ_STATUS')->insert([
-                    
-                    'FS_KD_REG' => $request->input('FS_KD_REG'),
+        $users_role = User::with('roles')->where('id', auth()->user()->id)->first();
+
+
+        try {
+
+            $userEmr = $this->rajal->getUserEmr(auth()->user()->username);
+
+
+            DB::beginTransaction();
+            $status_rj = DB::connection('pku')->table('TAC_RJ_STATUS')->insert([
+
+                'FS_KD_REG' => $request->input('FS_KD_REG'),
                 'FS_STATUS' => '1',
                 'FS_FORM' => '1',
                 'FS_JNS_ASESMEN' => 'A',
@@ -320,29 +323,24 @@ class AssesmenController extends Controller
                 }
             }
             DB::commit();
-                  // dd($users->roles[0]->name);
-        // die;
-            if ($users_role->roles[0]->name=='fisioterapi'){
+            // dd($users->roles[0]->name);
+            // die;
+            if ($users_role->roles[0]->name == 'fisioterapi') {
 
                 $cek_ttd_pasien =  DB::connection('pku')->table('TTD_PASIEN_MASTER')->where('NO_MR_PASIEN', $request->input('NO_MR'))->count();
-        
-            
+
+
 
                 if ($cek_ttd_pasien < '1') {
                     // var_dump($request->input('NO_MR'));
                     // die;
-                    return redirect()->route('ttd.pasien2', ['no_mr' => $request->input('NO_MR'),'kode_dokter'=> $request->input('KODE_DOKTER')]);
-                }
-
-                else {
+                    return redirect()->route('ttd.pasien2', ['no_mr' => $request->input('NO_MR'), 'kode_dokter' => $request->input('KODE_DOKTER')]);
+                } else {
 
                     return redirect('rj/rawat_jalan?kode_dokter=' . $request->input('KODE_DOKTER'))->with('success', 'Data Pasien Added successfully!');
-
                 }
-                
-            }
-            else {
-                
+            } else {
+
                 return redirect('rj/rawat_jalan?kode_dokter=' . $request->input('KODE_DOKTER'))->with('success', 'Data Pasien Added successfully!');
             }
         } catch (\Exception $e) {
@@ -402,7 +400,7 @@ class AssesmenController extends Controller
 
 
         $userEmr = $this->rajal->getUserEmr(auth()->user()->username);
- 
+
 
         $asasmen_perawat = DB::connection('pku')->table('TAC_ASES_PER2')->where('FS_KD_REG', $kode_reg)->update([
             'FS_RIW_PENYAKIT_DAHULU' => '',

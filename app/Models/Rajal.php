@@ -25,10 +25,18 @@ class Rajal extends Model
 
     public function byKodeDokter()
     {
-        $request = $this->httpClient->get($this->simrsUrlApi . 'dokter/select');
-        $response = $request->getBody()->getContents();
-        $data = json_decode($response, true);
-        return $data['data'];
+        $data = DB::connection('db_rsmm')
+            ->table('DOKTER')
+            ->select(
+                'KODE_DOKTER as kode_dokter',
+                'NAMA_DOKTER as nama_dokter'
+            )
+            ->where('Spesialis', 'FISIOTERAPI')
+            ->where('JENIS_PROFESI', 'DOKTER UMUM')
+            ->orWhere('JENIS_PROFESI', 'DOKTER SPESIALIS')
+            ->whereNotIn('KODE_DOKTER', ['140s', 'TM140'])
+            ->get()->toArray();
+        return $data;
     }
 
     public function getData($kode_dokter = null)
@@ -241,7 +249,7 @@ class Rajal extends Model
     public function get_rencana_skdp($id)
     {
 
-        $data = DB::connection('pku')->table('TAC_COM_PARAMETER_SKDP_RENCANA')->where('FS_KD_TRS_SKDP_ALASAN',$id)->get();
+        $data = DB::connection('pku')->table('TAC_COM_PARAMETER_SKDP_RENCANA')->where('FS_KD_TRS_SKDP_ALASAN', $id)->get();
         return $data;
     }
 }

@@ -35,7 +35,7 @@
                                     <select class="form-control select2" id="kode_dokter" name="kode_dokter">
                                         <option value="" selected disabled>-- silahkan pillih --</option>
                                         @foreach ($dokters as $dokter)
-                                        <option value="{{ $dokter['kode_dokter'] }}" {{ request('kode_dokter') == $dokter['kode_dokter'] ? 'selected' : '' }}>{{ $dokter['nama_dokter'] }}</option>
+                                        <option value="{{ $dokter->kode_dokter }}" {{ request('kode_dokter') == $dokter->kode_dokter ? 'selected' : '' }}>{{ $dokter->nama_dokter }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -70,16 +70,16 @@
                                     <td class="text-center" width="5%">
                                         {{ $loop->iteration }}
                                     </td>
-                                    <td>{{ $item['no_mr'] }}</td>
-                                    <td>{{ $item['nama_pasien'] }}</td>
-                                    <td>{{ $item['Alamat'] }}</td>
+                                    <td>{{ $item->no_mr }}</td>
+                                    <td>{{ $item->nama_pasien }}</td>
+                                    <td>{{ $item->Alamat }}</td>
                                     <td>
-                                        @if($item['FS_STATUS'] == '')
+                                        @if($item->FS_STATUS == '')
                                         <div class="badge badge-warning text-white">Perawat</div>
-                                        @elseif($item['FS_STATUS'] == '1')
+                                        @elseif($item->FS_STATUS == '1')
                                         <div class="badge badge-danger">Dokter</div>
-                                        @elseif($item['FS_STATUS'] == '2')
-                                        @if($item['FS_TERAPI'] == '' or $item['FS_TERAPI'] == '<p>-</p>')
+                                        @elseif($item->FS_STATUS == '2')
+                                        @if($item->FS_TERAPI == '' or $item->FS_TERAPI == '<p>-</p>')
                                         <div class="badge badge-success">Selesai</div>
                                         @else
                                         <div class="badge badge-info">Farmasi</div>
@@ -87,61 +87,61 @@
                                         @endif
                                     </td>
                                     <td width="40%">
-                                        @if($item['FS_STATUS'] != '')
-                                        <a href="{{ route('rj.edit', $item['No_Reg'] )}}" class="btn btn-sm btn-primary"><i class="fas fa-notes-medical"></i> Edit</a>
+                                        @if($item->FS_STATUS != '')
+                                        <a href="{{ route('rj.edit', $item->No_Reg )}}" class="btn btn-sm btn-primary"><i class="fas fa-notes-medical"></i> Edit</a>
                                         @else
-                                        <a href="{{ route('rj.add', $item['No_Reg'] )}}" class="btn btn-sm btn-primary"><i class="fas fa-notes-medical"></i> Entry</a>
+                                        <a href="{{ route('rj.add', $item->No_Reg )}}" class="btn btn-sm btn-primary"><i class="fas fa-notes-medical"></i> Entry</a>
                                         @endif
                                         <!-- pasien kontrol -->
-                                        @if($item['FS_CARA_PULANG'] == 2)
+                                        @if($item->FS_CARA_PULANG == 2)
                                         <a href="{{ route('rj.skdp', [
-                                            'noReg' => $item['No_Reg'],
-                                            'kode_transaksi' => $item['FS_KD_TRS']
+                                            'noReg' => $item->No_Reg,
+                                            'kode_transaksi' => $item->FS_KD_TRS
                                             ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> SKDP</a>
 
-                                        <a href="{{ route('rj.editSKDP', $item['No_Reg']) }}" class="btn btn-sm btn-info"><i class="fas fa-edit"></i>Edit SKDP</a>
+                                        <a href="{{ route('rj.editSKDP', $item->No_Reg) }}" class="btn btn-sm btn-info"><i class="fas fa-edit"></i>Edit SKDP</a>
                                         <!-- pasien rujuk luar rs -->
-                                        @elseif ($item['FS_CARA_PULANG'] == 4)
+                                        @elseif ($item->FS_CARA_PULANG == 4)
                                         <a href="{{ route('rj.rujukanRS', [
-                                            'noReg' => $item['No_Reg'],
-                                            'kode_transaksi' => $item['FS_KD_TRS']
+                                            'noReg' => $item->No_Reg,
+                                            'kode_transaksi' => $item->FS_KD_TRS
                                             ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujukan RS</a>
                                         <!-- pasien dengan rujuk internal -->
-                                        @elseif ($item['FS_CARA_PULANG'] == 6)
+                                        @elseif ($item->FS_CARA_PULANG == 6)
                                         <a href="{{ route('rj.rujukanInternal', [
-                                            'noReg' => $item['No_Reg'],
-                                            'kode_transaksi' => $item['FS_KD_TRS']
+                                            'noReg' => $item->No_Reg,
+                                            'kode_transaksi' => $item->FS_KD_TRS
                                             ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujukan Internal</a>
                                         <!-- pasien dikembalikan ke faskes primer -->
-                                        @elseif ($item['FS_CARA_PULANG'] == 7)
+                                        @elseif ($item->FS_CARA_PULANG == 7)
                                         <a href="{{ route('rj.faskes', [
-                                            'noReg' => $item['No_Reg'],
-                                            'kode_transaksi' => $item['FS_KD_TRS']
+                                            'noReg' => $item->No_Reg,
+                                            'kode_transaksi' => $item->FS_KD_TRS
                                             ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Faskes</a>
-                                        @elseif ($item['FS_CARA_PULANG'] == 8)
+                                        @elseif ($item->FS_CARA_PULANG == 8)
                                         <a href="{{ route('rj.prb', [
-                                            'noReg' => $item['No_Reg'],
-                                            'kode_transaksi' => $item['FS_KD_TRS']
+                                            'noReg' => $item->No_Reg,
+                                            'kode_transaksi' => $item->FS_KD_TRS
                                             ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> PRB</a>
                                         @endif
 
                                         <!-- Radiologi -->
-                                        @if($rajalModel->cek_rad($item['No_Reg']) == true)
+                                        @if($rajalModel->cek_rad($item->No_Reg) == true)
                                         <a href="{{ route('rj.radiologi', [
-                                            'noReg' => $item['No_Reg'],
-                                            'kode_transaksi' => $item['FS_KD_TRS']
+                                            'noReg' => $item->No_Reg,
+                                            'kode_transaksi' => $item->FS_KD_TRS
                                             ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Radiologi</a>
                                         @endif
                                         <!-- Laboratiorium -->
-                                        @if($rajalModel->cek_lab($item['No_Reg']) == true)
+                                        @if($rajalModel->cek_lab($item->No_Reg) == true)
                                         <a href="{{ route('rj.lab', [
-                                            'noReg' => $item['No_Reg'],
-                                            'kode_transaksi' => $item['FS_KD_TRS']
+                                            'noReg' => $item->No_Reg,
+                                            'kode_transaksi' => $item->FS_KD_TRS
                                             ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Lab</a>
                                         @endif
                                         <!-- Resep -->
-                                        @if($item['FS_TERAPI'] != '')
-                                        <a href="{{ route('rj.resep', [$item['No_Reg'], $item['FS_KD_TRS']])  }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Resep</a>
+                                        @if($item->FS_TERAPI != '')
+                                        <a href="{{ route('rj.resep', [$item->No_Reg, $item->FS_KD_TRS])  }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Resep</a>
                                         @endif
 
 
