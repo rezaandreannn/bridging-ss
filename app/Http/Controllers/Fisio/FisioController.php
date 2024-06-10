@@ -68,13 +68,18 @@ class FisioController extends Controller
     // Proses Tambah Data Transaksi Fisioterapi
     public function store(Request $request)
     {
-        $lastKodeTransaksi = $this->fisio->getLastTransaksiFisio();
+
+        $lastKodeTransaksi = DB::connection('pku')
+            ->table('TRANSAKSI_FISIOTERAPI')
+            ->orderBy('ID_TRANSAKSI', 'DESC')
+            ->limit('1')
+            ->first();
 
         $kode = 'F';
-        if ($lastKodeTransaksi == null) {
+        if (!$lastKodeTransaksi) {
             $nomorUrut = "000001";
         } else {
-            $noTerakhir = substr($lastKodeTransaksi['KODE_TRANSAKSI_FISIO'], 2);
+            $noTerakhir = (int)substr($lastKodeTransaksi->KODE_TRANSAKSI_FISIO, 2);
             $noTerakhir += 1;
             $nomorUrut = sprintf('%06s', $noTerakhir);
         }
@@ -301,7 +306,6 @@ class FisioController extends Controller
     public function bukti_layanan(Request $request, $id)
     {
         $title = $this->prefix . ' ' . 'Bukti Layanan CPPT';
-
         $data = DB::connection('pku')
             ->table('TR_CPPT_FISIOTERAPI as a')
             ->join('TRANSAKSI_FISIOTERAPI', 'a.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
@@ -310,7 +314,7 @@ class FisioController extends Controller
                 'a.*',
                 'TRANSAKSI_FISIOTERAPI.*',
                 'b.NO_MR_PASIEN as PASIEN_USERNAME',
-                'b.IMAGE as IMAGE_PASIEN',
+                'b.IMAGE',
             )
             ->where('TRANSAKSI_FISIOTERAPI.KODE_TRANSAKSI_FISIO', '=', $id)
             ->get();

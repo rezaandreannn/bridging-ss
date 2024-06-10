@@ -88,7 +88,7 @@
                                     </td>
                                     <td width="40%">
                                         @if($item['FS_STATUS'] != '')
-                                        <a href="{{ route('rj.edit', $item['No_Reg'] )}}" class="btn btn-primary"><i class="fas fa-notes-medical"></i> Edit</a>
+                                        <a href="{{ route('rj.edit', $item['No_Reg'] )}}" class="btn btn-sm btn-primary"><i class="fas fa-notes-medical"></i> Edit</a>
                                         @else
                                         <a href="{{ route('rj.add', $item['No_Reg'] )}}" class="btn btn-sm btn-primary"><i class="fas fa-notes-medical"></i> Entry</a>
                                         @endif
@@ -143,9 +143,9 @@
                                         @if($item['FS_TERAPI'] != '')
                                         <a href="{{ route('rj.resep', [$item['No_Reg'], $item['FS_KD_TRS']])  }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Resep</a>
                                         @endif
-                                  
 
-                               
+
+
                                     </td>
                                 </tr>
                                 @endforeach

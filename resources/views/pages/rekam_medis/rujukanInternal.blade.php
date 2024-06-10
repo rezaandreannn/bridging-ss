@@ -55,30 +55,30 @@
             </tr>
         </table>
         <p style="font-size: 12px; text-align:left;"> <b>Yth,</b></p>
-        <p style="font-size: 12px; text-align:left;"> <b>{{ $data['FS_TUJUAN_RUJUKAN'] ?? ''}}</b></p>
-        <p style="font-size: 12px; text-align:left;"> <b>{{ $data['FS_TUJUAN_RUJUKAN2'] ?? ''}}</b></p>
+        <p style="font-size: 12px; text-align:left;"> <b>{{ $data->FS_TUJUAN_RUJUKAN ?? ''}}</b></p>
+        <p style="font-size: 12px; text-align:left;"> <b>{{ $data->FS_TUJUAN_RUJUKAN2 ?? ''}}</b></p>
         <p style="font-size: 12px; text-align:left;"> Assalamu'alaikum Wr Wb</p>
         <p style="font-size: 12px; text-align:left;"> Dengan hormat, bersama ini kami kirimkan pasien :</p>
         <table width="100%">
             <tr>
                 <td width="80" style="font-size: 11px;">Nama</td>
-                <td width="300" style="font-size: 11px;">: {{ $biodata['NAMA_PASIEN'] ?? ''}}</td>
+                <td width="300" style="font-size: 11px;">: {{ $biodata->NAMA_PASIEN ?? ''}}</td>
             </tr>
             <tr>
                 <td width="80" style="font-size: 11px;">No RM</td>
-                <td width="300" style="font-size: 11px;">: {{ $biodata['NO_MR'] ?? ''}}</td>
+                <td width="300" style="font-size: 11px;">: {{ $biodata->NO_MR ?? ''}}</td>
             </tr>
             <tr>
                 <td width="80" style="font-size: 11px;">Tanggal Lahir</td>
-                <td width="300" style="font-size: 11px;">: {{ date('d-m-Y', strtotime($biodata['TGL_LAHIR'])) }}</td>
+                <td width="300" style="font-size: 11px;">: {{ date('d-m-Y', strtotime($biodata->TGL_LAHIR)) }}</td>
             </tr>
             <tr>
                 <td width="80" style="font-size: 11px;">Alamat</td>
-                <td width="300" style="font-size: 11px;">: {{ $biodata['ALAMAT'] ?? ''}}</td>
+                <td width="300" style="font-size: 11px;">: {{ $biodata->ALAMAT ?? ''}}</td>
             </tr>
             <tr>
                 <td width="80" style="font-size: 11px;">Jenis Kelamin</td>
-                <td width="300" style="font-size: 11px;">: @if ($biodata['JENIS_KELAMIN'] == 'L')
+                <td width="300" style="font-size: 11px;">: @if ($biodata->JENIS_KELAMIN == 'L')
                     Laki-Laki
                     @else
                     Perempuan
@@ -86,15 +86,15 @@
             </tr>
             <tr>
                 <td width="80" style="font-size: 11px;">Diagnosa</td>
-                <td width="300" style="font-size: 11px;">: {{ $resep['FS_DIAGNOSA'] ?? ''}}</td>
+                <td width="300" style="font-size: 11px;">: {{ $resep->FS_DIAGNOSA ?? ''}}</td>
             </tr>
             <tr>
                 <td width="80" style="font-size: 11px;">Terapi</td>
-                <td width="300" style="font-size: 11px;">: {{ $resep['FS_TERAPI'] ?? ''}}</td>
+                <td width="300" style="font-size: 11px;">: {{ $resep->FS_TERAPI ?? ''}}</td>
             </tr>
             <tr>
                 <td width="80" style="font-size: 11px;">Alasan dirujuk</td>
-                <td width="300" style="font-size: 11px;">: {{ $data['FS_ALASAN_RUJUK'] ?? ''}}</td>
+                <td width="300" style="font-size: 11px;">: {{ $data->FS_ALASAN_RUJUK ?? ''}}</td>
             </tr>
         </table>
         <p style="font-size: 12px; text-align:left;"> Demikian harap menjadi maklum adanya dan terimakasih atas perhatian teman sejawat</p>
@@ -109,12 +109,12 @@
                 <td></td>
                 <td style="float: left;">
                     <!-- Menampilkan barcode dengan lebar 200px dan tinggi 200px -->
-                    {!! DNS1D::getBarcodeHTML($resep['KODE_DOKTER'], 'C39') !!}
+                    {!! DNS1D::getBarcodeHTML($resep->KODE_DOKTER, 'C39') !!}
                 </td>
             </tr>
             <tr>
                 <td></td>
-                <td style="text-align: left;">{{ $resep['NAMALENGKAP'] ?? ''}}</td>
+                <td style="text-align: left;">{{ $resep->NAMALENGKAP ?? ''}}</td>
             </tr>
         </table>
     </center>

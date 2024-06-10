@@ -77,26 +77,29 @@ class Pasien extends Model
     // {
     //     $data = DB::connection('db_rsmm')
     //         ->table('REGISTER_PASIEN as a')
+    //         ->leftJoin('PENDAFTARAN as b', 'a.No_MR', '=', 'b.No_MR')
     //         ->select(
     //             'a.NAMA_PASIEN',
     //             'a.NO_MR',
-    //             'a.HP2',
     //             'a.HP1',
+    //             'a.HP2',
     //             'a.ALAMAT',
     //             'a.KOTA',
     //             'a.PROVINSI',
     //             'a.JENIS_KELAMIN',
     //             'a.TGL_LAHIR',
-    //             'a.FS_ALERGI',
     //             'a.FS_REAK_ALERGI',
     //             'a.FS_RIW_PENYAKIT_DAHULU',
+    //             'a.FS_ALERGI',
     //             'a.FS_RIW_PENYAKIT_DAHULU2',
-    //             'b.No_Reg'
+    //             'a.FS_HIGH_RISK',
+    //             'b.No_MR',
+    //             'b.No_Reg',
     //         )
-    //         ->join('PENDAFTARAN as b', 'a.NO_MR', '=', 'b.NO_MR')
     //         ->where('a.NO_MR', $no_mr)
+    //         ->orderBy('b.No_Reg', 'DESC')
+    //         ->limit('1')
     //         ->first();
-
     //     return $data;
     // }
 }

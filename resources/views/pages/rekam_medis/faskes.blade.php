@@ -69,23 +69,23 @@ $dayList = array(
         <table width="100%">
             <tr>
                 <td width="80" style="font-size: 11px;">Nama</td>
-                <td width="300" style="font-size: 11px;">: {{ $biodata['NAMA_PASIEN'] ?? ''}}</td>
+                <td width="300" style="font-size: 11px;">: {{ $biodata->NAMA_PASIEN ?? ''}}</td>
 
             </tr>
             <tr>
                 <td width="80" style="font-size: 11px;">No RM</td>
-                <td width="300" style="font-size: 11px;">: {{ $biodata['NO_MR'] ?? ''}}</td>
+                <td width="300" style="font-size: 11px;">: {{ $biodata->NO_MR ?? ''}}</td>
             </tr>
             <tr>
                 <td width="80" style="font-size: 11px;">Diagnosa</td>
-                <td width="300" style="font-size: 11px;">: {{ $resep['FS_DIAGNOSA'] ?? ''}}</td>
+                <td width="300" style="font-size: 11px;">: {{ $resep->FS_DIAGNOSA ?? ''}}</td>
             </tr>
             <tr>
                 <td width="80" style="font-size: 11px;">Terapi</td>
                 <td width="300" style="font-size: 11px;">: </td>
             </tr>
         </table>
-        <p style="font-size: 12px; text-align:left; padding-left:160px;">{!! nl2br(trim($resep['FS_TERAPI'] ?? '')) !!}</p>
+        <p style="font-size: 12px; text-align:left; padding-left:160px;">{!! nl2br(trim($resep->FS_TERAPI ?? '')) !!}</p>
         <table width="100%">
             <tr>
                 <td colspan="3">
@@ -97,7 +97,7 @@ $dayList = array(
             <tr>
                 <td>
                     <font size="2">Pasien dapat kontrol kembali ke Rumah Sakit setelah dari FKTP pada hari & tanggal
-                        : <b> {{ $dayList[date('D', strtotime($data['FS_TGL_PRB']))] . ', ' . date('d M Y', strtotime($data['FS_TGL_PRB'])) }}</b> Demikian hal ini kami sampaikan untuk dapat dipergunakan
+                        : <b> {{ $dayList[date('D', strtotime($data->FS_TGL_PRB))] . ', ' . date('d M Y', strtotime($data->FS_TGL_PRB)) }}</b> Demikian hal ini kami sampaikan untuk dapat dipergunakan
                         sebagaimana perlu, Terimakasih.</font>
                 </td>
             </tr>
@@ -113,12 +113,12 @@ $dayList = array(
                 <td></td>
                 <td style="float: left; padding-left:350px;">
                     <!-- Menampilkan barcode dengan lebar 200px dan tinggi 200px -->
-                    {!! DNS2D::getBarcodeHTML($resep['NAMALENGKAP'], 'QRCODE', 2, 2) !!}
+                    {!! DNS2D::getBarcodeHTML($resep->NAMALENGKAP, 'QRCODE', 2, 2) !!}
                 </td>
             </tr>
             <tr>
                 <td></td>
-                <td style="text-align: left; padding-left:350px;">{{ $resep['NAMALENGKAP'] ?? ''}}</td>
+                <td style="text-align: left; padding-left:350px;">{{ $resep->NAMALENGKAP ?? ''}}</td>
             </tr>
         </table>
     </center>

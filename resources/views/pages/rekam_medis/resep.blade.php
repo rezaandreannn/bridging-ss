@@ -41,7 +41,7 @@
             <table width="100%">
                 <tr>
                     <td class="text">
-                        Rekanan : {{ $biodata['NAMAREKANAN'] ?? ''}}
+                        Rekanan : {{ $biodata->NAMAREKANAN ?? ''}}
                     </td>
                 </tr>
             </table>
@@ -54,7 +54,7 @@
             </table>
             <table width="100%">
                 <tr>
-                    <td class="text5">{{ $data['NAMALENGKAP'] ?? ''}}</td>
+                    <td class="text5">{{ $data->NAMALENGKAP}}</td>
                 </tr>
                 <tr>
                     <td class="text5">SIP : </td>
@@ -68,7 +68,7 @@
                     </td>
                 </tr>
             </table>
-            <p style="font-size: 12px; text-align:left;">{!! nl2br(trim($data['FS_TERAPI'] ?? '')) !!}</p>
+            <p style="font-size: 12px; text-align:left;">{!! nl2br(trim($data->FS_TERAPI)) !!}</p>
             <table width="100%">
                 <tr>
                     <td colspan="4">
@@ -77,21 +77,21 @@
                 </tr>
                 <tr>
                     <td width="10%">No RM</td>
-                    <td width="25%">: {{ $biodata['NO_MR'] ?? ''}}</td>
+                    <td width="25%">: {{ $biodata->NO_MR ?? ''}}</td>
                     <td width="15%">Tgl Lahir</td>
-                    <td width="25%">: {{ date('d-m-Y', strtotime($biodata['TGL_LAHIR'])) }}</td>
+                    <td width="25%">: {{ date('d-m-Y', strtotime($biodata->TGL_LAHIR)) }}</td>
                 </tr>
                 <tr>
                     <td width="10%">Nama</td>
-                    <td width="30%">: {{ $biodata['NAMA_PASIEN'] ?? ''}}</td>
+                    <td width="30%">: {{ $biodata->NAMA_PASIEN ?? ''}}</td>
                 </tr>
                 <tr>
                     <td width="10%">Alamat</td>
-                    <td width="40%">: {{ $biodata['ALAMAT'] ?? ''}}</td>
+                    <td width="40%">: {{ $biodata->ALAMAT ?? ''}}</td>
                 </tr>
                 <tr>
                     <td>Jenis Kelamin</td>
-                    <td>: @if ($biodata['JENIS_KELAMIN'] == 'L')
+                    <td>: @if ($biodata->JENIS_KELAMIN == 'L')
                         Laki-Laki
                         @else
                         Perempuan
@@ -106,18 +106,18 @@
 
                 <tr>
                     <td>Diagnosa</td>
-                    <td>: {{ $data['FS_DIAGNOSA'] ?? ''}}</td>
+                    <td>: {{ $data->FS_DIAGNOSA}}</td>
                     <td>Alergi</td>
-                    <td>: {{ $data['FS_ALERGI'] ?? ''}}</td>
+                    <td>: {{ $data->FS_ALERGI}}</td>
                 </tr>
                 <tr>
                     <td>Diagnosa Sekunder</td>
-                    <td>: {{ $data['FS_DIAGNOSA_SEKUNDER'] ?? ''}}</td>
+                    <td>: {{ $data->FS_DIAGNOSA_SEKUNDER}}</td>
                 </tr>
             </table>
             <table width="100%">
                 <tr>
-                    {!! DNS1D::getBarcodeHTML($data['KODE_DOKTER'], 'C39',2,40) !!}
+                    {!! DNS1D::getBarcodeHTML($data->KODE_DOKTER, 'C39',2,40) !!}
                 </tr>
             </table>
         </center>
