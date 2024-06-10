@@ -35,6 +35,29 @@ class Fisioterapi extends Model
         return $data['data'];
     }
 
+    public function getPasienRehabMedis()
+    {
+        $date=date('Y-m-d');
+        $data = DB::connection('db_rsmm')
+        ->table('ANTRIAN as A')
+        ->join('PENDAFTARAN as P', 'A.No_MR', '=', 'P.No_MR')
+        ->join('REGISTER_PASIEN as RP', 'P.No_MR', '=', 'RP.No_MR')->select(
+            'A.Nomor',
+            'RP.No_MR',
+            'RP.Nama_Pasien',
+            'RP.Alamat',
+
+        )
+        ->where('A.Tanggal', $date)
+        ->where('P.Tanggal', $date)
+        ->where('A.Dokter', '151')
+        ->where('P.Kode_Dokter', '151')
+        ->where('P.Medis', 'RAWAT JALAN')
+        ->orderBy('Nomor', 'ASC')
+        ->get()->toArray();
+        return $data;
+    }
+
 
     // Data Table Pasien Fisioterapi
     public function transaksiFisioByMr($no_mr)

@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Simrs\Icd10;
+use App\Models\Simrs\Antrean;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
@@ -9,6 +12,7 @@ use App\Http\Controllers\Manage\UserController;
 use App\Http\Controllers\TandaTanganController;
 use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\Rj\RawatJalanController;
+use App\Http\Controllers\MasterData\Icd10Controller;
 use App\Http\Controllers\Berkas\Berkas_rm_controller;
 use App\Http\Controllers\Kunjungan\AntreanController;
 use App\Http\Controllers\Manage\PermissionController;
@@ -17,16 +21,14 @@ use App\Http\Controllers\MasterData\PasienController;
 use App\Http\Controllers\Encounter\RecourceController;
 use App\Http\Controllers\MasterData\LocationController;
 use App\Http\Controllers\Kunjungan\PendaftaranController;
+use App\Http\Controllers\MasterData\JenisFisioController;
 use App\Http\Controllers\MasterData\OrganizationController;
 use App\Http\Controllers\Manage\RoleHasPermissionController;
 use App\Http\Controllers\Mapping\MappingEncounterController;
+use App\Http\Controllers\Fisio\Dokter\AssesmenDokterController;
 use App\Http\Controllers\RawatJalan\Perawat\AssesmenController;
 use App\Http\Controllers\Case\Encounter\EncounterCreateController;
-use App\Http\Controllers\MasterData\Icd10Controller;
-use App\Http\Controllers\MasterData\JenisFisioController;
-use App\Models\Simrs\Antrean;
-use App\Models\Simrs\Icd10;
-use Illuminate\Support\Facades\DB;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -154,7 +156,8 @@ Route::middleware('auth')->group(function () {
         Route::get('bukti_layanan/{kode_transaksi}/{no_mr}', [FisioController::class, 'bukti_layanan'])->name('cppt.buktiLayanan');
 
         // Fisioterapi Dokter
-        Route::get('list_pasiens', [FisioController::class, 'fisioDokter'])->name('list-pasiens.dokter');
+        Route::get('dokter/list_pasiens', [AssesmenDokterController::class, 'index'])->name('list_pasiens.dokter');
+        Route::get('dokter/assesmen_dokter/{NoMr}', [AssesmenDokterController::class, 'create'])->name('add.dokter');
         Route::get('/form_fisioterapi/{no_mr}', [FisioController::class, 'formDokter'])->name('form.dokter');
         Route::get('/hasil_tindakan/{no_mr}', [FisioController::class, 'tindakanDokter'])->name('tindakan.dokter');
         Route::get('/diagnosa_fisioterapi', [FisioController::class, 'diagnosaDokter'])->name('diagnosa.dokter');

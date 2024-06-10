@@ -25,7 +25,7 @@
 
         <div class="section-body">
             <div class="card card-primary">
-                <form id="filterForm" action="{{ route('form.dokter') }}" method="get">
+                <form id="filterForm" action="#" method="get">
                     <div class="card-header">
                         <h4>Fisioterapi</h4>
                     </div>
@@ -37,7 +37,7 @@
                                     <select name="no_mr" id="" class="form-control select2">
                                         <option value="" selected disabled>-- Pilih Pasien --</option>
                                         @foreach ($listpasien as $pasien)
-                                        <option value="{{ $pasien['NO_MR'] }}">{{ $pasien['NAMA_PASIEN'] }}</option>
+                                        <option value="{{ $pasien->No_MR }}">{{ $pasien->Nama_Pasien }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -49,6 +49,37 @@
 
                     </div>
                 </form>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table-striped table" id="table-1">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No Antrian</th>
+                                    <th scope="col">No MR</th>
+                                    <th scope="col">Nama Pasien</th>
+                                    <th scope="col">Alamat</th>
+                                    <th scope="col">Periksa</th>
+                                    <th scope="col">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($listpasien as $pasien)
+                                    <tr>
+                                        <td>{{ $pasien->Nomor }}</td>
+                                        <td>{{ $pasien->No_MR }}</td>
+                                        <td>{{ $pasien->Nama_Pasien }}</td>
+                                        <td>{{ $pasien->Alamat }}</td>
+                                        <td><div class="badge badge-warning text-white">Perawat</div></td>
+                                        <td width="15%">    <a href="{{ route('add.dokter', $pasien->No_MR)}}" class="btn btn-sm btn-primary"><i class="fas fa-notes-medical"></i> Entry</a></td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
