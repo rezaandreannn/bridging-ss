@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\RawatJalan\Perawat;
 
+use App\Models\User;
 use App\Models\Rajal;
 use GuzzleHttp\Client;
 use App\Models\Antrean;
@@ -39,11 +40,17 @@ class AssesmenController extends Controller
     public function index(Request $request)
     {
         $title = $this->prefix . ' ' . 'Index';
+    
 
         $rajalModel = new Rajal();
         $kode_dokter = $request->input('kode_dokter');
         $dokters = $this->rajal->byKodeDokter();
         $data = $this->antrean->getData($kode_dokter);
+     
+        
+        // dd($users->roles[0]->name);
+        // die;
+        
 
         return view($this->view . 'index', compact('title', 'dokters', 'data', 'rajalModel'));
     }
@@ -172,6 +179,8 @@ class AssesmenController extends Controller
             //     'FS_STATUS_PSIK' => 'required',
             //     'FS_STATUS_PSIK2' => 'required',
             // ]);
+
+            $users_role = User::with('roles')->where('id',auth()->user()->id)->first();
             
             
             try {
@@ -311,11 +320,35 @@ class AssesmenController extends Controller
                 }
             }
             DB::commit();
-            return redirect('rj/rawat_jalan?kode_dokter=' . $request->input('KODE_DOKTER'))->with('success', 'Data Pasien Added successfully!');
+                  // dd($users->roles[0]->name);
+        // die;
+            if ($users_role->roles[0]->name=='fisioterapi'){
+
+                $cek_ttd_pasien =  DB::connection('pku')->table('TTD_PASIEN_MASTER')->where('NO_MR_PASIEN', $request->input('NO_MR'))->count();
+        
+            
+
+                if ($cek_ttd_pasien < '1') {
+                    // var_dump($request->input('NO_MR'));
+                    // die;
+                    return redirect()->route('ttd.pasien2', ['no_mr' => $request->input('NO_MR'),'kode_dokter'=> $request->input('KODE_DOKTER')]);
+                }
+
+                else {
+
+                    return redirect('rj/rawat_jalan?kode_dokter=' . $request->input('KODE_DOKTER'))->with('success', 'Data Pasien Added successfully!');
+
+                }
+                
+            }
+            else {
+                
+                return redirect('rj/rawat_jalan?kode_dokter=' . $request->input('KODE_DOKTER'))->with('success', 'Data Pasien Added successfully!');
+            }
         } catch (\Exception $e) {
             //throw $th;
             DB::rollBack();
-            // return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
+            return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
         }
     }
 
