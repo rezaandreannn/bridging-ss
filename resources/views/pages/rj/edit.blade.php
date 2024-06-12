@@ -99,7 +99,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                <input type="hidden" name="KODE_DOKTER" value="{{ $rajal['Kode_Dokter']}}" />
+                                <input type="hidden" name="KODE_DOKTER" value="{{ $biodata->Kode_Dokter}}" />
                                     <label>Anamnesa / Allow Anamnesa <code>*</code></label>
                                     <textarea class="form-control" rows="3" name="FS_ANAMNESA" placeholder="Masukan ...">{{ $asasmen_perawat->FS_ANAMNESA }}</textarea>
                                 </div>

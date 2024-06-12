@@ -37,7 +37,7 @@
                                     <select name="no_mr" id="" class="form-control select2">
                                         <option value="" selected disabled>-- Pilih Pasien --</option>
                                         @foreach ($listpasien as $pasien)
-                                        <option value="{{ $pasien['NO_MR'] }}">{{ $pasien['NAMA_PASIEN'] }}</option>
+                                        <option value="{{ $pasien->NO_MR }}">{{ $pasien->NAMA_PASIEN }}</option>
                                         @endforeach
                                     </select>
                                 </div>

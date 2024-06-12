@@ -48,10 +48,14 @@ class FisioController extends Controller
     // LIST DAFTAR PASIEN FISIOTERAPI
     public function index()
     {
+        
         $listpasien = $this->fisio->pasienCpptdanFisioterapi();
 
+        // dd($listpasien);
+        // die;
+
         $title = $this->prefix . ' ' . 'Index';
-        return view($this->view . 'cppt', compact('title', 'listpasien'));
+        return view($this->view . 'listPasienCpptFisio', compact('title', 'listpasien'));
     }
 
     // Detail Pasien Transaksi Fisioterapi
@@ -60,6 +64,8 @@ class FisioController extends Controller
 
         $fisioModel = new Fisioterapi();
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
+        // dd($biodatas);
+        // die;
         $transaksis = $this->fisio->transaksiFisioByMr($request->no_mr);
         $title = $this->prefix . ' ' . 'Form CPPT';
         return view($this->view . 'transaksiFisio', compact('title', 'biodatas', 'transaksis', 'fisioModel'));
@@ -155,6 +161,8 @@ class FisioController extends Controller
         $title = $this->prefix . ' Tambah CPPT';
 
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
+        //  dd($biodatas);
+        // die;
         $data = $this->fisio->dataPasienCPPT($id);
         $cppt =  DB::connection('pku')->table('TRANSAKSI_FISIOTERAPI')->where('ID_TRANSAKSI', $id)->first();
         $jenisfisio = DB::connection('pku')->table('TAC_COM_FISIOTERAPI_MASTER')->get();

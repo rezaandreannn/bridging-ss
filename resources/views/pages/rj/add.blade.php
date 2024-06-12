@@ -29,61 +29,9 @@
 
         <div class="section-body">
             <!-- Detail Pasien -->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="author-box-name">
-                                <a href="#">
-                                    <h6 class="mt-1">{{ $rajal['NAMA_PASIEN'] ?? ''}} - ({{ $rajal['NO_MR'] ?? ''}})</h6>
-                                </a>
-                            </div>
-                            <div class="author-box-job">
-                                <h6 class="mb-0"><b></b></h6>
-                                <hr>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <ul class="list-unstyled mb-0">
-                                        <li class="media">
-                                            <div class="media-title">Rekanan :</div>
-                                            <div class="media-body">
-                                                <div class="media-title ml-3 mb-1"> {{ $rajal['NAMAREKANAN'] ?? ''}}</div>
-                                            </div>
-                                        </li>
-                                        <li class="media">
-                                            <div class="media-title mb-0">Nama Dokter :</div>
-                                            <div class="media-body">
-                                                <div class="media-title ml-3 mb-1"> {{ $rajal['NAMA_DOKTER'] ?? ''}}</div>
-                                            </div>
-                                        </li>
-                                        <li class="media">
-                                            <div class="media-title">Jenis Kelamin :</div>
-                                            <div class="media-body">
-                                                <div class="media-title ml-3 mb-1"> {{ $rajal['JENIS_KELAMIN'] ?? ''}}</div>
-                                            </div>
-                                        </li>
-                                        <li class="media">
-                                            <div class="media-title mb-0">Tanggal Lahir :</div>
-                                            <div class="media-body">
-                                                <div class="media-title ml-3 mb-1">{{ date('d-m-Y', strtotime($rajal['TGL_LAHIR'] ?? '')) }}</div>
-                                            </div>
-                                        </li>
-                                        <li class="media">
-                                            <div class="media-title mb-0">Alamat :</div>
-                                            <div class="media-body">
-                                                <div class="media-title ml-3 mb-1"> {{ $rajal['ALAMAT'] ?? ''}}</div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @include('components.biodata-pasien-bynoreg')
             <!-- Tutup Detail Pasien -->
-            <a href="{{ route('rj.resume', $rajal['NO_MR'] )}}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-primary mb-2"><i class="fas fa-download"></i>Profil Ringkas Medis Rawat Jalan</a>
+            <a href="{{ route('rj.resume', $biodata->NO_MR )}}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-primary mb-2"><i class="fas fa-download"></i>Profil Ringkas Medis Rawat Jalan</a>
             <button class="btn btn-sm btn-primary mb-2" data-toggle="modal" data-target="#modal-histori"><i class="fas fa-history"></i> History</button>
             <!-- form -->
             <form action="{{ route('rj.store') }}" method="post">
@@ -99,8 +47,8 @@
                                 <div class="form-group">
                                     <label>Anamnesa / Allow Anamnesa <code>*</code></label>
                                     <input type="hidden" name="FS_KD_REG" value="{{ $noReg }}" />
-                                    <input type="hidden" name="KODE_DOKTER" value="{{ $rajal['Kode_Dokter']}}" />
-                                    <input type="hidden" name="NO_MR" value="{{ $rajal['NO_MR']}}" />
+                                    <input type="hidden" name="KODE_DOKTER" value="{{ $biodata->Kode_Dokter}}" />
+                                    <input type="hidden" name="NO_MR" value="{{ $biodata->NO_MR}}" />
 
                                   
                                     <textarea class="form-control" rows="3" name="FS_ANAMNESA" value="" placeholder="Masukan ..."></textarea>

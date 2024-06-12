@@ -190,13 +190,38 @@ class Rajal extends Model
     // Get Data Pasien Rawat Jalan
     public function pasien_bynoreg($noReg)
     {
-        $request = $this->httpClient->get($this->simrsUrlApi . 'pasien/biodatabynoreg/' . $noReg);
-        $response = $request->getBody()->getContents();
-        $data = json_decode($response, true);
-        // Mengganti kunci NO_REG menjadi No_Reg
-        $data['data']['No_Reg'] = $data['data']['NO_REG'];
-        unset($data['data']['NO_REG']);
-        return $data['data'];
+
+        $pku = DB::connection('pku')->getDatabaseName();
+        $data = DB::connection('db_rsmm')
+            ->table('REGISTER_PASIEN as a')
+            ->leftJoin('PENDAFTARAN as b', 'a.No_MR', '=', 'b.No_MR')
+            ->leftJoin('DOKTER as c', 'b.KODE_DOKTER', '=', 'c.KODE_DOKTER')
+            ->leftJoin($pku . '.dbo.TAC_RJ_MEDIS as d', 'b.NO_REG', '=', 'd.FS_KD_REG')
+            ->leftJoin('REKANAN as e', 'b.KODEREKANAN', '=', 'e.KODEREKANAN')
+            ->select(
+                'a.NAMA_PASIEN',
+                'a.NO_MR',
+                'a.ALAMAT',
+                'a.JENIS_KELAMIN',
+                'a.PROVINSI',
+                'a.TGL_LAHIR',
+                'a.FS_REAK_ALERGI',
+                'a.FS_RIW_PENYAKIT_DAHULU',
+                'a.FS_ALERGI',
+                'a.FS_RIW_PENYAKIT_DAHULU2',
+                'a.FS_HIGH_RISK',
+                'b.NO_REG',
+                'b.Kode_Dokter',
+                'c.NAMA_DOKTER',
+                'c.SPESIALIS',
+                'd.FS_DIAGNOSA',
+                'd.FS_DIAGNOSA_SEKUNDER',
+                'e.NAMAREKANAN',
+            )
+            ->where('b.NO_REG', $noReg)
+            ->first();
+        return $data;
+
     }
 
     //  View Profil Resume Medis Pasien

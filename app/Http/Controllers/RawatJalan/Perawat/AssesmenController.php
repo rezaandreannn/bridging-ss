@@ -63,9 +63,9 @@ class AssesmenController extends Controller
         $title = $this->prefix . ' ' . 'Add Data';
         $masalah_perawatan = $this->rajal->masalah_perawatan();
         $rencana_perawatan = $this->rajal->rencana_perawatan();
-        $rajal = $this->rajal->pasien_bynoreg($noReg);
+        $biodata = $this->rajal->pasien_bynoreg($noReg);
 
-        return view($this->view . 'add', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'rajal', 'noReg'));
+        return view($this->view . 'add', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'biodata', 'noReg'));
     }
 
     //Tampilan Report PDF Resume Pasien
@@ -93,14 +93,14 @@ class AssesmenController extends Controller
     public function editSKDP($noReg)
     {
         $title = $this->prefix . ' ' . 'Edit SKDP';
-        $rajal = $this->rajal->pasien_bynoreg($noReg);
+        $biodata = $this->rajal->pasien_bynoreg($noReg);
         $alasanSkdp = $this->rajal->getAlesanSkdp();
         $skdp = $this->rajal->getSkdp($noReg);
         $rencanaSkdp = $this->rajal->get_rencana_skdp_by_noreg();
         // dd($rajal);
         // die;
 
-        return view($this->view . 'editSKDP', compact('title', 'rajal', 'alasanSkdp', 'skdp', 'rencanaSkdp'));
+        return view($this->view . 'editSKDP', compact('title', 'biodata', 'alasanSkdp', 'skdp', 'rencanaSkdp'));
     }
 
     public function updateSKDP(Request $request, $noReg)
@@ -375,7 +375,7 @@ class AssesmenController extends Controller
 
         $masalah_perGet = $this->rajal->masalahPerawatanGetByNoreg($noReg);
         $rencana_perGet = $this->rajal->rencanaPerawatanGetByNoreg($noReg);
-        $rajal = $this->rajal->pasien_bynoreg($noReg);
+        $biodata = $this->rajal->pasien_bynoreg($noReg);
 
         $asasmen_perawat = $this->rajal->asasmenPerawatGet($noReg);
         $riwayat = $this->rajal->riwayatGet($noReg);
@@ -385,7 +385,7 @@ class AssesmenController extends Controller
         // dd($rencana_perGet);
         // die;
 
-        return view($this->view . 'edit', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'rajal', 'asasmen_perawat', 'riwayat', 'masalah_perGet', 'rencana_perGet'));
+        return view($this->view . 'edit', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'biodata', 'asasmen_perawat', 'riwayat', 'masalah_perGet', 'rencana_perGet'));
     }
 
     /**

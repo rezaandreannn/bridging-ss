@@ -92,6 +92,7 @@
                                         @else
                                         <a href="{{ route('rj.add', $item->No_Reg )}}" class="btn btn-sm btn-primary"><i class="fas fa-notes-medical"></i> Entry</a>
                                         @endif
+                                        
                                         <!-- pasien kontrol -->
                                         @if($item->FS_CARA_PULANG == 2)
                                         <a href="{{ route('rj.skdp', [

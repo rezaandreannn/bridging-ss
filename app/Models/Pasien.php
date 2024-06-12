@@ -65,41 +65,44 @@ class Pasien extends Model
         return $data['data'];
     }
 
-    public function biodataPasienByMr($no_mr)
-    {
-        $request = $this->httpClient->get($this->simrsUrlApi . 'pasien/biodatabymr/' . $no_mr);
-        $response = $request->getBody()->getContents();
-        $data = json_decode($response, true);
-        return $data['data'];
-    }
-
     // public function biodataPasienByMr($no_mr)
     // {
-    //     $data = DB::connection('db_rsmm')
-    //         ->table('REGISTER_PASIEN as a')
-    //         ->leftJoin('PENDAFTARAN as b', 'a.No_MR', '=', 'b.No_MR')
-    //         ->select(
-    //             'a.NAMA_PASIEN',
-    //             'a.NO_MR',
-    //             'a.HP1',
-    //             'a.HP2',
-    //             'a.ALAMAT',
-    //             'a.KOTA',
-    //             'a.PROVINSI',
-    //             'a.JENIS_KELAMIN',
-    //             'a.TGL_LAHIR',
-    //             'a.FS_REAK_ALERGI',
-    //             'a.FS_RIW_PENYAKIT_DAHULU',
-    //             'a.FS_ALERGI',
-    //             'a.FS_RIW_PENYAKIT_DAHULU2',
-    //             'a.FS_HIGH_RISK',
-    //             'b.No_MR',
-    //             'b.No_Reg',
-    //         )
-    //         ->where('a.NO_MR', $no_mr)
-    //         ->orderBy('b.No_Reg', 'DESC')
-    //         ->limit('1')
-    //         ->first();
-    //     return $data;
+    //     $request = $this->httpClient->get($this->simrsUrlApi . 'pasien/biodatabymr/' . $no_mr);
+    //     $response = $request->getBody()->getContents();
+    //     $data = json_decode($response, true);
+    //     return $data['data'];
     // }
+
+    public function biodataPasienByMr($no_mr)
+    {
+        $data = DB::connection('db_rsmm')
+            ->table('REGISTER_PASIEN as a')
+            ->leftJoin('PENDAFTARAN as b', 'a.No_MR', '=', 'b.No_MR')
+            ->leftJoin('DOKTER as c', 'b.KODE_DOKTER', '=', 'c.KODE_DOKTER')
+            ->select(
+                'a.NAMA_PASIEN',
+                'a.NO_MR',
+                'a.HP1',
+                'a.HP2',
+                'a.ALAMAT',
+                'a.KOTA',
+                'a.PROVINSI',
+                'a.JENIS_KELAMIN',
+                'a.TGL_LAHIR',
+                'a.FS_REAK_ALERGI',
+                'a.FS_RIW_PENYAKIT_DAHULU',
+                'a.FS_ALERGI',
+                'a.FS_RIW_PENYAKIT_DAHULU2',
+                'a.FS_HIGH_RISK',
+                'b.No_MR',
+                'b.No_Reg',
+                'c.NAMA_DOKTER',
+                'c.SPESIALIS'
+            )
+            ->where('a.NO_MR', $no_mr)
+            ->orderBy('b.No_Reg', 'DESC')
+            ->limit('1')
+            ->first();
+        return $data;
+    }
 }
