@@ -79,7 +79,7 @@ class TandaTanganController extends Controller
         return view($this->viewPath . 'ttdPasien', compact('title', 'biodatas', 'data'));
     }
 
-    public function ttdPasien2(Request $request, $id,$kode_dokter)
+    public function ttdPasien2(Request $request, $id, $kode_dokter)
     {
         $title = $this->prefix . ' Tambah CPPT';
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
@@ -88,7 +88,7 @@ class TandaTanganController extends Controller
             ->join('TRANSAKSI_FISIOTERAPI', 'TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
             ->where('TRANSAKSI_FISIOTERAPI.NO_MR_PASIEN', $id)
             ->first();
-        return view($this->viewPath . 'ttdPasien2', compact('title', 'biodatas', 'data','kode_dokter'));
+        return view($this->viewPath . 'ttdPasien2', compact('title', 'biodatas', 'data', 'kode_dokter'));
     }
 
     public function ttdPasienStore(Request $request)
@@ -100,18 +100,26 @@ class TandaTanganController extends Controller
             $image_type_aux = explode("image/", $image_parts[0]);
             $image_type = $image_type_aux[1];
             $image_base64 = base64_decode($image_parts[1]);
-            $file_name = auth()->user()->name . '-' . date('Y-m-d') . '.' . $image_type;
-            // Simpan gambar ke storage
+
+            // Use uniqid to generate a unique file name
+            $file_name = uniqid(auth()->user()->name . '-' . date('Y-m-d') . '-') . '.' . $image_type;
+
+            // Save the image to storage
             Storage::put('public/ttd/' . $file_name, $image_base64);
 
-            $data = DB::connection('pku')->table('TTD_PASIEN_MASTER')->insert([
+            // Insert data into the database
+            DB::connection('pku')->table('TTD_PASIEN_MASTER')->insert([
                 'NO_MR_PASIEN' => $request->input('NO_MR_PASIEN'),
                 'IMAGE' => $file_name,
                 'CREATE_AT' => now()
             ]);
-            // return redirect()->back()->with('success', 'Tanda Tangan Berhasil Ditambahkan!');
-            return redirect()->route('cppt.detail', ['id' => $request->input('ID_TRANSAKSI'), 'no_mr' => $request->input('NO_MR_PASIEN'), 'kode_transaksi' => $request->input('KODE_TRANSAKSI_FISIO')])->with('success', 'Tanda Tangan Berhasil Ditambahkan!');
-            // return redirect()->route('transaksi_fisio.fisio')->with('success', 'Tanda Tangan Berhasil Ditambahkan!');
+
+            // Redirect with success message
+            return redirect()->route('cppt.detail', [
+                'id' => $request->input('ID_TRANSAKSI'),
+                'no_mr' => $request->input('NO_MR_PASIEN'),
+                'kode_transaksi' => $request->input('KODE_TRANSAKSI_FISIO')
+            ])->with('success', 'Tanda Tangan Berhasil Ditambahkan!');
         }
     }
 
@@ -205,15 +213,24 @@ class TandaTanganController extends Controller
     public function delete($id_ttd)
     {
 
-        $ttdPetugasById = $this->ttd->tandaTanganGetById($id_ttd);
-        $namaTtd = $ttdPetugasById['IMAGE'];
+        // Retrieve the record before deletion
+        $data = DB::connection('pku')->table('TTD_PASIEN_MASTER')->where('ID_TTD_PASIEN', $id_ttd)->first();
 
-        if ($namaTtd) {
-            Storage::delete('public/images/' . $namaTtd);
+        if ($data) {
+            $namaTtd = $data->IMAGE;
+
+            // Delete the record
+            DB::connection('pku')->table('TTD_PASIEN_MASTER')->where('ID_TTD_PASIEN', $id_ttd)->delete();
+
+            // Delete the image if it exists
+            if ($namaTtd) {
+                Storage::delete('public/images/' . $namaTtd);
+            }
+
+            return redirect()->back()->with('success', 'Tanda Tangan Berhasil Dihapus!');
+        } else {
+            return redirect()->back()->with('error', 'Data not found.');
         }
-        $response = $this->httpClient->delete($this->simrsUrlApi . 'fisioterapi/ttd/petugas/delete/' . $id_ttd);
-
-        return redirect()->back()->with('success', 'Tanda Tangan Berhasil Dihapus!');
     }
 
 
