@@ -64,6 +64,7 @@ class AssesmenController extends Controller
         $masalah_perawatan = $this->rajal->masalah_perawatan();
         $rencana_perawatan = $this->rajal->rencana_perawatan();
         $biodata = $this->rajal->pasien_bynoreg($noReg);
+      
 
         return view($this->view . 'add', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'biodata', 'noReg'));
     }
@@ -183,9 +184,7 @@ class AssesmenController extends Controller
         //     'FS_STATUS_PSIK2' => 'required',
         // ]);
 
-        $users_role = User::with('roles')->where('id', auth()->user()->id)->first();
-
-
+  
         try {
 
             $userEmr = $this->rajal->getUserEmr(auth()->user()->username);
@@ -277,13 +276,13 @@ class AssesmenController extends Controller
             ]);
 
 
-            // $alergi = DB::connection('db_rsmm')->table('REGISTER_PASIEN')->where('NO_MR', $request->input('NO_MR'))->update([
+            $alergi = DB::connection('db_rsmm')->table('REGISTER_PASIEN')->where('NO_MR', $request->input('NO_MR'))->update([
 
-            //     'FS_ALERGI' => $request->input('FS_ALERGI'),
-            //     'FS_REAK_ALERGI' => $request->input('FS_REAK_ALERGI'),
-            //     'FS_RIW_PENYAKIT_DAHULU' => $request->input('FS_RIW_PENYAKIT_DAHULU'),
-            //     'FS_RIW_PENYAKIT_DAHULU2' => $request->input('FS_RIW_PENYAKIT_DAHULU2'),
-            // ]);
+                'FS_ALERGI' => $request->input('FS_ALERGI'),
+                'FS_REAK_ALERGI' => $request->input('FS_REAK_ALERGI'),
+                'FS_RIW_PENYAKIT_DAHULU' => $request->input('FS_RIW_PENYAKIT_DAHULU'),
+                'FS_RIW_PENYAKIT_DAHULU2' => $request->input('FS_RIW_PENYAKIT_DAHULU2'),
+            ]);
 
             $jatuh = DB::connection('pku')->table('TAC_RJ_NUTRISI')->insert([
 
@@ -325,8 +324,14 @@ class AssesmenController extends Controller
             DB::commit();
             // dd($users->roles[0]->name);
             // die;
-            if ($users_role->roles[0]->name == 'fisioterapi') {
+    
+            $biodata = $this->rajal->pasien_bynoreg($request->input('FS_KD_REG'));
+           
+            $kode_dokter = $biodata->Kode_Dokter;
+      
 
+            if ($kode_dokter == '151') {
+      
                 $cek_ttd_pasien =  DB::connection('pku')->table('TTD_PASIEN_MASTER')->where('NO_MR_PASIEN', $request->input('NO_MR'))->count();
 
 
@@ -380,12 +385,23 @@ class AssesmenController extends Controller
         $asasmen_perawat = $this->rajal->asasmenPerawatGet($noReg);
         $riwayat = $this->rajal->riwayatGet($noReg);
 
+        // dd($masalah_perGet);
+        $selected = false;
+        foreach($masalah_perawatan as $mp){
+            foreach ($masalah_perGet as  $value) {
+                if ($mp->FS_KD_DAFTAR_DIAGNOSA == $value->FS_KD_MASALAH_KEP) {
+                   $selected = true;
+                   break;
+                }      
+            }
+        }
+
+      
 
 
-        // dd($rencana_perGet);
         // die;
 
-        return view($this->view . 'edit', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'biodata', 'asasmen_perawat', 'riwayat', 'masalah_perGet', 'rencana_perGet'));
+        return view($this->view . 'edit', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'biodata', 'asasmen_perawat', 'riwayat', 'masalah_perGet', 'rencana_perGet','noReg'));
     }
 
     /**
@@ -466,14 +482,14 @@ class AssesmenController extends Controller
         ]);
 
 
-        // $alergi = DB::connection('db_rsmm')->table('REGISTER_PASIEN')->where('NO_MR', $request->input('NO_MR'))->update([
-        //     'FS_ALERGI' => $request->input('FS_ALERGI'),
-        //     'FS_REAK_ALERGI' => $request->input('FS_REAK_ALERGI'),
-        //     'FS_RIW_PENYAKIT_DAHULU' => $request->input('FS_RIW_PENYAKIT_DAHULU'),
-        //     'FS_RIW_PENYAKIT_DAHULU2' => $request->input('FS_RIW_PENYAKIT_DAHULU2'),
+        $alergi = DB::connection('db_rsmm')->table('REGISTER_PASIEN')->where('NO_MR', $request->input('NO_MR'))->update([
+            'FS_ALERGI' => $request->input('FS_ALERGI'),
+            'FS_REAK_ALERGI' => $request->input('FS_REAK_ALERGI'),
+            'FS_RIW_PENYAKIT_DAHULU' => $request->input('FS_RIW_PENYAKIT_DAHULU'),
+            'FS_RIW_PENYAKIT_DAHULU2' => $request->input('FS_RIW_PENYAKIT_DAHULU2'),
 
 
-        // ]);
+        ]);
 
         $nutrisi = DB::connection('pku')->table('TAC_RJ_NUTRISI')->where('FS_KD_REG', $kode_reg)->update([
             'FS_NUTRISI1' => $request->input('FS_NUTRISI1'),

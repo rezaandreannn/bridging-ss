@@ -13,6 +13,7 @@ class Rajal extends Model
     protected $guarded = [];
     protected $simrsUrlApi;
 
+
     public function __construct()
     {
         $this->httpClient = new Client([
@@ -126,14 +127,10 @@ class Rajal extends Model
     {
         $data = DB::connection('pku')->table('TAC_RJ_MASALAH_KEP')
             ->where('FS_KD_REG', $noReg)->get();
-
-        // $data = DB::connection('pku')
-        //     ->table('TR_CPPT_FISIOTERAPI')
-        //     ->join('TRANSAKSI_FISIOTERAPI', 'TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
-        //     ->where('TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', $id)
-        //     ->get();
         return $data;
     }
+
+
     public function rencanaPerawatanGetByNoreg($noReg)
     {
         $data = DB::connection('pku')->table('TAC_RJ_REN_KEP')
@@ -173,18 +170,16 @@ class Rajal extends Model
 
     public function masalah_perawatan()
     {
-        $request = $this->httpClient->get($this->simrsUrlApi . 'api/rawatjalan/perawat/masalah_keperawatan');
-        $response = $request->getBody()->getContents();
-        $data = json_decode($response, true);
-        return $data['data'];
+        $data = DB::connection('pku')->table('TAC_COM_DAFTAR_DIAG')->get();
+    return $data;
     }
 
     public function rencana_perawatan()
     {
-        $request = $this->httpClient->get($this->simrsUrlApi . 'api/rawatjalan/perawat/rencana_keperawatan');
-        $response = $request->getBody()->getContents();
-        $data = json_decode($response, true);
-        return $data['data'];
+        $data = DB::connection('pku')->table('TAC_COM_PARAM_REN_KEP')->get();
+
+ 
+    return $data;
     }
 
     // Get Data Pasien Rawat Jalan
@@ -192,6 +187,7 @@ class Rajal extends Model
     {
 
         $pku = DB::connection('pku')->getDatabaseName();
+      
         $data = DB::connection('db_rsmm')
             ->table('REGISTER_PASIEN as a')
             ->leftJoin('PENDAFTARAN as b', 'a.No_MR', '=', 'b.No_MR')
@@ -207,7 +203,6 @@ class Rajal extends Model
                 'a.TGL_LAHIR',
                 'a.FS_REAK_ALERGI',
                 'a.FS_RIW_PENYAKIT_DAHULU',
-                'a.FS_ALERGI',
                 'a.FS_RIW_PENYAKIT_DAHULU2',
                 'a.FS_HIGH_RISK',
                 'b.NO_REG',
@@ -217,6 +212,7 @@ class Rajal extends Model
                 'd.FS_DIAGNOSA',
                 'd.FS_DIAGNOSA_SEKUNDER',
                 'e.NAMAREKANAN',
+                'a.FS_ALERGI',
             )
             ->where('b.NO_REG', $noReg)
             ->first();

@@ -41,9 +41,7 @@
                     <form action="{{ route('ttd.store2') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
-                            <input type="hidden" class="form-control" value="{{ $data->ID_TRANSAKSI }}" name="ID_TRANSAKSI" readonly>
-                            <input type="hidden" class="form-control" value="{{ $data->KODE_TRANSAKSI_FISIO }}" name="KODE_TRANSAKSI_FISIO" readonly>
-                            <input type="hidden" class="form-control" name="NO_MR_PASIEN" value="{{ $data->NO_MR_PASIEN }}" readonly>
+                            <input type="hidden" class="form-control" name="NO_MR_PASIEN" value="{{ $No_Mr }}" readonly>
                             <input type="hidden" class="form-control" name="KODE_DOKTER" value="{{ $kode_dokter }}" readonly>
                             <div class="col-md-12">
                                 <label class="" for="">Tanda Tangan:</label>

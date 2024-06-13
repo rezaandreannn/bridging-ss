@@ -29,59 +29,7 @@
 
         <div class="section-body">
             <!-- Detail Pasien -->
-            <!-- <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="author-box-name">
-                                <a href="#">
-                                    <h6 class="mt-1">{{ $rajal['NAMA_PASIEN'] ?? ''}} - ({{ $rajal['NO_MR'] ?? ''}})</h6>
-                                </a>
-                            </div>
-                            <div class="author-box-job">
-                                <h6 class="mb-0"><b></b></h6>
-                                <hr>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <ul class="list-unstyled mb-0">
-                                        <li class="media">
-                                            <div class="media-title">Rekanan :</div>
-                                            <div class="media-body">
-                                                <div class="media-title ml-3 mb-1"> {{ $rajal['NAMAREKANAN'] ?? ''}}</div>
-                                            </div>
-                                        </li>
-                                        <li class="media">
-                                            <div class="media-title mb-0">Nama Dokter :</div>
-                                            <div class="media-body">
-                                                <div class="media-title ml-3 mb-1"> {{ $rajal['NAMA_DOKTER'] ?? ''}}</div>
-                                            </div>
-                                        </li>
-                                        <li class="media">
-                                            <div class="media-title">Jenis Kelamin :</div>
-                                            <div class="media-body">
-                                                <div class="media-title ml-3 mb-1"> {{ $rajal['JENIS_KELAMIN'] ?? ''}}</div>
-                                            </div>
-                                        </li>
-                                        <li class="media">
-                                            <div class="media-title mb-0">Tanggal Lahir :</div>
-                                            <div class="media-body">
-                                                <div class="media-title ml-3 mb-1">{{ date('d-m-Y', strtotime($rajal['TGL_LAHIR'] ?? '')) }}</div>
-                                            </div>
-                                        </li>
-                                        <li class="media">
-                                            <div class="media-title mb-0">Alamat :</div>
-                                            <div class="media-body">
-                                                <div class="media-title ml-3 mb-1"> {{ $rajal['ALAMAT'] ?? ''}}</div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
+            @include('components.biodata-pasien-bynoreg')
             <!-- Tutup Detail Pasien -->
             <a href="" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-primary mb-2"><i class="fas fa-download"></i>Profil Ringkas Medis Rawat Jalan</a>
             <button class="btn btn-sm btn-primary mb-2" data-toggle="modal" data-target="#modal-histori"><i class="fas fa-history"></i> History</button>
@@ -99,7 +47,9 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                <input type="hidden" name="KODE_DOKTER" value="{{ $biodata->Kode_Dokter}}" />
+                                <input type="hidden" name="FS_KD_REG" value="{{ $noReg }}" />
+                                    <input type="hidden" name="KODE_DOKTER" value="{{ $biodata->Kode_Dokter}}" />
+                                    <input type="hidden" name="NO_MR" value="{{ $biodata->NO_MR}}" />
                                     <label>Anamnesa / Allow Anamnesa <code>*</code></label>
                                     <textarea class="form-control" rows="3" name="FS_ANAMNESA" placeholder="Masukan ...">{{ $asasmen_perawat->FS_ANAMNESA }}</textarea>
                                 </div>
@@ -362,25 +312,25 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Riwayat Penyakit Dahulu</label>
-                                    <input type="text" class="form-control" name="FS_RIW_PENYAKIT_DAHULU" value="">
+                                    <input type="text" class="form-control" name="FS_RIW_PENYAKIT_DAHULU" value="{{$biodata->FS_RIW_PENYAKIT_DAHULU!='' ? $biodata->FS_RIW_PENYAKIT_DAHULU : '-' }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Riwayat Penyakit keluarga</label>
-                                    <input type="text" class="form-control" name="FS_RIW_PENYAKIT_DAHULU2" value="">
+                                    <input type="text" class="form-control" name="FS_RIW_PENYAKIT_DAHULU2" value="{{$biodata->FS_RIW_PENYAKIT_DAHULU2!='' ? $biodata->FS_RIW_PENYAKIT_DAHULU2 : '-' }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Riwayat Alergi<code>*</code></label>
-                                    <input type="text" class="form-control" name="FS_ALERGI" value="">
+                                    <input type="text" class="form-control" name="FS_ALERGI" value="{{$biodata->FS_ALERGI!='' ? $biodata->FS_ALERGI : '-' }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Reaksi Alergi<code>*</code></label>
-                                    <input type="text" class="form-control" name="FS_REAK_ALERGI" value="">
+                                    <input type="text" class="form-control" name="FS_REAK_ALERGI" value="{{$biodata->FS_REAK_ALERGI!='' ? $biodata->FS_REAK_ALERGI : '-' }}">
                                 </div>
                             </div>
                             <!-- include form -->
@@ -565,27 +515,41 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Masalah Keperawatan</label>
-                                    <select name="tujuan[]" id="masalah_perawatan" class="form-control select2" multiple="multiple" data-placeholder="Pilih Masalah Keperawatan" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                    <select name="tujuan[]" id="masalah_perawatan" class="form-control select2" multiple="multiple" data-placeholder="Pilih Masalah Keperawatan"  style="width: 100%;">
                               
                                         <option value="">-- pilih --</option>
-                                        @foreach ($masalah_perGet as $mp)
+                 
+                                    
+                                                                            
+                                        @forelse ($masalah_perGet as $mp)
                                         @foreach ($masalah_perawatan as $mk)
-                                        <option value="{{ $mk['FS_KD_DAFTAR_DIAGNOSA'] }}" {{ $mp->FS_KD_MASALAH_KEP == $mk['FS_KD_DAFTAR_DIAGNOSA'] ? 'selected' : '' }}>{{ $mk['FS_NM_DIAGNOSA'] }}</option>
+                                        <option value="{{ $mk->FS_KD_DAFTAR_DIAGNOSA }}" {{ $mk->FS_KD_DAFTAR_DIAGNOSA == $mp->FS_KD_MASALAH_KEP ? "selected" : "" }}>{{ $mk->FS_NM_DIAGNOSA }}</option>
                                         @endforeach
+                                        @empty
+                                        @foreach ($masalah_perawatan as $mk)
+                                        <option value="{{ $mk->FS_KD_DAFTAR_DIAGNOSA }}" >{{ $mk->FS_NM_DIAGNOSA }}</option>
                                         @endforeach
+                                        @endforelse
+
                                     </select>
                                 </div>
                             </div>
+                      
+                           
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Rencana Keperawatan</label>
-                                    <select multiple name="tembusan[]" id="rencana_perawatan" class="form-control select2" multiple="multiple" data-placeholder="Pilih Rencana Keperawatan" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                    <select multiple name="tembusan[]" id="rencana_perawatan" class="form-control select2" multiple="multiple" data-placeholder="Pilih Rencana Keperawatan"  style="width: 100%;">
                                         <option value="">-- pilih --</option>
-                                        @foreach ($rencana_perGet as $rpp)
+                                    
+                                        
+                                       
                                         @foreach ($rencana_perawatan as $rp)
-                                        <option value="{{ $rp['FS_KD_TRS'] }}" {{ $rpp->FS_KD_REN_KEP == $rp['FS_KD_TRS'] ? 'selected' : '' }}>{{ $rp['FS_NM_REN_KEP'] }}</option>
+                                        <option value="{{ $rp->FS_KD_TRS }}" {{ $rp->FS_KD_TRS == '3' ? 'selected' : ''}}>{{ $rp->FS_NM_REN_KEP }}</option>
                                         @endforeach
-                                        @endforeach
+                                  
+                                      
+                                     
                                     </select>
                                 </div>
                             </div>

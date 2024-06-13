@@ -36,6 +36,19 @@
             <!-- form -->
             <form action="{{ route('rj.store') }}" method="post">
                 @csrf
+                <div class="card mb-3" style="background-color: #ec5353;">
+                <div class="container-fluid mt-2">
+                    <div class="row">
+                    <div class="col-md-12">
+                        <label><color style="color : yellow;">High Risk :</color> <color style="color : white;">{{$biodata->FS_HIGH_RISK!='' ? $biodata->FS_HIGH_RISK : '-' }} </color></label>
+                    </div>
+                    <div class="col-md-12">
+                        <label><color style="color : yellow;">Alergi :</color> <color style="color : white;">{{$biodata->FS_ALERGI!='' ? $biodata->FS_ALERGI : '-' }} ( {{$biodata->FS_REAK_ALERGI!='' ? $biodata->FS_REAK_ALERGI : '-' }} )</color></label>
+                    </div>
+                </div>
+            
+                </div>
+</div>
                 <div class="card mb-3">
                     <div class="card-header">
                         <h4 class="card-title">Allowanamnesa dan Pemeriksaan Fisik</h4>
@@ -317,25 +330,25 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Riwayat Penyakit Dahulu</label>
-                                    <input type="text" class="form-control" name="FS_RIW_PENYAKIT_DAHULU" value="">
+                                    <input type="text" class="form-control" name="FS_RIW_PENYAKIT_DAHULU" value="{{$biodata->FS_RIW_PENYAKIT_DAHULU!='' ? $biodata->FS_RIW_PENYAKIT_DAHULU : '-' }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Riwayat Penyakit keluarga</label>
-                                    <input type="text" class="form-control" name="FS_RIW_PENYAKIT_DAHULU2" value="">
+                                    <input type="text" class="form-control" name="FS_RIW_PENYAKIT_DAHULU2" value="{{$biodata->FS_RIW_PENYAKIT_DAHULU2!='' ? $biodata->FS_RIW_PENYAKIT_DAHULU2 : '-' }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Riwayat Alergi<code>*</code></label>
-                                    <input type="text" class="form-control" name="FS_ALERGI" value="">
+                                    <input type="text" class="form-control" name="FS_ALERGI" value="{{$biodata->FS_ALERGI!='' ? $biodata->FS_ALERGI : '-' }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Reaksi Alergi<code>*</code></label>
-                                    <input type="text" class="form-control" name="FS_REAK_ALERGI" value="">
+                                    <input type="text" class="form-control" name="FS_REAK_ALERGI" value="{{$biodata->FS_REAK_ALERGI!='' ? $biodata->FS_REAK_ALERGI : '-' }}">
                                 </div>
                             </div>
                             <!-- include form -->
@@ -478,7 +491,7 @@
                                     <label>Agama</label>
                                     <select name="FS_AGAMA" id="" class="form-control select2">
                                         <option value="">-- Pilih Agama --</option>
-                                        <option value="1">Islam</option>
+                                        <option value="1" selected>Islam</option>
                                         <option value="2">Kristen</option>
                                         <option value="3">Katholik</option>
                                         <option value="4">Hindu</option>
@@ -523,7 +536,7 @@
                                     <select name="tujuan[]" id="masalah_perawatan" class="form-control select2" multiple="multiple" data-placeholder="Pilih Masalah Keperawatan" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                         <option value="">-- pilih --</option>
                                         @foreach ($masalah_perawatan as $mk)
-                                        <option value="{{ $mk['FS_KD_DAFTAR_DIAGNOSA'] }}" {{ request('tujuan') == $mk['FS_KD_DAFTAR_DIAGNOSA'] ? 'selected' : '' }}>{{ $mk['FS_NM_DIAGNOSA'] }}</option>
+                                        <option value="{{ $mk->FS_KD_DAFTAR_DIAGNOSA }}" >{{ $mk->FS_NM_DIAGNOSA'] }}</tion>
                                         @endforeach
                                     </select>
                                 </div>
@@ -534,7 +547,7 @@
                                     <select multiple name="tembusan[]" id="rencana_perawatan" class="form-control select2" multiple="multiple" data-placeholder="Pilih Rencana Keperawatan" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                         <option value="">-- pilih --</option>
                                         @foreach ($rencana_perawatan as $rp)
-                                        <option value="{{ $rp['FS_KD_TRS'] }}" {{ request('tembusan') == $rp['FS_KD_TRS'] ? 'selected' : '' }}>{{ $rp['FS_NM_REN_KEP'] }}</option>
+                                        <option value="{{ $rp->FS_KD_TRS }}" >{{ $rp->FS_NM_RENEP'] }}</option>
                                         @endforeach
                                     </select>
                                 </div>

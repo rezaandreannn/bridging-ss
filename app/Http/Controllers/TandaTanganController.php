@@ -79,16 +79,16 @@ class TandaTanganController extends Controller
         return view($this->viewPath . 'ttdPasien', compact('title', 'biodatas', 'data'));
     }
 
-    public function ttdPasien2(Request $request, $id,$kode_dokter)
+    public function ttdPasien2(Request $request, $No_Mr,$kode_dokter)
     {
         $title = $this->prefix . ' Tambah CPPT';
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
         $data = DB::connection('pku')
             ->table('TR_CPPT_FISIOTERAPI')
             ->join('TRANSAKSI_FISIOTERAPI', 'TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
-            ->where('TRANSAKSI_FISIOTERAPI.NO_MR_PASIEN', $id)
+            ->where('TRANSAKSI_FISIOTERAPI.NO_MR_PASIEN', $No_Mr)
             ->first();
-        return view($this->viewPath . 'ttdPasien2', compact('title', 'biodatas', 'data','kode_dokter'));
+        return view($this->viewPath . 'ttdPasien2', compact('title', 'biodatas', 'data','kode_dokter','No_Mr'));
     }
 
     public function ttdPasienStore(Request $request)

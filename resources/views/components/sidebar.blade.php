@@ -93,11 +93,11 @@
             @can('fisioterapi')
             <li class="nav-item dropdown {{ Request::is('fisioterapi*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Fisioterapi</span></a>
-                <ul class="dropdown-menu">
+                <!-- <ul class="dropdown-menu">
                     <li class="{{ Request::is('fisioterapi/asesmen_pasien') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('asesmen_pasien.index') }}">Asesmen Perawat</a>
                     </li>
-                </ul>
+                </ul> -->
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('fisioterapi*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('list-pasien.index') }}">CPPT Fisioterapi</a>
