@@ -544,9 +544,15 @@
                                     
                                         
                                        
+                                        @forelse ($rencana_perGet as $rpp)
                                         @foreach ($rencana_perawatan as $rp)
-                                        <option value="{{ $rp->FS_KD_TRS }}" {{ $rp->FS_KD_TRS == '3' ? 'selected' : ''}}>{{ $rp->FS_NM_REN_KEP }}</option>
+                                        <option value="{{ $rp->FS_KD_TRS }}" {{ $rp->FS_KD_TRS == $rpp->FS_KD_REN_KEP ? 'selected' : ''}}>{{ $rp->FS_NM_REN_KEP }}</option>
                                         @endforeach
+                                        @empty
+                                        @foreach ($rencana_perawatan as $rp)
+                                        <option value="{{ $rp->FS_KD_TRS }}">{{ $rp->FS_NM_REN_KEP }}</option>
+                                        @endforeach
+                                        @endforelse
                                   
                                       
                                      
