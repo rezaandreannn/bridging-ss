@@ -33,7 +33,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table-striped table" id="table-1">
+                        <table class="table table-striped" id="table-1">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -46,24 +46,17 @@
                             <tbody>
                                 @foreach ($ttdDetail as $ttd)
                                 <tr>
-                                    <td>{{$loop->iteration}}</td>
-                                    <td>
-                                        {{$ttd->NO_MR_PASIEN}}
-                                    </td>
-                                    <td>
-                                        {{$ttd->CREATE_AT}}
-                                    </td>
-                                    <td> <a href="#" data-toggle="modal" data-target="#gambarModal{{$ttd->ID_TTD_PASIEN}}">Lihat Tanda Tangan</a>
-                                    </td>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $ttd->NO_MR_PASIEN }}</td>
+                                    <td>{{ $ttd->CREATE_AT }}</td>
+                                    <td> <img src="{{ asset('storage/ttd/'.  $ttd->IMAGE ) }}" width="25%" alt="Gambar Pengguna"></td>
                                     <td width="15%">
-                                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-ttd{{$ttd->ID_TTD_PASIEN}}">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button id="delete" data-id="{{ $ttd->ID_TTD_PASIEN }}" data-nama="{{ $ttd->NO_MR_PASIEN }}" data-bs-toggle="tooltip" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                        <button id="delete" data-id="{{ $ttd->ID_TTD_PASIEN }}" data-nama="{{ $ttd->NO_MR_PASIEN }}" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" title="Hapus"><i class="fas fa-trash"></i></button>
                                     </td>
                                 </tr>
-                                @endforeach
 
+
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -72,67 +65,6 @@
         </div>
     </section>
 </div>
-
-<div class="modal fade" id="gambarModal{{$ttd->ID_TTD_PASIEN}}">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Tanda Tangan Pengguna</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="col-md-12">
-                    Dibuat: {{$ttd->CREATE_AT}}
-                    <img src="{{ asset('storage/ttd/' . $ttd->IMAGE ) }}" width="50%" alt="Gambar Pengguna">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-@foreach ($ttdDetail as $ttd)
-<!-- modal edit ttd -->
-<div class="modal fade" id="modal-ttd{{$ttd->ID_TTD_PASIEN}}">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Tanda Tangan</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-                <div class="card-body">
-
-                    <div class="container">
-                        <form method="POST" action="{{ route('ttd.pasien.update',$ttd->ID_TTD_PASIEN)}}" enctype="multipart/form-data">
-                            @csrf
-                            @method('PUT')
-                            <div class="col-md-12">
-                                <input type="hidden" name="ID_TTD_PASIEN" class="form-control" value="{{ $ttd->ID_TTD_PASIEN }}" readonly>
-                                <label class="" for="">Tanda Tangan:</label>
-                                <br />
-                                <div id="signat"></div>
-                                <br />
-                                <button id="clear">Hapus Tanda Tangan</button>
-                                <textarea id="signature64" name="signed" style="display: none"></textarea>
-                            </div>
-                            <br />
-                    </div>
-                </div>
-            </div>
-            <div class="card-footer text-left">
-                <button type="submit" class="btn btn-primary"><i class="fa fa-print"></i> Simpan</button>
-                <button type="button" class="btn btn-info" data-dismiss="modal">Tutup</button>
-            </div>
-            </form>
-        </div>
-    </div>
-</div>
-@endforeach
 
 @endsection
 
@@ -149,6 +81,12 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
 
 <script type="text/javascript">
     var sig = $("#signat").signature({
