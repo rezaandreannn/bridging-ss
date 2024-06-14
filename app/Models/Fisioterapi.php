@@ -29,35 +29,34 @@ class Fisioterapi extends Model
     // List Pasien Fisioterapi
     public function pasienCpptdanFisioterapi()
     {
-        $date=date('Y-m-d');
+        $date = date('Y-m-d');
         $kode_dokter = array('028', '151');
         $data = DB::connection('db_rsmm')
             ->table('ANTRIAN as a')
-            ->leftJoin('REGISTER_PASIEN as rp', 'a.NO_MR', '=', 'rp.NO_MR')
-            ->leftJoin('PENDAFTARAN as p', 'a.Dokter', '=', 'p.Kode_Dokter')
+            ->Join('REGISTER_PASIEN as rp', 'a.No_MR', '=', 'rp.No_MR')
+            ->Join('PENDAFTARAN as p', 'a.No_MR', '=', 'p.No_MR')
             ->select(
                 'a.NOMOR',
-              
+
                 'a.TANGGAL',
                 'p.Kode_Dokter',
-                 'rp.NAMA_PASIEN',
-                 'rp.ALAMAT',
-                 'rp.KOTA',
-                 'rp.PROVINSI',
-                 'rp.NO_MR',
-                 'p.NO_REG',
-                 'p.KODEREKANAN'
-                
+                'rp.NAMA_PASIEN',
+                'rp.ALAMAT',
+                'rp.KOTA',
+                'rp.PROVINSI',
+                'rp.NO_MR',
+                'p.NO_REG',
+                'p.KODEREKANAN'
+
             )
-            ->where('a.TANGGAL', $date)
-            ->where('p.TANGGAL', $date)
-            ->where('p.Status', '1')
-            ->where('p.Status', '1')
             ->whereIn('p.Kode_Dokter', $kode_dokter)
+            ->whereIn('a.Dokter', $kode_dokter)
+            ->where('a.Tanggal', $date)
+            ->where('p.Tanggal', $date)
+            ->where('p.Status', '1')
             ->orderBy('a.NOMOR', 'ASC')
             ->get()->toArray();
         return $data;
-
     }
 
     public function biodataPasienByMr($no_mr)
@@ -92,24 +91,24 @@ class Fisioterapi extends Model
 
     public function getPasienRehabMedis()
     {
-        $date=date('Y-m-d');
+        $date = date('Y-m-d');
         $data = DB::connection('db_rsmm')
-        ->table('ANTRIAN as A')
-        ->join('PENDAFTARAN as P', 'A.No_MR', '=', 'P.No_MR')
-        ->join('REGISTER_PASIEN as RP', 'P.No_MR', '=', 'RP.No_MR')->select(
-            'A.Nomor',
-            'RP.No_MR',
-            'RP.Nama_Pasien',
-            'RP.Alamat',
+            ->table('ANTRIAN as A')
+            ->join('PENDAFTARAN as P', 'A.No_MR', '=', 'P.No_MR')
+            ->join('REGISTER_PASIEN as RP', 'P.No_MR', '=', 'RP.No_MR')->select(
+                'A.Nomor',
+                'RP.No_MR',
+                'RP.Nama_Pasien',
+                'RP.Alamat',
 
-        )
-        ->where('A.Tanggal', $date)
-        ->where('P.Tanggal', $date)
-        ->where('A.Dokter', '151')
-        ->where('P.Kode_Dokter', '151')
-        ->where('P.Medis', 'RAWAT JALAN')
-        ->orderBy('Nomor', 'ASC')
-        ->get()->toArray();
+            )
+            ->where('A.Tanggal', $date)
+            ->where('P.Tanggal', $date)
+            ->where('A.Dokter', '151')
+            ->where('P.Kode_Dokter', '151')
+            ->where('P.Medis', 'RAWAT JALAN')
+            ->orderBy('Nomor', 'ASC')
+            ->get()->toArray();
         return $data;
     }
 
@@ -198,7 +197,7 @@ class Fisioterapi extends Model
             ->table('TR_CPPT_FISIOTERAPI')
             ->join('TRANSAKSI_FISIOTERAPI', 'TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
             ->where('TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', $id)
-            ->orderBy('ID_CPPT_FISIO', 'DESC')
+            ->orderBy('ID_CPPT_FISIO', 'ASC')
             ->get();
         return $data;
     }

@@ -28,9 +28,9 @@
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
-                  <!-- components biodata pasien by no mr -->
-                  @include('components.biodata-pasien-fisio-bymr')
-                        <!-- components biodata pasien by no mr -->
+                    <!-- components biodata pasien by no mr -->
+                    @include('components.biodata-pasien-fisio-bymr')
+                    <!-- components biodata pasien by no mr -->
                 </div>
             </div>
 
@@ -134,6 +134,7 @@
                                 <table class="table-striped table" id="table-1">
                                     <thead>
                                         <tr>
+                                            <th>No</th>
                                             <th>Tanggal & Jam</th>
                                             <th>Anamnesa & Pemeriksaaan</th>
                                             <th>Diagnosa</th>
@@ -148,6 +149,7 @@
                                         @endphp
                                         @foreach ($data as $cppt)
                                         <tr>
+                                            <td>{{ $loop->iteration }}</td>
                                             <td>{{$cppt->TANGGAL_FISIO}} & {{ date('G:i', strtotime($cppt->JAM_FISIO))}} WIB</td>
                                             <td>S = {{$cppt->ANAMNESA}} <br>O = TD = {{$cppt->TEKANAN_DARAH}}, N = {{$cppt->NADI}}, T = {{$cppt->SUHU}}</td>
                                             <td>{{$cppt->DIAGNOSA}}</td>

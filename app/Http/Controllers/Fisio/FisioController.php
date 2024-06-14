@@ -48,7 +48,7 @@ class FisioController extends Controller
     // LIST DAFTAR PASIEN FISIOTERAPI
     public function index()
     {
-        
+
         $listpasien = $this->fisio->pasienCpptdanFisioterapi();
 
         // dd($listpasien);
@@ -74,6 +74,8 @@ class FisioController extends Controller
     // Proses Tambah Data Transaksi Fisioterapi
     public function store(Request $request)
     {
+
+
 
         $lastKodeTransaksi = DB::connection('pku')
             ->table('TRANSAKSI_FISIOTERAPI')
@@ -101,7 +103,7 @@ class FisioController extends Controller
         $jumlah_total_fisio = $request->input('JUMLAH_TOTAL_FISIO');
 
         if ($jumlah_total_fisio < 0) {
-            return redirect()->back()->with('warning', 'Inputan tidak boleh Minus !!');
+            return redirect()->back()->with('warning', 'Inputan tidak Kosong !!');
         }
 
         if ($jumlah_total_fisio > 8) {
@@ -113,7 +115,7 @@ class FisioController extends Controller
             'NO_MR_PASIEN' => $no_mr_pasien,
             'JUMLAH_TOTAL_FISIO' => $jumlah_total_fisio,
             'CREATE_AT' => now(),
-            'CREATE_BY' => auth()->user()->name,
+            'CREATE_BY' => auth()->user()->id,
         ]);
 
         return redirect()->back()->with('success', 'Transaksi Berhasil Ditambahkan!');
@@ -213,7 +215,7 @@ class FisioController extends Controller
                 'CARA_PULANG' => $request->input('CARA_PULANG'),
                 'ANAMNESA' => $request->input('ANAMNESA'),
                 'CREATE_AT' => now(),
-                'CREATE_BY' => auth()->user()->name,
+                'CREATE_BY' => auth()->user()->id,
             ]);
 
 
@@ -275,7 +277,7 @@ class FisioController extends Controller
             'CARA_PULANG' => $request->input('CARA_PULANG'),
             'ANAMNESA' => $request->input('ANAMNESA'),
             'CREATE_AT' => now(),
-            'CREATE_BY' => auth()->user()->name,
+            'CREATE_BY' => auth()->user()->id,
         ]);
 
         // return redirect()->back()->with('success', 'CPPT Berhasil Ditambahkan!');
@@ -300,6 +302,7 @@ class FisioController extends Controller
             ->table('TR_CPPT_FISIOTERAPI')
             ->join('TRANSAKSI_FISIOTERAPI', 'TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
             ->where('TRANSAKSI_FISIOTERAPI.KODE_TRANSAKSI_FISIO', '=', $id)
+            ->orderBy('TR_CPPT_FISIOTERAPI.ID_CPPT_FISIO', 'ASC')
             ->get();
 
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
@@ -325,12 +328,22 @@ class FisioController extends Controller
                 'b.IMAGE',
             )
             ->where('TRANSAKSI_FISIOTERAPI.KODE_TRANSAKSI_FISIO', '=', $id)
+            ->orderBy('a.ID_CPPT_FISIO', 'ASC')
             ->get();
+
+        $lastCppt = DB::connection('pku')
+            ->table('TR_CPPT_FISIOTERAPI')
+            ->orderBy('ID_CPPT_FISIO', 'DESC')
+            ->limit('1')
+            ->first();
+
+        // dd($lastCppt);
+        // die;
 
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
         $date = date('dMY');
         $filename = 'BuktiLayanan-' . $date;
-        $pdf = PDF::loadview($this->view . 'cetak/bukti_pelayanan', ['title' => $title, 'data' => $data, 'biodatas' => $biodatas]);
+        $pdf = PDF::loadview($this->view . 'cetak/bukti_pelayanan', ['title' => $title, 'data' => $data, 'biodatas' => $biodatas, 'lastCppt' => $lastCppt]);
         return $pdf->stream($filename . '.pdf');
     }
 

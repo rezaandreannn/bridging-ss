@@ -46,15 +46,15 @@
                 <table>
                     <tr>
                         <td>No. RM </td>
-                        <td>: {{ $biodatas['NO_MR'] ?? ''}}</td>
+                        <td>: {{ $biodatas->NO_MR ?? ''}}</td>
                     </tr>
                     <tr>
                         <td>Nama</td>
-                        <td>: {{ $biodatas['NAMA_PASIEN'] ?? ''}}</td>
+                        <td>: {{ $biodatas->NAMA_PASIEN ?? ''}}</td>
                     </tr>
                     <tr>
                         <td>Tanggal Lahir</td>
-                        <td>: {{ date('d-m-Y', strtotime($biodatas['TGL_LAHIR']))}}</td>
+                        <td>: {{ date('d-m-Y', strtotime($biodatas->TGL_LAHIR))}}</td>
                     </tr>
                 </table>
             </td>
