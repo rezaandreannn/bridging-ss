@@ -172,6 +172,7 @@ Route::middleware('auth')->group(function () {
         Route::put('petugas/edit/{id}', [TandaTanganController::class, 'update'])->name('list-ttd.update');
         Route::get('petugas/delete/{id}', [TandaTanganController::class, 'delete'])->name('list-ttd.delete');
 
+
         // Tanda Tangan Pasien
         Route::get('/cppt/ttd_pasien/{no_mr}', [TandaTanganController::class, 'ttdPasien'])->name('ttd.pasien');
         Route::get('/cppt/ttd_pasien2/{no_mr}/{kode_dokter}', [TandaTanganController::class, 'ttdPasien2'])->name('ttd.pasien2');
@@ -180,6 +181,7 @@ Route::middleware('auth')->group(function () {
 
         // Edit Tanda Tangan Pasien
         Route::get('/pasienTTD/detail', [TandaTanganController::class, 'ttdPasienDetail'])->name('ttd.pasien.detail');
+        Route::get('/pasienTTD/delete/{id}', [TandaTanganController::class, 'deletePasien'])->name('list-ttd-pasien.delete');
         Route::put('/pasienTTD/edit/{id}', [TandaTanganController::class, 'update'])->name('ttd.pasien.update');
 
         // Tanda Tangan Dokter

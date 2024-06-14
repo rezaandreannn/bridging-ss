@@ -43,28 +43,17 @@ class TandaTanganController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $title = 'Index Tanda Tangan Petugas';
-        $ttdPetugas = $this->ttd->tandaTanganGet();
-        return view($this->viewPath . 'index', compact('title', 'ttdPetugas'));
-    }
+
+
+    // ------------------------------- 
+    //      Tanda Tangan Pasien
+    // -------------------------------
 
     public function ttdPasienDetail()
     {
         $title = 'Index Tanda Tangan Pasien';
         $ttdDetail =  DB::connection('pku')->table('TTD_PASIEN_MASTER')->get();
         return view($this->viewPath . 'detailPasien', compact('title', 'ttdDetail'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     public function ttdPasien(Request $request, $id)
@@ -152,6 +141,50 @@ class TandaTanganController extends Controller
         }
     }
 
+    public function deletePasien($id_ttd)
+    {
+
+        // Retrieve the record before deletion
+        $data = DB::connection('pku')->table('TTD_PASIEN_MASTER')->where('ID_TTD_PASIEN', $id_ttd)->first();
+
+        if ($data) {
+            $namaTtd = $data->IMAGE;
+
+            // Delete the record
+            DB::connection('pku')->table('TTD_PASIEN_MASTER')->where('ID_TTD_PASIEN', $id_ttd)->delete();
+
+            // Delete the image if it exists
+            if ($namaTtd) {
+                Storage::delete('public/images/' . $namaTtd);
+            }
+
+            return redirect()->back()->with('success', 'Tanda Tangan Berhasil Dihapus!');
+        } else {
+            return redirect()->back()->with('error', 'Data not found.');
+        }
+    }
+
+    // ------------------------------- 
+    //      Tanda Tangan Petugas
+    // -------------------------------
+
+    public function index()
+    {
+        $title = 'Index Tanda Tangan Petugas';
+        $ttdPetugas = $this->ttd->tandaTanganGet();
+        return view($this->viewPath . 'index', compact('title', 'ttdPetugas'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
     public function store(Request $request)
     {
         if (!$request->has('signed') || empty($request->signed)) {
@@ -219,13 +252,13 @@ class TandaTanganController extends Controller
     {
 
         // Retrieve the record before deletion
-        $data = DB::connection('pku')->table('TTD_PASIEN_MASTER')->where('ID_TTD_PASIEN', $id_ttd)->first();
+        $data = DB::connection('pku')->table('TTD_PETUGAS_MASTER')->where('ID_TTD', $id_ttd)->first();
 
         if ($data) {
             $namaTtd = $data->IMAGE;
 
             // Delete the record
-            DB::connection('pku')->table('TTD_PASIEN_MASTER')->where('ID_TTD_PASIEN', $id_ttd)->delete();
+            DB::connection('pku')->table('TTD_PETUGAS_MASTER')->where('ID_TTD', $id_ttd)->delete();
 
             // Delete the image if it exists
             if ($namaTtd) {

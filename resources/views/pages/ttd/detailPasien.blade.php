@@ -133,7 +133,7 @@
             })
             .then((willDelete) => {
                 if (willDelete) {
-                    window.location = "{{ route('list-ttd.delete', ['id' => ':id']) }}".replace(':id', ttd);
+                    window.location = "{{ route('list-ttd-pasien.delete', ['id' => ':id']) }}".replace(':id', ttd);
                 } else {
                     swal("Data will not be deleted!");
                 }
