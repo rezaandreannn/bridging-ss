@@ -80,7 +80,7 @@ class TandaTanganController extends Controller
     }
 
 
-    public function ttdPasien2(Request $request, $No_Mr,$kode_dokter)
+    public function ttdPasien2(Request $request, $No_Mr, $kode_dokter)
 
     {
         $title = $this->prefix . ' Tambah CPPT';
@@ -91,9 +91,7 @@ class TandaTanganController extends Controller
             ->where('TRANSAKSI_FISIOTERAPI.NO_MR_PASIEN', $No_Mr)
             ->first();
 
-        return view($this->viewPath . 'ttdPasien2', compact('title', 'biodatas', 'data','kode_dokter','No_Mr'));
-
-
+        return view($this->viewPath . 'ttdPasien2', compact('title', 'biodatas', 'data', 'kode_dokter', 'No_Mr'));
     }
 
     public function ttdPasienStore(Request $request)
@@ -137,7 +135,8 @@ class TandaTanganController extends Controller
             $image_type_aux = explode("image/", $image_parts[0]);
             $image_type = $image_type_aux[1];
             $image_base64 = base64_decode($image_parts[1]);
-            $file_name = auth()->user()->name . '-' . date('Y-m-d') . '.' . $image_type;
+            // Use uniqid to generate a unique file name
+            $file_name = uniqid(auth()->user()->name . '-' . date('Y-m-d') . '-') . '.' . $image_type;
             // Simpan gambar ke storage
             Storage::put('public/ttd/' . $file_name, $image_base64);
 
