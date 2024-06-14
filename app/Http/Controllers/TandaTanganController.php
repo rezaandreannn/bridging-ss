@@ -46,8 +46,8 @@ class TandaTanganController extends Controller
     public function index()
     {
         $title = 'Index Tanda Tangan Petugas';
-        $ttdPasien = $this->ttd->tandaTanganGet();
-        return view($this->viewPath . 'index', compact('title', 'ttdPasien'));
+        $ttdPetugas = $this->ttd->tandaTanganGet();
+        return view($this->viewPath . 'index', compact('title', 'ttdPetugas'));
     }
 
     public function ttdPasienDetail()
@@ -161,7 +161,8 @@ class TandaTanganController extends Controller
             $image_type_aux = explode("image/", $image_parts[0]);
             $image_type = $image_type_aux[1];
             $image_base64 = base64_decode($image_parts[1]);
-            $file_name = auth()->user()->name . '-' . date('Y-m-d') . '.' . $image_type;
+            // Use uniqid to generate a unique file name
+            $file_name = uniqid(auth()->user()->name . '-' . date('Y-m-d') . '-') . '.' . $image_type;
             // Simpan gambar ke storage
             Storage::put('public/ttd/' . $file_name, $image_base64);
 

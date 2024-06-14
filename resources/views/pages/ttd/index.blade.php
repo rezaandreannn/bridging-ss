@@ -50,15 +50,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($ttdPasien as $ttd)
+                                @foreach ($ttdPetugas as $ttd)
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>
                                         {{$ttd->USERNAME}}
                                     </td>
                                     <td width="30%">{{$ttd->STATUS}}</td>
-                                    <td> <a href="#" data-toggle="modal" data-target="#gambarModal{{$ttd->ID_TTD}}">Lihat Tanda Tangan</a></td>
-
+                                    <td>
+                                        <a href="#" data-toggle="modal" data-target="#gambarModal{{ $ttd->ID_TTD }}">Lihat Tanda Tangan</a>
+                                    </td>
                                     <td width="15%">
                                         <a href="{{ route('list-ttd.edit', [
                                             'id' => $ttd->ID_TTD
@@ -78,24 +79,27 @@
     </section>
 </div>
 
-<div class="modal fade" id="gambarModal{{$ttd->ID_TTD}}">
-    <div class="modal-dialog">
+@foreach ($ttdPetugas as $ttd)
+<div class="modal fade" id="gambarModal{{ $ttd->ID_TTD }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Tanda Tangan Petugas</h4>
+                <h5 class="modal-title" id="exampleModalCenterTitle">Tanda Tangan Pengguna - {{ $ttd->USERNAME }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="col-md-12">
-                    Dibuat: {{$ttd->CREATE_AT}}
-                    <img src="{{ asset('storage/ttd/' . $ttd->IMAGE ) }}" width="50%" alt="Gambar Pengguna">
-                </div>
+            <div class="modal-body text-center">
+                <p>Dibuat: {{ $ttd->CREATE_AT }}</p>
+                <img src="{{ asset('storage/ttd/' . $ttd->IMAGE) }}" class="img-fluid" alt="Gambar Pengguna">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
             </div>
         </div>
     </div>
 </div>
+@endforeach
 
 
 <!-- modal add ttd -->
