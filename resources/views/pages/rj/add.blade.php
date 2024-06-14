@@ -536,7 +536,7 @@
                                     <select name="tujuan[]" id="masalah_perawatan" class="form-control select2" multiple="multiple" data-placeholder="Pilih Masalah Keperawatan" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                         <option value="">-- pilih --</option>
                                         @foreach ($masalah_perawatan as $mk)
-                                        <option value="{{ $mk->FS_KD_DAFTAR_DIAGNOSA }}" >{{ $mk->FS_NM_DIAGNOSA'] }}</tion>
+                                        <option value="{{ $mk->FS_KD_DAFTAR_DIAGNOSA }}" >{{ $mk->FS_NM_DIAGNOSA }}</tion>
                                         @endforeach
                                     </select>
                                 </div>
@@ -547,7 +547,7 @@
                                     <select multiple name="tembusan[]" id="rencana_perawatan" class="form-control select2" multiple="multiple" data-placeholder="Pilih Rencana Keperawatan" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                         <option value="">-- pilih --</option>
                                         @foreach ($rencana_perawatan as $rp)
-                                        <option value="{{ $rp->FS_KD_TRS }}" >{{ $rp->FS_NM_RENEP'] }}</option>
+                                        <option value="{{ $rp->FS_KD_TRS }}" >{{ $rp->FS_NM_REN_KEP }}</option>
                                         @endforeach
                                     </select>
                                 </div>
