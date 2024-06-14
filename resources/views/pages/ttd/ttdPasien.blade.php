@@ -35,7 +35,6 @@
         </div>
 
         <div class="section-body">
-
             <div class="card">
                 <div class="card-body">
                     <form action="{{ route('ttd.store') }}" method="post" enctype="multipart/form-data">
