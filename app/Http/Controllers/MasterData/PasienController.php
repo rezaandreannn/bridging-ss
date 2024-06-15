@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\MasterData;
 
-use App\Http\Controllers\Controller;
 use App\Models\Pasien;
-use App\Services\SatuSehat\PatientService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Services\SatuSehat\PatientService;
 
 class PasienController extends Controller
 {
@@ -58,22 +59,28 @@ class PasienController extends Controller
     {
     }
 
-    public function show($noMr)
+    // public function show($no_mr)
+    // {
+    //     // $request = $this->pasien->getData($no_mr);
+    //     $pasien =  DB::connection('db_rsmm')->table('REGISTER_PASIEN')->where('No_MR', $no_mr)->first();
+
+    //     $nik = $request->nik ?? null;
+    //     $params = [
+    //      'identifier' => $nik
+    //     ];
+
+    //     $pasiens = $this->pasien->getByNoMR($no_mr);
+
+    //     dd($pasiens);
+    //     die;
+    //     return view($this->viewPath . 'detail', compact('pasien', 'pasiens'));
+    // }
+
+    public function show($no_mr)
     {
-        $request = $this->pasien->getData($noMr);
+        $pasiens =  DB::connection('db_rsmm')->table('REGISTER_PASIEN')->where('No_MR', $no_mr)->first();
 
-        // Extract 'nik' from the retrieved data
-        $nik = $request[0]['nik'] ?? null;
-
-        // Prepare parameters for the API request
-        $params = [
-            'identifier' => $nik
-        ];
-        // Make request to the API using PatientSatuSehatService
-        $pasien = $this->patientSatuSehat->getRequest($this->endpoint, $params);
-
-        // Menggunakan model Dokter untuk mencari data berdasarkan kode dokter
-        $pasiens = $this->pasien->getByNoMR($noMr);
+        $pasien = $this->pasien->getByNoMR($no_mr);
         // Pass the data to the view for rendering
         return view($this->viewPath . 'detail', compact('pasien', 'pasiens'));
     }
