@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Fisio\Dokter;
 
 use App\Models\Pasien;
+use GuzzleHttp\Client;
 use App\Models\JenisFisio;
 use App\Models\Fisioterapi;
 use App\Models\TandaTangan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use GuzzleHttp\Client;
 
 class AssesmenDokterController extends Controller
 {
@@ -61,11 +62,12 @@ class AssesmenDokterController extends Controller
     public function create($NoMr)
     {
         //
+        $jenisterapifisio = DB::connection('pku')->table('TAC_COM_FISIOTERAPI_MASTER')->get();
         $biodatas = $this->pasien->biodataPasienByMr($NoMr);
         // dd($biodatas);
         // die;
         $title = $this->prefix . ' ' . 'Assesmen Dokter';
-        return view($this->view . 'dokter.form', compact('title','biodatas'));
+        return view($this->view . 'dokter.form', compact('title','biodatas','jenisterapifisio'));
     }
 
     /**
