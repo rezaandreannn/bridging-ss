@@ -84,20 +84,20 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>
-                                        <div class="badge badge-success">{{ $item['no_mr'] }}</div>
+                                        <div class="badge badge-success">{{ $item->no_mr }}</div>
                                     </td>
-                                    <td width="30%">{{ $item['nama_pasien'] }}</td>
-                                    <td>{{ $item['no_bpjs'] }}</td>
-                                    <td>{{ $item['nik'] }}</td>
+                                    <td width="30%">{{ $item->nama_pasien }}</td>
+                                    <td>{{ $item->no_bpjs }}</td>
+                                    <td>{{ $item->nik }}</td>
                                     <td>
-                                        @if ($item['jenis_kelamin'] == 'L')
+                                        @if ($item->jenis_kelamin == 'L')
                                         <div>L</div>
                                         @else
                                         <div>P</div>
                                         @endif
                                     </td>
                                     <td width="15%">
-                                        <a href="{{ route('patient.show', $item['no_mr'])}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
+                                        <a href="{{ route('patient.show', $item->no_mr)}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                                         <a href="http://" class="btn btn-primary">sync</a>
                                     </td>
                                 </tr>
