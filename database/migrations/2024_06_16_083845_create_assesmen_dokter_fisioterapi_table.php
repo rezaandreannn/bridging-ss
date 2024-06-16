@@ -29,4 +29,7 @@ return new class extends Migration
     {
         Schema::connection('pku')->dropIfExists('assesmen_dokter_fisioterapi');
     }
+
+    // cara migrasinya 
+    // php artisan migrate --path=database\migrations\2024_06_16_083845_create_assesmen_dokter_fisioterapi_table.php
 };
