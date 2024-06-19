@@ -62,12 +62,38 @@ class AssesmenDokterController extends Controller
     public function create($NoMr)
     {
         //
+        $lastKodeTransaksiByMr = DB::connection('pku')
+            ->table('TRANSAKSI_FISIOTERAPI')
+            ->where('NO_MR_PASIEN', $NoMr)
+            ->orderBy('ID_TRANSAKSI', 'DESC')
+            ->limit('1')
+            ->first();
+
+        $lastKodeTransaksi = DB::connection('pku')
+            ->table('TRANSAKSI_FISIOTERAPI')
+            ->orderBy('ID_TRANSAKSI', 'DESC')
+            ->limit('1')
+            ->first();
+
+        $kode = 'F';
+        if (!$lastKodeTransaksiByMr) {
+            $noTerakhir = (int)substr($lastKodeTransaksi->KODE_TRANSAKSI_FISIO, 2);
+            $noTerakhir += 1;
+            $nomorUrut = sprintf('%06s', $noTerakhir);
+        } else {
+            $noTerakhir = (int)substr($lastKodeTransaksiByMr->KODE_TRANSAKSI_FISIO, 2);
+            $nomorUrut = sprintf('%06s', $noTerakhir);
+        }
+
+        $kode_transaksi_fisio = $kode . '-' . $nomorUrut;
+
         $jenisterapifisio = DB::connection('pku')->table('TAC_COM_FISIOTERAPI_MASTER')->get();
         $biodatas = $this->pasien->biodataPasienByMr($NoMr);
+        
         // dd($biodatas);
         // die;
         $title = $this->prefix . ' ' . 'Assesmen Dokter';
-        return view($this->view . 'dokter.form', compact('title','biodatas','jenisterapifisio'));
+        return view($this->view . 'dokter.form', compact('title','biodatas','jenisterapifisio','kode_transaksi_fisio'));
     }
 
     /**
