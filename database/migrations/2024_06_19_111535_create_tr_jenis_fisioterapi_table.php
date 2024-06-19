@@ -19,8 +19,6 @@ return new class extends Migration
             $table->string('kode_tr_fisio');
             $table->integer('id_jenis_fisioterapi');
             $table->timestamps();
-            $table->foreign('kode_tr_fisio')->references('kode_transaksi_fisio')->on('assesmen_dokter_fisioterapi')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('id_jenis_fisioterapi')->references('ID_JENIS_FISIO')->on('TAC_COM_FISIOTERAPI_MASTER')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
