@@ -61,22 +61,33 @@
                                             <div class="col-md-8">
                                                 : {{ $pasiens->nama_dokter}}
                                             </div>
+                                            <div class="col-md-4">
+                                                Status Rawat
+                                            </div>
+                                            <div class="col-md-8">
+                                                : {{ $pasiens->status_rawat}}
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <div class="row">
                                             <div class="col-md-4">
-                                                Kode Dokter
+                                                Alamat
                                             </div>
                                             <div class="col-md-8">
-                                                : {{ $pasiens->kode_dokter}}
-
+                                                : {{ $pasiens->alamat}}
                                             </div>
                                             <div class="col-md-4">
-
+                                                Kota
                                             </div>
                                             <div class="col-md-8">
-
+                                                : {{ $pasiens->kota}}
+                                            </div>
+                                            <div class="col-md-4">
+                                                Provinsi
+                                            </div>
+                                            <div class="col-md-8">
+                                                : {{ $pasiens->provinsi}}
                                             </div>
                                             <div class="col-md-4">
                                                 Daftar By
@@ -90,12 +101,7 @@
                                             <div class="col-md-8">
                                                 : {{ $pasiens->created_by}}
                                             </div>
-                                            <div class="col-md-4">
-                                                Status Rawat
-                                            </div>
-                                            <div class="col-md-8">
-                                                : {{ $pasiens->status_rawat}}
-                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
