@@ -25,30 +25,50 @@ class Dokter extends Model
         $this->simrsUrlApi = env('SIMRS_BASE_URL');
     }
 
+    // public function getData()
+    // {
+    //     try {
+    //         $request = $this->httpClient->get($this->simrsUrlApi . 'dokter');
+    //         $response = $request->getBody()->getContents();
+    //         $data = json_decode($response, true);
+    //         return $data['data']; // Mengambil bagian 'data' dari respons
+    //     } catch (\Exception $e) {
+    //         // Tangani kesalahan
+    //         return []; // Mengembalikan array kosong jika terjadi kesalahan
+    //     }
+    // }
+
     public function getData()
     {
-        try {
-            $request = $this->httpClient->get($this->simrsUrlApi . 'dokter');
-            $response = $request->getBody()->getContents();
-            $data = json_decode($response, true);
-            return $data['data']; // Mengambil bagian 'data' dari respons
-        } catch (\Exception $e) {
-            // Tangani kesalahan
-            return []; // Mengembalikan array kosong jika terjadi kesalahan
-        }
-
-        // $data = DB::connection('db_rsmm')
-        //     ->table('DOKTER')
-        //     ->select('Kode_Dokter', 'Nama_Dokter')
-        //     ->where(function ($query) {
-        //         $query->where('Jenis_Profesi', 'DOKTER UMUM')
-        //             ->orWhere('Jenis_Profesi', 'DOKTER SPESIALIS');
-        //     })
-        //     ->whereNotIn('Kode_Dokter', ['140s', 'TM140'])
-        //     ->orderBy('Nama_Dokter', 'ASC')
-        //     ->get();
-
-        // return $data;
+        $data = DB::connection('db_rsmm')
+            ->table('DOKTER as a')
+            ->select(
+                'a.Kode_Dokter as kode_dokter',
+                'a.Jenis_Profesi as jenis_profesi',
+                'a.Spesialis as spesialis',
+                'a.Nama_Dokter as nama_dokter',
+                'a.Jenis_Kelamin as jenis_kelamin',
+                'a.Tgl_Lahir as tgl_lahir',
+                'a.Agama as agama',
+                'a.Email as email',
+                'a.No_KTP as nik',
+                'a.Alamat as alamat',
+                'a.Kota as kota',
+                'a.Provinsi as provinsi',
+                'a.Kode_Pos as kode_pos',
+                DB::raw('COALESCE(NULLIF(a.HP1, \'\'), a.Telp_Rumah) as no_hp'),
+                'a.Pemeriksaan as pemeriksaan',
+                'a.Visite as visite',
+                'a.Konsul as konsul',
+                'a.Tindakan as tindakan',
+                'a.Lain as lain'
+            )
+            ->where('a.Jenis_Profesi', 'like', '%dokter%')
+            ->where('a.Nama_Dokter', '!=', '-')
+            ->where('a.No_KTP', '!=', '')
+            ->get()
+            ->toArray();
+        return $data;
     }
 
     // Method to fetch data for a specific doctor

@@ -27,15 +27,11 @@ class DokterController extends Controller
 
     public function index(Request $request)
     {
-        try {
-            $title = 'Dokter';
-            $data = $this->dokter->getData();
-            return view('pages.md.dokter.index', ['data' => $data]);
-        } catch (\Exception $e) {
-            // Tangani kesalahan
-            return response()->json(['error' => 'Failed to fetch data'], 500);
-            // return view('error-view', ['error' => 'Failed to fetch data']);
-        }
+        $title = 'Dokter';
+        $data = $this->dokter->getData();
+        dd($data);
+        die;
+        return view('pages.md.dokter.index', ['data' => $data]);
     }
 
     public function edit($kodeDokter)
