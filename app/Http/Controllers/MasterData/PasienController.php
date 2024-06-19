@@ -76,13 +76,11 @@ class PasienController extends Controller
     //     return view($this->viewPath . 'detail', compact('pasien', 'pasiens'));
     // }
 
-    public function show($no_mr)
+    public function show(Request $request, $no_mr)
     {
-        $pasiens =  DB::connection('db_rsmm')->table('REGISTER_PASIEN')->where('No_MR', $no_mr)->first();
-
-        $pasien = $this->pasien->getByNoMR($no_mr);
-        // Pass the data to the view for rendering
-        return view($this->viewPath . 'detail', compact('pasien', 'pasiens'));
+        // $pasiens =  DB::connection('db_rsmm')->table('REGISTER_PASIEN')->where('No_MR', $no_mr)->first();
+        $pasiens = $this->pasien->getByNoMR($no_mr);
+        return view($this->viewPath . 'detail', compact('pasiens'));
     }
 
     public function edit()

@@ -106,28 +106,38 @@ class Pasien extends Model
         $data = DB::connection('db_rsmm')
             ->table('REGISTER_PASIEN as a')
             ->leftJoin('PENDAFTARAN as b', 'a.No_MR', '=', 'b.No_MR')
+            ->leftJoin('DOKTER as c', 'b.KODE_DOKTER', '=', 'c .KODE_DOKTER')
+            ->leftJoin('REKANAN as d', 'b.KODEREKANAN', '=', 'd.KODEREKANAN')
+            ->leftJoin('ANTRIAN as e', 'e.No_MR', '=', 'b.No_MR')
             ->select(
-                'a.NAMA_PASIEN',
-                'a.NO_MR',
-                'a.HP1',
-                'a.HP2',
-                'a.ALAMAT',
-                'a.KOTA',
-                'a.PROVINSI',
-                'a.JENIS_KELAMIN',
-                'a.TGL_LAHIR',
+                'a.NAMA_PASIEN as nama_pasien',
+                'a.NO_MR as no_mr',
+                'a.HP1 as no_hp',
+                'a.HP2 as nik',
+                'a.No_Identitas as no_bpjs',
+                'a.ALAMAT as alamat',
+                'a.KOTA as kota',
+                'a.PROVINSI as provinsi',
+                'a.JENIS_KELAMIN as jenis_kelamin',
+                'a.TGL_LAHIR as tgl_lahir',
                 'a.FS_REAK_ALERGI',
                 'a.FS_RIW_PENYAKIT_DAHULU',
                 'a.FS_ALERGI',
                 'a.FS_RIW_PENYAKIT_DAHULU2',
                 'a.FS_HIGH_RISK',
+                'b.NamaUser as created_by',
                 'b.No_MR',
-                'b.No_Reg',
+                'b.Medis as status_rawat',
+                'b.No_Reg as no_registrasi',
+                'b.KODE_DOKTER as kode_dokter',
+                'c.NAMA_DOKTER as nama_dokter',
+                'd.NamaRekanan as nama_rekanan',
+                'e.Status as daftar_by',
             )
             ->where('a.NO_MR', $no_mr)
             ->orderBy('b.No_Reg', 'DESC')
             ->limit('1')
-            ->get()->toArray();
+            ->first();
         return $data;
     }
 

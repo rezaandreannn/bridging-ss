@@ -70,7 +70,6 @@ class TandaTanganController extends Controller
 
 
     public function ttdPasien2(Request $request, $No_Mr, $kode_dokter)
-
     {
         $title = $this->prefix . ' Tambah CPPT';
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
