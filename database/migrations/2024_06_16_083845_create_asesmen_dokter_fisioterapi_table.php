@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::connection('pku')->create('assesmen_dokter_fisioterapi', function (Blueprint $table) {
+        Schema::connection('pku')->create('asesmen_dokter_fisioterapi', function (Blueprint $table) {
             $table->id();
             $table->string('no_registrasi');
             $table->string('kode_transaksi_fisio');
             $table->date('tanggal');
             $table->time('jam');
             $table->string('cara_datang');
-            $table->string('deskripsi_cara_datang');
+            $table->string('deskripsi_cara_datang')->nullable();
             $table->text('anamnesa');
             $table->string('keadaan_umum');
             $table->string('kesadaran');
@@ -42,6 +42,7 @@ return new class extends Migration
             $table->text('deskripsi_konsul')->nullable();
             $table->integer('anjuran_terapi');
             $table->integer('evaluasi_terapi');
+            $table->string('create_by');
             $table->timestamps();
         });
     }

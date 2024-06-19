@@ -28,18 +28,18 @@
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
-                  <!-- components biodata pasien by no mr -->
-                  @include('components.biodata-pasien-fisio-bymr')
+                    <!-- components biodata pasien by no mr -->
+                    @include('components.biodata-pasien-fisio-bymr')
                     <!-- components biodata pasien by no mr -->
                     <div class="card card-primary">
-                    <div class="card-header card-success">
+                        <div class="card-header card-success">
                             <h4 class="card-title">Form Dokter Fisioterapi</h4>
                         </div>
                     </div>
                     <div class="card card-primary">
-                  
+
                         <div class="card-body">
-                            <form action="#" method="POST">
+                            <form action="{{ route('asesmenStore.dokter') }}" method="POST">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6">
@@ -54,7 +54,7 @@
                                             <label>Tanggal dan jam Terapi </label>
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <input type="date" name="tanggal" class="form-control" value="" >
+                                                    <input type="date" name="tanggal" class="form-control" value="">
                                                 </div>
                                                 <div class="col-md-6">
                                                     <input type="time" name="jam" class="form-control" id="jam_keperawatan">
@@ -65,23 +65,23 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Cara Pasien Datang</label>
-                                           
+
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="cara_datang" value="Sendiri" id="cara_datang1">
                                                 <label class="form-check-label" for="cara_datang1">
-                                                Sendiri
+                                                    Sendiri
                                                 </label>
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="cara_datang" value="Diantar" id="cara_datang2">
                                                 <label class="form-check-label" for="cara_datang2">
-                                                Diantar
+                                                    Diantar
                                                 </label>
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="cara_datang" value="Rujukan" id="cara_datang3">
                                                 <label class="form-check-label" for="cara_datang3">
-                                                Rujukan
+                                                    Rujukan
                                                 </label>
                                             </div>
                                         </div>
@@ -104,56 +104,56 @@
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="keadaan_umum" value="Baik" id="keadaan_umum1">
                                                 <label class="form-check-label" for="keadaan_umum1">
-                                                Baik
+                                                    Baik
                                                 </label>
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="keadaan_umum" value="Sedang" id="keadaan_umum2">
                                                 <label class="form-check-label" for="keadaan_umum2">
-                                                Sedang
+                                                    Sedang
                                                 </label>
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="keadaan_umum" value="Buruk" id="keadaan_umum3">
                                                 <label class="form-check-label" for="keadaan_umum3">
-                                                Buruk
+                                                    Buruk
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                    <div class="form-group">
+                                        <div class="form-group">
                                             <label class="d-block">Keadaan Kesadaran</label>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="kesadaran" value="GCS" id="kesadaran1">
                                                 <label class="form-check-label" for="kesadaran1">
-                                                GCS
+                                                    GCS
                                                 </label>
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="kesadaran" value="E" id="kesadaran2">
                                                 <label class="form-check-label" for="kesadaran2">
-                                                E
+                                                    E
                                                 </label>
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="kesadaran" value="M" id="kesadaran3">
                                                 <label class="form-check-label" for="kesadaran3">
-                                                M
+                                                    M
                                                 </label>
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="kesadaran" value="V" id="kesadaran4">
                                                 <label class="form-check-label" for="kesadaran4">
-                                                V
+                                                    V
                                                 </label>
                                             </div>
-                                            </div>
-                
+                                        </div>
+
                                     </div>
-                                <div class="card-header card-success">
-                                    <h4 class="card-title">Pemeriksaan Fisik</h4>
-                                </div>
+                                    <div class="card-header card-success">
+                                        <h4 class="card-title">Pemeriksaan Fisik</h4>
+                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tekanan Darah</label>
@@ -265,18 +265,18 @@
                                             </select>
                                         </div>
                                     </div>
-                                <div class="card-header card-success">
-                                    <h4 class="card-title">Analisa</h4>
-                                </div>
+                                    <div class="card-header card-success">
+                                        <h4 class="card-title">Analisa</h4>
+                                    </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Diagnosa Klinis <code>*</code></label>
                                             <textarea class="form-control" rows="3" name="diagnosa_klinis" value="" placeholder="Masukan ..."></textarea>
                                         </div>
                                     </div>
-                                <div class="card-header card-success">
-                                    <h4 class="card-title">Perencanaan</h4>
-                                </div>
+                                    <div class="card-header card-success">
+                                        <h4 class="card-title">Perencanaan</h4>
+                                    </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Terapi <code>*</code></label>
@@ -290,25 +290,25 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                        <label>Rencana Tindakan</label>
+                                            <label>Rencana Tindakan</label>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="radio" name="rencana_tindakan" value="Tidak Ada" id="rencana_tindakan1">
-                                                                <label class="form-check-label" for="rencana_tindakan1">
-                                                                    Tidak Ada
-                                                                </label>
+                                                            <label class="form-check-label" for="rencana_tindakan1">
+                                                                Tidak Ada
+                                                            </label>
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="radio" name="rencana_tindakan" value="Ya" id="rencana_tindakan2">
-                                                                <label class="form-check-label" for="rencana_tindakan2">
-                                                                    Ya
-                                                                </label>
+                                                            <label class="form-check-label" for="rencana_tindakan2">
+                                                                Ya
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                
+
                                                 <div class="col-md-6">
                                                     <input type="text" name="jenis_tindakan" class="form-control" placeholder="Isi jenis tindakan jika ya">
                                                 </div>
@@ -320,18 +320,18 @@
                                             <label>Rujuk</label>
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                <div class="form-group">
+                                                    <div class="form-group">
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="radio" name="rencana_rujukan" value="Tidak Ada" id="rencana_rujukan1">
-                                                                <label class="form-check-label" for="rencana_rujukan1">
-                                                                    Tidak Ada
-                                                                </label>
+                                                            <label class="form-check-label" for="rencana_rujukan1">
+                                                                Tidak Ada
+                                                            </label>
                                                         </div>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="radio" name="rencana_rujukan" value="Ya" id="rencana_rujukan2">
-                                                                <label class="form-check-label" for="rencana_rujukan2">
-                                                                    Ya
-                                                                </label>
+                                                            <label class="form-check-label" for="rencana_rujukan2">
+                                                                Ya
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -344,28 +344,28 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Konsul</label>
-                                           
-                                                <div class="col-md-6">
+
+                                            <div class="col-md-6">
                                                 <div class="form-group">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="rencana_konsul" value="Tidak Ada" id="rencana_konsul1">
-                                                                <label class="form-check-label" for="rencana_konsul1">
-                                                                    Tidak Ada
-                                                                </label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="rencana_konsul" value="Ya" id="rencana_konsul2">
-                                                                <label class="form-check-label" for="rencana_konsul2">
-                                                                    Ya
-                                                                </label>
-                                                        </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="rencana_konsul" value="Tidak Ada" id="rencana_konsul1">
+                                                        <label class="form-check-label" for="rencana_konsul1">
+                                                            Tidak Ada
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="rencana_konsul" value="Ya" id="rencana_konsul2">
+                                                        <label class="form-check-label" for="rencana_konsul2">
+                                                            Ya
+                                                        </label>
                                                     </div>
                                                 </div>
-                                           
+                                            </div>
+
                                         </div>
                                     </div>
 
-                                    
+
 
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -373,7 +373,7 @@
                                             <input type="text" name="deskripsi_konsul" class="form-control" placeholder="Ke Bagian">
                                         </div>
                                     </div>
-                    
+
 
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -406,8 +406,8 @@
                         <div class="card-body">
                             <label>*Bismillahirohmanirrohim, saya dengan sadar dan penuh tanggung jawab mengisikan formulir ini dengan data yang benar </label>
                             <div class="text-left">
-                                <!-- <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button> -->
-                                <a href="{{ route('tindakan.dokter', ['no_mr' => $biodatas->NO_MR]) }}" class="btn btn-primary mb-2"><i class="fas fa-save"></i> Simpan</a>
+                                <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button>
+                                <!-- <a href="{{ route('tindakan.dokter', ['no_mr' => $biodatas->NO_MR]) }}" class="btn btn-primary mb-2"><i class="fas fa-save"></i> Simpan</a> -->
                             </div>
                         </div>
                         </form>
