@@ -29,8 +29,6 @@ class DokterController extends Controller
     {
         $title = 'Dokter';
         $data = $this->dokter->getData();
-        dd($data);
-        die;
         return view('pages.md.dokter.index', ['data' => $data]);
     }
 
@@ -47,22 +45,29 @@ class DokterController extends Controller
         }
     }
 
+    // public function show($kodeDokter)
+    // {
+    //     try {
+    //         $params = [
+    //             'identifier' => $this->dokter->getNik($kodeDokter)
+    //         ];
+    //         // kirem data ke satu sehat berdasarkan nik
+    //         $practitionerSatuSehat = $this->practicionerSatuSehat->getRequest($this->endpoint, $params);
+
+    //         // Menggunakan model Dokter untuk mencari data berdasarkan kode dokter
+    //         $dokter = $this->dokter->getByKodeDokter($kodeDokter);
+    //         return view($this->viewPath . 'detail', compact('dokter'));
+    //     } catch (\Exception $e) {
+    //         // Handle any exceptions that occur during the API request
+    //         $errorMessage = "Error: " . $e->getMessage();
+    //         return redirect()->back()->with('error', $errorMessage);
+    //     }
+    // }
+
     public function show($kodeDokter)
     {
-        try {
-            $params = [
-                'identifier' => $this->dokter->getNik($kodeDokter)
-            ];
-            // kirem data ke satu sehat berdasarkan nik
-            $practitionerSatuSehat = $this->practicionerSatuSehat->getRequest($this->endpoint, $params);
-
-            // Menggunakan model Dokter untuk mencari data berdasarkan kode dokter
-            $dokter = $this->dokter->getByKodeDokter($kodeDokter);
-            return view($this->viewPath . 'detail', compact('dokter'));
-        } catch (\Exception $e) {
-            // Handle any exceptions that occur during the API request
-            $errorMessage = "Error: " . $e->getMessage();
-            return redirect()->back()->with('error', $errorMessage);
-        }
+        // $pasiens =  DB::connection('db_rsmm')->table('DOKTER')->where('NAMA_DOKTER', $kodeDokter)->first();
+        $dokter = $this->dokter->getByKodeDokter($kodeDokter);
+        return view($this->viewPath . 'detail', compact('dokter'));
     }
 }

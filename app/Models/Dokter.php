@@ -101,10 +101,40 @@ class Dokter extends Model
         return $data['data'];
     }
 
+    // public function getByKodeDokter($kodeDokter)
+    // {
+    //     $response = Http::get($this->simrsUrlApi . 'dokter/detail/' . $kodeDokter);
+    //     return $response->json();
+    // }
+
     public function getByKodeDokter($kodeDokter)
     {
-        $response = Http::get($this->simrsUrlApi . 'dokter/detail/' . $kodeDokter);
-        return $response->json();
+        $data = DB::connection('db_rsmm')
+            ->table('DOKTER as a')
+            ->select(
+                'a.Kode_Dokter as kode_dokter',
+                'a.Jenis_Profesi as jenis_profesi',
+                'a.Spesialis as spesialis',
+                'a.Nama_Dokter as nama_dokter',
+                'a.Jenis_Kelamin as jenis_kelamin',
+                'a.Tgl_Lahir as tgl_lahir',
+                'a.Agama as agama',
+                'a.Email as email',
+                'a.No_KTP as nik',
+                'a.Alamat as alamat',
+                'a.Kota as kota',
+                'a.Provinsi as provinsi',
+                'a.Kode_Pos as kode_pos',
+                DB::raw('COALESCE(NULLIF(a.HP1, \'\'), a.Telp_Rumah) as no_hp'),
+                'a.Pemeriksaan as pemeriksaan',
+                'a.Visite as visite',
+                'a.Konsul as konsul',
+                'a.Tindakan as tindakan',
+                'a.Lain as lain'
+            )
+            ->where('Kode_Dokter', $kodeDokter)
+            ->first();
+        return $data;
     }
 
     public function getNik($kodeDokter)

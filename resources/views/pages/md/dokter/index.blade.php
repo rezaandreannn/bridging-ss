@@ -49,17 +49,17 @@
                                         {{ $loop->iteration }}
                                     </td>
                                     <td>
-                                        <div class="badge badge-success"> {{ $item['kode_dokter'] }}</div>
+                                        <div class="badge badge-success"> {{ $item->kode_dokter }}</div>
                                     </td>
-                                    <td>{{ $item['jenis_profesi'] }}</td>
-                                    <td>{{ $item['spesialis'] }}</td>
-                                    <td>{{ $item['nama_dokter'] }}</td>
-                                    <td>{{ $item['email'] }}</td>
-                                    <td>{{ $item['nik'] }}</td>
+                                    <td>{{ $item->jenis_profesi }}</td>
+                                    <td>{{ $item->spesialis }}</td>
+                                    <td>{{ $item->nama_dokter }}</td>
+                                    <td>{{ $item->email }}</td>
+                                    <td>{{ $item->nik }}</td>
                                     <td width="15%">
                                         <button class="btn btn-warning" disabled><i class="far fa-edit"></i></button>
                                         <!-- <a href="javascript: void(0)" class="btn btn-warning"><i class="far fa-edit"></i></a> -->
-                                        <a href="{{ route('dokter.show', $item['kode_dokter'] )}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
+                                        <a href="{{ route('dokter.show', $item->kode_dokter )}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
