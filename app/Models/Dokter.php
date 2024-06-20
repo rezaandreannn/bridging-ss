@@ -66,8 +66,7 @@ class Dokter extends Model
             ->where('a.Jenis_Profesi', 'like', '%dokter%')
             ->where('a.Nama_Dokter', '!=', '-')
             ->where('a.No_KTP', '!=', '')
-            ->get()
-            ->toArray();
+            ->get();
         return $data;
     }
 
