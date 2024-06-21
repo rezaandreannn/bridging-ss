@@ -34,7 +34,7 @@
                                     <select class="form-control select2" id="kode_dokter" name="kode_dokter">
                                         <option value="" selected disabled>-- silahkan pillih --</option>
                                         @foreach ($dokters as $dokter)
-                                        <option value="{{ $dokter->kode_dokter }}" {{ request('kode_dokter') == $dokter->kode_dokter ? 'selected' : '' }}>{{ $dokter->nama_dokter }}</option>
+                                        <option value="{{ $dokter['kode_dokter'] }}" {{ request('kode_dokter') == $dokter['kode_dokter'] ? 'selected' : '' }}>{{ $dokter['nama_dokter'] }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -81,23 +81,22 @@
                                         {{ $loop->iteration }}
                                     </td>
                                     <td>
-                                        <div class="badge badge-success"> {{ $item->nomor_antrean }}</div>
+                                        <div class="badge badge-success"> {{ $item['nomor_antrean'] }}</div>
                                     </td>
-                                    <td>{{ $item->nama_pasien }}</td>
-                                    <td>{{ $item->no_mr }}</td>
-                                    <td>{{ $item->no_hp }}</td>
-                                    <td>{{ $item->jenis_pasien }} @if($item->jenis_pasien == 'BPJS')
+                                    <td>{{ $item['nama_pasien'] }}</td>
+                                    <td>{{ $item['no_mr'] }}</td>
+                                    <td>{{ $item['no_hp'] }}</td>
+                                    <td>{{ $item['jenis_pasien'] }} @if($item['jenis_pasien'] == 'BPJS')
                                         <br>
                                         @foreach($listSEP as $sep)
-                                        @if($item->No_Identitas != NULL)
-                                        @if($sep['noKartu'] == $item->No_Identitas)
+                                        @if($item['No_Identitas'] != NULL)
+                                        @if($sep['noKartu'] == $item['No_Identitas'])
                                         <a href="">{{$sep['noSEP']}}</a>
                                         @endif
                                         @endif
                                         @endforeach
-                                        @endif
-                                    </td>
-                                    <td>{{ $item->created_by }}</td>
+                                        @endif</td>
+                                    <td>{{ $item['created_by'] }}</td>
                                     <td width="15%">
                                         <button class="btn btn-warning" disabled><i class="fas fa-info-circle"></i></button>
                                         <button class="btn btn-primary" disabled>sync</button>
@@ -131,8 +130,9 @@
     function resetForm() {
         document.getElementById("filterForm").value = "";
         alert('Filter telah direset!');
-        window.location.href = "{{ route('antrean.index') }}";
+        window.location.href = "{{ route('pendaftaran.index') }}";
     }
+
 </script>
 <!-- Page Specific JS File -->
 @endpush

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\MasterData;
 
-use App\Http\Controllers\Controller;
+use GuzzleHttp\Client;
 use App\Models\JenisFisio;
 use Illuminate\Http\Request;
-use GuzzleHttp\Client;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class JenisFisioController extends Controller
 {
@@ -58,13 +59,9 @@ class JenisFisioController extends Controller
             'NAMA_TERAPI' => 'required',
         ]);
 
-        $response = $this->httpClient->post($this->simrsUrlApi . 'fisioterapi/master/jenisFisio/add', [
-            'json' => [
-                'NAMA_TERAPI' => $request->input('NAMA_TERAPI'),
-            ]
+        DB::connection('pku')->table('TAC_COM_FISIOTERAPI_MASTER')->insert([
+            'NAMA_TERAPI' => $request->input('NAMA_TERAPI'),
         ]);
-
-        $responseData = $response->getBody()->getContents();
 
         return redirect()->back()->with('success', 'Jenis Terapi Berhasil Ditambahkan!');
     }
@@ -98,16 +95,14 @@ class JenisFisioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $ID_JENIS_FISIO)
+    public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
             'NAMA_TERAPI' => 'required',
         ]);
 
-        $response = $this->httpClient->put($this->simrsUrlApi . 'fisioterapi/master/jenisFisio/update/' . $ID_JENIS_FISIO, [
-            'json' => [
-                'NAMA_TERAPI' => $request->input('NAMA_TERAPI'),
-            ]
+        DB::connection('pku')->table('TAC_COM_FISIOTERAPI_MASTER')->where('ID_JENIS_FISIO', $id)->update([
+            'NAMA_TERAPI' => $request->input('NAMA_TERAPI'),
         ]);
 
         return redirect()->back()->with('success', 'Jenis Terapi Berhasil Diperbarui!');
@@ -119,9 +114,9 @@ class JenisFisioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($ID_JENIS_FISIO)
+    public function destroy($id)
     {
-        $response = $this->httpClient->delete($this->simrsUrlApi . 'fisioterapi/master/jenisFisio/delete/' . $ID_JENIS_FISIO);
+        DB::connection('pku')->table('TAC_COM_FISIOTERAPI_MASTER')->where('ID_JENIS_FISIO', $id)->delete();
 
         return redirect()->back()->with('success', 'Jenis Terapi Berhasil Dihapus!');
     }

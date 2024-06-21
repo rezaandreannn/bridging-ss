@@ -59,39 +59,95 @@ class Antrean extends Model
         return $data;
     }
 
-    public function getData($kode_dokter = null, $tanggal = null)
+    // public function getData($kode_dokter = null, $tanggal = null)
+    // {
+    //     try {
+    //         // Menyiapkan query parameters
+    //         $queryParams = [];
+    //         if ($kode_dokter !== null) {
+    //             $queryParams['kode_dokter'] = $kode_dokter;
+    //         }
+    //         if ($tanggal !== null) {
+    //             $queryParams['tanggal'] = $tanggal ?? date('Y-m-d'); // Tanggal sekarang;
+    //         }
+    //         // Mengirim permintaan HTTP dengan query parameters
+    //         $request = $this->httpClient->get($this->simrsUrlApi . 'antrean?kode_dokter', [
+    //             'query' => $queryParams,
+    //         ]);
+
+    //         // Mengambil respons dari API
+    //         $response = $request->getBody()->getContents();
+    //         $data = json_decode($response, true);
+
+    //         // Mengembalikan data pasien
+    //         return $data['data']; // Mengambil bagian 'data' dari respons
+    //     } catch (\Exception $e) {
+    //         // Tangani kesalahan
+    //         return []; // Mengembalikan array kosong jika terjadi kesalahan
+    //     }
+    // }
+
+    public function getData($kode_dokter)
     {
-        try {
-            // Menyiapkan query parameters
-            $queryParams = [];
-            if ($kode_dokter !== null) {
-                $queryParams['kode_dokter'] = $kode_dokter;
-            }
-            if ($tanggal !== null) {
-                $queryParams['tanggal'] = $tanggal ?? date('Y-m-d'); // Tanggal sekarang;
-            }
-            // Mengirim permintaan HTTP dengan query parameters
-            $request = $this->httpClient->get($this->simrsUrlApi . 'antrean?kode_dokter', [
-                'query' => $queryParams,
-            ]);
-
-            // Mengambil respons dari API
-            $response = $request->getBody()->getContents();
-            $data = json_decode($response, true);
-
-            // Mengembalikan data pasien
-            return $data['data']; // Mengambil bagian 'data' dari respons
-        } catch (\Exception $e) {
-            // Tangani kesalahan
-            return []; // Mengembalikan array kosong jika terjadi kesalahan
-        }
+        $date = date('Y-m-d');
+        $dbpku = DB::connection('pku')->getDatabaseName();
+        $data = DB::connection('db_rsmm')
+            ->table('ANTRIAN as a')
+            ->Join('REGISTER_PASIEN as rp', 'a.No_MR', '=', 'rp.No_MR')
+            ->Join('PENDAFTARAN as p', 'a.No_MR', '=', 'p.No_MR')
+            ->leftJoin($dbpku . '.dbo.TAC_RJ_STATUS as st', 'p.NO_REG', '=', 'st.FS_KD_REG')
+            ->leftJoin($dbpku . '.dbo.TAC_RJ_MEDIS as m', 'p.NO_REG', '=', 'm.FS_KD_REG')
+            ->select(
+                'a.No_Ponsel as no_hp',
+                'a.Nomor as nomor_antrean',
+                'a.No_MR as no_mr',
+                'a.Tanggal as tanggal',
+                'a.Dokter as kode_dokter',
+                'a.Jenis as jenis_pasien',
+                'a.Status as created_by',
+                'rp.Nama_Pasien as nama_pasien',
+                'rp.No_Identitas',
+                'rp.Alamat',
+                'p.No_Reg',
+                'st.FS_STATUS',
+                'm.FS_CARA_PULANG',
+                'm.FS_TERAPI',
+                'm.FS_KD_TRS',
+                'm.HASIL_ECHO',
+            )
+            ->where('a.Dokter', $kode_dokter)
+            ->where('p.Kode_Dokter', $kode_dokter)
+            ->where('a.Tanggal', $date)
+            ->where('p.Tanggal', $date)
+            ->orderBy('a.Nomor', 'ASC')
+            ->get()->toArray();
+        return $data;
     }
 
-    public function byKodeDokter($kodeDokter = '')
+    // public function byKodeDokter($kodeDokter = '')
+    // {
+    //     $request = $this->httpClient->get($this->simrsUrlApi . 'dokter/select' . $kodeDokter);
+    //     $response = $request->getBody()->getContents();
+    //     $data = json_decode($response, true);
+    //     return $data['data'];
+    // }
+
+    public function byKodeDokter()
     {
-        $request = $this->httpClient->get($this->simrsUrlApi . 'dokter/select' . $kodeDokter);
-        $response = $request->getBody()->getContents();
-        $data = json_decode($response, true);
-        return $data['data'];
+        $data = DB::connection('db_rsmm')
+            ->table('DOKTER as a')
+            ->select(
+                'a.KODE_DOKTER as kode_dokter',
+                'a.NAMA_DOKTER as nama_dokter',
+            )
+            ->where(function ($query) {
+                $query->where('JENIS_PROFESI', 'DOKTER UMUM')
+                    ->orWhere('JENIS_PROFESI', 'DOKTER SPESIALIS')
+                    ->orWhere('Spesialis', 'FISIOTERAPI');
+            })
+            ->whereNotIn('KODE_DOKTER', ['140s', 'TM140'])
+            ->orderBy('NAMA_DOKTER', 'ASC')
+            ->get();
+        return $data;
     }
 }

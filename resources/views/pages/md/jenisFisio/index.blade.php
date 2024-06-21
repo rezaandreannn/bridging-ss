@@ -43,11 +43,11 @@
                                 @foreach ($jenis as $fisio)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{$fisio['NAMA_TERAPI']}}</td>
+                                    <td>{{$fisio->NAMA_TERAPI}}</td>
                                     <td>
-                                        <button data-toggle="modal" data-target="#modal-edit-tranksasi18{{$fisio['ID_JENIS_FISIO']}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</button>
+                                        <button data-toggle="modal" data-target="#modal-edit-tranksasi18{{$fisio->ID_JENIS_FISIO}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</button>
 
-                                        <button id="delete" data-id="{{ $fisio['ID_JENIS_FISIO'] }}" data-nama="{{ $fisio['NAMA_TERAPI'] }}" data-bs-toggle="tooltip" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</button>
+                                        <button id="delete" data-id="{{ $fisio->ID_JENIS_FISIO }}" data-nama="{{ $fisio->NAMA_TERAPI }}" data-bs-toggle="tooltip" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</button>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -79,6 +79,9 @@
                                 <div class="form-group">
                                     <label>Jenis Fisio</label>
                                     <input type="text" name="NAMA_TERAPI" class="form-control" value="">
+                                    @if ($errors->has('NAMA_TERAPI'))
+                                    <span class="text-danger">{{ $errors->first('NAMA_TERAPI') }}</span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -95,7 +98,7 @@
 
 <!-- Edit Data -->
 @foreach ($jenis as $fisio)
-<div class="modal fade" id="modal-edit-tranksasi18{{$fisio['ID_JENIS_FISIO']}}">
+<div class="modal fade" id="modal-edit-tranksasi18{{$fisio->ID_JENIS_FISIO}}">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -104,7 +107,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('jenisFisio.update',$fisio['ID_JENIS_FISIO'])}}" method="POST">
+            <form action="{{ route('jenisFisio.update',$fisio->ID_JENIS_FISIO)}}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">
@@ -112,7 +115,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Nama Terapi </label>
-                                <input type="text" name="NAMA_TERAPI" class="form-control" value="{{ $fisio['NAMA_TERAPI'] }}">
+                                <input type="text" name="NAMA_TERAPI" class="form-control" value="{{ $fisio->NAMA_TERAPI }}">
                             </div>
                         </div>
                     </div>

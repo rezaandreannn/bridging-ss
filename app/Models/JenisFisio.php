@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class JenisFisio extends Model
 {
@@ -25,9 +26,9 @@ class JenisFisio extends Model
     // Data Jenis Fisio
     public function getDataJenisFisio()
     {
-        $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/master/jenisFisio');
-        $response = $request->getBody()->getContents();
-        $data = json_decode($response, true);
-        return $data['data'];
+        $data = DB::connection('pku')
+            ->table('TAC_COM_FISIOTERAPI_MASTER')
+            ->get()->toArray();
+        return $data;
     }
 }
