@@ -64,7 +64,7 @@ class AssesmenController extends Controller
         $masalah_perawatan = $this->rajal->masalah_perawatan();
         $rencana_perawatan = $this->rajal->rencana_perawatan();
         $biodata = $this->rajal->pasien_bynoreg($noReg);
-      
+
 
         return view($this->view . 'add', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'biodata', 'noReg'));
     }
@@ -184,13 +184,14 @@ class AssesmenController extends Controller
         //     'FS_STATUS_PSIK2' => 'required',
         // ]);
 
-  
+
         try {
 
             $userEmr = $this->rajal->getUserEmr(auth()->user()->username);
 
 
-            DB::beginTransaction();
+            DB::connection('pku')->beginTransaction();
+
             $status_rj = DB::connection('pku')->table('TAC_RJ_STATUS')->insert([
 
                 'FS_KD_REG' => $request->input('FS_KD_REG'),
@@ -321,17 +322,17 @@ class AssesmenController extends Controller
                     ]);
                 }
             }
-            DB::commit();
+            DB::connection('pku')->commit();
             // dd($users->roles[0]->name);
             // die;
-    
+
             $biodata = $this->rajal->pasien_bynoreg($request->input('FS_KD_REG'));
-           
+
             $kode_dokter = $biodata->Kode_Dokter;
-      
+
 
             if ($kode_dokter == '151') {
-      
+
                 $cek_ttd_pasien =  DB::connection('pku')->table('TTD_PASIEN_MASTER')->where('NO_MR_PASIEN', $request->input('NO_MR'))->count();
 
 
@@ -350,7 +351,7 @@ class AssesmenController extends Controller
             }
         } catch (\Exception $e) {
             //throw $th;
-            DB::rollBack();
+            DB::connection('pku')->rollBack();
             return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
         }
     }
@@ -387,21 +388,21 @@ class AssesmenController extends Controller
 
         // dd($masalah_perGet);
         $selected = false;
-        foreach($masalah_perawatan as $mp){
+        foreach ($masalah_perawatan as $mp) {
             foreach ($masalah_perGet as  $value) {
                 if ($mp->FS_KD_DAFTAR_DIAGNOSA == $value->FS_KD_MASALAH_KEP) {
-                   $selected = true;
-                   break;
-                }      
+                    $selected = true;
+                    break;
+                }
             }
         }
 
-      
+
 
 
         // die;
 
-        return view($this->view . 'edit', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'biodata', 'asasmen_perawat', 'riwayat', 'masalah_perGet', 'rencana_perGet','noReg'));
+        return view($this->view . 'edit', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'biodata', 'asasmen_perawat', 'riwayat', 'masalah_perGet', 'rencana_perGet', 'noReg'));
     }
 
     /**

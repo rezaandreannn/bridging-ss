@@ -91,15 +91,18 @@ class Fisioterapi extends Model
 
     public function getPasienRehabMedis()
     {
+        $dbpku = DB::connection('pku')->getDatabaseName();
         $date = date('Y-m-d');
         $data = DB::connection('db_rsmm')
             ->table('ANTRIAN as A')
             ->join('PENDAFTARAN as P', 'A.No_MR', '=', 'P.No_MR')
-            ->join('REGISTER_PASIEN as RP', 'P.No_MR', '=', 'RP.No_MR')->select(
+            ->join('REGISTER_PASIEN as RP', 'P.No_MR', '=', 'RP.No_MR')
+            ->leftJoin($dbpku . '.dbo.TAC_RJ_STATUS as st', 'P.NO_REG', '=', 'st.FS_KD_REG')->select(
                 'A.Nomor',
                 'RP.No_MR',
                 'RP.Nama_Pasien',
                 'RP.Alamat',
+                'st.FS_STATUS'
 
             )
             ->where('A.Tanggal', $date)

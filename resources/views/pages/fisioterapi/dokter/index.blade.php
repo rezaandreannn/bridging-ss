@@ -67,14 +67,23 @@
                             </thead>
                             <tbody>
                                 @foreach ($listpasien as $pasien)
-                                    <tr>
-                                        <td>{{ $pasien->Nomor }}</td>
-                                        <td>{{ $pasien->No_MR }}</td>
-                                        <td>{{ $pasien->Nama_Pasien }}</td>
-                                        <td>{{ $pasien->Alamat }}</td>
-                                        <td><div class="badge badge-warning text-white">Perawat</div></td>
-                                        <td width="15%">    <a href="{{ route('add.dokter', $pasien->No_MR)}}" class="btn btn-sm btn-primary"><i class="fas fa-notes-medical"></i> Entry</a></td>
-                                    </tr>
+                                <tr>
+                                    <td>{{ $pasien->Nomor }}</td>
+                                    <td>{{ $pasien->No_MR }}</td>
+                                    <td>{{ $pasien->Nama_Pasien }}</td>
+                                    <td>{{ $pasien->Alamat }}</td>
+                                    <td>
+                                        @if($pasien->FS_STATUS == '')
+                                        <div class="badge badge-warning text-white">Perawat</div>
+                                        @elseif($pasien->FS_STATUS == '1')
+                                        <div class="badge badge-danger">Dokter</div>
+                                        @elseif($pasien->FS_STATUS == '2')
+                                        <div class="badge badge-success">Selesai</div>
+
+                                        @endif
+                                    </td>
+                                    <td width="15%"> <a href="{{ route('add.dokter', $pasien->No_MR)}}" class="btn btn-sm btn-primary"><i class="fas fa-notes-medical"></i> Entry</a></td>
+                                </tr>
                                 @endforeach
                             </tbody>
                         </table>

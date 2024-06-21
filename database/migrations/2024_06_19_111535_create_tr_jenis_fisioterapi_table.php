@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tr_jenis_fisioterapi');
+        Schema::connection('pku')->dropIfExists('tr_jenis_fisioterapi');
     }
 };
