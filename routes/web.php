@@ -119,9 +119,9 @@ Route::middleware('auth')->group(function () {
 
         // PASIEN
         Route::get('/antrean', [AntreanController::class, 'index'])->name('antrean.index');
-        Route::get('/antrean/{kodeDokter}', [AntreanController::class, 'getByKodeDokter']);
         Route::get('/antrean/create', [AntreanController::class, 'create'])->name('antrean.create');
         Route::post('/antrean', [AntreanController::class, 'store'])->name('antrean.store');
+        Route::get('/antrean/{no_mr}', [AntreanController::class, 'show'])->name('antrean.show');
     });
 
 

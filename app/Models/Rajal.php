@@ -171,15 +171,15 @@ class Rajal extends Model
     public function masalah_perawatan()
     {
         $data = DB::connection('pku')->table('TAC_COM_DAFTAR_DIAG')->get();
-    return $data;
+        return $data;
     }
 
     public function rencana_perawatan()
     {
         $data = DB::connection('pku')->table('TAC_COM_PARAM_REN_KEP')->get();
 
- 
-    return $data;
+
+        return $data;
     }
 
     // Get Data Pasien Rawat Jalan
@@ -187,7 +187,7 @@ class Rajal extends Model
     {
 
         $pku = DB::connection('pku')->getDatabaseName();
-      
+
         $data = DB::connection('db_rsmm')
             ->table('REGISTER_PASIEN as a')
             ->leftJoin('PENDAFTARAN as b', 'a.No_MR', '=', 'b.No_MR')
@@ -217,25 +217,64 @@ class Rajal extends Model
             ->where('b.NO_REG', $noReg)
             ->first();
         return $data;
-
     }
 
     //  View Profil Resume Medis Pasien
+    // public function resumeMedisPasienByMR($noMR)
+    // {
+    //     $request = $this->httpClient->get($this->simrsUrlApi . 'berkas/resumeRawatJalan/' . $noMR);
+    //     $response = $request->getBody()->getContents();
+    //     $data = json_decode($response, true);
+    //     return $data['data'];
+    // }
+
+    // Data Cetak Resume Berkas Pasien
     public function resumeMedisPasienByMR($noMR)
     {
-        $request = $this->httpClient->get($this->simrsUrlApi . 'berkas/resumeRawatJalan/' . $noMR);
-        $response = $request->getBody()->getContents();
-        $data = json_decode($response, true);
-        return $data['data'];
-    }
-
-    // Cetak Profil Resume Medis Pasien
-    public function profilMR($noMR)
-    {
-        $request = $this->httpClient->get($this->simrsUrlApi . 'pasien/biodatabymr/' . $noMR);
-        $response = $request->getBody()->getContents();
-        $data = json_decode($response, true);
-        return $data['data'];
+        $dbpku = DB::connection('pku')->getDatabaseName();
+        $data = DB::connection('db_rsmm')
+            ->table('PENDAFTARAN as a')
+            ->Join('REGISTER_PASIEN as rp', 'a.No_MR', '=', 'rp.No_MR')
+            ->Join('DOKTER as c', 'a.KODE_DOKTER', '=', 'c.KODE_DOKTER')
+            ->leftJoin($dbpku . '.dbo.TAC_RJ_MEDIS as st', 'a.NO_REG', '=', 'st.FS_KD_REG')
+            ->leftJoin($dbpku . '.dbo.TAC_RJ_VITAL_SIGN as m', 'a.NO_REG', '=', 'm.FS_KD_REG')
+            ->select(
+                'a.TANGGAL',
+                'a.STATUS',
+                'a.NO_REG',
+                'rp.NAMA_PASIEN',
+                'rp.ALAMAT',
+                'rp.NO_MR',
+                'rp.KOTA',
+                'rp.PROVINSI',
+                'rp.GOL_DARAH',
+                'rp.STATUS_NIKAH',
+                'rp.NAMA_PASANGAN',
+                'rp.TGL_LAHIR',
+                'rp.JENIS_KELAMIN',
+                'rp.WARGA_NEGARA',
+                'rp.PEKERJAAN',
+                'rp.AGAMA',
+                'rp.NO_TELP',
+                'rp.HP1',
+                'rp.HP2',
+                'rp.KODE_POS',
+                'rp.EMAIL',
+                'rp.NAMA_HUB',
+                'rp.NO_IDENTITAS',
+                'rp.HUB_PASIEN',
+                'rp.TELP_RUMAH',
+                'rp.FS_ALERGI',
+                'c.NAMA_DOKTER',
+                'c.SPESIALIS',
+                'st.*',
+                'm.*',
+            )
+            ->where('a.NO_MR', $noMR)
+            ->orderBy('a.TANGGAL', 'DESC')
+            ->limit('10')
+            ->get()->toArray();
+        return $data;
     }
 
     // Edit Data Rawat Jalan

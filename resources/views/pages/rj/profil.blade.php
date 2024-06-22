@@ -62,15 +62,15 @@
         <table width="100%" style="border: none">
             <tr>
                 <td width="100" class="text1">Nama</td>
-                <td width="100" class="text1">: {{ $pasien['NAMA_PASIEN'] ?? ''}}</td>
+                <td width="100" class="text1">: {{ $pasien->NAMA_PASIEN}}</td>
                 <td width="100" class="text1">No MR</td>
-                <td width="100" class="text1">: {{ $pasien['NO_MR'] ?? ''}}</td>
+                <td width="100" class="text1">: {{ $pasien->NO_MR}}</td>
             </tr>
             <tr>
                 <td width="100" class="text1">Tanggal Lahir</td>
-                <td width="100" class="text1">: {{ $pasien['TGL_LAHIR'] ?? ''}}</td>
+                <td width="100" class="text1">: {{ $pasien->TGL_LAHIR}}</td>
                 <td width="100" class="text1">Alamat</td>
-                <td width="100" class="text1">: {{ $pasien['ALAMAT'] ?? ''}}</td>
+                <td width="100" class="text1">: {{ $pasien->ALAMAT}}</td>
             </tr>
             <tr>
                 <td colspan="4" style="border: none">
@@ -93,14 +93,14 @@
             </tr>
             @foreach ($data as $item)
             <tr>
-                <td>{{ date('d-m-Y', strtotime($item['TANGGAL'])) }}</td>
-                <td>{{ $item['NAMA_DOKTER'] }}({{ $item['SPESIALIS'] }})</td>
-                <td>TD: {{ str_replace("-", "", $item['FS_TD']) }} mmHg
-                    keluhan: {{ str_replace("-", "", $item['FS_ANAMNESA']) }}</td>
-                <td>{{ $item['FS_DIAGNOSA'] }}</td>
-                <td>{{ $item['HASIL_ECHO'] }}</td>
-                <td>{{ $item['FS_PLANNING'] }}</td>
-                <td>{{ $item['FS_TERAPI'] }}</td>
+                <td>{{ date('d-m-Y', strtotime($item->TANGGAL)) }}</td>
+                <td>{{ $item->NAMA_DOKTER }}({{ $item->SPESIALIS }})</td>
+                <td>TD: {{ str_replace("-", "", $item->FS_TD) }} mmHg
+                    keluhan: {{ str_replace("-", "", $item->FS_ANAMNESA) }}</td>
+                <td>{{ $item->FS_DIAGNOSA }}</td>
+                <td>{{ $item->HASIL_ECHO }}</td>
+                <td>{{ $item->FS_PLANNING }}</td>
+                <td>{{ $item->FS_TERAPI }}</td>
             </tr>
             @endforeach
         </table>

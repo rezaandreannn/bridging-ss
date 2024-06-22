@@ -99,7 +99,8 @@
                                     </td>
                                     <td>{{ $item->created_by }}</td>
                                     <td width="15%">
-                                        <button class="btn btn-warning" disabled><i class="fas fa-info-circle"></i></button>
+                                        {{-- <button class="btn btn-warning" disabled><i class="fas fa-info-circle"></i></button> --}}
+                                        <a href="{{ route('antrean.show', $item->no_mr)}}" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                                         <button class="btn btn-primary" disabled>sync</button>
                                         <!-- <a href="javascript: void(0)" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
                                     <a href="javascript: void(0)" class="btn btn-primary">sync</a> -->

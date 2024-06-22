@@ -28,7 +28,7 @@
                         <div class="card-body">
                             <div class="author-box-name">
                                 <a href="#">
-                                    <h6 class="mt-1">{{ $pasien['NAMA_PASIEN'] ?? ''}} - ({{ $pasien['NO_MR'] ?? ''}})</h6>
+                                    <h6 class="mt-1">{{ $pasien->NAMA_PASIEN}} - ({{ $pasien->NO_MR}})</h6>
                                 </a>
                             </div>
                             <div class="author-box-job">
@@ -41,25 +41,25 @@
                                         <li class="media">
                                             <div class="media-title">No Registrasi :</div>
                                             <div class="media-body">
-                                                <div class="media-title ml-3 mb-1"> {{ $pasien['No_Reg'] ?? ''}}</div>
+                                                <div class="media-title ml-3 mb-1"> {{ $pasien->No_Reg}}</div>
                                             </div>
                                         </li>
                                         <li class="media">
                                             <div class="media-title">Jenis Kelamin :</div>
                                             <div class="media-body">
-                                                <div class="media-title ml-3 mb-1"> {{ $pasien['JENIS_KELAMIN'] ?? ''}}</div>
+                                                <div class="media-title ml-3 mb-1"> {{ $pasien->JENIS_KELAMIN}}</div>
                                             </div>
                                         </li>
                                         <li class="media">
                                             <div class="media-title mb-0">Tanggal Lahir :</div>
                                             <div class="media-body">
-                                                <div class="media-title ml-3 mb-1"> {{ date('d-m-Y', strtotime($pasien['TGL_LAHIR'])) }}</div>
+                                                <div class="media-title ml-3 mb-1"> {{ date('d-m-Y', strtotime($pasien->TGL_LAHIR)) }}</div>
                                             </div>
                                         </li>
                                         <li class="media">
                                             <div class="media-title mb-0">Alamat :</div>
                                             <div class="media-body">
-                                                <div class="media-title ml-3 mb-1"> {{ $pasien['ALAMAT'] ?? ''}}</div>
+                                                <div class="media-title ml-3 mb-1"> {{ $pasien->ALAMAT}}</div>
                                             </div>
                                         </li>
                                     </ul>
@@ -69,7 +69,7 @@
                     </div>
                 </div>
             </div>
-            <a href="{{ route('rj.cetak', $pasien['NO_MR'] )}}" class="btn btn-sm btn-primary mb-2"><i class="fas fa-download"></i> Download</a>
+            <a href="{{ route('rj.cetak', $pasien->NO_MR )}}" class="btn btn-sm btn-primary mb-2"><i class="fas fa-download"></i> Download</a>
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
@@ -88,15 +88,15 @@
                             <tbody>
                                 @foreach ($data as $item)
                                 <tr>
-                                    <td width="15%">{{ date('d-m-Y', strtotime($item['TANGGAL'])) }}</td>
-                                    <td width="20%">{{ $item['NAMA_DOKTER'] }}({{ $item['SPESIALIS'] }})
+                                    <td width="15%">{{ date('d-m-Y', strtotime($item->TANGGAL)) }}</td>
+                                    <td width="20%">{{ $item->NAMA_DOKTER }}({{ $item->SPESIALIS }})
                                     </td>
-                                    <td width="25%">TD: {{ str_replace("-", "", $item['FS_TD']) }} mmHg
-                                        keluhan: {{ str_replace("-", "", $item['FS_ANAMNESA']) }}</td>
-                                    <td>{{ $item['FS_DIAGNOSA'] }}</td>
-                                    <td>{{ $item['HASIL_ECHO'] }}</td>
-                                    <td>{{ $item['FS_PLANNING'] }}</td>
-                                    <td width="40%">{{ $item['FS_TERAPI'] }}</td>
+                                    <td width="25%">TD: {{ str_replace("-", "", $item->FS_TD) }} mmHg
+                                        keluhan: {{ str_replace("-", "", $item->FS_ANAMNESA) }}</td>
+                                    <td>{{ $item->FS_DIAGNOSA }}</td>
+                                    <td>{{ $item->HASIL_ECHO }}</td>
+                                    <td>{{ $item->FS_PLANNING }}</td>
+                                    <td width="40%">{{ $item->FS_TERAPI }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>

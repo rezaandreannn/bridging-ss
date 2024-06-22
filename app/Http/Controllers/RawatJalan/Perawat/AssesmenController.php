@@ -4,6 +4,7 @@ namespace App\Http\Controllers\RawatJalan\Perawat;
 
 use App\Models\User;
 use App\Models\Rajal;
+use App\Models\Pasien;
 use GuzzleHttp\Client;
 use App\Models\Antrean;
 use Illuminate\Http\Request;
@@ -18,6 +19,7 @@ class AssesmenController extends Controller
     protected $routeIndex;
     protected $prefix;
     protected $antrean;
+    protected $pasien;
     protected $httpClient;
     protected $simrsUrlApi;
 
@@ -28,6 +30,7 @@ class AssesmenController extends Controller
         $this->routeIndex = 'rj.index';
         $this->prefix = 'Rawat Jalan';
         $this->antrean = new Antrean();
+        $this->pasien = new Pasien();
 
         $this->httpClient = new Client([
             'headers' => [
@@ -74,7 +77,7 @@ class AssesmenController extends Controller
     {
         $title = $this->prefix . ' ' . 'Resume Pasien';
         $data = $this->rajal->resumeMedisPasienByMR($noMR);
-        $pasien = $this->rajal->profilMR($noMR);
+        $pasien = $this->pasien->biodataPasienByMr($noMR);
         return view($this->view . 'resume', compact('title', 'data', 'pasien'));
     }
 
@@ -82,7 +85,7 @@ class AssesmenController extends Controller
     public function profilPDF($noMR)
     {
         $data = $this->rajal->resumeMedisPasienByMR($noMR);
-        $pasien = $this->rajal->profilMR($noMR);
+        $pasien = $this->pasien->biodataPasienByMr($noMR);
 
         $date = date('dMY');
         $filename = 'resumeMedis-' . $date . '-' . $noMR;
