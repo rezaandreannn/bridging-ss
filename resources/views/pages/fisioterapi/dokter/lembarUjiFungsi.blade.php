@@ -33,34 +33,40 @@
                     <!-- components biodata pasien by no mr -->
                     <div class="card card-primary">
                         <div class="card-body">
-                            <form action="#" method="POST">
+                            <form action="{{ route('asesmenStore.ujiFungsi') }}" method="POST">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
+                                            <label>Diagnosis Fungsional / Diagnosis Klinis : <code>*</code></label>
+                                            <textarea class="form-control" rows="3" name="diagnosis_fungsional" value="" placeholder="Masukan ..."></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
                                             <label>Instrumen Uji Fungsi / Prosedur KFR : <code>*</code></label>
-                                            <textarea class="form-control" rows="3" name="PROSEDUR_KFR" value="" placeholder="Masukan ..."></textarea>
+                                            <textarea class="form-control" rows="3" name="prosedur_kfr" value="" placeholder="Masukan ..."></textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Hasil yang didapat : </label>
-                                            <textarea class="form-control" rows="3" name="HASIL_DAPAT" value="" placeholder="Masukan ..."></textarea>
+                                            <textarea class="form-control" rows="3" name="hasil_pemeriksaan" value="" placeholder="Masukan ..."></textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Kesimpulan : </label>
-                                            <textarea class="form-control" rows="3" name="KESIMPULAN" value="" placeholder="Masukan ..."></textarea>
+                                            <textarea class="form-control" rows="3" name="kesimpulan" value="" placeholder="Masukan ..."></textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Rekomendasi : </label>
-                                            <textarea class="form-control" rows="3" name="REKOMENDASI" value="" placeholder="Masukan ..."></textarea>
+                                            <textarea class="form-control" rows="3" name="rekomendasi" value="" placeholder="Masukan ..."></textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-9">
+                                    {{-- <div class="col-md-9">
 
                                     </div>
                                     <div class="col-md-3">
@@ -77,13 +83,14 @@
                                     </div>
                                     <div class="col-md-3">
                                         (Nama Dokter Pemeriksa)
-                                    </div>
+                                    </div> --}}
                                 </div>
                         </div>
                         <div class="card-body">
                             <div class="text-left">
-                                <!-- <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button> -->
-                                <a href="{{ route('diagnosa.dokter') }}" class="btn btn-primary mb-2"><i class="fas fa-save"></i> Simpan</a>
+                                <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button>
+                                
+                                {{-- <a href="{{ route('diagnosa.dokter') }}" class="btn btn-primary mb-2"><i class="fas fa-save"></i> Simpan</a> --}}
                             </div>
                         </div>
                         </form>
