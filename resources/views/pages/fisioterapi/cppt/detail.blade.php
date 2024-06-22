@@ -71,6 +71,14 @@
                                             <textarea class="form-control" rows="2" name="ANAMNESA" value="" placeholder="Masukan ..."></textarea>
                                         </div>
                                     </div>
+                                    @if ((auth()->user()->roles->pluck('name')[0])=='dokter fisioterapi')
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Diagnosa <code>*</code></label>
+                                            <textarea class="form-control" rows="2" name="DIAGNOSA" value="" placeholder="Masukan ..."></textarea>
+                                        </div>
+                                    </div>
+                                    @endif
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tekanan Darah</label>

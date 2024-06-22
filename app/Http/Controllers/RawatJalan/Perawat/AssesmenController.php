@@ -51,8 +51,9 @@ class AssesmenController extends Controller
 
 
         $data = $this->antrean->getDataPasienRajal($kode_dokter);
-        // dd($data);
-        // die;
+
+        // menampilkan role user yang login
+        // $user = auth()->user()->roles->pluck('name')[0]; 
 
         // dd($users->roles[0]->name);
         // die;

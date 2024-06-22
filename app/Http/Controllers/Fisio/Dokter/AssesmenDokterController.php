@@ -89,36 +89,36 @@ class AssesmenDokterController extends Controller
 
         $jenisterapifisio = DB::connection('pku')->table('TAC_COM_FISIOTERAPI_MASTER')->get();
         $biodatas = $this->pasien->biodataPasienByMr($NoMr);
-        
+
         // dd($biodatas);
         // die;
         $title = $this->prefix . ' ' . 'Assesmen Dokter';
         return view($this->view . 'dokter.createAsesmen', compact('title', 'biodatas', 'jenisterapifisio', 'kode_transaksi_fisio'));
     }
-    
-    public function createUjiFungsi($NoMr){
-        $biodatas = $this->pasien->biodataPasienByMr($NoMr);
-        
-        $title = $this->prefix .' '. 'Lembar Uji Fungsi';
-        return view($this->view . 'dokter.lembarUjiFungsi', compact('title', 'biodatas'));
 
+    public function createUjiFungsi($NoMr)
+    {
+        $biodatas = $this->pasien->biodataPasienByMr($NoMr);
+
+        $title = $this->prefix . ' ' . 'Lembar Uji Fungsi';
+        return view($this->view . 'dokter.lembarUjiFungsi', compact('title', 'biodatas'));
     }
 
-    public function storeUjiFungsi(Request $request){
+    public function storeUjiFungsi(Request $request)
+    {
 
         $lembarUjiFungsi = DB::connection('pku')->table('lembar_uji_fungsi_fisioterapi')->insert([
-            'diagnosis_fungsional'=>$request->input('diagnosis_fungsional'),
-            'prosedur_kfr'=>$request->input('prosedur_kfr'),
-            'hasil_pemeriksaan'=>$request->input('hasil_pemeriksaan'),
-            'kesimpulan'=>$request->input('kesimpulan'),
-            'rekomendasi'=>$request->input('rekomendasi'),
-            'create_by'=> auth()->user()->username,
-            'created_at'=> date('Y-m-d H:i:s'),
-            'updated_at'=> date('Y-m-d H:i:s')
+            'diagnosis_fungsional' => $request->input('diagnosis_fungsional'),
+            'prosedur_kfr' => $request->input('prosedur_kfr'),
+            'hasil_pemeriksaan' => $request->input('hasil_pemeriksaan'),
+            'kesimpulan' => $request->input('kesimpulan'),
+            'rekomendasi' => $request->input('rekomendasi'),
+            'create_by' => auth()->user()->username,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s')
         ]);
 
         var_dump('ok');
-
     }
 
     /**
@@ -130,7 +130,6 @@ class AssesmenDokterController extends Controller
     public function store(Request $request)
     {
 
-        
 
         $validatedData = $request->validate([
             'anamnesa' => 'required',
@@ -189,8 +188,6 @@ class AssesmenDokterController extends Controller
             DB::connection('pku')->commit();
 
             return redirect()->route('add.ujifungsi', ['NoMr' => $request->input('NO_MR')]);
-
-          
         } catch (\Exception $e) {
             // Rollback transaksi jika terjadi kesalahan
             DB::connection('pku')->rollback();

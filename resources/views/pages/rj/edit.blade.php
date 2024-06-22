@@ -34,7 +34,7 @@
             <a href="" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-primary mb-2"><i class="fas fa-download"></i>Profil Ringkas Medis Rawat Jalan</a>
             <button class="btn btn-sm btn-primary mb-2" data-toggle="modal" data-target="#modal-histori"><i class="fas fa-history"></i> History</button>
             <!-- form -->
-   
+
             <form action="{{ route('rj.update', $asasmen_perawat->FS_KD_REG) }}" method="POST">
                 @csrf
                 @method('put')
@@ -47,7 +47,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                <input type="hidden" name="FS_KD_REG" value="{{ $noReg }}" />
+                                    <input type="hidden" name="FS_KD_REG" value="{{ $noReg }}" />
                                     <input type="hidden" name="KODE_DOKTER" value="{{ $biodata->Kode_Dokter}}" />
                                     <input type="hidden" name="NO_MR" value="{{ $biodata->NO_MR}}" />
                                     <label>Anamnesa / Allow Anamnesa <code>*</code></label>
@@ -387,7 +387,7 @@
                                         <option value="1" {{ ($asasmen_perawat->FS_PENGELIHATAN=='1') ? 'selected' : ''}}>Normal</option>
                                         <option value="2" {{ ($asasmen_perawat->FS_PENGELIHATAN=='2') ? 'selected' : ''}}>Kabur</option>
                                         <option value="3" {{ ($asasmen_perawat->FS_PENGELIHATAN=='3') ? 'selected' : ''}}>Kaca Mata</option>
-                                        <option value="4"  {{ ($asasmen_perawat->FS_PENGELIHATAN=='4') ? 'selected' : ''}}>Lensa Kontak</option>
+                                        <option value="4" {{ ($asasmen_perawat->FS_PENGELIHATAN=='4') ? 'selected' : ''}}>Lensa Kontak</option>
                                     </select>
                                 </div>
                             </div>
@@ -493,7 +493,7 @@
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="FS_NILAI_KHUSUS" id="exampleRadios2" value="1"{{ ($asasmen_perawat->FS_NILAI_KHUSUS=='1') ? 'checked' : ''}} onclick='document.getElementById("civstaton4").disabled = true'>
+                                        <input class="form-check-input" type="radio" name="FS_NILAI_KHUSUS" id="exampleRadios2" value="1" {{ ($asasmen_perawat->FS_NILAI_KHUSUS=='1') ? 'checked' : ''}} onclick='document.getElementById("civstaton4").disabled = true'>
                                         <label class="form-check-label" for="exampleRadios2">
                                             Tidak
                                         </label>
@@ -515,35 +515,35 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Masalah Keperawatan</label>
-                                    <select name="tujuan[]" id="masalah_perawatan" class="form-control select2" multiple="multiple" data-placeholder="Pilih Masalah Keperawatan"  style="width: 100%;">
-                              
+                                    <select name="tujuan[]" id="masalah_perawatan" class="form-control select2" multiple="multiple" data-placeholder="Pilih Masalah Keperawatan" style="width: 100%;">
+
                                         <option value="">-- pilih --</option>
-                 
-                                    
-                                                                            
+
+
+
                                         @forelse ($masalah_perGet as $mp)
                                         @foreach ($masalah_perawatan as $mk)
                                         <option value="{{ $mk->FS_KD_DAFTAR_DIAGNOSA }}" {{ $mk->FS_KD_DAFTAR_DIAGNOSA == $mp->FS_KD_MASALAH_KEP ? "selected" : "" }}>{{ $mk->FS_NM_DIAGNOSA }}</option>
                                         @endforeach
                                         @empty
                                         @foreach ($masalah_perawatan as $mk)
-                                        <option value="{{ $mk->FS_KD_DAFTAR_DIAGNOSA }}" >{{ $mk->FS_NM_DIAGNOSA }}</option>
+                                        <option value="{{ $mk->FS_KD_DAFTAR_DIAGNOSA }}">{{ $mk->FS_NM_DIAGNOSA }}</option>
                                         @endforeach
                                         @endforelse
 
                                     </select>
                                 </div>
                             </div>
-                      
-                           
+
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Rencana Keperawatan</label>
-                                    <select multiple name="tembusan[]" id="rencana_perawatan" class="form-control select2" multiple="multiple" data-placeholder="Pilih Rencana Keperawatan"  style="width: 100%;">
+                                    <select multiple name="tembusan[]" id="rencana_perawatan" class="form-control select2" multiple="multiple" data-placeholder="Pilih Rencana Keperawatan" style="width: 100%;">
                                         <option value="">-- pilih --</option>
-                                    
-                                        
-                                       
+
+
+
                                         @forelse ($rencana_perGet as $rpp)
                                         @foreach ($rencana_perawatan as $rp)
                                         <option value="{{ $rp->FS_KD_TRS }}" {{ $rp->FS_KD_TRS == $rpp->FS_KD_REN_KEP ? 'selected' : ''}}>{{ $rp->FS_NM_REN_KEP }}</option>
@@ -553,9 +553,9 @@
                                         <option value="{{ $rp->FS_KD_TRS }}">{{ $rp->FS_NM_REN_KEP }}</option>
                                         @endforeach
                                         @endforelse
-                                  
-                                      
-                                     
+
+
+
                                     </select>
                                 </div>
                             </div>

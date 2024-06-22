@@ -144,12 +144,39 @@ class Rajal extends Model
         return $data;
     }
 
+    // // Button Cek Laboratori
+    // public function cek_lab($noReg)
+    // {
+    //     $request = Http::get($this->simrsUrlApi . '/berkas/cekLaboratorium/' . $noReg);
+    //     $code = $request->status();
+    //     if ($code == 200) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
+
+    // // Button Cek Radiologi
+    // public function cek_rad($noReg)
+    // {
+    //     $request = Http::get($this->simrsUrlApi . '/berkas/cekRadiologi/' . $noReg);
+    //     $code = $request->status();
+    //     if ($code == 200) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
+
     // Button Cek Laboratori
     public function cek_lab($noReg)
     {
-        $request = Http::get($this->simrsUrlApi . '/berkas/cekLaboratorium/' . $noReg);
-        $code = $request->status();
-        if ($code == 200) {
+        $data = DB::connection('pku')->table('TA_TRS_KARTU_PERIKSA4')
+            ->select('FS_KD_REG2')
+            ->where('FS_KD_REG2', $noReg)
+            ->first();
+
+        if ($data != null) {
             return true;
         } else {
             return false;
@@ -159,9 +186,11 @@ class Rajal extends Model
     // Button Cek Radiologi
     public function cek_rad($noReg)
     {
-        $request = Http::get($this->simrsUrlApi . '/berkas/cekRadiologi/' . $noReg);
-        $code = $request->status();
-        if ($code == 200) {
+        $data = DB::connection('pku')->table('TA_TRS_KARTU_PERIKSA5')
+            ->select('FS_KD_REG2')
+            ->where('FS_KD_REG2', $noReg)
+            ->first();
+        if ($data == 200) {
             return true;
         } else {
             return false;
