@@ -91,7 +91,7 @@
             @endcan
 
             @can('fisioterapi')
-            <li class="nav-item dropdown {{ Request::is('fisioterapi*') ? 'active' : '' }}">
+            <li class="nav-item dropdown {{ Request::is('fisioterapi/perawat*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Fisioterapi</span></a>
                 <!-- <ul class="dropdown-menu">
                     <li class="{{ Request::is('fisioterapi/asesmen_pasien') ? 'active' : '' }}">
@@ -99,7 +99,7 @@
                     </li>
                 </ul> -->
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('fisioterapi*') ? 'active' : '' }}">
+                    <li class="{{ Request::is('fisioterapi/perawat/*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('list-pasien.index') }}">CPPT Fisioterapi</a>
                     </li>
                 </ul>

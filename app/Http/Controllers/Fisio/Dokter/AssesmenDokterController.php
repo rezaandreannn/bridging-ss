@@ -124,23 +124,73 @@ class AssesmenDokterController extends Controller
         return view($this->view . 'dokter.lembarUjiFungsi', compact('title', 'biodatas', 'asesmenDokterGet'));
     }
 
+    public function editUjiFungsi($NoMr)
+    {
+        $biodatas = $this->pasien->biodataPasienByMr($NoMr);
+        $lembarUjiFungsiGet = DB::connection('pku')->table('fis_lembar_uji_fungsi')->where('no_registrasi', $biodatas->No_Reg)->first();
+        // dd($lembarUjiFungsiGet);
+
+        $title = $this->prefix . ' ' . 'Lembar Uji Fungsi';
+        return view($this->view . 'dokter.editLembarUjiFungsi', compact('title', 'biodatas', 'lembarUjiFungsiGet'));
+    }
+
     public function storeUjiFungsi(Request $request)
     {
+        try {
+            DB::connection('pku')->beginTransaction();
 
-        $lembarUjiFungsi = DB::connection('pku')->table('fis_lembar_uji_fungsi')->insert([
-            'no_registrasi' => $request->input('no_registrasi'),
-            'kode_transaksi_fisio' => $request->input('kode_transaksi_fisio'),
-            'diagnosis_fungsional' => $request->input('diagnosis_fungsional'),
-            'prosedur_kfr' => $request->input('prosedur_kfr'),
-            'hasil_pemeriksaan' => $request->input('hasil_pemeriksaan'),
-            'kesimpulan' => $request->input('kesimpulan'),
-            'rekomendasi' => $request->input('rekomendasi'),
-            'create_by' => auth()->user()->username,
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
-        ]);
+            $lembarUjiFungsi = DB::connection('pku')->table('fis_lembar_uji_fungsi')->insert([
+                'no_registrasi' => $request->input('no_registrasi'),
+                'kode_transaksi_fisio' => $request->input('kode_transaksi_fisio'),
+                'diagnosis_fungsional' => $request->input('diagnosis_fungsional'),
+                'prosedur_kfr' => $request->input('prosedur_kfr'),
+                'hasil_pemeriksaan' => $request->input('hasil_pemeriksaan'),
+                'kesimpulan' => $request->input('kesimpulan'),
+                'rekomendasi' => $request->input('rekomendasi'),
+                'create_by' => auth()->user()->username,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
 
-        var_dump('ok');
+
+            DB::connection('pku')->commit();
+
+            return redirect('fisioterapi/perawat/transaksi_fisio?no_mr=' . $request->input('no_mr'))->with('success', 'Lembar Uji Fungsi Berhasil Ditambahkan!');
+        } catch (\Exception $e) {
+            // Rollback transaksi jika terjadi kesalahan
+            DB::connection('pku')->rollback();
+
+            return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function updateUjiFungsi(Request $request)
+    {
+        try {
+            DB::connection('pku')->beginTransaction();
+
+            $lembarUjiFungsi = DB::connection('pku')->table('fis_lembar_uji_fungsi')->where('no_registrasi', $request->input('no_registrasi'))->update([
+                'no_registrasi' => $request->input('no_registrasi'),
+                'kode_transaksi_fisio' => $request->input('kode_transaksi_fisio'),
+                'diagnosis_fungsional' => $request->input('diagnosis_fungsional'),
+                'prosedur_kfr' => $request->input('prosedur_kfr'),
+                'hasil_pemeriksaan' => $request->input('hasil_pemeriksaan'),
+                'kesimpulan' => $request->input('kesimpulan'),
+                'rekomendasi' => $request->input('rekomendasi'),
+                'create_by' => auth()->user()->username,
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
+
+
+            DB::connection('pku')->commit();
+
+            return redirect()->route('list_pasiens.dokter')->with('success', 'Lembar Uji Fungsi Berhasil Diperbarui!');
+        } catch (\Exception $e) {
+            // Rollback transaksi jika terjadi kesalahan
+            DB::connection('pku')->rollback();
+
+            return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
+        }
     }
 
     /**

@@ -65,7 +65,7 @@
                                                     @enderror
                                                 </div>
                                                 <div class=" col-md-6">
-                                                    <input type="time" name="jam" class="form-control" value="{{$asesmenDokterGet->jam}}">
+                                                    <input type="time" name="jam" class="form-control" value="{{ date('H:i:s', strtotime($asesmenDokterGet->jam))}}">
                                                 </div>
                                             </div>
                                         </div>
