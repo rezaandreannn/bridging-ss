@@ -39,15 +39,16 @@
                     <div class="card card-primary">
 
                         <div class="card-body">
-                            <form action="{{ route('asesmenStore.dokter') }}" method="POST">
+                            <form action="{{ route('asesmenUpdate.dokter') }}" method="POST">
                                 @csrf
+                                @method('PUT')
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Kode Registrasi Pendaftaran </label>
                                             <input type="text" name="no_registrasi" class="form-control" value="{{$biodatas->No_Reg}}" readonly>
                                             <input type="hidden" name="NO_MR" class="form-control" value="{{$biodatas->NO_MR}}" readonly>
-                                            <input type="hidden" name="kode_transaksi_fisio" class="form-control" value="{{$kode_transaksi_fisio}}" readonly>
+                                            <input type="hidden" name="kode_transaksi_fisio" class="form-control" value="{{$asesmenDokterGet->kode_transaksi_fisio}}" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -56,7 +57,7 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <input type="date" name="tanggal" class="form-control @error('tanggal') is-invalid  
-                                                @enderror" value="{{ date('Y-m-d')}}">
+                                                @enderror" value="{{ $asesmenDokterGet->tanggal}}">
                                                     @error('tanggal')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -64,7 +65,7 @@
                                                     @enderror
                                                 </div>
                                                 <div class=" col-md-6">
-                                                    <input type="time" name="jam" class="form-control" value="{{date('H:i:s')}}">
+                                                    <input type="time" name="jam" class="form-control" value="{{$asesmenDokterGet->jam}}">
                                                 </div>
                                             </div>
                                         </div>
@@ -74,19 +75,19 @@
                                             <label>Cara Pasien Datang</label>
 
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="cara_datang" value="Sendiri" id="cara_datang1" @if(old('cara_datang','0')=='Sendiri' ) checked @endif>
+                                                <input class="form-check-input" type="radio" name="cara_datang" value="Sendiri" id="cara_datang1" @if($asesmenDokterGet->cara_datang=='Sendiri' ) checked @endif>
                                                 <label class="form-check-label" for="cara_datang1">
                                                     Sendiri
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="cara_datang" value="Diantar" id="cara_datang2" @if(old('cara_datang','0')=='Diantar' ) checked @endif>
+                                                <input class="form-check-input" type="radio" name="cara_datang" value="Diantar" id="cara_datang2" @if($asesmenDokterGet->cara_datang=='Diantar' ) checked @endif>
                                                 <label class="form-check-label" for="cara_datang2">
                                                     Diantar
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="cara_datang" value="Rujukan" id="cara_datang3" @if(old('cara_datang','0')=='Rujukan' ) checked @endif>
+                                                <input class="form-check-input" type="radio" name="cara_datang" value="Rujukan" id="cara_datang3" @if($asesmenDokterGet->cara_datang=='Rujukan' ) checked @endif>
                                                 <label class="form-check-label" for="cara_datang3">
                                                     Rujukan
                                                 </label>
@@ -97,7 +98,7 @@
                                         <div class="form-group">
                                             <label>Diantar Atau Rujukan Dari : <code>Di isi jika diantar/rujukan</code></label>
                                             <input type="text" name="deskripsi_cara_datang" class="form-control @error('deskripsi_cara_datang') is-invalid  
-                                                @enderror" value="{{ old('deskripsi_cara_datang')}}">
+                                                @enderror" value="{{ $asesmenDokterGet->deskripsi_cara_datang}}">
                                         </div>
                                         @error('deskripsi_cara_datang')
                                         <div class="invalid-feedback">
@@ -109,7 +110,7 @@
                                         <div class="form-group">
                                             <label>Anamnesa / Allow Anamnesa <code>*</code></label>
                                             <textarea name="anamnesa" class="form-control  @error('anamnesa') is-invalid  
-                                                @enderror" rows="3" placeholder="Masukan ...">@if($asesmen_perawat !=null ) {{ $asesmen_perawat->FS_ANAMNESA}}  @else {{ old('anamnesa')}} @endif</textarea>
+                                                @enderror" rows="3" placeholder="Masukan ...">{{$asesmenDokterGet->anamnesa}}</textarea>
                                         </div>
                                         @error('anamnesa')
                                         <div class="invalid-feedback">
@@ -121,19 +122,19 @@
                                         <div class="form-group">
                                             <label class="d-block">Keadaan Umum</label>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="keadaan_umum" value="Baik" id="keadaan_umum1" @if(old('keadaan_umum','0')=='Baik' ) checked @endif>
+                                                <input class="form-check-input" type="radio" name="keadaan_umum" value="Baik" id="keadaan_umum1" @if($asesmenDokterGet->keadaan_umum=='Baik' ) checked @endif>
                                                 <label class="form-check-label" for="keadaan_umum1">
                                                     Baik
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="keadaan_umum" value="Sedang" id="keadaan_umum2" @if(old('keadaan_umum','0')=='Sedang' ) checked @endif>
+                                                <input class="form-check-input" type="radio" name="keadaan_umum" value="Sedang" id="keadaan_umum2" @if($asesmenDokterGet->keadaan_umum=='Sedang' ) checked @endif>
                                                 <label class="form-check-label" for="keadaan_umum2">
                                                     Sedang
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="keadaan_umum" value="Buruk" id="keadaan_umum3" @if(old('keadaan_umum','0')=='Buruk' ) checked @endif>
+                                                <input class="form-check-input" type="radio" name="keadaan_umum" value="Buruk" id="keadaan_umum3" @if($asesmenDokterGet->keadaan_umum=='Buruk' ) checked @endif>
                                                 <label class="form-check-label" for="keadaan_umum3">
                                                     Buruk
                                                 </label>
@@ -144,25 +145,25 @@
                                         <div class="form-group">
                                             <label class="d-block">Keadaan Kesadaran</label>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="kesadaran" value="GCS" id="kesadaran1" @if(old('kesadaran','0')=='GCS' ) checked @endif>
+                                                <input class="form-check-input" type="radio" name="kesadaran" value="GCS" id="kesadaran1" @if($asesmenDokterGet->kesadaran=='GCS' ) checked @endif>
                                                 <label class="form-check-label" for="kesadaran1">
                                                     GCS
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="kesadaran" value="E" id="kesadaran2" @if(old('kesadaran','0')=='E' ) checked @endif>
+                                                <input class="form-check-input" type="radio" name="kesadaran" value="E" id="kesadaran2" @if($asesmenDokterGet->kesadaran=='E' ) checked @endif>
                                                 <label class="form-check-label" for="kesadaran2">
                                                     E
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="kesadaran" value="M" id="kesadaran3" @if(old('kesadaran','0')=='M' ) checked @endif>
+                                                <input class="form-check-input" type="radio" name="kesadaran" value="M" id="kesadaran3" @if($asesmenDokterGet->kesadaran=='M' ) checked @endif>
                                                 <label class="form-check-label" for="kesadaran3">
                                                     M
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="kesadaran" value="V" id="kesadaran4" @if(old('kesadaran','0')=='V' ) checked @endif>
+                                                <input class="form-check-input" type="radio" name="kesadaran" value="V" id="kesadaran4" @if($asesmenDokterGet->kesadaran=='V' ) checked @endif>
                                                 <label class="form-check-label" for="kesadaran4">
                                                     V
                                                 </label>
@@ -178,7 +179,7 @@
                                             <label>Tekanan Darah</label>
                                             <div class="input-group">
                                                 <input type="text" name="tekanan_darah" class="form-control @error('tekanan_darah') is-invalid  
-                                                @enderror" @if($ttv !=null ) value="{{ $ttv->FS_TD}}" @else value="{{ old('tekanan_darah')}}" @endif>
+                                                @enderror" value="{{$asesmenDokterGet->tekanan_darah}}">
                                                 <div class="input-group-append">
                                                     <div class="input-group-text">
                                                         <b>mmHG</b>
@@ -197,7 +198,7 @@
                                             <label>Nadi</label>
                                             <div class="input-group">
                                                 <input type="text" name="nadi" class="form-control @error('nadi') is-invalid  
-                                                @enderror" @if($ttv !=null ) value="{{ $ttv->FS_NADI}}" @else value="{{ old('nadi')}}" @endif>
+                                                @enderror" value="{{$asesmenDokterGet->nadi}}">
                                                 <div class="input-group-append">
                                                     <div class="input-group-text">
                                                         <b>x/menit</b>
@@ -216,7 +217,7 @@
                                             <label>Respirasi</label>
                                             <div class="input-group">
                                                 <input type="text" name="respirasi" class="form-control @error('respirasi') is-invalid  
-                                                @enderror" @if($ttv !=null ) value="{{ $ttv->FS_R}}" @else value="{{ old('respirasi')}}" @endif>
+                                                @enderror" value="{{$asesmenDokterGet->respirasi}}">
                                                 <div class="input-group-append">
                                                     <div class="input-group-text">
                                                         <b>x/menit</b>
@@ -235,7 +236,7 @@
                                             <label>Suhu</label>
                                             <div class="input-group">
                                                 <input type="text" name="suhu" class="form-control @error('suhu') is-invalid  
-                                                @enderror" @if($ttv !=null ) value="{{ $ttv->FS_SUHU}}" @else value="{{ old('suhu')}}" @endif>
+                                                @enderror" value="{{$asesmenDokterGet->suhu}}">
                                                 <div class="input-group-append">
                                                     <div class="input-group-text">
                                                         <b>C</b>
@@ -254,7 +255,7 @@
                                             <label>Berat Badan</label>
                                             <div class="input-group">
                                                 <input type="text" name="berat_badan" class="form-control @error('berat_badan') is-invalid  
-                                                @enderror" @if($ttv !=null ) value="{{ $ttv->FS_BB}}" @else value="{{ old('berat_badan')}}" @endif>
+                                                @enderror" value="{{$asesmenDokterGet->berat_badan}}">
                                                 <div class="input-group-append">
                                                     <div class="input-group-text">
                                                         <b>Kg</b>
@@ -272,7 +273,7 @@
                                         <div class="form-group">
                                             <label>Prothesa</label>
                                             <input type="text" name="prothesa" class="form-control @error('prothesa') is-invalid  
-                                                @enderror" value="{{ old('prothesa')}}">
+                                                @enderror" value="{{$asesmenDokterGet->prothesa}}">
                                         </div>
                                         @error('prothesa')
                                         <div class="invalid-feedback">
@@ -284,7 +285,7 @@
                                         <div class="form-group">
                                             <label>Orthosis</label>
                                             <input type="text" name="orthosis" class="form-control @error('orthosis') is-invalid  
-                                                @enderror" value="{{ old('orthosis')}}">
+                                                @enderror" value="{{$asesmenDokterGet->orthosis}}">
                                         </div>
                                         @error('orthosis')
                                         <div class="invalid-feedback">
@@ -307,10 +308,10 @@
                                             <label>Status Psikologi</label>
                                             <select name="status_psikologi" id="" class="form-control @error('status_psikologi')  is-invalid @enderror">
                                                 <option value="" selected disabled>--Pilih Status Psikologi--</option>
-                                                <option value="Tenang" @if(old('status_psikologi')=='Tenang' ) selected @endif>Tenang</option>
-                                                <option value="Cemas" @if(old('status_psikologi')=='Cemas' ) selected @endif>Cemas</option>
-                                                <option value="Marah" @if(old('status_psikologi')=='Marah' ) selected @endif>Marah</option>
-                                                <option value="Depresi" @if(old('status_psikologi')=='Depresi' ) selected @endif>Depresi</option>
+                                                <option value="Tenang" @if($asesmenDokterGet->status_psikologi=='Tenang' ) selected @endif>Tenang</option>
+                                                <option value="Cemas" @if($asesmenDokterGet->status_psikologi=='Cemas' ) selected @endif>Cemas</option>
+                                                <option value="Marah" @if($asesmenDokterGet->status_psikologi=='Marah' ) selected @endif>Marah</option>
+                                                <option value="Depresi" @if($asesmenDokterGet->status_psikologi=='Depresi' ) selected @endif>Depresi</option>
                                             </select>
                                             @error('status_psikologi')
                                             <span class="text-danger" style="font-size: 12px;">
@@ -324,10 +325,10 @@
                                             <label>Status Mental</label>
                                             <select name="status_mental" id="" class="form-control @error('status_mental')  is-invalid @enderror">
                                                 <option value="" selected disabled>--Pilih Status Mental--</option>
-                                                <option value="Kooperatif" @if(old('status_mental')=='Kooperatif' ) selected @endif>Kooperatif</option>
-                                                <option value="Tidak Kooperatif" @if(old('status_mental')=='Tidak Kooperatif' ) selected @endif>Tidak Kooperatif</option>
-                                                <option value="Gelisah/Delirium/Berontak" @if(old('status_mental')=='Gelisah/Delirium/Berontak' ) selected @endif>Gelisah/Delirium/Berontak</option>
-                                                <option value="Ketidak Mampuan Dalam Mengikuti Perintah" @if(old('status_mental')=='Ketidak Mampuan Dalam Mengikuti Perintah' ) selected @endif>Ketidak Mampuan Dalam Mengikuti Perintah</option>
+                                                <option value="Kooperatif" @if($asesmenDokterGet->status_mental=='Kooperatif' ) selected @endif>Kooperatif</option>
+                                                <option value="Tidak Kooperatif" @if($asesmenDokterGet->status_mental=='Tidak Kooperatif' ) selected @endif>Tidak Kooperatif</option>
+                                                <option value="Gelisah/Delirium/Berontak" @if($asesmenDokterGet->status_mental=='Gelisah/Delirium/Berontak' ) selected @endif>Gelisah/Delirium/Berontak</option>
+                                                <option value="Ketidak Mampuan Dalam Mengikuti Perintah" @if($asesmenDokterGet->status_mental=='Ketidak Mampuan Dalam Mengikuti Perintah' ) selected @endif>Ketidak Mampuan Dalam Mengikuti Perintah</option>
                                             </select>
                                             @error('status_mental')
                                             <span class="text-danger" style="font-size: 12px;">
@@ -343,7 +344,7 @@
                                         <div class="form-group">
                                             <label>Diagnosa Klinis <code>*</code></label>
                                             <textarea class="form-control @error('diagnosa_klinis') is-invalid  
-                                                @enderror" rows="3" name="diagnosa_klinis" value="" placeholder="Masukan ...">{{ old('diagnosa_klinis')}}</textarea>
+                                                @enderror" rows="3" name="diagnosa_klinis" value="" placeholder="Masukan ...">{{ $asesmenDokterGet->diagnosa_klinis}}</textarea>
                                         </div>
                                         @error('diagnosa_klinis')
                                         <div class="invalid-feedback">
@@ -359,9 +360,17 @@
                                             <label>Terapi <code>*</code></label>
                                             <select name="jenis_terapi_fisio[]" class="form-control select2" multiple="multiple" data-placeholder="Pilih Jenis Fisio" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                                 <option value="" disabled>-- Pilih Jenis Fisio --</option>
+                                                @forelse ($terapiFisioGet as $terapiGet)
                                                 @foreach ($jenisterapifisio as $terapi)
-                                                <option value="{{ $terapi->ID_JENIS_FISIO }}" @if(old('jenis_terapi_fisio')==$terapi) selected @endif>{{ $terapi->NAMA_TERAPI }}</option>
+                                                <option value="{{ $terapi->ID_JENIS_FISIO }}" {{ $terapi->ID_JENIS_FISIO == $terapiGet->id_jenis_fisioterapi ? "selected" : "" }}>{{ $terapi->NAMA_TERAPI }}</option>
                                                 @endforeach
+                                                @empty
+                                                @foreach ($jenisterapifisio as $terapi)
+                                                <option value="{{ $terapi->ID_JENIS_FISIO }}">{{ $terapi->NAMA_TERAPI }}</option>
+                                                @endforeach
+                                                @endforelse
+
+
                                             </select>
                                             @error('jenis_terapi_fisio')
                                             <span class="text-danger" style="font-size: 12px;">
@@ -377,13 +386,13 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="rencana_tindakan" value="Tidak Ada" id="rencana_tindakan1" @if(old('rencana_tindakan', '0' )=='Tidak Ada' ) checked @endif>
+                                                            <input class="form-check-input" type="radio" name="rencana_tindakan" value="Tidak Ada" id="rencana_tindakan1" @if($asesmenDokterGet->rencana_tindakan=='Tidak Ada' ) checked @endif>
                                                             <label class="form-check-label" for="rencana_tindakan1">
                                                                 Tidak Ada
                                                             </label>
                                                         </div>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="rencana_tindakan" value="Ya" id="rencana_tindakan2" @if(old('rencana_tindakan', '0' )=='Ya' ) checked @endif>
+                                                            <input class="form-check-input" type="radio" name="rencana_tindakan" value="Ya" id="rencana_tindakan2" @if($asesmenDokterGet->rencana_tindakan=='Ya' ) checked @endif>
                                                             <label class="form-check-label" for="rencana_tindakan2">
                                                                 Ya
                                                             </label>
@@ -393,7 +402,7 @@
 
                                                 <div class="col-md-6">
                                                     <input type="text" name="jenis_tindakan" class="form-control @error('jenis_tindakan') is-invalid  
-                                                @enderror" value="{{old('jenis_tindakan')}}" placeholder="Isi jenis tindakan jika ya">
+                                                @enderror" value="{{$asesmenDokterGet->jenis_tindakan}}" placeholder="Isi jenis tindakan jika ya">
                                                 </div>
                                                 @error('jenis_tindakan')
                                                 <div class="invalid-feedback">
@@ -410,13 +419,13 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="rencana_rujukan" value="Tidak Ada" id="rencana_rujukan1" @if(old('rencana_rujukan', '0' )=='Tidak Ada' ) checked @endif>
+                                                            <input class="form-check-input" type="radio" name="rencana_rujukan" value="Tidak Ada" id="rencana_rujukan1" @if($asesmenDokterGet->rencana_rujukan=='Tidak Ada' ) checked @endif>
                                                             <label class="form-check-label" for="rencana_rujukan1">
                                                                 Tidak Ada
                                                             </label>
                                                         </div>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="rencana_rujukan" value="Ya" id="rencana_rujukan2" @if(old('rencana_rujukan', '0' )=='Ya' ) checked @endif>
+                                                            <input class="form-check-input" type="radio" name="rencana_rujukan" value="Ya" id="rencana_rujukan2" @if($asesmenDokterGet->rencana_rujukan=='Ya' ) checked @endif>
                                                             <label class="form-check-label" for="rencana_rujukan2">
                                                                 Ya
                                                             </label>
@@ -425,7 +434,7 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <input type="text" name="deskripsi_rujukan" class="form-control @error('deskripsi_rujukan') is-invalid  
-                                                @enderror" value="{{old('deskripsi_rujukan')}}" placeholder="Rujukan Ke">
+                                                @enderror" value="{{$asesmenDokterGet->deskripsi_rujukan}}" placeholder="Rujukan Ke">
                                                 </div>
                                                 @error('deskripsi_rujukan')
                                                 <div class="invalid-feedback">
@@ -442,13 +451,13 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="rencana_konsul" value="Tidak Ada" id="rencana_konsul1" @if(old('rencana_konsul', '0' )=='Tidak Ada' ) checked @endif>
+                                                        <input class="form-check-input" type="radio" name="rencana_konsul" value="Tidak Ada" id="rencana_konsul1" @if($asesmenDokterGet->rencana_konsul=='Tidak Ada' ) checked @endif>
                                                         <label class="form-check-label" for="rencana_konsul1">
                                                             Tidak Ada
                                                         </label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="rencana_konsul" value="Ya" id="rencana_konsul2" @if(old('rencana_konsul', '0' )=='Ya' ) checked @endif>
+                                                        <input class="form-check-input" type="radio" name="rencana_konsul" value="Ya" id="rencana_konsul2" @if($asesmenDokterGet->rencana_konsul=='Ya' ) checked @endif>
                                                         <label class="form-check-label" for="rencana_konsul2">
                                                             Ya
                                                         </label>
@@ -465,7 +474,7 @@
                                         <div class="form-group">
                                             <label>Ke bagian : </label>
                                             <input type="text" name="deskripsi_konsul" class="form-control @error('deskripsi_konsul') is-invalid  
-                                                @enderror" value="{{old('deskripsi_konsul')}}" placeholder="Ke Bagian">
+                                                @enderror" value="{{$asesmenDokterGet->deskripsi_konsul}}" placeholder="Ke Bagian">
                                         </div>
                                         @error('deskripsi_konsul')
                                         <div class="invalid-feedback">
@@ -481,14 +490,14 @@
                                             <div class="input-group">
                                                 <select name="anjuran_terapi" id="" class="form-control @error('anjuran_terapi')  is-invalid @enderror">
                                                     <option value="" selected disabled>--Pilih Status Psikologi--</option>
-                                                    <option value="1" @if(old('anjuran_terapi')=='1' ) selected @endif>1</option>
-                                                    <option value="2" @if(old('anjuran_terapi')=='2' ) selected @endif>2</option>
-                                                    <option value="3" @if(old('anjuran_terapi')=='3' ) selected @endif>3</option>
-                                                    <option value="4" @if(old('anjuran_terapi')=='4' ) selected @endif>4</option>
-                                                    <option value="5" @if(old('anjuran_terapi')=='5' ) selected @endif>5</option>
-                                                    <option value="6" @if(old('anjuran_terapi')=='6' ) selected @endif>6</option>
-                                                    <option value="7" @if(old('anjuran_terapi')=='7' ) selected @endif>7</option>
-                                                    <option value="8" @if(old('anjuran_terapi')=='8' ) selected @endif>8</option>
+                                                    <option value="1" @if($asesmenDokterGet->anjuran_terapi=='1' ) selected @endif>1</option>
+                                                    <option value="2" @if($asesmenDokterGet->anjuran_terapi=='2' ) selected @endif>2</option>
+                                                    <option value="3" @if($asesmenDokterGet->anjuran_terapi=='3' ) selected @endif>3</option>
+                                                    <option value="4" @if($asesmenDokterGet->anjuran_terapi=='4' ) selected @endif>4</option>
+                                                    <option value="5" @if($asesmenDokterGet->anjuran_terapi=='5' ) selected @endif>5</option>
+                                                    <option value="6" @if($asesmenDokterGet->anjuran_terapi=='6' ) selected @endif>6</option>
+                                                    <option value="7" @if($asesmenDokterGet->anjuran_terapi=='7' ) selected @endif>7</option>
+                                                    <option value="8" @if($asesmenDokterGet->anjuran_terapi=='8' ) selected @endif>8</option>
                                                 </select>
                                                 @error('anjuran_terapi')
                                                 <span class="text-danger" style="font-size: 12px;">
@@ -509,14 +518,14 @@
                                             <div class="input-group">
                                                 <select name="evaluasi_terapi" id="" class="form-control @error('evaluasi_terapi')  is-invalid @enderror">
                                                     <option value="" selected disabled>--Pilih Status Psikologi--</option>
-                                                    <option value="1" @if(old('evaluasi_terapi')=='1' ) selected @endif>1</option>
-                                                    <option value="2" @if(old('evaluasi_terapi')=='2' ) selected @endif>2</option>
-                                                    <option value="3" @if(old('evaluasi_terapi')=='3' ) selected @endif>3</option>
-                                                    <option value="4" @if(old('evaluasi_terapi')=='4' ) selected @endif>4</option>
-                                                    <option value="5" @if(old('evaluasi_terapi')=='5' ) selected @endif>5</option>
-                                                    <option value="6" @if(old('evaluasi_terapi')=='6' ) selected @endif>6</option>
-                                                    <option value="7" @if(old('evaluasi_terapi')=='7' ) selected @endif>7</option>
-                                                    <option value="8" @if(old('evaluasi_terapi')=='8' ) selected @endif>8</option>
+                                                    <option value="1" @if($asesmenDokterGet->evaluasi_terapi=='1' ) selected @endif>1</option>
+                                                    <option value="2" @if($asesmenDokterGet->evaluasi_terapi=='2' ) selected @endif>2</option>
+                                                    <option value="3" @if($asesmenDokterGet->evaluasi_terapi=='3' ) selected @endif>3</option>
+                                                    <option value="4" @if($asesmenDokterGet->evaluasi_terapi=='4' ) selected @endif>4</option>
+                                                    <option value="5" @if($asesmenDokterGet->evaluasi_terapi=='5' ) selected @endif>5</option>
+                                                    <option value="6" @if($asesmenDokterGet->evaluasi_terapi=='6' ) selected @endif>6</option>
+                                                    <option value="7" @if($asesmenDokterGet->evaluasi_terapi=='7' ) selected @endif>7</option>
+                                                    <option value="8" @if($asesmenDokterGet->evaluasi_terapi=='8' ) selected @endif>8</option>
                                                 </select>
                                                 @error('evaluasi_terapi')
                                                 <span class="text-danger" style="font-size: 12px;">
@@ -562,7 +571,6 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
-
 
 
 @endpush

@@ -13,11 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::connection('pku')->create('tr_jenis_fisioterapi', function (Blueprint $table) {
+        Schema::connection('pku')->create('fis_lembar_uji_fungsi', function (Blueprint $table) {
             $table->id();
             $table->string('no_registrasi');
-            $table->string('kode_tr_fisio');
-            $table->integer('id_jenis_fisioterapi');
+            $table->string('kode_transaksi_fisio');
+            $table->string('diagnosis_fungsional');
+            $table->string('prosedur_kfr');
+            $table->string('hasil_pemeriksaan');
+            $table->string('kesimpulan');
+            $table->string('rekomendasi');
+            $table->string('create_by');
             $table->timestamps();
         });
     }
@@ -29,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::connection('pku')->dropIfExists('tr_jenis_fisioterapi');
+        Schema::connection('pku')->dropIfExists('fis_lembar_uji_fungsi');
     }
 };

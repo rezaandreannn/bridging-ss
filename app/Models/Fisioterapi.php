@@ -102,6 +102,7 @@ class Fisioterapi extends Model
                 'RP.No_MR',
                 'RP.Nama_Pasien',
                 'RP.Alamat',
+                'P.NO_REG',
                 'st.FS_STATUS'
 
             )
@@ -155,6 +156,20 @@ class Fisioterapi extends Model
     //         ->get();
     //     return $data;
     // }
+
+    public function cek_asesmen_dokter_fisio($noReg)
+    {
+        $data = DB::connection('pku')->table('fis_asesmen_dokter')
+            ->select('no_registrasi')
+            ->where('no_registrasi', $noReg)
+            ->first();
+
+        if ($data != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
     // // Get Kode Transaksi

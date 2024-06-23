@@ -24,7 +24,7 @@
         </div>
 
         <div class="section-body">
-            <div class="card card-primary">
+            <!-- <div class="card card-primary">
                 <form id="filterForm" action="#" method="get">
                     <div class="card-header">
                         <h4>Fisioterapi</h4>
@@ -49,7 +49,7 @@
 
                     </div>
                 </form>
-            </div>
+            </div> -->
 
             <div class="card">
                 <div class="card-body">
@@ -82,7 +82,13 @@
 
                                         @endif
                                     </td>
-                                    <td width="15%"> <a href="{{ route('add.dokter', $pasien->No_MR)}}" class="btn btn-sm btn-primary"><i class="fas fa-notes-medical"></i> Entry</a></td>
+                                    <td width="15%">
+                                        @if ($cekAsesmenDokter->cek_asesmen_dokter_fisio($pasien->NO_REG)==true)
+                                        <button data-toggle="modal" data-target="#modal-edit{{$pasien->No_MR}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</button>
+                                        @else
+                                        <a href="{{ route('add.dokter', $pasien->No_MR)}}" class="btn btn-sm btn-primary"><i class="fas fa-notes-medical"></i> Entry</a>
+                                        @endif
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -93,6 +99,55 @@
         </div>
     </section>
 </div>
+@foreach ($listpasien as $pasien)
+<div class="modal fade" id="modal-edit{{$pasien->No_MR}}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Asesmen/Tindakan</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table-striped table" id="table-1">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Jenis</th>
+                                    <th scope="col">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Asesmen Awal Dokter</td>
+                                    <td> <a href="{{ route('edit_asesmen.dokter', $pasien->No_MR)}}" class="btn btn-sm btn-warning"><i class="fas fa fa-edit"></i> Edit</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Lembar Uji Fungsi</td>
+                                    <td> <a href="{{ route('add.dokter', $pasien->No_MR)}}" class="btn btn-sm btn-warning"><i class="fas fa fa-edit"></i> Edit</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Cppt</td>
+                                    <td> <a href="{{ route('add.dokter', $pasien->No_MR)}}" class="btn btn-sm btn-warning"><i class="fas fa fa-edit"></i> Edit</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-footer text-left">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Tutup</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+@endforeach
 @endsection
 
 @push('scripts')

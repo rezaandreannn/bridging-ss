@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::connection('pku')->create('asesmen_dokter_fisioterapi', function (Blueprint $table) {
+        Schema::connection('pku')->create('fis_asesmen_dokter', function (Blueprint $table) {
             $table->id();
             $table->string('no_registrasi');
             $table->string('kode_transaksi_fisio');
@@ -29,8 +29,8 @@ return new class extends Migration
             $table->string('respirasi');
             $table->string('suhu');
             $table->string('berat_badan');
-            $table->string('prothesa');
-            $table->string('orthosis');
+            $table->string('prothesa')->nullable();
+            $table->string('orthosis')->nullable();
             $table->string('status_psikologi');
             $table->string('status_mental');
             $table->string('diagnosa_klinis');
@@ -54,7 +54,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::connection('pku')->dropIfExists('assesmen_dokter_fisioterapi');
+        Schema::connection('pku')->dropIfExists('fis_asesmen_dokter');
     }
 
     // cara migrasinya 

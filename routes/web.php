@@ -158,8 +158,10 @@ Route::middleware('auth')->group(function () {
         // Fisioterapi Dokter
         Route::get('dokter/list_pasiens', [AssesmenDokterController::class, 'index'])->name('list_pasiens.dokter');
         Route::get('dokter/assesmen_dokter/{NoMr}', [AssesmenDokterController::class, 'create'])->name('add.dokter');
+        Route::get('dokter/assesmen_dokter/edit/{NoMr}', [AssesmenDokterController::class, 'editAsesmen'])->name('edit_asesmen.dokter');
         Route::post('dokter/assesmen_dokter/add', [AssesmenDokterController::class, 'store'])->name('asesmenStore.dokter');
-        
+        Route::put('dokter/assesmen_dokter/update', [AssesmenDokterController::class, 'update'])->name('asesmenUpdate.dokter');
+
         // uji fungsi
         Route::get('dokter/lembar_uji_fungsi/{NoMr}', [AssesmenDokterController::class, 'createUjiFungsi'])->name('add.ujifungsi');
         Route::post('dokter/lembar_uji_fungsi/add', [AssesmenDokterController::class, 'storeUjiFungsi'])->name('asesmenStore.ujiFungsi');

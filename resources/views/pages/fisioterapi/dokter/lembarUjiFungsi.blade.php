@@ -37,6 +37,8 @@
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-12">
+                                        <input type="hidden" name="no_registrasi" class="form-control" value="{{$biodatas->No_Reg}}" readonly>
+                                        <input type="hidden" name="kode_transaksi_fisio" class="form-control" value="{{$asesmenDokterGet->kode_transaksi_fisio}}" readonly>
                                         <div class="form-group">
                                             <label>Diagnosis Fungsional / Diagnosis Klinis : <code>*</code></label>
                                             <textarea class="form-control" rows="3" name="diagnosis_fungsional" value="" placeholder="Masukan ..."></textarea>
@@ -89,7 +91,7 @@
                         <div class="card-body">
                             <div class="text-left">
                                 <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button>
-                                
+
                                 {{-- <a href="{{ route('diagnosa.dokter') }}" class="btn btn-primary mb-2"><i class="fas fa-save"></i> Simpan</a> --}}
                             </div>
                         </div>
