@@ -46,13 +46,9 @@ class AssesmenDokterController extends Controller
     {
         //
         $listpasien = $this->fisio->getPasienRehabMedis();
-        $cekAsesmenDokter = new Fisioterapi();
-
-        // dd($listpasien);
-        // die;
-
+        $fisioterapi = new Fisioterapi();
         $title = $this->prefix . ' ' . 'List Pasien';
-        return view($this->view . 'dokter.index', compact('title', 'listpasien', 'cekAsesmenDokter'));
+        return view($this->view . 'dokter.index', compact('title', 'listpasien', 'fisioterapi'));
     }
 
     /**
