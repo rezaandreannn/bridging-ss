@@ -60,11 +60,14 @@
                                                     <input type="date" name="TANGGAL_FISIO" class="form-control" value="{{ $cppt->CREATE_AT}}" readonly>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <input type="time" name="JAM_FISIO" class="form-control" id="jam_keperawatan">
+                                                    <input type="time" name="JAM_FISIO" class="form-control" value="{{date('H:i:s')}}">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    @if ((auth()->user()->roles->pluck('name')[0])=='dokter fisioterapi')
+                                    <input type="hidden" name="KODE_DOKTER" class="form-control" value="{{ auth()->user()->username }}" readonly>
+                                    @endif
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Anamnesa / Allow Anamnesa <code>*</code></label>
@@ -163,7 +166,7 @@
                                             <td>{{$cppt->DIAGNOSA}}</td>
                                             <td>{{$cppt->JENIS_FISIO}}</td>
                                             <td>@if($cppt->KODE_DOKTER != '')
-                                                {{ $dokter->Nama_Dokter }}
+                                                {{ $biodatas->NAMA_DOKTER }}
                                                 @else
 
                                                 @endif

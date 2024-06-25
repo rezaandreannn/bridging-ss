@@ -143,6 +143,10 @@
                                     <td> <a href="{{ route('edit.ujifungsi', $pasien->No_MR)}}" class="btn btn-sm btn-warning"><i class="fas fa fa-edit"></i> Edit</a></td>
                                 </tr>
                                 <tr>
+                                    <td>Lembar SPKFR</td>
+                                    <td> <a href="{{ route('edit.lembarspkfr', $pasien->No_MR)}}" class="btn btn-sm btn-warning"><i class="fas fa fa-edit"></i> Edit</a></td>
+                                </tr>
+                                <tr>
                                     <td>Cppt</td>
                                     <td> <a href="{{ route('add.dokter', $pasien->No_MR)}}" class="btn btn-sm btn-warning"><i class="fas fa fa-edit"></i> Edit</a></td>
                                 </tr>

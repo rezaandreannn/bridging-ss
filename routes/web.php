@@ -165,12 +165,18 @@ Route::middleware('auth')->group(function () {
         // uji fungsi
         Route::get('dokter/lembar_uji_fungsi/{NoMr}', [AssesmenDokterController::class, 'createUjiFungsi'])->name('add.ujifungsi');
         Route::get('dokter/lembar_uji_fungsi/edit/{NoMr}', [AssesmenDokterController::class, 'editUjiFungsi'])->name('edit.ujifungsi');
-        Route::post('dokter/lembar_uji_fungsi/add', [AssesmenDokterController::class, 'storeUjiFungsi'])->name('asesmenStore.ujiFungsi');
-        Route::put('dokter/lembar_uji_fungsi/update', [AssesmenDokterController::class, 'updateUjiFungsi'])->name('asesmenUpdate.ujiFungsi');
+        Route::post('dokter/lembar_uji_fungsi/add', [AssesmenDokterController::class, 'storeUjiFungsi'])->name('store.ujiFungsi');
+        Route::put('dokter/lembar_uji_fungsi/update', [AssesmenDokterController::class, 'updateUjiFungsi'])->name('update.ujiFungsi');
+        
+        // lembar spkfr
+        Route::get('dokter/lembar_spkfr/{NoMr}', [AssesmenDokterController::class, 'lembarSpkfr'])->name('add.spkfr');
+        Route::get('dokter/lembar_spkfr/edit/{NoMr}', [AssesmenDokterController::class, 'editLembarSpkfr'])->name('edit.lembarspkfr');
+        Route::post('dokter/lembar_spkfr/add', [AssesmenDokterController::class, 'storeSpkfr'])->name('store.spkfr');
+        Route::put('dokter/lembar_spkfr/update', [AssesmenDokterController::class, 'updateSpkfr'])->name('update.spkfr');
 
 
         Route::get('/form_fisioterapi/{no_mr}', [FisioController::class, 'formDokter'])->name('form.dokter');
-        Route::get('/lembar_fisioterapi/{no_mr}', [FisioController::class, 'lembarDokter'])->name('lembar.dokter');
+       
         Route::get('/hasil_tindakan/{no_mr}', [FisioController::class, 'tindakanDokter'])->name('tindakan.dokter');
         Route::get('/diagnosa_fisioterapi', [FisioController::class, 'diagnosaDokter'])->name('diagnosa.dokter');
         Route::get('cetak_cppt/{no_mr}', [FisioController::class, 'cetakFormulir'])->name('cppt.cetakFormulir');

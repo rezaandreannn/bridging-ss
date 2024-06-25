@@ -212,6 +212,7 @@ class FisioController extends Controller
                 'JENIS_FISIO' => $terapi,
                 'TANGGAL_FISIO' => $request->input('TANGGAL_FISIO'),
                 'JAM_FISIO' => $request->input('JAM_FISIO'),
+                'KODE_DOKTER' => $request->input('KODE_DOKTER') ?? null,
                 'CARA_PULANG' => $request->input('CARA_PULANG'),
                 'ANAMNESA' => $request->input('ANAMNESA'),
                 'CREATE_AT' => now(),
@@ -225,7 +226,14 @@ class FisioController extends Controller
             if ($cek_ttd_pasien < '1') {
                 return redirect()->route('ttd.pasien', ['no_mr' => $request->input('NO_MR_PASIEN')]);
             } else {
-                return redirect()->route('cppt.detail', ['id' => $request->input('ID_TRANSAKSI'), 'kode_transaksi' => $request->input('KODE_TRANSAKSI_FISIO'), 'no_mr' => $request->input('NO_MR_PASIEN')])->with('success', 'CPPT Berhasil Ditambahkan!');
+                if ((auth()->user()->roles->pluck('name')[0])=='dokter fisioterapi'){
+                    return redirect()->route('add.spkfr', ['NoMr' => $request->input('NO_MR_PASIEN')])->with('success', 'CPPT Berhasil Ditambahkan!');
+                }
+                else
+                {
+                    return redirect()->route('cppt.detail', ['id' => $request->input('ID_TRANSAKSI'), 'kode_transaksi' => $request->input('KODE_TRANSAKSI_FISIO'), 'no_mr' => $request->input('NO_MR_PASIEN')])->with('success', 'CPPT Berhasil Ditambahkan!');
+                }
+           
                 // return redirect()->route('cppt.detail', ['no_mr' => $request->input('NO_MR'), 'kode_transaksi' => $request->input('KD_TRANSAKSI_FISIO')])->with('success', 'CPPT Berhasil Diperbarui!');
             }
         }
@@ -378,15 +386,6 @@ class FisioController extends Controller
         $title = $this->prefix . ' ' . 'Tindakan';
         $jenisfisio = DB::connection('pku')->table('TAC_COM_FISIOTERAPI_MASTER')->get();
         return view($this->view . 'dokter.diagnosa', compact('title', 'jenisfisio'));
-    }
-
-
-    public function lembarDokter(Request $request)
-    {
-        $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
-
-        $title = $this->prefix . ' ' . 'Lembar Dokter';
-        return view($this->view . 'dokter.lembar', compact('title', 'biodatas', 'request'));
     }
 
     public function cetakFormulir(Request $request)
