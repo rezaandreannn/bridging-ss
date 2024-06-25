@@ -380,6 +380,15 @@ class FisioController extends Controller
         return view($this->view . 'dokter.diagnosa', compact('title', 'jenisfisio'));
     }
 
+
+    public function lembarDokter(Request $request)
+    {
+        $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
+
+        $title = $this->prefix . ' ' . 'Lembar Dokter';
+        return view($this->view . 'dokter.lembar', compact('title', 'biodatas', 'request'));
+    }
+
     public function cetakFormulir(Request $request)
     {
         $title = $this->prefix . ' ' . 'Bukti Layanan CPPT';

@@ -155,6 +155,7 @@ class Pasien extends Model
             ->table('REGISTER_PASIEN as a')
             ->leftJoin('PENDAFTARAN as b', 'a.No_MR', '=', 'b.No_MR')
             ->leftJoin('DOKTER as c', 'b.KODE_DOKTER', '=', 'c.KODE_DOKTER')
+            ->leftJoin('REKANAN as d', 'b.KODEREKANAN', '=', 'd.KODEREKANAN')
             ->select(
                 'a.NAMA_PASIEN',
                 'a.NO_MR',
@@ -173,7 +174,8 @@ class Pasien extends Model
                 'b.No_MR',
                 'b.No_Reg',
                 'c.NAMA_DOKTER',
-                'c.SPESIALIS'
+                'c.SPESIALIS',
+                'd.NAMAREKANAN',
             )
             ->where('a.NO_MR', $no_mr)
             ->orderBy('b.No_Reg', 'DESC')
