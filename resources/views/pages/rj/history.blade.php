@@ -23,66 +23,58 @@
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
-                    <div class="card author-box card-primary">
+                    <div class="card">
                         <div class="card-body">
                             <div class="author-box-name">
                                 <a href="#">
-                                    <h4>{{ $pasien->NAMA_PASIEN}} - ( {{ $pasien->NO_MR}} )</h4>
+                                    <h6 class="mt-1">{{ $pasien->NAMA_PASIEN ?? ''}} - ({{ $pasien->NO_MR ?? ''}})</h6>
                                 </a>
                             </div>
                             <div class="author-box-job">
-                                <h5>NIK : {{ $pasien->HP2}}</h5>
+                                <h6 class="mb-0"><b></b></h6>
+                                <hr>
                             </div>
-                            <div class="author-box-description">
-                                <div class="row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                No Registrasi
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="media">
+                                            <div class="media-title">Rekanan :</div>
+                                            <div class="media-body">
+                                                <div class="media-title ml-3 mb-1"> {{ $pasien->NAMAREKANAN ?? ''}}</div>
                                             </div>
-                                            <div class="col-md-8">
-                                                : {{ $pasien->No_Reg}}
+                                        </li>
+                        
+                                        <li class="media">
+                                            <div class="media-title">Jenis Kelamin :</div>
+                                            <div class="media-body">
+                                                <div class="media-title ml-3 mb-1"> @if ($pasien->JENIS_KELAMIN == 'L')
+                                                    Laki-Laki
+                                                    @else
+                                                    Perempuan
+                                                    @endif  </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                Jenis Kelamin
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-title mb-0">Tanggal Lahir :</div>
+                                            <div class="media-body">
+                                                <div class="media-title ml-3 mb-1">{{ date('d-m-Y', strtotime($pasien->TGL_LAHIR ?? '')) }}</div>
                                             </div>
-                                            <div class="col-md-8">
-                                                : {{ $pasien->JENIS_KELAMIN}}
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-title mb-0">Alamat :</div>
+                                            <div class="media-body">
+                                                <div class="media-title ml-3 mb-1"> {{ $pasien->ALAMAT ?? ''}}</div>
                                             </div>
-                                            <div class="col-md-4">
-                                                Tanggal Lahir
+                                        </li>
+                                        <li class="media">
+                                            <div class="media-title mb-0">Nama Dokter :</div>
+                                            <div class="media-body">
+                                                <div class="media-title ml-3 mb-1"> {{ $pasien->NAMA_DOKTER ?? ''}}</div>
                                             </div>
-                                            <div class="col-md-8">
-                                                : {{ date('d-m-Y', strtotime($pasien->TGL_LAHIR)) }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                Alamat
-                                            </div>
-                                            <div class="col-md-8">
-                                                : {{ $pasien->ALAMAT}}
-                                            </div>
-                                            <div class="col-md-4">
-                                                Nama Dokter
-                                            </div>
-                                            <div class="col-md-8">
-                                                : {{ $pasien->NAMA_DOKTER}}
-                                            </div>
-                                            <div class="col-md-4">
-                                                Spesialis
-                                            </div>
-                                            <div class="col-md-8">
-                                                : {{ $pasien->SPESIALIS}}
-                                            </div>
-
-                                        </div>
-                                    </div>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
-                            <div class="w-100 d-sm-none"></div>
                         </div>
                     </div>
                     <a href="{{ route('rj.cetak', $pasien->NO_MR )}}" class="btn btn-sm btn-primary mb-2"><i class="fas fa-download"></i> Download Berkas</a>

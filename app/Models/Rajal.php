@@ -211,6 +211,41 @@ class Rajal extends Model
         return $data;
     }
 
+    public function history($noMR)
+    {
+        $dbpku = DB::connection('pku')->getDatabaseName();
+        $data = DB::connection('db_rsmm')
+            ->table('PENDAFTARAN as p')
+            ->Join('REGISTER_PASIEN as rp', 'p.No_MR', '=', 'rp.No_MR')
+            ->Join('DOKTER as d', 'p.KODE_DOKTER', '=', 'd.KODE_DOKTER')
+            ->Join('REKANAN as r', 'p.KODEREKANAN', '=', 'r.KODEREKANAN')
+            ->Join('M_SPESIALIS as ms', 'd.SPESIALIS', '=', 'ms.SPESIALIS')
+            ->leftJoin($dbpku . '.dbo.TAC_RJ_STATUS as st', 'p.NO_REG', '=', 'st.FS_KD_REG')
+            ->leftJoin($dbpku . '.dbo.TAC_RJ_MEDIS as m', 'p.NO_REG', '=', 'm.FS_KD_REG')
+            ->select(
+                'p.TANGGAL',
+                'p.STATUS',
+                'p.NO_REG',
+                'p.KODE_RUANG',
+                'rp.NAMA_PASIEN',
+                'rp.ALAMAT',
+                'rp.KOTA',
+                'rp.PROVINSI',
+                'rp.TGL_LAHIR',
+                'rp.JENIS_KELAMIN',
+                'rp.FS_ALERGI',
+                'd.NAMA_DOKTER',
+                'ms.SPESIALIS',
+                'st.FS_FORM',
+                'm.FS_KD_TRS',
+            )
+            ->where('p.NO_MR', $noMR)
+            ->orderBy('p.TANGGAL', 'DESC')
+            ->limit('10')
+            ->get()->toArray();
+        return $data;
+    }
+
     // Get Data Pasien Rawat Jalan
     public function pasien_bynoreg($noReg)
     {

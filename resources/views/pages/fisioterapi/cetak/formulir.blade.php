@@ -115,15 +115,15 @@
                 <table>
                     <tr>
                         <td>No. RM </td>
-                        <td>: {{ $biodatas['NO_MR'] ?? ''}}</td>
+                        <td>: {{ $biodatas->NO_MR}}</td>
                     </tr>
                     <tr>
                         <td>Nama</td>
-                        <td>: {{ $biodatas['NAMA_PASIEN'] ?? ''}}</td>
+                        <td>: {{ $biodatas->NAMA_PASIEN}}</td>
                     </tr>
                     <tr>
                         <td>Tanggal Lahir</td>
-                        <td>: {{ date('d-m-Y', strtotime($biodatas['TGL_LAHIR']))}}</td>
+                        <td>: {{ date('d-m-Y', strtotime($biodatas->TGL_LAHIR))}}</td>
                     </tr>
                 </table>
             </td>
@@ -134,7 +134,7 @@
             <td class="text2" colspan="3" style="text-align: center; border: 1px solid black"><b>LEMBAR FORMULIR RAWAT JALAN LAYANAN KEDOKTERAN FISIK DAN REHABILITASI</b></td>
         </tr>
         <tr>
-            <td class="text2" colspan="3" style="border: 1px solid black">No. Telp / HP : {{ $biodatas['HP1'] ?? ''}}</td>
+            <td class="text2" colspan="3" style="border: 1px solid black">No. Telp / HP : {{ $biodatas->HP1}}</td>
         </tr>
         <tr>
             <td class="text2" colspan="3" style="border: 1px solid black">Diagnosa : </td>

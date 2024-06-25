@@ -69,7 +69,6 @@ class AssesmenController extends Controller
         $rencana_perawatan = $this->rajal->rencana_perawatan();
         $biodata = $this->rajal->pasien_bynoreg($noReg);
 
-
         return view($this->view . 'add', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'biodata', 'noReg'));
     }
 
@@ -80,6 +79,15 @@ class AssesmenController extends Controller
         $data = $this->rajal->resumeMedisPasienByMR($noMR);
         $pasien = $this->pasien->biodataPasienByMr($noMR);
         return view($this->view . 'resume', compact('title', 'data', 'pasien'));
+    }
+
+    //Tampilan History Pasien
+    public function history($noMR)
+    {
+        $title = $this->prefix . ' ' . 'Resume Pasien';
+        $data = $this->rajal->history($noMR);
+        $pasien = $this->pasien->biodataPasienByMr($noMR);
+        return view($this->view . 'history', compact('title', 'data', 'pasien'));
     }
 
     // Cetak PDF Profil Ringkas Medis Rawat Jalan

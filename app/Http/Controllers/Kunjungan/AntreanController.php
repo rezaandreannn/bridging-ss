@@ -54,7 +54,7 @@ class AntreanController extends Controller
 
     public function show($noMR)
     {
-        $data = $this->rajal->resumeMedisPasienByMR($noMR);
+        $data = $this->antrean->history($noMR);
         $pasien = $this->pasien->biodataPasienByMr($noMR);
         return view($this->view . 'detail', compact('data', 'pasien'));
     }
