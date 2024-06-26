@@ -88,11 +88,7 @@
 
                                                 @else
                                                 <button data-toggle="modal" data-target="#modal-edit-tranksasi18{{$transaksi->ID_TRANSAKSI}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</button>
-                                                <form id="delete-pegawai" action=" {{url('perawat/transaksi_fisio/'.$transaksi->ID_TRANSAKSI)}}" method="post">
-                                                    {{csrf_field()}}
-                                                    {{method_field('delete')}}
-                                                    <button type="button" class="btn btn-danger" onclick="confirmDelete('delete-pegawai')">delete</button>
-                                                </form>
+                                                <button id="delete" data-id="{{ $transaksi->ID_TRANSAKSI }}" data-nama="{{ $transaksi->NO_MR_PASIEN }}" data-bs-toggle="tooltip" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</button>
                                                 @endif
                                                 <a href="{{ route('form.dokter', ['no_mr' => $transaksi->NO_MR_PASIEN]) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i>CPPT Dokter</a>
                                                 <a href="{{ route('cppt.cetakFormulir', [
@@ -213,24 +209,25 @@
 
 <!-- Delete Data -->
 <script>
-    function confirmDelete(item_id) {
+    $(document).on('click', '#delete', function() {
+        var fisio = $(this).attr('data-id');
+        var nama = $(this).attr('data-nama');
+
         swal({
-             title: 'Apakah Anda Yakin?',
-              text: "Anda Tidak Akan Dapat Mengembalikannya!",
-              type: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Yes, delete it!'
-        })
+                title: "Are You Sure?",
+                text: "Data Will Be Deleted " + nama + " !!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
             .then((willDelete) => {
                 if (willDelete) {
-                    $('#'+item_id).submit();
+                    window.location = "{{ route('transaksi_fisio.delete', ['id' => ':id']) }}".replace(':id', fisio);
                 } else {
-                    swal("Cancelled Successfully");
+                    swal("Data will not be deleted!");
                 }
             });
-    }
+    });
 </script>
 
 @endpush
