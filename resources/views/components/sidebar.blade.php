@@ -105,6 +105,14 @@
                 </ul>
             </li>
             @endcan
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Berkas</span></a>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a class="nav-link" href="{{ route('berkas.fisio')}}">Berkas Fisio Terapi</a>
+                    </li>
+                </ul>
+            </li>
             <li class="menu-header">vclaim bpjs</li>
             <li class="nav-item dropdown ">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-clinic-medical"></i> <span>SEP</span></a>
