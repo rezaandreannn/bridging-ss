@@ -148,7 +148,8 @@
                                 </tr>
                                 <tr>
                                     <td>Cppt</td>
-                                    <td> <a href="{{ route('add.dokter', $pasien->No_MR)}}" class="btn btn-sm btn-warning"><i class="fas fa fa-edit"></i> Edit</a></td>
+                                    <td> <a href="{{ route('transaksi_fisio.fisio', ['no_mr' => $pasien->No_MR
+                                            ])}}" class="btn btn-sm btn-warning"><i class="fas fa fa-edit"></i> Edit</a></td>
                                 </tr>
                             </tbody>
                         </table>
