@@ -28,7 +28,8 @@ use App\Http\Controllers\Mapping\MappingEncounterController;
 use App\Http\Controllers\Fisio\Dokter\AssesmenDokterController;
 use App\Http\Controllers\RawatJalan\Perawat\AssesmenController;
 use App\Http\Controllers\Case\Encounter\EncounterCreateController;
-
+use App\Http\Controllers\Fisio\Berkas\BerkasFisioController;
+use App\Models\Fisioterapi;
 
 /*
 |--------------------------------------------------------------------------
@@ -180,6 +181,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/hasil_tindakan/{no_mr}', [FisioController::class, 'tindakanDokter'])->name('tindakan.dokter');
         Route::get('/diagnosa_fisioterapi', [FisioController::class, 'diagnosaDokter'])->name('diagnosa.dokter');
         Route::get('cetak_cppt/{no_mr}', [FisioController::class, 'cetakFormulir'])->name('cppt.cetakFormulir');
+    });
+
+    // Berkas Rekam Medis
+    Route::prefix('berkas')->group(function () {
+        Route::get('/berkas_fisio', [BerkasFisioController::class, 'index'])->name('berkas.fisio');
+        Route::get('/berkas_fisio/harian', [BerkasFisioController::class, 'berkas'])->name('berkas.harian');
     });
 
     Route::prefix('ttd')->group(function () {
