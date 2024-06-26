@@ -21,7 +21,7 @@
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{ route('list-pasien.index') }}">Fisioterapi</a></div>
-                <div class="breadcrumb-item">CPPT Fisioterapi</div>
+                <div class="breadcrumb-item">SPKFR Fisioterapi</div>
             </div>
         </div>
 
@@ -33,71 +33,48 @@
                     <!-- components biodata pasien by no mr -->
                     <div class="card card-primary">
                         <div class="card-header card-success">
-                            <h4 class="card-title">Form Dokter Fisioterapi</h4>
+                            <h4 class="card-title">Form SPKFR Fisioterapi</h4>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('asesmenStore.dokter') }}" method="POST">
+                            <form action="{{ route('store.spkfr') }}" method="POST">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>Tanggal Pelayanan</label>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <input type="date" name="TANGGAL_FISIO" class="form-control" value="{{ $data['CREATE_AT'] ?? ''}}" readonly>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <input type="time" name="JAM_FISIO" class="form-control" id="jam_keperawatan">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
                                             <label>Anamnesa / Allow Anamnesa <code>*</code></label>
-                                            <textarea class="form-control" rows="2" name="ANAMNESA" value="" placeholder="Masukan ..."></textarea>
+                                            <textarea class="form-control" rows="2" name="" value="" placeholder="Masukan ..." readonly>{{$asesmenDokter->anamnesa}}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Pemeriksaan Fisik dan Uji Fungsi </label>
-                                            <input class="form-control" name="ANAMNESA" value="" placeholder="Masukan ..."></input>
+                                            <input type="hidden" class="form-control" name="no_registrasi" value="{{$asesmenDokter->no_registrasi}}" placeholder="Masukan ..."></input>
+                                            <input type="hidden" class="form-control" name="kode_transaksi_fisio" value="{{$asesmenDokter->kode_transaksi_fisio}}" placeholder="Masukan ..."></input>
+                                            <input type="text" class="form-control" name="pemeriksaan_fisik" value="" placeholder="Masukan ..."></input>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Diagnosis Medis (ICD-10)</label>
-                                            <input class="form-control" name="ANAMNESA" value="" placeholder="Masukan ..."></input>
+                                            <input type="text" class="form-control" name="diagnosis_medis" value="" placeholder="Masukan ..."></input>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Diagnosis Fungsi (ICD-10)</label>
-                                            <input class="form-control" name="ANAMNESA" value="" placeholder="Masukan ..."></input>
+                                            <input type="text" class="form-control" name="diagnosis_fungsi" value="" placeholder="Masukan ..."></input>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Pemeriksaan Penunjang </label>
-                                            <input class="form-control" name="ANAMNESA" value="" placeholder="Masukan ..."></input>
+                                            <input type="text" class="form-control" name="pemeriksaan_penunjang" value="" placeholder="Masukan ..."></input>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Tata Laksana KFR (ICD 9 CM)</label>
-                                            <input class="form-control" name="ANAMNESA" value="" placeholder="Masukan ..."></input>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Anjuran</label>
-                                            <input class="form-control" type="number" name="ANAMNESA" value="" placeholder="Masukan ..."></input>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Evaluasi</label>
-                                            <input class="form-control" type="number" name="ANAMNESA" value="" placeholder="Masukan ..."></input>
+                                            <input type="text" class="form-control" name="tata_laksana_kfr" value="" placeholder="Masukan ..."></input>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -105,17 +82,23 @@
                                             <label>Suspek Penyakit Akibat Kerja</label>
 
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="Suspek" value="Sendiri" id="Suspek1" @if(old('Suspek','0')=='Ya' ) checked @endif>
-                                                <label class="form-check-label" for="ya">
+                                                <input class="form-check-input" type="radio" name="penyakit_akibat_kerja" value="Ya" id="penyakit_akibat_kerja1" @if(old('penyakit_akibat_kerja','0')=='Ya' ) checked @endif>
+                                                <label class="form-check-label">
                                                     Ya
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="Suspek" value="Diantar" id="Suspek2" @if(old('Suspek','0')=='Tidak' ) checked @endif>
-                                                <label class="form-check-label" for="tidak">
+                                                <input class="form-check-input" type="radio" name="penyakit_akibat_kerja" value="Tidak" id="penyakit_akibat_kerja2" @if(old('penyakit_akibat_kerja','0')=='Tidak' ) checked @endif>
+                                                <label class="form-check-label">
                                                     Tidak
                                                 </label>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Deskrispsi suspek penyakit akibat kerja <code>Isi jika ya</code></label>
+                                            <input type="text" class="form-control" name="deskripsi_akibat_kerja" value="" placeholder="Masukan ..."></input>
                                         </div>
                                     </div>
                                 </div>

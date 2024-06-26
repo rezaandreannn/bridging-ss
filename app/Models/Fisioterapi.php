@@ -171,6 +171,23 @@ class Fisioterapi extends Model
         }
     }
 
+    public function cek_cppt($noMr)
+    {
+        $data = DB::connection('pku')->table('TRANSAKSI_FISIOTERAPI as TS')
+        ->Join('TR_CPPT_FISIOTERAPI as TRC', 'TS.ID_TRANSAKSI', '=', 'TRC.ID_TRANSAKSI_FISIO')->select(
+            'TRC.ID_TRANSAKSI_FISIO'
+        )
+            ->where('TS.NO_MR_PASIEN', $noMr)
+            ->orderBy('TS.KODE_TRANSAKSI_FISIO','DESC')
+            ->first();
+            if ($data != null) {
+                return true;
+            } else {
+                return false;
+            }
+         
+    }
+
 
     // // Get Kode Transaksi
     public function getLastTransaksiFisio()

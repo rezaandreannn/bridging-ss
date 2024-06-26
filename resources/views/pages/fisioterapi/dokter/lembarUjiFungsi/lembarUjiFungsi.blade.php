@@ -33,40 +33,41 @@
                     <!-- components biodata pasien by no mr -->
                     <div class="card card-primary">
                         <div class="card-body">
-                            <form action="{{ route('asesmenUpdate.ujiFungsi') }}" method="POST">
+                       
+                            <form action="{{ route('store.ujiFungsi') }}" method="POST">
                                 @csrf
-                                @method('PUT')
                                 <div class="row">
                                     <div class="col-md-12">
+                                        <input type="hidden" name="no_mr" class="form-control" value="{{$biodatas->NO_MR}}" readonly>
                                         <input type="hidden" name="no_registrasi" class="form-control" value="{{$biodatas->No_Reg}}" readonly>
-                                        <input type="hidden" name="kode_transaksi_fisio" class="form-control" value="{{$lembarUjiFungsiGet->kode_transaksi_fisio}}" readonly>
+                                        <input type="hidden" name="kode_transaksi_fisio" class="form-control" value="{{$asesmenDokterGet->kode_transaksi_fisio}}" readonly>
                                         <div class="form-group">
                                             <label>Diagnosis Fungsional / Diagnosis Klinis : <code>*</code></label>
-                                            <textarea class="form-control" rows="3" name="diagnosis_fungsional" value="" placeholder="Masukan ...">{{$lembarUjiFungsiGet->diagnosis_fungsional}}</textarea>
+                                            <textarea class="form-control" rows="3" name="diagnosis_fungsional" value="" placeholder="Masukan ..."></textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Instrumen Uji Fungsi / Prosedur KFR : <code>*</code></label>
-                                            <textarea class="form-control" rows="3" name="prosedur_kfr" value="" placeholder="Masukan ...">{{$lembarUjiFungsiGet->prosedur_kfr}}</textarea>
+                                            <textarea class="form-control" rows="3" name="prosedur_kfr" value="" placeholder="Masukan ..."></textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Hasil yang didapat : </label>
-                                            <textarea class="form-control" rows="3" name="hasil_pemeriksaan" value="" placeholder="Masukan ...">{{$lembarUjiFungsiGet->hasil_pemeriksaan}}</textarea>
+                                            <textarea class="form-control" rows="3" name="hasil_pemeriksaan" value="" placeholder="Masukan ..."></textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Kesimpulan : </label>
-                                            <textarea class="form-control" rows="3" name="kesimpulan" value="" placeholder="Masukan ...">{{$lembarUjiFungsiGet->kesimpulan}}</textarea>
+                                            <textarea class="form-control" rows="3" name="kesimpulan" value="" placeholder="Masukan ..."></textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Rekomendasi : </label>
-                                            <textarea class="form-control" rows="3" name="rekomendasi" value="" placeholder="Masukan ...">{{$lembarUjiFungsiGet->rekomendasi}}</textarea>
+                                            <textarea class="form-control" rows="3" name="rekomendasi" value="" placeholder="Masukan ..."></textarea>
                                         </div>
                                     </div>
                                     {{-- <div class="col-md-9">

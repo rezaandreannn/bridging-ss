@@ -31,13 +31,11 @@
                     <!-- components biodata pasien by no mr -->
                     @include('components.biodata-pasien-fisio-bymr')
                     <!-- components biodata pasien by no mr -->
+            
                     <div class="card card-primary">
                         <div class="card-header card-success">
-                            <h4 class="card-title">Form Dokter Fisioterapi</h4>
+                            <a href="{{ route('list_pasiens.dokter')}}" class="btn btn-sm btn-primary"><i class="fas fa-arrow-rotate-back"></i> Kembali</a>
                         </div>
-                    </div>
-                    <div class="card card-primary">
-
                         <div class="card-body">
                             <form action="{{ route('asesmenUpdate.dokter') }}" method="POST">
                                 @csrf

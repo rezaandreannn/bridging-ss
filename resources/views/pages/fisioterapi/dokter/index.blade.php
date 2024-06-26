@@ -74,10 +74,10 @@
                                     <td>{{ $pasien->Nama_Pasien }}</td>
                                     <td>{{ $pasien->Alamat }}</td>
                                     <td>
-                                        @if($cekAsesmenDokter->cek_asesmen_dokter_fisio($pasien->NO_REG)==true && $pasien->FS_STATUS == '')
-                                        <div class="badge badge-success">Selesai</div>
+                                        @if($fisioterapi->cek_asesmen_dokter_fisio($pasien->NO_REG)==true && $pasien->FS_STATUS == '')
+                                        <div class="badge badge-success">Dokter Selesai</div>
                                         <div class="badge badge-warning">Perawat Belum</div>
-                                        @elseif($cekAsesmenDokter->cek_asesmen_dokter_fisio($pasien->NO_REG)==true && $pasien->FS_STATUS == '1')
+                                        @elseif($fisioterapi->cek_asesmen_dokter_fisio($pasien->NO_REG)==true && $pasien->FS_STATUS == '1')
                                         <div class="badge badge-success">Selesai</div>
                                         @elseif($pasien->FS_STATUS == '')
                                         <div class="badge badge-warning text-white">Perawat</div>
@@ -86,11 +86,16 @@
 
                                         @endif
                                     </td>
+                                
                                     <td>
-                                        <div class="badge badge-success">Selesai</div>
+                                        @if ($fisioterapi->cek_cppt($pasien->No_MR)==true)
+                                        <div class="badge badge-success">sudah</div>  
+                                        @else
+                                        <div class="badge badge-danger">belum</div>
+                                        @endif
                                     </td>
                                     <td width="15%">
-                                        @if ($cekAsesmenDokter->cek_asesmen_dokter_fisio($pasien->NO_REG)==true)
+                                        @if ($fisioterapi->cek_asesmen_dokter_fisio($pasien->NO_REG)==true)
                                         <button data-toggle="modal" data-target="#modal-edit{{$pasien->No_MR}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</button>
                                         @else
                                         <a href="{{ route('add.dokter', $pasien->No_MR)}}" class="btn btn-sm btn-primary"><i class="fas fa-notes-medical"></i> Entry</a>
@@ -136,6 +141,10 @@
                                 <tr>
                                     <td>Lembar Uji Fungsi</td>
                                     <td> <a href="{{ route('edit.ujifungsi', $pasien->No_MR)}}" class="btn btn-sm btn-warning"><i class="fas fa fa-edit"></i> Edit</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Lembar SPKFR</td>
+                                    <td> <a href="{{ route('edit.lembarspkfr', $pasien->No_MR)}}" class="btn btn-sm btn-warning"><i class="fas fa fa-edit"></i> Edit</a></td>
                                 </tr>
                                 <tr>
                                     <td>Cppt</td>

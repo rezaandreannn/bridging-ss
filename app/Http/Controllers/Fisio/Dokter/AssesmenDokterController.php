@@ -46,13 +46,9 @@ class AssesmenDokterController extends Controller
     {
         //
         $listpasien = $this->fisio->getPasienRehabMedis();
-        $cekAsesmenDokter = new Fisioterapi();
-
-        // dd($listpasien);
-        // die;
-
+        $fisioterapi = new Fisioterapi();
         $title = $this->prefix . ' ' . 'List Pasien';
-        return view($this->view . 'dokter.index', compact('title', 'listpasien', 'cekAsesmenDokter'));
+        return view($this->view . 'dokter.index', compact('title', 'listpasien', 'fisioterapi'));
     }
 
     /**
@@ -63,13 +59,14 @@ class AssesmenDokterController extends Controller
     public function create($NoMr)
     {
         //
+   
         $lastKodeTransaksiByMr = DB::connection('pku')
             ->table('TRANSAKSI_FISIOTERAPI')
             ->where('NO_MR_PASIEN', $NoMr)
             ->orderBy('ID_TRANSAKSI', 'DESC')
             ->limit('1')
             ->first();
-
+       
         $lastKodeTransaksi = DB::connection('pku')
             ->table('TRANSAKSI_FISIOTERAPI')
             ->orderBy('ID_TRANSAKSI', 'DESC')
@@ -78,9 +75,15 @@ class AssesmenDokterController extends Controller
 
         $kode = 'F';
         if (!$lastKodeTransaksiByMr) {
-            $noTerakhir = (int)substr($lastKodeTransaksi->KODE_TRANSAKSI_FISIO, 2);
-            $noTerakhir += 1;
-            $nomorUrut = sprintf('%06s', $noTerakhir);
+            if (!$lastKodeTransaksi){
+                $nomorUrut = "000001";
+            }
+            else{
+                $noTerakhir = (int)substr($lastKodeTransaksi->KODE_TRANSAKSI_FISIO, 2);
+                $noTerakhir += 1;
+                $nomorUrut = sprintf('%06s', $noTerakhir);
+            }
+        
         } else {
             $noTerakhir = (int)substr($lastKodeTransaksiByMr->KODE_TRANSAKSI_FISIO, 2);
             $nomorUrut = sprintf('%06s', $noTerakhir);
@@ -97,7 +100,7 @@ class AssesmenDokterController extends Controller
         // dd($biodatas);
         // die;
         $title = $this->prefix . ' ' . 'Assesmen Dokter';
-        return view($this->view . 'dokter.createAsesmen', compact('title', 'biodatas', 'jenisterapifisio', 'kode_transaksi_fisio', 'ttv', 'asesmen_perawat'));
+        return view($this->view . 'dokter.asesmenDokter.createAsesmen', compact('title', 'biodatas', 'jenisterapifisio', 'kode_transaksi_fisio', 'ttv', 'asesmen_perawat'));
     }
 
     public function editAsesmen($NoMr)
@@ -112,7 +115,7 @@ class AssesmenDokterController extends Controller
         $terapiFisioGet = DB::connection('pku')->table('fis_tr_jenis')->where('no_registrasi', $biodatas->No_Reg)->get();
 
         $title = $this->prefix . ' ' . 'Edit Assesmen Dokter';
-        return view($this->view . 'dokter.editAsesmen', compact('title', 'biodatas', 'jenisterapifisio', 'asesmenDokterGet', 'terapiFisioGet'));
+        return view($this->view . 'dokter.asesmenDokter.editAsesmen', compact('title', 'biodatas', 'jenisterapifisio', 'asesmenDokterGet', 'terapiFisioGet'));
     }
 
     public function createUjiFungsi($NoMr)
@@ -121,7 +124,7 @@ class AssesmenDokterController extends Controller
         $asesmenDokterGet = DB::connection('pku')->table('fis_asesmen_dokter')->where('no_registrasi', $biodatas->No_Reg)->first();
 
         $title = $this->prefix . ' ' . 'Lembar Uji Fungsi';
-        return view($this->view . 'dokter.lembarUjiFungsi', compact('title', 'biodatas', 'asesmenDokterGet'));
+        return view($this->view . 'dokter.lembarUjiFungsi.lembarUjiFungsi', compact('title', 'biodatas', 'asesmenDokterGet'));
     }
 
     public function editUjiFungsi($NoMr)
@@ -131,7 +134,7 @@ class AssesmenDokterController extends Controller
         // dd($lembarUjiFungsiGet);
 
         $title = $this->prefix . ' ' . 'Lembar Uji Fungsi';
-        return view($this->view . 'dokter.editLembarUjiFungsi', compact('title', 'biodatas', 'lembarUjiFungsiGet'));
+        return view($this->view . 'dokter.lembarUjiFungsi.editLembarUjiFungsi', compact('title', 'biodatas', 'lembarUjiFungsiGet'));
     }
 
     public function storeUjiFungsi(Request $request)
@@ -192,6 +195,108 @@ class AssesmenDokterController extends Controller
             return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
         }
     }
+
+    public function lembarSpkfr($NoMr)
+    {
+        $biodatas = $this->pasien->biodataPasienByMr($NoMr);
+        $asesmenDokter = DB::connection('pku')->table('fis_asesmen_dokter')->where('no_registrasi', $biodatas->No_Reg)->first();
+        
+
+        $title = $this->prefix . ' ' . 'Lembar SPKFR';
+        return view($this->view . 'dokter.lembarSpkfr.lembarSpkfr', compact('title', 'biodatas','asesmenDokter'));
+    }
+
+    public function storeSpkfr(Request $request)
+    {
+
+
+        $validatedData = $request->validate([
+            'pemeriksaan_fisik' => 'required',
+        ]);
+
+        try {
+            DB::connection('pku')->beginTransaction();
+      
+          
+            $spkfr = DB::connection('pku')->table('fis_lembar_spkfr')->insert([
+                'no_registrasi' => $request->input('no_registrasi'),
+                'kode_transaksi_fisio' => $request->input('kode_transaksi_fisio'),
+                'pemeriksaan_fisik' => $request->input('pemeriksaan_fisik'),
+                'diagnosis_medis' => $request->input('diagnosis_medis'),
+                'diagnosis_fungsi' => $request->input('diagnosis_fungsi'),
+                'pemeriksaan_penunjang' => $request->input('pemeriksaan_penunjang'),
+                'tata_laksana_kfr' => $request->input('tata_laksana_kfr'),
+                'penyakit_akibat_kerja' => $request->input('penyakit_akibat_kerja'),
+                'deskripsi_akibat_kerja' => $request->input('deskripsi_akibat_kerja'),
+                'create_by' => auth()->user()->username,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
+
+            // Commit transaksi
+            DB::connection('pku')->commit();
+
+            return redirect()->route('list_pasiens.dokter')->with('success', 'Spkfr Berhasil Ditambahkan!');
+        } catch (\Exception $e) {
+            // Rollback transaksi jika terjadi kesalahan
+            DB::connection('pku')->rollback();
+
+            return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function editLembarSpkfr($NoMr)
+    {
+        $biodatas = $this->pasien->biodataPasienByMr($NoMr);
+        $asesmenDokter = DB::connection('pku')->table('fis_asesmen_dokter')->where('no_registrasi', $biodatas->No_Reg)->first();
+        $lembarSpkfr = DB::connection('pku')->table('fis_lembar_spkfr')->where('no_registrasi', $biodatas->No_Reg)->first();
+     
+
+        $title = $this->prefix . ' ' . 'Edit Lembar SPKFR';
+        return view($this->view . 'dokter.lembarSpkfr.editLembarSpkfr', compact('title', 'biodatas', 'lembarSpkfr','asesmenDokter'));
+    }
+
+    public function updateSpkfr(Request $request)
+    {
+
+    
+
+        $validatedData = $request->validate([
+            'pemeriksaan_fisik' => 'required',
+        ]);
+
+        try {
+            DB::connection('pku')->beginTransaction();
+      
+          
+            $spkfr = DB::connection('pku')->table('fis_lembar_spkfr')->where('no_registrasi', $request->input('no_registrasi'))->update([
+                'no_registrasi' => $request->input('no_registrasi'),
+                'kode_transaksi_fisio' => $request->input('kode_transaksi_fisio'),
+                'pemeriksaan_fisik' => $request->input('pemeriksaan_fisik'),
+                'diagnosis_medis' => $request->input('diagnosis_medis'),
+                'diagnosis_fungsi' => $request->input('diagnosis_fungsi'),
+                'pemeriksaan_penunjang' => $request->input('pemeriksaan_penunjang'),
+                'tata_laksana_kfr' => $request->input('tata_laksana_kfr'),
+                'penyakit_akibat_kerja' => $request->input('penyakit_akibat_kerja'),
+                'deskripsi_akibat_kerja' => $request->input('deskripsi_akibat_kerja'),
+                'create_by' => auth()->user()->username,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
+
+            // Commit transaksi
+            DB::connection('pku')->commit();
+
+            return redirect()->route('list_pasiens.dokter')->with('success', 'Spkfr Berhasil Diperbarui!');
+        } catch (\Exception $e) {
+            // Rollback transaksi jika terjadi kesalahan
+            DB::connection('pku')->rollback();
+
+            return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
+        }
+    }
+
+
 
     /**
      * Store a newly created resource in storage.

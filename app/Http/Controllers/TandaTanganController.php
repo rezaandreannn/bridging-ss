@@ -104,13 +104,19 @@ class TandaTanganController extends Controller
                 'IMAGE' => $file_name,
                 'CREATE_AT' => now()
             ]);
-
+            if ((auth()->user()->roles->pluck('name')[0])=='dokter fisioterapi'){
+                return redirect()->route('add.spkfr', ['NoMr' => $request->input('NO_MR_PASIEN')])->with('success', 'Tanda Tangan Berhasil Ditambahkan!');
+            }
+            else
+            {
+                return redirect()->route('cppt.detail', [
+                    'id' => $request->input('ID_TRANSAKSI'),
+                    'no_mr' => $request->input('NO_MR_PASIEN'),
+                    'kode_transaksi' => $request->input('KODE_TRANSAKSI_FISIO')
+                ])->with('success', 'Tanda Tangan Berhasil Ditambahkan!');
+            }
             // Redirect with success message
-            return redirect()->route('cppt.detail', [
-                'id' => $request->input('ID_TRANSAKSI'),
-                'no_mr' => $request->input('NO_MR_PASIEN'),
-                'kode_transaksi' => $request->input('KODE_TRANSAKSI_FISIO')
-            ])->with('success', 'Tanda Tangan Berhasil Ditambahkan!');
+           
         }
     }
 
