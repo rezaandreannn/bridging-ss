@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Fisio\Berkas;
 use App\Models\Pasien;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\BerkasFisioterapi;
 use App\Models\Fisioterapi;
 use App\Models\Rajal;
 
@@ -14,20 +15,26 @@ class BerkasFisioController extends Controller
     protected $view;
     protected $prefix;
     protected $fisio;
-    protected $rajal;
+    protected $berkasFisio;
+    protected $pasien;
 
     public function __construct(Fisioterapi $fisio)
     {
         $this->fisio = $fisio;
         $this->view = 'pages.fisioterapi.berkas.';
         $this->prefix = 'Fisioterapi Berkas';
-        $this->rajal = new Rajal;
+        $this->berkasFisio = new BerkasFisioterapi();
+        $this->pasien = new Pasien();
     }
 
-    public function  index()
+    public function  index(Request $request)
     {
         $title = $this->prefix . ' ' . 'Pasien';
-        return view($this->view . 'index', compact('title'));
+        $no_mr = $request->input('no_mr');
+        $data = $this->berkasFisio->getFisioterapiHistory($no_mr);
+        $biodatas = $this->pasien->biodataPasienByMr($no_mr);
+        // dd($data);
+        return view($this->view . 'index', compact('title','data','biodatas'));
     }
 
     public function berkas()

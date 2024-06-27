@@ -160,15 +160,18 @@ class FisioController extends Controller
     // Tambah Data CPPT Pasien Fisioterapi
     public function detail_cppt(Request $request, $id)
     {
+
+    //    dd($request->kode_transaksi);
         $title = $this->prefix . ' Tambah CPPT';
 
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
-        //  dd($biodatas);
-        // die;
-        $data = $this->fisio->dataPasienCPPT($id);
+        $terapiFisioGet = DB::connection('pku')->table('fis_tr_jenis')->where('kode_tr_fisio', $request->kode_transaksi)->get();
+    
+        $data = $this->fisio->cpptGet($id);
+        // dd($data);
         $cppt =  DB::connection('pku')->table('TRANSAKSI_FISIOTERAPI')->where('ID_TRANSAKSI', $id)->first();
         $jenisfisio = DB::connection('pku')->table('TAC_COM_FISIOTERAPI_MASTER')->get();
-        return view($this->view . 'cppt.detail', compact('title', 'biodatas', 'data', 'cppt', 'jenisfisio'));
+        return view($this->view . 'cppt.detail', compact('title', 'biodatas', 'data', 'cppt', 'jenisfisio','terapiFisioGet'));
     }
 
     // public function tambah_cppt(Request $request, $id)
@@ -206,6 +209,7 @@ class FisioController extends Controller
             $data = DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')->insert([
 
                 'ID_TRANSAKSI_FISIO' => $request->input('ID_TRANSAKSI'),
+                'DIAGNOSA' => $request->input('DIAGNOSA'),
                 'TEKANAN_DARAH' => $request->input('TEKANAN_DARAH'),
                 'NADI' => $request->input('NADI'),
                 'SUHU' => $request->input('SUHU'),
@@ -274,20 +278,30 @@ class FisioController extends Controller
         }
 
         $data = DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')->where('ID_CPPT_FISIO', $id)->update([
+            'DIAGNOSA' => $request->input('DIAGNOSA'),
             'TEKANAN_DARAH' => $request->input('TEKANAN_DARAH'),
             'NADI' => $request->input('NADI'),
             'SUHU' => $request->input('SUHU'),
             'JENIS_FISIO' => $terapi,
             'TANGGAL_FISIO' => $request->input('TANGGAL_FISIO'),
             'JAM_FISIO' => $request->input('JAM_FISIO'),
+            'KODE_DOKTER' => $request->input('KODE_DOKTER') ?? null,
             'CARA_PULANG' => $request->input('CARA_PULANG'),
             'ANAMNESA' => $request->input('ANAMNESA'),
             'CREATE_AT' => now(),
-            'CREATE_BY' => auth()->user()->id,
+          
         ]);
 
+        if ((auth()->user()->roles->pluck('name')[0])=='dokter fisioterapi'){
+            return redirect()->route('list_pasiens.dokter')->with('success', 'Lembar Cppt Berhasil Diperbarui!');
+        }
+        else
+        {
+            return redirect()->route('cppt.detail', ['id' => $request->input('ID_TRANSAKSI'), 'kode_transaksi' => $request->input('KODE_TRANSAKSI_FISIO'), 'no_mr' => $request->input('NO_MR_PASIEN')])->with('success', 'CPPT Berhasil Diperbarui!');
+        }
+
         // return redirect()->back()->with('success', 'CPPT Berhasil Ditambahkan!');
-        return redirect()->route('cppt.detail', ['id' => $request->input('ID_TRANSAKSI'), 'kode_transaksi' => $request->input('KODE_TRANSAKSI_FISIO'), 'no_mr' => $request->input('NO_MR_PASIEN')])->with('success', 'CPPT Berhasil Diperbarui!');
+       
         // return redirect()->route('cppt.detail', ['id' => $id,  'no_mr' => $request->input('NO_MR_PASIEN'), 'kode_transaksi' => $request->input('kode_transaksi')])->with('success', 'CPPT Berhasil Diperbarui!');
     }
 

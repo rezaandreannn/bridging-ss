@@ -70,6 +70,12 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
+                                            <label>Diagnosa <code>*</code></label>
+                                            <textarea class="form-control" rows="2" name="DIAGNOSA" value="" placeholder="Masukan ..." @if ((auth()->user()->roles->pluck('name')[0])!='dokter fisioterapi') readonly  @endif>{{ $data->DIAGNOSA}}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
                                             <label>Tekanan Darah</label>
                                             <input type="text" name="TEKANAN_DARAH" id="tekananDarah" value="{{ $data->TEKANAN_DARAH}}" class="form-control">
                                         </div>

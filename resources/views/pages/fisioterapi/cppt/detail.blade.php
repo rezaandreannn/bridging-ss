@@ -57,7 +57,7 @@
                                             <label>Tanggal dan jam Terapi </label>
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <input type="date" name="TANGGAL_FISIO" class="form-control" value="{{ $cppt->CREATE_AT}}" readonly>
+                                                    <input type="date" name="TANGGAL_FISIO" class="form-control" value="{{date('Y-m-d')}}">
                                                 </div>
                                                 <div class="col-md-6">
                                                     <input type="time" name="JAM_FISIO" class="form-control" value="{{date('H:i:s')}}">
@@ -67,6 +67,8 @@
                                     </div>
                                     @if ((auth()->user()->roles->pluck('name')[0])=='dokter fisioterapi')
                                     <input type="hidden" name="KODE_DOKTER" class="form-control" value="{{ auth()->user()->username }}" readonly>
+                                    @else
+                                    <input type="hidden" name="KODE_DOKTER" class="form-control" value="028" readonly>
                                     @endif
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -74,14 +76,14 @@
                                             <textarea class="form-control" rows="2" name="ANAMNESA" value="" placeholder="Masukan ..."></textarea>
                                         </div>
                                     </div>
-                                    @if ((auth()->user()->roles->pluck('name')[0])=='dokter fisioterapi')
+                                    
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Diagnosa <code>*</code></label>
-                                            <textarea class="form-control" rows="2" name="DIAGNOSA" value="" placeholder="Masukan ..."></textarea>
+                                            <textarea class="form-control" rows="2" name="DIAGNOSA" value="" placeholder="Masukan ..." @if ((auth()->user()->roles->pluck('name')[0])!='dokter fisioterapi') readonly  @endif></textarea>
                                         </div>
                                     </div>
-                                    @endif
+                                  
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tekanan Darah</label>
@@ -105,9 +107,17 @@
                                             <label>Jenis Fisio</label>
                                             <select name="JENIS_FISIO[]" class="form-control select2" multiple="multiple" data-placeholder="Pilih Jenis Fisio" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                                 <option value="" disabled>-- Pilih Jenis Fisio --</option>
-                                                @foreach ($jenisfisio as $jenis)
-                                                <option value="{{ $jenis->NAMA_TERAPI }}">{{ $jenis->NAMA_TERAPI }}</option>
+                                            
+
+                                                @forelse ($terapiFisioGet as $terapiGet)
+                                                @foreach ($jenisfisio as $terapi)
+                                                <option value="{{ $terapi->NAMA_TERAPI }}" {{ $terapi->ID_JENIS_FISIO == $terapiGet->id_jenis_fisioterapi ? "selected" : "" }}>{{ $terapi->NAMA_TERAPI }}</option>
                                                 @endforeach
+                                                @empty
+                                                @foreach ($jenisfisio as $terapi)
+                                                <option value="{{ $terapi->NAMA_TERAPI }}">{{ $terapi->NAMA_TERAPI }}</option>
+                                                @endforeach
+                                                @endforelse
                                             </select>
                                         </div>
                                     </div>
@@ -165,10 +175,10 @@
                                             <td>S = {{$cppt->ANAMNESA}} <br>O = TD = {{$cppt->TEKANAN_DARAH}}, N = {{$cppt->NADI}}, T = {{$cppt->SUHU}}</td>
                                             <td>{{$cppt->DIAGNOSA}}</td>
                                             <td>{{$cppt->JENIS_FISIO}}</td>
-                                            <td>@if($cppt->KODE_DOKTER != '')
-                                                {{ $biodatas->NAMA_DOKTER }}
+                                            <td>@if($cppt->KODE_DOKTER == '151')
+                                                {{ $cppt->name . ' (Dokter SPKFR)' }}
                                                 @else
-
+                                                {{ $cppt->name . ' (Fisioterapis)' }}
                                                 @endif
                                             </td>
                                             <td width="20%">
