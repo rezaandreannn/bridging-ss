@@ -53,6 +53,8 @@
                                     <tbody>
                                         @foreach ($transaksis as $transaksi)
                                         <tr>
+                                            <input type="hidden" class="delete_id" value="{{ $transaksi->ID_TRANSAKSI }}">
+                                            <input type="hidden" class="nama" value="{{ $transaksi->NO_MR_PASIEN }}">
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{$transaksi->CREATE_AT}}</td>
                                             <td>{{$transaksi->KODE_TRANSAKSI_FISIO}}</td>
@@ -76,10 +78,12 @@
                                             'no_mr' => $transaksi->NO_MR_PASIEN,'kode_transaksi' => $transaksi->KODE_TRANSAKSI_FISIO
                                             ]) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i>Tambah CPPT</a>
                                                 @endif
+
                                                 <a href="{{ route('cppt.cetakCPPT', [
                                             'kode_transaksi' => $transaksi->KODE_TRANSAKSI_FISIO,
                                             'no_mr' => $transaksi->NO_MR_PASIEN
                                             ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-secondary"><i class="fa fa-print"></i> CPPT</a>
+                                                
                                                 <a href="{{ route('cppt.buktiLayanan', [
                                             'kode_transaksi' => $transaksi->KODE_TRANSAKSI_FISIO,
                                             'no_mr' => $transaksi->NO_MR_PASIEN
@@ -87,14 +91,21 @@
                                                 @if($fisioModel->countCpptByKodeTr($transaksi->ID_TRANSAKSI) >= $transaksi->JUMLAH_TOTAL_FISIO)
 
                                                 @else
+                                                
                                                 <button data-toggle="modal" data-target="#modal-edit-tranksasi18{{$transaksi->ID_TRANSAKSI}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</button>
-                                                <form id="delete-pegawai" action=" {{url('perawat/transaksi_fisio/'.$transaksi->ID_TRANSAKSI)}}" method="post">
-                                                    {{csrf_field()}}
-                                                    {{method_field('delete')}}
-                                                    <button type="button" class="btn btn-danger" onclick="confirmDelete('delete-pegawai')">delete</button>
+                                                
+                                                {{-- <a href="{{ route('transaksi_fisio.delete',$transaksi->ID_TRANSAKSI)}}" data-id="{{ $transaksi->ID_TRANSAKSI }}" data-nama="{{ $transaksi->NO_MR_PASIEN }}" id="delete" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</a> --}}
+                                                <form id="delete-form-{{$transaksi->ID_TRANSAKSI}}" action="{{ route('transaksi_fisio.delete', $transaksi->ID_TRANSAKSI) }}" method="POST" style="display: none;">
+                                                    @method('delete')
+                                                    @csrf
                                                 </form>
+                                                <a class="btn btn-sm btn-danger" confirm-delete="true" data-menuId="{{$transaksi->ID_TRANSAKSI}}" href="#"><i class="fas fa-trash"></i> Hapus</a>
                                                 @endif
+                                                
                                                 <a href="{{ route('form.dokter', ['no_mr' => $transaksi->NO_MR_PASIEN]) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i>CPPT Dokter</a>
+                                                
+                                                {{-- <a href="{{ route('lembar.dokter', ['no_mr' => $transaksi->NO_MR_PASIEN]) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i>Lembar Dokter</a> --}}
+                                                
                                                 <a href="{{ route('cppt.cetakFormulir', [
                                             'no_mr' => $transaksi->NO_MR_PASIEN
                                             ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-secondary"><i class="fa fa-print"></i> Formulir</a>
@@ -204,33 +215,44 @@
 <script src="{{ asset('library/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('library/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
-<script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script>
+{{-- <script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script> --}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+{{-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> --}}
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
 
 <!-- Batasan inputan transaksi Fisioterapi -->
 
+
 <!-- Delete Data -->
 <script>
-    function confirmDelete(item_id) {
-        swal({
-             title: 'Apakah Anda Yakin?',
-              text: "Anda Tidak Akan Dapat Mengembalikannya!",
-              type: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Yes, delete it!'
-        })
-            .then((willDelete) => {
-                if (willDelete) {
-                    $('#'+item_id).submit();
-                } else {
-                    swal("Cancelled Successfully");
+    document.querySelectorAll('[confirm-delete="true"]').forEach(function(element) {
+        element.addEventListener('click', function(event) {
+            event.preventDefault();
+            var menuId = this.getAttribute('data-menuId');
+            Swal.fire({
+                title: 'Apakah Kamu Yakin?'
+                , text: "Anda tidak akan dapat mengembalikan ini!"
+                , icon: 'warning'
+                , showCancelButton: true
+                , confirmButtonColor: '#6777EF'
+                , cancelButtonColor: '#d33'
+                , confirmButtonText: 'Ya, Hapus saja!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var form = document.getElementById('delete-form-' + menuId);
+                    if (form) {
+                        form.submit();
+                    } else {
+                        console.error('Form not found for menu ID:', menuId);
+                    }
                 }
             });
-    }
+        });
+    });
+
 </script>
 
 @endpush

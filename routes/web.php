@@ -143,7 +143,7 @@ Route::middleware('auth')->group(function () {
         Route::get('perawat/transaksi_fisio', [FisioController::class, 'transaksi'])->name('transaksi_fisio.fisio');
         Route::post('perawat/transaksi_fisio', [FisioController::class, 'store'])->name('transaksi_fisio.store');
         Route::put('perawat/transaksi_fisio/{id}', [FisioController::class, 'update'])->name('transaksi_fisio.update');
-        Route::get('perawat/transaksi_fisio/{id}', [FisioController::class, 'delete'])->name('transaksi_fisio.delete');
+        Route::delete('perawat/transaksi_fisio/{id}', [FisioController::class, 'delete'])->name('transaksi_fisio.delete');
 
         // Tambah Data CPPT Fisioterapi
         Route::get('perawat/cppt/{id}/{no_mr}/{kode_transaksi}', [FisioController::class, 'detail_cppt'])->name('cppt.detail');
@@ -168,7 +168,7 @@ Route::middleware('auth')->group(function () {
         Route::get('dokter/lembar_uji_fungsi/edit/{NoMr}', [AssesmenDokterController::class, 'editUjiFungsi'])->name('edit.ujifungsi');
         Route::post('dokter/lembar_uji_fungsi/add', [AssesmenDokterController::class, 'storeUjiFungsi'])->name('store.ujiFungsi');
         Route::put('dokter/lembar_uji_fungsi/update', [AssesmenDokterController::class, 'updateUjiFungsi'])->name('update.ujiFungsi');
-        
+
         // lembar spkfr
         Route::get('dokter/lembar_spkfr/{NoMr}', [AssesmenDokterController::class, 'lembarSpkfr'])->name('add.spkfr');
         Route::get('dokter/lembar_spkfr/edit/{NoMr}', [AssesmenDokterController::class, 'editLembarSpkfr'])->name('edit.lembarspkfr');
@@ -177,7 +177,7 @@ Route::middleware('auth')->group(function () {
 
 
         Route::get('/form_fisioterapi/{no_mr}', [FisioController::class, 'formDokter'])->name('form.dokter');
-       
+
         Route::get('/hasil_tindakan/{no_mr}', [FisioController::class, 'tindakanDokter'])->name('tindakan.dokter');
         Route::get('/diagnosa_fisioterapi', [FisioController::class, 'diagnosaDokter'])->name('diagnosa.dokter');
         Route::get('cetak_cppt/{no_mr}', [FisioController::class, 'cetakFormulir'])->name('cppt.cetakFormulir');
