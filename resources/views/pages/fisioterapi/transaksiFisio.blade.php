@@ -214,10 +214,7 @@
 <script src="{{ asset('library/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('library/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
-{{-- <script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script> --}}
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
-{{-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> --}}
+<script src="{{ asset('library/sweetalert/dist/sweetalert.baru.js') }}"></script>
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
@@ -227,30 +224,34 @@
 
 <!-- Delete Data -->
 <script>
-    document.querySelectorAll('[confirm-delete="true"]').forEach(function(element) {
-        element.addEventListener('click', function(event) {
-            event.preventDefault();
-            var menuId = this.getAttribute('data-menuId');
-            Swal.fire({
-                title: 'Apakah Kamu Yakin?'
-                , text: "Anda tidak akan dapat mengembalikan ini!"
-                , icon: 'warning'
-                , showCancelButton: true
-                , confirmButtonColor: '#6777EF'
-                , cancelButtonColor: '#d33'
-                , confirmButtonText: 'Ya, Hapus saja!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    var form = document.getElementById('delete-form-' + menuId);
-                    if (form) {
-                        form.submit();
-                    } else {
-                        console.error('Form not found for menu ID:', menuId);
-                    }
+$(document).ready(function() {
+    // Inisialisasi DataTable
+    var table = $('#table-1').DataTable();
+
+    // Event delegation untuk tombol delete
+    $('#table-1').on('click', '[confirm-delete="true"]', function(event) {
+        event.preventDefault();
+        var menuId = $(this).data('menuid');
+        Swal.fire({
+            title: 'Apakah Kamu Yakin?',
+            text: "Anda tidak akan dapat mengembalikan ini!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#6777EF',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Hapus saja!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var form = $('#delete-form-' + menuId);
+                if (form.length) {
+                    form.submit();
+                } else {
+                    console.error('Data will not be deleted!:', menuId);
                 }
-            });
+            }
         });
     });
+});
 </script>
 
 @endpush

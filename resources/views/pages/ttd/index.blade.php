@@ -61,15 +61,15 @@
                                         <a href="#" data-toggle="modal" data-target="#gambarModal{{ $ttd->ID_TTD }}">Lihat Tanda Tangan</a>
                                     </td>
                                     <td width="15%">
-                                        <a href="{{ route('list-ttd.edit', [
-                                            'id' => $ttd->ID_TTD
-                                            ]) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                                        <button id="delete" data-id="{{ $ttd->ID_TTD }}" data-nama="{{ $ttd->USERNAME }}" data-bs-toggle="tooltip" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-
+                                        <a href="{{ route('list-ttd.edit', ['id' => $ttd->ID_TTD]) }}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                                        <form id="delete-form-{{$ttd->ID_TTD}}" action="{{ route('list-ttd.delete', $ttd->ID_TTD) }}" method="POST" style="display: none;">
+                                            @method('delete')
+                                            @csrf
+                                        </form>
+                                        <a class="btn btn-sm btn-danger" confirm-delete="true" data-menuId="{{$ttd->ID_TTD}}" href="#"><i class="fas fa-trash"></i> Hapus</a>
                                     </td>
                                 </tr>
                                 @endforeach
-
                             </tbody>
                         </table>
                     </div>
@@ -149,7 +149,7 @@
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('ttd/js/jquery.signature.min.js') }}"></script>
 <script src="{{ asset('ttd/js/jquery.ui.touch-punch.min.js') }}"></script>
-<script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script>
+<script src="{{ asset('library/sweetalert/dist/sweetalert.baru.js') }}"></script>
 
 
 <!-- Page Specific JS File -->
@@ -169,25 +169,34 @@
 
 <!-- Delete Data -->
 <script>
-    $(document).on('click', '#delete', function() {
-        var ttd = $(this).attr('data-id');
-        var nama = $(this).attr('data-nama');
+$(document).ready(function() {
+    // Inisialisasi DataTable
+    var table = $('#table-1').DataTable();
 
-        swal({
-                title: "Are You Sure?",
-                text: "Data Will Be Deleted " + nama + " !!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-            .then((willDelete) => {
-                if (willDelete) {
-                    window.location = "{{ route('list-ttd.delete', ['id' => ':id']) }}".replace(':id', ttd);
+    // Event delegation untuk tombol delete
+    $('#table-1').on('click', '[confirm-delete="true"]', function(event) {
+        event.preventDefault();
+        var menuId = $(this).data('menuid');
+        Swal.fire({
+            title: 'Apakah Kamu Yakin?',
+            text: "Anda tidak akan dapat mengembalikan ini!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#6777EF',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Hapus saja!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var form = $('#delete-form-' + menuId);
+                if (form.length) {
+                    form.submit();
                 } else {
-                    swal("Data will not be deleted!");
+                    console.error('Data will not be deleted!:', menuId);
                 }
-            });
+            }
+        });
     });
+});
 </script>
 
 <!-- Page Specific JS File -->

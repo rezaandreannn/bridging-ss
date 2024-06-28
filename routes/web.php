@@ -29,6 +29,7 @@ use App\Http\Controllers\Fisio\Dokter\AssesmenDokterController;
 use App\Http\Controllers\RawatJalan\Perawat\AssesmenController;
 use App\Http\Controllers\Case\Encounter\EncounterCreateController;
 use App\Http\Controllers\Fisio\Berkas\BerkasFisioController;
+use App\Http\Controllers\RawatJalan\Dokter\RajalDokterController;
 use App\Models\Fisioterapi;
 
 /*
@@ -90,11 +91,11 @@ Route::middleware('auth')->group(function () {
         // ICD10
         Route::resource('icd10', Icd10Controller::class);
 
-        // Jenis Fisioterapi
+        // Jenis Fisioterapi (Master Data)
         Route::get('/jenisFisio', [JenisFisioController::class, 'index'])->name('jenisFisio.index');
         Route::post('/jenisFisio', [JenisFisioController::class, 'store'])->name('jenisFisio.store');
         Route::put('/jenisFisio/{id}', [JenisFisioController::class, 'update'])->name('jenisFisio.update');
-        Route::get('/jenisFisio/{id}', [JenisFisioController::class, 'destroy'])->name('jenisFisio.delete');
+        Route::delete('/jenisFisio/{id}', [JenisFisioController::class, 'destroy'])->name('jenisFisio.delete');
     });
 
     // ENCOUNTER 
@@ -150,7 +151,7 @@ Route::middleware('auth')->group(function () {
         Route::get('perawat/cppt/tambah/{no_mr}/{kode_transaksi}', [FisioController::class, 'tambah_cppt'])->name('cppt.tambah');
         Route::post('perawat/cppt', [FisioController::class, 'tambahDataCPPT'])->name('cppt.tambahData');
         Route::put('perawat/cppt/{id}', [FisioController::class, 'editDataCPPT'])->name('cppt.updateData');
-        Route::get('perawat/cppt/{id}', [FisioController::class, 'deleteDataCPPT'])->name('cppt.deleteData');
+        Route::delete('perawat/cppt/{id}', [FisioController::class, 'deleteDataCPPT'])->name('cppt.deleteData');
         Route::get('perawat/edit_cppt/{id}', [FisioController::class, 'edit_cppt'])->name('cppt.edit');
 
         Route::get('cetak_cppt/{kode_transaksi}/{no_mr}', [FisioController::class, 'cetak_cppt'])->name('cppt.cetakCPPT');
@@ -195,7 +196,7 @@ Route::middleware('auth')->group(function () {
         Route::post('petugas', [TandaTanganController::class, 'store'])->name('list-ttd.store');
         Route::get('petugas/edit/{id}', [TandaTanganController::class, 'edit'])->name('list-ttd.edit');
         Route::put('petugas/edit/{id}', [TandaTanganController::class, 'update'])->name('list-ttd.update');
-        Route::get('petugas/delete/{id}', [TandaTanganController::class, 'delete'])->name('list-ttd.delete');
+        Route::delete('petugas/delete/{id}', [TandaTanganController::class, 'delete'])->name('list-ttd.delete');
 
 
         // Tanda Tangan Pasien
@@ -206,15 +207,17 @@ Route::middleware('auth')->group(function () {
 
         // Edit Tanda Tangan Pasien
         Route::get('/pasienTTD/detail', [TandaTanganController::class, 'ttdPasienDetail'])->name('ttd.pasien.detail');
-        Route::get('/pasienTTD/delete/{id}', [TandaTanganController::class, 'deletePasien'])->name('list-ttd-pasien.delete');
+        Route::delete('/pasienTTD/delete/{id}', [TandaTanganController::class, 'deletePasien'])->name('list-ttd-pasien.delete');
         Route::put('/pasienTTD/edit/{id}', [TandaTanganController::class, 'update'])->name('ttd.pasien.update');
 
         // Tanda Tangan Dokter
         Route::get('/cppt/ttd_dokter', [TandaTanganController::class, 'ttdDokter'])->name('ttd.dokter');
     });
 
+
+    // Rawat Jalan Perawat
     Route::prefix('rj')->group(function () {
-        //Rawat Jalan
+        //Rawat Jalan Perawat
         Route::get('rawat_jalan', [AssesmenController::class, 'index'])->name('rj.index');
         Route::get('rawat_jalan/{noReg}', [AssesmenController::class, 'add'])->name('rj.add');
         Route::post('/rawat_jalan', [AssesmenController::class, 'store'])->name('rj.store');
@@ -237,6 +240,10 @@ Route::middleware('auth')->group(function () {
         Route::get('rawat_jalan/rujukanInternal/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakRujukanInternal'])->name('rj.rujukanInternal');
         Route::get('rawat_jalan/prb/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakPRB'])->name('rj.prb');
         Route::get('rawat_jalan/faskes/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakFaskes'])->name('rj.faskes');
+
+
+        // Rawat Jalan Dokter
+        Route::get('rawat_jalan/dokter', [RajalDokterController::class, 'index'])->name('rj.dokter');
     });
 
     // MANAGE USER
@@ -247,7 +254,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
         Route::post('/user', [UserController::class, 'store'])->name('user.store');
         Route::put('/user{id}', [UserController::class, 'update'])->name('user.update');
-        Route::get('/user/delete/{id}', [UserController::class, 'destroy'])->name('user.delete');
+        Route::delete('/user/delete/{id}', [UserController::class, 'destroy'])->name('user.delete');
 
         // ROLES
         Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
@@ -255,7 +262,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/roles/{id}/edit', [RoleController::class, 'edit'])->name('roles.edit');
         Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
         Route::put('/roles{id}', [RoleController::class, 'update'])->name('roles.update');
-        Route::get('/roles/delete/{id}', [RoleController::class, 'destroy'])->name('roles.delete');
+        Route::delete('/roles/delete/{id}', [RoleController::class, 'destroy'])->name('roles.delete');
 
         // PERMISSION
         Route::get('/permission', [PermissionController::class, 'index'])->name('permission.index');
@@ -263,7 +270,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/permission/{id}/edit', [PermissionController::class, 'edit'])->name('permission.edit');
         Route::post('/permission', [PermissionController::class, 'store'])->name('permission.store');
         Route::put('/permission{id}', [PermissionController::class, 'update'])->name('permission.update');
-        Route::get('/permission/delete/{id}', [PermissionController::class, 'destroy'])->name('permission.delete');
+        Route::delete('/permission/delete/{id}', [PermissionController::class, 'destroy'])->name('permission.delete');
 
         // ROLE-PERMISSION
         Route::get('/role-permission', [RoleHasPermissionController::class, 'index'])->name('rolepermission.index');

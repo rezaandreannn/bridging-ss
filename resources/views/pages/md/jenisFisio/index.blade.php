@@ -47,7 +47,11 @@
                                     <td>
                                         <button data-toggle="modal" data-target="#modal-edit-tranksasi18{{$fisio->ID_JENIS_FISIO}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</button>
 
-                                        <button id="delete" data-id="{{ $fisio->ID_JENIS_FISIO }}" data-nama="{{ $fisio->NAMA_TERAPI }}" data-bs-toggle="tooltip" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</button>
+                                        <form id="delete-form-{{$fisio->ID_JENIS_FISIO}}" action="{{ route('jenisFisio.delete', $fisio->ID_JENIS_FISIO) }}" method="POST" style="display: none;">
+                                            @method('delete')
+                                            @csrf
+                                        </form>
+                                        <a class="btn btn-sm btn-danger" confirm-delete="true" data-menuId="{{$fisio->ID_JENIS_FISIO}}" href="#"><i class="fas fa-trash"></i> Hapus</a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -138,32 +142,42 @@
 <script src="{{ asset('library/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('library/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
-<script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script>
+<script src="{{ asset('library/sweetalert/dist/sweetalert.baru.js') }}"></script>
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
 
+<!-- Delete Data -->
 <script>
-    $(document).on('click', '#delete', function() {
-        var fisio = $(this).attr('data-id');
-        var nama = $(this).attr('data-nama');
-
-        swal({
-                title: "Are You Sure?",
-                text: "Data Will Be Deleted " + nama + " !!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-            .then((willDelete) => {
-                if (willDelete) {
-                    window.location = "{{ route('jenisFisio.delete', ['id' => ':id']) }}".replace(':id', fisio);
-                } else {
-                    swal("Data will not be deleted!");
+    $(document).ready(function() {
+        // Inisialisasi DataTable
+        var table = $('#table-1').DataTable();
+    
+        // Event delegation untuk tombol delete
+        $('#table-1').on('click', '[confirm-delete="true"]', function(event) {
+            event.preventDefault();
+            var menuId = $(this).data('menuid');
+            Swal.fire({
+                title: 'Apakah Kamu Yakin?',
+                text: "Anda tidak akan dapat mengembalikan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#6777EF',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Hapus saja!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var form = $('#delete-form-' + menuId);
+                    if (form.length) {
+                        form.submit();
+                    } else {
+                        console.error('Data will not be deleted!:', menuId);
+                    }
                 }
             });
+        });
     });
-</script>
+    </script>
 
 <!-- Page Specific JS File -->
 @endpush

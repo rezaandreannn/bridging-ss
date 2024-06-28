@@ -187,10 +187,12 @@
                                                 $tanggalSekarang = Carbon::now()->toDateString();
                                                 @endphp
                                                 @if ($tanggalFisio === $tanggalSekarang)
-                                                <a href="{{ route('cppt.edit', [
-                                            'id' => $cppt->ID_CPPT_FISIO
-                                            ]) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i>Edit</a>
-                                                <button id="delete" data-id="{{ $cppt->ID_CPPT_FISIO }}" data-nama="{{ $cppt->ANAMNESA }}" data-bs-toggle="tooltip" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</button>
+                                                <a href="{{ route('cppt.edit', ['id' => $cppt->ID_CPPT_FISIO]) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i>Edit</a>
+                                                <form id="delete-form-{{$cppt->ID_CPPT_FISIO}}" action="{{ route('cppt.deleteData', $cppt->ID_CPPT_FISIO) }}" method="POST" style="display: none;">
+                                                    @method('delete')
+                                                    @csrf
+                                                </form>
+                                                <a class="btn btn-sm btn-danger" confirm-delete="true" data-menuId="{{$cppt->ID_CPPT_FISIO}}" href="#"><i class="fas fa-trash"></i> Hapus</a>
                                                 @endif
                                             </td>
                                         </tr>
@@ -216,7 +218,7 @@
 <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('library/selectric/public/jquery.selectric.min.js') }}"></script>
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
-<script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script>
+<script src="{{ asset('library/sweetalert/dist/sweetalert.baru.js') }}"></script>
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
@@ -251,25 +253,34 @@
 
 <!-- Delete Data -->
 <script>
-    $(document).on('click', '#delete', function() {
-        var cppt = $(this).attr('data-id');
-        var nama = $(this).attr('data-nama');
+$(document).ready(function() {
+    // Inisialisasi DataTable
+    var table = $('#table-1').DataTable();
 
-        swal({
-                title: "Are You Sure?",
-                text: "Data Will Be Deleted (" + nama + ") !!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-            .then((willDelete) => {
-                if (willDelete) {
-                    window.location = "{{ route('cppt.deleteData', ['id' => ':id']) }}".replace(':id', cppt);
+    // Event delegation untuk tombol delete
+    $('#table-1').on('click', '[confirm-delete="true"]', function(event) {
+        event.preventDefault();
+        var menuId = $(this).data('menuid');
+        Swal.fire({
+            title: 'Apakah Kamu Yakin?',
+            text: "Anda tidak akan dapat mengembalikan ini!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#6777EF',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Hapus saja!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var form = $('#delete-form-' + menuId);
+                if (form.length) {
+                    form.submit();
                 } else {
-                    swal("Data will not be deleted!");
+                    console.error('Data will not be deleted!:', menuId);
                 }
-            });
+            }
+        });
     });
+});
 </script>
 
 @endpush
