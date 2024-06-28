@@ -20,15 +20,26 @@ class RajalDokterController extends Controller
 
         $this->rajal = $rajal;
         $this->view = 'pages.rj.dokter.';
-        $this->routeIndex = 'cppt.fisio';
-        $this->prefix = 'Fisioterapi';
+        $this->prefix = 'Rawat Jalan';
         $this->pasien = new Pasien;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $title = $this->prefix . ' ' . 'Dokter';
-        return view($this->view . 'dokter.form', compact('title', 'biodatas', 'request'));
+        return view($this->view . 'index', compact('title'));
+    }
+
+    public function history(Request $request)
+    {
+        $title = $this->prefix . ' ' . 'History';
+        return view($this->view . 'history', compact('title'));
+    }
+
+    public function add(Request $request)
+    {
+        $title = $this->prefix . ' ' . 'Add';
+        return view($this->view . 'add', compact('title'));
     }
 
     /**

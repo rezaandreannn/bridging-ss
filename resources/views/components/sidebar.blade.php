@@ -87,6 +87,11 @@
                         <a class="nav-link" href="{{ route('rj.index') }}">Pasien</a>
                     </li>
                 </ul>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a class="nav-link" href="{{ route('rj.dokter') }}">Dokter</a>
+                    </li>
+                </ul>
             </li>
             @endcan
 

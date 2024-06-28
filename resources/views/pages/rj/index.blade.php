@@ -20,7 +20,7 @@
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{ route('rj.index') }}">Rawat Jalan</a></div>
                 <div class="breadcrumb-item"><a href="{{ route('rj.index') }}">Nurse Record</a></div>
-                <div class="breadcrumb-item">Patient</div>
+                <div class="breadcrumb-item">Pasien</div>
             </div>
         </div>
 
