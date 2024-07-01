@@ -48,12 +48,14 @@
                                         <td>{{$data->ALAMAT}}</td>
                                         <td>@if($data->FS_STATUS == 1)
                                                 <span class="badge badge-pill badge-danger">Dokter</span>
+                                            @elseif($data->FS_STATUS == 2)
+                                                <span class="badge badge-pill badge-primary">Farmasi</span>
                                             @else
                                                 <span class="badge badge-pill badge-warning">Perawat</span>
                                             @endif
                                         </td>
                                         <td width="20%">
-                                            <a href="{{ route('rj.dokterHistory') }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
+                                            <a href="{{ route('rj.dokterHistory', ['no_mr' => $data->NO_MR]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
                                         </td>
                                     </tr>
                                 @endforeach

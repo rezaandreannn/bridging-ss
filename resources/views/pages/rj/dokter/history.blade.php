@@ -25,7 +25,7 @@
         </div>
 
         <div class="section-body">
-            {{-- @include('components.biodata-pasien-fisio-bymr') --}}
+            @include('components.biodata-pasien-fisio-bymr')
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
@@ -41,15 +41,23 @@
                                 </tr>
                             </thead>
                             <tbody>
-                               <td>28 June 2024</td>
-                               <td>dr. Toumi Shiddiqi, Sp. PD.</td>
-                               <td>SPESIALIS PENYAKIT DALAM</td>
-                               <td><a href="#"></a>Hasil Laboratorium</td>
-                               <td><div class="badge badge-danger">Rawat Inap</div></td>
-                               <td>
-                                    <a href="#" class="btn btn-sm btn-success"><i class="fas fa-download"></i> RM</a>
+                               @foreach ($history as $data)
+                                <tr>
+                                   <td>{{ date('d-M-Y', strtotime($data->TANGGAL))}}</td>
+                                   <td>{{$data->NAMA_DOKTER}}</td>
+                                   <td>{{$data->SPESIALIS}}</td>
+                                   <td>{{$data->HASIL_ECHO}}</td>
+                                   <td>@if($data->STATUS == 1)
+                                           <span class="badge badge-pill badge-primary">Rawat Jalan</span>
+                                       @else
+                                           <span class="badge badge-pill badge-success">Rawat Inap</span>
+                                       @endif
+                                   </td>
+                                   <td width="20%">
                                     <a href="{{ route('rj.dokterAdd') }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Copy</a>
-                               </td>
+                                   </td>
+                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

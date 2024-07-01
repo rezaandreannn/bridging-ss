@@ -32,10 +32,12 @@ class RajalDokterController extends Controller
         return view($this->view . 'index', compact('title', 'pasien'));
     }
 
-    public function history(Request $request)
+    public function history(Request $request, $noMR)
     {
         $title = $this->prefix . ' ' . 'History';
-        return view($this->view . 'history', compact('title'));
+        $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
+        $history = $this->rajaldokter->getHistoryPasien($noMR);
+        return view($this->view . 'history', compact('title', 'biodatas', 'history'));
     }
 
     public function add(Request $request)
