@@ -6,19 +6,20 @@ use App\Models\Rajal;
 use App\Models\Pasien;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\RajalDokter;
 
 class RajalDokterController extends Controller
 {
     protected $view;
     protected $routeIndex;
     protected $prefix;
-    protected $rajal;
+    protected $rajaldokter;
     protected $pasien;
 
-    public function __construct(Rajal $rajal)
+    public function __construct(RajalDokter $rajaldokter)
     {
 
-        $this->rajal = $rajal;
+        $this->rajaldokter = $rajaldokter;
         $this->view = 'pages.rj.dokter.';
         $this->prefix = 'Rawat Jalan';
         $this->pasien = new Pasien;
@@ -27,7 +28,8 @@ class RajalDokterController extends Controller
     public function index(Request $request)
     {
         $title = $this->prefix . ' ' . 'Dokter';
-        return view($this->view . 'index', compact('title'));
+        $pasien = $this->rajaldokter->getPasienByDokter();
+        return view($this->view . 'index', compact('title', 'pasien'));
     }
 
     public function history(Request $request)

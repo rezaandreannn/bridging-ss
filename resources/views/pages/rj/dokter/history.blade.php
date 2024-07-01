@@ -47,7 +47,8 @@
                                <td><a href="#"></a>Hasil Laboratorium</td>
                                <td><div class="badge badge-danger">Rawat Inap</div></td>
                                <td>
-                                    <a href="{{ route('rj.dokterAdd') }}" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> RM</a>
+                                    <a href="#" class="btn btn-sm btn-success"><i class="fas fa-download"></i> RM</a>
+                                    <a href="{{ route('rj.dokterAdd') }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Copy</a>
                                </td>
                             </tbody>
                         </table>

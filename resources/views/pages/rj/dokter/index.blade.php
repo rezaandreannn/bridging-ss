@@ -40,14 +40,23 @@
                                 </tr>
                             </thead>
                             <tbody>
-                               <td>1</td>
-                               <td>105243</td>
-                               <td>Jana</td>
-                               <td>DUSUN 4 RT 015 RW 008 DESA TRISNOMULYO KECAMATAN BATANGHARI NUBAN LAMTIM</td>
-                               <td><div class="badge badge-danger">Dokter</div></td>
-                               <td>
-                                    <a href="{{ route('rj.dokterHistory') }}" class="btn btn-sm btn-primary">Entry</a>
-                               </td>
+                                @foreach ($pasien as $data)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{$data->NO_MR}}</td>
+                                        <td>{{$data->NAMA_PASIEN}}</td>
+                                        <td>{{$data->ALAMAT}}</td>
+                                        <td>@if($data->FS_STATUS == 1)
+                                                <span class="badge badge-pill badge-danger">Dokter</span>
+                                            @else
+                                                <span class="badge badge-pill badge-warning">Perawat</span>
+                                            @endif
+                                        </td>
+                                        <td width="20%">
+                                            <a href="{{ route('rj.dokterHistory') }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

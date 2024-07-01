@@ -88,11 +88,6 @@ class Rajal extends Model
             ->join('TAC_RJ_NUTRISI', 'TAC_ASES_PER2.FS_KD_REG', '=', 'TAC_RJ_NUTRISI.FS_KD_REG')
             ->where('TAC_ASES_PER2.FS_KD_REG', $noReg)->first();
 
-        // $data = DB::connection('pku')
-        //     ->table('TR_CPPT_FISIOTERAPI')
-        //     ->join('TRANSAKSI_FISIOTERAPI', 'TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
-        //     ->where('TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', $id)
-        //     ->get();
         return $data;
     }
 
@@ -101,12 +96,6 @@ class Rajal extends Model
         $data = DB::connection('db_rsmm')->table('REGISTER_PASIEN')
             ->join('PENDAFTARAN', 'REGISTER_PASIEN.NO_MR', '=', 'PENDAFTARAN.NO_MR')
             ->where('PENDAFTARAN.NO_REG', $noReg)->first();
-
-        // $data = DB::connection('pku')
-        //     ->table('TR_CPPT_FISIOTERAPI')
-        //     ->join('TRANSAKSI_FISIOTERAPI', 'TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
-        //     ->where('TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', $id)
-        //     ->get();
         return $data;
     }
 
@@ -114,12 +103,6 @@ class Rajal extends Model
     {
         $data = DB::connection('pku')->table('TAC_COM_USER')
             ->where('user_name', $username)->first();
-
-        // $data = DB::connection('pku')
-        //     ->table('TR_CPPT_FISIOTERAPI')
-        //     ->join('TRANSAKSI_FISIOTERAPI', 'TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
-        //     ->where('TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', $id)
-        //     ->get();
         return $data;
     }
 
@@ -135,12 +118,6 @@ class Rajal extends Model
     {
         $data = DB::connection('pku')->table('TAC_RJ_REN_KEP')
             ->where('FS_KD_REG', $noReg)->get();
-
-        // $data = DB::connection('pku')
-        //     ->table('TR_CPPT_FISIOTERAPI')
-        //     ->join('TRANSAKSI_FISIOTERAPI', 'TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
-        //     ->where('TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', $id)
-        //     ->get();
         return $data;
     }
 
@@ -352,27 +329,23 @@ class Rajal extends Model
     // alasan skdp
     public function getAlesanSkdp()
     {
-
         $data = DB::connection('pku')->table('TAC_COM_PARAMETER_SKDP_ALASAN')->get();
         return $data;
     }
 
     public function getSkdp($NoReg)
     {
-
         $data = DB::connection('pku')->table('TAC_RJ_SKDP')->where('FS_KD_REG', $NoReg)->get()->first();
         return $data;
     }
 
     public function get_rencana_skdp_by_noreg()
     {
-
         $data = DB::connection('pku')->table('TAC_COM_PARAMETER_SKDP_RENCANA')->get()->toArray();
         return $data;
     }
     public function get_rencana_skdp($id)
     {
-
         $data = DB::connection('pku')->table('TAC_COM_PARAMETER_SKDP_RENCANA')->where('FS_KD_TRS_SKDP_ALASAN', $id)->get();
         return $data;
     }
