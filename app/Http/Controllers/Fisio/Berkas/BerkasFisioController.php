@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Fisio\Berkas;
 
-use App\Models\Pasien;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\BerkasFisioterapi;
-use App\Models\Fisioterapi;
+use Carbon\Carbon;
 use App\Models\Rajal;
+use App\Models\Pasien;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\Fisioterapi;
+use Illuminate\Http\Request;
+use App\Models\BerkasFisioterapi;
+use App\Http\Controllers\Controller;
 
 class BerkasFisioController extends Controller
 {
@@ -34,7 +36,7 @@ class BerkasFisioController extends Controller
         $data = $this->berkasFisio->getFisioterapiHistory($no_mr);
         $biodatas = $this->pasien->biodataPasienByMr($no_mr);
         // dd($data);
-        return view($this->view . 'index', compact('title','data','biodatas'));
+        return view($this->view . 'index', compact('title', 'data', 'biodatas'));
     }
 
     public function berkas()
@@ -42,6 +44,18 @@ class BerkasFisioController extends Controller
         $title = $this->prefix . ' ' . 'Harian';
         // $biodata = $this->rajal->resumeMedisPasienByMR($noMR);
         return view($this->view . 'berkas', compact('title'));
+    }
+
+    public function tindakan()
+    {
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+
+        $filename = 'Faskes-' . $date;
+        $pdf = PDF::loadview('pages.fisioterapi.berkas.tindakan', ['tanggal' => $tanggal]);
+        // Set paper size to A5
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
     }
 
     /**

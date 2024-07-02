@@ -47,12 +47,13 @@
                                    <td>{{$data->NAMA_DOKTER}}</td>
                                    <td>{{$data->SPESIALIS}}</td>
                                    <td>{{$data->HASIL_ECHO}}</td>
-                                   <td>@if($data->STATUS == 1)
-                                           <span class="badge badge-pill badge-primary">Rawat Jalan</span>
-                                       @else
-                                           <span class="badge badge-pill badge-success">Rawat Inap</span>
-                                       @endif
-                                   </td>
+                                   <td>
+                                        @if($data->KODE_RUANG == '')
+                                            <span class="badge badge-pill badge-primary">Rawat Jalan</span>
+                                        @elseif($data->KODE_RUANG != '')
+                                            <span class="badge badge-pill badge-success">Rawat Inap</span>
+                                        @endif
+                                    </td>
                                    <td width="20%">
                                     <a href="{{ route('rj.dokterAdd') }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Copy</a>
                                    </td>

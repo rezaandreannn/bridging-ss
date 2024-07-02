@@ -46,12 +46,16 @@
                                         <td>{{$data->NO_MR}}</td>
                                         <td>{{$data->NAMA_PASIEN}}</td>
                                         <td>{{$data->ALAMAT}}</td>
-                                        <td>@if($data->FS_STATUS == 1)
-                                                <span class="badge badge-pill badge-danger">Dokter</span>
+                                        <td>@if($data->FS_STATUS == '')
+                                            <span class="badge badge-pill badge-warning">Perawat</span>
+                                            @elseif($data->FS_STATUS == 1)
+                                            <span class="badge badge-pill badge-danger">Dokter</span>
                                             @elseif($data->FS_STATUS == 2)
-                                                <span class="badge badge-pill badge-primary">Farmasi</span>
+                                            @if($data->FS_TERAPI == '' or $data->FS_TERAPI == '-')
+                                            <span class="badge badge-pill badge-success">Selesai</span>
                                             @else
-                                                <span class="badge badge-pill badge-warning">Perawat</span>
+                                            <span class="badge badge-pill badge-primary">Farmasi</span>
+                                                @endif
                                             @endif
                                         </td>
                                         <td width="20%">
