@@ -241,6 +241,7 @@ class Rajal extends Model
                 'a.ALAMAT',
                 'a.JENIS_KELAMIN',
                 'a.PROVINSI',
+                'a.HP1',
                 'a.TGL_LAHIR',
                 'a.FS_REAK_ALERGI',
                 'a.FS_RIW_PENYAKIT_DAHULU',

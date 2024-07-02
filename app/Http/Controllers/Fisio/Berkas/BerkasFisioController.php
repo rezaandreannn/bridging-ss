@@ -19,6 +19,7 @@ class BerkasFisioController extends Controller
     protected $fisio;
     protected $berkasFisio;
     protected $pasien;
+    protected $rajal;
 
     public function __construct(Fisioterapi $fisio)
     {
@@ -27,6 +28,7 @@ class BerkasFisioController extends Controller
         $this->prefix = 'Fisioterapi Berkas';
         $this->berkasFisio = new BerkasFisioterapi();
         $this->pasien = new Pasien();
+        $this->rajal = new Rajal();
     }
 
     public function  index(Request $request)
@@ -34,9 +36,9 @@ class BerkasFisioController extends Controller
         $title = $this->prefix . ' ' . 'Pasien';
         $no_mr = $request->input('no_mr');
         $data = $this->berkasFisio->getFisioterapiHistory($no_mr);
-        $biodatas = $this->pasien->biodataPasienByMr($no_mr);
+
         // dd($data);
-        return view($this->view . 'index', compact('title', 'data', 'biodatas'));
+        return view($this->view . 'index', compact('title', 'data'));
     }
 
     public function berkas()
@@ -46,14 +48,22 @@ class BerkasFisioController extends Controller
         return view($this->view . 'berkas', compact('title'));
     }
 
-    public function tindakan()
+    public function cetak_rm_dokter($no_reg)
     {
+        $asesmenDokter = $this->berkasFisio->getAsesmenDokter($no_reg);
+        $lembarUjiFungsi = $this->berkasFisio->getLembarUjiFungsi($no_reg);
+        $lembarSpkfr = $this->berkasFisio->getLembarSpkfr($no_reg);
+        $biodata = $this->rajal->pasien_bynoreg($no_reg);
+        $usia = Carbon::parse($biodata->TGL_LAHIR)->age;
+
         $date = date('dMY');
         $tanggal = Carbon::now();
 
         $filename = 'Faskes-' . $date;
-        $pdf = PDF::loadview('pages.fisioterapi.berkas.tindakan', ['tanggal' => $tanggal]);
-        // Set paper size to A5
+        $title = $this->prefix . ' ' . 'Harian';
+
+        $pdf = PDF::loadview('pages.fisioterapi.berkas.formulir', ['tanggal' => $tanggal, 'title' => $title, 'asesmenDokter' => $asesmenDokter, 'lembarUjiFungsi' => $lembarUjiFungsi, 'lembarSpkfr' => $lembarSpkfr, 'biodata' => $biodata, 'usia' => $usia]);
+
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
     }
