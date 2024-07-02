@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Fisio\Berkas;
 
-use App\Models\Pasien;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\BerkasFisioterapi;
-use App\Models\Fisioterapi;
+use Carbon\Carbon;
 use App\Models\Rajal;
+use App\Models\Pasien;
+use App\Models\Fisioterapi;
+use Illuminate\Http\Request;
+use App\Models\BerkasFisioterapi;
+use App\Http\Controllers\Controller;
 
 class BerkasFisioController extends Controller
 {
@@ -17,6 +18,7 @@ class BerkasFisioController extends Controller
     protected $fisio;
     protected $berkasFisio;
     protected $pasien;
+    protected $rajal;
 
     public function __construct(Fisioterapi $fisio)
     {
@@ -25,6 +27,7 @@ class BerkasFisioController extends Controller
         $this->prefix = 'Fisioterapi Berkas';
         $this->berkasFisio = new BerkasFisioterapi();
         $this->pasien = new Pasien();
+        $this->rajal = new Rajal();
     }
 
     public function  index(Request $request)
@@ -32,17 +35,32 @@ class BerkasFisioController extends Controller
         $title = $this->prefix . ' ' . 'Pasien';
         $no_mr = $request->input('no_mr');
         $data = $this->berkasFisio->getFisioterapiHistory($no_mr);
-        $biodatas = $this->pasien->biodataPasienByMr($no_mr);
+        
         // dd($data);
-        return view($this->view . 'index', compact('title','data','biodatas'));
+        return view($this->view . 'index', compact('title','data'));
     }
-
+    
     public function berkas()
     {
         $title = $this->prefix . ' ' . 'Harian';
         // $biodata = $this->rajal->resumeMedisPasienByMR($noMR);
         return view($this->view . 'berkas', compact('title'));
     }
+    
+    public function cetak_rm_dokter($no_reg)
+    {
+        $asesmenDokter = $this->berkasFisio->getAsesmenDokter($no_reg);
+        $lembarUjiFungsi = $this->berkasFisio->getLembarUjiFungsi($no_reg);
+        $lembarSpkfr = $this->berkasFisio->getLembarSpkfr($no_reg);
+        $biodata = $this->rajal->pasien_bynoreg($no_reg);
+        $usia = Carbon::parse($biodata->TGL_LAHIR)->age;
+
+        $title = $this->prefix . ' ' . 'Harian';
+        // $biodata = $this->rajal->resumeMedisPasienByMR($noMR);
+        return view($this->view . 'berkas', compact('title','asesmenDokter','lembarUjiFungsi','lembarSpkfr','biodata','usia'));
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
