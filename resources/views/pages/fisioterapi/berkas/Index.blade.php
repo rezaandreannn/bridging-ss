@@ -79,7 +79,7 @@
                                         @if($pasien->Kode_Dokter == '151')
                                         <a href="{{ route('berkas.cetakRmFisio', ['no_reg' => $pasien->No_Reg]) }}" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Asesmen Dokter</a>
                                         @endif
-                                        <a href="" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Cppt</a>
+                                        <a href="{{ route('berkas.cppt', ['no_mr' => $pasien->No_MR]) }}" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Cppt</a>
                                        
                                     </td>
                                </tr>

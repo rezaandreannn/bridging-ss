@@ -188,6 +188,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('berkas')->group(function () {
         Route::get('berkas_fisio', [BerkasFisioController::class, 'index'])->name('berkas.fisio');
         Route::get('berkas_fisio/cetak_rm_dokter/{no_reg}', [BerkasFisioController::class, 'cetak_rm_dokter'])->name('berkas.cetakRmFisio');
+        Route::get('berkas_fisio/cppt/{no_mr}', [BerkasFisioController::class, 'cppt_list'])->name('berkas.cppt');
         Route::get('/berkas_fisio/harian', [BerkasFisioController::class, 'berkas'])->name('berkas.harian');
     });
 

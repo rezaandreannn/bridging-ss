@@ -42,8 +42,11 @@
                             </thead>
                             <tbody>
                                @foreach ($history as $data)
+                               @php
+                                $tanggal = date('d-m-Y', strtotime($data->TANGGAL));
+                                @endphp
                                 <tr>
-                                   <td>{{ date('d-M-Y', strtotime($data->TANGGAL))}}</td>
+                                   <td>{{ $tanggal; }}</td>
                                    <td>{{$data->NAMA_DOKTER}}</td>
                                    <td>{{$data->SPESIALIS}}</td>
                                    <td>{{$data->HASIL_ECHO}}</td>
