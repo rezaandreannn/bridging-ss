@@ -46,6 +46,20 @@ class BerkasFisioController extends Controller
         // $biodata = $this->rajal->resumeMedisPasienByMR($noMR);
         return view($this->view . 'berkas', compact('title'));
     }
+
+
+    public function cppt_list($no_mr = "")
+    {
+
+      
+        $fisioModel = new Fisioterapi();
+        $biodatas = $this->pasien->biodataPasienByMr($no_mr);
+        // dd($biodatas);
+        // die;
+        $transaksis = $this->fisio->transaksiFisioByMr($no_mr);
+        $title = $this->prefix . ' ' . 'Form CPPT';
+        return view($this->view . 'cppt', compact('title', 'biodatas', 'transaksis', 'fisioModel'));
+    }
     
     public function cetak_rm_dokter($no_reg)
     {
