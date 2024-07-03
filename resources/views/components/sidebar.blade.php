@@ -65,7 +65,7 @@
                 @can('medis rajal')
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('fisioterapi/asesmen_pasien') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('asesmen_pasien.index') }}">pemeriksaan rawat jalan</a>
+                        <a class="nav-link" href="{{ route('rj.dokter') }}">pemeriksaan rawat jalan</a>
                     </li>
                 </ul>
                 @endcan
@@ -85,11 +85,6 @@
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('rj*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('rj.index') }}">Pasien</a>
-                    </li>
-                </ul>
-                <ul class="dropdown-menu">
-                    <li class="">
-                        <a class="nav-link" href="{{ route('rj.dokter') }}">Dokter</a>
                     </li>
                 </ul>
             </li>

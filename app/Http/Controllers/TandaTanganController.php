@@ -93,7 +93,7 @@ class TandaTanganController extends Controller
             $image_base64 = base64_decode($image_parts[1]);
 
             // Use uniqid to generate a unique file name
-            $file_name = uniqid(auth()->user()->name . '-' . date('Y-m-d') . '-') . '.' . $image_type;
+            $file_name = uniqid($request->input('NO_MR_PASIEN') . '-' . date('Y-m-d') . '-') . '.' . $image_type;
 
             // Save the image to storage
             Storage::put('public/ttd/' . $file_name, $image_base64);
@@ -128,7 +128,7 @@ class TandaTanganController extends Controller
             $image_type = $image_type_aux[1];
             $image_base64 = base64_decode($image_parts[1]);
             // Use uniqid to generate a unique file name
-            $file_name = uniqid(auth()->user()->name . '-' . date('Y-m-d') . '-') . '.' . $image_type;
+            $file_name = uniqid($request->input('NO_MR_PASIEN') . '-' . date('Y-m-d') . '-') . '.' . $image_type;
             // Simpan gambar ke storage
             Storage::put('public/ttd/' . $file_name, $image_base64);
 
@@ -198,7 +198,7 @@ class TandaTanganController extends Controller
             $image_type = $image_type_aux[1];
             $image_base64 = base64_decode($image_parts[1]);
             // Use uniqid to generate a unique file name
-            $file_name = uniqid(auth()->user()->name . '-' . date('Y-m-d') . '-') . '.' . $image_type;
+            $file_name = uniqid(auth()->user()->username . '-' . date('Y-m-d') . '-') . '.' . $image_type;
             // Simpan gambar ke storage
             Storage::put('public/ttd/' . $file_name, $image_base64);
 
@@ -233,7 +233,7 @@ class TandaTanganController extends Controller
             $image_type_aux = explode("image/", $image_parts[0]);
             $image_type = $image_type_aux[1];
             $image_base64 = base64_decode($image_parts[1]);
-            $file_name = auth()->user()->name . '-' . date('Y-m-d') . '.' . $image_type;
+            $file_name = auth()->user()->username . '-' . date('Y-m-d') . '.' . $image_type;
             // Simpan gambar ke storage
             if ($file_name) {
                 Storage::delete('public/ttd/' . $file_name);
