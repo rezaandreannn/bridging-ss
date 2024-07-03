@@ -158,7 +158,7 @@ class TandaTanganController extends Controller
 
             // Delete the image if it exists
             if ($namaTtd) {
-                Storage::delete('public/images/' . $namaTtd);
+                Storage::delete('public/ttd/' . $namaTtd);
             }
 
             return redirect()->back()->with('success', 'Tanda Tangan Berhasil Dihapus!');
@@ -203,7 +203,7 @@ class TandaTanganController extends Controller
             Storage::put('public/ttd/' . $file_name, $image_base64);
 
             $data = DB::connection('pku')->table('TTD_PETUGAS_MASTER')->insert([
-                'USERNAME' => auth()->user()->name,
+                'USERNAME' => auth()->user()->username,
                 'STATUS' => auth()->user()->role_id, // Pastikan Anda mengelola peran pengguna dengan benar di aplikasi Anda
                 'IMAGE' => $file_name,
                 'CREATE_AT' => now()
@@ -241,7 +241,7 @@ class TandaTanganController extends Controller
             Storage::put('public/ttd/' . $file_name, $image_base64);
 
             $data = DB::connection('pku')->table('TTD_PETUGAS_MASTER')->where('ID_TTD', $request->ID_TTD)->update([
-                'USERNAME' => auth()->user()->name,
+                'USERNAME' => auth()->user()->username,
                 'STATUS' => auth()->user()->role_id, // Pastikan Anda mengelola peran pengguna dengan benar di aplikasi Anda
                 'IMAGE' => $file_name,
                 'CREATE_AT'  => now()
@@ -265,7 +265,7 @@ class TandaTanganController extends Controller
 
             // Delete the image if it exists
             if ($namaTtd) {
-                Storage::delete('public/images/' . $namaTtd);
+                Storage::delete('public/ttd/' . $namaTtd);
             }
 
             return redirect()->back()->with('success', 'Tanda Tangan Berhasil Dihapus!');

@@ -66,10 +66,12 @@ class BerkasFisioController extends Controller
     {
         $asesmenDokter = $this->berkasFisio->getAsesmenDokter($no_reg);
         $namaDokter = DB::connection('db_rsmm')->table('DOKTER')->select('Nama_Dokter')->where('Kode_Dokter', $asesmenDokter->create_by)->first();
-      
+        
         $lembarUjiFungsi = $this->berkasFisio->getLembarUjiFungsi($no_reg);
         $lembarSpkfr = $this->berkasFisio->getLembarSpkfr($no_reg);
         $biodata = $this->rajal->pasien_bynoreg($no_reg);
+        $ttdPasien = DB::connection('pku')->table('ttdPasien_MASTER')->select('IMAGE')->where('NO_MR_PASIEN', $biodata->NO_MR)->first();
+
         $usia = Carbon::parse($biodata->TGL_LAHIR)->age;
 
         $date = date('dMY');
@@ -78,7 +80,7 @@ class BerkasFisioController extends Controller
         $filename = 'Fisioterapi-' . $date;
         $title = $this->prefix . ' ' . 'Harian';
 
-        $pdf = PDF::loadview('pages.fisioterapi.berkas.formulir', ['tanggal' => $tanggal, 'title' => $title, 'asesmenDokter' => $asesmenDokter, 'lembarUjiFungsi' => $lembarUjiFungsi, 'lembarSpkfr' => $lembarSpkfr, 'biodata' => $biodata, 'usia' => $usia, 'namaDokter' => $namaDokter]);
+        $pdf = PDF::loadview('pages.fisioterapi.berkas.formulir', ['tanggal' => $tanggal, 'title' => $title, 'asesmenDokter' => $asesmenDokter, 'lembarUjiFungsi' => $lembarUjiFungsi, 'lembarSpkfr' => $lembarSpkfr, 'biodata' => $biodata, 'usia' => $usia, 'namaDokter' => $namaDokter, 'ttdPasien' => $ttdPasien]);
 
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
