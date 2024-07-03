@@ -74,17 +74,21 @@
             <th width="20%">Dokter</th>
         </tr>
         @foreach ($data as $item)
+        @php         
+        $nama_dokter = DB::connection('db_rsmm')
+        ->table('DOKTER')->select('Nama_Dokter')
+        ->where('Kode_Dokter',$item->KODE_DOKTER)
+        ->get();
+         @endphp
         <tr>
             <td>{{ $item->TANGGAL_FISIO }} & {{ date('G:i', strtotime($item->JAM_FISIO)) }}</td>
             <td>S = {{ $item->ANAMNESA }} <br>O = TD = {{ $item->TEKANAN_DARAH }}, N = {{ $item->NADI }}, T = {{ $item->SUHU }}</td>
             <td>{{ $item->DIAGNOSA }}</td>
             <td>{{ $item->JENIS_FISIO }}</td>
             <td>
-                @if($item->KODE_DOKTER != '')
-                {{ $dokter->Nama_Dokter }}
-                @else
-                <!-- Handle case when KODE_DOKTER is empty -->
-                @endif
+                @foreach ($nama_dokter as $dokter)
+                {{$dokter->Nama_Dokter}}
+                @endforeach
             </td>
         </tr>
         @endforeach

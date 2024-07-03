@@ -128,10 +128,10 @@
             <td class="text3" colspan="3" style="border: 1px solid black">No. Telp / HP : {{ $biodatas->HP1 ?? ''}}</td>
         </tr>
         <tr>
-            <td class="text3" colspan="3" style="border: 1px solid black">Diagnosa : </td>
+            <td class="text3" colspan="3" style="border: 1px solid black">Diagnosa : {{$firstCppt->DIAGNOSA}} </td>
         </tr>
         <tr>
-            <td class="text3" colspan="3" style="border: 1px solid black">Permintaan Terapi : </td>
+            <td class="text3" colspan="3" style="border: 1px solid black">Permintaan Terapi : {{$firstCppt->JENIS_FISIO}} </td>
         </tr>
     </table>
     <table border="1" width="100%">
@@ -147,19 +147,28 @@
             <td style="text-align: center;">Terapis</td>
         </tr>
         @foreach ($data as $item)
+   
         <tr>
             <td style="text-align: center">{{ $loop->iteration }}</td>
             <td style="text-align: center">{{ $item->JENIS_FISIO }}</td>
             <td style="text-align: center">{{ $item->TANGGAL_FISIO }}</td>
             <td style="text-align: center">
-                <!-- <img src="{{ asset('storage/ttd/' . $item->IMAGE ) }}" width="35" height="35" /> -->
-                {{ $item->IMAGE }}
+                <img src="storage/ttd/{{ $item->ttd_pasien}}" width="50" height="50" />
+         
             </td>
             <td style="text-align: center">
-
+               @if($item->KODE_DOKTER == '151')
+        
+               <img src="storage/ttd/{{ $item->ttd_petugas}}" width="50" height="50" />
+            
+               @endif
             </td>
             <td style="text-align: center">
-
+                @if($item->KODE_DOKTER != '151')
+        
+                <img src="storage/ttd/{{ $item->ttd_petugas}}" width="50" height="50" />
+                @endif
+              
             </td>
         </tr>
         @endforeach
@@ -180,7 +189,13 @@
         </tr>
         <tr>
             <td width="60%" class="text5"></td>
-            <td class="text5" style="padding-top: 15px;">(dr. Agung B Prasetiyono,Sp.PD)</td>
+          
+            <td class="text5" style="padding-top: 15px;"> <img src="storage/ttd/{{ $firstCppt->ttd_dokter}}" width="50" height="50" /></td>
+        </tr>
+        <tr>
+            <td width="60%" class="text5"></td>
+          
+            <td class="text5" style="padding-top: 15px;">({{$firstCppt->Nama_Dokter}})</td>
         </tr>
     </table>
 </body>
