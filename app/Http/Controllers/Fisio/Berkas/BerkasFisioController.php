@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Fisio\Berkas;
 use Carbon\Carbon;
 use App\Models\Rajal;
 use App\Models\Pasien;
-use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Fisioterapi;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\BerkasFisioterapi;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class BerkasFisioController extends Controller
@@ -64,6 +65,8 @@ class BerkasFisioController extends Controller
     public function cetak_rm_dokter($no_reg)
     {
         $asesmenDokter = $this->berkasFisio->getAsesmenDokter($no_reg);
+        $namaDokter = DB::connection('db_rsmm')->table('DOKTER')->select('Nama_Dokter')->where('Kode_Dokter', $asesmenDokter->create_by)->first();
+      
         $lembarUjiFungsi = $this->berkasFisio->getLembarUjiFungsi($no_reg);
         $lembarSpkfr = $this->berkasFisio->getLembarSpkfr($no_reg);
         $biodata = $this->rajal->pasien_bynoreg($no_reg);
@@ -75,7 +78,7 @@ class BerkasFisioController extends Controller
         $filename = 'Fisioterapi-' . $date;
         $title = $this->prefix . ' ' . 'Harian';
 
-        $pdf = PDF::loadview('pages.fisioterapi.berkas.formulir', ['tanggal' => $tanggal, 'title' => $title, 'asesmenDokter' => $asesmenDokter, 'lembarUjiFungsi' => $lembarUjiFungsi, 'lembarSpkfr' => $lembarSpkfr, 'biodata' => $biodata, 'usia' => $usia]);
+        $pdf = PDF::loadview('pages.fisioterapi.berkas.formulir', ['tanggal' => $tanggal, 'title' => $title, 'asesmenDokter' => $asesmenDokter, 'lembarUjiFungsi' => $lembarUjiFungsi, 'lembarSpkfr' => $lembarSpkfr, 'biodata' => $biodata, 'usia' => $usia, 'namaDokter' => $namaDokter]);
 
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
