@@ -281,8 +281,8 @@
                 <td class="text5"><img src="img/code.png" width="65" height="65" /></td>
             </tr>
             <tr>
-                <td width="50%" class="text5"></td>
-                <td class="text5">(dr. Agung B Prasetiyono,Sp.PD)</td>
+                <td width="50%" class="text5"></td>Nama_Dokter
+                <td class="text5">({{ $namaDokter->Nama_Dokter}})</td>
             </tr>
         </table>
     </body>
@@ -372,7 +372,7 @@
             </tr>
             <tr>
                 <td width="50%" class="text5"></td>
-                <td class="text5">(dr. Agung B Prasetiyono,Sp.PD)</td>
+                <td class="text5">({{ $namaDokter->Nama_Dokter}})</td>
             </tr>
         </table>
     </body>
@@ -381,114 +381,114 @@
 {{----------------- SpKFR -----------------}}
 <!DOCTYPE html>
 <html lang="en">
-<head></head>
-<body>
-    <table class="header-row" width="100%">
-        <tr>
-            <td class="logo-cell">
-                <img src="img/logo.png" width="50" height="50" />
-            </td>
-            <td class="info-cell">
-                <h5>MAJELIS PEMBINAAN KESEHATAN UMUM<br /></h5>
-                <h4>RSU MUHAMMADIYAH METRO</h4>
-                <table class="table-css">
-                    <tr>
-                        <td>Jl Soekarno Hatta No. 42 Mulyojati 16 B</td>
-                        <td>Fax : (0725) 47760</td>
-                    </tr>
-                    <tr>
-                        <td>Metro Barat - Kota Metro 34125</td>
-                        <td>e-mail : info.rsumm@gmail.com</td>
-                    </tr>
-                    <tr>
-                        <td>Telp : (0725) 49490 - 7850378</td>
-                        <td>website : www.rsumm.co.id</td>
-                    </tr>
-                </table>
-            </td>
-            <td class="logo-cell-2">
-                <img src="img/larsibaru.png" width="50" height="50" />
-            </td>
-            <td class="patient-info">
-                <table>
-                    <tr>
-                        <td>No. RM </td>
-                        <td>: {{ $biodata->NO_MR}}</td>
-                    </tr>
-                    <tr>
-                        <td>Nama</td>
-                        <td>: {{ $biodata->NAMA_PASIEN}}</td>
-                    </tr>
-                    <tr>
-                        <td>Tanggal Lahir</td>
-                        <td>: {{ date('d-m-Y', strtotime($biodata->TGL_LAHIR))}}</td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-    <table style="border: 1px solid black;" width="100%">
-        <tr>
-            <td class="text2" colspan="3" style="text-align: center; border: 1px solid black"><b>LEMBAR FORMULIR RAWAT JALAN LAYANAN KEDOKTERAN FISIK DAN REHABILITASI</b></td>
-        </tr>
-        <tr>
-            <td class="text2" colspan="3" style="border: 1px solid black">Alamat : {{ $biodata->ALAMAT}}</td>
-        </tr>
-        <tr>
-            <td class="text2" colspan="3" style="border: 1px solid black">No. Telp / HP : {{ $biodata->HP1}}</td>
-        </tr>
-    </table>
-    <table style="border: 1px solid black; border-top: none; border-bottom:none " width="100%">
-        <tr>
-            <td class="text3">Tanggal Pelayanan</td>
-            <td class="text3" colspan="2">: Tanggal : {{ date('d-m-Y', strtotime($lembarSpkfr->created_at))}} | Jam : {{ date('H:i:s', strtotime($lembarSpkfr->created_at))}} WIB</td>
-        </tr>
-        <tr>
-            <td class="text3">Anamesa</td>
-            <td class="text3" colspan="2">: {{ $asesmenDokter->anamnesa}}</td>
-        </tr>
-        <tr>
-            <td class="text3">Pemeriksaan Fisik dan Uji Fungsi</td>
-            <td class="text3" colspan="2">: {{ $lembarSpkfr->pemeriksaan_fisik}}</td>
-        </tr>
-        <tr>
-            <td class="text3">Diagnosis Medis (ICD-10)</td>
-            <td class="text3" colspan="2">: {{ $lembarSpkfr->diagnosis_medis}}</td>
-        </tr>
-        <tr>
-            <td class="text3">Diagnosis Fungsi (ICD-10)</td>
-            <td class="text3" colspan="2">: {{ $lembarSpkfr->diagnosis_fungsi}}</td>
-        </tr>
-        <tr>
-            <td class="text3">Pemeriksaan Penunjang</td>
-            <td class="text3" colspan="2">: {{ $lembarSpkfr->pemeriksaan_penunjang}}</td>
-        </tr>
-        <tr>
-            <td class="text3">Tata Laksana KFR (ICD 9 CM)</td>
-            <td class="text3" colspan="2">: {{ $lembarSpkfr->tata_laksana_kfr}}</td>
-        </tr>
-        <tr>
-            <td class="text3">Ajuran</td>
-            <td class="text3" colspan="2">: {{ $asesmenDokter->anjuran_terapi}}x Seminggu</td>
-        </tr>
-        <tr>
-            <td class="text3">Evalusi</td>
-            <td class="text3" colspan="2">: {{ $asesmenDokter->evaluasi_terapi}}x Terapi</td>
-        </tr>
-    </table>
-    <table style="border: 1px solid black; border-top: none;" width="100%">
-        <tr>
-            <td style="padding-top: 100px;" class="text5">Pasien</td>
-            <td style="padding-top: 100px;" class="text5">Dokter Pemeriksa</td>
-        </tr>
-        <tr>
-            <td class="text5"><img src="img/code.png" width="65" height="65" /></td>
-            <td class="text5"><img src="img/code.png" width="65" height="65" /></td>
-        </tr>
-        <tr>
-            <td width="50%" class="text5">(Dimas Budi Pratama)</td>
-            <td class="text5">(dr. Agung B Prasetiyono,Sp.PD)</td>
-        </tr>
-    </table>
-</body>
+    <head></head>
+    <body>
+        <table class="header-row" width="100%">
+            <tr>
+                <td class="logo-cell">
+                    <img src="img/logo.png" width="50" height="50" />
+                </td>
+                <td class="info-cell">
+                    <h5>MAJELIS PEMBINAAN KESEHATAN UMUM<br /></h5>
+                    <h4>RSU MUHAMMADIYAH METRO</h4>
+                    <table class="table-css">
+                        <tr>
+                            <td>Jl Soekarno Hatta No. 42 Mulyojati 16 B</td>
+                            <td>Fax : (0725) 47760</td>
+                        </tr>
+                        <tr>
+                            <td>Metro Barat - Kota Metro 34125</td>
+                            <td>e-mail : info.rsumm@gmail.com</td>
+                        </tr>
+                        <tr>
+                            <td>Telp : (0725) 49490 - 7850378</td>
+                            <td>website : www.rsumm.co.id</td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="logo-cell-2">
+                    <img src="img/larsibaru.png" width="50" height="50" />
+                </td>
+                <td class="patient-info">
+                    <table>
+                        <tr>
+                            <td>No. RM </td>
+                            <td>: {{ $biodata->NO_MR}}</td>
+                        </tr>
+                        <tr>
+                            <td>Nama</td>
+                            <td>: {{ $biodata->NAMA_PASIEN}}</td>
+                        </tr>
+                        <tr>
+                            <td>Tanggal Lahir</td>
+                            <td>: {{ date('d-m-Y', strtotime($biodata->TGL_LAHIR))}}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table style="border: 1px solid black;" width="100%">
+            <tr>
+                <td class="text2" colspan="3" style="text-align: center; border: 1px solid black"><b>LEMBAR FORMULIR RAWAT JALAN LAYANAN KEDOKTERAN FISIK DAN REHABILITASI</b></td>
+            </tr>
+            <tr>
+                <td class="text2" colspan="3" style="border: 1px solid black">Alamat : {{ $biodata->ALAMAT}}</td>
+            </tr>
+            <tr>
+                <td class="text2" colspan="3" style="border: 1px solid black">No. Telp / HP : {{ $biodata->HP1}}</td>
+            </tr>
+        </table>
+        <table style="border: 1px solid black; border-top: none; border-bottom:none " width="100%">
+            <tr>
+                <td class="text3">Tanggal Pelayanan</td>
+                <td class="text3" colspan="2">: Tanggal : {{ date('d-m-Y', strtotime($lembarSpkfr->created_at))}} | Jam : {{ date('H:i:s', strtotime($lembarSpkfr->created_at))}} WIB</td>
+            </tr>
+            <tr>
+                <td class="text3">Anamesa</td>
+                <td class="text3" colspan="2">: {{ $asesmenDokter->anamnesa}}</td>
+            </tr>
+            <tr>
+                <td class="text3">Pemeriksaan Fisik dan Uji Fungsi</td>
+                <td class="text3" colspan="2">: {{ $lembarSpkfr->pemeriksaan_fisik}}</td>
+            </tr>
+            <tr>
+                <td class="text3">Diagnosis Medis (ICD-10)</td>
+                <td class="text3" colspan="2">: {{ $lembarSpkfr->diagnosis_medis}}</td>
+            </tr>
+            <tr>
+                <td class="text3">Diagnosis Fungsi (ICD-10)</td>
+                <td class="text3" colspan="2">: {{ $lembarSpkfr->diagnosis_fungsi}}</td>
+            </tr>
+            <tr>
+                <td class="text3">Pemeriksaan Penunjang</td>
+                <td class="text3" colspan="2">: {{ $lembarSpkfr->pemeriksaan_penunjang}}</td>
+            </tr>
+            <tr>
+                <td class="text3">Tata Laksana KFR (ICD 9 CM)</td>
+                <td class="text3" colspan="2">: {{ $lembarSpkfr->tata_laksana_kfr}}</td>
+            </tr>
+            <tr>
+                <td class="text3">Ajuran</td>
+                <td class="text3" colspan="2">: {{ $asesmenDokter->anjuran_terapi}}x Seminggu</td>
+            </tr>
+            <tr>
+                <td class="text3">Evalusi</td>
+                <td class="text3" colspan="2">: {{ $asesmenDokter->evaluasi_terapi}}x Terapi</td>
+            </tr>
+        </table>
+        <table style="border: 1px solid black; border-top: none;" width="100%">
+            <tr>
+                <td style="padding-top: 100px;" class="text5">Pasien</td>
+                <td style="padding-top: 100px;" class="text5">Dokter Pemeriksa</td>
+            </tr>
+            <tr>
+                <td class="text5"><img src="{{ asset('storage/ttd/' . $ttd->IMAGE) }}" width="65" height="65" class="img-fluid" alt="Gambar Pengguna"></td>
+                <td class="text5"><img src="img/code.png" width="65" height="65" /></td>
+            </tr>
+            <tr>
+                <td width="50%" class="text5">({{ $biodata->NAMA_PASIEN}})</td>
+                <td class="text5">({{ $namaDokter->Nama_Dokter}})</td>
+            </tr>
+        </table>
+    </body>
 </html>
