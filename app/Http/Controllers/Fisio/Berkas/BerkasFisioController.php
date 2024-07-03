@@ -70,10 +70,6 @@ class BerkasFisioController extends Controller
         $lembarUjiFungsi = $this->berkasFisio->getLembarUjiFungsi($no_reg);
         $lembarSpkfr = $this->berkasFisio->getLembarSpkfr($no_reg);
         $biodata = $this->rajal->pasien_bynoreg($no_reg);
-<<<<<<< HEAD
-=======
-
->>>>>>> 4d71d77a4610a1c98c04fe29871ffa04a63e5bb5
         $ttdPasien = DB::connection('pku')->table('TTD_PASIEN_MASTER')->select('IMAGE')->where('NO_MR_PASIEN', $biodata->NO_MR)->first();
 
         $usia = Carbon::parse($biodata->TGL_LAHIR)->age;
@@ -81,11 +77,10 @@ class BerkasFisioController extends Controller
         $date = date('dMY');
         $tanggal = Carbon::now();
 
-<<<<<<< HEAD
+
         $filename = $biodata->NO_MR.'-Fisioterapi-' . $date;
-=======
-        $filename = 'Fisioterapi -' . $date;
->>>>>>> 4d71d77a4610a1c98c04fe29871ffa04a63e5bb5
+
+
         $title = $this->prefix . ' ' . 'Harian';
 
         $pdf = PDF::loadview('pages.fisioterapi.berkas.formulir', ['tanggal' => $tanggal, 'title' => $title, 'asesmenDokter' => $asesmenDokter, 'lembarUjiFungsi' => $lembarUjiFungsi, 'lembarSpkfr' => $lembarSpkfr, 'biodata' => $biodata, 'usia' => $usia, 'namaDokter' => $namaDokter, 'ttdPasien' => $ttdPasien]);
