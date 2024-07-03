@@ -18,13 +18,11 @@ class RajalDokterController extends Controller
 
     public function __construct(RajalDokter $rajaldokter)
     {
-
         $this->rajaldokter = $rajaldokter;
         $this->view = 'pages.rj.dokter.';
         $this->prefix = 'Rawat Jalan';
         $this->pasien = new Pasien;
     }
-
     public function index(Request $request)
     {
         $title = $this->prefix . ' ' . 'Dokter';
@@ -32,8 +30,12 @@ class RajalDokterController extends Controller
     
         return view($this->view . 'index', compact('title', 'pasien'));
     }
+<<<<<<< HEAD
 
     public function createAsesmen(Request $request)
+=======
+    public function history(Request $request, $noMR)
+>>>>>>> 4d71d77a4610a1c98c04fe29871ffa04a63e5bb5
     {
         
         $title = $this->prefix . ' ' . 'Pemeriksaan Dokter';

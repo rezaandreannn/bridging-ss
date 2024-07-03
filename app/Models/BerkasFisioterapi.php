@@ -26,7 +26,7 @@ class BerkasFisioterapi extends Model
                 'rp.Nama_Pasien'
             )
             ->where('p.No_MR', $no_mr)
-            ->whereIn('p.Kode_Dokter',array('151','028'))
+            ->whereIn('p.Kode_Dokter', array('151', '028'))
             ->get();
         return $data;
     }
