@@ -35,7 +35,8 @@ class BerkasFisioterapi extends Model
     {
 
         $data = DB::connection('pku')
-            ->table('fis_asesmen_dokter')
+            ->table('fis_asesmen_dokter as ad')
+            ->leftJoin('TTD_PETUGAS_MASTER as tpm', 'ad.create_by', '=', 'tpm.USERNAME')
             ->where('no_registrasi', $no_reg)
             ->first();
         return $data;

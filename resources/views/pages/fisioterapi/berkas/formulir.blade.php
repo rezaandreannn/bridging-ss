@@ -278,7 +278,7 @@
             </tr>
             <tr>
                 <td class="text5"></td>
-                <td class="text5"><img src="img/code.png" width="65" height="65" /></td>
+                <td class="text5"><img src="storage/ttd/{{ $asesmenDokter->IMAGE}}" width="80" height="100" /></td>
             </tr>
             <tr>
                 <td width="50%" class="text5"></td>Nama_Dokter
@@ -368,7 +368,7 @@
             </tr>
             <tr>
                 <td class="text5"></td>
-                <td class="text5"><img src="img/code.png" width="65" height="65" /></td>
+                <td class="text5"><img src="storage/ttd/{{ $asesmenDokter->IMAGE}}" width="80" height="100" /></td>
             </tr>
             <tr>
                 <td width="50%" class="text5"></td>
@@ -482,8 +482,8 @@
                 <td style="padding-top: 100px;" class="text5">Dokter Pemeriksa</td>
             </tr>
             <tr>
-                <td class="text5"><img src="{{ asset('storage/ttd/' . $ttd->IMAGE) }}" width="65" height="65" class="img-fluid" alt="Gambar Pengguna"></td>
-                <td class="text5"><img src="img/code.png" width="65" height="65" /></td>
+                <td class="text5"><img src="storage/ttd/{{ $ttdPasien->IMAGE}}" width="80" height="100" /></td>
+                <td class="text5"><img src="storage/ttd/{{ $asesmenDokter->IMAGE}}" width="80" height="100" /></td>
             </tr>
             <tr>
                 <td width="50%" class="text5">({{ $biodata->NAMA_PASIEN}})</td>
