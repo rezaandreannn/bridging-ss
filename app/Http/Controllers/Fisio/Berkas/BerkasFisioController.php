@@ -50,8 +50,6 @@ class BerkasFisioController extends Controller
 
     public function cppt_list($no_mr = "")
     {
-
-
         $fisioModel = new Fisioterapi();
         $biodatas = $this->pasien->biodataPasienByMr($no_mr);
         // dd($biodatas);
@@ -72,7 +70,7 @@ class BerkasFisioController extends Controller
         $date = date('dMY');
         $tanggal = Carbon::now();
 
-        $filename = 'Fisioterapi-' . $date;
+        $filename = 'Fisioterapi -' . $date;
         $title = $this->prefix . ' ' . 'Harian';
 
         $pdf = PDF::loadview('pages.fisioterapi.berkas.formulir', ['tanggal' => $tanggal, 'title' => $title, 'asesmenDokter' => $asesmenDokter, 'lembarUjiFungsi' => $lembarUjiFungsi, 'lembarSpkfr' => $lembarSpkfr, 'biodata' => $biodata, 'usia' => $usia]);
