@@ -323,9 +323,12 @@ class FisioController extends Controller
             ->orderBy('TR_CPPT_FISIOTERAPI.ID_CPPT_FISIO', 'ASC')
             ->get();
 
+
+            
+
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
         $date = date('dMY');
-        $filename = 'CPPT-' . $date;
+        $filename = $request->no_mr.'-CPPT-' . $date;
 
         $pdf = PDF::loadview($this->view . 'cetak/cppt', ['title' => $title, 'data' => $data, 'biodatas' => $biodatas]);
         return $pdf->stream($filename . '.pdf');
@@ -335,17 +338,20 @@ class FisioController extends Controller
     public function bukti_layanan(Request $request, $id)
     {
         $title = $this->prefix . ' ' . 'Bukti Layanan CPPT';
+        $db_emr_new = DB::connection('sqlsrv')->getDatabaseName();
         $data = DB::connection('pku')
             ->table('TR_CPPT_FISIOTERAPI as a')
-            ->join('TRANSAKSI_FISIOTERAPI', 'a.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
-            ->leftJoin('TTD_PASIEN_MASTER as b', 'TRANSAKSI_FISIOTERAPI.NO_MR_PASIEN', '=', 'b.NO_MR_PASIEN')
+            ->join('TRANSAKSI_FISIOTERAPI as tf', 'a.ID_TRANSAKSI_FISIO', '=', 'tf.ID_TRANSAKSI')
+            ->leftJoin('TTD_PASIEN_MASTER as b', 'tf.NO_MR_PASIEN', '=', 'b.NO_MR_PASIEN')
+            ->leftJoin($db_emr_new . '.dbo.users as u', 'a.create_by', '=', 'u.id')
+            ->leftJoin('TTD_PETUGAS_MASTER as tpm', 'u.username', '=', 'tpm.USERNAME')
             ->select(
                 'a.*',
-                'TRANSAKSI_FISIOTERAPI.*',
                 'b.NO_MR_PASIEN as PASIEN_USERNAME',
-                'b.IMAGE',
+                'b.IMAGE as ttd_pasien',
+                'tpm.IMAGE AS ttd_petugas'
             )
-            ->where('TRANSAKSI_FISIOTERAPI.KODE_TRANSAKSI_FISIO', '=', $id)
+            ->where('tf.KODE_TRANSAKSI_FISIO', '=', $id)
             ->orderBy('a.ID_CPPT_FISIO', 'ASC')
             ->get();
 
@@ -355,13 +361,27 @@ class FisioController extends Controller
             ->limit('1')
             ->first();
 
-        // dd($lastCppt);
-        // die;
+        $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
+        $firstCppt = DB::connection('pku')
+            ->table('TR_CPPT_FISIOTERAPI as TC')
+            ->leftJoin($db_rsmm . '.dbo.DOKTER as D', 'TC.KODE_DOKTER', '=', 'D.Kode_Dokter')
+            ->leftJoin('TTD_PETUGAS_MASTER as tpm', 'D.Kode_Dokter', '=', 'tpm.USERNAME')
+            ->select('D.Nama_Dokter','tpm.IMAGE as ttd_dokter','TC.DIAGNOSA','TC.JENIS_FISIO')
+            ->orderBy('TC.ID_CPPT_FISIO', 'ASC')
+            ->limit('1')
+            ->first();
+
+            // dd($data);
+            
+
+       
 
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
+       
+     
         $date = date('dMY');
         $filename = 'BuktiLayanan-' . $date;
-        $pdf = PDF::loadview($this->view . 'cetak/bukti_pelayanan', ['title' => $title, 'data' => $data, 'biodatas' => $biodatas, 'lastCppt' => $lastCppt]);
+        $pdf = PDF::loadview($this->view . 'cetak/bukti_pelayanan', ['title' => $title, 'data' => $data, 'biodatas' => $biodatas, 'lastCppt' => $lastCppt, 'firstCppt' => $firstCppt]);
         return $pdf->stream($filename . '.pdf');
     }
 
