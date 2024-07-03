@@ -78,7 +78,7 @@ class BerkasFisioController extends Controller
         $tanggal = Carbon::now();
 
 
-        $filename = $biodata->NO_MR.'-Fisioterapi-' . $date;
+        $filename = $biodata->NO_MR . '-Fisioterapi-' . $date;
 
 
         $title = $this->prefix . ' ' . 'Harian';

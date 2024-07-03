@@ -27,19 +27,18 @@ class RajalDokterController extends Controller
     {
         $title = $this->prefix . ' ' . 'Dokter';
         $pasien = $this->rajaldokter->getPasienByDokter(auth()->user()->username);
-    
         return view($this->view . 'index', compact('title', 'pasien'));
     }
 
 
     public function createAsesmen(Request $request)
-
     {
-        
+        $dokterModel = new RajalDokter();
         $title = $this->prefix . ' ' . 'Pemeriksaan Dokter';
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
         $history = $this->rajaldokter->getHistoryPasien($request->no_mr);
-        return view($this->view . 'add', compact('title', 'biodatas', 'history'));
+        $resepData = $dokterModel->getDataResep($noReg);
+        return view($this->view . 'add', compact('title', 'biodatas', 'history', 'dokterModel'));
     }
 
     /**
@@ -47,7 +46,7 @@ class RajalDokterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
- 
+
 
     /**
      * Store a newly created resource in storage.

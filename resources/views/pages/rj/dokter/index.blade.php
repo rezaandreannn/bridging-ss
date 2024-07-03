@@ -53,9 +53,9 @@
                                             <span class="badge badge-pill badge-danger">Dokter</span>
                                             @elseif($data->FS_STATUS == 2)
                                             @if($data->FS_TERAPI == '' or $data->FS_TERAPI == '-')
-                                            <span class="badge badge-pill badge-success">Selesai</span>
-                                            @else
                                             <span class="badge badge-pill badge-primary">Farmasi</span>
+                                            @else
+                                            <span class="badge badge-pill badge-success">Selesai</span>
                                                 @endif
                                             @endif
                                         </td>

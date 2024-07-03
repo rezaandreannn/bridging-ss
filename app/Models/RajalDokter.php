@@ -78,4 +78,30 @@ class RajalDokter extends Model
 
         return $data;
     }
+
+    public function getDataLab($noReg)
+    {
+        $data = DB::connection('db_rsmm')
+            ->table('TR_MASTER_LAB as a')
+            ->select(
+                'a.*',
+            )
+            ->where('a.No_Reg', $noReg)
+            ->get();
+
+        return $data;
+    }
+
+    public function getDataResep($noReg)
+    {
+        $data = DB::connection('db_rsmm')
+            ->table('TR_MASTER_RESEP as a')
+            ->select(
+                'a.*',
+            )
+            ->where('a.No_Reg', $noReg)
+            ->get();
+
+        return $data;
+    }
 }
