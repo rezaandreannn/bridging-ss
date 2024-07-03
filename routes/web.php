@@ -246,7 +246,7 @@ Route::middleware('auth')->group(function () {
 
         // Rawat Jalan Dokter
         Route::get('rajal/dokter', [RajalDokterController::class, 'index'])->name('rj.dokter');
-        Route::get('rajal/dokter/history/{no_mr}', [RajalDokterController::class, 'history'])->name('rj.dokterHistory');
+        Route::get('rajal/dokter/add_asesmen', [RajalDokterController::class, 'createAsesmen'])->name('rj.dokterHistory');
         Route::get('rajal/dokter/add', [RajalDokterController::class, 'add'])->name('rj.dokterAdd');
     });
 

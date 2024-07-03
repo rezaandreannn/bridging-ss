@@ -225,6 +225,9 @@
                     </div>
                     <div class="card">
                         <div class="card-body">
+                            <div class="card-header card-success">
+                                    <h4 class="card-title">History Pemeriksaan Pasien</h4>
+                            </div>
                             <div class="table-responsive">
                                 <table class="table-striped table" id="table-1">
                                     <thead>
@@ -238,14 +241,27 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       <td>28 June 2024</td>
-                                       <td>dr. Toumi Shiddiqi, Sp. PD.</td>
-                                       <td>SPESIALIS PENYAKIT DALAM</td>
-                                       <td><a href="#"></a>Hasil Laboratorium</td>
-                                       <td><div class="badge badge-danger">Rawat Inap</div></td>
-                                       <td>
-                                            <a href="" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> RM</a>
-                                       </td>
+                                       @foreach ($history as $data)
+                                       @php
+                                        $tanggal = date('d-m-Y', strtotime($data->TANGGAL));
+                                        @endphp
+                                        <tr>
+                                           <td>{{ $tanggal; }}</td>
+                                           <td>{{$data->NAMA_DOKTER}}</td>
+                                           <td>{{$data->SPESIALIS}}</td>
+                                           <td>{{$data->HASIL_ECHO}}</td>
+                                           <td>
+                                                @if($data->KODE_RUANG == '')
+                                                    <span class="badge badge-pill badge-primary">Rawat Jalan</span>
+                                                @elseif($data->KODE_RUANG != '')
+                                                    <span class="badge badge-pill badge-success">Rawat Inap</span>
+                                                @endif
+                                            </td>
+                                           <td width="20%">
+                                            <a href="{{ route('rj.dokterAdd') }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Copy</a>
+                                           </td>
+                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

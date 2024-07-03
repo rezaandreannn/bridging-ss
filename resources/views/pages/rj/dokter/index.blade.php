@@ -31,7 +31,7 @@
                         <table class="table-striped table" id="table-1">
                             <thead>
                                 <tr>
-                                    <th scope="col">No</th>
+                                    <th scope="col">No Antrian</th>
                                     <th scope="col">No MR</th>
                                     <th scope="col">Nama Pasien</th>
                                     <th scope="col">Alamat</th>
@@ -42,7 +42,8 @@
                             <tbody>
                                 @foreach ($pasien as $data)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
+                                        <td>
+                                            <span class="badge badge-pill badge-success">{{ $data->NOMOR }}</span></td>
                                         <td>{{$data->NO_MR}}</td>
                                         <td>{{$data->NAMA_PASIEN}}</td>
                                         <td>{{$data->ALAMAT}}</td>
@@ -59,7 +60,7 @@
                                             @endif
                                         </td>
                                         <td width="20%">
-                                            <a href="{{ route('rj.dokterHistory', ['no_mr' => $data->NO_MR]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
+                                            <a href="{{ route('rj.dokterHistory', ['no_reg' => $data->NO_REG, 'no_mr'=> $data->NO_MR]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
                                         </td>
                                     </tr>
                                 @endforeach

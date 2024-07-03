@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class RajalDokter extends Model
 {
-    public function getPasienByDokter()
+    public function getPasienByDokter($kode_dokter)
     {
         $dbpku = DB::connection('pku')->getDatabaseName();
         $date = now();
@@ -37,7 +37,7 @@ class RajalDokter extends Model
             )
             ->whereDate('a.TANGGAL', $date)
             ->whereDate('c.TANGGAL', $date)
-            ->where('c.Kode_Dokter', '140')
+            ->where('c.Kode_Dokter', $kode_dokter)
             ->orderBy('a.NOMOR', 'ASC')
             ->get()
             ->toArray();

@@ -28,22 +28,18 @@ class RajalDokterController extends Controller
     public function index(Request $request)
     {
         $title = $this->prefix . ' ' . 'Dokter';
-        $pasien = $this->rajaldokter->getPasienByDokter();
+        $pasien = $this->rajaldokter->getPasienByDokter(auth()->user()->username);
+    
         return view($this->view . 'index', compact('title', 'pasien'));
     }
 
-    public function history(Request $request, $noMR)
+    public function createAsesmen(Request $request)
     {
-        $title = $this->prefix . ' ' . 'History';
+        
+        $title = $this->prefix . ' ' . 'Pemeriksaan Dokter';
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
-        $history = $this->rajaldokter->getHistoryPasien($noMR);
-        return view($this->view . 'history', compact('title', 'biodatas', 'history'));
-    }
-
-    public function add(Request $request)
-    {
-        $title = $this->prefix . ' ' . 'Add';
-        return view($this->view . 'add', compact('title'));
+        $history = $this->rajaldokter->getHistoryPasien($request->no_mr);
+        return view($this->view . 'add', compact('title', 'biodatas', 'history'));
     }
 
     /**
@@ -51,10 +47,7 @@ class RajalDokterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
+ 
 
     /**
      * Store a newly created resource in storage.
