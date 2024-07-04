@@ -74,17 +74,43 @@ class BerkasFisioController extends Controller
 
         $usia = Carbon::parse($biodata->TGL_LAHIR)->age;
 
+
+        // Cetak PDF
         $date = date('dMY');
         $tanggal = Carbon::now();
-
-
         $filename = $biodata->NO_MR . '-Fisioterapi-' . $date;
-
 
         $title = $this->prefix . ' ' . 'Harian';
 
         $pdf = PDF::loadview('pages.fisioterapi.berkas.formulir', ['tanggal' => $tanggal, 'title' => $title, 'asesmenDokter' => $asesmenDokter, 'lembarUjiFungsi' => $lembarUjiFungsi, 'lembarSpkfr' => $lembarSpkfr, 'biodata' => $biodata, 'usia' => $usia, 'namaDokter' => $namaDokter, 'ttdPasien' => $ttdPasien]);
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
+    }
 
+    public function rujukan()
+    {
+        // Cetak PDF
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+        $filename = 'Rujukan-' . $date;
+
+        $title = $this->prefix . ' ' . 'Harian';
+
+        $pdf = PDF::loadview('pages.fisioterapi.berkas.rujukan', ['tanggal' => $tanggal, 'title' => $title]);
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
+    }
+
+    public function informed()
+    {
+        // Cetak PDF
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+        $filename = 'Informed-' . $date;
+
+        $title = $this->prefix . ' ' . 'Harian';
+
+        $pdf = PDF::loadview('pages.fisioterapi.berkas.informed', ['tanggal' => $tanggal, 'title' => $title]);
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
     }

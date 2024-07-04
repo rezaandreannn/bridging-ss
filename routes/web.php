@@ -189,6 +189,8 @@ Route::middleware('auth')->group(function () {
         Route::get('berkas_fisio', [BerkasFisioController::class, 'index'])->name('berkas.fisio');
         Route::get('berkas_fisio/cetak_rm_dokter/{no_reg}', [BerkasFisioController::class, 'cetak_rm_dokter'])->name('berkas.cetakRmFisio');
         Route::get('berkas_fisio/cppt/{no_mr}', [BerkasFisioController::class, 'cppt_list'])->name('berkas.cppt');
+        Route::get('berkas_fisio/rujukan', [BerkasFisioController::class, 'rujukan'])->name('berkas.rujukan');
+        Route::get('berkas_fisio/informed', [BerkasFisioController::class, 'informed'])->name('berkas.informed');
         Route::get('/berkas_fisio/harian', [BerkasFisioController::class, 'berkas'])->name('berkas.harian');
     });
 
@@ -245,8 +247,8 @@ Route::middleware('auth')->group(function () {
 
 
         // Rawat Jalan Dokter
-        Route::get('rajal/dokter', [RajalDokterController::class, 'index'])->name('rj.dokter');
-        Route::get('rajal/dokter/add_asesmen', [RajalDokterController::class, 'createAsesmen'])->name('rj.dokterHistory');
+        Route::get('rajal/dokter/', [RajalDokterController::class, 'index'])->name('rj.dokter');
+        Route::get('rajal/dokter/add_asesmen/{noReg}/{noMR}', [RajalDokterController::class, 'createAsesmen'])->name('rj.dokterHistory');
         Route::get('rajal/dokter/add', [RajalDokterController::class, 'add'])->name('rj.dokterAdd');
     });
 

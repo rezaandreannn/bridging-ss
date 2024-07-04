@@ -80,7 +80,8 @@
                                         <a href="{{ route('berkas.cetakRmFisio', ['no_reg' => $pasien->No_Reg]) }}" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Asesmen Dokter</a>
                                         @endif
                                         <a href="{{ route('berkas.cppt', ['no_mr' => $pasien->No_MR]) }}" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Cppt</a>
-                                       
+                                        <a href="{{ route('berkas.rujukan') }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Rujukan</a>
+                                        <a href="{{ route('berkas.informed') }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Informed</a>
                                     </td>
                                </tr>
                                @endforeach

@@ -112,6 +112,11 @@
                         <a class="nav-link" href="{{ route('berkas.fisio')}}">Berkas Fisio Terapi</a>
                     </li>
                 </ul>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a class="nav-link" href="#">Informed Concent</a>
+                    </li>
+                </ul>
             </li>
             <li class="menu-header">vclaim bpjs</li>
             <li class="nav-item dropdown ">

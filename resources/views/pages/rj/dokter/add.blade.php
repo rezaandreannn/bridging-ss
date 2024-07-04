@@ -241,15 +241,19 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       @foreach ($history as $data)
-                                       @php
-                                        $tanggal = date('d-m-Y', strtotime($data->TANGGAL));
-                                        $dokterModel = new App\Models\RajalDokter();
-                                        $resepData = $dokterModel->getDataResep($data->NO_REG);
-                                        $showResepLink = $resepData->count() > 0; 
-                                        $labData = $dokterModel->getDataLab($data->NO_REG);
-                                        $showLabLink = $labData->count() > 0; 
+                                        @php
+                                            $dokterModel = new App\Models\RajalDokter();
+                                           
                                         @endphp
+                                        @foreach ($history as $data)
+                                            @php
+                                                $tanggal = date('d-m-Y', strtotime($data->TANGGAL));
+                                                $resepData = $dokterModel->getDataResep($data->NO_REG);
+                                                $showResepLink = $resepData->count() > 0; 
+                                                    
+                                                $labData = $dokterModel->getDataLab($data->NO_REG);
+                                                $showLabLink = $labData->count() > 0; 
+                                            @endphp
                                         <tr>
                                            <td>{{ $tanggal; }}</td>
                                            <td>{{$data->NAMA_DOKTER}}</td>

@@ -4,9 +4,10 @@ namespace App\Http\Controllers\RawatJalan\Dokter;
 
 use App\Models\Rajal;
 use App\Models\Pasien;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\RajalDokter;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class RajalDokterController extends Controller
 {
@@ -31,13 +32,12 @@ class RajalDokterController extends Controller
     }
 
 
-    public function createAsesmen(Request $request)
+    public function createAsesmen($noReg, $noMR)
     {
         $dokterModel = new RajalDokter();
         $title = $this->prefix . ' ' . 'Pemeriksaan Dokter';
-        $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
-        $history = $this->rajaldokter->getHistoryPasien($request->no_mr);
-        $resepData = $dokterModel->getDataResep($noReg);
+        $biodatas = $this->pasien->biodataPasienByMr($noMR);
+        $history = $this->rajaldokter->getHistoryPasien($noMR);
         return view($this->view . 'add', compact('title', 'biodatas', 'history', 'dokterModel'));
     }
 
