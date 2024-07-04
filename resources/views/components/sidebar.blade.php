@@ -103,6 +103,11 @@
                         <a class="nav-link" href="{{ route('list-pasien.index') }}">CPPT Fisioterapi</a>
                     </li>
                 </ul>
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('fisioterapi/perawat/*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('informed_concent.index') }}">Informed Concent</a>
+                    </li>
+                </ul>
             </li>
             @endcan
             <li class="nav-item dropdown">
