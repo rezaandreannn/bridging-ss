@@ -29,6 +29,7 @@ use App\Http\Controllers\Fisio\Dokter\AssesmenDokterController;
 use App\Http\Controllers\RawatJalan\Perawat\AssesmenController;
 use App\Http\Controllers\Case\Encounter\EncounterCreateController;
 use App\Http\Controllers\Fisio\Berkas\BerkasFisioController;
+use App\Http\Controllers\Fisio\InformedConcentController;
 use App\Http\Controllers\RawatJalan\Dokter\RajalDokterController;
 use App\Models\Fisioterapi;
 
@@ -182,6 +183,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/hasil_tindakan/{no_mr}', [FisioController::class, 'tindakanDokter'])->name('tindakan.dokter');
         Route::get('/diagnosa_fisioterapi', [FisioController::class, 'diagnosaDokter'])->name('diagnosa.dokter');
         Route::get('cetak_cppt/{no_mr}', [FisioController::class, 'cetakFormulir'])->name('cppt.cetakFormulir');
+        
+        // informed concent
+        Route::get('informed_concent/list_pasien', [InformedConcentController::class, 'index'])->name('informed_concent.index');
+
     });
 
     // Berkas Rekam Medis

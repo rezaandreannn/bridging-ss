@@ -35,6 +35,7 @@ class Fisioterapi extends Model
             ->table('ANTRIAN as a')
             ->Join('REGISTER_PASIEN as rp', 'a.No_MR', '=', 'rp.No_MR')
             ->Join('PENDAFTARAN as p', 'a.No_MR', '=', 'p.No_MR')
+            ->Join('DOKTER as d', 'p.KODE_DOKTER', '=', 'd.KODE_DOKTER')
             ->select(
                 'a.NOMOR',
 
