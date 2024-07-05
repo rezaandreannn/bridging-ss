@@ -243,27 +243,21 @@
                                     <tbody>
                                         @php
                                             $dokterModel = new App\Models\RajalDokter();
-                                           
                                         @endphp
                                         @foreach ($history as $data)
                                             @php
                                                 $tanggal = date('d-m-Y', strtotime($data->TANGGAL));
-                                                $resepData = $dokterModel->getDataResep($data->NO_REG);
-                                                $showResepLink = $resepData->count() > 0; 
-                                                    
-                                                $labData = $dokterModel->getDataLab($data->NO_REG);
-                                                $showLabLink = $labData->count() > 0; 
                                             @endphp
                                         <tr>
                                            <td>{{ $tanggal; }}</td>
                                            <td>{{$data->NAMA_DOKTER}}</td>
                                            <td>{{$data->SPESIALIS}}</td>
                                            <td>
-                                            @if ($showResepLink)
-                                                <a href="">Resep</a>
+                                            @if ($dokterModel->getDataResep($data->NO_REG) == true)
+                                                <a href="{{ route('rj.dokterResep', [$data->NO_REG])  }}">Resep</a>
                                             @endif
-                                            @if ($showLabLink)
-                                                <a href="#">Hasil Lab</a>
+                                            @if ($dokterModel->getDataLab($data->NO_REG) == true)
+                                                <a href="{{ route('rj.dokterLab', [$data->NO_REG])  }}">Hasil Lab</a>
                                             @endif
                                             {{-- <a href="#" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;">Resep</a> --}}
                                            </td>

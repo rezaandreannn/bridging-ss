@@ -183,10 +183,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/hasil_tindakan/{no_mr}', [FisioController::class, 'tindakanDokter'])->name('tindakan.dokter');
         Route::get('/diagnosa_fisioterapi', [FisioController::class, 'diagnosaDokter'])->name('diagnosa.dokter');
         Route::get('cetak_cppt/{no_mr}', [FisioController::class, 'cetakFormulir'])->name('cppt.cetakFormulir');
-        
+
         // informed concent
         Route::get('informed_concent/list_pasien', [InformedConcentController::class, 'index'])->name('informed_concent.index');
-
     });
 
     // Berkas Rekam Medis
@@ -255,6 +254,8 @@ Route::middleware('auth')->group(function () {
         Route::get('rajal/dokter/', [RajalDokterController::class, 'index'])->name('rj.dokter');
         Route::get('rajal/dokter/add_asesmen/{noReg}/{noMR}', [RajalDokterController::class, 'createAsesmen'])->name('rj.dokterHistory');
         Route::get('rajal/dokter/add', [RajalDokterController::class, 'add'])->name('rj.dokterAdd');
+        Route::get('rajal/dokter/resep/{noReg}', [RajalDokterController::class, 'resepDokter'])->name('rj.dokterResep');
+        Route::get('rajal/dokter/lab/{noReg}', [RajalDokterController::class, 'labDokter'])->name('rj.dokterLab');
     });
 
     // MANAGE USER

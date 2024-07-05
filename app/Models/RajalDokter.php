@@ -84,12 +84,16 @@ class RajalDokter extends Model
         $data = DB::connection('db_rsmm')
             ->table('TR_MASTER_LAB as a')
             ->select(
-                'a.*',
+                'a.No_Reg',
             )
             ->where('a.No_Reg', $noReg)
-            ->get();
+            ->first();
 
-        return $data;
+        if ($data != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function getDataResep($noReg)
@@ -97,11 +101,53 @@ class RajalDokter extends Model
         $data = DB::connection('db_rsmm')
             ->table('TR_MASTER_RESEP as a')
             ->select(
+                'a.No_Reg',
+            )
+            ->where('a.No_Reg', $noReg)
+            ->first();
+
+        if ($data != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function resep($noReg)
+    {
+        $data = DB::connection('db_rsmm')
+            ->table('TR_DETAIL_RESEP as a')
+            ->join('TR_MASTER_RESEP as b', 'a.NO_RESEP', '=', 'b.NO_RESEP')
+            ->join('OBAT as c', 'a.KODE_OBAT', '=', 'c.KODE_OBAT')
+            ->join('SATUAN_OBAT as d', 'c.ID_SATUAN', '=', 'd.ID_SATUAN')
+            ->where('b.NO_REG', $noReg)
+            ->orderBy('c.Nama_Obat', 'ASC')
+            ->get();
+        return $data;
+    }
+
+    public function lab($noReg)
+    {
+        $data = DB::connection('db_rsmm')
+            ->table('TR_MASTER_LAB as a')
+            ->join('TR_DETAIL_LAB as b', 'b.Id_Lab', '=', 'a.Id_Lab')
+            ->join('REGISTER_PASIEN as c', 'a.No_MR', '=', 'c.No_MR')
+            ->join('LAB_JENISPERIKSA as d', 'a.No_Jenis', '=', 'd.No_Jenis')
+            ->join('LAB_HASIL as e', 'b.Kode_Hasil', '=', 'e.Kode_Hasil')
+            ->join('DOKTER as f', 'a.Pengirim', '=', 'f.Kode_Dokter')
+            ->select(
                 'a.*',
+                'b.Kode_Hasil',
+                'b.Hasil',
+                'b.Status',
+                'c.Nama_Pasien',
+                'd.Jenis',
+                'e.Nilai_Normal',
+                'e.Pemeriksaan',
+                'f.Nama_Dokter',
             )
             ->where('a.No_Reg', $noReg)
             ->get();
-
         return $data;
     }
 }

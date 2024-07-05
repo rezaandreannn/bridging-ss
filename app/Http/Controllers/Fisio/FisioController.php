@@ -223,8 +223,6 @@ class FisioController extends Controller
                 'CREATE_BY' => auth()->user()->id,
             ]);
 
-
-
             $cek_ttd_pasien =  DB::connection('pku')->table('TTD_PASIEN_MASTER')->where('NO_MR_PASIEN', $request->input('NO_MR_PASIEN'))->count();
 
             if ($cek_ttd_pasien < '1') {
@@ -324,11 +322,11 @@ class FisioController extends Controller
             ->get();
 
 
-            
+
 
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
         $date = date('dMY');
-        $filename = $request->no_mr.'-CPPT-' . $date;
+        $filename = $request->no_mr . '-CPPT-' . $date;
 
         $pdf = PDF::loadview($this->view . 'cetak/cppt', ['title' => $title, 'data' => $data, 'biodatas' => $biodatas]);
         return $pdf->stream($filename . '.pdf');
@@ -366,19 +364,15 @@ class FisioController extends Controller
             ->table('TR_CPPT_FISIOTERAPI as TC')
             ->leftJoin($db_rsmm . '.dbo.DOKTER as D', 'TC.KODE_DOKTER', '=', 'D.Kode_Dokter')
             ->leftJoin('TTD_PETUGAS_MASTER as tpm', 'D.Kode_Dokter', '=', 'tpm.USERNAME')
-            ->select('D.Nama_Dokter','tpm.IMAGE as ttd_dokter','TC.DIAGNOSA','TC.JENIS_FISIO')
+            ->select('D.Nama_Dokter', 'tpm.IMAGE as ttd_dokter', 'TC.DIAGNOSA', 'TC.JENIS_FISIO')
             ->orderBy('TC.ID_CPPT_FISIO', 'ASC')
             ->limit('1')
             ->first();
 
-            // dd($data);
-            
-
-       
+        // dd($data);
 
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
-       
-     
+
         $date = date('dMY');
         $filename = 'BuktiLayanan-' . $date;
         $pdf = PDF::loadview($this->view . 'cetak/bukti_pelayanan', ['title' => $title, 'data' => $data, 'biodatas' => $biodatas, 'lastCppt' => $lastCppt, 'firstCppt' => $firstCppt]);

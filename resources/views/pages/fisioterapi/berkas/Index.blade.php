@@ -19,7 +19,7 @@
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{ route('list-pasien.index') }}">Fisioterapi</a></div>
-                <div class="breadcrumb-item">Berkas Harian Fisioterapi</div>
+                <div class="breadcrumb-item">Fisioterapi Berkas Pasien</div>
             </div>
         </div>
 

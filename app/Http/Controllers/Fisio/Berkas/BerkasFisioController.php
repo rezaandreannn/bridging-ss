@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Storage;
 
 class BerkasFisioController extends Controller
 {
-
     protected $view;
     protected $prefix;
     protected $fisio;
@@ -66,7 +65,6 @@ class BerkasFisioController extends Controller
         set_time_limit(300);
         $asesmenDokter = $this->berkasFisio->getAsesmenDokter($no_reg);
         $namaDokter = DB::connection('db_rsmm')->table('DOKTER')->select('Nama_Dokter')->where('Kode_Dokter', $asesmenDokter->create_by)->first();
-
         $lembarUjiFungsi = $this->berkasFisio->getLembarUjiFungsi($no_reg);
         $lembarSpkfr = $this->berkasFisio->getLembarSpkfr($no_reg);
         $biodata = $this->rajal->pasien_bynoreg($no_reg);
@@ -115,67 +113,31 @@ class BerkasFisioController extends Controller
         return $pdf->stream($filename . '.pdf');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

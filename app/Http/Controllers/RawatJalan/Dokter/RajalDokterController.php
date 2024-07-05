@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\RawatJalan\Dokter;
 
+use Carbon\Carbon;
 use App\Models\Rajal;
 use App\Models\Pasien;
 use App\Models\RajalDokter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
+use App\Models\Rekam_medis;
 
 class RajalDokterController extends Controller
 {
@@ -16,6 +19,7 @@ class RajalDokterController extends Controller
     protected $prefix;
     protected $rajaldokter;
     protected $pasien;
+    protected $rekam_medis;
 
     public function __construct(RajalDokter $rajaldokter)
     {
@@ -23,6 +27,7 @@ class RajalDokterController extends Controller
         $this->view = 'pages.rj.dokter.';
         $this->prefix = 'Rawat Jalan';
         $this->pasien = new Pasien;
+        $this->rekam_medis = new Rekam_medis;
     }
     public function index(Request $request)
     {
@@ -38,7 +43,40 @@ class RajalDokterController extends Controller
         $title = $this->prefix . ' ' . 'Pemeriksaan Dokter';
         $biodatas = $this->pasien->biodataPasienByMr($noMR);
         $history = $this->rajaldokter->getHistoryPasien($noMR);
+
         return view($this->view . 'add', compact('title', 'biodatas', 'history', 'dokterModel'));
+    }
+
+    public function resepDokter($noReg)
+    {
+        $data = $this->rajaldokter->resep($noReg);
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+        // Cetak PDF
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+        $filename = 'Resep-' . $date;
+
+        $title = $this->prefix . ' ' . 'Resep';
+
+        $pdf = PDF::loadview('pages.rj.dokter.cetak.resep', ['tanggal' => $tanggal, 'title' => $title, 'data' => $data, 'biodata' => $biodata]);
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
+    }
+
+    public function labDokter($noReg)
+    {
+        $data = $this->rajaldokter->lab($noReg);
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+        // Cetak PDF
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+        $filename = 'Lab-' . $date;
+
+        $title = $this->prefix . ' ' . 'Lab';
+
+        $pdf = PDF::loadview('pages.rj.dokter.cetak.lab', ['tanggal' => $tanggal, 'title' => $title, 'data' => $data, 'biodata' => $biodata]);
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
     }
 
     /**
