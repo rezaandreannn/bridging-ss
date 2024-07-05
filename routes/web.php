@@ -186,6 +186,9 @@ Route::middleware('auth')->group(function () {
         
         // informed concent
         Route::get('informed_concent/list_pasien', [InformedConcentController::class, 'index'])->name('informed_concent.index');
+        Route::get('informed_concent/add', [InformedConcentController::class, 'create'])->name('informed_concent.add');
+        Route::post('informed_concent/add_proses', [InformedConcentController::class, 'store'])->name('informed_concent.add_proses');
+        Route::get('rujukan/add', [InformedConcentController::class, 'create_rujukan'])->name('rujukan.add');
 
     });
 
@@ -195,7 +198,7 @@ Route::middleware('auth')->group(function () {
         Route::get('berkas_fisio/cetak_rm_dokter/{no_reg}', [BerkasFisioController::class, 'cetak_rm_dokter'])->name('berkas.cetakRmFisio');
         Route::get('berkas_fisio/cppt/{no_mr}', [BerkasFisioController::class, 'cppt_list'])->name('berkas.cppt');
         Route::get('berkas_fisio/rujukan', [BerkasFisioController::class, 'rujukan'])->name('berkas.rujukan');
-        Route::get('berkas_fisio/informed', [BerkasFisioController::class, 'informed'])->name('berkas.informed');
+        Route::get('berkas_fisio/informed', [BerkasFisioController::class, 'cetak_informed'])->name('berkas.informed');
         Route::get('/berkas_fisio/harian', [BerkasFisioController::class, 'berkas'])->name('berkas.harian');
     });
 

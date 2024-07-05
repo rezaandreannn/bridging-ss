@@ -134,6 +134,41 @@ class Fisioterapi extends Model
         return $data;
     }
 
+    public function cekInformedConcent($no_reg)
+    {
+    
+
+        $data = DB::connection('pku')
+            ->table('INFORMED_CONCENT_FISIOTERAPI')
+            ->select('KODE_REGISTER')
+            ->where('KODE_REGISTER', $no_reg)
+            ->first();
+
+            if ($data != null) {
+                return true;
+            } else {
+                return false;
+            }
+    }
+
+    public function getInformedConcent($no_reg)
+    {
+    
+        $db_emr = DB::connection('sqlsrv')->getDatabaseName();
+        $data = DB::connection('pku')
+            ->table('INFORMED_CONCENT_FISIOTERAPI as ics')
+            ->leftJoin($db_emr . '.dbo.users as u', 'ics.create_by', '=', 'u.id')
+            ->leftJoin('TTD_PETUGAS_MASTER as t', 'u.username', '=', 't.USERNAME')->select(
+                'ics.*',
+                'u.name',
+                't.IMAGE'
+
+            )
+            ->where('ics.KODE_REGISTER', $no_reg)
+            ->first();
+        return $data;
+    }
+
 
     // Menghitung Jumlah Fisio yang sudah dilakukan
     public function countCpptByKodeTr($id)

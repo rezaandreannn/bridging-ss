@@ -7,6 +7,7 @@ use App\Models\Pasien;
 use App\Models\Fisioterapi;
 use Illuminate\Http\Request;
 use App\Models\BerkasFisioterapi;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class InformedConcentController extends Controller
@@ -32,9 +33,21 @@ class InformedConcentController extends Controller
     {
         //
         $listpasien = $this->fisio->pasienCpptdanFisioterapi();
+     
+
+        $fisioModel= new Fisioterapi();
        
         $title = $this->prefix . ' ' . 'Index';
-        return view($this->view . 'index', compact('title', 'listpasien'));
+        return view($this->view . 'index', compact('title', 'listpasien','fisioModel'));
+    }
+
+    public function create_rujukan()
+    {
+        //
+        $title = 'Surat Rujukan Fisioterapi Index';
+        // $biodata = $this->rajal->resumeMedisPasienByMR($noMR);
+        return view('pages.fisioterapi.surat_rujukan.add', compact('title'));
+
     }
 
     /**
@@ -42,7 +55,7 @@ class InformedConcentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
     }
@@ -56,6 +69,24 @@ class InformedConcentController extends Controller
     public function store(Request $request)
     {
         //
+
+        $informed_concent = DB::connection('pku')->table('INFORMED_CONCENT_FISIOTERAPI')->insert([
+            'KODE_REGISTER' => $request->input('KODE_REGISTER'),
+            'CREATE_AT' => date('Y-m-d'),
+            'CREATE_BY' => auth()->user()->id,
+            'IDENTIFIKASI' => $request->input('IDENTIFIKASI'),
+            'RUANGAN' => $request->input('RUANGAN'),
+            'JAM' => date('G:i:s')
+        ]);
+
+        if($informed_concent){
+            return redirect()->route('informed_concent.index')->with('success', 'Informed Concent Berhasil Ditambahkan!');
+            
+        }else {
+            return redirect()->route('informed_concent.index')->with('danger', 'Informed Concent Gagal Ditambahkan!');
+
+        }
+
     }
 
     /**

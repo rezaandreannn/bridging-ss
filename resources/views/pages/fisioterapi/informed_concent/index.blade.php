@@ -37,6 +37,7 @@
                                     <th scope="col">Alamat</th>
                                  
                                     <th scope="col">Aksi</th>
+                                    <th scope="col">Hasil Surat</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -48,8 +49,16 @@
                                         <td>{{$data->NAMA_PASIEN}}</td>
                                         <td>{{$data->ALAMAT}}</td>
                             
+                                        <td width="15%">
+                                            <a href="" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-add-informed-concent{{$data->NO_REG}}"><i class="fa fa-plus"></i> Informed Concent</a>   
+                                            <a href="{{ route('rujukan.add', ['no_reg' => $data->NO_REG
+                                            ])}}" class="btn btn-sm btn-danger"><i class="fa fa-plus"></i> Surat Rujuk</a>   
+                                        </td>
                                         <td width="20%">
-                                            <a href="{{ route('rj.dokterHistory', ['no_reg' => $data->NO_REG, 'no_mr'=> $data->NO_MR]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
+                                            @if($fisioModel->cekInformedConcent($data->NO_REG) == true)
+                                            <a href="{{ route('berkas.informed', ['no_reg' => $data->NO_REG
+                                            ])}}" class="btn btn-sm btn-warning" ><i class="fa fa-download"></i> Surat Informed Concent</a>
+                                            @endif  
                                         </td>
                                     </tr>
                                 @endforeach
@@ -61,6 +70,62 @@
         </div>
     </section>
 </div>
+
+@foreach ($listpasien as $data)
+<div class="modal fade" id="modal-add-informed-concent{{$data->NO_REG}}">">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Surat Informed Concent</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <form action="{{ route('informed_concent.add_proses') }}" method="POST">
+                @csrf
+                <div class="card-body">
+                    
+                <div class="container">
+                                <p><b>Nama : {{$data->NAMA_PASIEN}} <br> No MR : {{$data->NO_MR}} <br> Dengan ini menyatakan sesungguhnya memberikan PERSETUJUAN, untuk dilakukan tindakan fisioterapi : </b></p>
+                            </div>
+                        <div class="col-md-12">
+                   
+                            <div class="form-group">
+                                <label>Terhadap</label>
+                                <input type="hidden" name="KODE_REGISTER" value="{{$data->NO_REG}}">
+                                <select name="IDENTIFIKASI" class="form-control">
+                                    <option value="" disabled selected>--pilih--</option>
+                                    <option value="Diri sendiri" selected>Diri sendiri</option>
+                                    <option value="Suami">Suami</option>
+                                    <option value="Istri">Istri</option>
+                                    <option value="Anak">Anak</option>
+                                    <option value="Ayah">Ayah</option>
+                                    <option value="Ibu">Ibu</option>
+                                </select>     
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                   
+                            <div class="form-group">
+                                <label>Ruangan/kamar</label>
+                              <input type="text" name="RUANGAN" class="form-control">    
+                            </div>
+                        </div>
+                
+                </div>
+
+            </div>
+            <div class="card-footer text-left">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-print"></i> Simpan</button>
+                <button type="button" class="btn btn-info" data-dismiss="modal">Tutup</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+@endforeach
 @endsection
 
 @push('scripts')
