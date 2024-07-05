@@ -50,10 +50,6 @@ class FisioController extends Controller
     {
 
         $listpasien = $this->fisio->pasienCpptdanFisioterapi();
-
-        dd($listpasien);
-        die;
-
         $title = $this->prefix . ' ' . 'Index';
         return view($this->view . 'listPasienCpptFisio', compact('title', 'listpasien'));
     }

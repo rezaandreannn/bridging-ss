@@ -1,5 +1,8 @@
 <html lang="en">
     <head>
+     
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <style>
             table {
                 border-collapse: collapse;
@@ -63,15 +66,25 @@
                 <td class="text2" colspan="2"></td>
             </tr>
             <tr>
-                <td class="text2">Nama :</td>
+                <td class="text2">Nama : {{$biodata->NAMA_PASIEN}}</td>
+                <td class="text2" colspan="2"> </td>
+            </tr>
+            
+            @if($biodata->JENIS_KELAMIN=='L')
+            @php
+                $jenis_kelamin = 'Laki-laki';
+                @endphp
+                @else
+                @php
+                $jenis_kelamin = 'Perempuan';
+                @endphp
+            @endif
+            <tr>
+                <td class="text2">Umur/Jenis : {{$usia}} Tahun / {{$jenis_kelamin}}</td>
                 <td class="text2" colspan="2"> </td>
             </tr>
             <tr>
-                <td class="text2">Umur/Jenis :</td>
-                <td class="text2" colspan="2"> </td>
-            </tr>
-            <tr>
-                <td class="text2">Alamat :</td>
+                <td class="text2">Alamat : {{$biodata->ALAMAT}}</td>
                 <td class="text2" colspan="2"> </td>
             </tr>
             <tr>
@@ -103,46 +116,46 @@
                 <td class="text2" colspan="2"></td>
             </tr>
             <tr>
-                <td class="text2">Terhadap :</td>
+                <td class="text2">Terhadap : {{$informed_concent->IDENTIFIKASI}}</td>
                 <td class="text2" colspan="2"> </td>
             </tr>
             <tr>
-                <td class="text2">Nama :</td>
+                <td class="text2">Nama : {{$biodata->NAMA_PASIEN}}</td>
                 <td class="text2" colspan="2"> </td>
             </tr>
             <tr>
-                <td class="text2">Umur / Jenis :</td>
+                <td class="text2">Umur / Jenis : {{$usia}} Tahun / {{$jenis_kelamin}}</td>
                 <td class="text2" colspan="2"> </td>
             </tr>
             <tr>
-                <td class="text2">Alamat :</td>
+                <td class="text2">Alamat : {{$biodata->ALAMAT}}</td>
                 <td class="text2" colspan="2"> </td>
             </tr>
             <tr>
-                <td class="text2">Ruangan / Kamar :</td>
+                <td class="text2">Ruangan / Kamar : {{$informed_concent->RUANGAN}}</td>
                 <td class="text2" colspan="2"> </td>
             </tr>
             <tr>
-                <td class="text2">No Rekam Medis :</td>
+                <td class="text2">No Rekam Medis : {{$biodata->NO_MR}}</td>
                 <td class="text2" colspan="2"> </td>
             </tr>
         </table>
         <table width="100%">
             <tr>
-                <td style="padding-top: 100px;" class="text5">Jam : 16.00 WIB</td>
-                <td style="padding-top: 100px;" class="text5">Metro, Jam : 16.00 WIB</td>
+                <td style="padding-top: 100px;" class="text5"></td>
+                <td style="padding-top: 100px;" class="text5">Metro, {{$informed_concent->CREATE_AT}}</td>
             </tr>
             <tr>
-                <td class="text5">Penerima Rujukan</td>
-                <td class="text5">Dokter yang merujuk</td>
+                <td class="text5">Fisioterapis</td>
+                <td class="text5">Yang membuat pertanyaan</td>
             </tr>
             <tr>
-                <td class="text5"><img src="img/larsibaru.png" width="80" height="100" /></td>
-                <td class="text5"><img src="img/larsibaru.png" width="80" height="100" /></td>
+                <td class="text5"><img src="storage/ttd/{{$informed_concent->IMAGE}}" width="80" height="100" /></td>
+                <td class="text5"><img src="storage/ttd/{{$ttdPasien->IMAGE}}" width="80" height="100" /></td>
             </tr>
             <tr>
-                <td width="50%" class="text5">(Yusuf)</td>
-                <td class="text5">(Dr Bastian)</td>
+                <td width="50%" class="text5">( {{$informed_concent->name}} )</td>
+                <td class="text5">( {{$biodata->NAMA_PASIEN}} )</td>
             </tr>
         </table>
     </body>

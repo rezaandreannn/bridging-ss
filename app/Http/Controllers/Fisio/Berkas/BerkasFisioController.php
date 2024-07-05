@@ -99,7 +99,7 @@ class BerkasFisioController extends Controller
         return $pdf->stream($filename . '.pdf');
     }
 
-    public function informed()
+    public function cetak_informed(Request $request)
     {
         // Cetak PDF
         $date = date('dMY');
@@ -107,15 +107,22 @@ class BerkasFisioController extends Controller
         $filename = 'Informed-' . $date;
 
         $title = $this->prefix . ' ' . 'Harian';
+        $biodata = $this->rajal->pasien_bynoreg($request->no_reg);
+        $usia = Carbon::parse($biodata->TGL_LAHIR)->age;
+        
+        $ttdPasien = DB::connection('pku')->table('TTD_PASIEN_MASTER')->select('IMAGE')->where('NO_MR_PASIEN', $biodata->NO_MR)->first();
+        $informed_concent = $this->fisio->getInformedConcent($request->no_reg);   
+        // dd($informed_concent);
 
-        $pdf = PDF::loadview('pages.fisioterapi.berkas.informed', ['tanggal' => $tanggal, 'title' => $title]);
+        $pdf = PDF::loadview('pages.fisioterapi.berkas.informedConcent', ['tanggal' => $tanggal, 'title' => $title, 'biodata' => $biodata,'informed_concent' => $informed_concent,'usia' => $usia,'ttdPasien' => $ttdPasien]);
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
     }
 
     public function create()
     {
-        //
+     
+
     }
 
     public function store(Request $request)
