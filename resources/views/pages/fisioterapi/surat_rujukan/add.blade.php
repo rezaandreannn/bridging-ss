@@ -33,44 +33,77 @@
                             <h4 class="card-title">Tambah Data Surat Rujukan</h4>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('cppt.tambahData') }}" method="POST">
+                            <form action="{{ route('rujukan.store') }}" method="POST">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Anamnesa / Allow Anamnesa <code>*</code></label>
-                                            <textarea class="form-control" rows="2" name="ANAMNESA" value="" placeholder="Masukan ..."></textarea>
+                                            <label>Tujuan Rujukan <code>*</code></label>
+                                            <input type="hidden" name="kode_registrasi" value="{{$noreg}}" class="form-control">
+                                            <input type="text" name="tujuan_rujukan" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Tekanan Darah</label>
-                                            <input type="text" name="TEKANAN_DARAH" class="form-control">
+                                            <label>Alamat Tujuan Rujukan</label>
+                                            <input type="text" name="alamat_rujukan" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Lama Perawatan</label>
+                                            <input type="text" name="lama_perawatan" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Anamnesa</label>
+                                            <textarea class="form-control" rows="2" name="anamnesa" value="" placeholder="Masukan ..."></textarea>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Pemeriksaan Fisik</label>
+                                            <textarea class="form-control" rows="2" name="pemeriksaan_fisik" value="" placeholder="Masukan ..."></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Hasil Pemeriksaan Penunjang</label>
+                                            <textarea class="form-control" rows="2" name="hasil_pemeriksaan_penunjang" value="" placeholder="Masukan ..."></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Diagnosa</label>
+                                            <input type="text" name="diagnosa" class="form-control">
+                                        </div>
+                                    </div>
+              
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Terap/tindakan yang sudah dilakukan</label>
+                                            <textarea class="form-control" rows="2" name="terapi_yang_diberikan" value="" placeholder="Masukan ..."></textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Nadi</label>
-                                            <input type="text" name="NADI" class="form-control">
+                                            <label>Alasan dirujuk</label>
+                                            <input type="text" name="alasan_rujuk" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Suhu</label>
-                                            <input type="text" name="SUHU" class="form-control">
+                                            <label>penerima telepon di RS tujuan</label>
+                                            <input type="number" name="nohp_tujuan" class="form-control">
                                         </div>
                                     </div>
                     
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Cara Pulang </label>
-                                            <select name="CARA_PULANG" id="" class="form-control select2">
-                                                <option value="" selected disabled>--Pilih--</option>
-                                                <option value="KONSULTASI">KONSULTASI</option>
-                                                <option value="RUJUK">RUJUK</option>
-                                            </select>
-                                        </div>
-                                    </div>
                                 </div>
                         </div>
                         <div class="card-body">

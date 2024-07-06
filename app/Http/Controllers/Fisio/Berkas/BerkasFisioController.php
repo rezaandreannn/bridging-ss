@@ -85,16 +85,21 @@ class BerkasFisioController extends Controller
         return $pdf->stream($filename . '.pdf');
     }
 
-    public function rujukan()
+    public function cetak_rujukan(Request $request)
     {
         // Cetak PDF
+        $biodata = $this->rajal->pasien_bynoreg($request->no_reg);
         $date = date('dMY');
         $tanggal = Carbon::now();
-        $filename = 'Rujukan-' . $date;
+        $filename = 'SuratRujukan-'.$biodata->NO_MR.'-' . $date;
 
         $title = $this->prefix . ' ' . 'Harian';
+        $usia = Carbon::parse($biodata->TGL_LAHIR)->age;
+        
+        $surat_rujukan = $this->fisio->getSuratRujukan($request->no_reg);   
+        // dd($surat_rujukan);
 
-        $pdf = PDF::loadview('pages.fisioterapi.berkas.rujukan', ['tanggal' => $tanggal, 'title' => $title]);
+        $pdf = PDF::loadview('pages.fisioterapi.cetak.rujukan', ['tanggal' => $tanggal, 'title' => $title,'surat_rujukan' => $surat_rujukan,'usia'=>$usia, 'biodata'=>$biodata]);
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
     }
@@ -114,10 +119,12 @@ class BerkasFisioController extends Controller
         $informed_concent = $this->fisio->getInformedConcent($request->no_reg);   
         // dd($informed_concent);
 
-        $pdf = PDF::loadview('pages.fisioterapi.berkas.informedConcent', ['tanggal' => $tanggal, 'title' => $title, 'biodata' => $biodata,'informed_concent' => $informed_concent,'usia' => $usia,'ttdPasien' => $ttdPasien]);
+        $pdf = PDF::loadview('pages.fisioterapi.cetak.informedConcent', ['tanggal' => $tanggal, 'title' => $title, 'biodata' => $biodata,'informed_concent' => $informed_concent,'usia' => $usia,'ttdPasien' => $ttdPasien]);
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
     }
+
+
 
     public function create()
     {

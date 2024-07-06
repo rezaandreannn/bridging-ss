@@ -90,7 +90,7 @@
         </table>
         <table style="border: 1px solid black; border-top: none;border-bottom: none;" width="100%">
             <tr>
-                <td class="text5" colspan="3" style="text-align: center;border: 1px solid black;"><b>SURAT RUJUKAN</b></td>
+                <td class="text5" colspan="3" style="text-align: center;border: 1px solid black;"><b>SURAT surat_rujukan</b></td>
             </tr>
             <tr>
                 <td class="text8"></td>
@@ -98,11 +98,11 @@
             </tr>
             <tr>
                 <td class="text8"></td>
-                <td class="text2" colspan="2">....................................... </td>
+                <td class="text2" colspan="2">{{$surat_rujukan->tujuan_rujukan}} </td>
             </tr>
             <tr>
                 <td class="text8"></td>
-                <td class="text2" colspan="2">Di................................... </td>
+                <td class="text2" colspan="2">Di {{$surat_rujukan->alamat_rujukan}} </td>
             </tr>
         </table>
         <table style="border: 1px solid black; border-top: none;border-bottom: none;" width="100%">
@@ -115,51 +115,60 @@
                 <td class="text2" colspan="2"></td>
             </tr>
             <tr>
-                <td class="text3">Nama :</td>
+                <td class="text3">Nama : {{$biodata->NAMA_PASIEN}}</td>
                 <td class="text4" colspan="2"> </td>
             </tr>
             <tr>
-                <td class="text3">Tanggal Lahir :</td>
+                <td class="text3">Tanggal Lahir : {{ date('Y-m-d', strtotime($biodata->TGL_LAHIR))}}</td>
+                <td class="text4" colspan="2"> </td>
+            </tr>
+            @if($biodata->JENIS_KELAMIN=='L')
+            @php
+                $jenis_kelamin = 'Laki-laki';
+                @endphp
+                @else
+                @php
+                $jenis_kelamin = 'Perempuan';
+                @endphp
+            @endif
+            <tr>
+                <td class="text3">Jenis Kelamin : {{$jenis_kelamin}}</td>
                 <td class="text4" colspan="2"> </td>
             </tr>
             <tr>
-                <td class="text3">Jenis Kelamin :</td>
+                <td class="text3">Alamat : {{$biodata->ALAMAT}}</td>
                 <td class="text4" colspan="2"> </td>
             </tr>
             <tr>
-                <td class="text3">Alamat :</td>
+                <td class="text3">Lama Perawatan : {{$surat_rujukan->lama_perawatan}}</td>
                 <td class="text4" colspan="2"> </td>
             </tr>
             <tr>
-                <td class="text3">Lama Perawatan :</td>
-                <td class="text4" colspan="2"> </td>
-            </tr>
-            <tr>
-                <td class="text6">Anamnesa : </td>
+                <td class="text6">Anamnesa : {{$surat_rujukan->anamnesa}}</td>
                 <td class="text4" colspan="2"></td>
             </tr>
             <tr>
-                <td class="text6">Pemeriksaan Fisik : </td>
+                <td class="text6">Pemeriksaan Fisik : {{$surat_rujukan->pemeriksaan_fisik}}</td>
                 <td class="text4" colspan="2"></td>
             </tr>
             <tr>
-                <td class="text6">Hasil Pemeriksaan Penunjang : </td>
+                <td class="text6">Hasil Pemeriksaan Penunjang : {{$surat_rujukan->hasil_pemeriksaan_penunjang}}</td>
                 <td class="text4" colspan="2"></td>
             </tr>
             <tr>
-                <td class="text6">Diagnosa : </td>
+                <td class="text6">Diagnosa : {{$surat_rujukan->diagnosa}}</td>
                 <td class="text4" colspan="2"></td>
             </tr>
             <tr>
-                <td class="text6">Terapi /Tindakan yang sudah diberikan : </td>
+                <td class="text6">Terapi /Tindakan yang sudah diberikan : {{$surat_rujukan->terapi_yang_diberikan}}</td>
                 <td class="text4" colspan="2"></td>
             </tr>
             <tr>
-                <td class="text3">Alasan Dirujuk :</td>
+                <td class="text3">Alasan Dirujuk : {{$surat_rujukan->alasan_rujuk}}</td>
                 <td class="text4" colspan="2"> </td>
             </tr>
             <tr>
-                <td class="text3">Penerima telepon di RS Tujuan :</td>
+                <td class="text3">Penerima telepon di RS Tujuan : {{$surat_rujukan->nohp_tujuan}}</td>
                 <td class="text4" colspan="2"> </td>
             </tr>
             <tr>
@@ -169,8 +178,8 @@
         </table>
         <table style="border: 1px solid black; border-top: none;" width="100%">
             <tr>
-                <td style="padding-top: 100px;" class="text5">Jam : 16.00 WIB</td>
-                <td style="padding-top: 100px;" class="text5">Metro, Jam : 16.00 WIB</td>
+                <td style="padding-top: 100px;" class="text5">Jam : {{ date('G:i', strtotime($surat_rujukan->created_at))}} WIB</td>
+                <td style="padding-top: 100px;" class="text5">Metro, {{ date('Y-m-d', strtotime($surat_rujukan->created_at))}}</td>
             </tr>
             <tr>
                 <td class="text5">Penerima Rujukan</td>
@@ -178,11 +187,11 @@
             </tr>
             <tr>
                 <td class="text5"><img src="img/larsibaru.png" width="80" height="100" /></td>
-                <td class="text5"><img src="img/larsibaru.png" width="80" height="100" /></td>
+                <td class="text5"><img src="storage/ttd/{{$surat_rujukan->IMAGE}}" width="80" height="100" /></td>
             </tr>
             <tr>
                 <td width="50%" class="text5">(Yusuf)</td>
-                <td class="text5">(Dr Bastian)</td>
+                <td class="text5">({{$surat_rujukan->name}})</td>
             </tr>
         </table>
     </body>

@@ -151,6 +151,23 @@ class Fisioterapi extends Model
             }
     }
 
+    public function cekSuratRujukan($no_reg)
+    {
+    
+
+        $data = DB::connection('pku')
+            ->table('fis_surat_rujukan')
+            ->select('kode_registrasi')
+            ->where('kode_registrasi', $no_reg)
+            ->first();
+
+            if ($data != null) {
+                return true;
+            } else {
+                return false;
+            }
+    }
+
     public function getInformedConcent($no_reg)
     {
     
@@ -165,6 +182,24 @@ class Fisioterapi extends Model
 
             )
             ->where('ics.KODE_REGISTER', $no_reg)
+            ->first();
+        return $data;
+    }
+
+    public function getSuratRujukan($no_reg)
+    {
+    
+        $db_emr = DB::connection('sqlsrv')->getDatabaseName();
+        $data = DB::connection('pku')
+            ->table('fis_surat_rujukan as fsr')
+            ->leftJoin($db_emr . '.dbo.users as u', 'fsr.create_by', '=', 'u.id')
+            ->leftJoin('TTD_PETUGAS_MASTER as t', 'u.username', '=', 't.USERNAME')->select(
+                'fsr.*',
+                'u.name',
+                't.IMAGE'
+
+            )
+            ->where('fsr.kode_registrasi', $no_reg)
             ->first();
         return $data;
     }
