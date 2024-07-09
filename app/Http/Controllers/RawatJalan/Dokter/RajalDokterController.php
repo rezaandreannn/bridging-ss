@@ -47,6 +47,16 @@ class RajalDokterController extends Controller
         return view($this->view . 'add', compact('title', 'biodatas', 'history', 'dokterModel'));
     }
 
+    public function copyDokter($noReg, $noMR)
+    {
+        $dokterModel = new RajalDokter();
+        $title = $this->prefix . ' ' . 'Copy Dokter';
+        $biodatas = $this->pasien->biodataPasienByMr($noMR);
+        $history = $this->rajaldokter->getHistoryPasien($noMR);
+
+        return view($this->view . 'copyDokter', compact('title', 'biodatas', 'history', 'dokterModel'));
+    }
+
     public function resepDokter($noReg)
     {
         $data = $this->rajaldokter->resep($noReg);

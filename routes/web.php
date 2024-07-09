@@ -186,13 +186,9 @@ Route::middleware('auth')->group(function () {
 
         // informed concent
         Route::get('informed_concent/list_pasien', [InformedConcentController::class, 'index'])->name('informed_concent.index');
-<<<<<<< HEAD
-=======
         Route::get('informed_concent/add', [InformedConcentController::class, 'create'])->name('informed_concent.add');
         Route::post('informed_concent/add_proses', [InformedConcentController::class, 'store'])->name('informed_concent.add_proses');
         Route::get('rujukan/add', [InformedConcentController::class, 'create_rujukan'])->name('rujukan.add');
-
->>>>>>> 06df1d0e963f87c7f9faf84955fd53d7023160d2
     });
 
     // Berkas Rekam Medis
@@ -260,7 +256,7 @@ Route::middleware('auth')->group(function () {
         // Rawat Jalan Dokter
         Route::get('rajal/dokter/', [RajalDokterController::class, 'index'])->name('rj.dokter');
         Route::get('rajal/dokter/add_asesmen/{noReg}/{noMR}', [RajalDokterController::class, 'createAsesmen'])->name('rj.dokterHistory');
-        Route::get('rajal/dokter/add', [RajalDokterController::class, 'add'])->name('rj.dokterAdd');
+        Route::get('rajal/dokter/copy_asesmen/{noReg}/{noMR}', [RajalDokterController::class, 'copyDokter'])->name('rj.dokterCopy');
         Route::get('rajal/dokter/resep/{noReg}', [RajalDokterController::class, 'resepDokter'])->name('rj.dokterResep');
         Route::get('rajal/dokter/lab/{noReg}', [RajalDokterController::class, 'labDokter'])->name('rj.dokterLab');
     });

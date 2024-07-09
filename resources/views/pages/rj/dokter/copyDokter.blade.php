@@ -226,7 +226,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 style="text-align: center">History Kunjungan</h4>
-                            <h5 style="text-align: center">* untuk melihat history kunjungan pilih tanggal di bawah ini</h5>
+                            <h5 style="text-align: center">* untuk melihat history kunjungan klik tanggal di bawah ini</h5>
                         </div>
                     </div>
                     <div class="card">
@@ -274,7 +274,7 @@
                                                 @endif
                                             </td>
                                            <td width="20%">
-                                            <a href="{{ route('rj.dokterCopy', ['noReg' => $data->NO_REG, 'noMR'=> $data->NO_MR]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Copy</a>
+                                            <a href="{{ route('rj.dokterCopy') }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Copy</a>
                                            </td>
                                         </tr>
                                         @endforeach
