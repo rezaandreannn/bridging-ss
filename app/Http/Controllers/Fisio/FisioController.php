@@ -162,12 +162,40 @@ class FisioController extends Controller
 
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
         $terapiFisioGet = DB::connection('pku')->table('fis_tr_jenis')->where('kode_tr_fisio', $request->kode_transaksi)->get();
+        $asesmen_perawat = DB::connection('pku')->table('TAC_ASES_PER2')->where('FS_KD_REG', $biodatas->No_Reg)->first();
+        $asesmenDokterFisio = DB::connection('pku')->table('fis_asesmen_dokter')->where('no_registrasi', $biodatas->No_Reg)->first();
+        $transaksiFisio = DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')->where('ID_TRANSAKSI_FISIO', $id)->orderBy('ID_CPPT_FISIO', 'ASC')->first();
+        $ttv = DB::connection('pku')->table('TAC_RJ_VITAL_SIGN')->where('FS_KD_REG', $biodatas->No_Reg)->first();
+        if ($asesmen_perawat){
+            $cekasesmenperawat= true;
+        }
+        else {
+            $cekasesmenperawat= false;
+
+        }
+
+        if ($asesmenDokterFisio){
+            $cekasesmenDokter= true;
+        }
+        else {
+            $cekasesmenDokter= false;
+
+        }
+
+        if ($ttv != null){
+            $cekttv= true;
+        }
+        else {
+            $cekttv= false;
+
+        }
+        // dd($cekasesmenperawat);
 
         $data = $this->fisio->cpptGet($id);
-        // dd($data);
+
         $cppt =  DB::connection('pku')->table('TRANSAKSI_FISIOTERAPI')->where('ID_TRANSAKSI', $id)->first();
         $jenisfisio = DB::connection('pku')->table('TAC_COM_FISIOTERAPI_MASTER')->get();
-        return view($this->view . 'cppt.detail', compact('title', 'biodatas', 'data', 'cppt', 'jenisfisio', 'terapiFisioGet'));
+        return view($this->view . 'cppt.detail', compact('title', 'biodatas', 'data', 'cppt', 'jenisfisio', 'terapiFisioGet', 'ttv', 'cekttv','asesmen_perawat','cekasesmenperawat','asesmenDokterFisio','cekasesmenDokter','transaksiFisio' ));
     }
 
     // public function tambah_cppt(Request $request, $id)
