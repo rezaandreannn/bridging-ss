@@ -59,6 +59,11 @@
                                             <a href="{{ route('berkas.informed', ['no_reg' => $data->NO_REG
                                             ])}}" class="btn btn-sm btn-warning" ><i class="fa fa-download"></i> Surat Informed Concent</a>
                                             @endif  
+
+                                            @if($fisioModel->cekSuratRujukan($data->NO_REG) == true)
+                                            <a href="{{ route('berkas.rujukan', ['no_reg' => $data->NO_REG
+                                            ])}}" class="btn btn-sm btn-warning" ><i class="fa fa-download"></i> Surat Rujukan</a>
+                                            @endif  
                                         </td>
                                     </tr>
                                 @endforeach

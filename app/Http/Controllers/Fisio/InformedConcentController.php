@@ -41,12 +41,42 @@ class InformedConcentController extends Controller
         return view($this->view . 'index', compact('title', 'listpasien','fisioModel'));
     }
 
-    public function create_rujukan()
+    public function create_rujukan(Request $request)
     {
         //
         $title = 'Surat Rujukan Fisioterapi Index';
+        $noreg = $request->input('no_reg');
         // $biodata = $this->rajal->resumeMedisPasienByMR($noMR);
-        return view('pages.fisioterapi.surat_rujukan.add', compact('title'));
+        return view('pages.fisioterapi.surat_rujukan.add', compact('title','noreg'));
+
+    }
+
+    public function store_rujukan(Request $request)
+    {
+        //
+        $kode_dokter = DB::connection('db_rsmm')->table('pendaftaran')->select('Kode_Dokter')->where('No_Reg',$request->input('kode_registrasi'))->first();
+        
+     
+        $data = DB::connection('pku')->table('fis_surat_rujukan')->insert([
+
+            'kode_registrasi' => $request->input('kode_registrasi'),
+            'tujuan_rujukan' => $request->input('tujuan_rujukan'),
+            'alamat_rujukan' => $request->input('alamat_rujukan'),
+            'lama_perawatan' => $request->input('lama_perawatan'),
+            'anamnesa' => $request->input('anamnesa'),
+            'pemeriksaan_fisik' => $request->input('pemeriksaan_fisik'),
+            'hasil_pemeriksaan_penunjang' => $request->input('hasil_pemeriksaan_penunjang'),
+            'diagnosa' => $request->input('diagnosa'),
+            'terapi_yang_diberikan' => $request->input('terapi_yang_diberikan'),
+            'alasan_rujuk' => $request->input('alasan_rujuk'),
+            'nohp_tujuan' => $request->input('nohp_tujuan'),
+            'dokter_rujuk' => $kode_dokter->Kode_Dokter,
+            'create_by' => auth()->user()->id,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ]);
+        // dd($data);
+        return redirect()->route('informed_concent.index')->with('success', 'Informed Concent Berhasil Ditambahkan!');
 
     }
 

@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="{{ asset('library/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
 
+
 <!-- <link rel="stylesheet" href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}"> -->
 @endpush
 
@@ -149,7 +150,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>EKG</label>
-                                            <select name="EKG" id="" class="form-control @error('EKG')  is-invalid @enderror">
+                                            <select name="EKG" id="" class="form-control select2" @error('EKG')  is-invalid @enderror">
                                                 <option value="" selected disabled>--Pilih EKG--</option>
                                                 <option value="Ya" @if(old('EKG')=='Ya' ) selected @endif>Ya</option>
                                                 <option value="Tidak" @if(old('EKG')=='Tidak' ) selected @endif>Tidak</option>
@@ -164,7 +165,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Pilih Paket Obat</label>
-                                            <select name="paket_obat" id="" class="form-control @error('paket_obat')  is-invalid @enderror">
+                                            <select name="paket_obat" id="" class="form-control select2" @error('paket_obat')  is-invalid @enderror">
                                                 <option value="" selected disabled>--Pilih Status Mental--</option>
                                                 <option value="Dkd" @if(old('paket_obat')=='Dkd' ) selected @endif>Dkd</option>
                                                 <option value="Neuropati" @if(old('paket_obat')=='Neuropati' ) selected @endif>Neuropati</option>
@@ -184,8 +185,60 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
+                                            <label for="">Nama Obat</label>
+                                            <select name="nama_obat" id="" class="form-control select2" @error('nama_obat')  is-invalid @enderror">
+                                                <option value="" selected disabled>-- Pilih --</option>
+                                                <option value="Paracetamol" @if(old('Paracetamol')=='Paracetamol' ) selected @endif>Paracetamol</option>
+                                                <option value="Kontrol" @if(old('cara_pulang')=='Kontrol' ) selected @endif>Kontrol</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="numero">Numero</label>
+                                                <input type="text" class="form-control" id="numero">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="signa">Signa</label>
+                                                <input type="text" class="form-control" id="signa">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="terapi">Terapi</label>
+                                            <textarea class="form-control" id="terapi" rows="5"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="Namaobat">Nama Obat</label>
+                                            <select name="nama_obat" id="" class="form-control select2"  @error('nama_obat')  is-invalid @enderror">
+                                                <option value="" selected disabled>-- Pilih --</option>
+                                                <option value="Paracetamol" @if(old('Paracetamol')=='Paracetamol' ) selected @endif>Paracetamol</option>
+                                                <option value="Kontrol" @if(old('cara_pulang')=='Kontrol' ) selected @endif>Kontrol</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                <label for="numero2">Numero</label>
+                                                <input type="text" class="form-control" id="numero2">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="mf">m.f</label>
+                                                <input type="text" class="form-control" id="mf">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="signa2">Signa</label>
+                                                <input type="text" class="form-control" id="signa2">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="resepRacikan">Resep Racikan</label>
+                                            <textarea class="form-control" id="resepRacikan" rows="5"></textarea>
+                                        </div>
+                                    </div>               
+                                    <div class="col-md-6">
+                                        <div class="form-group">
                                             <label>Kondisi Pulang</label>
-                                            <select name="cara_pulang" id="" class="form-control @error('cara_pulang')  is-invalid @enderror">
+                                            <select name="cara_pulang" id="" class="form-control select2" @error('cara_pulang')  is-invalid @enderror">
                                                 <option value="" selected disabled>--Pilih Cara Pulang--</option>
                                                 <option value="Tidak Kontrol" @if(old('cara_pulang')=='Tidak Kontrol' ) selected @endif>Tidak Kontrol</option>
                                                 <option value="Kontrol" @if(old('cara_pulang')=='Kontrol' ) selected @endif>Kontrol</option>
@@ -273,9 +326,14 @@
                                                     <span class="badge badge-pill badge-success">Rawat Inap</span>
                                                 @endif
                                             </td>
-                                           <td width="20%">
-                                            <a href="{{ route('rj.dokterCopy', ['noReg' => $data->NO_REG, 'noMR'=> $data->NO_MR]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Copy</a>
-                                           </td>
+                                            <td width="20%">
+                                                <a href="{{ route('rj.dokterCopy', ['noReg' => $data->NO_REG, 'noMR'=> $data->NO_MR]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Copy</a>
+                                                @if($data->KODE_RUANG == '')
+                                                    <a href="{{ route('rj.rmDokter', ['noReg' => $data->NO_REG, 'noMR'=> $data->NO_MR]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> RM</a>
+                                                @elseif($data->KODE_RUANG != '')
+                                                    <a href="">Detail</a>
+                                                @endif
+                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>

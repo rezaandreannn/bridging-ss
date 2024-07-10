@@ -27,7 +27,7 @@
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
-                    {{-- @include('components.biodata-pasien-fisio-bymr') --}}
+                    @include('components.biodata-pasien-fisio-bymr')
                     <div class="card card-primary">
                         <div class="card-header card-success">
                             <h4 class="card-title">Pemeriksaan Dokter</h4>
@@ -222,66 +222,6 @@
                             </div>
                         </div>
                         </form>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 style="text-align: center">History Kunjungan</h4>
-                            <h5 style="text-align: center">* untuk melihat history kunjungan klik tanggal di bawah ini</h5>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="card-header card-success">
-                                    <h4 class="card-title">History Pemeriksaan Pasien</h4>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table-striped table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Tanggal Kunjungan</th>
-                                            <th scope="col">Dokter</th>
-                                            <th scope="col">Layanan</th>
-                                            <th scope="col">Catatan</th>
-                                            <th scope="col">Status</th>
-                                            <th scope="col">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $dokterModel = new App\Models\RajalDokter();
-                                        @endphp
-                                        @foreach ($history as $data)
-                                            @php
-                                                $tanggal = date('d-m-Y', strtotime($data->TANGGAL));
-                                            @endphp
-                                        <tr>
-                                            <td>{{ $tanggal; }}</td>
-                                            <td>{{$data->NAMA_DOKTER}}</td>
-                                            <td>{{$data->SPESIALIS}}</td>
-                                            <td>
-                                                @if ($dokterModel->getDataResep($data->NO_REG) == true)
-                                                    <a href="{{ route('rj.dokterResep', [$data->NO_REG])  }}">Resep</a>
-                                                @endif
-                                                @if ($dokterModel->getDataLab($data->NO_REG) == true)
-                                                    <a href="{{ route('rj.dokterLab', [$data->NO_REG])  }}">Hasil Lab</a>
-                                                @endif
-                                            </td>
-                                           <td>
-                                                @if($data->KODE_RUANG == '')
-                                                    <span class="badge badge-pill badge-primary">Rawat Jalan</span>
-                                                @elseif($data->KODE_RUANG != '')
-                                                    <span class="badge badge-pill badge-success">Rawat Inap</span>
-                                                @endif
-                                            </td>
-                                           <td width="20%">
-                                            <a href="{{ route('rj.dokterCopy') }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Copy</a>
-                                           </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

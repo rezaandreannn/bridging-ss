@@ -151,7 +151,11 @@
             </tr>
             <tr>
                 <td class="text5"><img src="storage/ttd/{{$informed_concent->IMAGE}}" width="80" height="100" /></td>
-                <td class="text5"><img src="storage/ttd/{{$ttdPasien->IMAGE}}" width="80" height="100" /></td>
+                <td class="text5">
+                    @if($ttdPasien != null)
+                    <img src="storage/ttd/{{$ttdPasien->IMAGE}}" width="80" height="100" />
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td width="50%" class="text5">( {{$informed_concent->name}} )</td>

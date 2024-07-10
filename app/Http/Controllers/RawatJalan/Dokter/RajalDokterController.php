@@ -52,9 +52,25 @@ class RajalDokterController extends Controller
         $dokterModel = new RajalDokter();
         $title = $this->prefix . ' ' . 'Copy Dokter';
         $biodatas = $this->pasien->biodataPasienByMr($noMR);
-        $history = $this->rajaldokter->getHistoryPasien($noMR);
 
-        return view($this->view . 'copyDokter', compact('title', 'biodatas', 'history', 'dokterModel'));
+        return view($this->view . 'copyDokter', compact('title', 'biodatas', 'dokterModel'));
+    }
+
+    public function cetakRM($noReg)
+    {
+        $resep = $this->rajaldokter->resep($noReg);
+        $lab = $this->rajaldokter->lab($noReg);
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+        // Cetak PDF
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+        $filename = 'RM -' . $date;
+
+        $title = $this->prefix . ' ' . 'Cetak RM';
+
+        $pdf = PDF::loadview('pages.rj.dokter.cetak.rm', ['tanggal' => $tanggal, 'title' => $title, 'resep' => $resep, 'lab' => $lab, 'biodata' => $biodata]);
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
     }
 
     public function resepDokter($noReg)

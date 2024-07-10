@@ -189,6 +189,10 @@ Route::middleware('auth')->group(function () {
         Route::get('informed_concent/add', [InformedConcentController::class, 'create'])->name('informed_concent.add');
         Route::post('informed_concent/add_proses', [InformedConcentController::class, 'store'])->name('informed_concent.add_proses');
         Route::get('rujukan/add', [InformedConcentController::class, 'create_rujukan'])->name('rujukan.add');
+
+        // rujukan fisioterapi
+        Route::get('rujukan/add', [InformedConcentController::class, 'create_rujukan'])->name('rujukan.add');
+        Route::post('rujukan/add', [InformedConcentController::class, 'store_rujukan'])->name('rujukan.store');
     });
 
     // Berkas Rekam Medis
@@ -196,7 +200,7 @@ Route::middleware('auth')->group(function () {
         Route::get('berkas_fisio', [BerkasFisioController::class, 'index'])->name('berkas.fisio');
         Route::get('berkas_fisio/cetak_rm_dokter/{no_reg}', [BerkasFisioController::class, 'cetak_rm_dokter'])->name('berkas.cetakRmFisio');
         Route::get('berkas_fisio/cppt/{no_mr}', [BerkasFisioController::class, 'cppt_list'])->name('berkas.cppt');
-        Route::get('berkas_fisio/rujukan', [BerkasFisioController::class, 'rujukan'])->name('berkas.rujukan');
+        Route::get('berkas_fisio/rujukan', [BerkasFisioController::class, 'cetak_rujukan'])->name('berkas.rujukan');
         Route::get('berkas_fisio/informed', [BerkasFisioController::class, 'cetak_informed'])->name('berkas.informed');
         Route::get('/berkas_fisio/harian', [BerkasFisioController::class, 'berkas'])->name('berkas.harian');
     });
@@ -257,6 +261,7 @@ Route::middleware('auth')->group(function () {
         Route::get('rajal/dokter/', [RajalDokterController::class, 'index'])->name('rj.dokter');
         Route::get('rajal/dokter/add_asesmen/{noReg}/{noMR}', [RajalDokterController::class, 'createAsesmen'])->name('rj.dokterHistory');
         Route::get('rajal/dokter/copy_asesmen/{noReg}/{noMR}', [RajalDokterController::class, 'copyDokter'])->name('rj.dokterCopy');
+        Route::get('rajal/dokter/add_asesmen/cetak_rm/{noReg}/{noMR}', [RajalDokterController::class, 'cetakRM'])->name('rj.rmDokter');
         Route::get('rajal/dokter/resep/{noReg}', [RajalDokterController::class, 'resepDokter'])->name('rj.dokterResep');
         Route::get('rajal/dokter/lab/{noReg}', [RajalDokterController::class, 'labDokter'])->name('rj.dokterLab');
     });

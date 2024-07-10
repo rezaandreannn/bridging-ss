@@ -365,8 +365,6 @@ class FisioController extends Controller
             ->limit('1')
             ->first();
 
-        // dd($data);
-
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
 
         $date = date('dMY');

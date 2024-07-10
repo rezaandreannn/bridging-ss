@@ -278,7 +278,7 @@
             </tr>
             <tr>
                 <td class="text5"></td>
-                <td class="text5"><img src="storage/ttd/{{ $asesmenDokter->IMAGE}}" width="80" height="100" /></td>
+                <td class="text5" style="padding-left: 135px">{!! DNS2D::getBarcodeHTML($namaDokter->Nama_Dokter, 'QRCODE', 3, 3) !!}</td>
             </tr>
             <tr>
                 <td width="50%" class="text5"></td>Nama_Dokter
@@ -298,7 +298,7 @@
                 <td class="tindakan1"><img src="img/logo.png" width="50" height="50" /></td>
                 <td class="tindakan2">
                     <center>
-                        <font size="2"><b>MAJELIS PEMBINA KESEHATAN UMUM</b></font><br />
+                        <font size="2"><b>MAJELIS PEMBINAAN KESEHATAN UMUM</b></font><br />
                         <font size="2"><b>RSU MUHAMMADIYAH METRO </b></font><br />
                         <font style="font-size: 8px;">JL Soekarno Hatta No. 42 Mulyojati 16B, Fax: (0725) 47760 Metro Barat - Kota Metro 34125</font><br />
                         <font style="font-size: 8px;">Email : info.rsumm@gmail.com , Telp: (0721) 49490-7850378 , Website : www.rsumm.co.id</font>
@@ -368,7 +368,7 @@
             </tr>
             <tr>
                 <td class="text5"></td>
-                <td class="text5"><img src="storage/ttd/{{ $asesmenDokter->IMAGE}}" width="80" height="100" /></td>
+                <td class="text5" style="padding-left: 135px">{!! DNS2D::getBarcodeHTML($namaDokter->Nama_Dokter, 'QRCODE', 3, 3) !!}</td>
             </tr>
             <tr>
                 <td width="50%" class="text5"></td>
@@ -483,7 +483,7 @@
             </tr>
             <tr>
                 <td class="text5"><img src="storage/ttd/{{ $ttdPasien->IMAGE}}" width="80" height="100" /></td>
-                <td class="text5"><img src="storage/ttd/{{ $asesmenDokter->IMAGE}}" width="80" height="100" /></td>
+                <td class="text5" style="padding-left: 130px">{!! DNS2D::getBarcodeHTML($namaDokter->Nama_Dokter, 'QRCODE', 3, 3) !!}</td>
             </tr>
             <tr>
                 <td width="50%" class="text5">({{ $biodata->NAMA_PASIEN}})</td>
