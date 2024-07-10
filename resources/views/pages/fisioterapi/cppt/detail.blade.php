@@ -73,33 +73,33 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Anamnesa / Allow Anamnesa <code>*</code></label>
-                                            <textarea class="form-control" rows="2" name="ANAMNESA" value="" placeholder="Masukan ..."></textarea>
+                                            <textarea class="form-control" rows="2" name="ANAMNESA"  placeholder="Masukan ...">@if ($cekasesmenperawat == true){{$asesmen_perawat->FS_ANAMNESA}} @else {{$transaksiFisio->ANAMNESA}} @endif</textarea>
                                         </div>
                                     </div>
                                     
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Diagnosa <code>*</code></label>
-                                            <textarea class="form-control" rows="2" name="DIAGNOSA" value="" placeholder="Masukan ..." @if ((auth()->user()->roles->pluck('name')[0])!='dokter fisioterapi') readonly  @endif></textarea>
+                                            <textarea class="form-control" rows="2" name="DIAGNOSA" value="" placeholder="Masukan ..." @if ((auth()->user()->roles->pluck('name')[0])!='dokter fisioterapi') readonly  @endif>@if($cekasesmenDokter==true) {{$asesmenDokterFisio->anamnesa}} @else {{$transaksiFisio->DIAGNOSA}} @endif</textarea>
                                         </div>
                                     </div>
                                   
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tekanan Darah</label>
-                                            <input type="text" name="TEKANAN_DARAH" id="tekananDarah" class="form-control">
+                                            <input type="text" name="TEKANAN_DARAH" id="tekananDarah" class="form-control" @if ($cekttv==true) value="{{$ttv->FS_TD}}" @endif>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Nadi</label>
-                                            <input type="text" name="NADI" id="nadi" class="form-control">
+                                            <input type="text" name="NADI" id="nadi" class="form-control" @if ($cekttv==true) value="{{$ttv->FS_NADI}}" @endif>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Suhu</label>
-                                            <input type="text" name="SUHU" id="suhu" class="form-control">
+                                            <input type="text" name="SUHU" id="suhu" class="form-control" @if ($cekttv==true)  value="{{$ttv->FS_SUHU}}" @endif>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
