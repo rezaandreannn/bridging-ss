@@ -59,6 +59,7 @@ class RajalDokter extends Model
                 'a.KODE_RUANG',
                 'a.STATUS',
                 'a.NO_REG',
+                'a.NO_MR',
                 'rp.NAMA_PASIEN',
                 'rp.ALAMAT',
                 'rp.TGL_LAHIR',
@@ -147,6 +148,21 @@ class RajalDokter extends Model
                 'f.Nama_Dokter',
             )
             ->where('a.No_Reg', $noReg)
+            ->get();
+        return $data;
+    }
+
+    public function konsulan($noReg)
+    {
+        $dbpku = DB::connection('db_rsmm')->getDatabaseName();
+        $data = DB::connection('pku')
+            ->table('TAC_RJ_RUJUKAN as a')
+            ->leftJoin($dbpku . '.dbo.DOKTER as b', 'a.FS_TUJUAN_RUJUKAN', '=', 'b.KODE_DOKTER')
+            ->select(
+                'a.FS_TUJUAN_RUJUKAN',
+                'b.NAMA_DOKTER',
+            )
+            ->where('a.FS_KD_REG', $noReg)
             ->get();
         return $data;
     }

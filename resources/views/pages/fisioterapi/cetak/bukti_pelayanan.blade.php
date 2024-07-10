@@ -72,6 +72,9 @@
             font-size: 12px;
             padding-top: 8px;
         }
+        .gambar{
+            padding: 10px;
+        }
     </style>
 </head>
 
@@ -157,25 +160,25 @@
          
             </td>
             <td style="text-align: center">
-               @if($item->KODE_DOKTER == '151')
-        
-               <img src="storage/ttd/{{ $item->ttd_petugas}}" width="50" height="50" />
-            
-               @endif
+                @if($item->KODE_DOKTER == '151')
+                    <div class="gambar">
+                        {!! DNS2D::getBarcodeHTML($firstCppt->Nama_Dokter, 'QRCODE', 2, 2) !!}
+                    </div>
+                @endif
             </td>
             <td style="text-align: center">
                 @if($item->KODE_DOKTER != '151')
-        
-                <img src="storage/ttd/{{ $item->ttd_petugas}}" width="50" height="50" />
+                    <div class="gambar">
+                        {!! DNS2D::getBarcodeHTML($firstCppt->Nama_Dokter, 'QRCODE', 2, 2) !!}
+                    </div>
                 @endif
-              
             </td>
         </tr>
         @endforeach
     </table>
     <br />
     <table width="100%">
-        <tr>10-02-2000
+        <tr>
             <td class="text5" width="60%"></td>
             <td class="text5">Metro, {{$lastCppt->TANGGAL_FISIO}}, Jam : {{date("H:i", strtotime($lastCppt->JAM_FISIO))}} WIB</td>
         </tr>
@@ -185,17 +188,17 @@
         </tr>
         <tr>
             <td width="60%" class="text5"></td>
-            <td class="text5" style="padding-top: 10px;"><img src="" width="65" height="65" /></td>
+            <td class="text5"><img src="" width="65" height="65" /></td>
         </tr>
         <tr>
             <td width="60%" class="text5"></td>
           
-            <td class="text5" style="padding-top: 15px;"> <img src="storage/ttd/{{ $firstCppt->ttd_dokter}}" width="50" height="50" /></td>
+            <td class="text5"> {!! DNS2D::getBarcodeHTML($firstCppt->Nama_Dokter, 'QRCODE', 3, 3) !!}</td>
         </tr>
         <tr>
             <td width="60%" class="text5"></td>
           
-            <td class="text5" style="padding-top: 15px;">({{$firstCppt->Nama_Dokter}})</td>
+            <td class="text5">({{$firstCppt->Nama_Dokter}})</td>
         </tr>
     </table>
 </body>

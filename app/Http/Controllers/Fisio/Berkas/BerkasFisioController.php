@@ -65,6 +65,7 @@ class BerkasFisioController extends Controller
         set_time_limit(300);
         $asesmenDokter = $this->berkasFisio->getAsesmenDokter($no_reg);
         $namaDokter = DB::connection('db_rsmm')->table('DOKTER')->select('Nama_Dokter')->where('Kode_Dokter', $asesmenDokter->create_by)->first();
+
         $lembarUjiFungsi = $this->berkasFisio->getLembarUjiFungsi($no_reg);
         $lembarSpkfr = $this->berkasFisio->getLembarSpkfr($no_reg);
         $biodata = $this->rajal->pasien_bynoreg($no_reg);
@@ -91,15 +92,15 @@ class BerkasFisioController extends Controller
         $biodata = $this->rajal->pasien_bynoreg($request->no_reg);
         $date = date('dMY');
         $tanggal = Carbon::now();
-        $filename = 'SuratRujukan-'.$biodata->NO_MR.'-' . $date;
+        $filename = 'SuratRujukan-' . $biodata->NO_MR . '-' . $date;
 
         $title = $this->prefix . ' ' . 'Harian';
         $usia = Carbon::parse($biodata->TGL_LAHIR)->age;
-        
-        $surat_rujukan = $this->fisio->getSuratRujukan($request->no_reg);   
+
+        $surat_rujukan = $this->fisio->getSuratRujukan($request->no_reg);
         // dd($surat_rujukan);
 
-        $pdf = PDF::loadview('pages.fisioterapi.cetak.rujukan', ['tanggal' => $tanggal, 'title' => $title,'surat_rujukan' => $surat_rujukan,'usia'=>$usia, 'biodata'=>$biodata]);
+        $pdf = PDF::loadview('pages.fisioterapi.cetak.rujukan', ['tanggal' => $tanggal, 'title' => $title, 'surat_rujukan' => $surat_rujukan, 'usia' => $usia, 'biodata' => $biodata]);
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
     }
@@ -114,12 +115,12 @@ class BerkasFisioController extends Controller
         $title = $this->prefix . ' ' . 'Harian';
         $biodata = $this->rajal->pasien_bynoreg($request->no_reg);
         $usia = Carbon::parse($biodata->TGL_LAHIR)->age;
-        
+
         $ttdPasien = DB::connection('pku')->table('TTD_PASIEN_MASTER')->select('IMAGE')->where('NO_MR_PASIEN', $biodata->NO_MR)->first();
-        $informed_concent = $this->fisio->getInformedConcent($request->no_reg);   
+        $informed_concent = $this->fisio->getInformedConcent($request->no_reg);
         // dd($informed_concent);
 
-        $pdf = PDF::loadview('pages.fisioterapi.cetak.informedConcent', ['tanggal' => $tanggal, 'title' => $title, 'biodata' => $biodata,'informed_concent' => $informed_concent,'usia' => $usia,'ttdPasien' => $ttdPasien]);
+        $pdf = PDF::loadview('pages.fisioterapi.cetak.informedConcent', ['tanggal' => $tanggal, 'title' => $title, 'biodata' => $biodata, 'informed_concent' => $informed_concent, 'usia' => $usia, 'ttdPasien' => $ttdPasien]);
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
     }
@@ -128,8 +129,6 @@ class BerkasFisioController extends Controller
 
     public function create()
     {
-     
-
     }
 
     public function store(Request $request)
