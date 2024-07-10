@@ -152,6 +152,23 @@ class RajalDokter extends Model
         return $data;
     }
 
+    public function radiologi($noReg)
+    {
+        $data = DB::connection('db_rsmm')
+            ->table('TR_BIAYARINCI as a')
+            ->leftJoin('TR_DETAIL_CATATANDOKTER as b', 'b.ID_BIAYA', '=', 'a.ID_BIAYA')
+            ->join('M_RINCI_HEADER as c', 'c.NO_RINCI', '=', 'a.NO_RINCI')
+            ->select(
+                'a.*',
+                'c.KET_TINDAKAN'
+            )
+            ->where('a.NO_REG', $noReg)
+            ->where('a.NO_RINCI', 'like', 'B%')
+            ->get();
+
+        return $data;
+    }
+
     public function konsulan($noReg)
     {
         $dbpku = DB::connection('db_rsmm')->getDatabaseName();

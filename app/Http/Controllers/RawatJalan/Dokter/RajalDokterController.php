@@ -60,6 +60,8 @@ class RajalDokterController extends Controller
     {
         $resep = $this->rajaldokter->resep($noReg);
         $lab = $this->rajaldokter->lab($noReg);
+        $rad = $this->rajaldokter->radiologi($noReg);
+        dd($rad);
         $biodata = $this->rekam_medis->getBiodata($noReg);
         // Cetak PDF
         $date = date('dMY');
