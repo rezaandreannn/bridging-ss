@@ -116,10 +116,22 @@ class OrganizationController extends Controller
     {
         $title = 'Detail' . ' ' . $this->prefix;
 
-        $organization = Organization::select('organizations.*', 'users.name as user_name')
-            ->leftJoin('users', 'organizations.created_by', '=', 'users.id')
-            ->where('organizations.organization_id', $organization_id)
+        // $organization = Organization::select('organizations.*', 'users.name as user_name')
+        //     ->leftJoin('users', 'organizations.created_by', '=', 'users.id')
+        //     ->where('organizations.organization_id', $organization_id)
+        //     ->first();
+
+        $organization = DB::connection('bridging')
+            ->table('satusehat_organization as a')
+            ->leftJoin('users as b', 'a.created_by', '=', 'b.id')
+            ->select(
+                'a.*',
+                'b.name as user_name'
+            )
+            ->where('organization_id', $organization_id)
             ->first();
+
+
 
         $organizationbyParts = Organization::where('part_of', $organization_id)->get();
 

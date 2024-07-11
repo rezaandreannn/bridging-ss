@@ -78,6 +78,15 @@
                 @endcan
             </li>
             @endcan
+            <li class="menu-header">Poli</li>
+            <li class="nav-item dropdown {{ Request::is('pm*') ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-eye"></i> <span>Poli Mata</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('pm/polimata') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('poliMata.index') }}">Assesmen Awal</a>
+                    </li>
+                </ul>
+            </li>
             @can('nurse record')
             <li class="menu-header">Rawat Jalan</li>
             <li class="nav-item dropdown {{ Request::is('rj*') ? 'active' : '' }}">
