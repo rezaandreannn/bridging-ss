@@ -132,6 +132,7 @@
                     </li>
                 </ul>
             </li>
+            @can('vclaim')
             <li class="menu-header">vclaim bpjs</li>
             <li class="nav-item dropdown ">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-clinic-medical"></i> <span>SEP</span></a>
@@ -170,6 +171,10 @@
             </li>
 
             <li class="{{ Request::is('dashboard') ? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-dashboard"></i> <span>E-Klaim</span></a></li>
+            
+            @endcan
+
+            @can('ttd')
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown {{ Request::is('ttd') ? 'active' : '' }}" data-toggle="dropdown"><i class="fas fa-signature"></i> <span>Tanda Tangan</span></a>
                 <ul class="dropdown-menu">
@@ -181,6 +186,8 @@
                     </li>
                 </ul>
             </li>
+            @endcan
+           
 
             @can('manage user')
             <li class="menu-header">Mengelola</li>
