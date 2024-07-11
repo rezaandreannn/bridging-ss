@@ -30,6 +30,7 @@ use App\Http\Controllers\RawatJalan\Perawat\AssesmenController;
 use App\Http\Controllers\Case\Encounter\EncounterCreateController;
 use App\Http\Controllers\Fisio\Berkas\BerkasFisioController;
 use App\Http\Controllers\Fisio\InformedConcentController;
+use App\Http\Controllers\Poli\Mata\AssesmenMataController;
 use App\Http\Controllers\RawatJalan\Dokter\RajalDokterController;
 use App\Models\Fisioterapi;
 
@@ -104,6 +105,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/encounter', [RecourceController::class, 'index'])->name('resource.index');
         Route::get('/encounter/{id}/edit', [RecourceController::class, 'edit'])->name('resource.edit');
     });
+
+
 
 
     // CASE 
@@ -203,6 +206,13 @@ Route::middleware('auth')->group(function () {
         Route::get('berkas_fisio/rujukan', [BerkasFisioController::class, 'cetak_rujukan'])->name('berkas.rujukan');
         Route::get('berkas_fisio/informed', [BerkasFisioController::class, 'cetak_informed'])->name('berkas.informed');
         Route::get('/berkas_fisio/harian', [BerkasFisioController::class, 'berkas'])->name('berkas.harian');
+    });
+
+    // Poli Mata
+    Route::prefix('pm')->group(function () {
+        Route::get('/polimata', [AssesmenMataController::class, 'index'])->name('poliMata.index');
+        Route::get('/polimata/assesmen_awal', [AssesmenMataController::class, 'create'])->name('poliMata.assesmenAwal');
+        Route::get('/polimata/assesmen_mata', [AssesmenMataController::class, 'assesmenMata'])->name('poliMata.assesmenMata');
     });
 
     Route::prefix('ttd')->group(function () {

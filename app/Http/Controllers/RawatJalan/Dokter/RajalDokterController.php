@@ -61,7 +61,6 @@ class RajalDokterController extends Controller
         $resep = $this->rajaldokter->resep($noReg);
         $lab = $this->rajaldokter->lab($noReg);
         $rad = $this->rajaldokter->radiologi($noReg);
-        dd($rad);
         $biodata = $this->rekam_medis->getBiodata($noReg);
         // Cetak PDF
         $date = date('dMY');
@@ -70,7 +69,7 @@ class RajalDokterController extends Controller
 
         $title = $this->prefix . ' ' . 'Cetak RM';
 
-        $pdf = PDF::loadview('pages.rj.dokter.cetak.rm', ['tanggal' => $tanggal, 'title' => $title, 'resep' => $resep, 'lab' => $lab, 'biodata' => $biodata]);
+        $pdf = PDF::loadview('pages.rj.dokter.cetak.rm', ['tanggal' => $tanggal, 'title' => $title, 'resep' => $resep, 'lab' => $lab, 'rad' => $rad, 'biodata' => $biodata]);
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
     }
