@@ -35,6 +35,33 @@ class Dashboard extends Model
 
     }
 
+    // rajal igd
+    public function countPasienIgdRajal(){
+
+        $date = date('Y-m-d');
+        $data = DB::connection('db_rsmm')
+            ->table('PENDAFTARAN')
+            ->where('Tanggal',$date)
+            ->where('Kode_Masuk','1')
+            ->where('Medis','RAWAT JALAN')
+            ->count();
+            return $data;
+        }
+        
+        // ranap igd
+        public function countPasienIgdRanap(){
+            
+            $date = date('Y-m-d');
+            $data = DB::connection('db_rsmm')
+            ->table('PENDAFTARAN')
+            ->where('Tanggal',$date)
+            ->where('Kode_Masuk','1')
+            ->where('Medis','RAWAT INAP')
+            ->count();
+        return $data;
+
+    }
+
         // fisioterapi 
         public function countPasienFisioterapi(){
 
@@ -54,37 +81,43 @@ class Dashboard extends Model
             $date = date('Y-m-d'); 
        
             $data = DB::connection('db_rsmm')
-                ->table('PENDAFTARAN')
-                ->where('Tanggal',$date)
-                ->whereIn('Kode_Dokter',array('151'))
-                ->where('Medis','RAWAT JALAN')
+                ->table('PENDAFTARAN as P')
+                ->leftjoin('DOKTER as d', 'p.Kode_Dokter', '=', 'd.Kode_Dokter')
+                ->where('P.Tanggal',$date)
+                ->where('d.Spesialis','SPESIALIS REHABILITASI MEDIK')
+                ->where('p.Medis','RAWAT JALAN')
                 ->count();
+
+                // dd($data);
               
             return $data;
+            
 
            
         }
 
-        // public function countPasienByDokter()
-        // {
+        public function countPasienByDokter()
+        {
 
             
-        //     $date = date('Y-m-d');
-        //     $data = DB::connection('db_rsmm')
-        //     ->table('DOKTER as d')
-        //     ->join('PENDAFTARAN as p', 'd.Kode_Dokter', '=', 'p.Kode_Dokter')
-        //         ->select(
-        //             'p.Kode_Dokter',DB::raw('count(*) as total')
-        //         )
-        //         // ->where('d.Spesialis', 'FISIOTERAPI')
-        //         // ->where('d.JENIS_PROFESI', 'DOKTER UMUM')
-        //         ->orWhere('d.JENIS_PROFESI', 'DOKTER SPESIALIS')
-        //         ->whereNotIn('d.KODE_DOKTER', ['140s', 'TM140','121p'])
-        //         ->where('p.Tanggal',$date)
-        //         ->();
+            $date = date('Y-m-d');
+            $data = DB::connection('db_rsmm')
+            ->table('PENDAFTARAN as p')
+            ->leftjoin('DOKTER as d', 'p.Kode_Dokter', '=', 'd.Kode_Dokter')
+                ->select(
+                    'd.Nama_Dokter',
+                    DB::raw('count(*) as total')
+                )
+                
+                ->where('d.JENIS_PROFESI', 'DOKTER SPESIALIS')
+                ->where('p.Tanggal',$date)
+                ->where('p.Medis','RAWAT JALAN')
+                ->orderBy('total','DESC')
+                ->groupBy('d.Nama_Dokter')
+                ->get();
 
-        //         dd($data);
+                // dd($data);
 
-        //     return $data;
-        // }
+            return $data;
+        }
 }

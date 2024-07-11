@@ -28,14 +28,22 @@ class DashboardController extends Controller
         $countPasienRajal = $this->dashboard->countPasienRajal();
         $countPasienRanap = $this->dashboard->countPasienRanap();
         $totalPasienToday = $countPasienRajal + $countPasienRanap;
+
+        // jalur masuk igd
+        $countPasienIgdRajal = $this->dashboard->countPasienIgdRajal();
+        $countPasienIgdRanap = $this->dashboard->countPasienIgdRanap();
+        $totalPasienIgdToday = $countPasienIgdRajal + $countPasienIgdRanap;
         
         // FISIOTERAPI DAN SPKFR
         $countPasienFisioterapi = $this->dashboard->countPasienFisioterapi();
         $countPasienSPKFR = $this->dashboard->countPasienSPKFR();
         $totalFisioSkpfr = $countPasienFisioterapi + $countPasienSPKFR;
 
+        // pasien by dokter
+        $countPasienByDokter = $this->dashboard->countPasienByDokter();
+
        
      
-        return view($this->view . 'dashboard', compact('title','countPasienRajal','countPasienRanap','totalPasienToday','countPasienFisioterapi','countPasienSPKFR', 'totalFisioSkpfr'));
+        return view($this->view . 'dashboard', compact('title','countPasienRajal','countPasienRanap','totalPasienToday','countPasienFisioterapi','countPasienSPKFR', 'totalFisioSkpfr','countPasienByDokter','countPasienIgdRajal','countPasienIgdRanap','totalPasienIgdToday'));
     }
 }
