@@ -41,9 +41,13 @@ class DashboardController extends Controller
 
         // pasien by dokter
         $countPasienByDokter = $this->dashboard->countPasienByDokter();
-
-       
-     
-        return view($this->view . 'dashboard', compact('title','countPasienRajal','countPasienRanap','totalPasienToday','countPasienFisioterapi','countPasienSPKFR', 'totalFisioSkpfr','countPasienByDokter','countPasienIgdRajal','countPasienIgdRanap','totalPasienIgdToday'));
+        
+        $countRanapKls1 = $this->dashboard->countRanapKls1();
+        $countRanapKls2 = $this->dashboard->countRanapKls2();
+        $countRanapKls3 = $this->dashboard->countRanapKls3();
+        $countRanapKlsvip = $this->dashboard->countRanapKlsvip();
+        $countRanapKlsvvip = $this->dashboard->countRanapKlsvvip();
+      
+        return view($this->view . 'dashboard', compact('title','countPasienRajal','countPasienRanap','totalPasienToday','countPasienFisioterapi','countPasienSPKFR', 'totalFisioSkpfr','countPasienByDokter','countPasienIgdRajal','countPasienIgdRanap','totalPasienIgdToday','countRanapKls1','countRanapKls2','countRanapKls3','countRanapKlsvip','countRanapKlsvvip'));
     }
 }

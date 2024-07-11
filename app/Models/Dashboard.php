@@ -120,4 +120,96 @@ class Dashboard extends Model
 
             return $data;
         }
+
+  
+        
+        public function countRanapKls1()
+        {
+
+            $month = (date('m')-1);
+      
+            $data = DB::connection('db_rsmm')
+            ->select("SELECT count (*) as total FROM PENDAFTARAN A 
+                      JOIN M_RUANG B ON A.Kode_Ruang = B.Kode_Ruang 
+                      WHERE B.Kode_Kelas IN ('KLS01', 'KLSAI', 'KLSHN', 'VIP01', 'VIP02') 
+                      AND MONTH(A.Tanggal) = $month  -- Selects records where month is July (7th month)
+                        AND YEAR(A.Tanggal) = 2024
+                      AND A.Medis = 'RAWAT INAP'");
+
+                // dd($data[0]);
+
+            return $data[0];
+        }
+
+        public function countRanapKls2()
+        {
+
+            $month = (date('m')-1);
+      
+            $data = DB::connection('db_rsmm')
+            ->select("SELECT count (*) as total FROM PENDAFTARAN A 
+                      JOIN M_RUANG B ON A.Kode_Ruang = B.Kode_Ruang 
+                      WHERE B.Kode_Kelas IN ('KLS02', 'KLSMN') 
+                      AND MONTH(A.Tanggal) = $month  -- Selects records where month is July (7th month)
+                        AND YEAR(A.Tanggal) = 2024
+                      AND A.Medis = 'RAWAT INAP'");
+
+                // dd($data[0]);
+
+            return $data[0];
+        }
+
+        public function countRanapKls3()
+        {
+
+            $month = (date('m')-1);
+      
+            $data = DB::connection('db_rsmm')
+            ->select("SELECT count (*) as total FROM PENDAFTARAN A 
+                      JOIN M_RUANG B ON A.Kode_Ruang = B.Kode_Ruang 
+                      WHERE B.Kode_Kelas IN ('001', 'KLS03') 
+                      AND MONTH(A.Tanggal) = $month  -- Selects records where month is July (7th month)
+                        AND YEAR(A.Tanggal) = 2024
+                      AND A.Medis = 'RAWAT INAP'");
+
+                // dd($data[0]);
+
+            return $data[0];
+        }
+
+        public function countRanapKlsvip()
+        {
+
+            $month = (date('m')-1);
+      
+            $data = DB::connection('db_rsmm')
+            ->select("SELECT count (*) as total FROM PENDAFTARAN A 
+                      JOIN M_RUANG B ON A.Kode_Ruang = B.Kode_Ruang 
+                      WHERE B.Kode_Kelas IN ('VVIP') 
+                      AND MONTH(A.Tanggal) = $month  -- Selects records where month is July (7th month)
+                        AND YEAR(A.Tanggal) = 2024
+                      AND A.Medis = 'RAWAT INAP'");
+
+                // dd($data[0]);
+
+            return $data[0];
+        }
+
+        public function countRanapKlsvvip()
+        {
+
+            $month = (date('m')-1);
+      
+            $data = DB::connection('db_rsmm')
+            ->select("SELECT count (*) as total FROM PENDAFTARAN A 
+                      JOIN M_RUANG B ON A.Kode_Ruang = B.Kode_Ruang 
+                      WHERE B.Kode_Kelas IN ('VVIP+') 
+                      AND MONTH(A.Tanggal) = $month  -- Selects records where month is July (7th month)
+                        AND YEAR(A.Tanggal) = 2024
+                      AND A.Medis = 'RAWAT INAP'");
+
+                // dd($data[0]);
+
+            return $data[0];
+        }
 }

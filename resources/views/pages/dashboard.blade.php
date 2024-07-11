@@ -159,6 +159,7 @@
                     </div>
                 </div>
             </div>
+        </div> 
             <div class="row">
                 <div class="col-md-8">
                     <div class="card">
@@ -182,7 +183,7 @@
                                         <td>
                                             <div class="badge badge-info">{{$hasilCount->total}}</div>
                                         </td>
-                                     
+                                        
                                     </tr>
                                         
                                     @endforeach
@@ -198,44 +199,62 @@
                             <div class="card-icon">
                                 <i class="far fa-question-circle"></i>
                             </div>
-                            <h4>14</h4>
-                            <div class="card-description">Customers need help</div>
+                            <div class="card-icon shadow-primary bg-primary">
+                                <i class="fas fa-user-nurse"></i>
+                            </div>
+                            <div class="card-description">Jumlah pasien Ranap Bulan lalu</div>
                         </div>
                         <div class="card-body p-0">
-                            <div class="tickets-list">
-                                <a href="#" class="ticket-item">
-                                    <div class="ticket-title">
-                                        <h4>My order hasn't arrived yet</h4>
-                                    </div>
-                                    <div class="ticket-info">
-                                        <div>Laila Tazkiah</div>
-                                        <div class="bullet"></div>
-                                        <div class="text-primary">1 min ago</div>
-                                    </div>
-                                </a>
-                                <a href="#" class="ticket-item">
-                                    <div class="ticket-title">
-                                        <h4>Please cancel my order</h4>
-                                    </div>
-                                    <div class="ticket-info">
-                                        <div>Rizal Fakhri</div>
-                                        <div class="bullet"></div>
-                                        <div>2 hours ago</div>
-                                    </div>
-                                </a>
-                                <a href="#" class="ticket-item">
-                                    <div class="ticket-title">
-                                        <h4>Do you see my mother?</h4>
-                                    </div>
-                                    <div class="ticket-info">
-                                        <div>Syahdan Ubaidillah</div>
-                                        <div class="bullet"></div>
-                                        <div>6 hours ago</div>
-                                    </div>
-                                </a>
-                                <a href="features-tickets.html" class="ticket-item ticket-more">
-                                    View All <i class="fas fa-chevron-right"></i>
-                                </a>
+                           <div class="table-responsive table-invoice">
+                                <table class="table-striped table" id="table-1">
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Jenis Kamar</th>
+                                        <th>Jumlah Pasien</th>
+                                       
+                                    </tr>
+                                   
+                                    <tr>
+                                        <td>1</td>
+                                        <td class="font-weight-600">Kelas I</td>
+                                        <td>
+                                            <div class="badge badge-info">{{$countRanapKls1->total}}</div>
+                                        </td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td class="font-weight-600">Kelas II</td>
+                                        <td>
+                                            <div class="badge badge-info">{{$countRanapKls2->total}}</div>
+                                        </td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td class="font-weight-600">Kelas III</td>
+                                        <td>
+                                            <div class="badge badge-info">{{$countRanapKls3->total}}</div>
+                                        </td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td class="font-weight-600">Kelas VIP</td>
+                                        <td>
+                                            <div class="badge badge-info">{{$countRanapKlsvip->total}}</div>
+                                        </td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td class="font-weight-600">Kelas VVIP</td>
+                                        <td>
+                                            <div class="badge badge-info">{{$countRanapKlsvvip->total}}</div>
+                                        </td>
+                                        
+                                    </tr>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -243,7 +262,7 @@
             </div>
    
 
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-header">
@@ -521,8 +540,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div>--}}
+        
 
     </section>
 </div>
