@@ -428,6 +428,47 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Lingkar Kepala</label>
+                                            <div class="input-group">
+                                                <input type="text" name="lingkar_kepala" class="form-control @error('lingkar_kepala') is-invalid  
+                                                @enderror">
+                                                <div class="input-group-append">
+                                                    <div class="input-group-text">
+                                                        <b>cm</b>
+                                                    </div>
+                                                </div>
+                                                @error('lingkar_kepala')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="d-block">Alat Bantu/Protesa</label>
+                                            <input type="text" name="alat_bantu" class="form-control @error('alat_bantu') is-invalid @enderror">
+                                            @error('alat_bantu')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="d-block">Cacat Tubuh</label>
+                                            <input type="text" name="cacat_tubuh" class="form-control @error('cacat_tubuh') is-invalid @enderror">
+                                            @error('cacat_tubuh')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Apakah Pasien tampak tidak seimbang(Sempoyongan/limbung)?</label>

@@ -331,7 +331,7 @@
                                                 @if($data->KODE_RUANG == '')
                                                     <a href="{{ route('rj.rmDokter', ['noReg' => $data->NO_REG, 'noMR'=> $data->NO_MR]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> RM</a>
                                                 @elseif($data->KODE_RUANG != '')
-                                                    <a href="">Detail</a>
+                                                    <a href="{{ route('rj.dokterDetail', ['noReg' => $data->NO_REG, 'noMR'=> $data->NO_MR]) }}">Detail</a>
                                                 @endif
                                             </td>
                                         </tr>

@@ -271,6 +271,7 @@ Route::middleware('auth')->group(function () {
         Route::get('rajal/dokter/', [RajalDokterController::class, 'index'])->name('rj.dokter');
         Route::get('rajal/dokter/add_asesmen/{noReg}/{noMR}', [RajalDokterController::class, 'createAsesmen'])->name('rj.dokterHistory');
         Route::get('rajal/dokter/copy_asesmen/{noReg}/{noMR}', [RajalDokterController::class, 'copyDokter'])->name('rj.dokterCopy');
+        Route::get('rajal/dokter/detail/{noReg}/{noMR}', [RajalDokterController::class, 'detailDokter'])->name('rj.dokterDetail');
         Route::get('rajal/dokter/add_asesmen/cetak_rm/{noReg}/{noMR}', [RajalDokterController::class, 'cetakRM'])->name('rj.rmDokter');
         Route::get('rajal/dokter/resep/{noReg}', [RajalDokterController::class, 'resepDokter'])->name('rj.dokterResep');
         Route::get('rajal/dokter/lab/{noReg}', [RajalDokterController::class, 'labDokter'])->name('rj.dokterLab');

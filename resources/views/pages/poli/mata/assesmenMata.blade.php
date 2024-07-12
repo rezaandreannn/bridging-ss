@@ -86,6 +86,154 @@
                                         </span>
                                         @enderror
                                     </div>
+                                    <div class="card-header card-success">
+                                        <h4 class="card-title">Pemeriksaaan Penunjang</h4>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Laboratorium</label>
+                                            <input type="text" name="penunjang_lab" class="form-control @error('penunjang_lab') is-invalid @enderror">
+                                            @error('penunjang_lab')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Radiologi</label>
+                                            <input type="text" name="penunjang_radiologi" class="form-control @error('penunjang_radiologi') is-invalid @enderror">
+                                            @error('penunjang_radiologi')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Lain-lain</label>
+                                            <input type="text" name="penunjang_lainnya" class="form-control @error('penunjang_lainnya') is-invalid @enderror">
+                                            @error('penunjang_lainnya')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Diagnosis <code>*</code></label>
+                                            <textarea name="diagnosis" class="form-control  @error('diagnosis') is-invalid  
+                                                @enderror" rows="3" placeholder="Masukan ..."></textarea>
+                                        </div>
+                                        @error('diagnosis')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Masalah Kesehatan</label>
+                                            <textarea name="masalah_kesehatan" class="form-control  @error('masalah_kesehatan') is-invalid  
+                                                @enderror" rows="3" placeholder="Masukan ..."></textarea>
+                                        </div>
+                                        @error('masalah_kesehatan')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Terapi</label>
+                                            <textarea name="terapi" class="form-control  @error('terapi') is-invalid  
+                                                @enderror" rows="3" placeholder="Masukan ..."></textarea>
+                                        </div>
+                                        @error('terapi')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Rencana Tindakan</label>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="rencana_tindakan" value="Tidak Ada" id="rencana_tindakan1" @if(old('rencana_tindakan', '0' )=='Tidak Ada' ) checked @endif>
+                                                            <label class="form-check-label" for="rencana_tindakan1">
+                                                                Tidak Ada
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="rencana_tindakan" value="Ada" id="rencana_tindakan2" @if(old('rencana_tindakan', '0' )=='Ada' ) checked @endif>
+                                                            <label class="form-check-label" for="rencana_tindakan2">
+                                                                Ada, Jenis Tindakan
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input type="text" name="rencana_tindakan" class="form-control @error('rencana_tindakan') is-invalid  
+                                                @enderror" value="{{old('rencana_tindakan')}}" placeholder="Jenis Tindakan ...">
+                                                </div>
+                                                @error('rencana_tindakan')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Diet</label>
+                                            <textarea name="diet" class="form-control  @error('diet') is-invalid  
+                                                @enderror" rows="3" placeholder="Masukan ..."></textarea>
+                                        </div>
+                                        @error('diet')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Konsul</label>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="konsul" value="Tidak" id="konsul1" @if(old('konsul', '0' )=='Tidak' ) checked @endif>
+                                                            <label class="form-check-label" for="konsul1">
+                                                                Tidak
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="konsul" value="Iya" id="konsul2" @if(old('konsul', '0' )=='Iya' ) checked @endif>
+                                                            <label class="form-check-label" for="konsul2">
+                                                                Iya, Kebagian
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input type="text" name="konsul" class="form-control @error('konsul') is-invalid  
+                                                @enderror" value="{{old('konsul')}}" placeholder="Kebagian konsul ...">
+                                                </div>
+                                                @error('konsul')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
                             </div>
                         </div>
                         <div class="card-body">
