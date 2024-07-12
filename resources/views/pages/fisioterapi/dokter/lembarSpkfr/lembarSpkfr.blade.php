@@ -50,31 +50,61 @@
                                             <label>Pemeriksaan Fisik dan Uji Fungsi </label>
                                             <input type="hidden" class="form-control" name="no_registrasi" value="{{$asesmenDokter->no_registrasi}}" placeholder="Masukan ..."></input>
                                             <input type="hidden" class="form-control" name="kode_transaksi_fisio" value="{{$asesmenDokter->kode_transaksi_fisio}}" placeholder="Masukan ..."></input>
-                                            <input type="text" class="form-control" name="pemeriksaan_fisik" value="" placeholder="Masukan ..."></input>
+                                            <input type="text" class="form-control @error('pemeriksaan_fisik') is-invalid  
+                                                @enderror" name="pemeriksaan_fisik" value="{{ old('pemeriksaan_fisik')}}"  placeholder="Masukan ..."></input>
+                                                @error('pemeriksaan_fisik')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Diagnosis Medis (ICD-10)</label>
-                                            <input type="text" class="form-control" name="diagnosis_medis" value="" placeholder="Masukan ..."></input>
+                                            <input type="text" class="form-control  @error('diagnosis_medis') is-invalid  
+                                                @enderror" name="diagnosis_medis" value="{{ old('diagnosis_medis')}}"  placeholder="Masukan ..."></input>
+                                                @error('diagnosis_medis')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Diagnosis Fungsi (ICD-10)</label>
-                                            <input type="text" class="form-control" name="diagnosis_fungsi" value="" placeholder="Masukan ..."></input>
+                                            <input type="text" class="form-control  @error('diagnosis_fungsi') is-invalid  
+                                                @enderror" name="diagnosis_fungsi" value="{{ old('diagnosis_fungsi')}}"  placeholder="Masukan ..."></input>
+                                                @error('diagnosis_fungsi')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Pemeriksaan Penunjang </label>
-                                            <input type="text" class="form-control" name="pemeriksaan_penunjang" value="" placeholder="Masukan ..."></input>
+                                            <input type="text" class="form-control  @error('pemeriksaan_penunjang') is-invalid  
+                                                @enderror" name="pemeriksaan_penunjang" value="{{ old('pemeriksaan_penunjang')}}"  placeholder="Masukan ..."></input>
+                                                @error('pemeriksaan_penunjang')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Tata Laksana KFR (ICD 9 CM)</label>
-                                            <input type="text" class="form-control" name="tata_laksana_kfr" value="" placeholder="Masukan ..."></input>
+                                            <input type="text" class="form-control  @error('tata_laksana_kfr') is-invalid  
+                                                @enderror" name="tata_laksana_kfr" value="{{ old('tata_laksana_kfr')}}"  placeholder="Masukan ..."></input>
+                                                @error('tata_laksana_kfr')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -98,7 +128,13 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Deskrispsi suspek penyakit akibat kerja <code>Isi jika ya</code></label>
-                                            <input type="text" class="form-control" name="deskripsi_akibat_kerja" value="" placeholder="Masukan ..."></input>
+                                            <input type="text" class="form-control @error('pemeriksaan_fisik') is-invalid  
+                                                @enderror" name="deskripsi_akibat_kerja" value="{{ old('deskripsi_akibat_kerja')}}"  placeholder="Masukan ..."></input>
+                                            @error('deskripsi_akibat_kerja')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>

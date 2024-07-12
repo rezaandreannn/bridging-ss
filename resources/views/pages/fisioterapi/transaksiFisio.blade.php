@@ -101,13 +101,13 @@
                                                 <a class="btn btn-sm btn-danger" confirm-delete="true" data-menuId="{{$transaksi->ID_TRANSAKSI}}" href="#"><i class="fas fa-trash"></i> Hapus</a>
                                                 @endif
                                                 
-                                                <a href="{{ route('form.dokter', ['no_mr' => $transaksi->NO_MR_PASIEN]) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i>CPPT Dokter</a>
+                                                {{-- <a href="{{ route('form.dokter', ['no_mr' => $transaksi->NO_MR_PASIEN]) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i>CPPT Dokter</a> --}}
                                                 
                                                 {{-- <a href="{{ route('lembar.dokter', ['no_mr' => $transaksi->NO_MR_PASIEN]) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i>Lembar Dokter</a> --}}
                                                 
-                                                <a href="{{ route('cppt.cetakFormulir', [
+                                                {{-- <a href="{{ route('cppt.cetakFormulir', [
                                             'no_mr' => $transaksi->NO_MR_PASIEN
-                                            ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-secondary"><i class="fa fa-print"></i> Formulir</a>
+                                            ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-secondary"><i class="fa fa-print"></i> Formulir</a> --}}
                                             </td>
                                         </tr>
                                         @endforeach
