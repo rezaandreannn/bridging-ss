@@ -43,31 +43,61 @@
                                         <input type="hidden" name="kode_transaksi_fisio" class="form-control" value="{{$asesmenDokterGet->kode_transaksi_fisio}}" readonly>
                                         <div class="form-group">
                                             <label>Diagnosis Fungsional / Diagnosis Klinis : <code>*</code></label>
-                                            <textarea class="form-control" rows="3" name="diagnosis_fungsional" value="" placeholder="Masukan ..."></textarea>
+                                            <textarea class="form-control @error('diagnosis_fungsional') is-invalid  
+                                                @enderror" rows="3" name="diagnosis_fungsional"  placeholder="Masukan ...">{{ old('diagnosis_fungsional')}}</textarea>
+                                                @error('diagnosis_fungsional')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Instrumen Uji Fungsi / Prosedur KFR : <code>*</code></label>
-                                            <textarea class="form-control" rows="3" name="prosedur_kfr" value="" placeholder="Masukan ..."></textarea>
+                                            <textarea class="form-control @error('prosedur_kfr') is-invalid  
+                                                @enderror" rows="3" name="prosedur_kfr"  placeholder="Masukan ...">{{ old('prosedur_kfr')}}</textarea>
+                                                @error('prosedur_kfr')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Hasil yang didapat : </label>
-                                            <textarea class="form-control" rows="3" name="hasil_pemeriksaan" value="" placeholder="Masukan ..."></textarea>
+                                            <textarea class="form-control @error('hasil_pemeriksaan') is-invalid  
+                                                @enderror" rows="3" name="hasil_pemeriksaan"  placeholder="Masukan ...">{{ old('hasil_pemeriksaan')}}</textarea>
+                                                @error('hasil_pemeriksaan')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Kesimpulan : </label>
-                                            <textarea class="form-control" rows="3" name="kesimpulan" value="" placeholder="Masukan ..."></textarea>
+                                            <textarea class="form-control @error('kesimpulan') is-invalid  
+                                                @enderror" rows="3" name="kesimpulan"  placeholder="Masukan ...">{{ old('kesimpulan')}}</textarea>
+                                                @error('kesimpulan')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Rekomendasi : </label>
-                                            <textarea class="form-control" rows="3" name="rekomendasi" value="" placeholder="Masukan ..."></textarea>
+                                            <textarea class="form-control @error('rekomendasi') is-invalid  
+                                                @enderror" rows="3" name="rekomendasi"  placeholder="Masukan ...">{{ old('rekomendasi')}}</textarea>
+                                                @error('rekomendasi')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
                                         </div>
                                     </div>
                                     {{-- <div class="col-md-9">

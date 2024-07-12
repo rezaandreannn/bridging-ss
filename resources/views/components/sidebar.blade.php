@@ -132,6 +132,62 @@
                     </li>
                 </ul>
             </li>
+            @can('igd')
+            <li class="menu-header">IGD</li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Layanan IGD</span></a>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a class="nav-link" href="">Triase</a>
+                    </li>
+                </ul>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a class="nav-link" href="#">Asesmen Keperawatan</a>
+                    </li>
+                </ul>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a class="nav-link" href="#">Asesmen Kebidanan</a>
+                    </li>
+                </ul>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a class="nav-link" href="#">Catatan Keperawatan</a>
+                    </li>
+                </ul>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a class="nav-link" href="#">EWS Dewasa</a>
+                    </li>
+                </ul>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a class="nav-link" href="#">EWS Ibu Hamil</a>
+                    </li>
+                </ul>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a class="nav-link" href="#">EWS Anak</a>
+                    </li>
+                </ul>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a class="nav-link" href="#">Asasmen Neonatus</a>
+                    </li>
+                </ul>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a class="nav-link" href="#">CPPT Igd</a>
+                    </li>
+                </ul>
+                <ul class="dropdown-menu">
+                    <li class="">Skrining TB</a>
+                    </li>
+                </ul>
+            </li>
+            @endcan
+
             @can('vclaim')
             <li class="menu-header">vclaim bpjs</li>
             <li class="nav-item dropdown ">

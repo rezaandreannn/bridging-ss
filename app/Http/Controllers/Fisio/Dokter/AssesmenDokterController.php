@@ -6,6 +6,7 @@ use App\Models\Pasien;
 use GuzzleHttp\Client;
 use App\Models\JenisFisio;
 use App\Models\Fisioterapi;
+use App\Models\RajalDokter;
 use App\Models\TandaTangan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,6 +19,7 @@ class AssesmenDokterController extends Controller
     protected $prefix;
     protected $fisio;
     protected $pasien;
+    protected $rajaldokter;
     protected $jenisFisio;
     protected $ttd;
     protected $httpClient;
@@ -31,6 +33,7 @@ class AssesmenDokterController extends Controller
         $this->routeIndex = 'cppt.fisio';
         $this->prefix = 'Fisioterapi';
         $this->pasien = new Pasien;
+        $this->rajaldokter = new RajalDokter;
         $this->jenisFisio = new JenisFisio;
         $this->ttd = new TandaTangan;
 
@@ -96,11 +99,12 @@ class AssesmenDokterController extends Controller
         $biodatas = $this->pasien->biodataPasienByMr($NoMr);
         $ttv = DB::connection('pku')->table('TAC_RJ_VITAL_SIGN')->where('FS_KD_REG', $biodatas->No_Reg)->first();
         $asesmen_perawat = DB::connection('pku')->table('TAC_ASES_PER2')->where('FS_KD_REG', $biodatas->No_Reg)->first();
+        $history = $this->rajaldokter->getHistoryPasien($NoMr);
 
         // dd($biodatas);
         // die;
         $title = $this->prefix . ' ' . 'Assesmen Dokter';
-        return view($this->view . 'dokter.asesmenDokter.createAsesmen', compact('title', 'biodatas', 'jenisterapifisio', 'kode_transaksi_fisio', 'ttv', 'asesmen_perawat'));
+        return view($this->view . 'dokter.asesmenDokter.createAsesmen', compact('title', 'biodatas', 'jenisterapifisio', 'kode_transaksi_fisio', 'ttv', 'asesmen_perawat','history'));
     }
 
     public function editAsesmen($NoMr)
@@ -139,6 +143,10 @@ class AssesmenDokterController extends Controller
 
     public function storeUjiFungsi(Request $request)
     {
+        $validatedData = $request->validate([
+            'diagnosis_fungsional' => 'required',
+        ]);
+
         try {
             DB::connection('pku')->beginTransaction();
 
@@ -310,6 +318,7 @@ class AssesmenDokterController extends Controller
 
         $validatedData = $request->validate([
             'anamnesa' => 'required',
+            'cara_datang' => 'required',
         ]);
 
         try {

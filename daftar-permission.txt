@@ -1,0 +1,13 @@
+1. master data
+2. kunjungan
+3. bridge
+4. medis
+5. medis rajal
+6. medis fisioterapi
+7. nurse record
+8. fisioterapi
+9. igd
+10. vclaim
+11. ttd
+12. manage user
+13. mappings
