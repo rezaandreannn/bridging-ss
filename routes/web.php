@@ -15,6 +15,7 @@ use App\Http\Controllers\Rj\RawatJalanController;
 use App\Http\Controllers\MasterData\Icd10Controller;
 use App\Http\Controllers\Berkas\Berkas_rm_controller;
 use App\Http\Controllers\Berkas\Ranap\BerkasController;
+use App\Http\Controllers\Berkas\Rekam_medis_by_mr\RekamMedisByMrController;
 use App\Http\Controllers\Kunjungan\AntreanController;
 use App\Http\Controllers\Manage\PermissionController;
 use App\Http\Controllers\MasterData\DokterController;
@@ -279,13 +280,20 @@ Route::middleware('auth')->group(function () {
         Route::get('rajal/dokter/lab/{noReg}', [RajalDokterController::class, 'labDokter'])->name('rj.dokterLab');
     });
 
-    // Rawat Jalan Perawat
+    // Rawat Inap berkas
     Route::prefix('ri')->group(function () {
         // Rawat Inap Dokter
         Route::get('ranap/berkas/{noReg}', [BerkasController::class, 'index'])->name('ri.dokterBerkas');
         Route::get('ranap/berkas/detailRencana/{noReg}', [BerkasController::class, 'rencanaKeperawatan'])->name('ri.detailRencana');
         Route::get('ranap/berkas/detailTindakan/{noReg}', [BerkasController::class, 'tindakanKeperawatan'])->name('ri.detailTindakan');
         Route::get('ranap/berkas/detailObat/{noReg}', [BerkasController::class, 'pemberianObat'])->name('ri.detailObat');
+    });
+
+    // Riwayat Rekam Medis
+    Route::prefix('rm')->group(function () {
+  
+        Route::get('riwayaRekamMedis/bymr', [RekamMedisByMrController::class, 'index'])->name('rm.bymr');
+
     });
 
     // MANAGE USER
