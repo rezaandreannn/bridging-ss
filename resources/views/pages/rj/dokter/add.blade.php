@@ -330,8 +330,8 @@
                                                 <a href="{{ route('rj.dokterCopy', ['noReg' => $data->NO_REG, 'noMR'=> $data->NO_MR]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Copy</a>
                                                 @if($data->KODE_RUANG == '')
                                                     <a href="{{ route('rj.rmDokter', ['noReg' => $data->NO_REG, 'noMR'=> $data->NO_MR]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> RM</a>
-                                                @elseif($data->KODE_RUANG != '')
-                                                    <a href="{{ route('rj.dokterDetail', ['noReg' => $data->NO_REG, 'noMR'=> $data->NO_MR]) }}">Detail</a>
+                                                @elseif($data->KODE_RUANG != '')    
+                                                    <a href="{{ route('ri.dokterBerkas', ['noReg' => $data->NO_REG]) }}">Detail</a>
                                                 @endif
                                             </td>
                                         </tr>

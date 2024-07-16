@@ -14,6 +14,7 @@ use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\Rj\RawatJalanController;
 use App\Http\Controllers\MasterData\Icd10Controller;
 use App\Http\Controllers\Berkas\Berkas_rm_controller;
+use App\Http\Controllers\Berkas\Ranap\BerkasController;
 use App\Http\Controllers\Kunjungan\AntreanController;
 use App\Http\Controllers\Manage\PermissionController;
 use App\Http\Controllers\MasterData\DokterController;
@@ -31,6 +32,7 @@ use App\Http\Controllers\Case\Encounter\EncounterCreateController;
 use App\Http\Controllers\Fisio\Berkas\BerkasFisioController;
 use App\Http\Controllers\Fisio\InformedConcentController;
 use App\Http\Controllers\Poli\Mata\AssesmenMataController;
+use App\Http\Controllers\RawatInap\Dokter\RanapDokterController;
 use App\Http\Controllers\RawatJalan\Dokter\RajalDokterController;
 use App\Models\Fisioterapi;
 
@@ -275,6 +277,15 @@ Route::middleware('auth')->group(function () {
         Route::get('rajal/dokter/add_asesmen/cetak_rm/{noReg}/{noMR}', [RajalDokterController::class, 'cetakRM'])->name('rj.rmDokter');
         Route::get('rajal/dokter/resep/{noReg}', [RajalDokterController::class, 'resepDokter'])->name('rj.dokterResep');
         Route::get('rajal/dokter/lab/{noReg}', [RajalDokterController::class, 'labDokter'])->name('rj.dokterLab');
+    });
+
+    // Rawat Jalan Perawat
+    Route::prefix('ri')->group(function () {
+        // Rawat Inap Dokter
+        Route::get('ranap/berkas/{noReg}', [BerkasController::class, 'index'])->name('ri.dokterBerkas');
+        Route::get('ranap/berkas/detailRencana/{noReg}', [BerkasController::class, 'rencanaKeperawatan'])->name('ri.detailRencana');
+        Route::get('ranap/berkas/detailTindakan/{noReg}', [BerkasController::class, 'tindakanKeperawatan'])->name('ri.detailTindakan');
+        Route::get('ranap/berkas/detailObat/{noReg}', [BerkasController::class, 'pemberianObat'])->name('ri.detailObat');
     });
 
     // MANAGE USER
