@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Berkas Pemeriksaan Dokter')
+@section('title', $title)
 
 @push('style')
 <!-- CSS Libraries -->
@@ -16,18 +16,18 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Berkas Pemeriksaan Dokter</h1>
+            <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('rj.dokter') }}">Pemeriksaan Medis</a></div>
-                <div class="breadcrumb-item"><a href="{{ route('rj.dokter') }}">Rawat Jalan</a></div>
-                <div class="breadcrumb-item">Detail</div>
+                <div class="breadcrumb-item active"><a href="{{ route('rj.dokter') }}">Medical Record</a></div>
+                <div class="breadcrumb-item"><a href="{{ route('rj.dokter') }}">Rawat Inap</a></div>
+                <div class="breadcrumb-item">Berkas</div>
             </div>
         </div>
 
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
-                    @include('components.biodata-pasien-fisio-bymr')
+                    @include('components.biodata-pasien-bynoreg')
                     <div class="card card-primary">
                         <div class="card-body">
                             <div class="table-responsive">
@@ -72,19 +72,19 @@
                                         <tr>
                                             <td>Rencana Keperawatan</td>
                                             <td>
-                                                <a href="" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Detail</a>
+                                                <a href="{{ route('ri.detailRencana', ['noReg' => $biodata->NO_REG]) }}" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Detail</a>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Tindakan Keperawatan</td>
                                             <td>
-                                                <a href="" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Detail</a>
+                                                <a href="{{ route('ri.detailTindakan', ['noReg' => $biodata->NO_REG]) }}" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Detail</a>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Catatan Pemberian Obat</td>
                                             <td>
-                                                <a href="" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Detail</a>
+                                                <a href="{{ route('ri.detailObat', ['noReg' => $biodata->NO_REG]) }}" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Detail</a>
                                             </td>
                                         </tr>
                                         <tr>
