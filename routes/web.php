@@ -321,8 +321,10 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/server', function () {
-    $data = Icd10::all();
-    dd($data);
+    return view('pages/rekam_medis/bymr/index');
+});
+Route::get('/server2', function () {
+    return view('pages/rekam_medis/bymr/index');
 });
 
 

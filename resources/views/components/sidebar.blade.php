@@ -182,7 +182,30 @@
                     </li>
                 </ul>
                 <ul class="dropdown-menu">
-                    <li class="">Skrining TB</a>
+                    <li class="">
+                        <a class="nav-link" href="#">Skrining TB</a>
+                    </li>
+                </ul>
+         
+            </li>
+            @endcan
+            @can('rekam medis')
+            <li class="menu-header">Rekam Medis</li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Riwayat Rekam Medis</span></a>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a class="nav-link" href="">Berkas RM by MR</a>
+                    </li>
+                </ul>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a class="nav-link" href="#">Berkas RM Harian</a>
+                    </li>
+                </ul>
+                <ul class="dropdown-menu">
+                    <li class="">
+                        <a class="nav-link" href="#">Berkas RM IGD</a>
                     </li>
                 </ul>
             </li>

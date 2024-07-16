@@ -11,3 +11,4 @@
 11. ttd
 12. manage user
 13. mappings
+14. rekam medis
