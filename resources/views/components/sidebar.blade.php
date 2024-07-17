@@ -194,13 +194,13 @@
             <li class="nav-item dropdown  {{ Request::is('rm/*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Riwayat Rekam Medis</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('rm/riwayaRekamMedis/*') ? 'active' : '' }}">
+                    <li class="{{ Request::is('rm/riwayaRekamMedis/bymr/*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('rm.bymr')}}">Berkas RM by MR</a>
                     </li>
                 </ul>
                 <ul class="dropdown-menu">
-                    <li class="">
-                        <a class="nav-link" href="#">Berkas RM Harian</a>
+                    <li class="{{ Request::is('rm/riwayaRekamMedis/harian/*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('rm.harian')}}">Berkas RM Harian</a>
                     </li>
                 </ul>
                 <ul class="dropdown-menu">

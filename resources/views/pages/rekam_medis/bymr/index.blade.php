@@ -38,7 +38,6 @@
                               </div>
                             </div>
                           </div>
-
                     </div>
                 </form>
             </div>
@@ -124,26 +123,48 @@
                                     <th scope="col">Tanggal</th>
                                     <th scope="col">Kode Reg</th>
                                     <th scope="col">Dokter</th>
-                                    <th scope="col">Layanan</th>
                                     <th scope="col">Status</th>
+                                    <th scope="col">Layanan</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($dataPasien as $pasien)
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{{$loop->iteration}}</td>
+                                    <td>{{ date('Y-m-d', strtotime($pasien->Tanggal))}}</td>
+                                    <td>{{$pasien->No_Reg}}</td>
+                                    <td>{{$pasien->Nama_Dokter}}</td>
+                                    <td>
+                                        @if ($pasien->Medis == 'RAWAT JALAN')
+                                        <div class="badge badge-primary">{{$pasien->Medis}}</div>
+                                        @else
+                                        <div class="badge badge-success">{{$pasien->Medis}}</div>
+                                        @endif
+
+                                        </td>
+                                    <td><b>{{$pasien->Nama_Ruang}}</b></td>
+                                    <td>
+                                        @if($pasien->KodeRekanan == '032')
+                                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Verif</a>
+                                        @endif
+                                        
+                                        @if($pasien->Medis == 'RAWAT JALAN')
+                                        <a href="#" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Scan</a>
+                                        <a href="#" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> RM</a>
+                                        @else
+                                       
+                                        <a href="{{ route('rm.detail', $pasien->No_Reg) }}" class="btn btn-sm btn-primary"><i class="fas fa-info-circle"></i> Detail</a>
+                                        @endif
+                                    </td>
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+            
         </div>
     </section>
 </div>

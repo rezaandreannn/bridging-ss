@@ -24,7 +24,10 @@ use App\Http\Controllers\Encounter\RecourceController;
 use App\Http\Controllers\Berkas\Ranap\BerkasController;
 use App\Http\Controllers\MasterData\LocationController;
 use App\Http\Controllers\Fisio\InformedConcentController;
+<<<<<<< HEAD
 use App\Http\Controllers\IGD\Layanan\EwsDewasaController;
+=======
+>>>>>>> d2205e566b73028788f0efcef01dbe40435ba375
 use App\Http\Controllers\Kunjungan\PendaftaranController;
 use App\Http\Controllers\MasterData\JenisFisioController;
 use App\Http\Controllers\Poli\Mata\AssesmenMataController;
@@ -38,7 +41,11 @@ use App\Http\Controllers\RawatInap\Dokter\RanapDokterController;
 use App\Http\Controllers\RawatJalan\Dokter\RajalDokterController;
 use App\Http\Controllers\Case\Encounter\EncounterCreateController;
 use App\Http\Controllers\Berkas\Rekam_medis_by_mr\RekamMedisByMrController;
+<<<<<<< HEAD
 use App\Http\Controllers\IGD\Layanan\SkriningController;
+=======
+use App\Http\Controllers\Berkas\Rekam_medis_harian\RekamMedisHarianController;
+>>>>>>> d2205e566b73028788f0efcef01dbe40435ba375
 
 /*
 |--------------------------------------------------------------------------
@@ -294,6 +301,15 @@ Route::middleware('auth')->group(function () {
 
     // Riwayat Rekam Medis
     Route::prefix('rm')->group(function () {
+<<<<<<< HEAD
+=======
+  
+        Route::get('riwayaRekamMedis/bymr/list', [RekamMedisByMrController::class, 'index'])->name('rm.bymr');
+        Route::get('riwayaRekamMedis/bymr/detailBerkas/{noReg}', [RekamMedisByMrController::class, 'detail_berkas'])->name('rm.detail');
+
+        // harian
+        Route::get('riwayaRekamMedis/harian/list', [RekamMedisHarianController::class, 'index'])->name('rm.harian');
+>>>>>>> d2205e566b73028788f0efcef01dbe40435ba375
 
         Route::get('riwayaRekamMedis/bymr', [RekamMedisByMrController::class, 'index'])->name('rm.bymr');
     });
