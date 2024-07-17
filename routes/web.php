@@ -23,11 +23,8 @@ use App\Http\Controllers\MasterData\PasienController;
 use App\Http\Controllers\Encounter\RecourceController;
 use App\Http\Controllers\Berkas\Ranap\BerkasController;
 use App\Http\Controllers\MasterData\LocationController;
+use App\Http\Controllers\IGD\Layanan\SkriningController;
 use App\Http\Controllers\Fisio\InformedConcentController;
-<<<<<<< HEAD
-use App\Http\Controllers\IGD\Layanan\EwsDewasaController;
-=======
->>>>>>> d2205e566b73028788f0efcef01dbe40435ba375
 use App\Http\Controllers\Kunjungan\PendaftaranController;
 use App\Http\Controllers\MasterData\JenisFisioController;
 use App\Http\Controllers\Poli\Mata\AssesmenMataController;
@@ -41,11 +38,7 @@ use App\Http\Controllers\RawatInap\Dokter\RanapDokterController;
 use App\Http\Controllers\RawatJalan\Dokter\RajalDokterController;
 use App\Http\Controllers\Case\Encounter\EncounterCreateController;
 use App\Http\Controllers\Berkas\Rekam_medis_by_mr\RekamMedisByMrController;
-<<<<<<< HEAD
-use App\Http\Controllers\IGD\Layanan\SkriningController;
-=======
 use App\Http\Controllers\Berkas\Rekam_medis_harian\RekamMedisHarianController;
->>>>>>> d2205e566b73028788f0efcef01dbe40435ba375
 
 /*
 |--------------------------------------------------------------------------
@@ -299,19 +292,29 @@ Route::middleware('auth')->group(function () {
         Route::get('ranap/berkas/detailObat/{noReg}', [BerkasController::class, 'pemberianObat'])->name('ri.detailObat');
     });
 
+    //IGD
+    Route::prefix('igd')->group(function () {
+        //Layanan IGD
+        // ------------ EWS --------------- //
+        Route::get('layananIGD/ewsDewasa', [EwsController::class, 'ewsDewasa'])->name('layanan.ewsDewasa');
+        Route::get('layananIGD/ewsDewasa/add', [EwsController::class, 'addDewasa'])->name('layanan.ewsDewasa.add');
+        Route::get('layananIGD/ewsAnak', [EwsController::class, 'ewsAnak'])->name('layanan.ewsAnak');
+        Route::get('layananIGD/ewsAnak/add', [EwsController::class, 'addAnak'])->name('layanan.ewsAnak.add');
+        Route::get('layananIGD/ewsHamil', [EwsController::class, 'ewsHamil'])->name('layanan.ewsHamil');
+        Route::get('layananIGD/ewsHamil/add', [EwsController::class, 'addHamil'])->name('layanan.ewsHamil.add');
+        // ------- Skrining TB ------- //
+        Route::get('layananIGD/SkriningTB', [SkriningController::class, 'index'])->name('layanan.skriningIndex');
+        Route::get('layananIGD/SkriningTB/add', [SkriningController::class, 'add'])->name('layanan.skriningIndex');
+    });
+
     // Riwayat Rekam Medis
     Route::prefix('rm')->group(function () {
-<<<<<<< HEAD
-=======
-  
+
         Route::get('riwayaRekamMedis/bymr/list', [RekamMedisByMrController::class, 'index'])->name('rm.bymr');
         Route::get('riwayaRekamMedis/bymr/detailBerkas/{noReg}', [RekamMedisByMrController::class, 'detail_berkas'])->name('rm.detail');
 
         // harian
         Route::get('riwayaRekamMedis/harian/list', [RekamMedisHarianController::class, 'index'])->name('rm.harian');
->>>>>>> d2205e566b73028788f0efcef01dbe40435ba375
-
-        Route::get('riwayaRekamMedis/bymr', [RekamMedisByMrController::class, 'index'])->name('rm.bymr');
     });
 
     // MANAGE USER
