@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Fisioterapi;
 use App\Models\Simrs\Icd10;
 use App\Models\Simrs\Antrean;
 use Illuminate\Support\Facades\DB;
@@ -14,28 +15,28 @@ use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\Rj\RawatJalanController;
 use App\Http\Controllers\MasterData\Icd10Controller;
 use App\Http\Controllers\Berkas\Berkas_rm_controller;
-use App\Http\Controllers\Berkas\Ranap\BerkasController;
-use App\Http\Controllers\Berkas\Rekam_medis_by_mr\RekamMedisByMrController;
 use App\Http\Controllers\Kunjungan\AntreanController;
 use App\Http\Controllers\Manage\PermissionController;
 use App\Http\Controllers\MasterData\DokterController;
 use App\Http\Controllers\MasterData\PasienController;
 use App\Http\Controllers\Encounter\RecourceController;
+use App\Http\Controllers\Berkas\Ranap\BerkasController;
 use App\Http\Controllers\MasterData\LocationController;
+use App\Http\Controllers\Fisio\InformedConcentController;
 use App\Http\Controllers\Kunjungan\PendaftaranController;
 use App\Http\Controllers\MasterData\JenisFisioController;
+use App\Http\Controllers\Poli\Mata\AssesmenMataController;
 use App\Http\Controllers\MasterData\OrganizationController;
+use App\Http\Controllers\Fisio\Berkas\BerkasFisioController;
 use App\Http\Controllers\Manage\RoleHasPermissionController;
 use App\Http\Controllers\Mapping\MappingEncounterController;
 use App\Http\Controllers\Fisio\Dokter\AssesmenDokterController;
 use App\Http\Controllers\RawatJalan\Perawat\AssesmenController;
-use App\Http\Controllers\Case\Encounter\EncounterCreateController;
-use App\Http\Controllers\Fisio\Berkas\BerkasFisioController;
-use App\Http\Controllers\Fisio\InformedConcentController;
-use App\Http\Controllers\Poli\Mata\AssesmenMataController;
 use App\Http\Controllers\RawatInap\Dokter\RanapDokterController;
 use App\Http\Controllers\RawatJalan\Dokter\RajalDokterController;
-use App\Models\Fisioterapi;
+use App\Http\Controllers\Case\Encounter\EncounterCreateController;
+use App\Http\Controllers\Berkas\Rekam_medis_by_mr\RekamMedisByMrController;
+use App\Http\Controllers\Berkas\Rekam_medis_harian\RekamMedisHarianController;
 
 /*
 |--------------------------------------------------------------------------
@@ -292,7 +293,11 @@ Route::middleware('auth')->group(function () {
     // Riwayat Rekam Medis
     Route::prefix('rm')->group(function () {
   
-        Route::get('riwayaRekamMedis/bymr', [RekamMedisByMrController::class, 'index'])->name('rm.bymr');
+        Route::get('riwayaRekamMedis/bymr/list', [RekamMedisByMrController::class, 'index'])->name('rm.bymr');
+        Route::get('riwayaRekamMedis/bymr/detailBerkas/{noReg}', [RekamMedisByMrController::class, 'detail_berkas'])->name('rm.detail');
+
+        // harian
+        Route::get('riwayaRekamMedis/harian/list', [RekamMedisHarianController::class, 'index'])->name('rm.harian');
 
     });
 

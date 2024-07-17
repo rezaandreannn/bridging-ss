@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Berkas\Rekam_medis_by_mr;
+namespace App\Http\Controllers\Berkas\Rekam_medis_harian;
 
 use App\Models\Rajal;
 use App\Models\Pasien;
@@ -9,8 +9,9 @@ use App\Models\RanapDokter;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class RekamMedisByMrController extends Controller
+class RekamMedisHarianController extends Controller
 {
+
     protected $view;
     protected $routeIndex;
     protected $prefix;
@@ -22,7 +23,7 @@ class RekamMedisByMrController extends Controller
     public function __construct(Rekam_medis $rekam_medis)
     {
         $this->rekam_medis = $rekam_medis;
-        $this->view = 'pages.rekam_medis.bymr.';
+        $this->view = 'pages.rekam_medis.harian.';
         $this->prefix = 'Riwayat Rekam Medis';
         $this->pasien = new Pasien;
         $this->rajal = new Rajal;
@@ -36,18 +37,15 @@ class RekamMedisByMrController extends Controller
     public function index(Request $request)
     {
         //
-        $title = $this->prefix . ' ' . 'By No MR';
+        $title = $this->prefix . ' ' . 'Harian';
         $nomr = $request->input('nomr');
-        $biodatas = $this->pasien->biodataPasienByMr($nomr);
-        $dataPasien = $this->rekam_medis->rekamMediByMr($nomr);
+        $dataPasien = 'ok';
+        $dokters = $this->rajal->byKodeDokter();
+        // $dataPasien = $this->rekam_medis->rekamMediByMr($nomr);
         // dd($dataPasien);
-        $cek_mr = 'false';
-        if($biodatas!=null){
-            $cek_mr = 'true';
-        }
-      
+
        
-        return view($this->view . 'index', compact('title','biodatas','cek_mr','dataPasien'));
+        return view($this->view . 'index', compact('title','dataPasien','dokters'));
     }
 
     /**
@@ -55,19 +53,6 @@ class RekamMedisByMrController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
-    public function detail_berkas($noReg){
-        $title = $this->prefix . ' ' . 'Berkas';
-        $biodata = $this->rajal->pasien_bynoreg($noReg);
-        $medis = $this->ranap->dataMedis($noReg);
-        $perawat = $this->ranap->dataPerawat($noReg);
-        $bidan = $this->ranap->dataBidan($noReg);
-        $rencana = $this->ranap->dataRencanaPulang($noReg);
-        $resume = $this->ranap->dataResume($noReg);
-
-        return view($this->view . 'detailBerkas', compact('title', 'biodata', 'medis', 'perawat', 'bidan', 'rencana', 'resume'));
-    }
-
     public function create()
     {
         //

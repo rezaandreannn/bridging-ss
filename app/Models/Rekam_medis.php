@@ -155,4 +155,37 @@ class Rekam_medis extends Model
             ->first();
         return $data;
     }
+
+
+    // rekam medis by mr
+
+    function rekamMediByMr($No_MR) {
+
+        $pku = DB::connection('pku')->getDatabaseName();
+        $data = DB::connection('db_rsmm')
+            ->table('PENDAFTARAN as p')
+            ->leftJoin('DOKTER as d', 'p.Kode_Dokter', '=', 'd.Kode_Dokter')
+            ->leftJoin('M_RUANG as mr', 'p.Kode_Ruang', '=', 'mr.Kode_Ruang')
+            ->leftJoin($pku . '.dbo.TAC_RJ_MEDIS as trm', 'p.No_Reg', '=', 'trm.FS_KD_REG')
+    
+            ->select(
+                'P.No_MR',
+                'p.Tanggal',
+                'p.No_Reg',
+                'p.Medis',
+                'p.KodeRekanan',
+                'p.Kode_Ruang',
+                'p.Status',
+                'd.Nama_Dokter',
+                'mr.Nama_Ruang',
+                'trm.FS_KD_TRS',
+                'trm.FS_CARA_PULANG',
+
+            )
+            ->where('p.No_MR', $No_MR)
+            ->orderBy('p.Tanggal', 'desc')
+            ->get();
+        return $data;
+
+    }
 }
