@@ -304,7 +304,7 @@ Route::middleware('auth')->group(function () {
         Route::get('layananIGD/ewsHamil/add', [EwsController::class, 'addHamil'])->name('layanan.ewsHamil.add');
         // ------- Skrining TB ------- //
         Route::get('layananIGD/SkriningTB', [SkriningController::class, 'index'])->name('layanan.skriningIndex');
-        Route::get('layananIGD/SkriningTB/add', [SkriningController::class, 'add'])->name('layanan.skriningIndex');
+        Route::get('layananIGD/SkriningTB/add', [SkriningController::class, 'add'])->name('layanan.skriningAdd');
     });
 
     // Riwayat Rekam Medis
