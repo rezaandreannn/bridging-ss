@@ -134,7 +134,7 @@
             </li>
             @can('igd')
             <li class="menu-header">IGD</li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown {{ Request::is('igd*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Layanan IGD</span></a>
                 <ul class="dropdown-menu">
                     <li class="">
@@ -158,17 +158,17 @@
                 </ul>
                 <ul class="dropdown-menu">
                     <li class="">
-                        <a class="nav-link" href="#">EWS Dewasa</a>
+                        <a class="nav-link" href="{{ route('layanan.ewsDewasa')}}">EWS Dewasa</a>
                     </li>
                 </ul>
                 <ul class="dropdown-menu">
                     <li class="">
-                        <a class="nav-link" href="#">EWS Ibu Hamil</a>
+                        <a class="nav-link" href="{{ route('layanan.ewsHamil')}}">EWS Ibu Hamil</a>
                     </li>
                 </ul>
                 <ul class="dropdown-menu">
                     <li class="">
-                        <a class="nav-link" href="#">EWS Anak</a>
+                        <a class="nav-link" href="{{ route('layanan.ewsAnak')}}">EWS Anak</a>
                     </li>
                 </ul>
                 <ul class="dropdown-menu">
@@ -183,7 +183,7 @@
                 </ul>
                 <ul class="dropdown-menu">
                     <li class="">
-                        <a class="nav-link" href="#">Skrining TB</a>
+                        <a class="nav-link" href="{{ route('layanan.skriningIndex')}}">Skrining TB</a>
                     </li>
                 </ul>
          
