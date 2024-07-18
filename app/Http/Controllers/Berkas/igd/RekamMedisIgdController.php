@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Berkas\Rekam_medis_harian;
+namespace App\Http\Controllers\Berkas\igd;
 
 use App\Models\Rajal;
 use App\Models\Pasien;
@@ -9,9 +9,8 @@ use App\Models\RanapDokter;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class RekamMedisHarianController extends Controller
+class RekamMedisIgdController extends Controller
 {
-
     protected $view;
     protected $routeIndex;
     protected $prefix;
@@ -23,7 +22,7 @@ class RekamMedisHarianController extends Controller
     public function __construct(Rekam_medis $rekam_medis)
     {
         $this->rekam_medis = $rekam_medis;
-        $this->view = 'pages.rekam_medis.harian.';
+        $this->view = 'pages.rekam_medis.igd.';
         $this->prefix = 'Riwayat Rekam Medis';
         $this->pasien = new Pasien;
         $this->rajal = new Rajal;
@@ -37,23 +36,23 @@ class RekamMedisHarianController extends Controller
     public function index(Request $request)
     {
         //
-        $rekamMedisModel = new Rekam_medis;
-        $title = $this->prefix . ' ' . 'Harian';
-        $kode_dokter = $request->input('kode_dokter');
-        $tanggal = $request->input('tanggal');
-        $dokters = $this->rajal->byKodeDokter();
-        $dataPasien=[];
-        if($kode_dokter != null and $kode_dokter != null){
-            $dataPasien = $this->rekam_medis->rekamMedisHarian($kode_dokter,$tanggal);
-        }
-
-        $tglSekarang =strtotime(date('Y-m-d'));
-        $tglKemarin =date('Y-m-d', strtotime("-1 day", $tglSekarang));
-        $userLogin = auth()->user()->username;
-        // dd($dataPasien);
-
+         //
+         $title = $this->prefix . ' ' . 'IGD';
+         $nomr = $request->input('nomr');
+         $biodatas = $this->pasien->biodataPasienByMr($nomr);
+         $dataPasien=[];
+         if($nomr != null){
+             $dataPasien = $this->rekam_medis->rekamMedisIgd($nomr);
+         }
+         // dd($dataPasien);
+ 
+         $cek_mr = 'false';
+         if($biodatas!=null){
+             $cek_mr = 'true';
+         }
        
-        return view($this->view . 'index', compact('title','dataPasien','dokters','tglKemarin','userLogin','rekamMedisModel'));
+        
+         return view($this->view . 'index', compact('title','biodatas','cek_mr','dataPasien'));
     }
 
     /**

@@ -188,4 +188,118 @@ class Rekam_medis extends Model
         return $data;
 
     }
+
+    function rekamMedisIgd($No_MR) {
+
+        $pku = DB::connection('pku')->getDatabaseName();
+        $data = DB::connection('db_rsmm')
+            ->table('PENDAFTARAN as p')
+            ->leftJoin('DOKTER as d', 'p.Kode_Dokter', '=', 'd.Kode_Dokter')
+            ->leftJoin($pku . '.dbo.IGD_AWAL_MEDIS as iam', 'p.No_Reg', '=', 'iam.FS_KD_REG')
+    
+            ->select(
+                'P.No_MR',
+                'p.Tanggal',
+                'p.No_Reg',
+                'p.Medis',
+                'p.KodeRekanan',
+                'p.Kode_Ruang',
+                'p.Status',
+                'd.Nama_Dokter',
+                'iam.D_PLANNING',
+                'iam.FS_TERAPI',
+                'iam.rad',
+                'iam.lab',
+                'iam.id',
+
+            )
+            ->where('p.No_MR', $No_MR)
+            ->where('p.Kode_Masuk', '1')
+            ->orderBy('p.Tanggal', 'asc')
+            ->get();
+        return $data;
+
+    }
+
+    // rekam medis harian by dokter dan tanggal
+
+    function rekamMedisHarian($kode_dokter,$tanggal) {
+
+        $pku = DB::connection('pku')->getDatabaseName();
+        $data = DB::connection('db_rsmm')
+            ->table('PENDAFTARAN as p')
+            ->leftJoin('DOKTER as d', 'p.Kode_Dokter', '=', 'd.Kode_Dokter')
+            ->leftJoin('REGISTER_PASIEN as rp', 'p.No_MR', '=', 'rp.No_MR')
+            ->leftJoin('ANTRIAN as a', 'p.No_MR', '=', 'a.No_MR')
+            ->leftJoin('M_RUANG as mr', 'p.Kode_Ruang', '=', 'mr.Kode_Ruang')
+            ->leftJoin($pku . '.dbo.TAC_RJ_MEDIS as trm', 'p.No_Reg', '=', 'trm.FS_KD_REG')
+            ->leftJoin($pku . '.dbo.TAC_RJ_STATUS as trs', 'p.No_Reg', '=', 'trs.FS_KD_REG')
+    
+            ->select(
+                'a.Nomor',
+                'P.No_MR',
+                'rp.Nama_Pasien',
+                'rp.Alamat',
+                'p.Tanggal',
+                'p.No_Reg',
+                'p.Medis',
+                'p.KodeRekanan',
+                'p.Kode_Ruang',
+                'p.Kode_Dokter',
+                'p.Status',
+                'd.Nama_Dokter',
+                'mr.Nama_Ruang',
+                'trm.FS_KD_TRS',
+                'trm.FS_CARA_PULANG',
+                'trm.FS_TERAPI',
+                'trm.HASIL_ECHO',
+                'trs.FS_STATUS',
+
+            )
+            ->where('p.Tanggal', $tanggal)
+            ->where('a.Tanggal', $tanggal)
+            ->where('p.Kode_Dokter', $kode_dokter)
+            ->where('a.Dokter', $kode_dokter)
+          
+            ->get();
+        return $data;
+
+    }
+
+    public function cekLab($noReg)
+    {
+  
+        $data = DB::connection('pku')
+            ->table('TA_TRS_KARTU_PERIKSA4')
+            ->select(
+                'FS_KD_REG2' 
+            )
+            ->where('FS_KD_REG2', $noReg)
+            ->first();
+
+        if ($data != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function cekRadiologi($noReg)
+    {
+  
+        $data = DB::connection('pku')
+            ->table('TA_TRS_KARTU_PERIKSA5')
+            ->select(
+                'FS_KD_REG2' 
+            )
+            ->where('FS_KD_REG2', $noReg)
+            ->first();
+             
+        if ($data != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

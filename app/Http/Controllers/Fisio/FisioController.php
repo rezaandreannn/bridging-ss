@@ -166,29 +166,24 @@ class FisioController extends Controller
         $asesmenDokterFisio = DB::connection('pku')->table('fis_asesmen_dokter')->where('no_registrasi', $biodatas->No_Reg)->first();
         $transaksiFisio = DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')->where('ID_TRANSAKSI_FISIO', $id)->orderBy('ID_CPPT_FISIO', 'ASC')->first();
         $ttv = DB::connection('pku')->table('TAC_RJ_VITAL_SIGN')->where('FS_KD_REG', $biodatas->No_Reg)->first();
+     
+        $cekasesmenperawat= false;
         if ($asesmen_perawat){
             $cekasesmenperawat= true;
         }
-        else {
-            $cekasesmenperawat= false;
+     
 
-        }
-
+        $cekasesmenDokter= false;
         if ($asesmenDokterFisio){
             $cekasesmenDokter= true;
         }
-        else {
-            $cekasesmenDokter= false;
+     
 
-        }
-
+        $cekttv= false;
         if ($ttv != null){
             $cekttv= true;
         }
-        else {
-            $cekttv= false;
-
-        }
+     
         // dd($cekasesmenperawat);
 
         $data = $this->fisio->cpptGet($id);

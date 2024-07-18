@@ -39,8 +39,12 @@ class RekamMedisByMrController extends Controller
         $title = $this->prefix . ' ' . 'By No MR';
         $nomr = $request->input('nomr');
         $biodatas = $this->pasien->biodataPasienByMr($nomr);
-        $dataPasien = $this->rekam_medis->rekamMediByMr($nomr);
+        $dataPasien=[];
+        if($nomr != null){
+            $dataPasien = $this->rekam_medis->rekamMediByMr($nomr);
+        }
         // dd($dataPasien);
+
         $cek_mr = 'false';
         if($biodatas!=null){
             $cek_mr = 'true';
