@@ -39,6 +39,7 @@ use App\Http\Controllers\RawatJalan\Dokter\RajalDokterController;
 use App\Http\Controllers\Case\Encounter\EncounterCreateController;
 use App\Http\Controllers\Berkas\Rekam_medis_by_mr\RekamMedisByMrController;
 use App\Http\Controllers\Berkas\Rekam_medis_harian\RekamMedisHarianController;
+use App\Http\Controllers\IGD\Layanan\AssesmenController as LayananAssesmenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -305,6 +306,18 @@ Route::middleware('auth')->group(function () {
         // ------- Skrining TB ------- //
         Route::get('layananIGD/SkriningTB', [SkriningController::class, 'index'])->name('layanan.skriningIndex');
         Route::get('layananIGD/SkriningTB/add', [SkriningController::class, 'add'])->name('layanan.skriningAdd');
+        // ------- Assesmen Keperawatan ------------ //
+        Route::get('layananIGD/assesmenPerawat', [LayananAssesmenController::class, 'assesmenPerawat'])->name('layanan.assesmenPerawat');
+        Route::get('layananIGD/assesmenPerawat/add', [LayananAssesmenController::class, 'assesmenPerawatAdd'])->name('layanan.assesmenPerawatAdd');
+        // ------- Assesmen Kebidanan ------------ //
+        Route::get('layananIGD/assesmenBidan', [LayananAssesmenController::class, 'assesmenBidan'])->name('layanan.assesmenBidan');
+        Route::get('layananIGD/assesmenBidan/add', [LayananAssesmenController::class, 'assesmenBidanAdd'])->name('layanan.assesmenBidanAdd');
+        // ------- Assesmen Neonatus ------------ //
+        Route::get('layananIGD/assesmenNeonatus', [LayananAssesmenController::class, 'assesmenNeonatus'])->name('layanan.assesmenNeonatus');
+        Route::get('layananIGD/assesmenNeonatus/add', [LayananAssesmenController::class, 'assesmenNeonatusAdd'])->name('layanan.assesmenNeonatusAdd');
+        // ------- Catatan Keperawatan ------------ //
+        Route::get('layananIGD/catatanKeperawatan', [LayananAssesmenController::class, 'catatanKeperawatan'])->name('layanan.catatanKeperawatan');
+        Route::get('layananIGD/catatanKeperawatan/add', [LayananAssesmenController::class, 'catatanKeperawatanAdd'])->name('layanan.catatanKeperawatanAdd');
     });
 
     // Riwayat Rekam Medis

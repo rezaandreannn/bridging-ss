@@ -143,7 +143,7 @@
                 </ul>
                 <ul class="dropdown-menu">
                     <li class="">
-                        <a class="nav-link" href="#">Asesmen Keperawatan</a>
+                        <a class="nav-link" href="{{ route('layanan.assesmenPerawat')}}">Asesmen Keperawatan</a>
                     </li>
                 </ul>
                 <ul class="dropdown-menu">

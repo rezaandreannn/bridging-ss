@@ -8,7 +8,7 @@ use App\Models\LayananIgd;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class SkriningController extends Controller
+class AssesmenController extends Controller
 {
     protected $view;
     protected $routeIndex;
@@ -25,18 +25,26 @@ class SkriningController extends Controller
         $this->rajal = new Rajal;
     }
 
-    public function index()
+    public function assesmenPerawat()
     {
-        $title = 'Skrining TB';
+        $title = 'Asessmen Keperawatan IGD';
         // $biodata = $this->rajal->pasien_bynoreg($noReg);
-        return view($this->view . 'SkriningTB.index', compact('title'));
+        return view($this->view . 'AssesmenPerawat.index', compact('title'));
     }
 
-    public function add()
+    public function assesmenPerawatAdd()
     {
-        $title = 'Add Data Skrining TB';
+        $title = 'Add Data Asessmen Keperawatan IGD';
         // $biodata = $this->rajal->pasien_bynoreg($noReg);
-        return view($this->view . 'SkriningTB.add', compact('title'));
+        return view($this->view . 'AssesmenPerawat.add', compact('title'));
+    }
+
+
+
+
+    public function index()
+    {
+        //
     }
 
     /**
