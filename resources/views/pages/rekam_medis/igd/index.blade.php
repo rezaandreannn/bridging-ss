@@ -31,21 +31,21 @@
                         <div class="section-title">Masukkan No Rekam Medis</div>
                         <div class="form-group col-md-6">
                             <div class="input-group mb-3">
-                              <input type="number" class="form-control" name="nomr" placeholder="" aria-label="">
+                              <input type="number" class="form-control" name="nomr" value="{{request('nomr')}}" placeholder="" aria-label="">
                               <div class="input-group-append">
                                 <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
                                 <button type="button" class="btn btn-danger" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
                               </div>
                             </div>
                           </div>
-
                     </div>
                 </form>
             </div>
+            @if($cek_mr != 'false')
             <div class="card author-box card-primary">
                 <div class="card-body">
                     <div class="author-box-name">
-                        <a href="#">tes</a>
+                        <a href="#">{{$biodatas->NAMA_PASIEN}}</a>
                     </div>
                     <div class="author-box-job"><b></div>
                     <div class="author-box-description">
@@ -57,7 +57,7 @@
                                         <h6 class="mb-0">No RM</h6>
                                     </div>
                                     <div class="col-sm-8">
-                                        : 18
+                                        : {{$biodatas->NO_MR}}
                                     </div>
                                 </div>
                                 <div class="row">
@@ -65,7 +65,7 @@
                                         <h6 class="mb-0">NIK</h6>
                                     </div>
                                     <div class="col-sm-8">
-                                        : 18
+                                        : {{$biodatas->HP2}}
                                     </div>
                                 </div>
 
@@ -74,7 +74,7 @@
                                         <h6 class="mb-0">Tanggal Lahir</h6>
                                     </div>
                                     <div class="col-sm-8">
-                                        : 
+                                        : {{ date('d-m-Y', strtotime($biodatas->TGL_LAHIR))}}
                                     </div>
                                 </div>
                                 <div class="row">
@@ -82,7 +82,11 @@
                                         <h6 class="mb-0">Jenis Kelamin</h6>
                                     </div>
                                     <div class="col-sm-8">
-                                        : laki
+                                        : @if ($biodatas->JENIS_KELAMIN == 'L')
+                                        Laki-Laki
+                                        @else
+                                        Perempuan
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="row">
@@ -90,7 +94,7 @@
                                         <h6 class="mb-0">No Hp</h6>
                                     </div>
                                     <div class="col-sm-8">
-                                        : 08
+                                        : {{$biodatas->HP1}}
                                     </div>
                                 </div>
                                 <div class="row">
@@ -98,7 +102,7 @@
                                         <h6 class="mb-0">Alamat</h6>
                                     </div>
                                     <div class="col-sm-8">
-                                        : 
+                                        : {{$biodatas->ALAMAT}}
                                     </div>
                                 </div>
                     
@@ -108,6 +112,7 @@
                 </div>
                 <div class="w-100 d-sm-none"></div>
             </div>
+            @endif
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
@@ -117,27 +122,52 @@
                                     <th scope="col">No</th>
                                     <th scope="col">Tanggal</th>
                                     <th scope="col">Kode Reg</th>
-                                    <th scope="col">Dokter</th>
-                                    <th scope="col">Layanan</th>
+                                    <th scope="col">Nama Dokter</th>
+                                    <th scope="col">Cara Masuk</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($dataPasien as $pasien)
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{{$loop->iteration}}</td>
+                                    <td>{{ date('d-M-Y', strtotime($pasien->Tanggal))}}</td>
+                                    <td>{{$pasien->No_Reg}}</td>
+                                    <td>{{$pasien->Nama_Dokter}}</td>
+                                    <td><b>IGD</b></td>
+                                    <td>
+                                        {{$pasien->Medis}}
+                                    </td>
+                                    <td>
+                                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> RM</a>
+
+                                        @if($pasien->D_PLANNING == 'Rujuk Internal')
+                                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujuk Internal</a>
+                                        @endif
+                                        
+                                        @if($pasien->FS_TERAPI != '')
+                                        <a href="#" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Resep</a>
+                                        @endif
+
+                                        @if($pasien->lab != '')
+                                        <a href="#" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Lab</a>
+                                        @endif
+                                        
+                                        @if($pasien->rad != '')
+                                        <a href="#" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Radiologi</a>
+                                        @endif
+
+                                        <a href="#" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Lembar Verif</a>
+                                    </td>
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+            
         </div>
     </section>
 </div>
@@ -158,7 +188,7 @@
     function resetForm() {
         document.getElementById("filterForm").value = "";
         alert('Filter telah direset!');
-        window.location.href = "{{ route('rj.index') }}";
+        window.location.href = "{{ route('rm.igd') }}";
     }
 </script>
 

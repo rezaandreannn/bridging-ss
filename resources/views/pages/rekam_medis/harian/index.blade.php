@@ -40,7 +40,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                              <input type="date" class="form-control" name="tanggal" value="{{request('tanggal')}}" placeholder="" aria-label="">
+                              <input type="date" class="form-control" name="tanggal" @if (request('tanggal')==null) value="{{date('Y-m-d')}}" @else value="{{request('tanggal')}}" @endif placeholder="" aria-label="">
                               <div class="input-group-append">
                                 <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
                                 <button type="button" class="btn btn-danger" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
@@ -58,24 +58,88 @@
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
-                                    <th scope="col">Tanggal</th>
-                                    <th scope="col">Kode Reg</th>
-                                    <th scope="col">Dokter</th>
+                                    <th scope="col">Nama Pasien</th>
+                                    <th scope="col">Alamat</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Layanan</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($dataPasien as $pasien)   
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td width="5%">
+                                        <div class="badge badge-success">{{$pasien->Nomor}}</div>
+                                    </td>
+                                    <td width="20%">{{$pasien->Nama_Pasien}}</td>
+                                    <td width="25%">{{$pasien->Alamat}}</td>
+                                    <td width="10%">
+                                        @if ($pasien->FS_STATUS=='')
+                                        <div class="badge badge-warning">Perawat</div>
+                                        @elseif ($pasien->FS_STATUS=='1')
+                                        <div class="badge badge-danger">Dokter</div>
+                                        @elseif ($pasien->FS_STATUS=='2')
+                                            @if ($pasien->FS_TERAPI=='')
+                                            <div class="badge badge-success">Selesai</div>
+                                            @else
+                                            <div class="badge badge-info">Farmasi</div>
+                                            @endif
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($pasien->Tanggal>=$tglKemarin)
+                                        <a href="#" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Edit Perawat</a>
+                                        @if($pasien->Kode_Dokter == $userLogin)
+                                        <a href="#" class="btn btn-sm btn-danger"><i class="fas fa-download"></i> Edit Dokter</a>
+                                        @endif
+                                        @endif
+
+                                        @if($pasien->FS_CARA_PULANG == '1')
+                                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> RB</a>
+                                        @endif
+
+                                        @if($pasien->FS_CARA_PULANG == '2')
+                                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> SKDP</a>
+                                        @endif
+                                        @if($pasien->FS_CARA_PULANG == '3')
+                                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rawat Inap</a>
+                                        @endif
+                                        @if($pasien->FS_CARA_PULANG == '4')
+                                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujukan RS</a>
+                                        @endif
+                                        @if($pasien->FS_CARA_PULANG == '5')
+                                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> PRB/Prolanis</a>
+                                        @endif
+                                        @if($pasien->FS_CARA_PULANG == '6')
+                                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujukan Internal</a>
+                                        @endif
+                                        @if($pasien->FS_CARA_PULANG == '7')
+                                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Faskes</a>
+                                        @endif
+                                        @if($pasien->FS_CARA_PULANG == '8')
+                                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> PRB</a>
+                                        @endif
+
+                                        @if($pasien->FS_TERAPI != '')
+                                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Resep</a>
+                                        @endif
+
+                                        @if($pasien->HASIL_ECHO != '')
+                                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Hasil Echo</a>
+                                        @endif
+
+                                        {{-- cek lab dan radiologi --}}
+                                        @if($rekamMedisModel->cekLab($pasien->No_Reg) == true)
+                                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Lab</a>
+                                        @endif
+
+                                        @if($rekamMedisModel->cekRadiologi($pasien->No_Reg) == true)
+                                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Radiologi</a>
+                                        @endif
+
+                                    </td>
+
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -102,7 +166,7 @@
     function resetForm() {
         document.getElementById("filterForm").value = "";
         alert('Filter telah direset!');
-        window.location.href = "{{ route('rm.bymr') }}";
+        window.location.href = "{{ route('rm.harian') }}";
     }
 </script>
 
