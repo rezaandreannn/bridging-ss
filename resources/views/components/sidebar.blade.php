@@ -203,9 +203,10 @@
                         <a class="nav-link" href="{{ route('rm.harian')}}">Berkas RM Harian</a>
                     </li>
                 </ul>
+      
                 <ul class="dropdown-menu">
-                    <li class="">
-                        <a class="nav-link" href="#">Berkas RM IGD</a>
+                    <li class="{{ Request::is('rm/riwayaRekamMedis/igd/*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('rm.igd')}}">Berkas RM IGD</a>
                     </li>
                 </ul>
             </li>

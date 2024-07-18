@@ -29,6 +29,7 @@ use App\Http\Controllers\Kunjungan\PendaftaranController;
 use App\Http\Controllers\MasterData\JenisFisioController;
 use App\Http\Controllers\Poli\Mata\AssesmenMataController;
 use App\Http\Controllers\MasterData\OrganizationController;
+use App\Http\Controllers\Berkas\igd\RekamMedisIgdController;
 use App\Http\Controllers\Fisio\Berkas\BerkasFisioController;
 use App\Http\Controllers\Manage\RoleHasPermissionController;
 use App\Http\Controllers\Mapping\MappingEncounterController;
@@ -324,10 +325,11 @@ Route::middleware('auth')->group(function () {
     Route::prefix('rm')->group(function () {
 
         Route::get('riwayaRekamMedis/bymr/list', [RekamMedisByMrController::class, 'index'])->name('rm.bymr');
-        Route::get('riwayaRekamMedis/bymr/detailBerkas/{noReg}', [RekamMedisByMrController::class, 'detail_berkas'])->name('rm.detail');
-
+        Route::get('riwayaRekamMedis/bymr/detailBerkas/{noReg}', [RekamMedisByMrController::class, 'detail_berkas'])->name('rm.detail');   
         // harian
         Route::get('riwayaRekamMedis/harian/list', [RekamMedisHarianController::class, 'index'])->name('rm.harian');
+        // IGD
+        Route::get('riwayaRekamMedis/igd/list', [RekamMedisIgdController::class, 'index'])->name('rm.igd');
     });
 
     // MANAGE USER
