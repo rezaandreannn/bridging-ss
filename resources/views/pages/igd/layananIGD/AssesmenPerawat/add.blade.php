@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="{{ asset('library/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('library/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
+<link rel="stylesheet" href="{{ asset('library/selectric/public/selectric.css') }}">
 
 <!-- <link rel="stylesheet" href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}"> -->
 @endpush
@@ -1181,6 +1182,473 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="card-header card-success">
+                                <h4 class="card-title">Assesmen Jatuh Dewasa Morse Fall Scale (>18-65 Tahun)</h4>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Riwayat Jatuh</label>
+                                    <select name="riwayat_jatuh" id="" class="form-control select2 @error('riwayat_jatuh')  is-invalid @enderror">
+                                        <option value="" selected disabled>-- Pilih Data --</option>
+                                        <option value="< 3 Bulan" @if(old('riwayat_jatuh')=='< 3 Bulan' ) selected @endif>< 3 Bulan</option>
+                                        <option value="Tidak ada atau > 3 bulan" @if(old('riwayat_jatuh')=='Tidak ada atau > 3 bulan' ) selected @endif>Tidak ada atau > 3 bulan</option>
+                                    </select>
+                                    @error('riwayat_jatuh')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Diagnosa Medis Sekunder</label>
+                                    <select name="diagnosa_medis" id="" class="form-control select2 @error('diagnosa_medis')  is-invalid @enderror">
+                                        <option value="" selected disabled>-- Pilih Data --</option>
+                                        <option value="> 1 Diagnosa Penyakit" @if(old('diagnosa_medis')=='> 1 Diagnosa Penyakit' ) selected @endif>> 1 Diagnosa Penyakit</option>
+                                        <option value="<= 1 Diagnosa Penyakit" @if(old('diagnosa_medis')=='<= 1 Diagnosa Penyakit' ) selected @endif><= 1 Diagnosa Penyakit</option>
+                                    </select>
+                                    @error('diagnosa_medis')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Alat Bantu Jalan</label>
+                                    <select name="alat_bantu_jalan" id="" class="form-control select2 @error('alat_bantu_jalan')  is-invalid @enderror">
+                                        <option value="" selected disabled>-- Pilih Data --</option>
+                                        <option value="Perabot" @if(old('alat_bantu_jalan')=='Perabot' ) selected @endif>Perabot</option>
+                                        <option value="Tongkat/Penopang" @if(old('alat_bantu_jalan')=='Tongkat/Penopang' ) selected @endif>Tongkat/Penopang</option>
+                                        <option value="Tidak ada/Tirah baring" @if(old('alat_bantu_jalan')=='Tidak ada/Tirah baring' ) selected @endif>Tidak ada/Tirah baring</option>
+                                    </select>
+                                    @error('alat_bantu_jalan')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Terapi IV / anti koagulan</label>
+                                    <select name="terapi_iv" id="" class="form-control select2 @error('terapi_iv')  is-invalid @enderror">
+                                        <option value="" selected disabled>-- Pilih Data --</option>
+                                        <option value="Terapi IV terus menerus" @if(old('terapi_iv')=='Terapi IV terus menerus' ) selected @endif>Terapi IV terus menerus</option>
+                                        <option value="Tidak" @if(old('terapi_iv')=='Tidak' ) selected @endif>Tidak</option>
+                                    </select>
+                                    @error('terapi_iv')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Gaya Berjalan</label>
+                                    <select name="gaya_berjalan" id="" class="form-control select2 @error('gaya_berjalan')  is-invalid @enderror">
+                                        <option value="" selected disabled>-- Pilih Data --</option>
+                                        <option value="Kerusakan" @if(old('gaya_berjalan')=='Kerusakan' ) selected @endif>Kerusakan</option>
+                                        <option value="Lemah" @if(old('gaya_berjalan')=='Lemah' ) selected @endif>Lemah</option>
+                                        <option value="Normal" @if(old('gaya_berjalan')=='Normal' ) selected @endif>Normal</option>
+                                    </select>
+                                    @error('gaya_berjalan')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Status Mental</label>
+                                    <select name="status_mental" id="" class="form-control select2 @error('status_mental')  is-invalid @enderror">
+                                        <option value="" selected disabled>-- Pilih Data --</option>
+                                        <option value="Lupa keterbatasan" @if(old('status_mental')=='Lupa keterbatasan' ) selected @endif>Lupa keterbatasan</option>
+                                        <option value="Sadar kemampuan diri" @if(old('status_mental')=='Sadar kemampuan diri' ) selected @endif>Sadar kemampuan diri</option>
+                                    </select>
+                                    @error('status_mental')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Kesimpulan</label>
+                                    <input type="text" name="kesimpulan" class="form-control @error('kesimpulan') is-invalid  
+                                        @enderror" value="{{ old('kesimpulan')}}">
+                                </div>
+                                @error('kesimpulan')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
+                            <div class="card-header card-success">
+                                <h4 class="card-title">Assesmen Resiko Dekubitus</h4>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Apakah Pasien menggunakan kursi roda/mmembutuhkan bantuan ?</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select name="bantuan" id="" class="form-control select2 @error('bantuan')  is-invalid @enderror">
+                                                <option value="" selected disabled>-- Pilih Data --</option>
+                                                <option value="Ya" @if(old('bantuan')=='Ya' ) selected @endif>Ya</option>
+                                                <option value="Tidak" @if(old('bantuan')=='Tidak' ) selected @endif>Tidak</option>
+                                            </select>
+                                        </div>
+                                        @error('bantuan')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Apakah ada inkontinensiauri / alvi?</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select name="alvi" id="" class="form-control select2 @error('alvi')  is-invalid @enderror">
+                                                <option value="" selected disabled>-- Pilih Data --</option>
+                                                <option value="Ya" @if(old('alvi')=='Ya' ) selected @endif>Ya</option>
+                                                <option value="Tidak" @if(old('alvi')=='Tidak' ) selected @endif>Tidak</option>
+                                            </select>
+                                        </div>
+                                        @error('alvi')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Apakah ada riwayat dekubitus atau luka dekubitus?</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select name="dekubitus" id="" class="form-control select2 @error('dekubitus')  is-invalid @enderror">
+                                                <option value="" selected disabled>-- Pilih Data --</option>
+                                                <option value="Ya" @if(old('dekubitus')=='Ya' ) selected @endif>Ya</option>
+                                                <option value="Tidak" @if(old('dekubitus')=='Tidak' ) selected @endif>Tidak</option>
+                                            </select>
+                                        </div>
+                                        @error('dekubitus')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Apakah Usia diatas 65 tahun?</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select name="usia_65" id="" class="form-control select2 @error('usia_65')  is-invalid @enderror">
+                                                <option value="" selected disabled>-- Pilih Data --</option>
+                                                <option value="Ya" @if(old('usia_65')=='Ya' ) selected @endif>Ya</option>
+                                                <option value="Tidak" @if(old('usia_65')=='Tidak' ) selected @endif>Tidak</option>
+                                            </select>
+                                        </div>
+                                        @error('usia_65')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Apakah Ekstremitas dan badan tidak sesuai dengan usia perkembangan?</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select name="ekstremitas" id="" class="form-control select2 @error('ekstremitas')  is-invalid @enderror">
+                                                <option value="" selected disabled>-- Pilih Data --</option>
+                                                <option value="Ya" @if(old('ekstremitas')=='Ya' ) selected @endif>Ya</option>
+                                                <option value="Tidak" @if(old('ekstremitas')=='Tidak' ) selected @endif>Tidak</option>
+                                            </select>
+                                        </div>
+                                        @error('ekstremitas')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-header card-success">
+                                <h4 class="card-title">Skrining Nutrisi</h4>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Penurunan berat badan yang tidak diinginkan selama 6 bulan terakhir</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select name="berat_badan" id="" class="form-control select2 @error('berat_badan')  is-invalid @enderror">
+                                                <option value="" selected disabled>-- Pilih Data --</option>
+                                                <option value="Tidak" @if(old('berat_badan')=='Tidak' ) selected @endif>Tidak</option>
+                                                <option value="Tidak Yakin" @if(old('berat_badan')=='Tidak Yakin' ) selected @endif>Tidak Yakin</option>
+                                                <option value="Ya (1-5Kg)" @if(old('berat_badan')=='Ya (1-5Kg)' ) selected @endif>Ya (1-5Kg)</option>
+                                                <option value="Ya (6-10Kg)" @if(old('berat_badan')=='Ya (6-10Kg)' ) selected @endif>Ya (6-10Kg)</option>
+                                                <option value="Ya (11-15Kg)" @if(old('berat_badan')=='Ya (11-15Kg)' ) selected @endif>Ya (11-15Kg)</option>
+                                                <option value="Ya (>15Kg)" @if(old('berat_badan')=='Ya (>15Kg)' ) selected @endif>Ya (>15Kg)</option>
+                                            </select>
+                                        </div>
+                                        @error('berat_badan')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Asupan makanan menurun dikarenakan adanya penurunan nafsu makan</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select name="asupan_makan" id="" class="form-control select2 @error('asupan_makan')  is-invalid @enderror">
+                                                <option value="" selected disabled>-- Pilih Data --</option>
+                                                <option value="Ya" @if(old('asupan_makan')=='Ya' ) selected @endif>Ya</option>
+                                                <option value="Tidak" @if(old('asupan_makan')=='Tidak' ) selected @endif>Tidak</option>
+                                            </select>
+                                        </div>
+                                        @error('asupan_makan')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-header card-success">
+                                <h4 class="card-title">Keperawatan</h4>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Masalah Keperawatan</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select name="masalah_keperawatan[]" class="form-control select2" multiple="multiple" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                                <option value="" disabled></option>
+                                                <option value="Resiko Jatuh">Resiko Jatuh</option>
+                                                <option value="Nyeri Akut">Nyeri Akut</option>
+                                            </select>
+                                        </div>
+                                        @error('masalah_keperawatan')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Rencana Keperawatan</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select name="rencana_keperawatan[]" class="form-control select2" multiple="multiple" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                                <option value="" disabled></option>
+                                                <option value="Pengobatan Luka">Pengobatan Luka</option>
+                                                <option value="Edukasi Pencegahan Jatuh">Edukasi Pencegahan Jatuh</option>
+                                            </select>
+                                        </div>
+                                        @error('rencana_keperawatan')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-header card-success">
+                                <h4 class="card-title">Kebutuhan Edukasi</h4>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Butuh Penerjemah?</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select name="penerjemah" id="" class="form-control select2 @error('penerjemah')  is-invalid @enderror">
+                                                <option value="Tidak" @if(old('penerjemah')=='Tidak' ) selected @endif>Tidak</option>
+                                                <option value="Ya" @if(old('penerjemah')=='Ya' ) selected @endif>Ya</option>
+                                            </select>
+                                        </div>
+                                        @error('penerjemah')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Penciuman</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select name="penciuman" id="" class="form-control select2 @error('penciuman')  is-invalid @enderror">
+                                                <option value="Normal" @if(old('penciuman')=='Normal' ) selected @endif>Normal</option>
+                                                <option value="Tidak Normal" @if(old('penciuman')=='Tidak Normal' ) selected @endif>Tidak Normal</option>
+                                            </select>
+                                        </div>
+                                        @error('penciuman')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Penglihatan</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select name="penglihatan" id="" class="form-control select2 @error('penglihatan')  is-invalid @enderror">
+                                                <option value="Normal" @if(old('penglihatan')=='Normal' ) selected @endif>Normal</option>
+                                                <option value="Kabur" @if(old('penglihatan')=='Kabur' ) selected @endif>Kabur</option>
+                                                <option value="Kaca Mata" @if(old('penglihatan')=='Kaca Mata' ) selected @endif>Kaca Mata</option>
+                                                <option value="Lensa Kontak" @if(old('penglihatan')=='Lensa Kontak' ) selected @endif>Lensa Kontak</option>
+                                            </select>
+                                        </div>
+                                        @error('penglihatan')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Pendengaran</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select name="penciuman" id="" class="form-control select2 @error('penciuman')  is-invalid @enderror">
+                                                <option value="Normal" @if(old('penciuman')=='Normal' ) selected @endif>Normal</option>
+                                                <option value="Tidak Normal (Kanan & Kiri)" @if(old('penciuman')=='Tidak Normal (Kanan & Kiri)' ) selected @endif>Tidak Normal (Kanan & Kiri)</option>
+                                                <option value="Tidak Normal (Kanan)" @if(old('penciuman')=='Tidak Normal (Kanan)' ) selected @endif>Tidak Normal (Kanan)</option>
+                                                <option value="Tidak Normal (Kiri)" @if(old('penciuman')=='Tidak Normal (Kiri)' ) selected @endif>Tidak Normal (Kiri)</option>
+                                                <option value="Alat Bantu Dengar (Kiri)" @if(old('penciuman')=='Alat Bantu Dengar (Kiri)' ) selected @endif>Alat Bantu Dengar (Kiri)</option>
+                                                <option value="Alat Bantu Dengar (Kanan)" @if(old('penciuman')=='Alat Bantu Dengar (Kanan)' ) selected @endif>Alat Bantu Dengar (Kanan)</option>
+                                                <option value="Alat Bantu Dengar (Kanan & Kiri)" @if(old('penciuman')=='Alat Bantu Dengar (Kanan & Kiri)' ) selected @endif>Alat Bantu Dengar (Kanan & Kiri)</option>
+                                            </select>
+                                        </div>
+                                        @error('penciuman')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Edukasi</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select name="edukasi[]" class="form-control select2" multiple="multiple" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                                <option value="" disabled></option>
+                                                <option value="Penggunaan Peralatan Medis">Penggunaan Peralatan Medis</option>
+                                                <option value="Intraksi Obat">Intraksi Obat</option>
+                                            </select>
+                                        </div>
+                                        @error('edukasi')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-header card-success">
+                                <h4 class="card-title">Scrinning Discharge Planning</h4>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Kriteria Discharge Planning</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select name="kriteria_discharge[]" class="form-control select2" multiple="multiple" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                                <option value="" disabled></option>
+                                                <option value="Umur>65">Umur>65</option>
+                                                <option value="Terbatas Mobilitas">Terbatas Mobilitas</option>
+                                                <option value="Perawatan Lanjutan">Perawatan Lanjutan</option>
+                                                <option value="Bantuan Aktifitas Sehari hari">Bantuan Aktifitas Sehari hari</option>
+                                            </select>
+                                        </div>
+                                        @error('kriteria_discharge')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Discharge Planning</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select name="discharge_planning[]" class="form-control select2" multiple="multiple" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                                <option value="" disabled></option>
+                                                <option value="Riwayat Jatuh">Riwayat Jatuh</option>
+                                                <option value="Riwayat Ketergantungan Obat">Riwayat Ketergantungan Obat</option>
+                                            </select>
+                                        </div>
+                                        @error('discharge_planning')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
                     </div>
                 </div>
                 <div class="card-body">
@@ -1239,6 +1707,7 @@
 <script src="{{ asset('library/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('library/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
 <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('library/selectric/public/jquery.selectric.min.js') }}"></script>
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
 
 <!-- Page Specific JS File -->
