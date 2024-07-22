@@ -32,8 +32,54 @@
         </div>
 
         <div class="section-body">
+            <div class="col-12">
+            <div class="card card-primary">
+                <div class="card-header card-success">
+                    <h4 class="card-title">Resume dan Hasil Laboratorium</h4>
+                </div>
+            
+                    <div class="form-group col-md-6">
+                        <div class="input-group">
+                          <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-download"></i> Resume Rawat Jalan</button>
+                            <button type="button" onclick="tampil_hasil_lab()" class="btn btn-danger"><i class="fas fa-info-circle"></i> Tampilkan Hasil Lab</button>
+                          </div>
+                        </div>
+                      </div>
+         
+            </div>
+            </div>
             <div class="row">
                 <div class="col-12">
+                           {{-- Hasil Laboratorium --}}
+                    <div class="card card-secondary" id="hasil_lab" style="display: none">
+                        <div class="card-header card-success">
+                            <h4 class="card-title">Hasil Laboratorium</h4>
+                        </div>
+                        <!-- include form -->
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table-striped table" id="table-1">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Jenis Pemeriksaan</th>
+                                            <th scope="col">Hasil Pemeriksaan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse ($getHasilLab as $lab)
+                                        <tr>
+                                            <td>{{$lab->pemeriksaan}}</td>
+                                            <td>{{$lab->hasil}}</td>
+                                        </tr>
+                                        @empty
+                                            
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                     {{-- @include('components.biodata-pasien-fisio-bymr') --}}
                     <div class="card card-primary">
                         <div class="card-header card-success">
@@ -47,7 +93,7 @@
                                         <div class="form-group">
                                             <label>Anamnesa (S)</label>
                                             <textarea name="anamnesa" style="height: 70px;" class="form-control  @error('anamnesa') is-invalid  
-                                            @enderror" rows="5" cols="50"  placeholder="Masukan ..."></textarea>
+                                            @enderror" rows="5" cols="50"  placeholder="Masukan ...">{{$asesmenPerawat->fs_anamnesa}}</textarea>
                                         </div>
                                         @error('anamnesa')
                                         <div class="invalid-feedback">
@@ -67,11 +113,15 @@
                                         </div>
                                         @enderror
                                     </div>
+                                    {{-- Suhu : {$vs.FS_SUHU} C, Nadi : {$vs.FS_NADI} x/menit,  Respirasi : {$vs.FS_R} x/menit, TD : {$vs.FS_TD} mmHg, BB : {$vs.FS_BB}, TB : {$vs.FS_TB}, Alergi :  {if $alergi.FS_ALERGI eq '1'} Belum Diketahui,  {elseif $alergi.FS_ALERGI eq '2'} Tidak Ada {elseif $alergi.FS_ALERGI eq '3'}  Ada, {$alergi.FS_ALERGI2} {else}
+                {/if}Skala Nyeri :{$nyeri.FS_NYERIS}, Skrining Nutrisi :  {if $result.FS_KD_LAYANAN eq 'P003' || $result.FS_KD_LAYANAN2 eq 'P003'|| $result.FS_KD_LAYANAN3 eq 'P003'}  {if ($nutrisi.FS_NUTRISI_ANAK1 + $nutrisi.FS_NUTRISI_ANAK2+ $nutrisi.FS_NUTRISI_ANAK3+ $nutrisi.FS_NUTRISI_ANAK4) < 1} Normal {else}  Terjadi Penurunan Badan Tidak Diinginkan   {/if} {else}   {if ($nutrisi.FS_NUTRISI1 + $nutrisi.FS_NUTRISI2) < 2}  Normal {else} Terjadi Penurunan Badan Tidak Diinginkan {/if} {/if} --}}
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Pemeriksaan Fisik (O)</label>
                                             <textarea name="pemeriksaan_fisik" style="height: 70px;" class="form-control  @error('pemeriksaan_fisik') is-invalid  
-                                            @enderror"  rows="5" cols="50" placeholder="Masukan ..."></textarea>
+                                            @enderror"  rows="5" cols="50" placeholder="Masukan ...">Suhu : {{$vitalSign->FS_SUHU}} C, Nadi : {{$vitalSign->FS_NADI}} x/menit, Respirasi : {{$vitalSign->FS_R}} x/menit, TD {{$vitalSign->FS_TD}} : mmHg, BB : Kg, TB : {{$vitalSign->FS_TB}}  cm, Alergi : , Skala Nyeri : {{$skalaNyeri->FS_NYERIS}} ,Skrining Nutrisi : 
+
+                                        </textarea>
                                         </div>
                                         @error('pemeriksaan_fisik')
                                         <div class="invalid-feedback">
@@ -105,6 +155,22 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
+                                            <label>Kode Diagnosa (ICD 10)</label>
+                                            <select name="periksa_lab[]" class="form-control select2" multiple="multiple" data-placeholder="Pilih Kode ICD 10" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                                <option value="" disabled>-- Pilih Kode ICD 10 --</option>
+                                                @foreach ($masterLab as $lab)
+                                                <option value="{{$lab->No_Jenis}}">{{$lab->Jenis}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        @error('hasil_usg')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
                                             <label>Hasil USG</label>
                                             <textarea name="hasil_usg" style="height: 70px;" class="form-control  @error('hasil_usg') is-invalid  
                                             @enderror"  rows="5" cols="50" placeholder="Masukan ..."></textarea>
@@ -115,7 +181,7 @@
                                         </div>
                                         @enderror
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Diagnosa Sekunder <code>*</code></label>
                                             <textarea name="diagnosa_sekunder" style="height: 70px;" class="form-control  @error('diagnosa_sekunder') is-invalid  
@@ -132,6 +198,9 @@
                                             <label>Order Periksa Laboratorium Control Selanjutnya</label>
                                             <select name="periksa_lab[]" class="form-control select2" multiple="multiple" data-placeholder="Pilih Periksa Lab" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                                 <option value="" disabled>-- Pilih Periksa Lab --</option>
+                                                @foreach ($masterLab as $lab)
+                                                <option value="{{$lab->No_Jenis}}">{{$lab->Jenis}}</option>
+                                                @endforeach
                                             </select>
                                             @error('periksa_lab')
                                             <span class="text-danger" style="font-size: 12px;">
@@ -141,17 +210,38 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Order Periksa Radiologi Control Selanjutnya</label>
-                                            <select name="periksa_radiologi[]" class="form-control select2" multiple="multiple" data-placeholder="Pilih Periksa Radiologi" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                                                <option value="" disabled>-- Pilih Periksa Radiologi --</option>
-                                            </select>
-                                            @error('periksa_radiologi')
-                                            <span class="text-danger" style="font-size: 12px;">
-                                                {{ $message }}
-                                            </span>
-                                            @enderror
+                                        <div class="row">
+                                            <div class="form-group col-md-8">
+                                                <label>Order Periksa Radiologi Control Selanjutnya</label>
+                                                <select name="periksa_radiologi[]" class="form-control select2" multiple="multiple" data-placeholder="Pilih Periksa Radiologi" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                                    <option value="" disabled>-- Pilih Periksa Radiologi --</option>
+                                                    @foreach ($masterRadiologi as $radiologi)
+                                                    <option value="{{$radiologi->No_Rinci}}">{{$radiologi->Ket_Tindakan}}</option>
+                                                    @endforeach
+                                                </select>
+                                                @error('periksa_radiologi')
+                                                <span class="text-danger" style="font-size: 12px;">
+                                                    {{ $message }}
+                                                </span>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Bagian</label>
+                                                <select name=" bagian" class="form-control" data-placeholder="Pilih Periksa Radiologi" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                                    <option value="" selected>-- Pilih Bagian --</option>
+                                                    <option value="Sinistra" >Sinistra</option>
+                                                    <option value="Dextra" >Dextra</option>
+                                                    <option value="Bilateral" >Bilateral</option>
+                                                </select>
+                                                @error('bagian')
+                                                <span class="text-danger" style="font-size: 12px;">
+                                                    {{ $message }}
+                                                </span>
+                                                @enderror
+                                            </div>
+
                                         </div>
+                              
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -198,8 +288,9 @@
                                             <label for="">Nama Obat</label>
                                             <select name="nama_obat" id="" class="form-control select2 @error('nama_obat')  is-invalid @enderror">
                                                 <option value="" selected disabled>-- Pilih --</option>
-                                                <option value="Paracetamol" @if(old('Paracetamol')=='Paracetamol' ) selected @endif>Paracetamol</option>
-                                                <option value="Kontrol" @if(old('cara_pulang')=='Kontrol' ) selected @endif>Kontrol</option>
+                                                @foreach ($masterObat as $obat)
+                                                <option value="{{$obat->Nama_Obat}}">{{$obat->Nama_Obat}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="form-row">
@@ -225,8 +316,9 @@
                                             <label for="Namaobat">Nama Obat</label>
                                             <select name="nama_obat" id="" class="form-control select2"  @error('nama_obat')  is-invalid @enderror">
                                                 <option value="" selected disabled>-- Pilih --</option>
-                                                <option value="Paracetamol" @if(old('Paracetamol')=='Paracetamol' ) selected @endif>Paracetamol</option>
-                                                <option value="Kontrol" @if(old('cara_pulang')=='Kontrol' ) selected @endif>Kontrol</option>
+                                                @foreach ($masterObat as $obat)
+                                                <option value="{{$obat->Nama_Obat}}">{{$obat->Nama_Obat}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="form-row">
@@ -338,7 +430,7 @@
                                 <div class="col-md-6">
                                     <label>Tanggal Expired Rujukan Faskes : </label>
                                     <div class="input-group mb-3">
-                                        <input type="date" name="FS_SKDP_FASKES" id="FS_SKDP_FASKES" class="form-control" >
+                                        <input type="date" name="FS_SKDP_FASKES" id="FS_SKDP_FASKES" @if ($asesmenPerawat->fs_skdp_faskes !='1900-01-01') value="{{$asesmenPerawat->fs_skdp_faskes}}" @endif class="form-control" >
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -553,6 +645,21 @@
             $("#form3").hide();
             $("#form4").hide();
             $("#form5").hide();
+        }
+    }
+
+    $("#hasil_lab").hide();
+    function tampil_hasil_lab() {
+
+        var x = document.getElementById("hasil_lab");
+
+        // alert(x);
+
+
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
         }
     }
 
