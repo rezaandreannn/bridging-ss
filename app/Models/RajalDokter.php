@@ -133,7 +133,6 @@ class RajalDokter extends Model
             ->table('TR_MASTER_LAB as a')
             ->join('TR_DETAIL_LAB as b', 'b.Id_Lab', '=', 'a.Id_Lab')
             ->join('REGISTER_PASIEN as c', 'a.No_MR', '=', 'c.No_MR')
-            ->join('LAB_JENISPERIKSA as d', 'a.No_Jenis', '=', 'd.No_Jenis')
             ->join('LAB_HASIL as e', 'b.Kode_Hasil', '=', 'e.Kode_Hasil')
             ->join('DOKTER as f', 'a.Pengirim', '=', 'f.Kode_Dokter')
             ->select(
@@ -142,7 +141,6 @@ class RajalDokter extends Model
                 'b.Hasil',
                 'b.Status',
                 'c.Nama_Pasien',
-                'd.Jenis',
                 'e.Nilai_Normal',
                 'e.Pemeriksaan',
                 'f.Nama_Dokter',

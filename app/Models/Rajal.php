@@ -163,11 +163,15 @@ class Rajal extends Model
     // Button Cek Radiologi
     public function cek_rad($noReg)
     {
-        $data = DB::connection('pku')->table('TA_TRS_KARTU_PERIKSA5')
-            ->select('FS_KD_REG2')
+        $data = DB::connection('pku')
+            ->table('TA_TRS_KARTU_PERIKSA5')
+            ->select(
+                'FS_KD_REG2'
+            )
             ->where('FS_KD_REG2', $noReg)
             ->first();
-        if ($data == 200) {
+
+        if ($data != null) {
             return true;
         } else {
             return false;

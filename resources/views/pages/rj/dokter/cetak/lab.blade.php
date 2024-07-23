@@ -76,7 +76,6 @@
             <thead>
                 <tr>
                     <th class="tabel1">Pemeriksaan</th>
-                    <th class="tabel1">Jenis</th>
                     <th class="tabel1">Hasil</th>
                 </tr>
             </thead>
@@ -84,7 +83,6 @@
                 @foreach ($data as $lab)
                 <tr>
                     <td class="text1">{{$lab->Pemeriksaan}}</td>
-                    <td class="text1">{{$lab->Jenis}}</td>
                     <td class="text1">{{$lab->Hasil}}</td>
                 </tr>
                 @endforeach

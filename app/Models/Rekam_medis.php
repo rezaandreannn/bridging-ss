@@ -24,6 +24,28 @@ class Rekam_medis extends Model
         $this->simrsUrlApi = env('SIMRS_BASE_URL');
     }
 
+    // public function medisResep($noReg, $kode_transaksi)
+    // {
+    //     $database = DB::connection('db_rsmm')->getDatabaseName();
+    //     $data = DB::connection('pku')
+    //         ->table('TAC_RJ_MEDIS as a')
+    //         ->leftJoin('TAC_COM_USER as b', 'a.mdb', '=', 'b.user_id')
+    //         // Menggunakan nama basis data secara eksplisit dalam join
+    //         ->leftJoin($database . '.dbo.DOKTER as c', 'b.user_name', '=', 'c.KODE_DOKTER')
+    //         ->leftJoin($database . '.dbo.TUSER as d', 'b.user_name', '=', 'd.NAMAUSER')
+    //         ->select(
+    //             'a.*',
+    //             'b.user_name',
+    //             'c.KODE_DOKTER',
+    //             'c.NAMA_DOKTER',
+    //             'd.NAMALENGKAP'
+    //         )
+    //         ->where('a.FS_KD_REG', $noReg)
+    //         ->where('a.FS_KD_TRS', $kode_transaksi)
+    //         ->first();
+    //     return $data;
+    // }
+
     // Cetak Resep
     public function cetakResep($noReg, $kode_transaksi)
     {
@@ -159,7 +181,8 @@ class Rekam_medis extends Model
 
     // rekam medis by mr
 
-    function rekamMediByMr($No_MR) {
+    function rekamMediByMr($No_MR)
+    {
 
         $pku = DB::connection('pku')->getDatabaseName();
         $data = DB::connection('db_rsmm')
@@ -167,7 +190,7 @@ class Rekam_medis extends Model
             ->leftJoin('DOKTER as d', 'p.Kode_Dokter', '=', 'd.Kode_Dokter')
             ->leftJoin('M_RUANG as mr', 'p.Kode_Ruang', '=', 'mr.Kode_Ruang')
             ->leftJoin($pku . '.dbo.TAC_RJ_MEDIS as trm', 'p.No_Reg', '=', 'trm.FS_KD_REG')
-    
+
             ->select(
                 'P.No_MR',
                 'p.Tanggal',
@@ -186,17 +209,17 @@ class Rekam_medis extends Model
             ->orderBy('p.Tanggal', 'desc')
             ->get();
         return $data;
-
     }
 
-    function rekamMedisIgd($No_MR) {
+    function rekamMedisIgd($No_MR)
+    {
 
         $pku = DB::connection('pku')->getDatabaseName();
         $data = DB::connection('db_rsmm')
             ->table('PENDAFTARAN as p')
             ->leftJoin('DOKTER as d', 'p.Kode_Dokter', '=', 'd.Kode_Dokter')
             ->leftJoin($pku . '.dbo.IGD_AWAL_MEDIS as iam', 'p.No_Reg', '=', 'iam.FS_KD_REG')
-    
+
             ->select(
                 'P.No_MR',
                 'p.Tanggal',
@@ -218,12 +241,12 @@ class Rekam_medis extends Model
             ->orderBy('p.Tanggal', 'asc')
             ->get();
         return $data;
-
     }
 
     // rekam medis harian by dokter dan tanggal
 
-    function rekamMedisHarian($kode_dokter,$tanggal) {
+    function rekamMedisHarian($kode_dokter, $tanggal)
+    {
 
         $pku = DB::connection('pku')->getDatabaseName();
         $data = DB::connection('db_rsmm')
@@ -234,7 +257,7 @@ class Rekam_medis extends Model
             ->leftJoin('M_RUANG as mr', 'p.Kode_Ruang', '=', 'mr.Kode_Ruang')
             ->leftJoin($pku . '.dbo.TAC_RJ_MEDIS as trm', 'p.No_Reg', '=', 'trm.FS_KD_REG')
             ->leftJoin($pku . '.dbo.TAC_RJ_STATUS as trs', 'p.No_Reg', '=', 'trs.FS_KD_REG')
-    
+
             ->select(
                 'a.Nomor',
                 'P.No_MR',
@@ -260,19 +283,18 @@ class Rekam_medis extends Model
             ->where('a.Tanggal', $tanggal)
             ->where('p.Kode_Dokter', $kode_dokter)
             ->where('a.Dokter', $kode_dokter)
-          
+
             ->get();
         return $data;
-
     }
 
     public function cekLab($noReg)
     {
-  
+
         $data = DB::connection('pku')
             ->table('TA_TRS_KARTU_PERIKSA4')
             ->select(
-                'FS_KD_REG2' 
+                'FS_KD_REG2'
             )
             ->where('FS_KD_REG2', $noReg)
             ->first();
@@ -286,20 +308,19 @@ class Rekam_medis extends Model
 
     public function cekRadiologi($noReg)
     {
-  
+
         $data = DB::connection('pku')
             ->table('TA_TRS_KARTU_PERIKSA5')
             ->select(
-                'FS_KD_REG2' 
+                'FS_KD_REG2'
             )
             ->where('FS_KD_REG2', $noReg)
             ->first();
-             
+
         if ($data != null) {
             return true;
         } else {
             return false;
         }
     }
-
 }

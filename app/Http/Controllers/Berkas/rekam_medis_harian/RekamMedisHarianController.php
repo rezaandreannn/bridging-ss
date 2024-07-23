@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Berkas\Rekam_medis_harian;
 
+use Carbon\Carbon;
 use App\Models\Rajal;
 use App\Models\Pasien;
-use App\Models\Rekam_medis;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\RanapDokter;
+use App\Models\Rekam_medis;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -42,18 +44,18 @@ class RekamMedisHarianController extends Controller
         $kode_dokter = $request->input('kode_dokter');
         $tanggal = $request->input('tanggal');
         $dokters = $this->rajal->byKodeDokter();
-        $dataPasien=[];
-        if($kode_dokter != null and $kode_dokter != null){
-            $dataPasien = $this->rekam_medis->rekamMedisHarian($kode_dokter,$tanggal);
+        $dataPasien = [];
+        if ($kode_dokter != null and $kode_dokter != null) {
+            $dataPasien = $this->rekam_medis->rekamMedisHarian($kode_dokter, $tanggal);
         }
 
-        $tglSekarang =strtotime(date('Y-m-d'));
-        $tglKemarin =date('Y-m-d', strtotime("-1 day", $tglSekarang));
+        $tglSekarang = strtotime(date('Y-m-d'));
+        $tglKemarin = date('Y-m-d', strtotime("-1 day", $tglSekarang));
         $userLogin = auth()->user()->username;
         // dd($dataPasien);
 
-       
-        return view($this->view . 'index', compact('title','dataPasien','dokters','tglKemarin','userLogin','rekamMedisModel'));
+
+        return view($this->view . 'index', compact('title', 'dataPasien', 'dokters', 'tglKemarin', 'userLogin', 'rekamMedisModel'));
     }
 
     /**
@@ -61,6 +63,7 @@ class RekamMedisHarianController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function create()
     {
         //

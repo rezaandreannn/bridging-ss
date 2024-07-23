@@ -10,6 +10,13 @@
 <!-- Select -->
 <link rel="stylesheet" href="{{ asset('library/selectric/public/selectric.css') }}">
 <link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
+<style>
+   .custom-img {
+        width: 400px;
+        display: block;
+        margin: 0 auto;
+    }
+</style>
 
 <!-- <link rel="stylesheet" href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}"> -->
 @endpush
@@ -39,6 +46,7 @@
                                 <div class="row">
                                     <div class="card-header card-success">
                                         <h4 class="card-title">Pemeriksaaan Fisik Mata</h4>
+                                            <img src="{{ asset('img/mata.png') }}" class="center-img custom-img"/>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
@@ -81,6 +89,144 @@
                                             <input type="text" name="conjuctiva_kanan" class="form-control @error('conjuctiva_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
                                         </div>
                                         @error('conjuctiva_kanan')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" name="cornea_kiri" class="form-control @error('cornea_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
+                                        </div>
+                                        @error('cornea_kiri')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h4 style="text-align: center">CORNEA</h4>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" name="cornea_kanan" class="form-control @error('cornea_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
+                                        </div>
+                                        @error('cornea_kanan')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" name="coa_kiri" class="form-control @error('coa_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
+                                        </div>
+                                        @error('coa_kiri')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h4 style="text-align: center">C.O.A</h4>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" name="coa_kanan" class="form-control @error('coa_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
+                                        </div>
+                                        @error('coa_kanan')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" name="coa_kiri" class="form-control @error('coa_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
+                                        </div>
+                                        @error('coa_kiri')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h4 style="text-align: center">IRIS</h4>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" name="coa_kanan" class="form-control @error('coa_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
+                                        </div>
+                                        @error('coa_kanan')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" name="coa_kiri" class="form-control @error('coa_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
+                                        </div>
+                                        @error('coa_kiri')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h4 style="text-align: center">PUPIL</h4>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" name="coa_kanan" class="form-control @error('coa_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
+                                        </div>
+                                        @error('coa_kanan')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" name="coa_kiri" class="form-control @error('coa_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
+                                        </div>
+                                        @error('coa_kiri')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h4 style="text-align: center">LENSA</h4>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" name="coa_kanan" class="form-control @error('coa_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
+                                        </div>
+                                        @error('coa_kanan')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" name="coa_kiri" class="form-control @error('coa_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
+                                        </div>
+                                        @error('coa_kiri')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h4 style="text-align: center">VITREOSH HUMOR</h4>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" name="coa_kanan" class="form-control @error('coa_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
+                                        </div>
+                                        @error('coa_kanan')
                                         <span class="text-danger" style="font-size: 12px;">
                                             {{ $message }}
                                         </span>

@@ -1456,7 +1456,7 @@
                                             <label>Masalah Keperawatan</label>
                                         </div>
                                         <div class="col-md-6">
-                                            <select name="masalah_keperawatan[]" class="form-control select2" multiple="multiple" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                            <select name="masalah_keperawatan[]" class="form-control select2" multiple="multiple" data-placeholder=" --- Pilih Data --- " data-dropdown-css-class="select2-purple" style="width: 100%;">
                                                 <option value="" disabled></option>
                                                 <option value="Resiko Jatuh">Resiko Jatuh</option>
                                                 <option value="Nyeri Akut">Nyeri Akut</option>
@@ -1477,7 +1477,7 @@
                                             <label>Rencana Keperawatan</label>
                                         </div>
                                         <div class="col-md-6">
-                                            <select name="rencana_keperawatan[]" class="form-control select2" multiple="multiple" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                            <select name="rencana_keperawatan[]" class="form-control select2" data-placeholder=" --- Pilih Data --- " multiple="multiple" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                                 <option value="" disabled></option>
                                                 <option value="Pengobatan Luka">Pengobatan Luka</option>
                                                 <option value="Edukasi Pencegahan Jatuh">Edukasi Pencegahan Jatuh</option>
@@ -1588,7 +1588,7 @@
                                             <label>Edukasi</label>
                                         </div>
                                         <div class="col-md-6">
-                                            <select name="edukasi[]" class="form-control select2" multiple="multiple" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                            <select name="edukasi[]" class="form-control select2" multiple="multiple" data-placeholder=" --- Pilih Data --- " data-dropdown-css-class="select2-purple" style="width: 100%;">
                                                 <option value="" disabled></option>
                                                 <option value="Penggunaan Peralatan Medis">Penggunaan Peralatan Medis</option>
                                                 <option value="Intraksi Obat">Intraksi Obat</option>
@@ -1612,7 +1612,7 @@
                                             <label>Kriteria Discharge Planning</label>
                                         </div>
                                         <div class="col-md-6">
-                                            <select name="kriteria_discharge[]" class="form-control select2" multiple="multiple" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                            <select name="kriteria_discharge[]" class="form-control select2" multiple="multiple" data-placeholder=" --- Pilih Data --- " data-dropdown-css-class="select2-purple" style="width: 100%;">
                                                 <option value="" disabled></option>
                                                 <option value="Umur>65">Umur>65</option>
                                                 <option value="Terbatas Mobilitas">Terbatas Mobilitas</option>
@@ -1635,7 +1635,7 @@
                                             <label>Discharge Planning</label>
                                         </div>
                                         <div class="col-md-6">
-                                            <select name="discharge_planning[]" class="form-control select2" multiple="multiple" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                            <select name="discharge_planning[]" class="form-control select2" multiple="multiple" data-placeholder=" --- Pilih Data --- " data-dropdown-css-class="select2-purple" style="width: 100%;">
                                                 <option value="" disabled></option>
                                                 <option value="Riwayat Jatuh">Riwayat Jatuh</option>
                                                 <option value="Riwayat Ketergantungan Obat">Riwayat Ketergantungan Obat</option>

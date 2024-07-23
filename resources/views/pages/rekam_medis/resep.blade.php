@@ -32,6 +32,10 @@
             width: 100mm;
             min-height: 210mm;
         }
+
+        .text1{
+            font-size: 10px
+        }
     </style>
 </head>
 
@@ -76,43 +80,43 @@
                     </td>
                 </tr>
                 <tr>
-                    <td width="10%">No RM</td>
-                    <td width="25%">: {{ $biodata->NO_MR ?? ''}}</td>
-                    <td width="15%">Tgl Lahir</td>
-                    <td width="25%">: {{ date('d-m-Y', strtotime($biodata->TGL_LAHIR)) }}</td>
+                    <td width="10%" class="text1">No RM</td>
+                    <td width="25%" class="text1">: {{ $biodata->NO_MR ?? ''}}</td>
+                    <td width="15%" class="text1">Tgl Lahir</td>
+                    <td width="25%" class="text1">: {{ date('d-m-Y', strtotime($biodata->TGL_LAHIR)) }}</td>
                 </tr>
                 <tr>
-                    <td width="10%">Nama</td>
-                    <td width="30%">: {{ $biodata->NAMA_PASIEN ?? ''}}</td>
+                    <td width="10%" class="text1">Nama</td>
+                    <td width="30%" class="text1">: {{ $biodata->NAMA_PASIEN ?? ''}}</td>
                 </tr>
                 <tr>
-                    <td width="10%">Alamat</td>
-                    <td width="40%">: {{ $biodata->ALAMAT ?? ''}}</td>
+                    <td width="10%" class="text1">Alamat</td>
+                    <td width="40%" class="text1">: {{ $biodata->ALAMAT ?? ''}}</td>
                 </tr>
                 <tr>
-                    <td>Jenis Kelamin</td>
-                    <td>: @if ($biodata->JENIS_KELAMIN == 'L')
+                    <td class="text1">Jenis Kelamin</td>
+                    <td class="text1">: @if ($biodata->JENIS_KELAMIN == 'L')
                         Laki-Laki
                         @else
                         Perempuan
                         @endif</td>
                 </tr>
                 <tr>
-                    <td>TB</td>
-                    <td>: </td>
-                    <td>BB</td>
-                    <td>: </td>
+                    <td class="text1">TB</td>
+                    <td class="text1">: </td>
+                    <td class="text1">BB</td>
+                    <td class="text1">: </td>
                 </tr>
 
                 <tr>
-                    <td>Diagnosa</td>
-                    <td>: {{ $data->FS_DIAGNOSA}}</td>
-                    <td>Alergi</td>
-                    <td>: {{ $data->FS_ALERGI}}</td>
+                    <td class="text1">Diagnosa</td>
+                    <td class="text1">: {{ $biodata->FS_DIAGNOSA}}</td>
+                    <td class="text1">Alergi</td>
+                    <td class="text1">: {{ $biodata->FS_ALERGI}}</td>
                 </tr>
                 <tr>
-                    <td>Diagnosa Sekunder</td>
-                    <td>: {{ $data->FS_DIAGNOSA_SEKUNDER}}</td>
+                    <td class="text1">Diagnosa Sekunder</td>
+                    <td class="text1">: {{ $biodata->FS_DIAGNOSA_SEKUNDER}}</td>
                 </tr>
             </table>
             <table width="100%">

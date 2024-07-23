@@ -98,29 +98,30 @@
                                         @endif
 
                                         @if($pasien->FS_CARA_PULANG == '2')
-                                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> SKDP</a>
+                                        <a href="{{ route('rj.skdp', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> SKDP</a>
                                         @endif
                                         @if($pasien->FS_CARA_PULANG == '3')
                                         <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rawat Inap</a>
                                         @endif
                                         @if($pasien->FS_CARA_PULANG == '4')
-                                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujukan RS</a>
+                                        <a href="{{ route('rj.rujukanRS', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujukan RS</a>
                                         @endif
                                         @if($pasien->FS_CARA_PULANG == '5')
                                         <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> PRB/Prolanis</a>
                                         @endif
                                         @if($pasien->FS_CARA_PULANG == '6')
-                                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujukan Internal</a>
+                                        <a href="{{ route('rj.rujukanInternal', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujukan Internal</a>
                                         @endif
                                         @if($pasien->FS_CARA_PULANG == '7')
-                                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Faskes</a>
+                                        <a href="{{ route('rj.faskes', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Faskes</a>
                                         @endif
                                         @if($pasien->FS_CARA_PULANG == '8')
-                                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> PRB</a>
+                                        <a href="{{ route('rj.prb', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> PRB</a>
                                         @endif
 
+                                        {{-- Resep --}}
                                         @if($pasien->FS_TERAPI != '')
-                                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Resep</a>
+                                        <a href="{{ route('rj.resep', [$pasien->No_Reg, $pasien->FS_KD_TRS])  }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Resep</a>
                                         @endif
 
                                         @if($pasien->HASIL_ECHO != '')
@@ -129,11 +130,11 @@
 
                                         {{-- cek lab dan radiologi --}}
                                         @if($rekamMedisModel->cekLab($pasien->No_Reg) == true)
-                                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Lab</a>
+                                        <a href="{{ route('rj.lab', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Lab</a>
                                         @endif
 
                                         @if($rekamMedisModel->cekRadiologi($pasien->No_Reg) == true)
-                                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Radiologi</a>
+                                        <a href="{{ route('rj.radiologi', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Radiologi</a>
                                         @endif
 
                                     </td>
