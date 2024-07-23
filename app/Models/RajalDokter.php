@@ -295,4 +295,13 @@ class RajalDokter extends Model
             ->first();
         return $data;
     }
+
+    public function getIcd10()
+    {   
+
+        $data = DB::connection('db_rsmm')
+        ->select("SELECT * FROM ICD10 WHERE KODE LIKE 'Z%'");
+
+        return $data;
+    }
 }
