@@ -181,4 +181,118 @@ class RajalDokter extends Model
             ->get();
         return $data;
     }
+
+    public function getMasterLab()
+    {   
+        $data = DB::connection('db_rsmm')
+            ->table('LAB_JENISPERIKSA as a')
+            ->select(
+                'a.id',
+                'a.No_Kelompok',
+                'a.No_Jenis',
+                'a.Jenis'
+            )
+            ->orderBy('jenis')
+            ->get();
+        return $data;
+    }
+    public function getMasterRadiologi()
+    {   
+
+        $data = DB::connection('db_rsmm')
+            ->table('M_RINCI_HEADER as a')
+            ->select(
+                'a.No_Rinci',
+                'a.Ket_Tindakan'
+            )
+            ->where('No_Rinci','like','B%')
+            ->get();
+        return $data;
+    }
+
+    public function getMasterObat()
+    {   
+
+        $data = DB::connection('db_rsmm')
+            ->table('Obat as a')
+            ->select(
+                'a.Nama_Obat',
+           
+            )
+            ->get();
+        return $data;
+    }
+
+    public function getAsesmenPerawat($noReg)
+    {   
+
+        $data = DB::connection('pku')
+            ->table('TAC_ASES_PER2 as a')
+            ->select(
+                'a.fs_skdp_faskes',
+                'a.fs_anamnesa',
+           
+            )
+            ->where('FS_KD_REG',$noReg)
+            ->first();
+        return $data;
+    }
+
+
+    public function getHasilLab($noReg)
+    {   
+
+        $data = DB::connection('db_rsmm')
+            ->table('TR_MASTER_LAB as a')
+            ->join('TR_DETAIL_LAB as b', 'b.Id_Lab', '=', 'a.Id_Lab')
+            ->join('REGISTER_PASIEN as rp', 'a.No_MR', '=', 'rp.No_MR')
+            ->join('LAB_HASIL as lh', 'lh.Kode_Hasil', '=', 'b.Kode_Hasil')
+            ->join('DOKTER as d', 'd.Kode_Dokter', '=', 'a.pengirim')
+            ->select(
+                'a.*',
+                'b.kode_hasil',
+                'b.hasil',
+                'b.status',
+                'rp.nama_pasien',
+                'lh.nilai_normal',
+                'lh.pemeriksaan',
+                'd.nama_dokter',
+           
+            )
+            ->where('a.No_Reg',$noReg)
+            ->orderBy('a.no_kelompok')
+            ->orderBy('a.no_Jenis')
+            ->orderBy('a.tanggal')
+            ->get();
+        return $data;
+    }
+
+    public function getVitalSign($noReg)
+    {   
+
+        $data = DB::connection('pku')
+            ->table('TAC_RJ_VITAL_SIGN as a')
+
+            ->select(
+                'a.*'
+           
+            )
+            ->where('a.FS_KD_REG',$noReg)
+            ->first();
+        return $data;
+    }
+    public function getSkalaNyeri($noReg)
+    {   
+
+        $data = DB::connection('pku')
+            ->table('TAC_RJ_NYERI as a')
+
+            ->select(
+                'a.*'
+           
+            )
+            ->where('a.FS_KD_REG',$noReg)
+            ->first();
+        return $data;
+    }
 }

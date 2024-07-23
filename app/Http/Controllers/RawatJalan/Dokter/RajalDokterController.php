@@ -41,10 +41,18 @@ class RajalDokterController extends Controller
     {
         $dokterModel = new RajalDokter();
         $title = $this->prefix . ' ' . 'Pemeriksaan Dokter';
+        $masterLab = $this->rajaldokter->getMasterLab();
+        $masterRadiologi = $this->rajaldokter->getMasterRadiologi();
+        $masterObat = $this->rajaldokter->getMasterObat();
+        $asesmenPerawat = $this->rajaldokter->getAsesmenPerawat($noReg);
+        $getHasilLab = $this->rajaldokter->getHasilLab($noReg);
+        $vitalSign = $this->rajaldokter->getVitalSign($noReg);
+        $skalaNyeri = $this->rajaldokter->getSkalaNyeri($noReg);
+        // dd($skalaNyeri);
         $biodatas = $this->pasien->biodataPasienByMr($noMR);
         $history = $this->rajaldokter->getHistoryPasien($noMR);
 
-        return view($this->view . 'add', compact('title', 'biodatas', 'history', 'dokterModel'));
+        return view($this->view . 'add', compact('title', 'biodatas', 'history', 'dokterModel','masterLab','masterRadiologi','masterObat','asesmenPerawat','getHasilLab','vitalSign','skalaNyeri'));
     }
 
     public function copyDokter($noReg, $noMR)
