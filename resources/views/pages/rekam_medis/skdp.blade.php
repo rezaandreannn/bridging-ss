@@ -53,7 +53,7 @@ $dayList = array(
                 <td><img src="img/logo.png" width="50" height="50" /></td>
                 <td>
                     <center>
-                        <font size="2"><b>MAJELIS PEMBINA KESEHATAN UMUM</b></font><br />
+                        <font size="2"><b>MAJELIS PEMBINAAN KESEHATAN UMUM</b></font><br />
                         <font size="2"><b>RSU MUHAMMADIYAH METRO </b></font><br />
                         <font style="font-size: 8px;">JL Soekarno Hatta No. 42 Mulyojati 16B, Fax: (0725) 47760 Metro Barat - Kota Metro 34125</font><br />
                         <font style="font-size: 8px;">Email : info.rsumm@gmail.com , Telp: (0721) 49490-7850378 , Website : www.rsumm.co.id</font>
