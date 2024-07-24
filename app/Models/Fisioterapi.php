@@ -29,8 +29,14 @@ class Fisioterapi extends Model
     // List Pasien Fisioterapi
     public function pasienCpptdanFisioterapi()
     {
+        // $query= DB::connection('db_rsmm')
+        // ->table('DOKTER as d')
+        // ->select('d.Kode_Dokter')
+        // ->whereIn('d.Spesialis', array('SPESIALIS REHABILITASI MEDIK','FISIOTERAPI'))
+        // ->get();
+
+        // dd($query);
         $date = date('Y-m-d');
-        $kode_dokter = array('028', '151');
         $data = DB::connection('db_rsmm')
             ->table('ANTRIAN as a')
             ->Join('REGISTER_PASIEN as rp', 'a.No_MR', '=', 'rp.No_MR')
@@ -50,13 +56,24 @@ class Fisioterapi extends Model
                 'p.KODEREKANAN'
 
             )
-            ->whereIn('p.Kode_Dokter', $kode_dokter)
-            ->whereIn('a.Dokter', $kode_dokter)
+            ->whereIn('p.Kode_Dokter', function ($query) {
+                $query->select('d.Kode_Dokter')
+                      ->from('DOKTER as d')
+                      ->whereIn('d.Spesialis', array('SPESIALIS REHABILITASI MEDIK','FISIOTERAPI'));
+            })
+            ->whereIn('a.Dokter', function ($query) {
+                $query->select('d.Kode_Dokter')
+                      ->from('DOKTER as d')
+                      ->whereIn('d.Spesialis', array('SPESIALIS REHABILITASI MEDIK','FISIOTERAPI'));
+            })
+      
             ->where('a.Tanggal', $date)
             ->where('p.Tanggal', $date)
             ->where('p.Status', '1')
             ->orderBy('a.NOMOR', 'ASC')
             ->get()->toArray();
+
+            // dd($data);
         return $data;
     }
 
@@ -90,7 +107,7 @@ class Fisioterapi extends Model
         return $data;
     }
 
-    public function getPasienRehabMedis()
+    public function getPasienRehabMedis($kode_dokter)
     {
         $dbpku = DB::connection('pku')->getDatabaseName();
         $date = date('Y-m-d');
@@ -109,8 +126,8 @@ class Fisioterapi extends Model
             )
             ->where('A.Tanggal', $date)
             ->where('P.Tanggal', $date)
-            ->where('A.Dokter', '151')
-            ->where('P.Kode_Dokter', '151')
+            ->where('A.Dokter', $kode_dokter)
+            ->where('P.Kode_Dokter', $kode_dokter)
             ->where('P.Medis', 'RAWAT JALAN')
             ->orderBy('Nomor', 'ASC')
             ->get()->toArray();
