@@ -258,12 +258,12 @@
 
             @can('ttd')
             <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown {{ Request::is('ttd') ? 'active' : '' }}" data-toggle="dropdown"><i class="fas fa-signature"></i> <span>Tanda Tangan</span></a>
+                <a href="#" class="nav-link has-dropdown {{ Request::is('ttd/*') ? 'active' : '' }}" data-toggle="dropdown"><i class="fas fa-signature"></i> <span>Tanda Tangan</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('ttd/petugas') ? 'active' : '' }}">
+                    <li class="{{ Request::is('ttd/petugas/*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('list-ttd.index') }}">Petugas</a>
                     </li>
-                    <li class="">
+                    <li class="{{ Request::is('ttd/pasienTTD/*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('ttd.pasien.detail') }}">Pasien</a>
                     </li>
                 </ul>

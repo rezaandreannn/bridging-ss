@@ -238,11 +238,13 @@ Route::middleware('auth')->group(function () {
         Route::get('/cppt/ttd_pasien2/{no_mr}/{kode_dokter}', [TandaTanganController::class, 'ttdPasien2'])->name('ttd.pasien2');
         Route::post('/cppt/ttd_pasien', [TandaTanganController::class, 'ttdPasienStore'])->name('ttd.store');
         Route::post('/cppt/ttd_pasien2', [TandaTanganController::class, 'ttdPasienStore2'])->name('ttd.store2');
-
+        
         // Edit Tanda Tangan Pasien
-        Route::get('/pasienTTD/detail', [TandaTanganController::class, 'ttdPasienDetail'])->name('ttd.pasien.detail');
-        Route::delete('/pasienTTD/delete/{id}', [TandaTanganController::class, 'deletePasien'])->name('list-ttd-pasien.delete');
-        Route::put('/pasienTTD/edit/{id}', [TandaTanganController::class, 'update'])->name('ttd.pasien.update');
+        Route::get('pasienTTD/detail', [TandaTanganController::class, 'ttdPasienDetail'])->name('ttd.pasien.detail');
+        Route::delete('pasienTTD/delete/{id}', [TandaTanganController::class, 'deletePasien'])->name('list-ttd-pasien.delete');
+        Route::put('pasienTTD/edit/{id}', [TandaTanganController::class, 'update'])->name('ttd.pasien.update');
+        Route::get('pasienTTD/byPetugas/', [TandaTanganController::class, 'ttdPasienBypetugas'])->name('ttd.pasien.bypetugas');
+        Route::post('/cppt/ttd_pasienbypetugas', [TandaTanganController::class, 'ttdPasienStoreByPetugas'])->name('ttd.storebypetugas');
 
         // Tanda Tangan Dokter
         Route::get('/cppt/ttd_dokter', [TandaTanganController::class, 'ttdDokter'])->name('ttd.dokter');
