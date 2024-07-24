@@ -25,19 +25,26 @@
 
         <div class="section-body">
             <div class="card card-primary">
-                <form id="filterForm" action="{{ route('transaksi_fisio.fisio') }}" method="get">
+                {{-- <form id="filterForm" action="{{ route('transaksi_fisio.fisio') }}" method="get"> --}}
+                <form id="filterForm" action="" method="get">
                     <div class="card-header">
                         <h4>Fisioterapi</h4>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-8">
-                                <label for="kode_dokter">Nama Pasien</label>
+                                <div class="section-title">Pilih Dokter</div>
                                 <div class="input-group">
-                                    <select name="no_mr" id="" class="form-control select2">
+                                    {{-- <select name="no_mr" id="" class="form-control select2">
                                         <option value="" selected disabled>-- Pilih Pasien --</option>
                                         @foreach ($listpasien as $pasien)
                                         <option value="{{ $pasien->NO_MR }}">{{ $pasien->NAMA_PASIEN }}</option>
+                                        @endforeach
+                                    </select> --}}
+                                    <select class="form-control select2" name="kode_dokter" >
+                                        <option value="" selected disabled>-- Pilih Pasien --</option>
+                                        @foreach ($dokters as $dokter)
+                                        <option value="{{ $dokter->Kode_Dokter }}" {{ request('kode_dokter') == $dokter->Kode_Dokter ? 'selected' : '' }}>{{ $dokter->Nama_Dokter }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -45,10 +52,42 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Cari Pasien</button>
-
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
+                        <button type="button" class="btn btn-danger" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
                     </div>
                 </form>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table-striped table" id="table-1">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No Antrian</th>
+                                    <th scope="col">Tanggal</th>
+                                    <th scope="col">Nama Pasien</th>
+                                    <th scope="col">No MR</th>
+                                    <th scope="col">Alamat</th>
+                                    <th scope="col">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($listpasien as $pasien)
+                                <tr>
+                                    <td width="5%"> <span class="badge badge-pill badge-success">{{ $pasien->NOMOR }}</span></td>
+                                    <td width="10%">{{ date('Y-m-d', strtotime($pasien->TANGGAL))}}</td>
+                                    <td width="15%">{{$pasien->NAMA_PASIEN}}</td>
+                                    <td width="10%">{{$pasien->NO_MR}}</td>
+                                    <td width="20%">{{$pasien->ALAMAT}}</td>
+                                    <td width="20%">
+                                        <a href="{{ route('transaksi_fisio.fisio', ['no_mr' => $pasien->NO_MR]) }}" class="btn btn-sm btn-info"><i class="fas fa-plus"></i> Open Cppt</a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -65,5 +104,13 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+
+<script>
+    function resetForm() {
+        document.getElementById("filterForm").value = "";
+        alert('Filter telah direset!');
+        window.location.href = "{{ route('list-pasien.index') }}";
+    }
+</script>
 
 @endpush
