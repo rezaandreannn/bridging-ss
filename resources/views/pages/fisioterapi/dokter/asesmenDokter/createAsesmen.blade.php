@@ -480,7 +480,7 @@
                                             <label>Anjuran</label>
                                             <div class="input-group">
                                                 <select name="anjuran_terapi" id="" class="form-control @error('anjuran_terapi')  is-invalid @enderror">
-                                                    <option value="" selected disabled>--Pilih Status Psikologi--</option>
+                                                    <option value="" selected disabled>--Pilih Anjuran--</option>
                                                     <option value="1" @if(old('anjuran_terapi')=='1' ) selected @endif>1</option>
                                                     <option value="2" @if(old('anjuran_terapi')=='2' ) selected @endif>2</option>
                                                     <option value="3" @if(old('anjuran_terapi')=='3' ) selected @endif>3</option>
@@ -508,7 +508,7 @@
                                             <label>Evaluasi</label>
                                             <div class="input-group">
                                                 <select name="evaluasi_terapi" id="" class="form-control @error('evaluasi_terapi')  is-invalid @enderror">
-                                                    <option value="" selected disabled>--Pilih Status Psikologi--</option>
+                                                    <option value="" selected disabled>--Pilih Evaluasi--</option>
                                                     <option value="1" @if(old('evaluasi_terapi')=='1' ) selected @endif>1</option>
                                                     <option value="2" @if(old('evaluasi_terapi')=='2' ) selected @endif>2</option>
                                                     <option value="3" @if(old('evaluasi_terapi')=='3' ) selected @endif>3</option>
