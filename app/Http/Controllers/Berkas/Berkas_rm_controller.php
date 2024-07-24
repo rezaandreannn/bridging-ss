@@ -229,4 +229,18 @@ class Berkas_rm_controller extends Controller
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
     }
+
+    public function cetakHasilEcho($noReg, $kode_transaksi)
+    {
+        $resep = $this->rekam_medis->cetakResep($noReg, $kode_transaksi);
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+
+        $filename = 'HasilEcho-' . $date . '-' . $noReg;
+        $pdf = PDF::loadview('pages.rekam_medis.hasilEcho', ['biodata' => $biodata, 'resep' => $resep, 'tanggal' => $tanggal]);
+        // Set paper size to A5
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
+    }
 }

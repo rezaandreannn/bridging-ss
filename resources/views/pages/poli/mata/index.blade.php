@@ -46,7 +46,7 @@
                                     <td>SADONAH BINTI JUMAR</td>
                                     <td>DUSUN III RT 012/004 TRIMULYO, SEKAMPUNG</td>
                                     <td><div class="badge badge-warning text-white">Perawat</div></td>
-                                    <td><a href="{{ route('poliMata.assesmenAwal')}}" class="btn btn-sm btn-primary"><i class="fas fa-notes-medical"></i> Entry</a></td>
+                                    <td><a href="{{ route('poliMata.assesmenKeperawatan')}}" class="btn btn-sm btn-primary"><i class="fas fa-notes-medical"></i> Entry</a></td>
                                 </tr>
                             </tbody>
                         </table>

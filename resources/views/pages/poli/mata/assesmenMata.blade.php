@@ -11,10 +11,13 @@
 <link rel="stylesheet" href="{{ asset('library/selectric/public/selectric.css') }}">
 <link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
 <style>
-   .custom-img {
-        width: 400px;
-        display: block;
-        margin: 0 auto;
+   .eye-image {
+            width: 200px;
+        }
+    .custom-judul{
+        font-size: 18px;
+        padding-left: 20px;
+        color: #6777ef;
     }
 </style>
 
@@ -44,10 +47,25 @@
                             <form action="" method="POST">
                                 @csrf
                                 <div class="row">
-                                    <div class="card-header card-success">
-                                        <h4 class="card-title">Pemeriksaaan Fisik Mata</h4>
-                                            <img src="{{ asset('img/mata.png') }}" class="center-img custom-img"/>
+                                    <h4 class="custom-judul">Pemeriksaaan Fisik Mata</h4>
+                                </div>
+                                <div class="row my-4">
+                                    <div class="col-md-4 text-right">
+                                        <p>O.D</p>
+                                        <p>Status Presen</p>
                                     </div>
+                                    <div class="col-md-2 text-center">
+                                        <img src="{{ asset('img/mata-kiri.png') }}" alt="Right Eye" class="eye-image">
+                                    </div>
+                                    <div class="col-md-2 text-center">
+                                        <img src="{{ asset('img/mata-kanan.png') }}" alt="Left Eye" class="eye-image">
+                                    </div>
+                                    <div class="col-md-4 text-left">
+                                        <p>OS</p>
+                                        <p>Kedudukan / Gerak Bola Mata</p>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <input type="text" name="palpebra_kiri" class="form-control @error('palpebra_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
@@ -142,9 +160,9 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="text" name="coa_kiri" class="form-control @error('coa_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
+                                            <input type="text" name="iris_kiri" class="form-control @error('iris_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
                                         </div>
-                                        @error('coa_kiri')
+                                        @error('iris_kiri')
                                         <span class="text-danger" style="font-size: 12px;">
                                             {{ $message }}
                                         </span>
@@ -155,9 +173,9 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="text" name="coa_kanan" class="form-control @error('coa_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
+                                            <input type="text" name="iris_kanan" class="form-control @error('iris_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
                                         </div>
-                                        @error('coa_kanan')
+                                        @error('iris_kanan')
                                         <span class="text-danger" style="font-size: 12px;">
                                             {{ $message }}
                                         </span>
@@ -165,9 +183,9 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="text" name="coa_kiri" class="form-control @error('coa_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
+                                            <input type="text" name="pupil_kiri" class="form-control @error('pupil_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
                                         </div>
-                                        @error('coa_kiri')
+                                        @error('pupil_kiri')
                                         <span class="text-danger" style="font-size: 12px;">
                                             {{ $message }}
                                         </span>
@@ -178,9 +196,9 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="text" name="coa_kanan" class="form-control @error('coa_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
+                                            <input type="text" name="pupil_kanan" class="form-control @error('pupil_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
                                         </div>
-                                        @error('coa_kanan')
+                                        @error('pupil_kanan')
                                         <span class="text-danger" style="font-size: 12px;">
                                             {{ $message }}
                                         </span>
@@ -188,9 +206,9 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="text" name="coa_kiri" class="form-control @error('coa_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
+                                            <input type="text" name="lensa_kiri" class="form-control @error('lensa_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
                                         </div>
-                                        @error('coa_kiri')
+                                        @error('lensa_kiri')
                                         <span class="text-danger" style="font-size: 12px;">
                                             {{ $message }}
                                         </span>
@@ -201,9 +219,9 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="text" name="coa_kanan" class="form-control @error('coa_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
+                                            <input type="text" name="lensa_kanan" class="form-control @error('lensa_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
                                         </div>
-                                        @error('coa_kanan')
+                                        @error('lensa_kanan')
                                         <span class="text-danger" style="font-size: 12px;">
                                             {{ $message }}
                                         </span>
@@ -211,9 +229,9 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="text" name="coa_kiri" class="form-control @error('coa_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
+                                            <input type="text" name="vitreosh_kiri" class="form-control @error('vitreosh_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
                                         </div>
-                                        @error('coa_kiri')
+                                        @error('vitreosh_kiri')
                                         <span class="text-danger" style="font-size: 12px;">
                                             {{ $message }}
                                         </span>
@@ -224,13 +242,139 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="text" name="coa_kanan" class="form-control @error('coa_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
+                                            <input type="text" name="vitreosh_kanan" class="form-control @error('vitreosh_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
                                         </div>
-                                        @error('coa_kanan')
+                                        @error('vitreosh_kanan')
                                         <span class="text-danger" style="font-size: 12px;">
                                             {{ $message }}
                                         </span>
                                         @enderror
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Visus</label>
+                                            <div class="col-md-12">
+                                                <div class="form-group" style="display: flex; flex-direction: row;">
+                                                    <div class="input-group" style="margin-right: 10px;">
+                                                        <label for="visus_od" class="mr-2 mt-2">
+                                                            OD
+                                                        </label>
+                                                        <input type="text" class="form-control" name="visus_od" id="visus_od">
+                                                    </div>
+                                                    <div class="input-group" style="margin-right: 10px;">
+                                                        <label for="visus_os" class="mr-2 mt-2">
+                                                            OS
+                                                        </label>
+                                                        <input type="text" class="form-control" name="visus_os" id="visus_os">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Streak</label>
+                                            <div class="col-md-12">
+                                                <div class="form-group" style="display: flex; flex-direction: row;">
+                                                    <div class="form-check" style="margin-right: 10px;">
+                                                        <input class="form-check-input" type="radio" name="discharge" value="Ya" id="discharge1" @if(old('discharge', '0' )=='Ya' ) checked @endif>
+                                                        <label class="form-check-label" for="discharge1">
+                                                            Retinoskopi
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check" style="margin-right: 10px;">
+                                                        <input class="form-check-input" type="radio" name="discharge" value="Tidak" id="discharge2" @if(old('discharge', '0' )=='Tidak' ) checked @endif>
+                                                        <label class="form-check-label" for="discharge2">
+                                                            Keratomeri
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>TONOMETRI</label>
+                                            <div class="col-md-12">
+                                                <div class="form-group" style="display: flex; flex-direction: row;">
+                                                    <div class="input-group" style="margin-right: 10px;">
+                                                        <label for="tonometri_od" class="mr-2 mt-2">
+                                                            OD
+                                                        </label>
+                                                        <input type="text" class="form-control" name="tonometri_od" id="tonometri_od">
+                                                    </div>
+                                                    <div class="input-group" style="margin-right: 10px;">
+                                                        <label for="tonometri_os" class="mr-2 mt-2">
+                                                            OS
+                                                        </label>
+                                                        <input type="text" class="form-control" name="tonometri_os" id="tonometri_os">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>APLANSI</label>
+                                            <div class="col-md-12">
+                                                <div class="form-group" style="display: flex; flex-direction: row;">
+                                                    <div class="input-group" style="margin-right: 10px;">
+                                                        <label for="aplansi_od" class="mr-2 mt-2">
+                                                            OD
+                                                        </label>
+                                                        <input type="text" class="form-control" name="aplansi_od" id="aplansi_od">
+                                                    </div>
+                                                    <div class="input-group" style="margin-right: 10px;">
+                                                        <label for="aplansi_os" class="mr-2 mt-2">
+                                                            OS
+                                                        </label>
+                                                        <input type="text" class="form-control" name="aplansi_os" id="aplansi_os">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>LAB</label>
+                                            <div class="col-md-12">
+                                                <div class="form-group" style="display: flex; flex-direction: row;">
+                                                    <div class="input-group" style="margin-right: 10px;">
+                                                        <label for="lab_od" class="mr-2 mt-2">
+                                                            OD
+                                                        </label>
+                                                        <input type="text" class="form-control" name="lab_od" id="lab_od">
+                                                    </div>
+                                                    <div class="input-group" style="margin-right: 10px;">
+                                                        <label for="lab_os" class="mr-2 mt-2">
+                                                            OS
+                                                        </label>
+                                                        <input type="text" class="form-control" name="lab_os" id="lab_os">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>ANEL</label>
+                                            <div class="col-md-12">
+                                                <div class="form-group" style="display: flex; flex-direction: row;">
+                                                    <div class="input-group" style="margin-right: 10px;">
+                                                        <label for="anel_od" class="mr-2 mt-2">
+                                                            OD
+                                                        </label>
+                                                        <input type="text" class="form-control" name="anel_od" id="anel_od">
+                                                    </div>
+                                                    <div class="input-group" style="margin-right: 10px;">
+                                                        <label for="anel_os" class="mr-2 mt-2">
+                                                            OS
+                                                        </label>
+                                                        <input type="text" class="form-control" name="anel_os" id="anel_os">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="card-header card-success">
                                         <h4 class="card-title">Pemeriksaaan Penunjang</h4>
@@ -267,6 +411,9 @@
                                             </span>
                                             @enderror
                                         </div>
+                                    </div>
+                                    <div class="card-header card-success">
+                                        <h4 class="card-title">Analisis & Rencana</h4>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -326,12 +473,12 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <input type="text" name="rencana_tindakan" class="form-control @error('rencana_tindakan') is-invalid  
-                                                @enderror" value="{{old('rencana_tindakan')}}" placeholder="Jenis Tindakan ...">
-                                                </div>
-                                                @error('rencana_tindakan')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
+                                                    @enderror" value="{{old('rencana_tindakan')}}" placeholder="Jenis Tindakan ...">
+                                                    </div>
+                                                    @error('rencana_tindakan')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
                                                 @enderror
                                             </div>
                                         </div>
@@ -380,6 +527,55 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Edukasi</label>
+                                            <select name="edukasi" id="" class="form-control select2 @error('edukasi')  is-invalid @enderror">
+                                                <option value="Perjalanan Penyakit" @if(old('edukasi')=='Perjalanan Penyakit' ) selected @endif>Perjalanan Penyakit</option>
+                                                <option value="Diagnosa" @if(old('edukasi')=='Diagnosa' ) selected @endif>Diagnosa</option>
+                                                <option value="Pengobatan" @if(old('edukasi')=='Pengobatan' ) selected @endif>Pengobatan</option>
+                                            </select>
+                                            @error('edukasi')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Discharge Planning</label>
+                                            <div class="col-md-12">
+                                                <div class="form-group" style="display: flex; flex-direction: row;">
+                                                    <div class="form-check" style="margin-right: 10px;">
+                                                        <input class="form-check-input" type="radio" name="discharge" value="Ya" id="discharge1" @if(old('discharge', '0' )=='Ya' ) checked @endif>
+                                                        <label class="form-check-label" for="discharge1">
+                                                            Pulang
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check" style="margin-right: 10px;">
+                                                        <input class="form-check-input" type="radio" name="discharge" value="Tidak" id="discharge2" @if(old('discharge', '0' )=='Tidak' ) checked @endif>
+                                                        <label class="form-check-label" for="discharge2">
+                                                            Kontrol Poli
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check" style="margin-right: 10px;">
+                                                        <input class="form-check-input" type="radio" name="discharge" value="Tidak" id="discharge3" @if(old('discharge', '0' )=='Tidak' ) checked @endif>
+                                                        <label class="form-check-label" for="discharge3">
+                                                            Rawat Inap
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check" style="margin-right: 10px;">
+                                                        <input class="form-check-input" type="radio" name="discharge" value="Tidak" id="discharge4" @if(old('discharge', '0' )=='Tidak' ) checked @endif>
+                                                        <label class="form-check-label" for="discharge4">
+                                                            Rujuk
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="card-body">

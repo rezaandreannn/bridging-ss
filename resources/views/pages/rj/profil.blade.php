@@ -84,23 +84,23 @@
             </tr>
             <tr style="text-align: center;">
                 <th width="50">Tanggal</th>
-                <th width="70">Dokter</th>
-                <th width="80">Uraian Klinis</th>
+                <th width="60">Dokter</th>
+                <th width="60">Uraian Klinis</th>
                 <th width="50">Diagnosa</th>
                 <th width="50">Hasil Echo</th>
                 <th width="50">Rencana</th>
-                <th width="120">Terapi</th>
+                <th width="100">Terapi</th>
             </tr>
             @foreach ($data as $item)
             <tr>
-                <td>{{ date('d-m-Y', strtotime($item->TANGGAL)) }}</td>
-                <td>{{ $item->NAMA_DOKTER }}({{ $item->SPESIALIS }})</td>
-                <td>TD: {{ str_replace("-", "", $item->FS_TD) }} mmHg
+                <td width="50">{{ date('d-m-Y', strtotime($item->TANGGAL)) }}</td>
+                <td width="60">{{ $item->NAMA_DOKTER }}({{ $item->SPESIALIS }})</td>
+                <td width="60">TD: {{ str_replace("-", "", $item->FS_TD) }} mmHg
                     keluhan: {{ str_replace("-", "", $item->FS_ANAMNESA) }}</td>
-                <td>{{ $item->FS_DIAGNOSA }}</td>
-                <td>{{ $item->HASIL_ECHO }}</td>
-                <td>{{ $item->FS_PLANNING }}</td>
-                <td>{{ $item->FS_TERAPI }}</td>
+                <td width="50">{{ $item->FS_DIAGNOSA }}</td>
+                <td width="50">{{ $item->HASIL_ECHO }}</td>
+                <td width="50">{{ $item->FS_PLANNING }}</td>
+                <td width="100">{{ $item->FS_TERAPI }}</td>
             </tr>
             @endforeach
         </table>

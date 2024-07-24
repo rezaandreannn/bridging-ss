@@ -39,4 +39,43 @@ class TandaTangan extends Model
             ->get();
         return $data;
     }
+
+    public function ttdPasienMaster()
+    {
+        $date = date('Y-m-d');
+        $kode_dokter = array('028', '151');
+        $pku = DB::connection('pku')->getDatabaseName();
+        $data = DB::connection('db_rsmm')
+            ->table('ANTRIAN as a')
+            ->Join('REGISTER_PASIEN as rp', 'a.No_MR', '=', 'rp.No_MR')
+            ->Join('PENDAFTARAN as p', 'a.No_MR', '=', 'p.No_MR')
+            ->Join('DOKTER as d', 'p.KODE_DOKTER', '=', 'd.KODE_DOKTER')
+            ->select(
+                'a.NOMOR',
+
+                'a.TANGGAL',
+                'p.Kode_Dokter',
+                'rp.NAMA_PASIEN',
+                'rp.ALAMAT',
+                'rp.KOTA',
+                'rp.PROVINSI',
+                'rp.NO_MR',
+                'p.NO_REG',
+                'p.KODEREKANAN'
+
+            )
+            ->whereIn('p.Kode_Dokter', $kode_dokter)
+            ->whereIn('a.Dokter', $kode_dokter)
+            ->where('a.Tanggal', $date)
+            ->where('p.Tanggal', $date)
+            ->where('p.Status', '1')
+            ->whereNotIn('a.No_MR', function ($query) use ($pku) {
+                $query->select('tpm.NO_MR_PASIEN')
+                      ->from($pku.'.dbo.TTD_PASIEN_MASTER as tpm');
+            })
+            ->orderBy('a.NOMOR', 'ASC')
+            ->get()->toArray();
+        return $data;
+    }
+    
 }
