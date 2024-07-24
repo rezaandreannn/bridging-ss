@@ -12,12 +12,49 @@
 <link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
 <style>
    .eye-image {
-            width: 200px;
+        max-width: 100%;
         }
     .custom-judul{
         font-size: 18px;
         padding-left: 20px;
         color: #6777ef;
+        margin-bottom: 0;
+        width: 100%;
+    }
+    .no-margin {
+        margin: 0;
+    }
+    .no-padding {
+            padding: 0;
+    }
+    .align-items-center {
+            display: flex;
+            align-items: center;
+            margin: 0;
+    }
+    @media (max-width: 768px) {
+            .text-right-mobile {
+                text-align: right;
+                font-size: 6px;
+            }
+            .text-left-mobile {
+                text-align: left;
+                font-size: 6px;
+            }
+            .eye-image {
+                max-width:100px;
+            }
+            .my-mobile {
+                margin-top: 2rem !important;
+                margin-bottom: 1rem !important;
+            }
+    }
+    .my-0 {
+            margin-top: -10px !important;
+            margin-bottom: 0 !important;
+    }
+    .my-1 {
+            margin-bottom: -30px !important;
     }
 </style>
 
@@ -47,22 +84,19 @@
                             <form action="" method="POST">
                                 @csrf
                                 <div class="row">
-                                    <h4 class="custom-judul">Pemeriksaaan Fisik Mata</h4>
+                                    <h4 class="custom-judul my-1">Pemeriksaan Fisik Mata</h4>
                                 </div>
-                                <div class="row my-4">
-                                    <div class="col-md-4 text-right">
-                                        <p>O.D</p>
-                                        <p>Status Presen</p>
+                                <div class="row align-items-center">
+                                    <div class="col-md-4 col-4 text-right text-right-mobile no-padding">
+                                        <p class="no-margin">O.D</p>
+                                        <p class="no-margin">Status Presen</p>
                                     </div>
-                                    <div class="col-md-2 text-center">
-                                        <img src="{{ asset('img/mata-kiri.png') }}" alt="Right Eye" class="eye-image">
+                                    <div class="col-md-4 col-4 text-center no-padding my-mobile">
+                                        <img src="{{ asset('img/mata.png') }}" alt="Right Eye" class="eye-image">
                                     </div>
-                                    <div class="col-md-2 text-center">
-                                        <img src="{{ asset('img/mata-kanan.png') }}" alt="Left Eye" class="eye-image">
-                                    </div>
-                                    <div class="col-md-4 text-left">
-                                        <p>OS</p>
-                                        <p>Kedudukan / Gerak Bola Mata</p>
+                                    <div class="col-md-4 col-4 text-left text-left-mobile no-padding">
+                                        <p class="no-margin">OS</p>
+                                        <p class="no-margin">Kedudukan / Gerak Bola Mata</p>
                                     </div>
                                 </div>
                                 <div class="row">
