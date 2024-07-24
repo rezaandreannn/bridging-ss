@@ -31,12 +31,16 @@
 
         <div class="section-body">
             <div class="card">
+                <div class="card-header">
+                    <a href="{{ route ('ttd.pasien.bypetugas') }}" class="btn btn-primary"> <i class="fas fa-plus"></i> TAMBAH TTD</a>
+                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-striped" id="table-1">
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Nama Pasien</th>
                                     <th>No MR</th>
                                     <th>Dibuat</th>
                                     <th>Tanda tangan</th>
@@ -47,6 +51,7 @@
                                 @foreach ($ttdDetail as $ttd)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $ttd->Nama_Pasien }}</td>
                                     <td>{{ $ttd->NO_MR_PASIEN }}</td>
                                     <td>{{ $ttd->CREATE_AT }}</td>
                                     <td>

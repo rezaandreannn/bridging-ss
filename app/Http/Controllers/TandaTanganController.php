@@ -53,8 +53,18 @@ class TandaTanganController extends Controller
     public function ttdPasienDetail()
     {
         $title = 'Index Tanda Tangan Pasien';
-        $ttdDetail =  DB::connection('pku')->table('TTD_PASIEN_MASTER')->get();
+        $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
+        $ttdDetail =  DB::connection('pku')->table('TTD_PASIEN_MASTER as tpm')->join($db_rsmm.'.dbo.REGISTER_PASIEN as rp', 'rp.No_MR', '=', 'tpm.NO_MR_PASIEN')->get();
+        // dd($ttdDetail);
         return view($this->viewPath . 'detailPasien', compact('title', 'ttdDetail'));
+    }
+
+    public function ttdPasienBypetugas()
+    {
+        $title = 'Index Tanda Tangan Pasien';
+        $listPasien = $this->ttd->ttdPasienMaster();
+        // dd($listPasien);
+        return view($this->viewPath . 'ttdPasienByPetugas', compact('title','listPasien'));
     }
 
     public function ttdPasien(Request $request, $id)
@@ -114,6 +124,36 @@ class TandaTanganController extends Controller
                     'kode_transaksi' => $request->input('KODE_TRANSAKSI_FISIO')
                 ])->with('success', 'Tanda Tangan Berhasil Ditambahkan!');
             }
+            // Redirect with success message
+
+        }
+    }
+
+    public function ttdPasienStoreByPetugas(Request $request)
+    {
+        if (!$request->has('signed') || empty($request->signed)) {
+            return redirect()->back()->with('warning', 'Tanda tangan harus diisi');
+        } else {
+            $image_parts = explode(";base64,", $request->signed);
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+            $image_base64 = base64_decode($image_parts[1]);
+
+            // Use uniqid to generate a unique file name
+            $file_name = uniqid($request->input('NO_MR_PASIEN') . '-' . date('Y-m-d') . '-') . '.' . $image_type;
+
+            // Save the image to storage
+            Storage::put('public/ttd/' . $file_name, $image_base64);
+
+            // Insert data into the database
+            DB::connection('pku')->table('TTD_PASIEN_MASTER')->insert([
+                'NO_MR_PASIEN' => $request->input('NO_MR_PASIEN'),
+                'IMAGE' => $file_name,
+                'CREATE_AT' => now()
+            ]);
+    
+                return redirect()->route('ttd.pasien.bypetugas')->with('success', 'Tanda Tangan Berhasil Ditambahkan!');
+       
             // Redirect with success message
 
         }
