@@ -60,6 +60,7 @@
             </li>
             @endcan
             @can('medis')
+            <li class="menu-header">Poliklinik dan Rawat Jalan</li>
             <li class="nav-item dropdown {{ Request::is('fisioterapi/dokter*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Medis</span></a>
                 @can('medis rajal')
@@ -102,6 +103,7 @@
             @endcan
 
             @can('fisioterapi')
+            <li class="menu-header">Fisioterapi</li>
             <li class="nav-item dropdown {{ Request::is('fisioterapi/perawat*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Fisioterapi</span></a>
                 <!-- <ul class="dropdown-menu">
@@ -257,13 +259,16 @@
             @endcan
 
             @can('ttd')
-            <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown {{ Request::is('ttd/*') ? 'active' : '' }}" data-toggle="dropdown"><i class="fas fa-signature"></i> <span>Tanda Tangan</span></a>
+            <li class="menu-header">Tanda Tangan</li>
+            <li class="nav-item dropdown {{ Request::is('ttd/*') ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-signature"></i> <span>Tanda Tangan</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('ttd/petugas/*') ? 'active' : '' }}">
+                    <li class="{{ Request::is('ttd/petugasTtd') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('list-ttd.index') }}">Petugas</a>
                     </li>
-                    <li class="{{ Request::is('ttd/pasienTTD/*') ? 'active' : '' }}">
+                </ul>
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('ttd/pasienTtd/*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('ttd.pasien.detail') }}">Pasien</a>
                     </li>
                 </ul>

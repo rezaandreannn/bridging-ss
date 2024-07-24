@@ -12,10 +12,7 @@
 <link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
 <style>
    .eye-image {
-            max-width: 100px;
-        }
-    .section-title {
-            font-weight: bold;
+            width: 200px;
         }
     .custom-judul{
         font-size: 18px;
@@ -51,26 +48,24 @@
                                 @csrf
                                 <div class="row">
                                     <h4 class="custom-judul">Pemeriksaaan Fisik Mata</h4>
-                                    <div class="row my-4">
-                                        <div class="col-md-2 text-right">
-                                            <p>O.D</p>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <p>Status Presen</p>
-                                        </div>
-                                        <div class="col-md-2 text-center">
-                                            <img src="{{ asset('img/mata-kiri.png') }}" alt="Right Eye" class="eye-image">
-                                        </div>
-                                        <div class="col-md-2 text-center">
-                                            <img src="{{ asset('img/mata-kanan.png') }}" alt="Left Eye" class="eye-image">
-                                        </div>
-                                        <div class="col-md-2 text-left">
-                                            <p>OS</p>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <p>Kedudukan / Gerak Bola Mata</p>
-                                        </div>
+                                </div>
+                                <div class="row my-4">
+                                    <div class="col-md-4 text-right">
+                                        <p>O.D</p>
+                                        <p>Status Presen</p>
                                     </div>
+                                    <div class="col-md-2 text-center">
+                                        <img src="{{ asset('img/mata-kiri.png') }}" alt="Right Eye" class="eye-image">
+                                    </div>
+                                    <div class="col-md-2 text-center">
+                                        <img src="{{ asset('img/mata-kanan.png') }}" alt="Left Eye" class="eye-image">
+                                    </div>
+                                    <div class="col-md-4 text-left">
+                                        <p>OS</p>
+                                        <p>Kedudukan / Gerak Bola Mata</p>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <input type="text" name="palpebra_kiri" class="form-control @error('palpebra_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
@@ -580,6 +575,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                             </div>
                         </div>
                         <div class="card-body">

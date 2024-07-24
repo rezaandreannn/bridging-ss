@@ -16,7 +16,7 @@ $dayList = array(
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Faskes</title>
+    <title>Hasil Echo</title>
     <style>
         table tr td {
             font-size: 13px;
@@ -61,65 +61,66 @@ $dayList = array(
         <table width="100%">
             <tr>
                 <td class="text">
-                    <b style="text-decoration:underline">SURAT KETERANGAN PESERTA RUJUK BALIK</b><br>
-                    NO {{ $data->FS_KD_TRS ?? ''}}/PRB/{{ $tanggal->format('m') }}/{{ $tanggal->format('Y') }}
+                    <b>SURAT KETERANGAN HASIL ECHOCARDIOGRAFI</b>
                     <hr />
                 </td>
             </tr>
         </table>
-        <p style="font-size: 12px; text-align:left;">Terimakasih atas kepercayaan sejawat dokter yang telah merujuk pasien kepada :</p>
         <table width="100%">
             <tr>
-                <td width="80" style="font-size: 11px;">Nama</td>
-                <td width="300" style="font-size: 11px;">: {{ $biodata->NAMA_PASIEN ?? ''}}</td>
+                <td width="80" style="font-size: 12px;">Nama</td>
+                <td width="300" style="font-size: 12px;">: {{ $biodata->NAMA_PASIEN ?? ''}}</td>
 
             </tr>
             <tr>
-                <td width="80" style="font-size: 11px;">Tanggal Lahir</td>
-                <td width="300" style="font-size: 11px;">: {{ date('d-m-Y', strtotime($biodata->TGL_LAHIR)) }}</td>
+                <td width="80" style="font-size: 12px;">No RM</td>
+                <td width="300" style="font-size: 12px;">: {{ $biodata->NO_MR ?? ''}}</td>
             </tr>
             <tr>
-                <td width="80" style="font-size: 11px;">Alamat</td>
-                <td width="300" style="font-size: 11px;">: {{ $biodata->ALAMAT ?? ''}}</td>
+                <td width="80" style="font-size: 12px;">Tanggal Lahir</td>
+                <td width="300" style="font-size: 12px;">: {{ $biodata->TGL_LAHIR ?? ''}}</td>
             </tr>
             <tr>
-                <td width="80" style="font-size: 11px;">Jenis Kelamin</td>
-                <td width="300" style="font-size: 11px;">: @if ($biodata->JENIS_KELAMIN == 'L')
-                    Laki-Laki
-                    @else
-                    Perempuan
-                    @endif</td>
-            </tr>
-        </table>
-        <p style="font-size: 12px; text-align:left;">Berikut kami sampaikan kesimpulan selama dalam perawatan kami :</p>
-        <table width="100%">
-            <tr>
-                <td width="80" style="font-size: 11px;">Diagnosa</td>
-                <td width="300" style="font-size: 11px;">: {{ $resep->FS_DIAGNOSA ?? ''}}</td>
+                <td width="80" style="font-size: 12px;">Jenis Kelamin</td>
+                <td width="300" style="font-size: 12px;">: {{ $biodata->JENIS_KELAMIN ?? ''}}</td>
             </tr>
             <tr>
-                <td width="80" style="font-size: 11px;">Terapi</td>
-                <td width="300" style="font-size: 11px;">: </td>
+                <td width="80" style="font-size: 12px;">Alamat</td>
+                <td width="300" style="font-size: 12px;">: {{ $biodata->ALAMAT ?? ''}}</td>
+            </tr>
+            <tr>
+                <td width="80" style="font-size: 12px;">Bagian</td>
+                <td width="300" style="font-size: 12px;">: {{ $biodata->SPESIALIS ?? ''}}</td>
             </tr>
         </table>
-        <p style="font-size: 12px; text-align:left; padding-left:160px;">{!! nl2br(trim($resep->FS_TERAPI ?? '')) !!}</p>
-        <p style="font-size: 12px; text-align:left;">Pasien dapat kembali kontrol ke Rumah Sakit setelah 3 bulan. Demikian hal ini kami
-            sampaikan untuk dapat dipergunakan sebagaimana perlu, Terimakasih.</p>
         <table width="100%">
             <tr>
-                <td></td>
-                <td class="ttd" style="text-align: left;">Metro, {{ $tanggal->format('d-m-Y') }}</td>
+                <td width="100" style="font-size: 12px;">Berikut merupakan hasil pemeriksaan echocardiografi :</td>
+            </tr>
+            <tr>
+                <td>
+                    <font size="2">{{ $resep->HASIL_ECHO ?? ''}}</font>
+                </td>
+            </tr>
+        </table>
+        <table width="100%">
+            <tr>
+                <td style="padding-top:50px;text-decoration:underline">
+                   
+                </td>
+                <td class="ttd" style="text-align: left; padding-left:420px;">Metro, {{ $tanggal->format('d-m-Y') }}</td>
+                
             </tr>
             <tr>
                 <td></td>
-                <td style="float: left;">
+                <td style="float: left; padding-left:450px;">
                     <!-- Menampilkan barcode dengan lebar 200px dan tinggi 200px -->
                     {!! DNS2D::getBarcodeHTML($resep->NAMALENGKAP, 'QRCODE', 2, 2) !!}
                 </td>
             </tr>
             <tr>
                 <td></td>
-                <td style="text-align: left;">{{ $resep->NAMALENGKAP ?? ''}}</td>
+                <td style="text-align: left; padding-left:400px;">{{ $resep->NAMALENGKAP ?? ''}}</td>
             </tr>
         </table>
     </center>

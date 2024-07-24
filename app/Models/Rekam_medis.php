@@ -24,28 +24,6 @@ class Rekam_medis extends Model
         $this->simrsUrlApi = env('SIMRS_BASE_URL');
     }
 
-    // public function medisResep($noReg, $kode_transaksi)
-    // {
-    //     $database = DB::connection('db_rsmm')->getDatabaseName();
-    //     $data = DB::connection('pku')
-    //         ->table('TAC_RJ_MEDIS as a')
-    //         ->leftJoin('TAC_COM_USER as b', 'a.mdb', '=', 'b.user_id')
-    //         // Menggunakan nama basis data secara eksplisit dalam join
-    //         ->leftJoin($database . '.dbo.DOKTER as c', 'b.user_name', '=', 'c.KODE_DOKTER')
-    //         ->leftJoin($database . '.dbo.TUSER as d', 'b.user_name', '=', 'd.NAMAUSER')
-    //         ->select(
-    //             'a.*',
-    //             'b.user_name',
-    //             'c.KODE_DOKTER',
-    //             'c.NAMA_DOKTER',
-    //             'd.NAMALENGKAP'
-    //         )
-    //         ->where('a.FS_KD_REG', $noReg)
-    //         ->where('a.FS_KD_TRS', $kode_transaksi)
-    //         ->first();
-    //     return $data;
-    // }
-
     // Cetak Resep
     public function cetakResep($noReg, $kode_transaksi)
     {
@@ -57,11 +35,9 @@ class Rekam_medis extends Model
             ->leftJoin($dbRsmm . '.dbo.DOKTER as c', 'b.user_name', '=', 'c.KODE_DOKTER')
             ->leftJoin($dbRsmm . '.dbo.TUSER as d', 'b.user_name', '=', 'd.NAMAUSER')
             ->select(
-                'a.FS_DIAGNOSA',
-                'a.FS_DIAGNOSA_SEKUNDER',
-                'a.FS_TERAPI',
-                'a.FS_ALERGI',
+                'a.*',
                 'b.user_name',
+                'c.NAMA_DOKTER',
                 'c.KODE_DOKTER',
                 'd.NAMALENGKAP'
             )

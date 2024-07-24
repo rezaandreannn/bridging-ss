@@ -226,11 +226,11 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('ttd')->group(function () {
         // Tanda Tangan Petugas
-        Route::get('petugas', [TandaTanganController::class, 'index'])->name('list-ttd.index');
-        Route::post('petugas', [TandaTanganController::class, 'store'])->name('list-ttd.store');
-        Route::get('petugas/edit/{id}', [TandaTanganController::class, 'edit'])->name('list-ttd.edit');
-        Route::put('petugas/edit/{id}', [TandaTanganController::class, 'update'])->name('list-ttd.update');
-        Route::delete('petugas/delete/{id}', [TandaTanganController::class, 'delete'])->name('list-ttd.delete');
+        Route::get('petugasTtd', [TandaTanganController::class, 'index'])->name('list-ttd.index');
+        Route::post('petugasTtd', [TandaTanganController::class, 'store'])->name('list-ttd.store');
+        Route::get('petugasTtd/edit/{id}', [TandaTanganController::class, 'edit'])->name('list-ttd.edit');
+        Route::put('petugasTtd/edit/{id}', [TandaTanganController::class, 'update'])->name('list-ttd.update');
+        Route::delete('petugasTtd/delete/{id}', [TandaTanganController::class, 'delete'])->name('list-ttd.delete');
 
 
         // Tanda Tangan Pasien
@@ -238,12 +238,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/cppt/ttd_pasien2/{no_mr}/{kode_dokter}', [TandaTanganController::class, 'ttdPasien2'])->name('ttd.pasien2');
         Route::post('/cppt/ttd_pasien', [TandaTanganController::class, 'ttdPasienStore'])->name('ttd.store');
         Route::post('/cppt/ttd_pasien2', [TandaTanganController::class, 'ttdPasienStore2'])->name('ttd.store2');
-        
+
         // Edit Tanda Tangan Pasien
-        Route::get('pasienTTD/detail', [TandaTanganController::class, 'ttdPasienDetail'])->name('ttd.pasien.detail');
-        Route::delete('pasienTTD/delete/{id}', [TandaTanganController::class, 'deletePasien'])->name('list-ttd-pasien.delete');
-        Route::put('pasienTTD/edit/{id}', [TandaTanganController::class, 'update'])->name('ttd.pasien.update');
-        Route::get('pasienTTD/byPetugas/', [TandaTanganController::class, 'ttdPasienBypetugas'])->name('ttd.pasien.bypetugas');
+        Route::get('pasienTtd/detail', [TandaTanganController::class, 'ttdPasienDetail'])->name('ttd.pasien.detail');
+        Route::delete('pasienTtd/delete/{id}', [TandaTanganController::class, 'deletePasien'])->name('list-ttd-pasien.delete');
+        Route::put('pasienTtd/edit/{id}', [TandaTanganController::class, 'update'])->name('ttd.pasien.update');
+        Route::get('pasienTtd/byPetugas/', [TandaTanganController::class, 'ttdPasienBypetugas'])->name('ttd.pasien.bypetugas');
         Route::post('/cppt/ttd_pasienbypetugas', [TandaTanganController::class, 'ttdPasienStoreByPetugas'])->name('ttd.storebypetugas');
 
         // Tanda Tangan Dokter
@@ -276,6 +276,7 @@ Route::middleware('auth')->group(function () {
         Route::get('rawat_jalan/rujukanInternal/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakRujukanInternal'])->name('rj.rujukanInternal');
         Route::get('rawat_jalan/prb/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakPRB'])->name('rj.prb');
         Route::get('rawat_jalan/faskes/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakFaskes'])->name('rj.faskes');
+        Route::get('rawat_jalan/hasil_echo/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakHasilEcho'])->name('rj.hasilEcho');
 
 
         // Rawat Jalan Dokter

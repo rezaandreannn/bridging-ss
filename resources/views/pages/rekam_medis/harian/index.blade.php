@@ -125,7 +125,7 @@
                                         @endif
 
                                         @if($pasien->HASIL_ECHO != '')
-                                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Hasil Echo</a>
+                                        <a href="{{ route('rj.hasilEcho', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Hasil Echo</a>
                                         @endif
 
                                         {{-- cek lab dan radiologi --}}
