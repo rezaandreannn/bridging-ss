@@ -166,6 +166,11 @@ class FisioController extends Controller
         $asesmenDokterFisio = DB::connection('pku')->table('fis_asesmen_dokter')->where('no_registrasi', $biodatas->No_Reg)->first();
         $transaksiFisio = DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')->where('ID_TRANSAKSI_FISIO', $id)->orderBy('ID_CPPT_FISIO', 'ASC')->first();
         $ttv = DB::connection('pku')->table('TAC_RJ_VITAL_SIGN')->where('FS_KD_REG', $biodatas->No_Reg)->first();
+
+        $cektransaksicppt = false;
+        if($transaksiFisio){
+            $cektransaksicppt = true;
+        }
      
         $cekasesmenperawat= false;
         if ($asesmen_perawat){
@@ -190,7 +195,7 @@ class FisioController extends Controller
 
         $cppt =  DB::connection('pku')->table('TRANSAKSI_FISIOTERAPI')->where('ID_TRANSAKSI', $id)->first();
         $jenisfisio = DB::connection('pku')->table('TAC_COM_FISIOTERAPI_MASTER')->get();
-        return view($this->view . 'cppt.detail', compact('title', 'biodatas', 'data', 'cppt', 'jenisfisio', 'terapiFisioGet', 'ttv', 'cekttv','asesmen_perawat','cekasesmenperawat','asesmenDokterFisio','cekasesmenDokter','transaksiFisio' ));
+        return view($this->view . 'cppt.detail', compact('title', 'biodatas', 'data', 'cppt', 'jenisfisio', 'terapiFisioGet', 'ttv', 'cekttv','asesmen_perawat','cekasesmenperawat','asesmenDokterFisio','cekasesmenDokter','transaksiFisio','cektransaksicppt' ));
     }
 
     // public function tambah_cppt(Request $request, $id)
@@ -235,7 +240,7 @@ class FisioController extends Controller
                 'JENIS_FISIO' => $terapi,
                 'TANGGAL_FISIO' => $request->input('TANGGAL_FISIO'),
                 'JAM_FISIO' => $request->input('JAM_FISIO'),
-                'KODE_DOKTER' => $request->input('KODE_DOKTER') ?? null,
+                'KODE_DOKTER' => $request->input('KODE_DOKTER') ?? '028',
                 'CARA_PULANG' => $request->input('CARA_PULANG'),
                 'ANAMNESA' => $request->input('ANAMNESA'),
                 'CREATE_AT' => now(),
@@ -379,14 +384,18 @@ class FisioController extends Controller
             ->first();
 
         $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
+        $emr_rsumm = DB::connection('sqlsrv')->getDatabaseName();
         $firstCppt = DB::connection('pku')
             ->table('TR_CPPT_FISIOTERAPI as TC')
             ->leftJoin($db_rsmm . '.dbo.DOKTER as D', 'TC.KODE_DOKTER', '=', 'D.Kode_Dokter')
             ->leftJoin('TTD_PETUGAS_MASTER as tpm', 'D.Kode_Dokter', '=', 'tpm.USERNAME')
-            ->select('D.Nama_Dokter', 'tpm.IMAGE as ttd_dokter', 'TC.DIAGNOSA', 'TC.JENIS_FISIO')
+            ->leftJoin($emr_rsumm .'.dbo.users as U', 'TC.CREATE_BY', '=', 'U.id')
+            ->select('D.Nama_Dokter', 'tpm.IMAGE as ttd_dokter', 'TC.DIAGNOSA', 'TC.JENIS_FISIO', 'U.name')
             ->orderBy('TC.ID_CPPT_FISIO', 'ASC')
             ->limit('1')
             ->first();
+
+            // dd($firstCppt);
 
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
 

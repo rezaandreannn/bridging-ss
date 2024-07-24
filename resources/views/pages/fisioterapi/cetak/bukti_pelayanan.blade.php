@@ -169,7 +169,7 @@
             <td style="text-align: center">
                 @if($item->KODE_DOKTER != '151')
                     <div class="gambar">
-                        {!! DNS2D::getBarcodeHTML($firstCppt->Nama_Dokter, 'QRCODE', 2, 2) !!}
+                        {!! DNS2D::getBarcodeHTML($firstCppt->name, 'QRCODE', 2, 2) !!}
                     </div>
                 @endif
             </td>

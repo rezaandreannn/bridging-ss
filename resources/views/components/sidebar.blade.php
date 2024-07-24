@@ -9,7 +9,7 @@
         <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>
             <li class="{{ Request::is('dashboard') ? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-dashboard"></i> <span>Dashboard</span></a></li>
-            <li class="menu-header">RSUMM</li>
+            <!-- <li class="menu-header">RSUMM</li> -->
             @can('master data')
             <li class="nav-item dropdown {{ Request::is('md*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-database"></i> <span>Master Data</span></a>
@@ -78,6 +78,7 @@
                 @endcan
             </li>
             @endcan
+            @can('poli mata')
             <li class="menu-header">Poli</li>
             <li class="nav-item dropdown {{ Request::is('pm*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-eye"></i> <span>Poli Mata</span></a>
@@ -87,6 +88,7 @@
                     </li>
                 </ul>
             </li>
+            @endcan
             @can('nurse record')
             <li class="menu-header">Rawat Jalan</li>
             <li class="nav-item dropdown {{ Request::is('rj*') ? 'active' : '' }}">
@@ -126,11 +128,11 @@
                         <a class="nav-link" href="{{ route('berkas.fisio')}}">Berkas Fisio Terapi</a>
                     </li>
                 </ul>
-                <ul class="dropdown-menu">
+                <!-- <ul class="dropdown-menu">
                     <li class="">
                         <a class="nav-link" href="#">Informed Concent</a>
                     </li>
-                </ul>
+                </ul> -->
             </li>
             @can('igd')
             <li class="menu-header">IGD</li>
