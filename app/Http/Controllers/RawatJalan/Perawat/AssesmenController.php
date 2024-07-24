@@ -99,7 +99,11 @@ class AssesmenController extends Controller
         $date = date('dMY');
         $filename = 'resumeMedis-' . $date . '-' . $noMR;
 
-        $pdf = PDF::loadview('pages.rj.profil', ['data' => $data, 'pasien' => $pasien]);
+        $paperSize = 'A4'; // Options: 'A4', 'letter', etc.
+        $paperOrientation = 'portrait'; // Options: 'portrait', 'landscape'
+
+        $pdf = PDF::loadview('pages.rj.profil', ['data' => $data, 'pasien' => $pasien])
+            ->setPaper($paperSize, $paperOrientation);
         return $pdf->download($filename . '.pdf');
     }
 

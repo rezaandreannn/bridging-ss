@@ -36,6 +36,12 @@ class AssesmenMataController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function assesmenKeperawatan()
+    {
+        $title = $this->prefix . ' ' . 'Mata Assesmen Keperawatan';
+        return view($this->view . 'assesmenKeperawatan', compact('title'));
+    }
+
     public function create()
     {
         $title = $this->prefix . ' ' . 'Mata Assesmen Awal';
