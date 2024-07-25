@@ -219,9 +219,9 @@ Route::middleware('auth')->group(function () {
     // Poli Mata
     Route::prefix('pm')->group(function () {
         Route::get('/polimata', [AssesmenMataController::class, 'index'])->name('poliMata.index');
-        Route::get('/polimata/assesmen_keperawatan', [AssesmenMataController::class, 'assesmenKeperawatan'])->name('poliMata.assesmenKeperawatan');
-        Route::get('/polimata/assesmen_awal', [AssesmenMataController::class, 'create'])->name('poliMata.assesmenAwal');
-        Route::get('/polimata/assesmen_mata', [AssesmenMataController::class, 'assesmenMata'])->name('poliMata.assesmenMata');
+        Route::get('/polimata/assesmen_keperawatan/{NoMr}', [AssesmenMataController::class, 'assesmenKeperawatan'])->name('poliMata.assesmenKeperawatan');
+        Route::get('/polimata/assesmen_awal/{NoMr}', [AssesmenMataController::class, 'create'])->name('poliMata.assesmenAwal');
+        Route::get('/polimata/assesmen_mata/{NoMr}', [AssesmenMataController::class, 'assesmenMata'])->name('poliMata.assesmenMata');
     });
 
     Route::prefix('ttd')->group(function () {
