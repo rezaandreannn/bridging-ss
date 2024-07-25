@@ -26,8 +26,73 @@ class Fisioterapi extends Model
     use HasFactory;
 
 
+    public function getDokterFisio(){
+            $data= DB::connection('db_rsmm')
+        ->table('DOKTER as d')
+        ->select(
+            'd.Kode_Dokter',
+            'd.Nama_Dokter'
+        )
+        ->whereIn('d.Spesialis', array('SPESIALIS REHABILITASI MEDIK','FISIOTERAPI'))
+        ->get();
+
+        return $data;
+    }
+
     // List Pasien Fisioterapi
-    public function pasienCpptdanFisioterapi()
+    public function pasienCpptdanFisioterapi($kode_dokter)
+    {
+        // $query= DB::connection('db_rsmm')
+        // ->table('DOKTER as d')
+        // ->select('d.Kode_Dokter')
+        // ->whereIn('d.Spesialis', array('SPESIALIS REHABILITASI MEDIK','FISIOTERAPI'))
+        // ->get();
+
+        // dd($query);
+        $date = date('Y-m-d');
+        $data = DB::connection('db_rsmm')
+            ->table('ANTRIAN as a')
+            ->Join('REGISTER_PASIEN as rp', 'a.No_MR', '=', 'rp.No_MR')
+            ->Join('PENDAFTARAN as p', 'a.No_MR', '=', 'p.No_MR')
+            ->Join('DOKTER as d', 'p.KODE_DOKTER', '=', 'd.KODE_DOKTER')
+            ->select(
+                'a.NOMOR',
+
+                'a.TANGGAL',
+                'p.Kode_Dokter',
+                'rp.NAMA_PASIEN',
+                'rp.ALAMAT',
+                'rp.KOTA',
+                'rp.PROVINSI',
+                'rp.NO_MR',
+                'p.NO_REG',
+                'p.KODEREKANAN'
+
+            )
+            // ->whereIn('p.Kode_Dokter', function ($query) {
+            //     $query->select('d.Kode_Dokter')
+            //           ->from('DOKTER as d')
+            //           ->whereIn('d.Spesialis', array('SPESIALIS REHABILITASI MEDIK','FISIOTERAPI'));
+            // })
+            // ->whereIn('a.Dokter', function ($query) {
+            //     $query->select('d.Kode_Dokter')
+            //           ->from('DOKTER as d')
+            //           ->whereIn('d.Spesialis', array('SPESIALIS REHABILITASI MEDIK','FISIOTERAPI'));
+            // })
+      
+            ->where('p.Kode_Dokter', $kode_dokter)
+            ->where('a.Dokter', $kode_dokter)
+            ->where('a.Tanggal', $date)
+            ->where('p.Tanggal', $date)
+            ->where('p.Status', '1')
+            ->orderBy('a.NOMOR', 'ASC')
+            ->get()->toArray();
+
+
+        return $data;
+    }
+
+    public function pasienCpptdanFisioterapiList()
     {
         // $query= DB::connection('db_rsmm')
         // ->table('DOKTER as d')
@@ -67,13 +132,15 @@ class Fisioterapi extends Model
                       ->whereIn('d.Spesialis', array('SPESIALIS REHABILITASI MEDIK','FISIOTERAPI'));
             })
       
+            // ->where('p.Kode_Dokter', $kode_dokter)
+            // ->where('a.Dokter', $kode_dokter)
             ->where('a.Tanggal', $date)
             ->where('p.Tanggal', $date)
             ->where('p.Status', '1')
             ->orderBy('a.NOMOR', 'ASC')
             ->get()->toArray();
 
-            // dd($data);
+
         return $data;
     }
 

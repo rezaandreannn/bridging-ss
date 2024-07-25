@@ -32,7 +32,7 @@ class InformedConcentController extends Controller
     public function index()
     {
         //
-        $listpasien = $this->fisio->pasienCpptdanFisioterapi();
+        $listpasien = $this->fisio->pasienCpptdanFisioterapiList();
      
 
         $fisioModel= new Fisioterapi();
