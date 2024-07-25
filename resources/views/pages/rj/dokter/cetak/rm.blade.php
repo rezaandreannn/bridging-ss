@@ -163,11 +163,11 @@
                 <table width="100%">
                     <tr>
                         <td class="text3"><b>Tanggal Kunjungan</b></td>
-                        <td class="text3">: 13-Jan-2024</td>
+                        <td class="text3">: {{date('d-m-Y', strtotime($biodata->tanggal_kunjungan))}}</td>
                     </tr>
                     <tr>
                         <td class="text3"><b>High Risk </b></td>
-                        <td class="text3">:</td>
+                        <td class="text3">: {{$biodata->FS_HIGH_RISK}}</td>
                     </tr>
                 </table>
             </td>
@@ -175,11 +175,11 @@
                 <table width="100%">
                     <tr>
                         <td class="text3"><b>Klinik Tujuan</b></td>
-                        <td class="text3">: SPESIALIS PENYAKIT DALAM</td>
+                        <td class="text3">: {{$biodata->SPESIALIS}}</td>
                     </tr>
                     <tr>
                         <td class="text3"><b>Alergi</b></td>
-                        <td class="text3">: </td>
+                        <td class="text3">: {{$biodata->FS_ALERGI}}</td>
                     </tr>
                 </table>
             </td>
@@ -193,71 +193,163 @@
         </tr>
         <tr>
             <td class="text3">Suhu</td>
-            <td class="text3" colspan="2">: 36.0</td>
+            <td class="text3" colspan="2">: {{$perawat->FS_SUHU}}</td>
         </tr>
         <tr>
             <td class="text3">Nadi</td>
-            <td class="text3" colspan="2">: 68 x/menit</td>
+            <td class="text3" colspan="2">: {{$perawat->FS_NADI}} x/menit</td>
         </tr>
         <tr>
             <td class="text3">R</td>
-            <td class="text3" colspan="2">: 68 x/menit</td>
+            <td class="text3" colspan="2">: {{$perawat->FS_R}} x/menit</td>
         </tr>
         <tr>
             <td class="text3">TD</td>
-            <td class="text3" colspan="2">: 140/70 mmHg</td>
+            <td class="text3" colspan="2">: {{$perawat->FS_TD}} mmHg</td>
         </tr>
         <tr>
             <td class="text3">Tinggi Badan</td>
-            <td class="text3" colspan="2">:  - cm</td>
+            <td class="text3" colspan="2">:  {{$perawat->FS_TB}} cm</td>
         </tr>
         <tr>
             <td class="text3">Berat Badan</td>
-            <td class="text3" colspan="2">: - Kg</td>
+            <td class="text3" colspan="2">: {{$perawat->FS_BB}} Kg</td>
         </tr>
         <tr>
+      
             <td class="text3"><b>Asesmen Nyeri</b></td>
-            <td class="text3" colspan="2">: Tidak Ada Nyeri</td>
+            <td class="text3" colspan="2">: 
+                @if ($perawat->FS_NYERI=='0')
+                {{'Tidak Ada Nyeri'}}
+                @elseif ($perawat->FS_NYERI=='1')
+                {{'Ada Nyeri'}}
+                @else
+                {{'-'}}
+                @endif
+            </td>
         </tr>
         <tr>
             <td class="text3">Provoke</td>
-            <td class="text3" colspan="2">: Tidak Ada</td>
+            <td class="text3" colspan="2">:
+                @if ($perawat->FS_NYERIP=='0')
+                {{'Tidak Ada'}}
+                @elseif ($perawat->FS_NYERIP=='1')
+                {{'Biologik'}}
+                @elseif ($perawat->FS_NYERIP=='2')
+                {{'Kimiawi'}}
+                @elseif ($perawat->FS_NYERIP=='3')
+                {{'Mekanik / Rudapaksa'}}
+                @else
+                {{'-'}}
+                @endif
+            </td>
         </tr>
         <tr>
             <td class="text3">Quality</td>
-            <td class="text3" colspan="2">: Tidak Ada</td>
+            <td class="text3" colspan="2">: 
+                @if ($perawat->FS_NYERIQ=='0')
+                {{'Tidak Ada'}}
+                @elseif ($perawat->FS_NYERIQ=='1')
+                {{'Seperti Di Tusuk-Tusuk'}}
+                @elseif ($perawat->FS_NYERIQ=='2')
+                {{'Seperti Terbakar'}}
+                @elseif ($perawat->FS_NYERIQ=='3')
+                {{'Seperti Tertimpa Beban'}}
+                @elseif ($perawat->FS_NYERIQ=='4')
+                {{'Ngilu'}}
+                @else
+                {{'-'}}
+                @endif
+            </td>
         </tr>
         <tr>
             <td class="text3">Regio</td>
-            <td class="text3" colspan="2">: - </td>
+            <td class="text3" colspan="2">: {{$perawat->FS_NYERIR}} </td>
         </tr>
         <tr>
             <td class="text3">Severity</td>
-            <td class="text3" colspan="2">: 0</td>
+            <td class="text3" colspan="2">:         
+                @if ($perawat->FS_NYERIS!=null)
+                {{$perawat->FS_NYERIS}}
+                @else
+                {{'-'}}
+                @endif</td>
         </tr>
         <tr>
             <td class="text3">Time</td>
-            <td class="text3" colspan="2">: Tidak Ada</td>
+            <td class="text3" colspan="2">: 
+                @if ($perawat->FS_NYERIT=='0')
+                {{'Tidak Ada'}}
+                @elseif ($perawat->FS_NYERIT=='1')
+                {{'Kadang-kadang'}}
+                @elseif ($perawat->FS_NYERIT=='2')
+                {{'Sering'}}
+                @elseif ($perawat->FS_NYERIT=='3')
+                {{'Menetap'}}
+                @else
+                {{'-'}}
+                @endif
+            </td>
         </tr>
         <tr>
             <td class="text3"><b>Asesmen Jatuh</b></td>
-            <td class="text3" colspan="2"></td>
+            <td class="text3" colspan="2">
+            </td>
         </tr>
         <tr>
             <td class="text3">Cara berjalan pasien Tidak seimbang/sempoyongan/limbung</td>
-            <td class="text3" colspan="2">: Tidak</td>
+            <td class="text3" colspan="2">:               
+                @if ($perawat->FS_CARA_BERJALAN1=='1')
+                {{'Ya'}}
+                @elseif ($perawat->FS_CARA_BERJALAN1=='0')
+                {{'Tidak'}}
+                @else
+                {{'-'}}
+                @endif
+            </td>
         </tr>
         <tr>
             <td class="text3">Cara berjalan pasien dengan mengunakan alat bantu</td>
-            <td class="text3" colspan="2">: Tidak</td>
+            <td class="text3" colspan="2">: 
+                @if ($perawat->FS_CARA_BERJALAN2=='1')
+                {{'Ya'}}
+                @elseif ($perawat->FS_CARA_BERJALAN2=='0')
+                {{'Tidak'}}
+                @else
+                {{'-'}}
+                @endif
+            </td>
         </tr>
         <tr>
-            <td class="text3">Menopang saat akan duduk: </td>
-            <td class="text3" colspan="2">: Tidak</td>
+            <td class="text3">Menopang saat akan duduk: tampak memegang pinggiran kursi atau meja / <br>benda lain sebagai penopang saat akan duduk</td>
+            <td class="text3" colspan="2">: 
+                @if ($perawat->FS_CARA_DUDUK=='1')
+                {{'Ya'}}
+                @elseif ($perawat->FS_CARA_DUDUK=='0')
+                {{'Tidak'}}
+                @else
+                {{'-'}}
+                @endif
+            </td>
         </tr>
         <tr>
             <td class="text3">Kesimpulan</td>
-            <td class="text3" colspan="2">: <b>Resiko Rendah</b></td>
+            <td class="text3" colspan="2">: 
+                @php
+                    $kesimpulan = $perawat->FS_CARA_BERJALAN1 + $perawat->FS_CARA_BERJALAN2 + $perawat->FS_CARA_DUDUK
+                @endphp
+                <b>
+                    @if($kesimpulan <= '1')
+                    {{'RESIKO RENDAH'}}
+                    @elseif ($kesimpulan == '2')
+                    {{'RESIKO SEDANG'}}
+                    @elseif ($kesimpulan >= '3')
+                    {{'RESIKO TINGGI'}}
+                    @else 
+                    {{'-'}}
+                    @endif
+                </b>
+            </td>
         </tr>
         <tr>
             <td class="text3"><b>Riwayat Kesehatan</b></td>
@@ -265,15 +357,41 @@
         </tr>
         <tr>
             <td class="text3">Riwayat Penyakit Dahulu</td>
-            <td class="text3" colspan="2">: </td>
+            <td class="text3" colspan="2">: {{$biodata->FS_RIW_PENYAKIT_DAHULU}}</td>
         </tr>
         <tr>
             <td class="text3">Riwayat Penyakit Keluarga</td>
-            <td class="text3" colspan="2">: -</td>
+            <td class="text3" colspan="2">: 
+                @if($perawat->FS_RIW_PENYAKIT_KEL == '1')
+                {{'Hipertensi'}}
+                @elseif ($perawat->FS_RIW_PENYAKIT_KEL == '2')
+                {{'TB Paru'}}
+                @elseif ($perawat->FS_RIW_PENYAKIT_KEL == '3')
+                {{$perawat->FS_RIW_PENYAKIT_KEL2}}
+                @else 
+                {{'-'}}
+                @endif
+            </td>
         </tr>
         <tr>
             <td class="text3"><b>Status Psikologi</b></td>
-            <td class="text3" colspan="2">: Tenang</td>
+            <td class="text3" colspan="2">: 
+                @if($perawat->FS_STATUS_PSIK == '1')
+                {{'Tenang'}}
+                @elseif ($perawat->FS_STATUS_PSIK == '2')
+                {{'Cemas'}}
+                @elseif ($perawat->FS_STATUS_PSIK == '3')
+                {{'Takut'}}
+                @elseif ($perawat->FS_STATUS_PSIK == '4')
+                {{'Marah'}}
+                @elseif ($perawat->FS_STATUS_PSIK == '5')
+                {{'Sedih'}}
+                @elseif ($perawat->FS_STATUS_PSIK == '6')
+                {{$perawat->FS_STATUS_PSIK2}}
+                @else 
+                {{'-'}}
+                @endif
+            </td>
         </tr>
         <tr>
             <td class="text3"><b>Status Sosial</b></td>
@@ -281,23 +399,78 @@
         </tr>
         <tr>
             <td class="text3">Hubungan dengan anggota keluarga</td>
-            <td class="text3" colspan="2">: Baik</td>
+            <td class="text3" colspan="2">: 
+                @if($perawat->FS_HUB_KELUARGA == '1')
+                {{'Baik'}}
+                @elseif ($perawat->FS_HUB_KELUARGA == '2')
+                {{'Tidak Baik'}}
+                @else 
+                {{'-'}}
+                @endif
+            </td>
         </tr>
         <tr>
             <td class="text3"><b>Status Fungsional</b></td>
-            <td class="text3" colspan="2">: Mandiri</td>
+            <td class="text3" colspan="2">: 
+
+                @if($perawat->FS_ST_FUNGSIONAL == '1')
+                {{'Mandiri'}}
+                @elseif ($perawat->FS_ST_FUNGSIONAL == '2')
+                {{'Perlu Bantuan'}}
+                @else 
+                {{'-'}}
+                @endif
+            </td>
         </tr>
         <tr>
             <td class="text3">Penglihatan</td>
-            <td class="text3" colspan="2">: Normal</td>
+            <td class="text3" colspan="2">: 
+                @if($perawat->FS_PENGELIHATAN == '1')
+                {{'Normal'}}
+                @elseif ($perawat->FS_PENGELIHATAN == '2')
+                {{'Kabur'}}
+                @elseif ($perawat->FS_PENGELIHATAN == '3')
+                {{'Kacamata'}}
+                @elseif ($perawat->FS_PENGELIHATAN == '4')
+                {{'Lensa kontak'}}
+                @else 
+                {{'-'}}
+                @endif
+            </td>
         </tr>
         <tr>
             <td class="text3">Penciuman</td>
-            <td class="text3" colspan="2">: Normal</td>
+            <td class="text3" colspan="2">: 
+                @if($perawat->FS_PENCIUMAN == '1')
+                {{'Normal'}}
+                @elseif ($perawat->FS_PENCIUMAN == '2')
+                {{'Tidak Normal'}}
+                @else 
+                {{'-'}}
+                @endif
+            </td>
         </tr>
         <tr>
             <td class="text3">Pendengaran</td>
-            <td class="text3" colspan="2">: Normal</td>
+            <td class="text3" colspan="2">: 
+                @if($perawat->FS_PENDENGARAN == '1')
+                {{'Normal'}}
+                @elseif ($perawat->FS_PENDENGARAN == '2')
+                {{'Tidak Normal (Kanan)'}}
+                @elseif ($perawat->FS_PENDENGARAN == '3')
+                {{'Tidak Normal (Kiri)'}}
+                @elseif ($perawat->FS_PENDENGARAN == '4')
+                {{'Tidak Normal (Kanan & Kiri)'}}
+                @elseif ($perawat->FS_PENDENGARAN == '5')
+                {{'Alat Bantu Dengar (Kanan)'}}
+                @elseif ($perawat->FS_PENDENGARAN == '6')
+                {{'Alat Bantu Dengar (Kiri)'}}
+                @elseif ($perawat->FS_PENDENGARAN == '7')
+                {{'Alat Bantu Dengar (Kanan & Kiri)'}}
+                @else 
+                {{'-'}}
+                @endif
+            </td>
         </tr>
         <tr>
             <td class="text3"><b>Spritual dan kultural pasien</b></td>
@@ -305,11 +478,37 @@
         </tr>
         <tr>
             <td class="text3">Agama</td>
-            <td class="text3" colspan="2">: Islam</td>
+            <td class="text3" colspan="2">: 
+                @if($perawat->FS_AGAMA == '1')
+                {{'Islam'}}
+                @elseif ($perawat->FS_AGAMA == '2')
+                {{'Kristen'}}
+                @elseif ($perawat->FS_AGAMA == '3')
+                {{'Katholik'}}
+                @elseif ($perawat->FS_AGAMA == '4')
+                {{'Hindu'}}
+                @elseif ($perawat->FS_AGAMA == '5')
+                {{'Budha'}}
+                @elseif ($perawat->FS_AGAMA == '6')
+                {{'Konghucu'}}
+    
+                @else 
+                {{'-'}}
+                @endif
+            </td>
         </tr>
         <tr>
             <td class="text3">Nilai/Kepercayaan khusus</td>
-            <td class="text3" colspan="2">: Tidak Ada</td>
+            <td class="text3" colspan="2">: 
+                @if($perawat->FS_NILAI_KHUSUS == '1')
+                {{'Tidak Ada'}}
+                @elseif ($perawat->FS_NILAI_KHUSUS == '2')
+                {{$perawat->FS_NILAI_KHUSUS2}}
+                @else 
+                {{'-'}}
+                @endif
+            </td>
+            </td>
         </tr>
         <tr>
             <td class="text3"><b>Keperawatan</b></td>
@@ -326,16 +525,16 @@
     </table>
     <table style="border: 1px solid black; border-top: none;" width="100%">
         <tr>
-            <td style="padding-top: 50px;" class="text5"></td>
-            <td style="padding-top: 50px;" class="text5">Tanggal 2024-07-10 Jam 08:35:22</td>
+            <td style="padding-top: 50px;" width="60%" class="text5"></td>
+            <td style="padding-top: 50px;" class="text5">Tanggal {{$perawat->TANGGAL_PERIKSA}} Jam {{$perawat->JAM_PERIKSA}}</td>
         </tr>
         <tr>
-            <td class="text5"></td>
-            <td class="text5"><img src="img/code.png" width="65" height="65" /></td>
+            <td width="70%" class="text5"></td>
+            <td class="text5" style="padding-left: 30px;">{!! DNS2D::getBarcodeHTML($perawat->NAMALENGKAP, 'QRCODE', 3, 3) !!}</td>
         </tr>
         <tr>
-            <td width="50%" class="text5"></td>
-            <td class="text5">(VITA VIA RANTI)</td>
+            <td width="60%" class="text5"></td>
+            <td class="text5" style="padding-right: 50px;">{{($perawat->NAMALENGKAP)}}</td>
         </tr>
     </table>
 </body>

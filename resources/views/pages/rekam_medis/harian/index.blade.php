@@ -86,6 +86,7 @@
                                         @endif
                                     </td>
                                     <td>
+                                        <a href="{{ route('rj.rmDokter', ['noReg' => $pasien->No_Reg, 'noMR'=> $pasien->No_MR]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> RM</a>
                                         @if($pasien->Tanggal>=$tglKemarin)
                                         <a href="#" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Edit Perawat</a>
                                         @if($pasien->Kode_Dokter == $userLogin)
