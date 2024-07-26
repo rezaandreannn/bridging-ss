@@ -143,6 +143,7 @@ class Rekam_medis extends Model
                 'a.FS_HIGH_RISK',
                 'b.NO_REG',
                 'b.Kode_Dokter',
+                'b.Tanggal as tanggal_kunjungan',
                 'c.NAMA_DOKTER',
                 'c.SPESIALIS',
                 'd.FS_DIAGNOSA',
@@ -263,7 +264,7 @@ class Rekam_medis extends Model
             ->get();
         return $data;
     }
-
+    
     public function cekLab($noReg)
     {
 
@@ -271,6 +272,24 @@ class Rekam_medis extends Model
             ->table('TA_TRS_KARTU_PERIKSA4')
             ->select(
                 'FS_KD_REG2'
+            )
+            ->where('FS_KD_REG2', $noReg)
+            ->first();
+            
+        if ($data != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public function cekRadiologi($noReg)
+    {
+        
+        $data = DB::connection('pku')
+        ->table('TA_TRS_KARTU_PERIKSA5')
+        ->select(
+            'FS_KD_REG2'
             )
             ->where('FS_KD_REG2', $noReg)
             ->first();
@@ -282,21 +301,107 @@ class Rekam_medis extends Model
         }
     }
 
-    public function cekRadiologi($noReg)
+    public function masalahKepByNoreg($noReg)
     {
-
         $data = DB::connection('pku')
-            ->table('TA_TRS_KARTU_PERIKSA5')
-            ->select(
-                'FS_KD_REG2'
-            )
-            ->where('FS_KD_REG2', $noReg)
-            ->first();
+        ->table('TAC_RJ_MASALAH_KEP as trmk')
+        ->leftJoin('TAC_COM_DAFTAR_DIAG as tcd', 'trmk.FS_KD_MASALAH_KEP', '=', 'tcd.FS_KD_DAFTAR_DIAGNOSA')
+            ->where('trmk.FS_KD_REG', $noReg)
+            ->get();
 
-        if ($data != null) {
-            return true;
-        } else {
-            return false;
-        }
+            return $data;
+    }
+
+    public function rencanaKepByNoreg($noReg)
+    {
+        $data = DB::connection('pku')
+        ->table('TAC_RJ_REN_KEP as trk')
+        ->leftJoin('TAC_COM_PARAM_REN_KEP as tcpr', 'trk.FS_KD_REN_KEP', '=', 'tcpr.FS_KD_TRS')
+            ->where('trk.FS_KD_REG', $noReg)
+            ->get();
+            return $data;
+    }
+    
+    public function cetakRmRajal($noReg){
+        
+        $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
+        $data = DB::connection('pku')
+            ->table('TAC_ASES_PER2 as tap')
+
+            ->leftJoin('TAC_RJ_VITAL_SIGN as vs', 'tap.FS_KD_REG', '=', 'vs.FS_KD_REG')
+            ->leftJoin('TAC_RJ_NYERI as trn', 'tap.FS_KD_REG', '=', 'trn.FS_KD_REG')
+            ->leftJoin('TAC_RJ_JATUH as trj', 'tap.FS_KD_REG', '=', 'trj.FS_KD_REG')
+            ->leftJoin('TAC_COM_USER as tcm', 'vs.mdb', '=', 'tcm.user_id')
+            ->leftJoin($db_rsmm . '.dbo.TUSER as u', 'tcm.user_name', '=', 'u.NAMAUSER')
+       
+            // ->leftJoin('ANTRIAN as a', 'p.No_MR', '=', 'a.No_MR')
+            // ->leftJoin('M_RUANG as mr', 'p.Kode_Ruang', '=', 'mr.Kode_Ruang')
+            // ->leftJoin($pku . '.dbo.TAC_RJ_MEDIS as trm', 'p.No_Reg', '=', 'trm.FS_KD_REG')
+            // ->leftJoin($pku . '.dbo.TAC_RJ_STATUS as trs', 'p.No_Reg', '=', 'trs.FS_KD_REG')
+        
+            ->select(
+                'tap.*',
+                // vital sign
+                'vs.FS_SUHU',
+                'vs.FS_NADI',
+                'vs.FS_R',
+                'vs.FS_TD',
+                'vs.FS_TB',
+                'vs.FS_BB',
+                'vs.MDD as TANGGAL_PERIKSA',
+                'vs.FS_JAM_TRS as JAM_PERIKSA',
+                'vs.FS_BB',
+                // nyeri
+                'trn.FS_NYERIP',
+                'trn.FS_NYERIQ',
+                'trn.FS_NYERIR',
+                'trn.FS_NYERIS',
+                'trn.FS_NYERIT',
+                'trn.FS_NYERI',
+                // resiko jatuh
+                'trj.FS_CARA_BERJALAN1',
+                'trj.FS_CARA_BERJALAN2',
+                'trj.FS_CARA_DUDUK',
+                'trj.INTERVENSI1',
+                'trj.INTERVENSI2',
+                // PEMERIKSAN TTV
+                'u.NAMALENGKAP'
+
+ 
+        
+            )
+            ->where('tap.FS_KD_REG', $noReg)
+            ->where('vs.FS_KD_REG', $noReg)
+            ->first();
+        return $data;
+    }
+
+    public function asesmenDokterRjBynoReg($noReg){
+        
+        $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
+        $data = DB::connection('pku')
+            ->table('TAC_RJ_MEDIS as trm')
+
+            ->leftJoin('TAC_COM_USER as tcu', 'trm.mdb', '=', 'tcu.user_id')
+            ->leftJoin($db_rsmm . '.dbo.DOKTER as d', 'tcu.user_name', '=', 'd.Kode_Dokter')
+            ->leftJoin($db_rsmm . '.dbo.TUSER as u', 'tcu.user_name', '=', 'u.NAMAUSER')
+       
+            // ->leftJoin('ANTRIAN as a', 'p.No_MR', '=', 'a.No_MR')
+            // ->leftJoin('M_RUANG as mr', 'p.Kode_Ruang', '=', 'mr.Kode_Ruang')
+            // ->leftJoin($pku . '.dbo.TAC_RJ_MEDIS as trm', 'p.No_Reg', '=', 'trm.FS_KD_REG')
+            // ->leftJoin($pku . '.dbo.TAC_RJ_STATUS as trs', 'p.No_Reg', '=', 'trs.FS_KD_REG')
+        
+            ->select(
+                'trm.*',
+                // vital sign
+                'tcu.user_name',
+                'd.Nama_Dokter',
+                'd.Kode_Dokter',
+                
+                'u.NAMALENGKAP as NamaLengkap',
+            )
+            ->where('trm.FS_KD_REG', $noReg)
+            ->first();
+        return $data;
     }
 }

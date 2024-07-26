@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Berkas;
 
 use App\Models\Pasien;
+use App\Models\RajalDokter;
 use App\Models\Rekam_medis;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -14,12 +15,14 @@ class Berkas_rm_controller extends Controller
 {
 
     protected $view;
+    protected $rajaldokter;
     protected $rekam_medis;
     protected $routeIndex;
 
     public function __construct(Rekam_medis $rekam_medis)
     {
         $this->rekam_medis = $rekam_medis;
+        $this->rajaldokter = new RajalDokter;
     }
 
     public function cetakResep($noReg, $kode_transaksi)
@@ -240,6 +243,30 @@ class Berkas_rm_controller extends Controller
         $filename = 'HasilEcho-' . $date . '-' . $noReg;
         $pdf = PDF::loadview('pages.rekam_medis.hasilEcho', ['biodata' => $biodata, 'resep' => $resep, 'tanggal' => $tanggal]);
         // Set paper size to A5
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
+    }
+
+    public function cetakRM($noReg)
+    {
+        $resep = $this->rajaldokter->resep($noReg);
+        $labs = $this->rajaldokter->lab($noReg);
+        $rads = $this->rajaldokter->radiologi($noReg);
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+        // dd($biodata);
+        $asesmenPerawat = $this->rekam_medis->cetakRmRajal($noReg);
+        $asesmenDokterRj = $this->rekam_medis->asesmenDokterRjBynoReg($noReg);
+        $masalahKeperawatan = $this->rekam_medis->masalahKepByNoreg($noReg);
+        $rencanaKeperawatan = $this->rekam_medis->rencanaKepByNoreg($noReg);
+        // Cetak PDF
+        // dd($asesmenDokterRj);
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+        $filename = 'RM -' . $date;
+
+        $title = 'Cetak RM';
+
+        $pdf = PDF::loadview('pages.rj.dokter.cetak.rm', ['tanggal' => $tanggal, 'title' => $title, 'resep' => $resep, 'labs' => $labs, 'rads' => $rads, 'biodata' => $biodata, 'perawat'=>$asesmenPerawat,'masalahKeperawatan'=>$masalahKeperawatan,'rencanaKeperawatan'=>$rencanaKeperawatan, 'asesmenDokterRj'=>$asesmenDokterRj]);
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
     }

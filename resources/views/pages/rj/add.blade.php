@@ -457,6 +457,11 @@
                                         <option value="4">Ya (11-15 Kg)</option>
                                         <option value="5">Ya (>15 Kg)</option>
                                     </select>
+                                    @error('FS_NUTRISI1')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
                                     <input type="hidden" id="hasil_sn1">
                                 </div>
                             </div>
@@ -468,6 +473,11 @@
                                         <option value="0">Tidak</option>
                                         <option value="1">Ya</option>
                                     </select>
+                                    @error('FS_NUTRISI2')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
                                     <input type="hidden" id="hasil_sn2">
                                 </div>
                             </div>

@@ -66,20 +66,20 @@
 
                                             </td>
                                             <td width="20%">
-                                                          <a href="{{ route('cppt.detail', [
+                                                          {{-- <a href="{{ route('cppt.detail', [
                                             'id' => $transaksi->ID_TRANSAKSI,
                                             'no_mr' => $transaksi->NO_MR_PASIEN,'kode_transaksi' => $transaksi->KODE_TRANSAKSI_FISIO
-                                            ]) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i>Tambah CPPT</a>
+                                            ]) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i>Tambah CPPT</a> --}}
 
                                                 <a href="{{ route('cppt.cetakCPPT', [
                                             'kode_transaksi' => $transaksi->KODE_TRANSAKSI_FISIO,
                                             'no_mr' => $transaksi->NO_MR_PASIEN
-                                            ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-secondary"><i class="fa fa-print"></i> CPPT</a>
+                                            ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-success"><i class="fa fa-print"></i> CPPT</a>
                                                 
                                                 <a href="{{ route('cppt.buktiLayanan', [
                                             'kode_transaksi' => $transaksi->KODE_TRANSAKSI_FISIO,
                                             'no_mr' => $transaksi->NO_MR_PASIEN
-                                            ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-secondary"><i class="fa fa-print"></i> Bukti Pelayanan</a>
+                                            ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-success"><i class="fa fa-print"></i> Bukti Pelayanan</a>
                                                 
                                             </td>
                                         </tr>

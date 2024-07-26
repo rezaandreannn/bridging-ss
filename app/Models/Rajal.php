@@ -32,9 +32,8 @@ class Rajal extends Model
                 'KODE_DOKTER as kode_dokter',
                 'NAMA_DOKTER as nama_dokter'
             )
-            ->where('Spesialis', 'FISIOTERAPI')
-            ->where('JENIS_PROFESI', 'DOKTER UMUM')
-            ->orWhere('JENIS_PROFESI', 'DOKTER SPESIALIS')
+            ->Where('JENIS_PROFESI', 'DOKTER SPESIALIS')
+            ->orWhere('Kode_Dokter', '100')
             ->whereNotIn('KODE_DOKTER', ['140s', 'TM140'])
             ->get()->toArray();
         return $data;

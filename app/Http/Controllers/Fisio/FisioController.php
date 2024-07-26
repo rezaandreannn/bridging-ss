@@ -310,7 +310,6 @@ class FisioController extends Controller
             'JENIS_FISIO' => $terapi,
             'TANGGAL_FISIO' => $request->input('TANGGAL_FISIO'),
             'JAM_FISIO' => $request->input('JAM_FISIO'),
-            'KODE_DOKTER' => $request->input('KODE_DOKTER') ?? null,
             'CARA_PULANG' => $request->input('CARA_PULANG'),
             'ANAMNESA' => $request->input('ANAMNESA'),
             'CREATE_AT' => now(),

@@ -246,7 +246,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>EKG</label>
-                                            <select name="EKG" id="" class="form-control select2" @error('EKG')  is-invalid @enderror">
+                                            <select name="EKG" id="" class="form-control select2 @error('EKG')  is-invalid @enderror">
                                                 <option value="" selected disabled>--Pilih EKG--</option>
                                                 <option value="Ya" @if(old('EKG')=='Ya' ) selected @endif>Ya</option>
                                                 <option value="Tidak" @if(old('EKG')=='Tidak' ) selected @endif>Tidak</option>
