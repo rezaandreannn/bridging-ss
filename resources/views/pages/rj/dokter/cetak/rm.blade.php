@@ -516,11 +516,23 @@
         </tr>
         <tr>
             <td class="text3">Masalah Keperawatan</td>
-            <td class="text3" colspan="2">: Kurang pengetahuan proses penyakit</td>
+            <td class="text3" colspan="2">: 
+                @forelse ($masalahKeperawatan as $masalahkep)
+                    {{$masalahkep->FS_NM_DIAGNOSA}}
+                @empty
+                    
+                @endforelse
+            </td>
         </tr>
         <tr>
             <td class="text3">Rencana Keperawatan</td>
-            <td class="text3" colspan="2">: Edukasi Proses Penyakit</td>
+            <td class="text3" colspan="2">: 
+                @forelse ($rencanaKeperawatan as $rencanakep)
+                {{$rencanakep->FS_NM_REN_KEP}}
+                 @empty
+                
+                @endforelse
+            </td>
         </tr>
     </table>
     <table style="border: 1px solid black; border-top: none;" width="100%">
@@ -601,7 +613,7 @@
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>
-                <td class="text3">: -kontrol hipotiroid. kel; TAK</td>
+                <td class="text3">: {{$asesmenDokterRj->FS_ANAMNESA}}</td>
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>
@@ -609,7 +621,7 @@
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>
-                <td class="text3">: </td>
+                <td class="text3">: {{$biodata->FS_RIW_PENYAKIT_DAHULU}}</td>
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>
@@ -617,7 +629,7 @@
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>
-                <td class="text3">:</td>
+                <td class="text3">: {{$asesmenDokterRj->FS_RIW_PENYAKIT_DAHULU2}}</td>
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>
@@ -625,7 +637,23 @@
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>
-                <td class="text3">: Tenang</td>
+                <td class="text3">: 
+                    @if($perawat->FS_STATUS_PSIK == '1')
+                    {{'Tenang'}}
+                    @elseif ($perawat->FS_STATUS_PSIK == '2')
+                    {{'Cemas'}}
+                    @elseif ($perawat->FS_STATUS_PSIK == '3')
+                    {{'Takut'}}
+                    @elseif ($perawat->FS_STATUS_PSIK == '4')
+                    {{'Marah'}}
+                    @elseif ($perawat->FS_STATUS_PSIK == '5')
+                    {{'Sedih'}}
+                    @elseif ($perawat->FS_STATUS_PSIK == '6')
+                    {{$perawat->FS_STATUS_PSIK2}}
+                    @else 
+                    {{'-'}}
+                    @endif
+                </td>
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>
@@ -633,15 +661,100 @@
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>
-                <td class="text3">: Suhu : -36 C, Nadi : -83 x/menit, Respirasi : -20 x/menit, TD : -134/82 mmHg, BB : -, TB : -, Alergi : Skala Nyeri :0, Skrining Nutrisi : Normal</td>
+                <td class="text3">: {{$asesmenDokterRj->FS_CATATAN_FISIK}}</td>
+                <td class="text3" colspan="2"></td>
+            </tr>
+            @if ($asesmenDokterRj->MUKOSA !='')
+            <tr>
+                <td class="text3"><b>Kepala Leher</b></td>
+                <td class="text3" colspan="2"></td>
+            </tr>
+
+                    <tr>
+                        <td class="text3">Konjungtiva : {{$asesmenDokterRj->KONJUNGTIVA}}</td>
+                        <td class="text3" colspan="2"></td>
+                    </tr>
+                        <tr>
+                            <td class="text3">Sklera : {{$asesmenDokterRj->SKELERA}}  </td>
+                            <td class="text3" colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td class="text3">Bibir/Lidah : {{$asesmenDokterRj->BIBIR}} </td>
+                            <td class="text3" colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td class="text3"> Mukosa : {{$asesmenDokterRj->MUKOSA}}</td>
+                            <td class="text3" colspan="2"></td>
+                        </tr>
+           
+                        <tr>
+                            <td class="text3">Deviasi Trakea : {{$asesmenDokterRj->DEVIASI}} </td>
+                            <td class="text3" colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td class="text3">JVP : {{$asesmenDokterRj->JVP}} </td>
+                            <td class="text3" colspan="2"></td>
+                        </tr>
+             @endif
+             @if ($asesmenDokterRj->THORAX !='')           
+            <tr>
+                <td class="text3"><b>Thorax</b></td>
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>
-                <td class="text3"><b>Diagnosa</b></td>
+                <td class="text3">{{$asesmenDokterRj->THORAX}}</td>
+                <td class="text3" colspan="2"></td>
+            </tr>
+            @endif
+            @if ($asesmenDokterRj->JANTUNG !='')
+            <tr>
+                <td class="text3"><b>Jantung</b></td>
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>
-                <td class="text3">: Hipotiroid</td>
+                <td class="text3">{{$asesmenDokterRj->JANTUNG}}</td>
+                <td class="text3" colspan="2"></td>
+            </tr>
+            @endif
+            @if ($asesmenDokterRj->ABDOMEN !='')
+            <tr>
+                <td class="text3"><b>Abdomen</b></td>
+                <td class="text3" colspan="2"></td>
+            </tr>
+            <tr>
+                <td class="text3">{{$asesmenDokterRj->ABDOMEN}}</td>
+                <td class="text3" colspan="2"></td>
+            </tr>
+            @endif
+            @if ($asesmenDokterRj->PINGGANG !='')
+            <tr>
+                <td class="text3"><b>Pinggang</b></td>
+                <td class="text3" colspan="2"></td>
+            </tr>
+            <tr>
+                <td class="text3">{{$asesmenDokterRj->PINGGANG}}</td>
+                <td class="text3" colspan="2"></td>
+            </tr>
+            @endif
+            @if ($asesmenDokterRj->EKS_ATAS !='')
+            <tr>
+                <td class="text3"><b>Ekstremitas</b></td>
+                <td class="text3" colspan="2"></td>
+            </tr>
+            <tr>
+                <td class="text3">
+                    {{$asesmenDokterRj->EKS_ATAS}}
+                    {{$asesmenDokterRj->EKS_BAWAH}}
+                </td>
+                <td class="text3" colspan="2"></td>
+            </tr>
+            @endif
+            <tr>
+                <td class="text3"><b>Diagnosa (A)</b></td>
+                <td class="text3" colspan="2"></td>
+            </tr>
+            <tr>
+                <td class="text3">: {{$asesmenDokterRj->FS_DIAGNOSA}}</td>
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>
@@ -649,7 +762,7 @@
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>
-                <td class="text3">: </td>
+                <td class="text3">: {{$asesmenDokterRj->FS_DAFTAR_MASALAH}}</td>
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>
@@ -657,39 +770,45 @@
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>
-                <td class="text3">: </td>
+                <td class="text3">: 
+                    {{$asesmenDokterRj->FS_TINDAKAN}}
+                    @if ($asesmenDokterRj->FS_EKG !='')
+                    <br>
+                    EKG : {{$asesmenDokterRj->FS_EKG}}
+                    @endif
+                </td>
                 <td class="text3" colspan="2"></td>
             </tr>
+            @if ($asesmenDokterRj->FS_PLANNING !='')
+            <tr>
+                <td class="text3"><b>Planning</b></td>
+                <td class="text3" colspan="2"></td>
+            </tr>
+            <tr>
+                <td class="text3">: 
+                    {{$asesmenDokterRj->FS_PLANNING}}
+                </td>
+                <td class="text3" colspan="2"></td>
+            </tr>
+            @endif
         </table>
         <table style="border: 1px solid black; border-top: none;" width="100%">
             <tr>
                 <td style="padding-top: 50px;" class="text5"></td>
-                <td style="padding-top: 50px;" class="text5">Tanggal 2024-07-10 Jam 08:35:22</td>
+                <td style="padding-top: 50px;" class="text5">Tanggal {{$asesmenDokterRj->mdd}}, Jam {{$asesmenDokterRj->FS_JAM_TRS}}</td>
             </tr>
             <tr>
-                <td class="text5"></td>
-                <td class="text5"><img src="img/code.png" width="65" height="65" /></td>
-            </tr>
-            <tr>
-                <td width="50%" class="text5"></td>
-                <td class="text5">(VITA VIA RANTI)</td>
-            </tr>
-        </table>
-        <p class="text7"><b>HASIL USG</b></p>
-        <table style="border: 1px solid black;" width="100%">
-            <tr>
-                <td class="text5"></td>
-                <td class="text5">Tanggal 2024-07-10 Jam 08:35:22</td>
-            </tr>
-            <tr>
-                <td class="text5"></td>
-                <td class="text5"><img src="img/code.png" width="65" height="65" /></td>
+                <tr>
+                    <td width="70%" class="text5"></td>
+                    <td class="text5" style="padding-left: 30px;">{!! DNS2D::getBarcodeHTML($asesmenDokterRj->NamaLengkap, 'QRCODE', 3, 3) !!}</td>
+                </tr>
             </tr>
             <tr>
                 <td width="50%" class="text5"></td>
-                <td class="text5">(VITA VIA RANTI)</td>
+                <td class="text5">({{$asesmenDokterRj->NamaLengkap}})</td>
             </tr>
         </table>
+
     </body>
 </html>
 
@@ -748,6 +867,31 @@
                 </td>
             </tr>
         </table>
+        <p class="text7"><b>HASIL USG</b></p>
+        <table style="border: 1px solid black;" width="100%">
+            <tr>
+                <td class="text3"><b>Hasil USG</b></td>
+                <td class="text3" colspan="2"></td>
+            </tr>
+            <tr>
+                <td class="text3">: 
+                    {{$asesmenDokterRj->FS_USG}}
+                </td>
+                <td class="text3" colspan="2"></td>
+            </tr>
+            <tr>
+                <td class="text5"></td>
+                <td class="text5" colspan="2">Tanggal {{$asesmenDokterRj->mdd}}, Jam {{$asesmenDokterRj->FS_JAM_TRS}}</td>
+            </tr>
+            <tr>
+                <td width="70%" class="text5"></td>
+                <td class="text5" colspan="2" style="padding-left: 30px;">{!! DNS2D::getBarcodeHTML($asesmenDokterRj->NamaLengkap, 'QRCODE', 3, 3) !!}</td>
+            </tr>
+            <tr>
+                <td width="50%" class="text5"></td>
+                <td class="text5" colspan="2">({{$asesmenDokterRj->NamaLengkap}})</td>
+            </tr>
+        </table>
         <p class="text7"><b>HASIL RADIOLOGI</b></p>
         <table width="100%">
             <thead>
@@ -757,10 +901,12 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach ($rads as $rad)
                 <tr>
-                    <td class="text8">Testing</td>
-                    <td class="text8">2</td>
+                    <td class="text8">{{$rad->KET_TINDAKAN}}</td>
+                    <td class="text8">{{$rad->Ket}}</td>
                 </tr>
+                @endforeach
             </tbody>
         </table>
         <p class="text7"><b>HASIL LABORATORIUM</b></p>
@@ -772,10 +918,10 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($lab as $labs)
+                @foreach ($labs as $lab)
                 <tr>
-                    <td class="text8">{{$labs->Pemeriksaan}}</td>
-                    <td class="text8">{{$labs->Hasil}}</td>
+                    <td class="text8">{{$lab->Pemeriksaan}}</td>
+                    <td class="text8">{{$lab->Hasil}}</td>
                 </tr>
                 @endforeach
             </tbody>

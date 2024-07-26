@@ -300,6 +300,27 @@ class Rekam_medis extends Model
             return false;
         }
     }
+
+    public function masalahKepByNoreg($noReg)
+    {
+        $data = DB::connection('pku')
+        ->table('TAC_RJ_MASALAH_KEP as trmk')
+        ->leftJoin('TAC_COM_DAFTAR_DIAG as tcd', 'trmk.FS_KD_MASALAH_KEP', '=', 'tcd.FS_KD_DAFTAR_DIAGNOSA')
+            ->where('trmk.FS_KD_REG', $noReg)
+            ->get();
+
+            return $data;
+    }
+
+    public function rencanaKepByNoreg($noReg)
+    {
+        $data = DB::connection('pku')
+        ->table('TAC_RJ_REN_KEP as trk')
+        ->leftJoin('TAC_COM_PARAM_REN_KEP as tcpr', 'trk.FS_KD_REN_KEP', '=', 'tcpr.FS_KD_TRS')
+            ->where('trk.FS_KD_REG', $noReg)
+            ->get();
+            return $data;
+    }
     
     public function cetakRmRajal($noReg){
         
@@ -351,6 +372,35 @@ class Rekam_medis extends Model
             )
             ->where('tap.FS_KD_REG', $noReg)
             ->where('vs.FS_KD_REG', $noReg)
+            ->first();
+        return $data;
+    }
+
+    public function asesmenDokterRjBynoReg($noReg){
+        
+        $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
+        $data = DB::connection('pku')
+            ->table('TAC_RJ_MEDIS as trm')
+
+            ->leftJoin('TAC_COM_USER as tcu', 'trm.mdb', '=', 'tcu.user_id')
+            ->leftJoin($db_rsmm . '.dbo.DOKTER as d', 'tcu.user_name', '=', 'd.Kode_Dokter')
+            ->leftJoin($db_rsmm . '.dbo.TUSER as u', 'tcu.user_name', '=', 'u.NAMAUSER')
+       
+            // ->leftJoin('ANTRIAN as a', 'p.No_MR', '=', 'a.No_MR')
+            // ->leftJoin('M_RUANG as mr', 'p.Kode_Ruang', '=', 'mr.Kode_Ruang')
+            // ->leftJoin($pku . '.dbo.TAC_RJ_MEDIS as trm', 'p.No_Reg', '=', 'trm.FS_KD_REG')
+            // ->leftJoin($pku . '.dbo.TAC_RJ_STATUS as trs', 'p.No_Reg', '=', 'trs.FS_KD_REG')
+        
+            ->select(
+                'trm.*',
+                // vital sign
+                'tcu.user_name',
+                'd.Nama_Dokter',
+                'd.Kode_Dokter',
+                
+                'u.NAMALENGKAP as NamaLengkap',
+            )
+            ->where('trm.FS_KD_REG', $noReg)
             ->first();
         return $data;
     }

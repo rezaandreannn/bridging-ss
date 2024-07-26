@@ -158,7 +158,8 @@ class RajalDokter extends Model
             ->join('M_RINCI_HEADER as c', 'c.NO_RINCI', '=', 'a.NO_RINCI')
             ->select(
                 'a.*',
-                'c.KET_TINDAKAN'
+                'c.KET_TINDAKAN',
+                'b.Ket'
             )
             ->where('a.NO_REG', $noReg)
             ->where('a.NO_RINCI', 'like', 'B%')

@@ -44,6 +44,7 @@ class RekamMedisHarianController extends Controller
         $kode_dokter = $request->input('kode_dokter');
         $tanggal = $request->input('tanggal');
         $dokters = $this->rajal->byKodeDokter();
+        // dd($dokters);
         $dataPasien = [];
         if ($kode_dokter != null and $kode_dokter != null) {
             $dataPasien = $this->rekam_medis->rekamMedisHarian($kode_dokter, $tanggal);
