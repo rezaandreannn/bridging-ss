@@ -27,7 +27,7 @@
         </div>
 
         <div class="section-body">
-            @include('components.biodata-pasien-fisio-bymr')
+            {{-- @include('components.biodata-pasien-fisio-bymr') --}}
             <div class="card card-primary">
                 <div class="card-body">
                     <form action="" method="POST">

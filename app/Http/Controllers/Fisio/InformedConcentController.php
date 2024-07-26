@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Fisio;
 
+use Carbon\Carbon;
 use App\Models\Rajal;
 use App\Models\Pasien;
 use App\Models\Fisioterapi;
+use App\Models\Rekam_medis;
 use Illuminate\Http\Request;
 use App\Models\BerkasFisioterapi;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class InformedConcentController extends Controller
 {
@@ -18,6 +21,7 @@ class InformedConcentController extends Controller
     protected $berkasFisio;
     protected $pasien;
     protected $rajal;
+    protected $rekam_medis;
 
     public function __construct(Fisioterapi $fisio)
     {
@@ -27,18 +31,19 @@ class InformedConcentController extends Controller
         $this->berkasFisio = new BerkasFisioterapi();
         $this->pasien = new Pasien();
         $this->rajal = new Rajal();
+        $this->rekam_medis = new Rekam_medis();
     }
 
     public function index()
     {
         //
         $listpasien = $this->fisio->pasienCpptdanFisioterapiList();
-     
 
-        $fisioModel= new Fisioterapi();
-       
+
+        $fisioModel = new Fisioterapi();
+
         $title = $this->prefix . ' ' . 'Index';
-        return view($this->view . 'index', compact('title', 'listpasien','fisioModel'));
+        return view($this->view . 'index', compact('title', 'listpasien', 'fisioModel'));
     }
 
     public function create_rujukan(Request $request)
@@ -47,16 +52,15 @@ class InformedConcentController extends Controller
         $title = 'Surat Rujukan Fisioterapi Index';
         $noreg = $request->input('no_reg');
         // $biodata = $this->rajal->resumeMedisPasienByMR($noMR);
-        return view('pages.fisioterapi.surat_rujukan.add', compact('title','noreg'));
-
+        return view('pages.fisioterapi.surat_rujukan.add', compact('title', 'noreg'));
     }
 
     public function store_rujukan(Request $request)
     {
         //
-        $kode_dokter = DB::connection('db_rsmm')->table('pendaftaran')->select('Kode_Dokter')->where('No_Reg',$request->input('kode_registrasi'))->first();
-        
-     
+        $kode_dokter = DB::connection('db_rsmm')->table('pendaftaran')->select('Kode_Dokter')->where('No_Reg', $request->input('kode_registrasi'))->first();
+
+
         $data = DB::connection('pku')->table('fis_surat_rujukan')->insert([
 
             'kode_registrasi' => $request->input('kode_registrasi'),
@@ -77,7 +81,6 @@ class InformedConcentController extends Controller
         ]);
         // dd($data);
         return redirect()->route('informed_concent.index')->with('success', 'Informed Concent Berhasil Ditambahkan!');
-
     }
 
     /**
@@ -85,6 +88,20 @@ class InformedConcentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function cetakPersetujuan($noReg)
+    {
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+
+        $filename = 'Persetujuan-' . $date . '-' . $noReg;
+        $pdf = PDF::loadview('pages.fisioterapi.cetak.lembarPersetujuan', ['biodata' => $biodata, 'tanggal' => $tanggal]);
+        // Set paper size to A5
+        $pdf->setPaper('F4');
+        return $pdf->stream($filename . '.pdf');
+    }
+
     public function create(Request $request)
     {
         //
@@ -109,14 +126,11 @@ class InformedConcentController extends Controller
             'JAM' => date('G:i:s')
         ]);
 
-        if($informed_concent){
+        if ($informed_concent) {
             return redirect()->route('informed_concent.index')->with('success', 'Informed Concent Berhasil Ditambahkan!');
-            
-        }else {
+        } else {
             return redirect()->route('informed_concent.index')->with('danger', 'Informed Concent Gagal Ditambahkan!');
-
         }
-
     }
 
     /**

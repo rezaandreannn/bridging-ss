@@ -199,6 +199,7 @@ Route::middleware('auth')->group(function () {
         Route::get('informed_concent/list_pasien', [InformedConcentController::class, 'index'])->name('informed_concent.index');
         Route::get('informed_concent/add', [InformedConcentController::class, 'create'])->name('informed_concent.add');
         Route::post('informed_concent/add_proses', [InformedConcentController::class, 'store'])->name('informed_concent.add_proses');
+        Route::get('informed_concent/dokter/{noReg}', [InformedConcentController::class, 'cetakPersetujuan'])->name('informed_concent.cetakPersetujuan');
         Route::get('rujukan/add', [InformedConcentController::class, 'create_rujukan'])->name('rujukan.add');
 
         // rujukan fisioterapi
@@ -219,9 +220,9 @@ Route::middleware('auth')->group(function () {
     // Poli Mata
     Route::prefix('pm')->group(function () {
         Route::get('/polimata', [AssesmenMataController::class, 'index'])->name('poliMata.index');
-        Route::get('/polimata/assesmen_keperawatan/{NoMr}', [AssesmenMataController::class, 'assesmenKeperawatan'])->name('poliMata.assesmenKeperawatan');
-        Route::get('/polimata/assesmen_awal/{NoMr}', [AssesmenMataController::class, 'create'])->name('poliMata.assesmenAwal');
-        Route::get('/polimata/assesmen_mata/{NoMr}', [AssesmenMataController::class, 'assesmenMata'])->name('poliMata.assesmenMata');
+        Route::get('/polimata/assesmen_keperawatan', [AssesmenMataController::class, 'assesmenKeperawatan'])->name('poliMata.assesmenKeperawatan');
+        Route::get('/polimata/assesmen_awal', [AssesmenMataController::class, 'create'])->name('poliMata.assesmenAwal');
+        Route::get('/polimata/assesmen_mata', [AssesmenMataController::class, 'assesmenMata'])->name('poliMata.assesmenMata');
     });
 
     Route::prefix('ttd')->group(function () {

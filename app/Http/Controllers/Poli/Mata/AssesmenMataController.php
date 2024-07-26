@@ -36,25 +36,25 @@ class AssesmenMataController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function assesmenKeperawatan($noMR)
+    public function assesmenKeperawatan()
     {
         $title = $this->prefix . ' ' . 'Mata Assesmen Keperawatan';
-        $biodatas = $this->pasien->biodataPasienByMr($noMR);
-        return view($this->view . 'assesmenKeperawatan', compact('title', 'biodatas'));
+        // $biodatas = $this->pasien->biodataPasienByMr($noMR);
+        return view($this->view . 'assesmenKeperawatan', compact('title'));
     }
 
-    public function create($noMR)
+    public function create()
     {
         $title = $this->prefix . ' ' . 'Mata Assesmen Awal';
-        $biodatas = $this->pasien->biodataPasienByMr($noMR);
-        return view($this->view . 'assesmenAwal', compact('title', 'biodatas'));
+        // $biodatas = $this->pasien->biodataPasienByMr($noMR);
+        return view($this->view . 'assesmenAwal', compact('title'));
     }
 
-    public function assesmenMata($noMR)
+    public function assesmenMata()
     {
         $title = $this->prefix . ' ' . 'Mata Assesmen Pemeriksaan';
-        $biodatas = $this->pasien->biodataPasienByMr($noMR);
-        return view($this->view . 'assesmenMata', compact('title', 'biodatas'));
+        // $biodatas = $this->pasien->biodataPasienByMr($noMR);
+        return view($this->view . 'assesmenMata', compact('title'));
     }
 
     /**

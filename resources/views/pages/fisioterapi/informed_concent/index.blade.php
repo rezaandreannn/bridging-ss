@@ -64,6 +64,8 @@
                                             <a href="{{ route('berkas.rujukan', ['no_reg' => $data->NO_REG
                                             ])}}" class="btn btn-sm btn-warning" ><i class="fa fa-download"></i> Surat Rujukan</a>
                                             @endif  
+                                            <a href="{{ route('informed_concent.cetakPersetujuan', ['noReg' => $data->NO_REG
+                                            ])}}" class="btn btn-sm btn-success">Surat Persetujuan</a>
                                         </td>
                                     </tr>
                                 @endforeach
