@@ -19,7 +19,8 @@
                 class="needs-validation"
                 novalidate="">
                 @csrf
-                <div class="form-group">
+                <div class="form-group @error('email') is-invalid  
+                                                @enderror">
                     <label for="email">Email</label>
                     <input id="email"
                         type="email"
@@ -28,9 +29,11 @@
                         tabindex="1"
                         required
                         autofocus>
-                    <div class="invalid-feedback">
-                        Please fill in your email
-                    </div>
+                        @error('email')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
                 </div>
 
                 <div class="form-group">
@@ -46,13 +49,16 @@
                     </div>
                     <input id="password"
                         type="password"
-                        class="form-control"
+                        class="form-control @error('password') is-invalid  
+                                                @enderror"
                         name="password"
                         tabindex="2"
                         required>
-                    <div class="invalid-feedback">
-                        please fill in your password
-                    </div>
+                        @error('password')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
                 </div>
 
                 <div class="form-group">
