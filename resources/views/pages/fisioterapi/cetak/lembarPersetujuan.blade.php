@@ -284,7 +284,7 @@
             </td>
         </tr>
         <tr>
-            <td rowspan="2" colspan="2" class="tanda">Dengan ini menyatakan bahwa saya telah menerangkan hal-hal di atas secara benar dan jelas dan memberikan kesempatan untuk bertanya dan atau berdiskusi.</td>
+            <td rowspan="2" colspan="2" class="tanda">Dengan ini menyatakan bahwa saya telah menerima informasi sebagaimana di atas yang beri tanda/paraf di kolom kanannya telah memahaminya</td>
             <td class="tandatangan" colspan="2" style="border-left:none; border-top:none;border-bottom:none;">Penerima Informasi</td>
           </tr>
         <tr>
