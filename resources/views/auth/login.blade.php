@@ -14,6 +14,7 @@
         </div>
 
         <div class="card-body">
+            <x-auth-validation-errors class="mb-4" :errors="$errors" />
             <form method="POST"
                 action="{{ route('login') }}"
                 class="needs-validation"
@@ -28,7 +29,7 @@
                         name="email"
                         tabindex="1"
                         required
-                        autofocus>
+                        autofocus value="{{ old('email')}}">
                         @error('email')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -53,7 +54,7 @@
                                                 @enderror"
                         name="password"
                         tabindex="2"
-                        required>
+                        required  value="{{ old('password')}}">
                         @error('password')
                         <div class="invalid-feedback">
                             {{ $message }}
