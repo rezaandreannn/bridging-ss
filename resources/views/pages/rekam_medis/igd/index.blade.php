@@ -140,7 +140,7 @@
                                         {{$pasien->Medis}}
                                     </td>
                                     <td>
-                                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> RM</a>
+                                        <a href="{{ route('rm.berkasIgd', ['noReg' => $pasien->No_Reg]) }}" class="btn btn-sm btn-info"><i class="fas fa-download"></i> RM</a>
 
                                         @if($pasien->D_PLANNING == 'Rujuk Internal')
                                         <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujuk Internal</a>

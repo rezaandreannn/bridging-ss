@@ -215,7 +215,6 @@ Route::middleware('auth')->group(function () {
         Route::get('berkas_fisio/rujukan', [BerkasFisioController::class, 'cetak_rujukan'])->name('berkas.rujukan');
         Route::get('berkas_fisio/informed', [BerkasFisioController::class, 'cetak_informed'])->name('berkas.informed');
         Route::get('/berkas_fisio/harian', [BerkasFisioController::class, 'berkas'])->name('berkas.harian');
-
     });
 
     // Poli Mata
@@ -279,9 +278,12 @@ Route::middleware('auth')->group(function () {
         Route::get('rawat_jalan/prb/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakPRB'])->name('rj.prb');
         Route::get('rawat_jalan/faskes/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakFaskes'])->name('rj.faskes');
         Route::get('rawat_jalan/hasil_echo/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakHasilEcho'])->name('rj.hasilEcho');
-
-        
+        // Report Rekam Medis Rawat Jalan
         Route::get('rawat_jalan/cetak_rm/{noReg}/{noMR}', [Berkas_rm_controller::class, 'cetakRM'])->name('rj.rmDokter');
+        // Report Rekam Medis IGD
+        Route::get('riwayaRekamMedis/berkasIgd/{noReg}', [Berkas_rm_controller::class, 'cetakRMIgd'])->name('rm.berkasIgd');
+
+
 
 
         // Rawat Jalan Dokter
@@ -289,7 +291,7 @@ Route::middleware('auth')->group(function () {
         Route::get('rajal/dokter/add_asesmen/{noReg}/{noMR}', [RajalDokterController::class, 'createAsesmen'])->name('rj.dokterHistory');
         Route::get('rajal/dokter/copy_asesmen/{noReg}/{noMR}', [RajalDokterController::class, 'copyDokter'])->name('rj.dokterCopy');
         Route::get('rajal/dokter/detail/{noReg}/{noMR}', [RajalDokterController::class, 'detailDokter'])->name('rj.dokterDetail');
-    
+
         Route::get('rajal/dokter/resep/{noReg}', [RajalDokterController::class, 'resepDokter'])->name('rj.dokterResep');
         Route::get('rajal/dokter/lab/{noReg}', [RajalDokterController::class, 'labDokter'])->name('rj.dokterLab');
     });

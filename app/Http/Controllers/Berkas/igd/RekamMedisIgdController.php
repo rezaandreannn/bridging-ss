@@ -36,23 +36,23 @@ class RekamMedisIgdController extends Controller
     public function index(Request $request)
     {
         //
-         //
-         $title = $this->prefix . ' ' . 'IGD';
-         $nomr = $request->input('nomr');
-         $biodatas = $this->pasien->biodataPasienByMr($nomr);
-         $dataPasien=[];
-         if($nomr != null){
-             $dataPasien = $this->rekam_medis->rekamMedisIgd($nomr);
-         }
-         // dd($dataPasien);
- 
-         $cek_mr = 'false';
-         if($biodatas!=null){
-             $cek_mr = 'true';
-         }
-       
-        
-         return view($this->view . 'index', compact('title','biodatas','cek_mr','dataPasien'));
+        //
+        $title = $this->prefix . ' ' . 'IGD';
+        $nomr = $request->input('nomr');
+        $biodatas = $this->pasien->biodataPasienByMr($nomr);
+        $dataPasien = [];
+        if ($nomr != null) {
+            $dataPasien = $this->rekam_medis->rekamMedisIgd($nomr);
+        }
+        // dd($dataPasien);
+
+        $cek_mr = 'false';
+        if ($biodatas != null) {
+            $cek_mr = 'true';
+        }
+
+
+        return view($this->view . 'index', compact('title', 'biodatas', 'cek_mr', 'dataPasien'));
     }
 
     /**

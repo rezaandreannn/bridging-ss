@@ -410,6 +410,48 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Thorak</label>
+                                            <div class="col-md-12">
+                                                <div class="form-group" style="display: flex; flex-direction: row;">
+                                                    <div class="input-group" style="margin-right: 10px;">
+                                                        <label for="ekstremitas_atas" class="mr-2 mt-2">
+                                                            Jantung
+                                                        </label>
+                                                        <input type="text" class="form-control" name="ekstremitas_atas" id="anel_od">
+                                                    </div>
+                                                    <div class="input-group" style="margin-right: 10px;">
+                                                        <label for="ekstremitas_bawah" class="mr-2 mt-2">
+                                                            Paru
+                                                        </label>
+                                                        <input type="text" class="form-control" name="ekstremitas_bawah" id="anel_os">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Ekstremitas</label>
+                                            <div class="col-md-12">
+                                                <div class="form-group" style="display: flex; flex-direction: row;">
+                                                    <div class="input-group" style="margin-right: 10px;">
+                                                        <label for="ekstremitas_atas" class="mr-2 mt-2">
+                                                            Atas
+                                                        </label>
+                                                        <input type="text" class="form-control" name="ekstremitas_atas" id="anel_od">
+                                                    </div>
+                                                    <div class="input-group" style="margin-right: 10px;">
+                                                        <label for="ekstremitas_bawah" class="mr-2 mt-2">
+                                                            Bawah
+                                                        </label>
+                                                        <input type="text" class="form-control" name="ekstremitas_bawah" id="anel_os">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="card-header card-success">
                                         <h4 class="card-title">Pemeriksaaan Penunjang</h4>
                                     </div>
