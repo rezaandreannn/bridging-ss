@@ -72,6 +72,17 @@ class RekamMedisByMrController extends Controller
         return view($this->view . 'detailBerkas', compact('title', 'biodata', 'medis', 'perawat', 'bidan', 'rencana', 'resume'));
     }
 
+    public function detail_cppt($noReg){
+        $title = $this->prefix . ' ' . 'Berkas Cppt';
+        $biodata = $this->rajal->pasien_bynoreg($noReg);
+        $cppt = $this->rekam_medis->detailCpptByNoreg($noReg);
+
+        dd($cppt);
+      
+
+        return view($this->view . 'detailBerkas', compact('title', 'biodata', 'medis', 'perawat', 'bidan', 'rencana', 'resume'));
+    }
+
     public function create()
     {
         //
