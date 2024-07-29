@@ -68,7 +68,7 @@
                                 @foreach ($data as $item)
                                 <tr>
                                     <td class="text-center" width="5%">
-                                        {{ $loop->iteration }}
+                                        <span class="badge badge-pill badge-success">{{ $item->nomor_antrean }}</span>
                                     </td>
                                     <td>{{ $item->no_mr }}</td>
                                     <td>{{ $item->nama_pasien }}</td>

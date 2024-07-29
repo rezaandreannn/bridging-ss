@@ -43,7 +43,8 @@
                                 @foreach ($pasien as $data)
                                     <tr>
                                         <td>
-                                            <span class="badge badge-pill badge-success">{{ $data->NOMOR }}</span></td>
+                                            <span class="badge badge-pill badge-success">{{ $data->NOMOR }}</span>
+                                        </td>
                                         <td>{{$data->NO_MR}}</td>
                                         <td>{{$data->NAMA_PASIEN}}</td>
                                         <td>{{$data->ALAMAT}}</td>

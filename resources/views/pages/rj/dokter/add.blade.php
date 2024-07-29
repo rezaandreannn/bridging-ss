@@ -86,7 +86,7 @@
                             <h4 class="card-title">Pemeriksaan Dokter</h4>
                         </div>
                         <div class="card-body">
-                            <form action="" method="POST">
+                            <form id="myForm" action="" method="POST">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6">
@@ -286,7 +286,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="">Nama Obat</label>
-                                            <select name="nama_obat" id="" class="form-control select2 @error('nama_obat')  is-invalid @enderror">
+                                            <select name="nama_obat" id="namaobat" class="form-control select2 @error('nama_obat')  is-invalid @enderror">
                                                 <option value="" selected disabled>-- Pilih --</option>
                                                 @foreach ($masterObat as $obat)
                                                 <option value="{{$obat->Nama_Obat}}">{{$obat->Nama_Obat}}</option>
@@ -296,16 +296,16 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="numero">Numero</label>
-                                                <input type="text" class="form-control" id="numero">
+                                                <input type="text" class="form-control numero" onkeypress="handleKeyPress(event)">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="signa">Signa</label>
-                                                <input type="text" class="form-control" id="signa">
+                                                <input type="text" class="form-control dosis" onkeypress="handleKeyPress(event)">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="terapi">Terapi</label>
-                                            <textarea  rows="7" cols="50" style="height: 180px;" class="form-control" id="terapi"></textarea>
+                                            <textarea  rows="7" cols="50" style="height: 180px;" class="form-control resep" id="terapi"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -314,7 +314,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="Namaobat">Nama Obat</label>
-                                            <select name="nama_obat" id="" class="form-control select2"  @error('nama_obat')  is-invalid @enderror">
+                                            <select name="nama_obat" id="namaobat2" class="form-control select2 @error('nama_obat')  is-invalid @enderror">
                                                 <option value="" selected disabled>-- Pilih --</option>
                                                 @foreach ($masterObat as $obat)
                                                 <option value="{{$obat->Nama_Obat}}">{{$obat->Nama_Obat}}</option>
@@ -324,20 +324,20 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-4">
                                                 <label for="numero2">Numero</label>
-                                                <input type="text" class="form-control" id="numero2">
+                                                <input type="text" class="form-control numero2" onkeypress="handleResepRacik(event)">
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label for="mf">m.f</label>
-                                                <input type="text" class="form-control" id="mf">
+                                                <input type="text" class="form-control mf2" onkeypress="handleResepRacik(event)">
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label for="signa2">Signa</label>
-                                                <input type="text" class="form-control" id="signa2">
+                                                <input type="text" class="form-control dosis2" onkeypress="handleResepRacikFull(event)">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="resepRacikan">Resep Racikan</label>
-                                            <textarea class="form-control" style="height: 180px;" id="resepRacikan"  rows="5" cols="50"></textarea>
+                                            <textarea class="form-control resepracik" style="height: 180px;"   rows="5" cols="50"></textarea>
                                         </div>
                                     </div>               
                                     <div class="col-md-6">
@@ -663,6 +663,113 @@
         }
     }
 
+    </script>
+    
+    <script>
+
+        $(document).ready(function() {
+            $('#myForm input').on('keypress', function(event) {
+                if (event.which === 13) {
+                    event.preventDefault(); // Mencegah pengiriman form
+                }
+            });
+        });
+        </script>
+
+    <script>
+          function handleKeyPress(e) {
+    var yhr = new XMLHttpRequest();
+    var key = e.keyCode || e.which;
+    if (key == 13) {
+      var namaobat = $("#namaobat").val();
+      var numero = $(".numero").val();
+      var dosis = $(".dosis").val();
+      var kolomresep = document.getElementById("kolomresep");
+      var resep = $(".resep").val();
+
+      $(".resep").val(
+        resep +
+          "\n /R   " +
+          namaobat +
+          "   no. " +
+          numero +
+          "\n S    " +
+          dosis +
+          "\n ----------------------------------------------- \n "
+      );
+      //    alert(namaobat+numero+dosis);
+      $("#namaobat").select2("data", null);
+      $(".numero").val(null);
+      $(".dosis").val(null);
+
+      //    $("#namaobat").select2({}).focus();
+      $("#namaobat").select2("open");
+    }
+  }
+
+//   khusus resep racik
+  function handleResepRacik(e) {
+    var key = e.keyCode || e.which;
+    if (key == 13) {
+      var namaobat2 = $("#namaobat2").val();
+      var numero2 = $(".numero2").val();
+      //    var dosis2 = $(".dosis2").val();
+      var resepracik = $(".resepracik").val();
+
+      $(".resepracik").val(
+        resepracik + "" + namaobat2 + "   no. " + numero2 + "\n     "
+      );
+      //    alert(namaobat+numero+dosis);
+      $("#namaobat2").select2("data", null);
+      $(".numero2").val(null);
+      $(".dosis2").val(null);
+
+      //    $("#namaobat").select2({}).focus();
+      $("#namaobat2").select2("open");
+    }
+  }
+
+  function handleResepRacikFull(e) {
+    var key = e.keyCode || e.which;
+    if (key == 13) {
+      var namaobat2 = $("#namaobat2").val();
+      var numero2 = $(".numero2").val();
+      var dosis2 = $(".dosis2").val();
+      var mf2 = $(".mf2").val();
+      var resepracik = $(".resepracik").val();
+      if (namaobat2 == null) {
+        $(".resepracik").val(
+          resepracik +
+            "          " +
+            mf2 +
+            "\n   S  " +
+            dosis2 +
+            "\n ------------------------------------------------- \n \n   /R"
+        );
+      } else {
+        $(".resepracik").val(
+          resepracik +
+            "    " +
+            namaobat2 +
+            "   no. " +
+            numero2 +
+            "\n" +
+            "           " +
+            mf2 +
+            "\n    S      " +
+            dosis2 +
+            "\n ------------------------------------------ \n \n  /R"
+        );
+      } //    alert(namaobat+numero+dosis);
+      $("#namaobat2").select2("data", null);
+      $(".numero2").val(null);
+      $(".dosis2").val(null);
+      $(".mf2").val(null);
+
+      //    $("#namaobat").select2({}).focus();
+      $("#namaobat2").select2("open");
+    }
+  }
     </script>
 
 @endpush
