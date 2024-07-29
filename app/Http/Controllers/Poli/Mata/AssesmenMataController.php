@@ -6,6 +6,7 @@ use App\Models\Pasien;
 use App\Models\PoliMata;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\RajalDokter;
 
 class AssesmenMataController extends Controller
 {
@@ -15,10 +16,12 @@ class AssesmenMataController extends Controller
     protected $prefix;
     protected $poliMata;
     protected $pasien;
+    protected $rajaldokter;
     protected $rekam_medis;
 
     public function __construct(PoliMata $poliMata)
     {
+        $this->rajaldokter = new RajalDokter;
         $this->poliMata = $poliMata;
         $this->view = 'pages.poli.mata.';
         $this->prefix = 'Poli';
@@ -28,7 +31,9 @@ class AssesmenMataController extends Controller
     public function index()
     {
         $title = $this->prefix . ' ' . 'Mata';
-        return view($this->view . 'index', compact('title'));
+        $pasien = $this->rajaldokter->getPasienByDokter(auth()->user()->username);
+        // dd($pasien);
+        return view($this->view . 'index', compact('title','pasien'));
     }
 
     /**

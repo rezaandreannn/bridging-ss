@@ -40,14 +40,31 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($pasien as $data)
                                 <tr>
-                                    <td><div class="badge badge-success">1</div></td>
-                                    <td>123456</td>
-                                    <td>SADONAH BINTI JUMAR</td>
-                                    <td>DUSUN III RT 012/004 TRIMULYO, SEKAMPUNG</td>
-                                    <td><div class="badge badge-warning text-white">Perawat</div></td>
-                                    <td><a href="{{ route('poliMata.assesmenKeperawatan') }}" class="btn btn-sm btn-primary"><i class="fas fa-notes-medical"></i> Entry</a></td>
+                                    <td>
+                                        <span class="badge badge-pill badge-success">{{ $data->NOMOR }}</span>
+                                    </td>
+                                    <td>{{$data->NO_MR}}</td>
+                                    <td>{{$data->NAMA_PASIEN}}</td>
+                                    <td>{{$data->ALAMAT}}</td>
+                                    <td>@if($data->FS_STATUS == '')
+                                        <span class="badge badge-pill badge-warning">Perawat</span>
+                                        @elseif($data->FS_STATUS == 1)
+                                        <span class="badge badge-pill badge-danger">Dokter</span>
+                                        @elseif($data->FS_STATUS == 2)
+                                        @if($data->FS_TERAPI == '' or $data->FS_TERAPI == '-')
+                                        <span class="badge badge-pill badge-primary">Farmasi</span>
+                                        @else
+                                        <span class="badge badge-pill badge-success">Selesai</span>
+                                            @endif
+                                        @endif
+                                    </td>
+                                    <td width="20%">
+                                        <a href="{{ route('rj.dokterHistory', ['noReg' => $data->NO_REG, 'noMR'=> $data->NO_MR]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
+                                    </td>
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
