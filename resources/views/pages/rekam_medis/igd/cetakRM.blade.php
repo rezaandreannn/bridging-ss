@@ -332,7 +332,7 @@
             </tr>
             <tr>
                 <td class="text3">Catatan Khusus</td>
-                <td class="text3">: </td>
+                <td class="text3" colspan="3">: </td>
             </tr>
             <tr>
                 <td class="text3">Keputusan</td>

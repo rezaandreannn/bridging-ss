@@ -7,6 +7,7 @@ use App\Models\PoliMata;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\RajalDokter;
+use App\Models\Rekam_medis;
 
 class AssesmenMataController extends Controller
 {
@@ -22,6 +23,7 @@ class AssesmenMataController extends Controller
     public function __construct(PoliMata $poliMata)
     {
         $this->rajaldokter = new RajalDokter;
+        $this->rekam_medis = new Rekam_medis;
         $this->poliMata = $poliMata;
         $this->view = 'pages.poli.mata.';
         $this->prefix = 'Poli';
@@ -33,7 +35,7 @@ class AssesmenMataController extends Controller
         $title = $this->prefix . ' ' . 'Mata';
         $pasien = $this->rajaldokter->getPasienByDokter(auth()->user()->username);
         // dd($pasien);
-        return view($this->view . 'index', compact('title','pasien'));
+        return view($this->view . 'index', compact('title', 'pasien'));
     }
 
     /**
@@ -41,25 +43,25 @@ class AssesmenMataController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function assesmenKeperawatan()
+    public function assesmenKeperawatan($noReg)
     {
         $title = $this->prefix . ' ' . 'Mata Assesmen Keperawatan';
-        // $biodatas = $this->pasien->biodataPasienByMr($noMR);
-        return view($this->view . 'assesmenKeperawatan', compact('title'));
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+        return view($this->view . 'assesmenKeperawatan', compact('title', 'biodata'));
     }
 
-    public function create()
+    public function create($noReg)
     {
         $title = $this->prefix . ' ' . 'Mata Assesmen Awal';
-        // $biodatas = $this->pasien->biodataPasienByMr($noMR);
-        return view($this->view . 'assesmenAwal', compact('title'));
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+        return view($this->view . 'assesmenAwal', compact('title', 'biodata'));
     }
 
-    public function assesmenMata()
+    public function assesmenMata($noReg)
     {
         $title = $this->prefix . ' ' . 'Mata Assesmen Pemeriksaan';
-        // $biodatas = $this->pasien->biodataPasienByMr($noMR);
-        return view($this->view . 'assesmenMata', compact('title'));
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+        return view($this->view . 'assesmenMata', compact('title', 'biodata'));
     }
 
     /**

@@ -76,9 +76,9 @@
         <div class="section-body">
             <div class="row">
                 <div class="col-12">
-                    <!-- components biodata pasien by no mr -->
-                    {{-- @include('components.biodata-pasien-fisio-bymr') --}}
-                    <!-- components biodata pasien by no mr -->
+                     <!-- components biodata pasien by no reg -->
+                    @include('components.biodata-pasien-bynoreg')
+                    <!-- components biodata pasien by no reg -->
                     <div class="card card-primary">
                         <div class="card-body">
                             <form action="" method="POST">
@@ -658,7 +658,7 @@
                             <label>*Bismillahirohmanirrohim, saya dengan sadar dan penuh tanggung jawab mengisikan formulir ini dengan data yang benar </label>
                             <div class="text-left">
                                 {{-- <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button> --}}
-                                <a href="{{ route('poliMata.assesmenMata')}}" class="btn btn-primary mb-2"><i class="fas fa-save"></i>     Simpan</a>
+                                <a href="{{ route('poliMata.assesmenMata', ['noReg' => $biodata->NO_REG]) }}" class="btn btn-primary mb-2"><i class="fas fa-save"></i>     Simpan</a>
                             </div>
                         </div>
                         </form>

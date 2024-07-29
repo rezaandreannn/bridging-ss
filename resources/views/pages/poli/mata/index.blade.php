@@ -61,7 +61,7 @@
                                         @endif
                                     </td>
                                     <td width="20%">
-                                        <a href="{{ route('rj.dokterHistory', ['noReg' => $data->NO_REG, 'noMR'=> $data->NO_MR]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
+                                        <a href="{{ route('poliMata.assesmenKeperawatan', ['noReg' => $data->NO_REG]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
                                     </td>
                                 </tr>
                                 @endforeach
