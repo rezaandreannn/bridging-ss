@@ -151,7 +151,7 @@
                                         
                                         @if($pasien->Medis == 'RAWAT JALAN')
                                         <a href="#" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Scan</a>
-                                        <a href="#" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> RM</a>
+                                        <a href="{{ route('rj.rmDokter', ['noReg' => $pasien->No_Reg, 'noMR'=> $pasien->No_MR]) }}" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> RM</a>
                                         @else
                                        
                                         <a href="{{ route('rm.detail', $pasien->No_Reg) }}" class="btn btn-sm btn-primary"><i class="fas fa-info-circle"></i> Detail</a>

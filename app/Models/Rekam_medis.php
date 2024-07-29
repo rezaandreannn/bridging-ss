@@ -404,4 +404,49 @@ class Rekam_medis extends Model
             ->first();
         return $data;
     }
+
+    public function detailCpptByNoreg($noReg){
+        
+        //   $sql = "SELECT a.*,b.NAMALENGKAP,d.role_id,RIGHT(mdd_date,2) 'TGL',
+        // e.NAMALENGKAP 'FS_NM_MEDIS_VERIF'
+        // FROM PKU.dbo.TAC_RI_CPPT a
+        // LEFT JOIN DB_RSMM.dbo.TUSER b ON a.mdb=b.NAMAUSER
+        // LEFT JOIN PKU.dbo.TAC_COM_USER c ON a.mdb=c.user_name
+        // LEFT JOIN PKU.dbo.TAC_COM_ROLE_USER d ON c.user_id=d.user_id
+        // LEFT JOIN DB_RSMM.dbo.TUSER e ON a.FS_KD_MEDIS_VERIF = e.NAMAUSER
+        // WHERE FS_KD_REG = ? AND FD_TGL_VOID='3000-01-01'
+        // ORDER BY mdd_date DESC,mdd_time DESC";
+        
+        $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
+        $data = DB::connection('pku')
+            ->table('TAC_RI_CPPT as a')
+
+            ->leftJoin($db_rsmm . '.dbo.TUSER as b', 'a.mdb', '=', 'b.NAMAUSER')
+            ->leftJoin('TAC_COM_USER as c', 'a.mdb', '=', 'c.user_name')
+            ->leftJoin('TAC_COM_ROLE_USER as d', 'c.user_id', '=', 'd.user_id')
+       
+            // ->leftJoin('ANTRIAN as a', 'p.No_MR', '=', 'a.No_MR')
+            // ->leftJoin('M_RUANG as mr', 'p.Kode_Ruang', '=', 'mr.Kode_Ruang')
+            // ->leftJoin($pku . '.dbo.TAC_RJ_MEDIS as trm', 'p.No_Reg', '=', 'trm.FS_KD_REG')
+            // ->leftJoin($pku . '.dbo.TAC_RJ_STATUS as trs', 'p.No_Reg', '=', 'trs.FS_KD_REG')
+        
+            ->select(
+                'a.*',
+                // vital sign
+
+                // user simrs
+                'b.NAMALENGKAP as nama_lengkap',
+
+
+                'd.role_id',
+            
+                
+            )
+            ->where('a.FS_KD_REG', $noReg)
+            ->orWhere('a.FD_TGL_VOID', '3000-01-01')
+            ->orderBy('a.mdd_date', 'desc')
+            ->where('a.mdd_time', 'desc')
+            ->get();
+        return $data;
+    }
 }

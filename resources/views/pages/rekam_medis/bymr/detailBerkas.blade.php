@@ -89,8 +89,9 @@
                                         </tr>
                                         <tr>
                                             <td>CPPT</td>
+                                      
                                             <td>
-                                                <a href="" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Detail</a>
+                                                <a href="{{ route('rm.cppt', ['noReg' => $biodata->NO_REG]) }}" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Detail</a>
                                             </td>
                                         </tr>
                                         <tr>
