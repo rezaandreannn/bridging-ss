@@ -1221,7 +1221,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Mata</td>
+                            <td class="text3" width="150">Mata</td>
                             <td class="text3">:</td>
                         </tr>
                         <tr>
@@ -1253,7 +1253,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Sklera</td>
+                            <td class="text3" width="100">Sklera</td>
                             <td class="text3">:  </td>
                         </tr>
                         <tr>
@@ -1291,7 +1291,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Dada</td>
+                            <td class="text3" width="150">Dada</td>
                             <td class="text3">:</td>
                         </tr>
                         <tr>
@@ -1315,7 +1315,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Auskultasi</td>
+                            <td class="text3" width="100">Auskultasi</td>
                             <td class="text3">:  </td>
                         </tr>
                         <tr>
@@ -1343,15 +1343,15 @@
             </tr>
             <tr>
                 <td class="text3">Ada Nyeri</td>
-                <td class="text3" colspan="3"></td>
+                <td class="text3" colspan="3">: -</td>
             </tr>
             <tr>
                 <td class="text3">Provokatif</td>
-                <td class="text3" colspan="3"></td>
+                <td class="text3" colspan="3">: -</td>
             </tr>
             <tr>
                 <td class="text3">Quality</td>
-                <td class="text3" colspan="3"></td>
+                <td class="text3" colspan="3">: -</td>
             </tr>
             <tr>
                 <td class="text3">Regio</td>
@@ -1359,11 +1359,11 @@
             </tr>
             <tr>
                 <td class="text3">Severity</td>
-                <td class="text3" colspan="3"></td>
+                <td class="text3" colspan="3">: -</td>
             </tr>
             <tr>
                 <td class="text3">Time</td>
-                <td class="text3" colspan="3"></td>
+                <td class="text3" colspan="3">: -</td>
             </tr>
             <tr>
                 <td class="text3"><b>Skrining Nutrisi</b></td>
@@ -1371,11 +1371,11 @@
             </tr>
             <tr>
                 <td class="text3">Penurunan berat badan yang tidak diinginkan selama 6 bulan terakhir</td>
-                <td class="text3" colspan="3"></td>
+                <td class="text3" colspan="3"> : -</td>
             </tr>
             <tr>
                 <td class="text3">Asupan makanan menurun dikarenakan adanya penurunan nafsu makan</td>
-                <td class="text3" colspan="3"></td>
+                <td class="text3" colspan="3">: -</td>
             </tr>
             <tr>
                 <td class="text3"><b>Status Fungsional</b></td>
@@ -1383,15 +1383,15 @@
             </tr>
             <tr>
                 <td class="text3">Penglihatan</td>
-                <td class="text3" colspan="3"></td>
+                <td class="text3" colspan="3">: -</td>
             </tr>
             <tr>
                 <td class="text3">Penciuman</td>
-                <td class="text3" colspan="3"></td>
+                <td class="text3" colspan="3">: -</td>
             </tr>
             <tr>
                 <td class="text3">Pendengaran</td>
-                <td class="text3" colspan="3"></td>
+                <td class="text3" colspan="3">: -</td>
             </tr>
             <tr>
                 <td class="text3">Butuh Penerjemah</td>
@@ -1522,7 +1522,7 @@
                 <td class="text2" colspan="4" style="text-align: center; border: 1px solid black"><b>ASESMEN NEONATUS IGD</b></td>
             </tr>
             <tr>
-                <td class="text3">Tanggal dan Jam Masuk ruangan</td>
+                <td class="text3" width="150">Tanggal dan Jam Masuk ruangan</td>
                 <td class="text3" colspan="3">: </td>
             </tr>
             <tr>
@@ -1541,7 +1541,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Jenis Kelamin</td>
+                            <td class="text3" width="150">Jenis Kelamin</td>
                             <td class="text3">:</td>
                         </tr>
                     </table>
@@ -1549,7 +1549,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Tanggal Lahir</td>
+                            <td class="text3" width="100">Tanggal Lahir</td>
                             <td class="text3">: </td>
                         </tr>
                     </table>
@@ -1583,7 +1583,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Agama</td>
+                            <td class="text3" width="150">Agama</td>
                             <td class="text3">:</td>
                         </tr>
                     </table>
@@ -1591,7 +1591,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Suku</td>
+                            <td class="text3" width="100">Suku</td>
                             <td class="text3">: </td>
                         </tr>
                     </table>
@@ -1633,7 +1633,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Prenatal</td>
+                            <td class="text3" width="150">Prenatal</td>
                             <td class="text3">:</td>
                         </tr>
                         <tr>
@@ -1653,7 +1653,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Natal</td>
+                            <td class="text3" width="100">Natal</td>
                             <td class="text3">: </td>
                         </tr>
                         <tr>
@@ -1671,7 +1671,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Suhu</td>
+                            <td class="text3" width="150">Suhu</td>
                             <td class="text3">:</td>
                         </tr>
                         <tr>
@@ -1699,7 +1699,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Nadi</td>
+                            <td class="text3" width="100">Nadi</td>
                             <td class="text3">: x/menit</td>
                         </tr>
                         <tr>
@@ -1741,7 +1741,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Suhu</td>
+                            <td class="text3" width="150">Suhu</td>
                             <td class="text3">:</td>
                         </tr>
                         <tr>
@@ -1769,7 +1769,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Nadi</td>
+                            <td class="text3" width="100">Nadi</td>
                             <td class="text3">: x/menit</td>
                         </tr>
                         <tr>
@@ -1799,7 +1799,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Kepala</td>
+                            <td class="text3" width="150">Kepala</td>
                             <td class="text3">:</td>
                         </tr>
                         <tr>
@@ -1819,7 +1819,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Mulut</td>
+                            <td class="text3" width="100">Mulut</td>
                             <td class="text3">:  </td>
                         </tr>
                         <tr>
@@ -1842,7 +1842,7 @@
                 <td class="text3" colspan="3"></td>
             </tr>
             <tr>
-                <td class="text3">Dada</td>
+                <td class="text3" width="150">Dada</td>
                 <td class="text3" colspan="3"></td>
             </tr>
             <tr>
@@ -1850,26 +1850,18 @@
                 <td class="text3" colspan="3"></td>
             </tr>
             <tr>
+                <td class="text3">Bunyi Nafas</td>
+                <td class="text3" colspan="3"></td>
+            </tr>
+            <tr>
+                <td class="text3"><b>Pemeriksaan Gastroinestinal</b></td>
+                <td class="text3" colspan="3"></td>
+            </tr>
+            <tr>
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Dada</td>
-                            <td class="text3">:</td>
-                        </tr>
-                        <tr>
-                            <td class="text3">Irama Nafas</td>
-                            <td class="text3">:</td>
-                        </tr>
-                        <tr>
-                            <td class="text3">Leopod II</td>
-                            <td class="text3">:</td>
-                        </tr>
-                        <tr>
-                            <td class="text3">Leopod III</td>
-                            <td class="text3">:</td>
-                        </tr>
-                        <tr>
-                            <td class="text3">Leopod IV</td>
+                            <td class="text3" width="150">Abdomen</td>
                             <td class="text3">:</td>
                         </tr>
                     </table>
@@ -1877,103 +1869,160 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Auskultasi</td>
+                            <td class="text3" width="100">Tali Pusat</td>
+                            <td class="text3">:  </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td class="text3"><b>Pemeriksaan Status Nutrisi</b></td>
+                <td class="text3" colspan="3"></td>
+            </tr>
+            <tr>
+                <td class="text3">Regurgitasi</td>
+                <td class="text3" colspan="3"></td>
+            </tr>
+            <tr>
+                <td class="text3">Refleks Menghisap</td>
+                <td class="text3" colspan="3"></td>
+            </tr>
+            <tr>
+                <td class="text3">Refleks Menelan</td>
+                <td class="text3" colspan="3"></td>
+            </tr>
+            <tr>
+                <td class="text3"><b>Pemeriksaan Genitourinaria</b></td>
+                <td class="text3" colspan="3"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <table width="100%">
+                        <tr>
+                            <td class="text3" width="150">Genitalia</td>
+                            <td class="text3">:</td>
+                        </tr>
+                        <tr>
+                            <td class="text3" width="150">Mekonium</td>
+                            <td class="text3">:</td>
+                        </tr>
+                        <tr>
+                            <td class="text3" width="150">Bab</td>
+                            <td class="text3">:</td>
+                        </tr>
+                    </table>
+                </td>
+                <td colspan="2">
+                    <table width="100%">
+                        <tr>
+                            <td class="text3" width="100">Anus</td>
                             <td class="text3">:  </td>
                         </tr>
                         <tr>
-                            <td class="text3">Inspeksi Ano Genital</td>
-                            <td class="text3">:     </td>
-                        </tr>
-                        <tr>
-                            <td class="text3">Inspeksi Abdomen</td>
-                            <td class="text3">:     </td>
-                        </tr>
-                        <tr>
-                            <td class="text3">Kontraksi</td>
-                            <td class="text3">:     </td>
-                        </tr>
-                        <tr>
-                            <td class="text3">Vagina Toucher</td>
-                            <td class="text3">:     </td>
+                            <td class="text3" width="100">Bak</td>
+                            <td class="text3">:  </td>
                         </tr>
                     </table>
                 </td>
             </tr>
             <tr>
-                <td class="text3"><b>Assesmen Nyeri</b></td>
+                <td class="text3"><b>Pemeriksaan Muskuloskeletal dan Integumentum</b></td>
                 <td class="text3" colspan="3"></td>
             </tr>
             <tr>
-                <td class="text3">Ada Nyeri</td>
+                <td colspan="2">
+                    <table width="100%">
+                        <tr>
+                            <td class="text3" width="150">Ekstremitas atas / bawah</td>
+                            <td class="text3">:</td>
+                        </tr>
+                        <tr>
+                            <td class="text3" width="150">Turgor</td>
+                            <td class="text3">:</td>
+                        </tr>
+                    </table>
+                </td>
+                <td colspan="2">
+                    <table width="100%">
+                        <tr>
+                            <td class="text3" width="100">Kelainan Fisik</td>
+                            <td class="text3">:  </td>
+                        </tr>
+                        <tr>
+                            <td class="text3" width="100">Warna Kulit</td>
+                            <td class="text3">:  </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td class="text3"><b>SKALA NYERI - NIPS
+                    (NEONATAL INFANT PAINT SCORE)</b></td>
                 <td class="text3" colspan="3"></td>
             </tr>
             <tr>
-                <td class="text3">Provokatif</td>
+                <td class="text3">Ekspresi Wajah</td>
+                <td class="text3" colspan="3">: -</td>
+            </tr>
+            <tr>
+                <td class="text3">Tangisan</td>
+                <td class="text3" colspan="3">: -</td>
+            </tr>
+            <tr>
+                <td class="text3">Pola Nafas</td>
+                <td class="text3" colspan="3">: -</td>
+            </tr>
+            <tr>
+                <td class="text3">Tangan</td>
+                <td class="text3" colspan="3">: -</td>
+            </tr>
+            <tr>
+                <td class="text3">Kaki</td>
+                <td class="text3" colspan="3">: -</td>
+            </tr>
+            <tr>
+                <td class="text3">Kesadaran</td>
+                <td class="text3" colspan="3">: -</td>
+            </tr>
+            <tr>
+                <td class="text3"><b>Analisis dan Rencana keperawatan</b></td>
                 <td class="text3" colspan="3"></td>
             </tr>
             <tr>
-                <td class="text3">Quality</td>
+                <td class="text3">Masalah Keperawatan</td>
+                <td class="text3" colspan="3">: -</td>
+            </tr>
+            <tr>
+                <td class="text3">Rencana Keperawatan</td>
+                <td class="text3" colspan="3">: -</td>
+            </tr>
+            <tr>
+                <td class="text3"><b>Kebutuhan Edukasi</b></td>
                 <td class="text3" colspan="3"></td>
             </tr>
             <tr>
-                <td class="text3">Regio</td>
+                <td class="text3">Terdapat Hambatan dalam Pembelajaran ?</td>
+                <td class="text3" colspan="3">: -</td>
+            </tr>
+            <tr>
+                <td class="text3">Butuh Penerjemah ?</td>
+                <td class="text3" colspan="3">: -</td>
+            </tr>
+            <tr>
+                <td class="text3">Kebutuhan Edukasi ?</td>
+                <td class="text3" colspan="3">: -</td>
+            </tr>
+            <tr>
+                <td class="text3"><b>Rencana Pulang / Discharge Planning Awal</b></td>
                 <td class="text3" colspan="3"></td>
             </tr>
             <tr>
-                <td class="text3">Severity</td>
-                <td class="text3" colspan="3"></td>
+                <td class="text3">Perawatan Bayi Baru Lahir ?</td>
+                <td class="text3" colspan="3">: -</td>
             </tr>
             <tr>
-                <td class="text3">Time</td>
-                <td class="text3" colspan="3"></td>
-            </tr>
-            <tr>
-                <td class="text3"><b>Skrining Nutrisi</b></td>
-                <td class="text3" colspan="3"></td>
-            </tr>
-            <tr>
-                <td class="text3">Penurunan berat badan yang tidak diinginkan selama 6 bulan terakhir</td>
-                <td class="text3" colspan="3"></td>
-            </tr>
-            <tr>
-                <td class="text3">Asupan makanan menurun dikarenakan adanya penurunan nafsu makan</td>
-                <td class="text3" colspan="3"></td>
-            </tr>
-            <tr>
-                <td class="text3"><b>Status Fungsional</b></td>
-                <td class="text3" colspan="3"></td>
-            </tr>
-            <tr>
-                <td class="text3">Penglihatan</td>
-                <td class="text3" colspan="3"></td>
-            </tr>
-            <tr>
-                <td class="text3">Penciuman</td>
-                <td class="text3" colspan="3"></td>
-            </tr>
-            <tr>
-                <td class="text3">Pendengaran</td>
-                <td class="text3" colspan="3"></td>
-            </tr>
-            <tr>
-                <td class="text3">Butuh Penerjemah</td>
-                <td class="text3" colspan="3"></td>
-            </tr>
-            <tr>
-                <td class="text3"><b>Kebidanan</b></td>
-                <td class="text3" colspan="3"></td>
-            </tr>
-            <tr>
-                <td class="text3">Masalah kebidanan</td>
-                <td class="text3" colspan="3">: </td>
-            </tr>
-            <tr>
-                <td class="text3">Diagnosa kebidanan</td>
-                <td class="text3" colspan="3">: </td>
-            </tr>
-            <tr>
-                <td class="text3">Rencana tindakan</td>
-                <td class="text3" colspan="3">: </td>
+                <td class="text3">Lainnya</td>
+                <td class="text3" colspan="3">: -</td>
             </tr>
         </table>
         <table style="border: 1px solid black; border-top: none;" width="100%">
@@ -1988,6 +2037,233 @@
             <tr>
                 <td width="60%" class="text5"></td>
                 <td class="text5" style="padding-right: 50px;">(Perawat)</td>
+            </tr>
+        </table>
+    </body>
+</html>
+
+{{-- Assesmen Medis IGD --}}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    </head>
+    <body>
+        <table class="header-row" width="100%">
+            <tr>
+                <td class="logo-cell">
+                    <img src="img/logo.png" width="50" height="50" />
+                </td>
+                <td class="info-cell">
+                    <h5>MAJELIS PEMBINAAN KESEHATAN UMUM<br /></h5>
+                    <h4>RSU MUHAMMADIYAH METRO</h4>
+                    <table class="table-css">
+                        <tr>
+                            <td>Jl Soekarno Hatta No. 42 Mulyojati 16 B</td>
+                            <td>Fax : (0725) 47760</td>
+                        </tr>
+                        <tr>
+                            <td>Metro Barat - Kota Metro 34125</td>
+                            <td>e-mail : info.rsumm@gmail.com</td>
+                        </tr>
+                        <tr>
+                            <td>Telp : (0725) 49490 - 7850378</td>
+                            <td>website : www.rsumm.co.id</td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="logo-cell-2">
+                    <img src="img/larsibaru.png" width="50" height="50" />
+                </td>
+                <td class="patient-info">
+                    <table>
+                        <tr>
+                            <td>No. RM </td>
+                            <td>: {{ $biodata->NO_MR}}</td>
+                        </tr>
+                        <tr>
+                            <td>Nama</td>
+                            <td>: {{ $biodata->NAMA_PASIEN}}</td>
+                        </tr>
+                        <tr>
+                            <td>Tanggal Lahir</td>
+                            <td>: {{ date('d-m-Y', strtotime($biodata->TGL_LAHIR))}}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <hr />
+                </td>
+            </tr>
+        </table>
+        <table style="border: 1px solid black;" width="100%">
+            <tr>
+                <td class="text2" colspan="4" style="text-align: center; border: 1px solid black"><b>ASESMEN RAWAT JALAN IGD</b></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="vertical-align: top;">
+                    <table width="100%">
+                        <tr>
+                            <td class="text3"><b>Tanggal Kunjungan</b></td>
+                            <td class="text3">: {{date('d-m-Y', strtotime($biodata->tanggal_kunjungan))}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text3"><b>High Risk </b></td>
+                            <td class="text3">: {{$biodata->FS_HIGH_RISK}}</td>
+                        </tr>
+                    </table>
+                </td>
+                <td colspan="2" style="vertical-align: top;">
+                    <table width="100%">
+                        <tr>
+                            <td class="text3"><b>Klinik Tujuan</b></td>
+                            <td class="text3">: {{$biodata->SPESIALIS}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text3"><b>Alergi</b></td>
+                            <td class="text3">: {{$biodata->FS_ALERGI}}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <table style="border: 1px solid black; border-bottom:none " width="100%">
+            <tr>
+                <td class="text2" colspan="4" style="text-align: center; border: 1px solid black"><b>ASESMEN MEDIS IGD</b></td>
+            </tr>
+            <tr>
+                <td class="text3" width="200"><b>Anamnesa (S)</b></td>
+                <td class="text3" colspan="3">: </td>
+            </tr>
+            <tr>
+                <td class="text3">Riwayat Penyakit Dahulu</td>
+                <td class="text3" colspan="3">: </td>
+            </tr>
+            <tr>
+                <td class="text3">Riwayat Penyakit Sekarang</td>
+                <td class="text3" colspan="3">: </td>
+            </tr>
+            <tr>
+                <td class="text3">Riwayat Perawatan Sebelumnya</td>
+                <td class="text3" colspan="3">: </td>
+            </tr>
+            <tr>
+                <td class="text3">Terapi & Tindakan yang pernah dilakukan</td>
+                <td class="text3" colspan="3">: </td>
+            </tr>
+            <tr>
+                <td class="text3">Riwayat Alergi</td>
+                <td class="text3" colspan="3">: </td>
+            </tr>
+            <tr>
+                <td class="text3">Reaksi Alergi</td>
+                <td class="text3" colspan="3">: </td>
+            </tr>
+            <tr>
+                <td class="text3">Status Psikologi</td>
+                <td class="text3" colspan="3">: -</td>
+            </tr>
+            <tr>
+                <td class="text3">Status Mental</td>
+                <td class="text3" colspan="3">: </td>
+            </tr>
+            <tr>
+                <td class="text3">Pemeriksaan Fisik</td>
+                <td class="text3" colspan="3">: </td>
+            </tr>
+            <tr>
+                <td class="text3"><b>Kepala Leher</b></td>
+                <td class="text3" colspan="3"></td>
+            </tr>
+            <tr>
+                <td class="text3">Konjungtiva</td>
+                <td class="text3" colspan="3">: </td>
+            </tr>
+            <tr>
+                <td class="text3">Sklera</td>
+                <td class="text3" colspan="3">: </td>
+            </tr>
+            <tr>
+                <td class="text3">Bibir/Lidah</td>
+                <td class="text3" colspan="3">: </td>
+            </tr>
+            <tr>
+                <td class="text3">Mukos</td>
+                <td class="text3" colspan="3">: </td>
+            </tr>
+            <tr>
+                <td class="text3">Deviasi Trakea</td>
+                <td class="text3" colspan="3">: </td>
+            </tr>
+            <tr>
+                <td class="text3">JVP</td>
+                <td class="text3" colspan="3">: </td>
+            </tr>
+            <tr>
+                <td class="text3">Thorax</td>
+                <td class="text3" colspan="3">: </td>
+            </tr>
+            <tr>
+                <td class="text3">Jantung</td>
+                <td class="text3" colspan="3">: </td>
+            </tr>
+            <tr>
+                <td class="text3">Abdomen</td>
+                <td class="text3" colspan="3">: </td>
+            </tr>
+            <tr>
+                <td class="text3">Pinggang</td>
+                <td class="text3" colspan="3">: </td>
+            </tr>
+            <tr>
+                <td class="text3">Ekstremitas</td>
+                <td class="text3" colspan="3">: - Atas,- Bawah</td>
+            </tr>
+            <tr>
+                <td class="text3">Diagnosa (A)</td>
+                <td class="text3" colspan="3">: </td>
+            </tr>
+            <tr>
+                <td class="text3">Tindakan (P)</td>
+                <td class="text3" colspan="3">: </td>
+            </tr>
+            <tr>
+                <td class="text3">Diet</td>
+                <td class="text3" colspan="3">: </td>
+            </tr>
+            <tr>
+                <td class="text3">Konsul DPJP 1</td>
+                <td class="text3" colspan="3">: </td>
+            </tr>
+            <tr>
+                <td class="text3">Isi Konsul</td>
+                <td class="text3" colspan="3">: </td>
+            </tr>
+            <tr>
+                <td class="text3">Kondisi Akhir</td>
+                <td class="text3" colspan="3">: </td>
+            </tr>
+            <tr>
+                <td class="text3">Jam Selesai periksa</td>
+                <td class="text3" colspan="3">: </td>
+            </tr>
+        </table>
+        <table style="border: 1px solid black; border-top: none;" width="100%">
+            <tr>
+                <td style="padding-top: 50px;" class="text5"></td>
+                <td style="padding-top: 50px;" class="text5">Tanggal 27-07-2024, Jam 11.00</td>
+            </tr>
+            <tr>
+                <tr>
+                    <td width="70%" class="text5"></td>
+                    <td class="text5" style="padding-left: 30px;"><img src="img/barcode.jpeg" width="50" height="50" /></td>
+                </tr>
+            </tr>
+            <tr>
+                <td width="50%" class="text5"></td>
+                <td class="text5">(Perawat)</td>
             </tr>
         </table>
     </body>

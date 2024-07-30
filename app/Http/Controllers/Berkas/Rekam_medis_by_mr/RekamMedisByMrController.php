@@ -109,7 +109,7 @@ class RekamMedisByMrController extends Controller
 
         $title = 'Cetak RM';
 
-        $pdf = PDF::loadview('pages.rekam_medis.bymr.resumeRanap', ['tanggal' => $tanggal, 'title' => $title, 'resep' => $resep, 'biodata' => $biodata, 'resumePasienRanap' => $resumePasienRanap,'resumeDiagnosaSekunder' => $resumeDiagnosaSekunder,'resumeTindakan' => $resumeTindakan,'resumeTerapiPulang' => $resumeTerapiPulang]);
+        $pdf = PDF::loadview('pages.rekam_medis.bymr.resumeRanap', ['tanggal' => $tanggal, 'title' => $title, 'resep' => $resep, 'biodata' => $biodata, 'resumePasienRanap' => $resumePasienRanap, 'resumeDiagnosaSekunder' => $resumeDiagnosaSekunder, 'resumeTindakan' => $resumeTindakan, 'resumeTerapiPulang' => $resumeTerapiPulang]);
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
     }
