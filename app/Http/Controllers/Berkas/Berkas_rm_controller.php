@@ -10,12 +10,14 @@ use Illuminate\Support\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\RawatInap;
 
 class Berkas_rm_controller extends Controller
 {
 
     protected $view;
     protected $rajaldokter;
+    protected $rawatinap;
     protected $rekam_medis;
     protected $routeIndex;
 
@@ -23,7 +25,8 @@ class Berkas_rm_controller extends Controller
     {
         $this->rekam_medis = $rekam_medis;
         $this->rajaldokter = new RajalDokter;
-    }
+        $this->rawatinap = new RawatInap;
+    }   
 
     public function cetakResep($noReg, $kode_transaksi)
     {
