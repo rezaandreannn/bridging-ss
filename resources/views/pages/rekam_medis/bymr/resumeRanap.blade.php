@@ -135,15 +135,15 @@
                     <table>
                         <tr>
                             <td>No. RM </td>
-                            <td>: {{ $biodata->NO_MR}}</td>
+                            <td>: {{ $biodata->no_mr}}</td>
                         </tr>
                         <tr>
                             <td>Nama</td>
-                            <td>: {{ $biodata->NAMA_PASIEN}}</td>
+                            <td>: {{ $biodata->nama_pasien}}</td>
                         </tr>
                         <tr>
                             <td>Tanggal Lahir</td>
-                            <td>: {{ date('d-m-Y', strtotime($biodata->TGL_LAHIR))}}</td>
+                            <td>: {{ date('d-m-Y', strtotime($biodata->tgl_lahir))}}</td>
                         </tr>
                     </table>
                 </td>
@@ -156,15 +156,20 @@
         </table>
         <table style="border: 1px solid black;" class="isi" width="100%">
             <tr>
-                <td class="text2" colspan="4" style="text-align: center; border: 1px solid black;"><b>Resume Rawat Jalan</b></td>
+                <td class="text2" colspan="4" style="text-align: center; border: 1px solid black;"><b>Ringkasan Pasien Pulang</b></td>
             </tr>
             <tr>
-                <td class="text3"><b>Tanggal Pelayanan</b></td>
-                <td class="text3" colspan="3">: {{date('d-m-Y', strtotime($biodata->tanggal_kunjungan))}}</td>
+                <td class="text3">Tanggal Masuk :</td>
+                <td class="text3">Tanggal Keluar :</td>
+                <td class="text3" colspan="2">Nama Ruangan :</td>
             </tr>
+       
+            {{-- {{date('d-m-Y', strtotime($biodata->tanggal_kunjungan))}}
+            {{$biodata->SPESIALIS}}
+            {{$biodata->SPESIALIS}} --}}
             <tr>
-                <td class="text3" colspan="2">Indikasi rawat :{{$biodata->SPESIALIS}}</td>
-                <td class="text3" colspan="2">Diagnosa saat masuk :{{$biodata->SPESIALIS}}</td>
+                <td class="text3" colspan="2">Indikasi rawat :</td>
+                <td class="text3" colspan="2">Diagnosa saat masuk :</td>
             </tr>
             <tr>
                 <td class="text3">Ringkasan Riwayat Pasien</td>

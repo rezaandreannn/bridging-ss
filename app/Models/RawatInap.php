@@ -70,7 +70,7 @@ class RawatInap extends Model
             )
             ->where('tk.no_reg', $noReg)
             ->orderBy('tk.Tgl_Mulai','desc')
-            ->get();
+            ->first();
         return $data;
     }
 
