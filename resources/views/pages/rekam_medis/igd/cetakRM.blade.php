@@ -195,16 +195,16 @@
                 <td class="text3" colspan="3"></td>
             </tr>
             <tr>
-                <td class="text3">Tanggal</td>
-                <td class="text3" colspan="3">: </td>
+                <td class="text3" width="200">Tanggal</td>
+                <td class="text3" colspan="3">: 29-07-2024</td>
             </tr>
             <tr>
                 <td class="text3">Jam Datang</td>
-                <td class="text3" colspan="3">: </td>
+                <td class="text3" colspan="3">: 14.00</td>
             </tr>
             <tr>
                 <td class="text3">Cara Masuk</td>
-                <td class="text3" colspan="3">: </td>
+                <td class="text3" colspan="3">: Kursi Roda</td>
             </tr>
             <tr>
                 <td class="text3">Sudah Terpasang</td>
@@ -212,7 +212,7 @@
             </tr>
             <tr>
                 <td class="text3">Alasan Kedatangan</td>
-                <td class="text3" colspan="3">: </td>
+                <td class="text3" colspan="3">:  Datang Sendiri </td>
             </tr>
             <tr>
                 <td class="text3">Kendaraan</td>
@@ -240,7 +240,7 @@
             </tr>
             <tr>
                 <td class="text3">Keluhan Utama</td>
-                <td class="text3" colspan="3">: </td>
+                <td class="text3" colspan="3">:  hamil anak ke 2 UK 30 minggu, mengeluh keluar darah segar pukul 00.00 wib, mules (-), riwayat PP</td>
             </tr>
             <tr>
                 <td class="text3"><b>Vital Sign</b></td>
@@ -250,43 +250,43 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Kesadaran</td>
-                            <td class="text3">:</td>
+                            <td class="text3" width="200">Kesadaran</td>
+                            <td class="text3">: Sadar</td>
                         </tr>
                         <tr>
                             <td class="text3">Suhu</td>
-                            <td class="text3">:</td>
+                            <td class="text3">: 36.4</td>
                         </tr>
                         <tr>
                             <td class="text3">Respirasi</td>
-                            <td class="text3">: x/menit</td>
+                            <td class="text3">: 20x/menit</td>
                         </tr>
                         <tr>
                             <td class="text3">Saturasi O2</td>
-                            <td class="text3">:</td>
+                            <td class="text3">: 99</td>
                         </tr>
                     </table>
                 </td>
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Nadi</td>
-                            <td class="text3">: x/menit</td>
+                            <td class="text3" width="100">Nadi</td>
+                            <td class="text3">: 77x/menit</td>
                         </tr>
                         <tr>
                             <td class="text3">Tekanan Darah</td>
-                            <td class="text3">: mmHg</td>
+                            <td class="text3">:  125/92mmHg</td>
                         </tr>
                         <tr>
                             <td class="text3">Berat Badan</td>
-                            <td class="text3">: Kg</td>
+                            <td class="text3">: 60Kg</td>
                         </tr>
                     </table>
                 </td>
             </tr>
             <tr>
                 <td class="text3"><b>Kesimpulan</b></td>
-                <td class="text3" colspan="3"></td>
+                <td class="text3" colspan="3"> Prioritas III (0-1)</td>
             </tr>
             <tr>
                 <td class="text3"><b>Skor</b></td>
@@ -296,47 +296,47 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Kesadaran</td>
-                            <td class="text3">:</td>
+                            <td class="text3" width="200">Kesadaran</td>
+                            <td class="text3">: 0</td>
                         </tr>
                         <tr>
                             <td class="text3">Suhu</td>
-                            <td class="text3">:</td>
+                            <td class="text3">: 0</td>
                         </tr>
                         <tr>
                             <td class="text3">Respirasi</td>
-                            <td class="text3">: x/menit</td>
+                            <td class="text3">: 1</td>
                         </tr>
                     </table>
                 </td>
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Nadi</td>
-                            <td class="text3">: x/menit</td>
+                            <td class="text3" width="100">Nadi</td>
+                            <td class="text3">: 0</td>
                         </tr>
                         <tr>
                             <td class="text3">Tekanan Darah</td>
-                            <td class="text3">: mmHg</td>
+                            <td class="text3">: 1</td>
                         </tr>
                         <tr>
                             <td class="text3">Saturasi O2</td>
-                            <td class="text3">:</td>
+                            <td class="text3">: 0</td>
                         </tr>
                     </table>
                 </td>
             </tr>
             <tr>
                 <td class="text3"><b>Total Skor</b></td>
-                <td class="text3" colspan="3"></td>
+                <td class="text3" colspan="3"> 1</td>
             </tr>
             <tr>
                 <td class="text3">Catatan Khusus</td>
-                <td class="text3" colspan="3">: </td>
+                <td class="text3" colspan="3">: anak ke 1 SC tahun 20199 di RSPH, vaksin covid boster </td>
             </tr>
             <tr>
                 <td class="text3">Keputusan</td>
-                <td class="text3">: </td>
+                <td class="text3" colspan="3">: 01:03:00.0000000 </td>
             </tr>
         </table>
         <table style="border: 1px solid black; border-top: none;" width="100%">
@@ -450,7 +450,7 @@
                 <td class="text2" colspan="4" style="text-align: center; border: 1px solid black"><b>ASESMEN KEPERAWATAN IGD</b></td>
             </tr>
             <tr>
-                <td class="text3">Keluhan Utama</td>
+                <td class="text3" width="200">Keluhan Utama</td>
                 <td class="text3" colspan="3">: </td>
             </tr>
             <tr>
@@ -513,16 +513,16 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Suhu</td>
-                            <td class="text3">:</td>
+                            <td class="text3" width="200">Suhu</td>
+                            <td class="text3">: 36.4</td>
                         </tr>
                         <tr>
                             <td class="text3">Respirasi</td>
-                            <td class="text3">: x/menit</td>
+                            <td class="text3">: 20x/menit</td>
                         </tr>
                         <tr>
                             <td class="text3">Tinggi Badan</td>
-                            <td class="text3">: cm</td>
+                            <td class="text3">: 152cm</td>
                         </tr>
                         <tr>
                             <td class="text3">Lingkar Kepala</td>
@@ -533,16 +533,16 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Nadi</td>
-                            <td class="text3">: x/menit</td>
+                            <td class="text3" width="150">Nadi</td>
+                            <td class="text3">: 36.4x/menit</td>
                         </tr>
                         <tr>
-                            <td class="text3">TD</td>
-                            <td class="text3">: mmHg</td>
+                            <td class="text3">Tekanan Darah</td>
+                            <td class="text3">: 125/92mmHg</td>
                         </tr>
                         <tr>
                             <td class="text3">Berat Badan</td>
-                            <td class="text3">: Kg</td>
+                            <td class="text3">: 60Kg</td>
                         </tr>
                         <tr>
                             <td class="text3">Status Gizi</td>

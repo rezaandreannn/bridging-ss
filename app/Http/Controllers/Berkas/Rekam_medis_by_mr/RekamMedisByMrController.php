@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Berkas\Rekam_medis_by_mr;
 
+use Carbon\Carbon;
 use App\Models\Rajal;
 use App\Models\Pasien;
-use App\Models\Rekam_medis;
+use App\Models\RajalDokter;
 use App\Models\RanapDokter;
+use App\Models\Rekam_medis;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 
 class RekamMedisByMrController extends Controller
@@ -18,6 +21,7 @@ class RekamMedisByMrController extends Controller
     protected $rajal;
     protected $ranap;
     protected $rekam_medis;
+    protected $rajaldokter;
 
     public function __construct(Rekam_medis $rekam_medis)
     {
@@ -27,6 +31,7 @@ class RekamMedisByMrController extends Controller
         $this->pasien = new Pasien;
         $this->rajal = new Rajal;
         $this->ranap = new RanapDokter;
+        $this->rajaldokter = new RajalDokter;
     }
     /**
      * Display a listing of the resource.
@@ -39,19 +44,19 @@ class RekamMedisByMrController extends Controller
         $title = $this->prefix . ' ' . 'By No MR';
         $nomr = $request->input('nomr');
         $biodatas = $this->pasien->biodataPasienByMr($nomr);
-        $dataPasien=[];
-        if($nomr != null){
+        $dataPasien = [];
+        if ($nomr != null) {
             $dataPasien = $this->rekam_medis->rekamMediByMr($nomr);
         }
         // dd($dataPasien);
 
         $cek_mr = 'false';
-        if($biodatas!=null){
+        if ($biodatas != null) {
             $cek_mr = 'true';
         }
-      
-       
-        return view($this->view . 'index', compact('title','biodatas','cek_mr','dataPasien'));
+
+
+        return view($this->view . 'index', compact('title', 'biodatas', 'cek_mr', 'dataPasien'));
     }
 
     /**
@@ -60,7 +65,8 @@ class RekamMedisByMrController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function detail_berkas($noReg){
+    public function detail_berkas($noReg)
+    {
         $title = $this->prefix . ' ' . 'Berkas';
         $biodata = $this->rajal->pasien_bynoreg($noReg);
         $medis = $this->ranap->dataMedis($noReg);
@@ -72,15 +78,33 @@ class RekamMedisByMrController extends Controller
         return view($this->view . 'detailBerkas', compact('title', 'biodata', 'medis', 'perawat', 'bidan', 'rencana', 'resume'));
     }
 
-    public function detail_cppt($noReg){
+    public function detail_cppt($noReg)
+    {
         $title = $this->prefix . ' ' . 'Berkas Cppt';
         $biodata = $this->rajal->pasien_bynoreg($noReg);
         $cppt = $this->rekam_medis->detailCpptByNoreg($noReg);
 
         dd($cppt);
-      
+
 
         return view($this->view . 'detailBerkas', compact('title', 'biodata', 'medis', 'perawat', 'bidan', 'rencana', 'resume'));
+    }
+
+    public function resumeRanap($noReg)
+    {
+        $resep = $this->rajaldokter->resep($noReg);
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+        // dd($biodata);
+        // Cetak PDF
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+        $filename = 'RM -' . $date;
+
+        $title = 'Cetak RM';
+
+        $pdf = PDF::loadview('pages.rekam_medis.bymr.resumeRanap', ['tanggal' => $tanggal, 'title' => $title, 'resep' => $resep, 'biodata' => $biodata]);
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
     }
 
     public function create()

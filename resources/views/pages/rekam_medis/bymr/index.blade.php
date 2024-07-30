@@ -156,6 +156,7 @@
                                        
                                         <a href="{{ route('rm.detail', $pasien->No_Reg) }}" class="btn btn-sm btn-primary"><i class="fas fa-info-circle"></i> Detail</a>
                                         @endif
+                                        <a href="{{ route('rm.ranap', $pasien->No_Reg) }}" class="btn btn-sm btn-primary"><i class="fas fa-info-circle"></i> Resume Ranap</a>
                                     </td>
                                 </tr>
                                 @endforeach
