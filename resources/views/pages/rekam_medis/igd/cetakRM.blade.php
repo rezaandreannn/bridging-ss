@@ -450,8 +450,10 @@
                 <td class="text2" colspan="4" style="text-align: center; border: 1px solid black"><b>ASESMEN KEPERAWATAN IGD</b></td>
             </tr>
             <tr>
-                <td class="text3" width="200">Keluhan Utama</td>
-                <td class="text3" colspan="3">: </td>
+                <td class="text3" width="150">Keluhan Utama</td>
+                <td class="text3" colspan="3">: hamil anak ke 2 UK 30 minggu, mengeluh keluar darah segar pukul 00.00 wib,
+                    mules (-), riwayat PP hamil anak ke 2 UK 30 minggu, mengeluh keluar darah segar pukul 00.00 wib,
+                    mules (-), riwayat PP</td>
             </tr>
             <tr>
                 <td class="text3">Keluhan Penyakit Sekarang</td>
@@ -513,7 +515,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3" width="200">Suhu</td>
+                            <td class="text3" width="150">Suhu</td>
                             <td class="text3">: 36.4</td>
                         </tr>
                         <tr>
@@ -533,7 +535,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3" width="150">Nadi</td>
+                            <td class="text3" width="100">Nadi</td>
                             <td class="text3">: 36.4x/menit</td>
                         </tr>
                         <tr>
@@ -575,32 +577,32 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Ada Nyeri</td>
-                            <td class="text3">:</td>
+                            <td class="text3" width="150">Ada Nyeri</td>
+                            <td class="text3">: Tidak Ada Nyeri </td>
                         </tr>
                         <tr>
                             <td class="text3">Provoke</td>
-                            <td class="text3">:</td>
+                            <td class="text3">: Tidak Ada</td>
                         </tr>
                         <tr>
                             <td class="text3">Quality</td>
-                            <td class="text3">:   </td>
+                            <td class="text3">: Tidak Ada</td>
                         </tr>
                     </table>
                 </td>
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Regio</td>
-                            <td class="text3">:  </td>
+                            <td class="text3" width="100">Regio</td>
+                            <td class="text3">: -</td>
                         </tr>
                         <tr>
                             <td class="text3">Severity</td>
-                            <td class="text3">:     </td>
+                            <td class="text3">: 0</td>
                         </tr>
                         <tr>
                             <td class="text3">Time</td>
-                            <td class="text3">: </td>
+                            <td class="text3">: Tidak Ada</td>
                         </tr>
                     </table>
                 </td>
@@ -613,7 +615,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Irama Nafas</td>
+                            <td class="text3" width="150">Irama Nafas</td>
                             <td class="text3">:</td>
                         </tr>
                         <tr>
@@ -629,7 +631,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Batuk</td>
+                            <td class="text3" width="100">Batuk</td>
                             <td class="text3">:  </td>
                         </tr>
                         <tr>
@@ -647,7 +649,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Nyeri Dada</td>
+                            <td class="text3" width="150">Nyeri Dada</td>
                             <td class="text3">:</td>
                         </tr>
                         <tr>
@@ -663,7 +665,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Akral</td>
+                            <td class="text3" width="100">Akral</td>
                             <td class="text3">:  </td>
                         </tr>
                         <tr>
@@ -685,7 +687,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Reflek Cahaya</td>
+                            <td class="text3" width="150">Reflek Cahaya</td>
                             <td class="text3">:</td>
                         </tr>
                         <tr>
@@ -697,7 +699,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Pupil</td>
+                            <td class="text3" width="100">Pupil</td>
                             <td class="text3">:  </td>
                         </tr>
                         <tr>
@@ -715,7 +717,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">BAK</td>
+                            <td class="text3" width="150">BAK</td>
                             <td class="text3">:</td>
                         </tr>
                         <tr>
@@ -727,7 +729,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Nyeri Tekan</td>
+                            <td class="text3" width="100">Nyeri Tekan</td>
                             <td class="text3">:  </td>
                         </tr>
                     </table>
@@ -741,7 +743,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">BAB</td>
+                            <td class="text3" width="150">BAB</td>
                             <td class="text3">:</td>
                         </tr>
                         <tr>
@@ -753,7 +755,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Abdomen</td>
+                            <td class="text3" width="100">Abdomen</td>
                             <td class="text3">:  </td>
                         </tr>
                         <tr>
@@ -771,7 +773,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Pergerakan Sendi</td>
+                            <td class="text3" width="150">Pergerakan Sendi</td>
                             <td class="text3">:</td>
                         </tr>
                         <tr>
@@ -783,7 +785,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Dislokasi</td>
+                            <td class="text3" width="100">Dislokasi</td>
                             <td class="text3">:  </td>
                         </tr>
                         <tr>
@@ -958,8 +960,8 @@
                 <td class="text2" colspan="4" style="text-align: center; border: 1px solid black"><b>ASESMEN KEBIDANAN IGD</b></td>
             </tr>
             <tr>
-                <td class="text3">Cara masuk</td>
-                <td class="text3" colspan="3">: </td>
+                <td class="text3" width="150">Cara masuk</td>
+                <td class="text3" colspan="3">:  Kursi Roda</td>
             </tr>
             <tr>
                 <td class="text3">Rujukan dari</td>
@@ -967,7 +969,7 @@
             </tr>
             <tr>
                 <td class="text3">Membawa obat sendiri</td>
-                <td class="text3" colspan="3">: </td>
+                <td class="text3" colspan="3">: Tidak</td>
             </tr>
             <tr>
                 <td class="text3"><b>Data Suami</b></td>
@@ -975,19 +977,19 @@
             </tr>
             <tr>
                 <td class="text3">Nama</td>
-                <td class="text3" colspan="3">: </td>
+                <td class="text3" colspan="3">: gilang jayanto</td>
             </tr>
             <tr>
                 <td class="text3">Tanggal Lahir</td>
-                <td class="text3" colspan="3">: </td>
+                <td class="text3" colspan="3">:  1991-08-11</td>
             </tr>
             <tr>
                 <td class="text3">Pekerjaan</td>
-                <td class="text3" colspan="3">: </td>
+                <td class="text3" colspan="3">:  karyawan swasta</td>
             </tr>
             <tr>
                 <td class="text3">Agama</td>
-                <td class="text3" colspan="3">: </td>
+                <td class="text3" colspan="3">: Islam</td>
             </tr>
             <tr>
                 <td class="text3"><b>Data Pasien</b></td>
@@ -995,15 +997,15 @@
             </tr>
             <tr>
                 <td class="text3">Pekerjaan Pasien</td>
-                <td class="text3" colspan="3">: </td>
+                <td class="text3" colspan="3">: IRT</td>
             </tr>
             <tr>
                 <td class="text3">Pendidikan Pasien</td>
-                <td class="text3" colspan="3">: </td>
+                <td class="text3" colspan="3">: S1</td>
             </tr>
             <tr>
                 <td class="text3">Agama</td>
-                <td class="text3" colspan="3">: </td>
+                <td class="text3" colspan="3">: Islam</td>
             </tr>
             <tr>
                 <td class="text3"><b>Riwayat Haid</b></td>
@@ -1013,40 +1015,40 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Menarche</td>
-                            <td class="text3">:</td>
+                            <td class="text3" width="150">Menarche</td>
+                            <td class="text3">: 12 tahun</td>
                         </tr>
                         <tr>
                             <td class="text3">Lama haid</td>
-                            <td class="text3">:</td>
+                            <td class="text3">: 7</td>
                         </tr>
                         <tr>
                             <td class="text3">HPL</td>
-                            <td class="text3">: </td>
+                            <td class="text3">: 19/09/2024</td>
                         </tr>
                         <tr>
                             <td class="text3">Keluhan Utama</td>
-                            <td class="text3">: </td>
+                            <td class="text3">: hamil anak ke 2 UK 30 minggu, mengeluh keluar darah segar pukul 00.00 wib, mules (-), riwayat PP </td>
                         </tr>
                     </table>
                 </td>
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Riwayat Penyakit Dahulu</td>
-                            <td class="text3">: </td>
-                        </tr>
-                        <tr>
-                            <td class="text3">Siklus haid</td>
-                            <td class="text3">: </td>
+                            <td class="text3" width="100">Siklus haid</td>
+                            <td class="text3">: 7 tahun</td>
                         </tr>
                         <tr>
                             <td class="text3">Hpht</td>
-                            <td class="text3">: </td>
+                            <td class="text3">: 19/09/2024 </td>
                         </tr>
                         <tr>
                             <td class="text3">Keluhan</td>
-                            <td class="text3">:</td>
+                            <td class="text3">: Sakit</td>
+                        </tr>
+                        <tr>
+                            <td class="text3">Riwayat Penyakit Dahulu</td>
+                            <td class="text3">: hamil anak ke 2 UK 30 minggu</td>
                         </tr>
                     </table>
                 </td>
@@ -1057,7 +1059,7 @@
             </tr>
             <tr>
                 <td class="text3">Asma</td>
-                <td class="text3" colspan="3">:  , Dalam Terapi</td>
+                <td class="text3" colspan="3">: - , Dalam Terapi -</td>
             </tr>
             <tr>
                 <td class="text3">Jantung</td>
@@ -1093,19 +1095,19 @@
             </tr>
             <tr>
                 <td class="text3">Pola Makan</td>
-                <td class="text3" colspan="3">:  kali/hari, Terakhir Jam</td>
+                <td class="text3" colspan="3">:  3 kali/hari, Terakhir Jam 19.00 Wib</td>
             </tr>
             <tr>
                 <td class="text3">Pola Minum</td>
-                <td class="text3" colspan="3">:  cc/hari, Terakhir Jam</td>
+                <td class="text3" colspan="3">:  3 cc/hari, Terakhir Jam 19.00 Wib</td>
             </tr>
             <tr>
                 <td class="text3">Pola BAK</td>
-                <td class="text3" colspan="3">:  kali/hari, Terakhir Jam</td>
+                <td class="text3" colspan="3">:  3 kali/hari, Terakhir Jam 19.00 Wib</td>
             </tr>
             <tr>
                 <td class="text3">Pola BAB</td>
-                <td class="text3" colspan="3">:  kali/hari, Terakhir Jam</td>
+                <td class="text3" colspan="3">:  3 kali/hari, Terakhir Jam 19.00 Wib</td>
             </tr>
             <tr>
                 <td class="text3">Pola Istirahat</td>
@@ -1127,16 +1129,16 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">PJ Darurat</td>
-                            <td class="text3">:</td>
+                            <td class="text3" width="150">PJ Darurat</td>
+                            <td class="text3">:  gilang jayanto</td>
                         </tr>
                     </table>
                 </td>
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Hubungan</td>
-                            <td class="text3">:  </td>
+                            <td class="text3" width="100">Hubungan</td>
+                            <td class="text3">: Suami </td>
                         </tr>
                     </table>
                 </td>
@@ -1161,7 +1163,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Suhu</td>
+                            <td class="text3" width="150">Suhu</td>
                             <td class="text3">:</td>
                         </tr>
                         <tr>
@@ -1181,7 +1183,7 @@
                 <td colspan="2">
                     <table width="100%">
                         <tr>
-                            <td class="text3">Nadi</td>
+                            <td class="text3" width="100">Nadi</td>
                             <td class="text3">: x/menit</td>
                         </tr>
                         <tr>

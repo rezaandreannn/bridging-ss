@@ -156,86 +156,59 @@
         </table>
         <table style="border: 1px solid black;" class="isi" width="100%">
             <tr>
-                <td class="text2" colspan="6" style="text-align: center; border: 1px solid black;"><b>RINGKASAN PASIEN PULANG</b></td>
+                <td class="text2" colspan="4" style="text-align: center; border: 1px solid black;"><b>Resume Rawat Jalan</b></td>
             </tr>
             <tr>
-                <td class="text3" colspan="2">Tanggal keluar : {{date('d-m-Y', strtotime($biodata->tanggal_kunjungan))}}</td>
-                <td class="text3" colspan="2" width="300">Tanggal Masuk : {{date('d-m-Y', strtotime($biodata->tanggal_kunjungan))}}</td>
-                <td class="text3" colspan="2" width="300">Ruang perawatan : SHAFA B 5</td>
+                <td class="text3"><b>Tanggal Pelayanan</b></td>
+                <td class="text3" colspan="3">: {{date('d-m-Y', strtotime($biodata->tanggal_kunjungan))}}</td>
             </tr>
             <tr>
-                <td class="text3" colspan="3">Indikasi rawat : {{$biodata->SPESIALIS}}</td>
-                <td class="text3" colspan="3">Diagnosa saat masuk : {{$biodata->SPESIALIS}}</td>
+                <td class="text3" colspan="2">Indikasi rawat :{{$biodata->SPESIALIS}}</td>
+                <td class="text3" colspan="2">Diagnosa saat masuk :{{$biodata->SPESIALIS}}</td>
             </tr>
             <tr>
                 <td class="text3">Ringkasan Riwayat Pasien</td>
-                <td class="text3" colspan="5"> </td>
+                <td class="text3" colspan="3"> </td>
             </tr>
             <tr>
                 <td class="text3">Pemeriksaan Fisik</td>
-                <td class="text3" colspan="5"> </td>
+                <td class="text3" colspan="3"> </td>
             </tr>
             <tr>
-                <td class="text3">Pemeriksaan penunjang terpenting </td>
-                <td class="text3" colspan="5"> </td>
+                <td class="text3">Pemeriksaan Penunjang</td>
+                <td class="text3" colspan="3"> </td>
             </tr>
             <tr>
-                <td class="text3">Terapi / Pengobatan selama di rumah sakit</td>
-                <td class="text3" colspan="5"> </td>
+                <td class="text3">Terapi / Pengobatan </td>
+                <td class="text3" colspan="3"> </td>
             </tr>
             <tr>
-                <td class="text3">Hasil laboratorium belum selesai</td>
-                <td class="text3" colspan="5"> </td>
+                <td class="text3">Hasil Laboratorium</td>
+                <td class="text3" colspan="3"> </td>
             </tr>
             <tr>
-                <td class="text3">Alergi (reaksi obat)</td>
-                <td class="text3" colspan="5"> </td>
+                <td class="text3">Alergi</td>
+                <td class="text3" colspan="3"> </td>
             </tr>
             <tr>
-                <td class="text3">Diet</td>
-                <td class="text3" colspan="5"> </td>
+                <td class="text3">Tanggal Kontrol</td>
+                <td class="text3" colspan="3"> </td>
             </tr>
             <tr>
-                <td class="text3">Pengobatan dilanjutkan</td>
-                <td class="text3" colspan="5"> </td>
-            </tr>
-            <tr>
-                <td class="text3" colspan="3">Diagnosa Utama : {{$biodata->SPESIALIS}}</td>
-                <td class="text3" colspan="3">ICD 10 : {{$biodata->SPESIALIS}}</td>
+                <td class="text3">Diagnosa Utama</td>
+                <td class="text3" colspan="3"> </td>
             </tr>
             <tr>
                 <td class="text3">Diagnosa Sekunder</td>
-                <td class="text3" colspan="5"> </td>
+                <td class="text3" colspan="3"> </td>
             </tr>
             <tr>
-                <td class="text3" colspan="3">Tindakan / Prosedur : {{$biodata->SPESIALIS}}</td>
-                <td class="text3" colspan="3">ICD 9 : {{$biodata->SPESIALIS}}</td>
+                <td class="text3">Tindakan / Prosedur</td>
+                <td class="text3" colspan="3"> </td>
             </tr>
             <tr>
-                <td class="text3" colspan="6"><b>Keadaan Pasien Saat Pulang</b></td>
-            </tr>
-            <tr>
-                <td class="text3">Keadaan Umum</td>
-                <td class="text3" colspan="5"> </td>
-            </tr>
-            <tr>
-                <td class="text3">Vital Sign</td>
-                <td class="text3" colspan="5"> </td>
-            </tr>
-            <tr>
-                <td class="text3">Pemeriksaan Fisik</td>
-                <td class="text3" colspan="5"> </td>
-            </tr>
-            <tr>
-                <td class="text3">Cara Pulang</td>
-                <td class="text3" colspan="5"> </td>
-            </tr>
-            <tr>
-                <td class="text3">Instruksi/Anjuran edukasi</td>
-                <td class="text3" colspan="5"> </td>
-            </tr>
-            <tr>
-                <td class="text3" colspan="6"><b>Terapi yang diberikan dokter</b></td>
+                <td class="text3"><b>Terapi yang diberikan dokter</b></td>
+                <td class="text3" colspan="3"></td>
             </tr>
         </table>
         <table width="100%" style="border-top:none;">
