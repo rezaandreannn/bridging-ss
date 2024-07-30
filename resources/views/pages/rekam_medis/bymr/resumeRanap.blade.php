@@ -135,15 +135,15 @@
                     <table>
                         <tr>
                             <td>No. RM </td>
-                            <td>: {{ $biodata->NO_MR}}</td>
+                            <td>: {{ $biodata->no_mr}}</td>
                         </tr>
                         <tr>
                             <td>Nama</td>
-                            <td>: {{ $biodata->NAMA_PASIEN}}</td>
+                            <td>: {{ $biodata->nama_pasien}}</td>
                         </tr>
                         <tr>
                             <td>Tanggal Lahir</td>
-                            <td>: {{ date('d-m-Y', strtotime($biodata->TGL_LAHIR))}}</td>
+                            <td>: {{ date('d-m-Y', strtotime($biodata->tgl_lahir))}}</td>
                         </tr>
                     </table>
                 </td>
@@ -163,6 +163,10 @@
                 <td class="text3" colspan="2" width="300">Tanggal Masuk : {{date('d-m-Y', strtotime($biodata->tanggal_kunjungan))}}</td>
                 <td class="text3" colspan="2" width="300">Ruang perawatan : SHAFA B 5</td>
             </tr>
+       
+            {{-- {{date('d-m-Y', strtotime($biodata->tanggal_kunjungan))}}
+            {{$biodata->SPESIALIS}}
+            {{$biodata->SPESIALIS}} --}}
             <tr>
                 <td class="text3" colspan="3">Indikasi rawat : {{$biodata->SPESIALIS}}</td>
                 <td class="text3" colspan="3">Diagnosa saat masuk : {{$biodata->SPESIALIS}}</td>

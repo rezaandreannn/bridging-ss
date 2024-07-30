@@ -11,6 +11,7 @@ use App\Models\Rekam_medis;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
+use App\Models\RawatInap;
 
 class RekamMedisByMrController extends Controller
 {
@@ -22,6 +23,7 @@ class RekamMedisByMrController extends Controller
     protected $ranap;
     protected $rekam_medis;
     protected $rajaldokter;
+    protected $rawatinap;
 
     public function __construct(Rekam_medis $rekam_medis)
     {
@@ -32,6 +34,7 @@ class RekamMedisByMrController extends Controller
         $this->rajal = new Rajal;
         $this->ranap = new RanapDokter;
         $this->rajaldokter = new RajalDokter;
+        $this->rawatinap = new RawatInap;
     }
     /**
      * Display a listing of the resource.
@@ -93,7 +96,11 @@ class RekamMedisByMrController extends Controller
     public function resumeRanap($noReg)
     {
         $resep = $this->rajaldokter->resep($noReg);
-        $biodata = $this->rekam_medis->getBiodata($noReg);
+        $biodata = $this->rawatinap->biodataPasienRanap($noReg);
+        $resumePasienRanap = $this->rawatinap->resumePasienRanapByNoreg($noReg);
+        $resumeDiagnosaSekunder = $this->rawatinap->resumeDiagnosaSekunder($noReg);
+        $resumeTindakan = $this->rawatinap->resumeTindakan($noReg);
+        $resumeTerapiPulang = $this->rawatinap->resumeTerapiPulang($noReg);
         // dd($biodata);
         // Cetak PDF
         $date = date('dMY');
@@ -102,7 +109,7 @@ class RekamMedisByMrController extends Controller
 
         $title = 'Cetak RM';
 
-        $pdf = PDF::loadview('pages.rekam_medis.bymr.resumeRanap', ['tanggal' => $tanggal, 'title' => $title, 'resep' => $resep, 'biodata' => $biodata]);
+        $pdf = PDF::loadview('pages.rekam_medis.bymr.resumeRanap', ['tanggal' => $tanggal, 'title' => $title, 'resep' => $resep, 'biodata' => $biodata, 'resumePasienRanap' => $resumePasienRanap,'resumeDiagnosaSekunder' => $resumeDiagnosaSekunder,'resumeTindakan' => $resumeTindakan,'resumeTerapiPulang' => $resumeTerapiPulang]);
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
     }
