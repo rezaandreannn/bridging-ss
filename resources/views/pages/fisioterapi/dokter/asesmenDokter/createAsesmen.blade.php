@@ -69,42 +69,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Cara Pasien Datang</label>
-
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="cara_datang" value="Sendiri" id="cara_datang1" @if(old('cara_datang','0')=='Sendiri' ) checked @endif>
-                                                <label class="form-check-label" for="cara_datang1">
-                                                    Sendiri
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="cara_datang" value="Diantar" id="cara_datang2" @if(old('cara_datang','0')=='Diantar' ) checked @endif>
-                                                <label class="form-check-label" for="cara_datang2">
-                                                    Diantar
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="cara_datang" value="Rujukan" id="cara_datang3" @if(old('cara_datang','0')=='Rujukan' ) checked @endif>
-                                                <label class="form-check-label" for="cara_datang3">
-                                                    Rujukan
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Diantar Atau Rujukan Dari : <code>Di isi jika diantar/rujukan</code></label>
-                                            <input type="text" name="deskripsi_cara_datang" class="form-control @error('deskripsi_cara_datang') is-invalid  
-                                                @enderror" value="{{ old('deskripsi_cara_datang')}}">
-                                        </div>
-                                        @error('deskripsi_cara_datang')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                    </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Anamnesa / Allow Anamnesa <code>*</code></label>
@@ -116,59 +80,6 @@
                                             {{ $message }}
                                         </div>
                                         @enderror
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="d-block">Keadaan Umum</label>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="keadaan_umum" value="Baik" id="keadaan_umum1" @if(old('keadaan_umum','0')=='Baik' ) checked @endif>
-                                                <label class="form-check-label" for="keadaan_umum1">
-                                                    Baik
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="keadaan_umum" value="Sedang" id="keadaan_umum2" @if(old('keadaan_umum','0')=='Sedang' ) checked @endif>
-                                                <label class="form-check-label" for="keadaan_umum2">
-                                                    Sedang
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="keadaan_umum" value="Buruk" id="keadaan_umum3" @if(old('keadaan_umum','0')=='Buruk' ) checked @endif>
-                                                <label class="form-check-label" for="keadaan_umum3">
-                                                    Buruk
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="d-block">Keadaan Kesadaran</label>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="kesadaran" value="GCS" id="kesadaran1" @if(old('kesadaran','0')=='GCS' ) checked @endif>
-                                                <label class="form-check-label" for="kesadaran1">
-                                                    GCS
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="kesadaran" value="E" id="kesadaran2" @if(old('kesadaran','0')=='E' ) checked @endif>
-                                                <label class="form-check-label" for="kesadaran2">
-                                                    E
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="kesadaran" value="M" id="kesadaran3" @if(old('kesadaran','0')=='M' ) checked @endif>
-                                                <label class="form-check-label" for="kesadaran3">
-                                                    M
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="kesadaran" value="V" id="kesadaran4" @if(old('kesadaran','0')=='V' ) checked @endif>
-                                                <label class="form-check-label" for="kesadaran4">
-                                                    V
-                                                </label>
-                                            </div>
-                                        </div>
-
                                     </div>
                                     <div class="card-header card-success">
                                         <h4 class="card-title">Pemeriksaan Fisik</h4>
@@ -302,40 +213,6 @@
                                             </select>
                                         </div>
                                     </div> -->
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Status Psikologi</label>
-                                            <select name="status_psikologi" id="" class="form-control @error('status_psikologi')  is-invalid @enderror">
-                                                <option value="" selected disabled>--Pilih Status Psikologi--</option>
-                                                <option value="Tenang" @if(old('status_psikologi')=='Tenang' ) selected @endif>Tenang</option>
-                                                <option value="Cemas" @if(old('status_psikologi')=='Cemas' ) selected @endif>Cemas</option>
-                                                <option value="Marah" @if(old('status_psikologi')=='Marah' ) selected @endif>Marah</option>
-                                                <option value="Depresi" @if(old('status_psikologi')=='Depresi' ) selected @endif>Depresi</option>
-                                            </select>
-                                            @error('status_psikologi')
-                                            <span class="text-danger" style="font-size: 12px;">
-                                                {{ $message }}
-                                            </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Status Mental</label>
-                                            <select name="status_mental" id="" class="form-control @error('status_mental')  is-invalid @enderror">
-                                                <option value="" selected disabled>--Pilih Status Mental--</option>
-                                                <option value="Kooperatif" @if(old('status_mental')=='Kooperatif' ) selected @endif>Kooperatif</option>
-                                                <option value="Tidak Kooperatif" @if(old('status_mental')=='Tidak Kooperatif' ) selected @endif>Tidak Kooperatif</option>
-                                                <option value="Gelisah/Delirium/Berontak" @if(old('status_mental')=='Gelisah/Delirium/Berontak' ) selected @endif>Gelisah/Delirium/Berontak</option>
-                                                <option value="Ketidak Mampuan Dalam Mengikuti Perintah" @if(old('status_mental')=='Ketidak Mampuan Dalam Mengikuti Perintah' ) selected @endif>Ketidak Mampuan Dalam Mengikuti Perintah</option>
-                                            </select>
-                                            @error('status_mental')
-                                            <span class="text-danger" style="font-size: 12px;">
-                                                {{ $message }}
-                                            </span>
-                                            @enderror
-                                        </div>
-                                    </div>
                                     <div class="card-header card-success">
                                         <h4 class="card-title">Analisa</h4>
                                     </div>

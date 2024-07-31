@@ -67,12 +67,12 @@
                                             <input type="text" class="form-control" name="diagnosis_fungsi" value="{{$lembarSpkfr->diagnosis_fungsi}}" ></input>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    {{-- <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>Pemeriksaan Penunjang </label>
+                                            <label>Pemeriksaan Penunjang</label>
                                             <input type="text" class="form-control" name="pemeriksaan_penunjang" value="{{$lembarSpkfr->pemeriksaan_penunjang}}" ></input>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Tata Laksana KFR (ICD 9 CM)</label>

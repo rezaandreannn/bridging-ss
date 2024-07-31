@@ -83,7 +83,7 @@
                                                 @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    {{-- <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Pemeriksaan Penunjang </label>
                                             <input type="text" class="form-control  @error('pemeriksaan_penunjang') is-invalid  
@@ -94,7 +94,7 @@
                                                 </div>
                                                 @enderror
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Tata Laksana KFR (ICD 9 CM)</label>

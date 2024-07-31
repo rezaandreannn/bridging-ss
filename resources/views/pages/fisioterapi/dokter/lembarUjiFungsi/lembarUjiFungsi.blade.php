@@ -100,6 +100,12 @@
                                                 @enderror
                                         </div>
                                     </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Edukasi : </label>
+                                            <textarea class="form-control" rows="3" name="edukasi"  placeholder="Masukan ..."></textarea>
+                                        </div>
+                                    </div>
                                     {{-- <div class="col-md-9">
 
                                     </div>
