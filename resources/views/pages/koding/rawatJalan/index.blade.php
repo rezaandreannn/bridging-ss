@@ -128,7 +128,7 @@
     function resetForm() {
         document.getElementById("filterForm").value = "";
         alert('Filter telah direset!');
-        window.location.href = "{{ route('rj.index') }}";
+        window.location.href = "{{ route('koding.index') }}";
     }
 </script>
 
