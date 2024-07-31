@@ -41,6 +41,7 @@ use App\Http\Controllers\Case\Encounter\EncounterCreateController;
 use App\Http\Controllers\Berkas\Rekam_medis_by_mr\RekamMedisByMrController;
 use App\Http\Controllers\Berkas\Rekam_medis_harian\RekamMedisHarianController;
 use App\Http\Controllers\IGD\Layanan\AssesmenController as LayananAssesmenController;
+use App\Http\Controllers\PetugasKoding\Rajal\KodingRajalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -344,6 +345,18 @@ Route::middleware('auth')->group(function () {
         Route::get('riwayaRekamMedis/harian/list', [RekamMedisHarianController::class, 'index'])->name('rm.harian');
         // IGD
         Route::get('riwayaRekamMedis/igd/list', [RekamMedisIgdController::class, 'index'])->name('rm.igd');
+    });
+
+    // Riwayat Rekam Medis
+    Route::prefix('koding')->group(function () {
+
+        Route::get('kodingDiagnosa/rajal/list', [KodingRajalController::class, 'index'])->name('koding.index');
+        Route::get('kodingDiagnosa/rajal/addDiagnosa/{noReg}',[KodingRajalController::class, 'create'])->name('koding.add');
+        Route::get('kodingDiagnosa/rajal/editDiagnosa/{noReg}',[KodingRajalController::class, 'show'])->name('koding.showEdit');
+        Route::post('kodingDiagnosa/rajal/addProsesDiagnosa/{noReg}',[KodingRajalController::class, 'store'])->name('koding.addproses');
+        Route::put('kodingDiagnosa/rajal/updateProsesDiagnosa/{noReg}',[KodingRajalController::class, 'update'])->name('koding.updateproses');
+ 
+    
     });
 
     // MANAGE USER

@@ -108,7 +108,7 @@ return [
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 
-        'bridging' => [
+        'bridging_ss' => [
             'driver'  => 'sqlsrv',
             'url' => env('DATABASE_URL_BRIDGING'),
             'host' => env('DB_HOST_BRIDGING', 'localhost'),

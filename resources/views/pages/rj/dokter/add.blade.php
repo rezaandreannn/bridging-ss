@@ -159,7 +159,7 @@
                                             <select name="periksa_lab[]" class="form-control select2" multiple="multiple" data-placeholder="Pilih Kode ICD 10" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                                 <option value="" disabled>-- Pilih Kode ICD 10 --</option>
                                                 @foreach ($masterIcd10 as $icd10)
-                                                <option value="{{$icd10->KODE}}">{{$icd10->KET}} || {{$icd10->KODE}}</option>
+                                                <option value="{{$icd10->icd10_code}}">{{$icd10->icd10_code}} || {{$icd10->icd10_en}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
