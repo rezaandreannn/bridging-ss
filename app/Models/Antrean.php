@@ -69,6 +69,7 @@ class Antrean extends Model
             ->table('ANTRIAN as a')
             ->Join('REGISTER_PASIEN as rp', 'a.No_MR', '=', 'rp.No_MR')
             ->Join('PENDAFTARAN as p', 'a.No_MR', '=', 'p.No_MR')
+            ->Join($bridging_ss . '.dbo.satusehat_encounter as se', 'p.NO_REG', '=', 'se.kode_register')
             ->leftJoin($bridging_ss . '.dbo.satusehat_condition as sc', 'p.NO_REG', '=', 'sc.kode_register')
             ->leftJoin($dbpku . '.dbo.TAC_RJ_STATUS as st', 'p.NO_REG', '=', 'st.FS_KD_REG')
             ->leftJoin($dbpku . '.dbo.TAC_RJ_MEDIS as m', 'p.NO_REG', '=', 'm.FS_KD_REG')
