@@ -59,6 +59,47 @@ class Antrean extends Model
         return $data;
     }
 
+    public function getDataPasienRajalDiagnosa($kode_dokter,$tanggal)
+    {
+
+        $date = date('Y-m-d');
+        $dbpku = DB::connection('pku')->getDatabaseName();
+        $bridging_ss = DB::connection('bridging_ss')->getDatabaseName();
+        $data = DB::connection('db_rsmm')
+            ->table('ANTRIAN as a')
+            ->Join('REGISTER_PASIEN as rp', 'a.No_MR', '=', 'rp.No_MR')
+            ->Join('PENDAFTARAN as p', 'a.No_MR', '=', 'p.No_MR')
+            ->leftJoin($bridging_ss . '.dbo.satusehat_condition as sc', 'p.NO_REG', '=', 'sc.kode_register')
+            ->leftJoin($dbpku . '.dbo.TAC_RJ_STATUS as st', 'p.NO_REG', '=', 'st.FS_KD_REG')
+            ->leftJoin($dbpku . '.dbo.TAC_RJ_MEDIS as m', 'p.NO_REG', '=', 'm.FS_KD_REG')
+            ->select(
+                'a.No_Ponsel as no_hp',
+                'a.Nomor as nomor_antrean',
+                'a.No_MR as no_mr',
+                'a.Tanggal as tanggal',
+                'a.Dokter as kode_dokter',
+                'a.Jenis as jenis_pasien',
+                'a.Status as created_by',
+                'rp.Nama_Pasien as nama_pasien',
+                'rp.No_Identitas',
+                'rp.Alamat',
+                'p.No_Reg',
+                'st.FS_STATUS',
+                'm.FS_CARA_PULANG',
+                'm.FS_TERAPI',
+                'm.FS_KD_TRS',
+                'm.HASIL_ECHO',
+                'sc.kode_register'
+            )
+            ->where('a.Dokter', $kode_dokter)
+            ->where('p.Kode_Dokter', $kode_dokter)
+            ->where('a.Tanggal', $tanggal)
+            ->where('p.Tanggal', $tanggal)
+            ->orderBy('a.Nomor', 'ASC')
+            ->get()->toArray();
+        return $data;
+    }
+
     // public function getData($kode_dokter = null, $tanggal = null)
     // {
     //     try {

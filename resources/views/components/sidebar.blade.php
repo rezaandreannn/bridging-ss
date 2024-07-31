@@ -216,6 +216,19 @@
             </li>
             @endcan
 
+            @can('koding')
+            <li class="menu-header">Petugas Koding</li>
+            <li class="nav-item dropdown  {{ Request::is('rm/*') ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Koding</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('rm/riwayaRekamMedis/bymr/*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('koding.index')}}">Diagnosa Rajal</a>
+                    </li>
+                </ul>
+        
+            </li>
+            @endcan
+
             @can('vclaim')
             <li class="menu-header">vclaim bpjs</li>
             <li class="nav-item dropdown ">

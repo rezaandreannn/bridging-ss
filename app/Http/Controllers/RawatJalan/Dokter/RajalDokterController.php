@@ -48,7 +48,7 @@ class RajalDokterController extends Controller
         $getHasilLab = $this->rajaldokter->getHasilLab($noReg);
         $vitalSign = $this->rajaldokter->getVitalSign($noReg);
         $skalaNyeri = $this->rajaldokter->getSkalaNyeri($noReg);
-        $masterIcd10 = $this->rajaldokter->getIcd10();
+        $masterIcd10 = $this->rajaldokter->getIcd10Dokter();
         // dd($masterIcd10);
         $biodatas = $this->pasien->biodataPasienByMr($noMR);
         $history = $this->rajaldokter->getHistoryPasien($noMR);

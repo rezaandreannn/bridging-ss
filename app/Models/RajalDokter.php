@@ -297,12 +297,25 @@ class RajalDokter extends Model
         return $data;
     }
 
+    public function getIcd10Dokter()
+    {   
+
+        $data = DB::connection('bridging_ss')
+        ->table('satusehat_icd10')
+        ->where('icd10_code', 'like','Z%')
+        ->orWhere('icd10_code', 'like','A%')
+        ->get();
+    return $data;
+
+    }
+
     public function getIcd10()
     {   
 
-        $data = DB::connection('db_rsmm')
-        ->select("SELECT * FROM ICD10 WHERE KODE LIKE 'Z%'");
+        $data = DB::connection('bridging_ss')
+        ->table('satusehat_icd10')
+        ->get();
+    return $data;
 
-        return $data;
     }
 }
