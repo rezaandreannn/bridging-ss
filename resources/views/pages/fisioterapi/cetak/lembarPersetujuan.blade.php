@@ -280,7 +280,7 @@
         <tr>
             <td class="tandatangan" colspan="2" style="border-left:none; border-top:none;">
                 <img src="img/barcode.jpeg" width="50" height="50" />
-                <div>(Bastian)</div>
+                <div>(dr. Bastian)</div>
             </td>
         </tr>
         <tr>
@@ -290,7 +290,7 @@
         <tr>
             <td class="tandatangan" colspan="2" style="border-left:none; border-top:none;">
                 <img src="img/barcode.jpeg" width="50" height="50" />
-                <div>(Toumi)</div>
+                <div>(Pasien)</div>
             </td>
         </tr>
     </table>
@@ -414,7 +414,7 @@
                 <td class="barcode"><img src="img/barcode.jpeg" width="50" height="50" /></td>
             </tr>
             <tr>
-                <td class="barcode">(Bastian)</td>
+                <td class="barcode">(dr. Bastian)</td>
                 <td class="barcode">(Pasien)</td>
                 <td class="barcode">(Saksi)</td>
             </tr>

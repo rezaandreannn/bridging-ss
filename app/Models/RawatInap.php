@@ -27,7 +27,8 @@ class RawatInap extends Model
     // }
 
 
-    public function biodataPasienRanap($noReg){
+    public function biodataPasienRanap($noReg)
+    {
 
         $pku = DB::connection('pku')->getDatabaseName();
         $data = DB::connection('db_rsmm')
@@ -39,12 +40,12 @@ class RawatInap extends Model
             ->leftJoin('M_RUANG as mr', 'tk.KODE_RUANG', '=', 'mr.KODE_RUANG')
             ->leftJoin('M_BANGSAL as mb', 'mr.KODE_BANGSAL', '=', 'mb.KODE_BANGSAL')
             ->leftJoin('REKANAN as r', 'p.KODEREKANAN', '=', 'r.KODEREKANAN')
-       
+
             // ->leftJoin('ANTRIAN as a', 'p.No_MR', '=', 'a.No_MR')
             // ->leftJoin('M_RUANG as mr', 'p.Kode_Ruang', '=', 'mr.Kode_Ruang')
             // ->leftJoin($pku . '.dbo.TAC_RJ_MEDIS as trm', 'p.No_Reg', '=', 'trm.FS_KD_REG')
             // ->leftJoin($pku . '.dbo.TAC_RJ_STATUS as trs', 'p.No_Reg', '=', 'trs.FS_KD_REG')
-        
+
             ->select(
                 // transaksi_kamar
                 'tk.no_reg',
@@ -55,7 +56,7 @@ class RawatInap extends Model
                 'p.koderekanan',
                 'p.tanggal',
                 'p.jam',
-                
+
                 'rp.nama_pasien',
                 'rp.jenis_kelamin',
                 'rp.alamat',
@@ -65,16 +66,17 @@ class RawatInap extends Model
                 'mb.nama_bangsal',
 
                 'r.namarekanan',
-            
-                
+
+
             )
             ->where('tk.no_reg', $noReg)
-            ->orderBy('tk.Tgl_Mulai','desc')
+            ->orderBy('tk.Tgl_Mulai', 'desc')
             ->first();
         return $data;
     }
 
-    public function resumePasienRanapByNoreg($noReg){
+    public function resumePasienRanapByNoreg($noReg)
+    {
 
         $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
         $data = DB::connection('pku')
@@ -86,7 +88,7 @@ class RawatInap extends Model
             ->leftJoin($db_rsmm . '.dbo.PENDAFTARAN as p', 'resume.FS_KD_REG', '=', 'p.NO_REG')
             ->leftJoin($db_rsmm . '.dbo.M_RUANG as mr', 'mr.KODE_RUANG', '=', 'p.KODE_RUANG')
             ->leftJoin('TAC_COM_USER as tcu', 'resume.mdb_update', '=', 'tcu.user_id')
-            ->leftJoin($db_rsmm . '.dbo.DOKTER as d', 'd.Kode_Dokter', '=', 'tcu.user_name') 
+            ->leftJoin($db_rsmm . '.dbo.DOKTER as d', 'd.Kode_Dokter', '=', 'tcu.user_name')
             ->select(
                 // transaksi_kamar
                 'resume.*',
@@ -97,18 +99,19 @@ class RawatInap extends Model
                 'mr.nama_ruang',
                 // pendaftaran table
                 'd.nama_dokter',
-          
-            
-                
+
+
+
             )
             ->where('resume.FS_KD_REG', $noReg)
-            ->get();
+            ->first();
         return $data;
     }
-    
 
-    public function resumeDiagnosaSekunder($noReg){
-    
+
+    public function resumeDiagnosaSekunder($noReg)
+    {
+
         $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
         $data = DB::connection('pku')
             ->table('TAB_PX_PULANG_RESUME_DIAG_SEK as a')
@@ -117,16 +120,55 @@ class RawatInap extends Model
             ->select(
                 // transaksi_kamar
                 'a.*',
-                
+
             )
             ->where('a.FS_KD_REG', $noReg)
-            ->orderBy('a.FS_KD_DIAG_SEK','asc')
+            ->orderBy('a.FS_KD_DIAG_SEK', 'asc')
+            ->first();
+        return $data;
+    }
+
+    public function resumeIdikasi($noReg)
+    {
+        // $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
+        $data = DB::connection('pku')
+            ->table('TAB_PX_PULANG_RESUME_INDIKASI_RAWAT as a')
+            ->leftJoin('COM_PARAM_RM_40_INDIKASI_DIRAWAT as b', 'a.FS_KD_PARAM_INDIKASI_DIRAWAT', '=', 'b.FS_KD_PARAM_INDIKASI_DIRAWAT')
+
+            ->select(
+                // transaksi_kamar
+                'a.*',
+                'b.*',
+
+            )
+            ->where('a.FS_KD_REG', $noReg)
             ->get();
         return $data;
     }
-    public function resumeTindakan($noReg){
-    
-        
+
+    public function resumeDiet($noReg)
+    {
+        // $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
+        $data = DB::connection('pku')
+            ->table('TAB_PX_PULANG_RESUME_DIET as a')
+            ->leftJoin('TAB_PX_PULANG_DIET as b', 'a.FS_KD_DIET', '=', 'b.FS_KD_DIET')
+
+            ->select(
+                // transaksi_kamar
+                'a.FS_KD_PX_PULANG_DIET',
+                'a.FS_KD_DIET',
+                'b.FS_NM_DIET',
+
+            )
+            ->where('a.FS_KD_REG', $noReg)
+            ->get();
+        return $data;
+    }
+
+    public function resumeTindakan($noReg)
+    {
+
+
         $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
         $data = DB::connection('pku')
             ->table('TAB_PX_PULANG_RESUME_TIND as a')
@@ -135,17 +177,18 @@ class RawatInap extends Model
             ->select(
                 // transaksi_kamar
                 'a.*',
-                
+
             )
             ->where('a.FS_KD_REG', $noReg)
-            ->orderBy('a.FS_KD_TIND','asc')
-            ->get();
+            ->orderBy('a.FS_KD_TIND', 'asc')
+            ->first();
         return $data;
     }
     // $sql = "SELECT * FROM PKU.dbo.TAB_PX_PULANG_TERAPI WHERE FS_KD_REG = ? ORDER BY FS_KD_TERAPI ASC";
-    public function resumeTerapiPulang($noReg){
-    
-        
+    public function resumeTerapiPulang($noReg)
+    {
+
+
         $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
         $data = DB::connection('pku')
             ->table('TAB_PX_PULANG_TERAPI as a')
@@ -154,10 +197,10 @@ class RawatInap extends Model
             ->select(
                 // transaksi_kamar
                 'a.*',
-                
+
             )
             ->where('a.FS_KD_REG', $noReg)
-            ->orderBy('a.FS_KD_TERAPI','asc')
+            ->orderBy('a.FS_KD_TERAPI', 'asc')
             ->get();
         return $data;
     }
