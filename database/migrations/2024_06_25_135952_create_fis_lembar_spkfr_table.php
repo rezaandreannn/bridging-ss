@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('pemeriksaan_fisik');
             $table->string('diagnosis_medis');
             $table->string('diagnosis_fungsi');
-            $table->string('pemeriksaan_penunjang');
+            $table->string('pemeriksaan_penunjang')->nullable();
             $table->string('tata_laksana_kfr');
             $table->string('penyakit_akibat_kerja');
             $table->string('deskripsi_akibat_kerja');
