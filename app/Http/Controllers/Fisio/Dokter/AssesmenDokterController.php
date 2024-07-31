@@ -310,8 +310,6 @@ class AssesmenDokterController extends Controller
      */
     public function store(Request $request)
     {
-
-
         $validatedData = $request->validate([
             'anamnesa' => 'required',
         ]);
@@ -333,7 +331,6 @@ class AssesmenDokterController extends Controller
                     ]);;
                 }
             }
-
             $time = date('H:i:s');
             $asesmen_dokter = DB::connection('pku')->table('fis_asesmen_dokter')->insert([
                 'no_registrasi' => $request->input('no_registrasi'),
@@ -377,8 +374,6 @@ class AssesmenDokterController extends Controller
 
     public function update(Request $request)
     {
-
-
         $validatedData = $request->validate([
             'anamnesa' => 'required',
         ]);
@@ -401,7 +396,6 @@ class AssesmenDokterController extends Controller
                     ]);;
                 }
             }
-
 
             $asesmen_dokter_update = DB::connection('pku')->table('fis_asesmen_dokter')->where('no_registrasi', $request->input('no_registrasi'))->update([
                 'kode_transaksi_fisio' => $request->input('kode_transaksi_fisio'),
