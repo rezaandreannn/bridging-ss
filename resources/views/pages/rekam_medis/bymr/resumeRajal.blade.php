@@ -156,59 +156,64 @@
         </table>
         <table style="border: 1px solid black;" class="isi" width="100%">
             <tr>
-                <td class="text2" colspan="4" style="text-align: center; border: 1px solid black;"><b>Resume Rawat Jalan</b></td>
+                <td class="text2" colspan="6" style="text-align: center; border: 1px solid black;"><b>RINGKASAN RAWAT JALAN</b></td>
             </tr>
             <tr>
-                <td class="text3"><b>Tanggal Pelayanan</b></td>
-                <td class="text3" colspan="3">: {{date('d-m-Y', strtotime($biodata->tanggal_kunjungan))}}</td>
+                <td class="text3" width="100"><b>Tanggal Pelayanan</b></td>
+                <td class="text3" colspan="5"> {{date('d M Y', strtotime($asesmenDokterRj->mdd))}}</td>
             </tr>
             <tr>
-                <td class="text3" colspan="2">Indikasi rawat :{{$biodata->SPESIALIS}}</td>
-                <td class="text3" colspan="2">Diagnosa saat masuk :{{$biodata->SPESIALIS}}</td>
+                <td class="text3" colspan="3">Indikasi rawat :</td>
+                <td class="text3" colspan="3">Diagnosa saat masuk : {{ $asesmenDokterRj->FS_ANAMNESA}}</td>
             </tr>
             <tr>
                 <td class="text3">Ringkasan Riwayat Pasien</td>
-                <td class="text3" colspan="3"> </td>
+                <td class="text3" colspan="5"> {{ $asesmenDokterRj->FS_RIW_PENYAKIT_DAHULU}}</td>
             </tr>
             <tr>
                 <td class="text3">Pemeriksaan Fisik</td>
-                <td class="text3" colspan="3"> </td>
+                <td class="text3" colspan="5"> , {{ $asesmenDokterRj->FS_CATATAN_FISIK}}</td>
             </tr>
             <tr>
                 <td class="text3">Pemeriksaan Penunjang</td>
-                <td class="text3" colspan="3"> </td>
+                <td class="text3" colspan="5"> </td>
             </tr>
             <tr>
                 <td class="text3">Terapi / Pengobatan </td>
-                <td class="text3" colspan="3"> </td>
+                <td class="text3" colspan="5"> {{ $asesmenDokterRj->FS_TERAPI}}</td>
             </tr>
             <tr>
                 <td class="text3">Hasil Laboratorium</td>
-                <td class="text3" colspan="3"> </td>
+                <td class="text3" colspan="5"> </td>
             </tr>
             <tr>
                 <td class="text3">Alergi</td>
-                <td class="text3" colspan="3"> </td>
+                <td class="text3" colspan="5"> {{ $asesmenDokterRj->FS_ALERGI}}</td>
             </tr>
             <tr>
                 <td class="text3">Tanggal Kontrol</td>
-                <td class="text3" colspan="3"> </td>
+                <td class="text3" colspan="5"> {{date('d M Y', strtotime($asesmenDokterRj->mdd))}}</td>
             </tr>
             <tr>
                 <td class="text3">Diagnosa Utama</td>
-                <td class="text3" colspan="3"> </td>
+                <td class="text3" colspan="3"> {{ $asesmenDokterRj->FS_DIAGNOSA}}</td>
+                <td class="text3" colspan="2">ICD 10:</td>
             </tr>
+            {{-- <tr>
+                <td class="text3">Diagnosa Utama</td>
+                <td class="text3" colspan="5"> {{ $asesmenDokterRj->FS_DIAGNOSA}}</td>
+            </tr> --}}
             <tr>
                 <td class="text3">Diagnosa Sekunder</td>
-                <td class="text3" colspan="3"> </td>
+                <td class="text3" colspan="5"> {{ $biodata->FS_DIAGNOSA_SEKUNDER}}</td>
             </tr>
             <tr>
                 <td class="text3">Tindakan / Prosedur</td>
-                <td class="text3" colspan="3"> </td>
+                <td class="text3" colspan="3"> {{ $asesmenDokterRj->FS_TINDAKAN}}</td>
+                <td class="text3" colspan="2">ICD 9 : </td>
             </tr>
             <tr>
-                <td class="text3"><b>Terapi yang diberikan dokter</b></td>
-                <td class="text3" colspan="3"></td>
+                <td class="text3" colspan="6"><b>Terapi yang diberikan dokter</b></td>
             </tr>
         </table>
         <table width="100%" style="border-top:none;">
@@ -299,20 +304,20 @@ date_default_timezone_set('Asia/Jakarta');
         </table>
         <table width="100%">
             <tr>
-                <td width="100">Nama</td>
-                <td width="175">: {{ $biodata->NAMA_PASIEN ?? ''}}</td>
+                <td>No MR </td>
+                <td>: {{ $biodata->NO_MR}}</td>
             </tr>
             <tr>
-                <td width="100">No MR</td>
-                <td width="175">: {{ $biodata->NO_MR ?? ''}}</td>
+                <td>Nama</td>
+                <td>: {{ $biodata->NAMA_PASIEN}}</td>
             </tr>
             <tr>
                 <td width="100">Diagnosa </td>
-                <td width="175">:</td>
+                <td width="200">: {{ $asesmenDokterRj->FS_ANAMNESA}}</td>
             </tr>
             <tr>
                 <td width="100">Terapi</td>
-                <td width="175">:</td>
+                <td width="200">:</td>
             </tr>
             <tr>
                 <td colspan="4"></td>

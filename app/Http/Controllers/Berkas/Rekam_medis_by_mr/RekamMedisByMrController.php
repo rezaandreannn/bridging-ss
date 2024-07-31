@@ -95,13 +95,14 @@ class RekamMedisByMrController extends Controller
 
     public function resumeRanap($noReg)
     {
-        $resep = $this->rajaldokter->resep($noReg);
         $biodata = $this->rawatinap->biodataPasienRanap($noReg);
         $resumePasienRanap = $this->rawatinap->resumePasienRanapByNoreg($noReg);
         $resumeDiagnosaSekunder = $this->rawatinap->resumeDiagnosaSekunder($noReg);
+        // dd($resumePasienRanap);
+        $resumeIdikasi = $this->rawatinap->resumeIdikasi($noReg);
+        $resumeDiet = $this->rawatinap->resumeDiet($noReg);
         $resumeTindakan = $this->rawatinap->resumeTindakan($noReg);
         $resumeTerapiPulang = $this->rawatinap->resumeTerapiPulang($noReg);
-        // dd($biodata);
         // Cetak PDF
         $date = date('dMY');
         $tanggal = Carbon::now();
@@ -109,7 +110,27 @@ class RekamMedisByMrController extends Controller
 
         $title = 'Cetak RM';
 
-        $pdf = PDF::loadview('pages.rekam_medis.bymr.resumeRanap', ['tanggal' => $tanggal, 'title' => $title, 'resep' => $resep, 'biodata' => $biodata, 'resumePasienRanap' => $resumePasienRanap, 'resumeDiagnosaSekunder' => $resumeDiagnosaSekunder, 'resumeTindakan' => $resumeTindakan, 'resumeTerapiPulang' => $resumeTerapiPulang]);
+        $pdf = PDF::loadview('pages.rekam_medis.bymr.resumeRanap', ['tanggal' => $tanggal, 'title' => $title, 'biodata' => $biodata, 'resumePasienRanap' => $resumePasienRanap, 'resumeDiet' => $resumeDiet, 'resumeIdikasi' => $resumeIdikasi, 'resumeDiagnosaSekunder' => $resumeDiagnosaSekunder, 'resumeTindakan' => $resumeTindakan, 'resumeTerapiPulang' => $resumeTerapiPulang]);
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
+    }
+
+    public function resumeRajal($noReg)
+    {
+        $resep = $this->rajaldokter->resep($noReg);
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+        // dd($biodata);
+        $asesmenPerawat = $this->rekam_medis->cetakRmRajal($noReg);
+        $asesmenDokterRj = $this->rekam_medis->asesmenDokterRjBynoReg($noReg);
+        // dd($asesmenDokterRj);
+        // Cetak PDF
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+        $filename = 'RM -' . $date;
+
+        $title = 'Cetak RM';
+
+        $pdf = PDF::loadview('pages.rekam_medis.bymr.resumeRajal', ['tanggal' => $tanggal, 'title' => $title, 'resep' => $resep, 'biodata' => $biodata, 'asesmenPerawat' => $asesmenPerawat, 'asesmenDokterRj' => $asesmenDokterRj]);
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
     }

@@ -340,6 +340,7 @@ Route::middleware('auth')->group(function () {
         Route::get('riwayaRekamMedis/bymr/detailBerkas/{noReg}', [RekamMedisByMrController::class, 'detail_berkas'])->name('rm.detail');
         Route::get('riwayaRekamMedis/bymr/detailBerkas/cppt/{noReg}', [RekamMedisByMrController::class, 'detail_cppt'])->name('rm.cppt');
         Route::get('riwayaRekamMedis/bymr/resumeRanap/{noReg}', [RekamMedisByMrController::class, 'resumeRanap'])->name('rm.ranap');
+        Route::get('riwayaRekamMedis/bymr/resumeRajal/{noReg}', [RekamMedisByMrController::class, 'resumeRajal'])->name('rm.rajal');
         // harian
         Route::get('riwayaRekamMedis/harian/list', [RekamMedisHarianController::class, 'index'])->name('rm.harian');
         // IGD

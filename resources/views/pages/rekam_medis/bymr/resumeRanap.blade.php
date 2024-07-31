@@ -159,109 +159,181 @@
                 <td class="text2" colspan="6" style="text-align: center; border: 1px solid black;"><b>RINGKASAN PASIEN PULANG</b></td>
             </tr>
             <tr>
-                <td class="text3" colspan="2">Tanggal keluar : {{date('d-m-Y', strtotime($biodata->tanggal_kunjungan))}}</td>
-                <td class="text3" colspan="2" width="300">Tanggal Masuk : {{date('d-m-Y', strtotime($biodata->tanggal_kunjungan))}}</td>
-                <td class="text3" colspan="2" width="300">Ruang perawatan : SHAFA B 5</td>
+                <td class="text3" colspan="2">Tanggal Masuk : {{date('d M Y', strtotime($resumePasienRanap->tanggal))}}</td>
+                <td class="text3" colspan="2" width="300">Tanggal keluar :  {{date('d M Y', strtotime($resumePasienRanap->tgl_keluar))}}</td>
+                <td class="text3" colspan="2" width="300">Ruang perawatan : {{ $resumePasienRanap->nama_ruang}}</td>
             </tr>
        
             {{-- {{date('d-m-Y', strtotime($biodata->tanggal_kunjungan))}}
             {{$biodata->SPESIALIS}}
             {{$biodata->SPESIALIS}} --}}
             <tr>
-                <td class="text3" colspan="3">Indikasi rawat : {{$biodata->SPESIALIS}}</td>
-                <td class="text3" colspan="3">Diagnosa saat masuk : {{$biodata->SPESIALIS}}</td>
+                <td class="text3" colspan="3">Indikasi rawat : 
+                    @foreach ($resumeIdikasi as $indikasi)
+                    {{ $indikasi->FS_NM_INDIKASI_DIRAWAT}}
+                    @endforeach
+                    {{ $resumePasienRanap->FS_KET_INDIKASI}}
+                </td>
+                <td class="text3" colspan="3">Diagnosa saat masuk : {{ $resumePasienRanap->FS_KELUHAN_UTAMA}}</td>
             </tr>
             <tr>
                 <td class="text3">Ringkasan Riwayat Pasien</td>
-                <td class="text3" colspan="5"> </td>
+                <td class="text3" colspan="5"> {{ $resumePasienRanap->FS_RIWAYAT_PENYAKIT}}</td>
             </tr>
             <tr>
                 <td class="text3">Pemeriksaan Fisik</td>
-                <td class="text3" colspan="5"> </td>
+                <td class="text3" colspan="5"> {{ $resumePasienRanap->FS_PEMERIKSAAN_FISIK}}, S: {{ $resumePasienRanap->FS_SUHU1}} C, N: {{ $resumePasienRanap->FS_NADI1}} x/Menit, R: {{ $resumePasienRanap->FS_R1}} x/Menit, TD: {{ $resumePasienRanap->FS_TD1}} mmHg</td>
             </tr>
             <tr>
                 <td class="text3">Pemeriksaan penunjang terpenting </td>
-                <td class="text3" colspan="5"> </td>
+                <td class="text3" colspan="5"> {{ $resumePasienRanap->FS_PEMERIKSAAN_PENUNJANG}}</td>
             </tr>
             <tr>
                 <td class="text3">Terapi / Pengobatan selama di rumah sakit</td>
-                <td class="text3" colspan="5"> </td>
+                <td class="text3" colspan="5"> {{ $resumePasienRanap->FS_TERAPI}}</td>
             </tr>
             <tr>
                 <td class="text3">Hasil laboratorium belum selesai</td>
-                <td class="text3" colspan="5"> </td>
+                <td class="text3" colspan="5"> 
+                    @if($resumePasienRanap->FS_HASIL_LAB != 'NULL')
+                        {{ $resumePasienRanap->FS_HASIL_LAB }}
+                    @else
+                        {{ '' }}
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td class="text3">Alergi (reaksi obat)</td>
-                <td class="text3" colspan="5"> </td>
+                <td class="text3" colspan="5">
+                    @if($resumePasienRanap->FS_ALERGI != 'NULL')
+                        {{ $resumePasienRanap->FS_ALERGI }}
+                    @else
+                        {{ '' }}
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td class="text3">Diet</td>
-                <td class="text3" colspan="5"> </td>
+                <td class="text3" colspan="5"> 
+                    @foreach ($resumeDiet as $diet)
+                    {{ $diet->FS_NM_DIET}},
+                    @endforeach
+                </td>
             </tr>
             <tr>
                 <td class="text3">Pengobatan dilanjutkan</td>
-                <td class="text3" colspan="5"> </td>
+                <td class="text3" colspan="5"> {{ $resumePasienRanap->ket_masuk}} {{ $resumePasienRanap->FS_KET_KONTROL}}, Tanggal Kontrol :{{date('d M Y', strtotime($resumePasienRanap->FD_TGL_KONTROL))}}, Jam :{{ $resumePasienRanap->FS_JAM_KONTROL}}  </td>
             </tr>
             <tr>
-                <td class="text3" colspan="3">Diagnosa Utama : {{$biodata->SPESIALIS}}</td>
-                <td class="text3" colspan="3">ICD 10 : {{$biodata->SPESIALIS}}</td>
+                <td class="text3">Diagnosa Utama</td>
+                <td class="text3" colspan="3">{{ $resumePasienRanap->FS_DIAG_UTAMA}}</td>
+                <td class="text3" colspan="2">ICD 10 : {{ $resumePasienRanap->FS_ICD_DIAG_UTAMA}}</td>
             </tr>
+                @if(is_null($resumeDiagnosaSekunder))
+                <tr>
+                    <td class="text3">Diagnosa Sekunder</td>
+                    <td class="text3" colspan="5"></td>
+                </tr>
+                @else
+                    <tr>
+                        <td class="text3">Diagnosa Sekunder</td>
+                        <td class="text3" colspan="3">{{ $resumeDiagnosaSekunder->FS_NM_DIAG_SEK}}</td>
+                        <td class="text3" colspan="2">ICD 10 : {{ $resumeDiagnosaSekunder->ICD10}}</td>
+                    </tr>
+                @endif
             <tr>
-                <td class="text3">Diagnosa Sekunder</td>
-                <td class="text3" colspan="5"> </td>
-            </tr>
-            <tr>
-                <td class="text3" colspan="3">Tindakan / Prosedur : {{$biodata->SPESIALIS}}</td>
-                <td class="text3" colspan="3">ICD 9 : {{$biodata->SPESIALIS}}</td>
+                <td class="text3">Tindakan / Prosedur</td>
+                <td class="text3" colspan="3">{{ $resumeTindakan->FS_NM_TIND}} </td>
+                <td class="text3" colspan="2">ICD 9 : {{ $resumeTindakan->ICD9CM}}</td>
             </tr>
             <tr>
                 <td class="text3" colspan="6"><b>Keadaan Pasien Saat Pulang</b></td>
             </tr>
             <tr>
                 <td class="text3">Keadaan Umum</td>
-                <td class="text3" colspan="5"> </td>
+                <td class="text3" colspan="5">
+                    {{ $resumePasienRanap->FS_KEADAAN_UMUM_BAIK == "YA" ? "Baik," : "" }}
+                    {{ $resumePasienRanap->FS_KEADAAN_UMUM_MASIH_SAKIT == "YA" ? "Masih Sakit," : "" }}
+                    {{ $resumePasienRanap->FS_KEADAAN_UMUM_SESAK == "YA" ? "Sesak," : "" }}
+                    {{ $resumePasienRanap->FS_KEADAAN_UMUM_PUCAT == "YA" ? "Pucat," : "" }}
+                    {{ $resumePasienRanap->FS_KEADAAN_UMUM_LEMAH == "YA" ? "Lemah," : "" }}
+                    {{ $resumePasienRanap->FS_KEADAAN_UMUM_LAIN != "0" ? 'Lainnya: ' . $resumePasienRanap->FS_KEADAAN_UMUM_LAIN : '' }}
+                </td>
             </tr>
             <tr>
                 <td class="text3">Vital Sign</td>
-                <td class="text3" colspan="5"> </td>
+                <td class="text3" colspan="5">S: {{ $resumePasienRanap->FS_SUHU}}C, N: {{ $resumePasienRanap->FS_NADI}} x/Menit, R: {{ $resumePasienRanap->FS_R}} x/Menit, TD: {{ $resumePasienRanap->FS_TD}} mmHg </td>
             </tr>
             <tr>
                 <td class="text3">Pemeriksaan Fisik</td>
-                <td class="text3" colspan="5"> </td>
+                <td class="text3" colspan="5"> 
+                    {{ $resumePasienRanap->FS_PEM_FISIK1 == "YA" ? "Tak Anemis," : "" }}
+                    {{ $resumePasienRanap->FS_PEM_FISIK2 == "YA" ? "Anemis," : "" }}
+                    {{ $resumePasienRanap->FS_PEM_FISIK3 == "YA" ? "COR Dalam Batas Normal," : "" }}
+                    {{ $resumePasienRanap->FS_PEM_FISIK4 == "YA" ? "Kardiomegali," : "" }}
+                    {{ $resumePasienRanap->FS_PEM_FISIK5 == "YA" ? "Paru Dalam Batas Normal," : "" }}
+                    {{ $resumePasienRanap->FS_PEM_FISIK6 == "YA" ? "Ekstremitas Dalam Batas Normal," : "" }}
+                    {{ $resumePasienRanap->FS_PEM_FISIK7 != "YA" && $resumePasienRanap->FS_PEM_FISIK7 != "0" && $resumePasienRanap->FS_PEM_FISIK7 != "1" ? $resumePasienRanap->FS_PEM_FISIK7 : "" }}
+                    {{ $resumePasienRanap->FS_PEM_FISIK8 != "YA" && $resumePasienRanap->FS_PEM_FISIK8 != "0" && $resumePasienRanap->FS_PEM_FISIK8 != "1" ? $resumePasienRanap->FS_PEM_FISIK8 : "" }}
+                </td>
             </tr>
             <tr>
                 <td class="text3">Cara Pulang</td>
-                <td class="text3" colspan="5"> </td>
+                <td class="text3" colspan="5">
+                    {{ $resumePasienRanap->FS_CARA_PULANG == "1" ? "Sembuh," : "" }}
+                    {{ $resumePasienRanap->FS_CARA_PULANG == "2" ? "Tampak Masih Sakit," : "" }}
+                    {{ $resumePasienRanap->FS_CARA_PULANG == "3" ? "Pulang Atas Peremintaan Sendiri," : "" }}
+                    {{ $resumePasienRanap->FS_CARA_PULANG == "4" ? "Meninggal," : "" }}
+                    {{ $resumePasienRanap->FS_CARA_PULANG == "5" ? "Pindah Rumah Sakit," : "" }}
+                    {{ $resumePasienRanap->FS_CARA_PULANG != "1" && 
+                    $resumePasienRanap->FS_CARA_PULANG != "2" && 
+                    $resumePasienRanap->FS_CARA_PULANG != "3" && 
+                    $resumePasienRanap->FS_CARA_PULANG != "4" && 
+                    $resumePasienRanap->FS_CARA_PULANG != "5" &&
+                    $resumePasienRanap->FS_CARA_PULANG != null &&
+                    $resumePasienRanap->FS_CARA_PULANG != "" 
+                    ? "Lainnya," . $resumePasienRanap->FS_CARA_PULANG : "" 
+                    }}
+                </td>
             </tr>
             <tr>
                 <td class="text3">Instruksi/Anjuran edukasi</td>
-                <td class="text3" colspan="5"> </td>
+                <td class="text3" colspan="5"> 
+                    {!! $resumePasienRanap->FS_INSTRUKSI1 == "YA" ? "Istirahat Cukup,<br>" : "" !!}
+                    {!! $resumePasienRanap->FS_INSTRUKSI2 == "YA" ? "Kontrol Sesuai Waktu Yang Di Anjurkan,<br>" : "" !!}
+                    {!! $resumePasienRanap->FS_INSTRUKSI3 == "YA" ? "Minum Obat Sesuai Anjuran,<br>" : "" !!}
+                    {!! $resumePasienRanap->FS_INSTRUKSI4 == "YA" ? "Tingkatkan Latihan,<br>" : "" !!}
+                    {!! $resumePasienRanap->FS_INSTRUKSI5 == "YA" ? "Hubungi RSU Muhammadiyah Metro bila dalam keadaan gawat darurat," : "" !!}
+                </td>
             </tr>
             <tr>
-                <td class="text3" colspan="6"><b>Terapi yang diberikan dokter</b></td>
+                <td class="text3" colspan="6"><b>Terapi saat pulang</b></td>
             </tr>
         </table>
         <table width="100%" style="border-top:none;">
             <thead>
                 <tr>
                     <th class="tabel1">Nama Obat</th>
-                    <th class="tabel1">Cara Pemakaian</th>
+                    <th class="tabel1">Jumlah</th>
+                    <th class="tabel1">Dosis</th>
+                    <th class="tabel1">Cara Pemberian</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($resep as $reseps)
+                @foreach ($resumeTerapiPulang as $resep)
                 <tr>
-                    <td class="text8">{{$reseps->Nama_Obat}}</td>
-                    <td class="text8">{{$reseps->Dosis}}</td>
+                    <td class="text8">{{$resep->FS_NM_OBAT}}</td>
+                    <td class="text8">{{$resep->FS_JML_OBAT}}</td>
+                    <td class="text8">{{$resep->FS_DOSIS_OBAT}}</td>
+                    <td class="text8">{{$resep->FS_CARA_PEM_OBAT}}</td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
         <table  width="100%">
             <tr>
-                <td style="padding-top: 100px;" class="text5"></td>
-                <td style="padding-top: 100px;" class="text5">Tanggal 27-07-2024, Jam 11.00</td>
+                <td style="padding-top: 50px;" class="text5"></td>
+                <td style="padding-top: 50px;" class="text5">Tanggal {{date('d-m-Y', strtotime($resumePasienRanap->FD_TGL_PULANG))}}</td>
             </tr>
             <tr>
                 <td class="text5">Tanda Tangan Pasien / Keluarga</td>
@@ -331,15 +403,15 @@ date_default_timezone_set('Asia/Jakarta');
         <table width="100%">
             <tr>
                 <td width="100">Nama</td>
-                <td width="175">: {{ $biodata->NAMA_PASIEN ?? ''}}</td>
+                <td width="175">: {{ $biodata->nama_pasien}}</td>
             </tr>
             <tr>
                 <td width="100">No MR</td>
-                <td width="175">: {{ $biodata->NO_MR ?? ''}}</td>
+                <td width="175">: {{ $biodata->no_mr}}</td>
             </tr>
             <tr>
                 <td width="100">Diagnosa </td>
-                <td width="175">:</td>
+                <td width="175">: {{ $resumePasienRanap->FS_DIAG_UTAMA}}</td>
             </tr>
             <tr>
                 <td width="100">Terapi</td>
@@ -357,10 +429,10 @@ date_default_timezone_set('Asia/Jakarta');
                 </tr>
             </thead>
             <tbody>
-                @foreach ($resep as $reseps)
+                @foreach ($resumeTerapiPulang as $resep)
                 <tr>
-                    <td class="text8">{{$reseps->Nama_Obat}}</td>
-                    <td class="text8">{{$reseps->Dosis}}</td>
+                    <td class="text8">{{$resep->FS_NM_OBAT}}</td>
+                    <td class="text8">{{$resep->FS_DOSIS_OBAT}}</td>
                 </tr>
                 @endforeach
             </tbody>
@@ -368,18 +440,18 @@ date_default_timezone_set('Asia/Jakarta');
         <table width="100%">
                 <tr>
                     <td>
-                        Pasien dapat kontrol kembali ke Rumah Sakit pada hari Kamis,01 Jan 1970 , di
+                        Pasien dapat kontrol kembali ke Rumah Sakit pada hari <b> {{ $dayList[date('D', strtotime($resumePasienRanap->FD_TGL_KONTROL))] . ', ' . date('d M Y', strtotime($resumePasienRanap->FD_TGL_KONTROL)) }}</b> , di <b>{{ $resumePasienRanap->ket_masuk}}</b>
+                        adapun tanggal expired rujukan adalah : <b>{{date('d M Y', strtotime($resumePasienRanap->FS_KET_KONTROL))}}</b>
+                        <br>
+                        catatan : <b>{{ $resumePasienRanap->FS_KET_KONTROL}}</b>
+                        <br>
                         Demikian hal ini kami sampaikan untuk dapat dipergunakan sebagaimana perlu, Terimakasih
                     </td>
                 </tr>
                 <table  width="100%">
                     <tr>
                         <td style="padding-top: 100px;" class="text5"></td>
-                        <td style="padding-top: 100px;" class="text5">Tanggal 27-07-2024, Jam 11.00</td>
-                    </tr>
-                    <tr>
-                        <td class="text5"></td>
-                        <td class="text5">Tanda Tangan dan Nama DPJP</td>
+                        <td style="padding-top: 100px;" class="text5">Tanda Tangan dan Nama DPJP</td>
                     </tr>
                     <tr>
                         <tr>
