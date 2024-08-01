@@ -72,6 +72,12 @@
                                             <textarea class="form-control" rows="3" name="rekomendasi" value="" placeholder="Masukan ...">{{$lembarUjiFungsiGet->rekomendasi}}</textarea>
                                         </div>
                                     </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Edukasi : </label>
+                                            <textarea class="form-control" rows="3" name="edukasi" value="" placeholder="Masukan ..."></textarea>
+                                        </div>
+                                    </div>
                                     {{-- <div class="col-md-9">
 
                                     </div>

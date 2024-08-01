@@ -96,6 +96,7 @@ class RekamMedisByMrController extends Controller
     public function resumeRanap($noReg)
     {
         $biodata = $this->rawatinap->biodataPasienRanap($noReg);
+        // dd($biodata);
         $resumePasienRanap = $this->rawatinap->resumePasienRanapByNoreg($noReg);
         $resumeDiagnosaSekunder = $this->rawatinap->resumeDiagnosaSekunder($noReg);
         // dd($resumePasienRanap);

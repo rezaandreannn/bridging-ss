@@ -131,10 +131,10 @@
             <td class="text3" colspan="3" style="border: 1px solid black">No. Telp / HP : {{ $biodatas->HP1 ?? ''}}</td>
         </tr>
         <tr>
-            <td class="text3" colspan="3" style="border: 1px solid black">Diagnosa : {{$firstCppt->DIAGNOSA}} </td>
+            <td class="text3" colspan="3" style="border: 1px solid black">Diagnosa : {{$firstCppt->DIAGNOSA?? ''}} </td>
         </tr>
         <tr>
-            <td class="text3" colspan="3" style="border: 1px solid black">Permintaan Terapi : {{$firstCppt->JENIS_FISIO}} </td>
+            <td class="text3" colspan="3" style="border: 1px solid black">Permintaan Terapi : {{$firstCppt->JENIS_FISIO ?? ''}} </td>
         </tr>
     </table>
     <table border="1" width="100%">
@@ -156,20 +156,21 @@
             <td style="text-align: center">{{ $item->JENIS_FISIO }}</td>
             <td style="text-align: center">{{ $item->TANGGAL_FISIO }}</td>
             <td style="text-align: center">
-                <img src="storage/ttd/{{ $item->ttd_pasien}}" width="50" height="50" />
-         
+                <div class="gambar">
+                    {!! DNS2D::getBarcodeHTML($item->PASIEN_USERNAME, 'QRCODE', 2, 2) !!}
+                </div>
             </td>
             <td style="text-align: center">
                 @if($item->KODE_DOKTER == '151')
                     <div class="gambar">
-                        {!! DNS2D::getBarcodeHTML($firstCppt->Nama_Dokter, 'QRCODE', 2, 2) !!}
+                        {!! DNS2D::getBarcodeHTML($item->name, 'QRCODE', 2, 2) !!}
                     </div>
                 @endif
             </td>
             <td style="text-align: center">
                 @if($item->KODE_DOKTER != '151')
                     <div class="gambar">
-                        {!! DNS2D::getBarcodeHTML($firstCppt->name, 'QRCODE', 2, 2) !!}
+                        {!! DNS2D::getBarcodeHTML($item->name, 'QRCODE', 2, 2) !!}
                     </div>
                 @endif
             </td>
@@ -193,12 +194,18 @@
         <tr>
             <td width="60%" class="text5"></td>
           
-            <td class="text5"> {!! DNS2D::getBarcodeHTML($firstCppt->Nama_Dokter, 'QRCODE', 3, 3) !!}</td>
+            <td class="text5"> 
+                @if ($cekFirstCppt ==false)
+
+                @else
+                {!! DNS2D::getBarcodeHTML($firstCppt->Nama_Dokter, 'QRCODE', 3, 3) !!}
+                @endif
+            </td>
         </tr>
         <tr>
             <td width="60%" class="text5"></td>
           
-            <td class="text5">({{$firstCppt->Nama_Dokter}})</td>
+            <td class="text5">({{$firstCppt->Nama_Dokter ?? ''}})</td>
         </tr>
     </table>
 </body>

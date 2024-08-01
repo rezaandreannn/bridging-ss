@@ -169,27 +169,11 @@
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>
-                <td class="text4">Cara Pasien Pulang</td>
-                <td class="text4" colspan="2">: {{ $asesmenDokter->cara_datang}}</td>
-            </tr>
-            <tr>
                 <td class="text4">Anamnesa</td>
                 <td class="text4" colspan="2">: {{ $asesmenDokter->anamnesa}}</td>
             </tr>
             <tr>
-                <td class="text3"><b>2. Objektif</b></td>
-                <td class="text3" colspan="2"></td>
-            </tr>
-            <tr>
-                <td class="text4">Keadaan Umum</td>
-                <td class="text4" colspan="2">: {{ $asesmenDokter->keadaan_umum}}</td>
-            </tr>
-            <tr>
-                <td class="text4">Keadaan Kesadaran</td>
-                <td class="text4" colspan="2">: {{ $asesmenDokter->kesadaran}}</td>
-            </tr>
-            <tr>
-                <td class="text3"><b>3. Pemeriksaan Fisik</b></td>
+                <td class="text3"><b>2. Pemeriksaan Fisik</b></td>
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>
@@ -221,15 +205,7 @@
                 <td class="text4" colspan="2">: {{ $asesmenDokter->orthosis}}</td>
             </tr>
             <tr>
-                <td class="text4">Status Psikologi</td>
-                <td class="text4" colspan="2">: {{ $asesmenDokter->status_psikologi}}</td>
-            </tr>
-            <tr>
-                <td class="text4">Status Mental</td>
-                <td class="text4" colspan="2">: {{ $asesmenDokter->status_mental}}</td>
-            </tr>
-            <tr>
-                <td class="text3"><b>4. Analisa</b></td>
+                <td class="text3"><b>3. Analisa</b></td>
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>
@@ -349,16 +325,14 @@
                 <td class="text6">Instrumen Uji Fungsi / Prosedur KFR : {{ $lembarUjiFungsi->prosedur_kfr}}</td>
             </tr>
             <tr>
-                <td class="text6">Hasil yang didapat : {{ $lembarUjiFungsi->hasil_pemeriksaan}}</td>
-            
-            </tr>
-            <tr>
                 <td class="text6">Kesimpulan : {{ $lembarUjiFungsi->kesimpulan}}</td>
             
             </tr>
             <tr>
                 <td class="text6">Rekomendasi : {{ $lembarUjiFungsi->rekomendasi}}</td>
-            
+            </tr>
+            <tr>
+                <td class="text6">Edukasi : {{ $lembarUjiFungsi->edukasi}}</td>
             </tr>
         </table>
         <table style="border: 1px solid black; border-top: none;" width="100%">
@@ -460,10 +434,6 @@
                 <td class="text3" colspan="2">: {{ $lembarSpkfr->diagnosis_fungsi}}</td>
             </tr>
             <tr>
-                <td class="text3">Pemeriksaan Penunjang</td>
-                <td class="text3" colspan="2">: {{ $lembarSpkfr->pemeriksaan_penunjang}}</td>
-            </tr>
-            <tr>
                 <td class="text3">Tata Laksana KFR (ICD 9 CM)</td>
                 <td class="text3" colspan="2">: {{ $lembarSpkfr->tata_laksana_kfr}}</td>
             </tr>
@@ -482,7 +452,7 @@
                 <td style="padding-top: 100px;" class="text5">Dokter Pemeriksa</td>
             </tr>
             <tr>
-                <td class="text5"><img src="storage/ttd/{{ $ttdPasien->IMAGE}}" width="80" height="100" /></td>
+                <td class="text5" style="padding-left: 150px">{!! DNS2D::getBarcodeHTML($biodata->NAMA_PASIEN, 'QRCODE', 3, 3) !!}</td>
                 <td class="text5" style="padding-left: 130px">{!! DNS2D::getBarcodeHTML($namaDokter->Nama_Dokter, 'QRCODE', 3, 3) !!}</td>
             </tr>
             <tr>

@@ -160,22 +160,13 @@
             </tr>
             <tr>
                 <td class="text3" colspan="2">Tanggal Masuk : {{date('d M Y', strtotime($resumePasienRanap->tanggal))}}</td>
-                <td class="text3" colspan="2" width="300">Tanggal keluar :  {{date('d M Y', strtotime($resumePasienRanap->tgl_keluar))}}</td>
+                <td class="text3" colspan="2" width="300">Tanggal keluar :  {{date('d M Y', strtotime($resumePasienRanap->tgl_keluar ?? ""))}}</td>
                 <td class="text3" colspan="2" width="300">Ruang perawatan : {{ $resumePasienRanap->nama_ruang}}</td>
             </tr>
        
             {{-- {{date('d-m-Y', strtotime($biodata->tanggal_kunjungan))}}
             {{$biodata->SPESIALIS}}
             {{$biodata->SPESIALIS}} --}}
-            <tr>
-                <td class="text3" colspan="3">Indikasi rawat : 
-                    @foreach ($resumeIdikasi as $indikasi)
-                    {{ $indikasi->FS_NM_INDIKASI_DIRAWAT}}
-                    @endforeach
-                    {{ $resumePasienRanap->FS_KET_INDIKASI}}
-                </td>
-                <td class="text3" colspan="3">Diagnosa saat masuk : {{ $resumePasienRanap->FS_KELUHAN_UTAMA}}</td>
-            </tr>
             <tr>
                 <td class="text3">Ringkasan Riwayat Pasien</td>
                 <td class="text3" colspan="5"> {{ $resumePasienRanap->FS_RIWAYAT_PENYAKIT}}</td>
@@ -188,7 +179,7 @@
                 <td class="text3">Pemeriksaan penunjang terpenting </td>
                 <td class="text3" colspan="5"> {{ $resumePasienRanap->FS_PEMERIKSAAN_PENUNJANG}}</td>
             </tr>
-            <tr>
+            {{-- <tr>
                 <td class="text3">Terapi / Pengobatan selama di rumah sakit</td>
                 <td class="text3" colspan="5"> {{ $resumePasienRanap->FS_TERAPI}}</td>
             </tr>
@@ -201,7 +192,7 @@
                         {{ '' }}
                     @endif
                 </td>
-            </tr>
+            </tr> --}}
             <tr>
                 <td class="text3">Alergi (reaksi obat)</td>
                 <td class="text3" colspan="5">
@@ -243,8 +234,8 @@
                 @endif
             <tr>
                 <td class="text3">Tindakan / Prosedur</td>
-                <td class="text3" colspan="3">{{ $resumeTindakan->FS_NM_TIND}} </td>
-                <td class="text3" colspan="2">ICD 9 : {{ $resumeTindakan->ICD9CM}}</td>
+                <td class="text3" colspan="3">{{ $resumeTindakan->FS_NM_TIND ?? ""}} </td>
+                <td class="text3" colspan="2">ICD 9 : {{ $resumeTindakan->ICD9CM ?? ""}}</td>
             </tr>
             <tr>
                 <td class="text3" colspan="6"><b>Keadaan Pasien Saat Pulang</b></td>
@@ -310,7 +301,7 @@
                 <td class="text3" colspan="6"><b>Terapi saat pulang</b></td>
             </tr>
         </table>
-        <table width="100%" style="border-top:none;">
+        <table width="100%">
             <thead>
                 <tr>
                     <th class="tabel1">Nama Obat</th>
@@ -330,7 +321,7 @@
                 @endforeach
             </tbody>
         </table>
-        <table  width="100%">
+        <table width="100%">
             <tr>
                 <td style="padding-top: 50px;" class="text5"></td>
                 <td style="padding-top: 50px;" class="text5">Tanggal {{date('d-m-Y', strtotime($resumePasienRanap->FD_TGL_PULANG))}}</td>
@@ -341,13 +332,13 @@
             </tr>
             <tr>
                 <tr>
-                    <td class="text5" style="padding-left: 30px;"><img src="img/barcode.jpeg" width="50" height="50" /></td>
+                    <td class="text5" style="padding-left: 180px;">{!! DNS2D::getBarcodeHTML($biodata->nama_pasien, 'QRCODE', 2, 2) !!}</td>
                     <td class="text5" style="padding-left: 30px;"><img src="img/barcode.jpeg" width="50" height="50" /></td>
                 </tr>
             </tr>
             <tr>
-                <td class="text5" style="padding-left: 30px;">(Perawat)</td>
-                <td class="text5" style="padding-left: 30px;">(Perawat)</td>
+                <td class="text5" style="padding-left: 30px;">({{$biodata->nama_pasien}})</td>
+                <td class="text5" style="padding-left: 30px;">(Dokter)</td>
             </tr>
         </table>
     </body>
@@ -421,7 +412,7 @@ date_default_timezone_set('Asia/Jakarta');
                 <td colspan="4"></td>
             </tr>
         </table>
-        <table width="100%" style="border-top:none;">
+        <table width="100%">
             <thead>
                 <tr>
                     <th class="tabel1">Nama Obat</th>
@@ -461,7 +452,7 @@ date_default_timezone_set('Asia/Jakarta');
                     </tr>
                     <tr>
                         <td class="text5" style="padding-left: 30px;"></td>
-                        <td class="text5" style="padding-left: 30px;">(Perawat)</td>
+                        <td class="text5" style="padding-left: 30px;">(Dokter)</td>
                     </tr>
                 </table>
     </center>

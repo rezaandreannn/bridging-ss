@@ -62,14 +62,14 @@ class AssesmenDokterController extends Controller
     public function create($NoMr)
     {
         //
-   
+
         $lastKodeTransaksiByMr = DB::connection('pku')
             ->table('TRANSAKSI_FISIOTERAPI')
             ->where('NO_MR_PASIEN', $NoMr)
             ->orderBy('ID_TRANSAKSI', 'DESC')
             ->limit('1')
             ->first();
-       
+
         $lastKodeTransaksi = DB::connection('pku')
             ->table('TRANSAKSI_FISIOTERAPI')
             ->orderBy('ID_TRANSAKSI', 'DESC')
@@ -78,15 +78,13 @@ class AssesmenDokterController extends Controller
 
         $kode = 'F';
         if (!$lastKodeTransaksiByMr) {
-            if (!$lastKodeTransaksi){
+            if (!$lastKodeTransaksi) {
                 $nomorUrut = "000001";
-            }
-            else{
+            } else {
                 $noTerakhir = (int)substr($lastKodeTransaksi->KODE_TRANSAKSI_FISIO, 2);
                 $noTerakhir += 1;
                 $nomorUrut = sprintf('%06s', $noTerakhir);
             }
-        
         } else {
             $noTerakhir = (int)substr($lastKodeTransaksiByMr->KODE_TRANSAKSI_FISIO, 2);
             $nomorUrut = sprintf('%06s', $noTerakhir);
@@ -104,7 +102,7 @@ class AssesmenDokterController extends Controller
         // dd($biodatas);
         // die;
         $title = $this->prefix . ' ' . 'Assesmen Dokter';
-        return view($this->view . 'dokter.asesmenDokter.createAsesmen', compact('title', 'biodatas', 'jenisterapifisio', 'kode_transaksi_fisio', 'ttv', 'asesmen_perawat','history'));
+        return view($this->view . 'dokter.asesmenDokter.createAsesmen', compact('title', 'biodatas', 'jenisterapifisio', 'kode_transaksi_fisio', 'ttv', 'asesmen_perawat', 'history'));
     }
 
     public function editAsesmen($NoMr)
@@ -155,7 +153,6 @@ class AssesmenDokterController extends Controller
                 'kode_transaksi_fisio' => $request->input('kode_transaksi_fisio'),
                 'diagnosis_fungsional' => $request->input('diagnosis_fungsional'),
                 'prosedur_kfr' => $request->input('prosedur_kfr'),
-                'hasil_pemeriksaan' => $request->input('hasil_pemeriksaan'),
                 'kesimpulan' => $request->input('kesimpulan'),
                 'rekomendasi' => $request->input('rekomendasi'),
                 'create_by' => auth()->user()->username,
@@ -185,7 +182,6 @@ class AssesmenDokterController extends Controller
                 'kode_transaksi_fisio' => $request->input('kode_transaksi_fisio'),
                 'diagnosis_fungsional' => $request->input('diagnosis_fungsional'),
                 'prosedur_kfr' => $request->input('prosedur_kfr'),
-                'hasil_pemeriksaan' => $request->input('hasil_pemeriksaan'),
                 'kesimpulan' => $request->input('kesimpulan'),
                 'rekomendasi' => $request->input('rekomendasi'),
                 'create_by' => auth()->user()->username,
@@ -208,10 +204,10 @@ class AssesmenDokterController extends Controller
     {
         $biodatas = $this->pasien->biodataPasienByMr($NoMr);
         $asesmenDokter = DB::connection('pku')->table('fis_asesmen_dokter')->where('no_registrasi', $biodatas->No_Reg)->first();
-        
+
 
         $title = $this->prefix . ' ' . 'Lembar SPKFR';
-        return view($this->view . 'dokter.lembarSpkfr.lembarSpkfr', compact('title', 'biodatas','asesmenDokter'));
+        return view($this->view . 'dokter.lembarSpkfr.lembarSpkfr', compact('title', 'biodatas', 'asesmenDokter'));
     }
 
     public function storeSpkfr(Request $request)
@@ -224,15 +220,14 @@ class AssesmenDokterController extends Controller
 
         try {
             DB::connection('pku')->beginTransaction();
-      
-          
+
+
             $spkfr = DB::connection('pku')->table('fis_lembar_spkfr')->insert([
                 'no_registrasi' => $request->input('no_registrasi'),
                 'kode_transaksi_fisio' => $request->input('kode_transaksi_fisio'),
                 'pemeriksaan_fisik' => $request->input('pemeriksaan_fisik'),
                 'diagnosis_medis' => $request->input('diagnosis_medis'),
                 'diagnosis_fungsi' => $request->input('diagnosis_fungsi'),
-                'pemeriksaan_penunjang' => $request->input('pemeriksaan_penunjang'),
                 'tata_laksana_kfr' => $request->input('tata_laksana_kfr'),
                 'penyakit_akibat_kerja' => $request->input('penyakit_akibat_kerja'),
                 'deskripsi_akibat_kerja' => $request->input('deskripsi_akibat_kerja'),
@@ -258,16 +253,16 @@ class AssesmenDokterController extends Controller
         $biodatas = $this->pasien->biodataPasienByMr($NoMr);
         $asesmenDokter = DB::connection('pku')->table('fis_asesmen_dokter')->where('no_registrasi', $biodatas->No_Reg)->first();
         $lembarSpkfr = DB::connection('pku')->table('fis_lembar_spkfr')->where('no_registrasi', $biodatas->No_Reg)->first();
-     
+
 
         $title = $this->prefix . ' ' . 'Edit Lembar SPKFR';
-        return view($this->view . 'dokter.lembarSpkfr.editLembarSpkfr', compact('title', 'biodatas', 'lembarSpkfr','asesmenDokter'));
+        return view($this->view . 'dokter.lembarSpkfr.editLembarSpkfr', compact('title', 'biodatas', 'lembarSpkfr', 'asesmenDokter'));
     }
 
     public function updateSpkfr(Request $request)
     {
 
-    
+
 
         $validatedData = $request->validate([
             'pemeriksaan_fisik' => 'required',
@@ -275,15 +270,14 @@ class AssesmenDokterController extends Controller
 
         try {
             DB::connection('pku')->beginTransaction();
-      
-          
+
+
             $spkfr = DB::connection('pku')->table('fis_lembar_spkfr')->where('no_registrasi', $request->input('no_registrasi'))->update([
                 'no_registrasi' => $request->input('no_registrasi'),
                 'kode_transaksi_fisio' => $request->input('kode_transaksi_fisio'),
                 'pemeriksaan_fisik' => $request->input('pemeriksaan_fisik'),
                 'diagnosis_medis' => $request->input('diagnosis_medis'),
                 'diagnosis_fungsi' => $request->input('diagnosis_fungsi'),
-                'pemeriksaan_penunjang' => $request->input('pemeriksaan_penunjang'),
                 'tata_laksana_kfr' => $request->input('tata_laksana_kfr'),
                 'penyakit_akibat_kerja' => $request->input('penyakit_akibat_kerja'),
                 'deskripsi_akibat_kerja' => $request->input('deskripsi_akibat_kerja'),
@@ -314,11 +308,8 @@ class AssesmenDokterController extends Controller
      */
     public function store(Request $request)
     {
-
-
         $validatedData = $request->validate([
             'anamnesa' => 'required',
-            'cara_datang' => 'required',
         ]);
 
         try {
@@ -338,18 +329,13 @@ class AssesmenDokterController extends Controller
                     ]);;
                 }
             }
-
             $time = date('H:i:s');
             $asesmen_dokter = DB::connection('pku')->table('fis_asesmen_dokter')->insert([
                 'no_registrasi' => $request->input('no_registrasi'),
                 'kode_transaksi_fisio' => $request->input('kode_transaksi_fisio'),
                 'tanggal' => $request->input('tanggal'),
                 'jam' => $request->input('jam'),
-                'cara_datang' => $request->input('cara_datang'),
-                'deskripsi_cara_datang' => $request->input('deskripsi_cara_datang'),
                 'anamnesa' => $request->input('anamnesa'),
-                'keadaan_umum' => $request->input('keadaan_umum'),
-                'kesadaran' => $request->input('kesadaran'),
                 'tekanan_darah' => $request->input('tekanan_darah'),
                 'nadi' => $request->input('nadi'),
                 'respirasi' => $request->input('respirasi'),
@@ -357,8 +343,6 @@ class AssesmenDokterController extends Controller
                 'berat_badan' => $request->input('berat_badan'),
                 'prothesa' => $request->input('prothesa'),
                 'orthosis' => $request->input('orthosis'),
-                'status_psikologi' => $request->input('status_psikologi'),
-                'status_mental' => $request->input('status_mental'),
                 'diagnosa_klinis' => $request->input('diagnosa_klinis'),
                 'rencana_tindakan' => $request->input('rencana_tindakan'),
                 'jenis_tindakan' => $request->input('jenis_tindakan') ? $request->input('jenis_tindakan') : null,
@@ -388,8 +372,6 @@ class AssesmenDokterController extends Controller
 
     public function update(Request $request)
     {
-
-
         $validatedData = $request->validate([
             'anamnesa' => 'required',
         ]);
@@ -413,16 +395,11 @@ class AssesmenDokterController extends Controller
                 }
             }
 
-
             $asesmen_dokter_update = DB::connection('pku')->table('fis_asesmen_dokter')->where('no_registrasi', $request->input('no_registrasi'))->update([
                 'kode_transaksi_fisio' => $request->input('kode_transaksi_fisio'),
                 'tanggal' => $request->input('tanggal'),
                 'jam' => $request->input('jam'),
-                'cara_datang' => $request->input('cara_datang'),
-                'deskripsi_cara_datang' => $request->input('deskripsi_cara_datang'),
                 'anamnesa' => $request->input('anamnesa'),
-                'keadaan_umum' => $request->input('keadaan_umum'),
-                'kesadaran' => $request->input('kesadaran'),
                 'tekanan_darah' => $request->input('tekanan_darah'),
                 'nadi' => $request->input('nadi'),
                 'respirasi' => $request->input('respirasi'),
@@ -430,8 +407,6 @@ class AssesmenDokterController extends Controller
                 'berat_badan' => $request->input('berat_badan'),
                 'prothesa' => $request->input('prothesa'),
                 'orthosis' => $request->input('orthosis'),
-                'status_psikologi' => $request->input('status_psikologi'),
-                'status_mental' => $request->input('status_mental'),
                 'diagnosa_klinis' => $request->input('diagnosa_klinis'),
                 'rencana_tindakan' => $request->input('rencana_tindakan'),
                 'jenis_tindakan' => $request->input('jenis_tindakan') ? $request->input('jenis_tindakan') : null,

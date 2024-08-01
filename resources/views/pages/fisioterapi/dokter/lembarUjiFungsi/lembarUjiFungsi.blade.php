@@ -66,18 +66,6 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>Hasil yang didapat : </label>
-                                            <textarea class="form-control @error('hasil_pemeriksaan') is-invalid  
-                                                @enderror" rows="3" name="hasil_pemeriksaan"  placeholder="Masukan ...">{{ old('hasil_pemeriksaan')}}</textarea>
-                                                @error('hasil_pemeriksaan')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                                @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
                                             <label>Kesimpulan : </label>
                                             <textarea class="form-control @error('kesimpulan') is-invalid  
                                                 @enderror" rows="3" name="kesimpulan"  placeholder="Masukan ...">{{ old('kesimpulan')}}</textarea>
@@ -92,12 +80,18 @@
                                         <div class="form-group">
                                             <label>Rekomendasi : </label>
                                             <textarea class="form-control @error('rekomendasi') is-invalid  
-                                                @enderror" rows="3" name="rekomendasi"  placeholder="Masukan ...">{{ old('rekomendasi')}}</textarea>
+                                                @enderror" rows="3" name="rekomendasi"  placeholder="Masukan ...">Terapi sesuai anjuran</textarea>
                                                 @error('rekomendasi')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
                                                 @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Edukasi : </label>
+                                            <textarea class="form-control" rows="3" name="edukasi"  placeholder="Masukan ..."></textarea>
                                         </div>
                                     </div>
                                     {{-- <div class="col-md-9">
