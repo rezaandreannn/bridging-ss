@@ -254,13 +254,13 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="rencana_tindakan" value="Tidak Ada" id="rencana_tindakan1" @if(old('rencana_tindakan', '0' )=='Tidak Ada' ) checked @endif>
+                                                            <input class="form-check-input" type="radio" name="rencana_tindakan" value="Tidak Ada" id="rencana_tindakan1" checked>
                                                             <label class="form-check-label" for="rencana_tindakan1">
                                                                 Tidak Ada
                                                             </label>
                                                         </div>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="rencana_tindakan" value="Ya" id="rencana_tindakan2" @if(old('rencana_tindakan', '0' )=='Ya' ) checked @endif>
+                                                            <input class="form-check-input" type="radio" name="rencana_tindakan" value="Ya" id="rencana_tindakan2">
                                                             <label class="form-check-label" for="rencana_tindakan2">
                                                                 Ya
                                                             </label>
@@ -287,13 +287,13 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="rencana_rujukan" value="Tidak Ada" id="rencana_rujukan1" @if(old('rencana_rujukan', '0' )=='Tidak Ada' ) checked @endif>
+                                                            <input class="form-check-input" type="radio" name="rencana_rujukan" value="Tidak Ada" id="rencana_rujukan1" checked>
                                                             <label class="form-check-label" for="rencana_rujukan1">
                                                                 Tidak Ada
                                                             </label>
                                                         </div>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="rencana_rujukan" value="Ya" id="rencana_rujukan2" @if(old('rencana_rujukan', '0' )=='Ya' ) checked @endif>
+                                                            <input class="form-check-input" type="radio" name="rencana_rujukan" value="Ya" id="rencana_rujukan2">
                                                             <label class="form-check-label" for="rencana_rujukan2">
                                                                 Ya
                                                             </label>
@@ -319,13 +319,13 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="rencana_konsul" value="Tidak Ada" id="rencana_konsul1" @if(old('rencana_konsul', '0' )=='Tidak Ada' ) checked @endif>
+                                                        <input class="form-check-input" type="radio" name="rencana_konsul" value="Tidak Ada" id="rencana_konsul1">
                                                         <label class="form-check-label" for="rencana_konsul1">
                                                             Tidak Ada
                                                         </label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="rencana_konsul" value="Ya" id="rencana_konsul2" @if(old('rencana_konsul', '0' )=='Ya' ) checked @endif>
+                                                        <input class="form-check-input" type="radio" name="rencana_konsul" value="Ya" id="rencana_konsul2" checked>
                                                         <label class="form-check-label" for="rencana_konsul2">
                                                             Ya
                                                         </label>
@@ -357,15 +357,15 @@
                                             <label>Anjuran</label>
                                             <div class="input-group">
                                                 <select name="anjuran_terapi" id="" class="form-control @error('anjuran_terapi')  is-invalid @enderror">
-                                                    <option value="" selected disabled>--Pilih Anjuran--</option>
-                                                    <option value="1" @if(old('anjuran_terapi')=='1' ) selected @endif>1</option>
-                                                    <option value="2" @if(old('anjuran_terapi')=='2' ) selected @endif>2</option>
-                                                    <option value="3" @if(old('anjuran_terapi')=='3' ) selected @endif>3</option>
-                                                    <option value="4" @if(old('anjuran_terapi')=='4' ) selected @endif>4</option>
-                                                    <option value="5" @if(old('anjuran_terapi')=='5' ) selected @endif>5</option>
-                                                    <option value="6" @if(old('anjuran_terapi')=='6' ) selected @endif>6</option>
-                                                    <option value="7" @if(old('anjuran_terapi')=='7' ) selected @endif>7</option>
-                                                    <option value="8" @if(old('anjuran_terapi')=='8' ) selected @endif>8</option>
+                                                    <option value="" disabled>--Pilih Anjuran--</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2" selected>2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                    <option value="6">6</option>
+                                                    <option value="7">7</option>
+                                                    <option value="8">8</option>
                                                 </select>
                                                 @error('anjuran_terapi')
                                                 <span class="text-danger" style="font-size: 12px;">
@@ -386,14 +386,14 @@
                                             <div class="input-group">
                                                 <select name="evaluasi_terapi" id="" class="form-control @error('evaluasi_terapi')  is-invalid @enderror">
                                                     <option value="" selected disabled>--Pilih Evaluasi--</option>
-                                                    <option value="1" @if(old('evaluasi_terapi')=='1' ) selected @endif>1</option>
-                                                    <option value="2" @if(old('evaluasi_terapi')=='2' ) selected @endif>2</option>
-                                                    <option value="3" @if(old('evaluasi_terapi')=='3' ) selected @endif>3</option>
-                                                    <option value="4" @if(old('evaluasi_terapi')=='4' ) selected @endif>4</option>
-                                                    <option value="5" @if(old('evaluasi_terapi')=='5' ) selected @endif>5</option>
-                                                    <option value="6" @if(old('evaluasi_terapi')=='6' ) selected @endif>6</option>
-                                                    <option value="7" @if(old('evaluasi_terapi')=='7' ) selected @endif>7</option>
-                                                    <option value="8" @if(old('evaluasi_terapi')=='8' ) selected @endif>8</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                    <option value="6">6</option>
+                                                    <option value="7">7</option>
+                                                    <option value="8" selected>8</option>
                                                 </select>
                                                 @error('evaluasi_terapi')
                                                 <span class="text-danger" style="font-size: 12px;">

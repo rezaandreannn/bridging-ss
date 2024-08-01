@@ -325,16 +325,14 @@
                 <td class="text6">Instrumen Uji Fungsi / Prosedur KFR : {{ $lembarUjiFungsi->prosedur_kfr}}</td>
             </tr>
             <tr>
-                <td class="text6">Hasil yang didapat : {{ $lembarUjiFungsi->hasil_pemeriksaan}}</td>
-            
-            </tr>
-            <tr>
                 <td class="text6">Kesimpulan : {{ $lembarUjiFungsi->kesimpulan}}</td>
             
             </tr>
             <tr>
                 <td class="text6">Rekomendasi : {{ $lembarUjiFungsi->rekomendasi}}</td>
-            
+            </tr>
+            <tr>
+                <td class="text6">Edukasi : {{ $lembarUjiFungsi->edukasi}}</td>
             </tr>
         </table>
         <table style="border: 1px solid black; border-top: none;" width="100%">
@@ -454,7 +452,7 @@
                 <td style="padding-top: 100px;" class="text5">Dokter Pemeriksa</td>
             </tr>
             <tr>
-                <td class="text5"><img src="storage/ttd/{{ $ttdPasien->IMAGE}}" width="80" height="100" /></td>
+                <td class="text5" style="padding-left: 150px">{!! DNS2D::getBarcodeHTML($biodata->NAMA_PASIEN, 'QRCODE', 3, 3) !!}</td>
                 <td class="text5" style="padding-left: 130px">{!! DNS2D::getBarcodeHTML($namaDokter->Nama_Dokter, 'QRCODE', 3, 3) !!}</td>
             </tr>
             <tr>

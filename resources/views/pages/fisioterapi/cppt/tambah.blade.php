@@ -82,6 +82,12 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
+                                            <label>Lain-lain</label>
+                                            <input type="text" name="LAINNYA" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
                                             <label>Jenis Fisio</label>
                                             <select name="JENIS_FISIO[]" class="form-control select2" multiple="multiple" data-placeholder="Pilih Jenis Fisio" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                                 <option value="" disabled>-- Pilih Jenis Fisio --</option>
@@ -93,7 +99,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Cara Pulang </label>
+                                            <label>Cara Pulang</label>
                                             <select name="CARA_PULANG" id="" class="form-control select2">
                                                 <option value="" selected disabled>--Pilih--</option>
                                                 <option value="KONSULTASI">KONSULTASI</option>

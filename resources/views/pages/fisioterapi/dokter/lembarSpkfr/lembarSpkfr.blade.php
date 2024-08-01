@@ -83,18 +83,6 @@
                                                 @enderror
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Pemeriksaan Penunjang </label>
-                                            <input type="text" class="form-control  @error('pemeriksaan_penunjang') is-invalid  
-                                                @enderror" name="pemeriksaan_penunjang" value="{{ old('pemeriksaan_penunjang')}}"  placeholder="Masukan ..."></input>
-                                                @error('pemeriksaan_penunjang')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                                @enderror
-                                        </div>
-                                    </div> --}}
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Tata Laksana KFR (ICD 9 CM)</label>
@@ -112,13 +100,13 @@
                                             <label>Suspek Penyakit Akibat Kerja</label>
 
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="penyakit_akibat_kerja" value="Ya" id="penyakit_akibat_kerja1" @if(old('penyakit_akibat_kerja','0')=='Ya' ) checked @endif>
+                                                <input class="form-check-input" type="radio" name="penyakit_akibat_kerja" value="Ya" id="penyakit_akibat_kerja1">
                                                 <label class="form-check-label">
                                                     Ya
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="penyakit_akibat_kerja" value="Tidak" id="penyakit_akibat_kerja2" @if(old('penyakit_akibat_kerja','0')=='Tidak' ) checked @endif>
+                                                <input class="form-check-input" type="radio" name="penyakit_akibat_kerja" value="Tidak" id="penyakit_akibat_kerja2" checked>
                                                 <label class="form-check-label">
                                                     Tidak
                                                 </label>

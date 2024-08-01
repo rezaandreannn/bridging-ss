@@ -54,7 +54,7 @@ class FisioController extends Controller
         $listpasien = $this->fisio->pasienCpptdanFisioterapi($kode_dokter);
         // dd($listpasien);
         $title = $this->prefix . ' ' . 'CPPT Index';
-        return view($this->view . 'listPasienCpptFisio', compact('title', 'listpasien','dokters'));
+        return view($this->view . 'listPasienCpptFisio', compact('title', 'listpasien', 'dokters'));
     }
 
     // Detail Pasien Transaksi Fisioterapi
@@ -171,34 +171,34 @@ class FisioController extends Controller
         $ttv = DB::connection('pku')->table('TAC_RJ_VITAL_SIGN')->where('FS_KD_REG', $biodatas->No_Reg)->first();
 
         $cektransaksicppt = false;
-        if($transaksiFisio){
+        if ($transaksiFisio) {
             $cektransaksicppt = true;
         }
-     
-        $cekasesmenperawat= false;
-        if ($asesmen_perawat){
-            $cekasesmenperawat= true;
-        }
-     
 
-        $cekasesmenDokter= false;
-        if ($asesmenDokterFisio){
-            $cekasesmenDokter= true;
+        $cekasesmenperawat = false;
+        if ($asesmen_perawat) {
+            $cekasesmenperawat = true;
         }
-     
 
-        $cekttv= false;
-        if ($ttv != null){
-            $cekttv= true;
+
+        $cekasesmenDokter = false;
+        if ($asesmenDokterFisio) {
+            $cekasesmenDokter = true;
         }
-     
+
+
+        $cekttv = false;
+        if ($ttv != null) {
+            $cekttv = true;
+        }
+
         // dd($cekasesmenperawat);
 
         $data = $this->fisio->cpptGet($id);
 
         $cppt =  DB::connection('pku')->table('TRANSAKSI_FISIOTERAPI')->where('ID_TRANSAKSI', $id)->first();
         $jenisfisio = DB::connection('pku')->table('TAC_COM_FISIOTERAPI_MASTER')->get();
-        return view($this->view . 'cppt.detail', compact('title', 'biodatas', 'data', 'cppt', 'jenisfisio', 'terapiFisioGet', 'ttv', 'cekttv','asesmen_perawat','cekasesmenperawat','asesmenDokterFisio','cekasesmenDokter','transaksiFisio','cektransaksicppt' ));
+        return view($this->view . 'cppt.detail', compact('title', 'biodatas', 'data', 'cppt', 'jenisfisio', 'terapiFisioGet', 'ttv', 'cekttv', 'asesmen_perawat', 'cekasesmenperawat', 'asesmenDokterFisio', 'cekasesmenDokter', 'transaksiFisio', 'cektransaksicppt'));
     }
 
     // public function tambah_cppt(Request $request, $id)
@@ -361,6 +361,7 @@ class FisioController extends Controller
     // Cetak Bukti Layanan Perawat
     public function bukti_layanan(Request $request, $id)
     {
+
         $title = $this->prefix . ' ' . 'Bukti Layanan CPPT';
         $db_emr_new = DB::connection('sqlsrv')->getDatabaseName();
         $data = DB::connection('pku')
@@ -373,7 +374,8 @@ class FisioController extends Controller
                 'a.*',
                 'b.NO_MR_PASIEN as PASIEN_USERNAME',
                 'b.IMAGE as ttd_pasien',
-                'tpm.IMAGE AS ttd_petugas'
+                'tpm.IMAGE AS ttd_petugas',
+                'u.name'
             )
             ->where('tf.KODE_TRANSAKSI_FISIO', '=', $id)
             ->orderBy('a.ID_CPPT_FISIO', 'ASC')
@@ -389,21 +391,30 @@ class FisioController extends Controller
         $emr_rsumm = DB::connection('sqlsrv')->getDatabaseName();
         $firstCppt = DB::connection('pku')
             ->table('TR_CPPT_FISIOTERAPI as TC')
+            ->join('TRANSAKSI_FISIOTERAPI as tf', 'TC.ID_TRANSAKSI_FISIO', '=', 'tf.ID_TRANSAKSI')
             ->leftJoin($db_rsmm . '.dbo.DOKTER as D', 'TC.KODE_DOKTER', '=', 'D.Kode_Dokter')
             ->leftJoin('TTD_PETUGAS_MASTER as tpm', 'D.Kode_Dokter', '=', 'tpm.USERNAME')
-            ->leftJoin($emr_rsumm .'.dbo.users as U', 'TC.CREATE_BY', '=', 'U.id')
+            ->leftJoin($emr_rsumm . '.dbo.users as U', 'TC.CREATE_BY', '=', 'U.id')
             ->select('D.Nama_Dokter', 'tpm.IMAGE as ttd_dokter', 'TC.DIAGNOSA', 'TC.JENIS_FISIO', 'U.name')
             ->orderBy('TC.ID_CPPT_FISIO', 'ASC')
+            ->where('tf.KODE_TRANSAKSI_FISIO', '=', $id)
             ->limit('1')
             ->first();
 
-            // dd($firstCppt);
+        $cekFirstCppt = false;
+        if ($firstCppt != null) {
+            $cekFirstCppt = true;
+        }
+
+        // dd($data);
+
+
 
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
 
         $date = date('dMY');
         $filename = 'BuktiLayanan-' . $date;
-        $pdf = PDF::loadview($this->view . 'cetak/bukti_pelayanan', ['title' => $title, 'data' => $data, 'biodatas' => $biodatas, 'lastCppt' => $lastCppt, 'firstCppt' => $firstCppt]);
+        $pdf = PDF::loadview($this->view . 'cetak/bukti_pelayanan', ['title' => $title, 'data' => $data, 'biodatas' => $biodatas, 'lastCppt' => $lastCppt, 'firstCppt' => $firstCppt, 'cekFirstCppt' => $cekFirstCppt]);
         return $pdf->stream($filename . '.pdf');
     }
 
