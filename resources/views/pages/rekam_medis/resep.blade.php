@@ -52,7 +52,7 @@
             <table width="100%">
                 <tr>
                     <td class="text">
-                        <b>No Antrian Obat : 1</b>
+                        <b>No Antrian Obat : {{ $antrian->FS_KD_ANTRIAN}}</b>
                     </td>
                 </tr>
             </table>
@@ -64,7 +64,7 @@
                     <td class="text5">SIP : </td>
                 </tr>
                 <tr>
-                    <td class="text5" style="text-align: right;">{{ $tanggal->format('d-m-Y') }}</td>
+                    <td class="text5" style="text-align: right;">{{ date('d-m-Y', strtotime($data->mdd)) }}</td>
                 </tr>
                 <tr>
                     <td colspan="4" style="padding: 0;">

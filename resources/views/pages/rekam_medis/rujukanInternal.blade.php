@@ -103,7 +103,7 @@
         <table width="100%">
             <tr>
                 <td></td>
-                <td class="ttd" style="text-align: left;">Metro, {{ $tanggal->format('d-m-Y') }}</td>
+                <td class="ttd" style="text-align: left;">Metro, {{ date('d-m-Y', strtotime($resep->mdd)) }}</td>
             </tr>
             <tr>
                 <td></td>
