@@ -34,14 +34,17 @@ use App\Http\Controllers\Fisio\Berkas\BerkasFisioController;
 use App\Http\Controllers\Manage\RoleHasPermissionController;
 use App\Http\Controllers\Mapping\MappingEncounterController;
 use App\Http\Controllers\Fisio\Dokter\AssesmenDokterController;
+use App\Http\Controllers\Fisio\MasterData\KesimpulanController;
 use App\Http\Controllers\RawatJalan\Perawat\AssesmenController;
 use App\Http\Controllers\RawatInap\Dokter\RanapDokterController;
 use App\Http\Controllers\RawatJalan\Dokter\RajalDokterController;
 use App\Http\Controllers\Case\Encounter\EncounterCreateController;
+use App\Http\Controllers\Fisio\MasterData\DiagnosisMedisController;
+use App\Http\Controllers\PetugasKoding\Rajal\KodingRajalController;
+use App\Http\Controllers\Fisio\MasterData\DiagnosisFungsiController;
 use App\Http\Controllers\Berkas\Rekam_medis_by_mr\RekamMedisByMrController;
 use App\Http\Controllers\Berkas\Rekam_medis_harian\RekamMedisHarianController;
 use App\Http\Controllers\IGD\Layanan\AssesmenController as LayananAssesmenController;
-use App\Http\Controllers\PetugasKoding\Rajal\KodingRajalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -206,6 +209,24 @@ Route::middleware('auth')->group(function () {
         // rujukan fisioterapi
         Route::get('rujukan/add', [InformedConcentController::class, 'create_rujukan'])->name('rujukan.add');
         Route::post('rujukan/add', [InformedConcentController::class, 'store_rujukan'])->name('rujukan.store');
+        
+        // diagnosis medis
+        Route::get('master_data/diagnosis_medis/list', [DiagnosisMedisController::class, 'index'])->name('diagnosisMedis.index');
+        Route::post('master_data/diagnosis_medis/add_proses', [DiagnosisMedisController::class, 'store'])->name('diagnosisMedis.store');
+        Route::put('master_data/diagnosis_medis/update_proses/{id}', [DiagnosisMedisController::class, 'update'])->name('diagnosisMedis.update');
+        Route::delete('master_data/diagnosis_medis/delete_proses/{id}', [DiagnosisMedisController::class, 'destroy'])->name('diagnosisMedis.destroy');
+
+        // diagnosis fungsi
+        Route::get('master_data/diagnosis_fungsi/list', [DiagnosisFungsiController::class, 'index'])->name('diagnosisFungsi.index');
+        Route::post('master_data/diagnosis_fungsi/add_proses', [DiagnosisFungsiController::class, 'store'])->name('diagnosisFungsi.store');
+        Route::put('master_data/diagnosis_fungsi/update_proses/{id}', [DiagnosisFungsiController::class, 'update'])->name('diagnosisFungsi.update');
+        Route::delete('master_data/diagnosis_fungsi/delete_proses/{id}', [DiagnosisFungsiController::class, 'destroy'])->name('diagnosisFungsi.destroy');
+
+        // kesimpulan
+        Route::get('master_data/kesimpulan/list', [KesimpulanController::class, 'index'])->name('kesimpulan.index');
+        Route::post('master_data/kesimpulan/add_proses', [KesimpulanController::class, 'store'])->name('kesimpulan.store');
+        Route::put('master_data/kesimpulan/update_proses/{id}', [KesimpulanController::class, 'update'])->name('kesimpulan.update');
+        Route::delete('master_data/kesimpulan/delete_proses/{id}', [KesimpulanController::class, 'destroy'])->name('kesimpulan.destroy');
     });
 
     // Berkas Rekam Medis

@@ -104,6 +104,26 @@
 
             @can('fisioterapi')
             <li class="menu-header">Fisioterapi</li>
+            <li class="nav-item dropdown  {{ Request::is('fisioterapi/master_data/*') ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Master Data</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('fisioterapi/master_data/diagnosis_medis/*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('diagnosisMedis.index')}}">Diagnossis Medis</a>
+                    </li>
+                </ul>
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('fisioterapi/master_data/diagnosis_fungsi/*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('diagnosisFungsi.index')}}">Diagnossis Fungsi</a>
+                    </li>
+                </ul>
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('fisioterapi/master_data/kesimpulan/*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('kesimpulan.index')}}">Kesimpulan</a>
+                    </li>
+                </ul>
+        
+            </li>
+          
             <li class="nav-item dropdown {{ Request::is('fisioterapi/perawat*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Fisioterapi</span></a>
                 <!-- <ul class="dropdown-menu">
