@@ -19,10 +19,9 @@ return new class extends Migration
             $table->string('kode_transaksi_fisio');
             $table->string('diagnosis_fungsional');
             $table->string('prosedur_kfr');
-            $table->string('hasil_pemeriksaan')->nullable();
             $table->string('kesimpulan')->nullable();
             $table->string('rekomendasi');
-            $table->string('edukasi');
+            $table->string('edukasi')->nullable();
             $table->string('create_by');
             $table->timestamps();
         });
