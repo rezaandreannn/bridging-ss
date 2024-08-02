@@ -62,7 +62,7 @@ $dayList = array(
             <tr>
                 <td class="text">
                     <b style="text-decoration:underline">SURAT KETERANGAN PESERTA RUJUK BALIK</b><br>
-                    NO {{ $data->FS_KD_TRS ?? ''}}/PRB/{{ $tanggal->format('m') }}/{{ $tanggal->format('Y') }}
+                    NO {{ $data->FS_KD_TRS ?? ''}}/PRB/{{ date('m', strtotime($resep->mdd)) }}/{{ date('Y', strtotime($resep->mdd)) }}
                     <hr />
                 </td>
             </tr>
@@ -108,7 +108,7 @@ $dayList = array(
         <table width="100%">
             <tr>
                 <td></td>
-                <td class="ttd" style="text-align: left;">Metro, {{ $tanggal->format('d-m-Y') }}</td>
+                <td class="ttd" style="text-align: left;">Metro, {{ date('d-m-Y', strtotime($resep->mdd)) }}</td>
             </tr>
             <tr>
                 <td></td>

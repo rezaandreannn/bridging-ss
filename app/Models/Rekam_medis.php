@@ -155,6 +155,18 @@ class Rekam_medis extends Model
         return $data;
     }
 
+    public function getAntrianObat($kode_transaksi)
+    {
+        $data = DB::connection('pku')
+            ->table('TAC_RJ_ANTRIAN_OBAT as a')
+            ->select(
+                'a.*'
+            )
+            ->where('FS_KD_RJ_MEDIS', $kode_transaksi)
+            ->first();
+        return $data;
+    }
+
 
     // rekam medis by mr
 
@@ -264,7 +276,7 @@ class Rekam_medis extends Model
             ->get();
         return $data;
     }
-    
+
     public function cekLab($noReg)
     {
 
@@ -275,21 +287,21 @@ class Rekam_medis extends Model
             )
             ->where('FS_KD_REG2', $noReg)
             ->first();
-            
+
         if ($data != null) {
             return true;
         } else {
             return false;
         }
     }
-    
+
     public function cekRadiologi($noReg)
     {
-        
+
         $data = DB::connection('pku')
-        ->table('TA_TRS_KARTU_PERIKSA5')
-        ->select(
-            'FS_KD_REG2'
+            ->table('TA_TRS_KARTU_PERIKSA5')
+            ->select(
+                'FS_KD_REG2'
             )
             ->where('FS_KD_REG2', $noReg)
             ->first();
@@ -304,26 +316,27 @@ class Rekam_medis extends Model
     public function masalahKepByNoreg($noReg)
     {
         $data = DB::connection('pku')
-        ->table('TAC_RJ_MASALAH_KEP as trmk')
-        ->leftJoin('TAC_COM_DAFTAR_DIAG as tcd', 'trmk.FS_KD_MASALAH_KEP', '=', 'tcd.FS_KD_DAFTAR_DIAGNOSA')
+            ->table('TAC_RJ_MASALAH_KEP as trmk')
+            ->leftJoin('TAC_COM_DAFTAR_DIAG as tcd', 'trmk.FS_KD_MASALAH_KEP', '=', 'tcd.FS_KD_DAFTAR_DIAGNOSA')
             ->where('trmk.FS_KD_REG', $noReg)
             ->get();
 
-            return $data;
+        return $data;
     }
 
     public function rencanaKepByNoreg($noReg)
     {
         $data = DB::connection('pku')
-        ->table('TAC_RJ_REN_KEP as trk')
-        ->leftJoin('TAC_COM_PARAM_REN_KEP as tcpr', 'trk.FS_KD_REN_KEP', '=', 'tcpr.FS_KD_TRS')
+            ->table('TAC_RJ_REN_KEP as trk')
+            ->leftJoin('TAC_COM_PARAM_REN_KEP as tcpr', 'trk.FS_KD_REN_KEP', '=', 'tcpr.FS_KD_TRS')
             ->where('trk.FS_KD_REG', $noReg)
             ->get();
-            return $data;
+        return $data;
     }
-    
-    public function cetakRmRajal($noReg){
-        
+
+    public function cetakRmRajal($noReg)
+    {
+
         $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
         $data = DB::connection('pku')
             ->table('TAC_ASES_PER2 as tap')
@@ -333,12 +346,12 @@ class Rekam_medis extends Model
             ->leftJoin('TAC_RJ_JATUH as trj', 'tap.FS_KD_REG', '=', 'trj.FS_KD_REG')
             ->leftJoin('TAC_COM_USER as tcm', 'vs.mdb', '=', 'tcm.user_id')
             ->leftJoin($db_rsmm . '.dbo.TUSER as u', 'tcm.user_name', '=', 'u.NAMAUSER')
-       
+
             // ->leftJoin('ANTRIAN as a', 'p.No_MR', '=', 'a.No_MR')
             // ->leftJoin('M_RUANG as mr', 'p.Kode_Ruang', '=', 'mr.Kode_Ruang')
             // ->leftJoin($pku . '.dbo.TAC_RJ_MEDIS as trm', 'p.No_Reg', '=', 'trm.FS_KD_REG')
             // ->leftJoin($pku . '.dbo.TAC_RJ_STATUS as trs', 'p.No_Reg', '=', 'trs.FS_KD_REG')
-        
+
             ->select(
                 'tap.*',
                 // vital sign
@@ -367,8 +380,8 @@ class Rekam_medis extends Model
                 // PEMERIKSAN TTV
                 'u.NAMALENGKAP'
 
- 
-        
+
+
             )
             ->where('tap.FS_KD_REG', $noReg)
             ->where('vs.FS_KD_REG', $noReg)
@@ -376,8 +389,9 @@ class Rekam_medis extends Model
         return $data;
     }
 
-    public function asesmenDokterRjBynoReg($noReg){
-        
+    public function asesmenDokterRjBynoReg($noReg)
+    {
+
         $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
         $data = DB::connection('pku')
             ->table('TAC_RJ_MEDIS as trm')
@@ -385,19 +399,19 @@ class Rekam_medis extends Model
             ->leftJoin('TAC_COM_USER as tcu', 'trm.mdb', '=', 'tcu.user_id')
             ->leftJoin($db_rsmm . '.dbo.DOKTER as d', 'tcu.user_name', '=', 'd.Kode_Dokter')
             ->leftJoin($db_rsmm . '.dbo.TUSER as u', 'tcu.user_name', '=', 'u.NAMAUSER')
-       
+
             // ->leftJoin('ANTRIAN as a', 'p.No_MR', '=', 'a.No_MR')
             // ->leftJoin('M_RUANG as mr', 'p.Kode_Ruang', '=', 'mr.Kode_Ruang')
             // ->leftJoin($pku . '.dbo.TAC_RJ_MEDIS as trm', 'p.No_Reg', '=', 'trm.FS_KD_REG')
             // ->leftJoin($pku . '.dbo.TAC_RJ_STATUS as trs', 'p.No_Reg', '=', 'trs.FS_KD_REG')
-        
+
             ->select(
                 'trm.*',
                 // vital sign
                 'tcu.user_name',
                 'd.Nama_Dokter',
                 'd.Kode_Dokter',
-                
+
                 'u.NAMALENGKAP as NamaLengkap',
             )
             ->where('trm.FS_KD_REG', $noReg)
@@ -405,8 +419,9 @@ class Rekam_medis extends Model
         return $data;
     }
 
-    public function detailCpptByNoreg($noReg){
-        
+    public function detailCpptByNoreg($noReg)
+    {
+
         //   $sql = "SELECT a.*,b.NAMALENGKAP,d.role_id,RIGHT(mdd_date,2) 'TGL',
         // e.NAMALENGKAP 'FS_NM_MEDIS_VERIF'
         // FROM PKU.dbo.TAC_RI_CPPT a
@@ -416,7 +431,7 @@ class Rekam_medis extends Model
         // LEFT JOIN DB_RSMM.dbo.TUSER e ON a.FS_KD_MEDIS_VERIF = e.NAMAUSER
         // WHERE FS_KD_REG = ? AND FD_TGL_VOID='3000-01-01'
         // ORDER BY mdd_date DESC,mdd_time DESC";
-        
+
         $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
         $data = DB::connection('pku')
             ->table('TAC_RI_CPPT as a')
@@ -424,12 +439,12 @@ class Rekam_medis extends Model
             ->leftJoin($db_rsmm . '.dbo.TUSER as b', 'a.mdb', '=', 'b.NAMAUSER')
             ->leftJoin('TAC_COM_USER as c', 'a.mdb', '=', 'c.user_name')
             ->leftJoin('TAC_COM_ROLE_USER as d', 'c.user_id', '=', 'd.user_id')
-       
+
             // ->leftJoin('ANTRIAN as a', 'p.No_MR', '=', 'a.No_MR')
             // ->leftJoin('M_RUANG as mr', 'p.Kode_Ruang', '=', 'mr.Kode_Ruang')
             // ->leftJoin($pku . '.dbo.TAC_RJ_MEDIS as trm', 'p.No_Reg', '=', 'trm.FS_KD_REG')
             // ->leftJoin($pku . '.dbo.TAC_RJ_STATUS as trs', 'p.No_Reg', '=', 'trs.FS_KD_REG')
-        
+
             ->select(
                 'a.*',
                 // vital sign
@@ -439,8 +454,8 @@ class Rekam_medis extends Model
 
 
                 'd.role_id',
-            
-                
+
+
             )
             ->where('a.FS_KD_REG', $noReg)
             ->orWhere('a.FD_TGL_VOID', '3000-01-01')

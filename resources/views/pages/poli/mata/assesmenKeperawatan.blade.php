@@ -395,6 +395,17 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label class="d-block">Alat Bantu/Protesa</label>
+                                    <input type="text" name="alat_bantu" class="form-control @error('alat_bantu') is-invalid @enderror">
+                                    @error('alat_bantu')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label>Status Gizi</label>
                                     <div class="col-md-6">
                                         <div class="form-group" style="display: flex; flex-direction: row;">
@@ -420,7 +431,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>ADL</label>
                                     <div class="col-md-6">
@@ -440,29 +451,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="d-block">Alat Bantu/Protesa</label>
-                                    <input type="text" name="alat_bantu" class="form-control @error('alat_bantu') is-invalid @enderror">
-                                    @error('alat_bantu')
-                                    <span class="text-danger" style="font-size: 12px;">
-                                        {{ $message }}
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="d-block">Cacat Tubuh</label>
-                                    <input type="text" name="cacat_tubuh" class="form-control @error('cacat_tubuh') is-invalid @enderror">
-                                    @error('cacat_tubuh')
-                                    <span class="text-danger" style="font-size: 12px;">
-                                        {{ $message }}
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
+                            </div>                           
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Apakah Pasien tampak tidak seimbang(Sempoyongan/limbung)?</label>
@@ -505,67 +494,22 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-header card-success">
-                                <h4 class="card-title">B1 (Breathing)</h4>
-                            </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Irama Nafas</label>
+                                    <label>Visus</label>
                                     <div class="col-md-12">
                                         <div class="form-group" style="display: flex; flex-direction: row;">
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="irama_nafas" value="Teratur" id="irama_nafas1" @if(old('irama_nafas', '0' )=='Teratur' ) checked @endif>
-                                                <label class="form-check-label" for="irama_nafas1">
-                                                    Teratur
+                                            <div class="input-group" style="margin-right: 10px;">
+                                                <label for="visus_od" class="mr-2 mt-2">
+                                                    OD
                                                 </label>
+                                                <input type="text" class="form-control" name="visus_od" id="visus_od">
                                             </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="irama_nafas" value="Tidak Teratur" id="irama_nafas2" @if(old('irama_nafas', '0' )=='Tidak Teratur' ) checked @endif>
-                                                <label class="form-check-label" for="irama_nafas2">
-                                                    Tidak Teratur
+                                            <div class="input-group" style="margin-right: 10px;">
+                                                <label for="visus_os" class="mr-2 mt-2">
+                                                    OS
                                                 </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Batuk</label>
-                                    <div class="col-md-12">
-                                        <div class="form-group" style="display: flex; flex-direction: row;">
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="batuk" value="Ada" id="batuk1" @if(old('batuk', '0' )=='Ada' ) checked @endif>
-                                                <label class="form-check-label" for="batuk1">
-                                                    Ada
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="batuk" value="Tidak" id="batuk2" @if(old('batuk', '0' )=='Tidak' ) checked @endif>
-                                                <label class="form-check-label" for="batuk2">
-                                                    Tidak
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Alat Bantu Nafas</label>
-                                    <div class="col-md-12">
-                                        <div class="form-group" style="display: flex; flex-direction: row;">
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="alat_bantu" value="Ya" id="alat_bantu1" @if(old('alat_bantu', '0') == 'Ya') checked @endif>
-                                                <label class="form-check-label" for="alat_bantu1">
-                                                    Ya
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="alat_bantu" value="Tidak" id="alat_bantu2" @if(old('alat_bantu', '0') == 'Tidak') checked @endif>
-                                                <label class="form-check-label" for="alat_bantu2">
-                                                    Tidak
-                                                </label>
+                                                <input type="text" class="form-control" name="visus_os" id="visus_os">
                                             </div>
                                         </div>
                                     </div>
@@ -573,203 +517,13 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Pola Pernafasan</label>
-                                    <div class="col-md-12">
-                                        <div class="form-group" style="display: flex; flex-direction: row;">
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="pola_pernafasan" value="Tidak Ada" id="pola_pernafasan1" @if(old('pola_pernafasan', '0') == 'Tidak Ada') checked @endif>
-                                                <label class="form-check-label" for="pola_pernafasan2">
-                                                    Tidak Ada
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="pola_pernafasan" value="Dypsnoe" id="pola_pernafasan2" @if(old('pola_pernafasan', '0') == 'Dypsnoe') checked @endif>
-                                                <label class="form-check-label" for="pola_pernafasan2">
-                                                    Dypsnoe
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="pola_pernafasan" value="Kusmaul" id="pola_pernafasan3" @if(old('pola_pernafasan', '0') == 'Kusmaul') checked @endif>
-                                                <label class="form-check-label" for="pola_pernafasan3">
-                                                    Kusmaul
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="pola_pernafasan" value="Cheyne Stoke" id="pola_pernafasan4" @if(old('pola_pernafasan', '0') == 'Cheyne Stoke') checked @endif>
-                                                <label class="form-check-label" for="pola_pernafasan4">
-                                                    Cheyne Stoke
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Suara Nafas</label>
-                                    <div class="col-md-12">
-                                        <div class="form-group" style="display: flex; flex-direction: row;">
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="suara_nafas" value="Gargling" id="suara_nafas1" @if(old('suara_nafas', '0') == 'Gargling') checked @endif>
-                                                <label class="form-check-label" for="suara_nafas1">
-                                                    Gargling
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="suara_nafas" value="Snoring" id="suara_nafas2" @if(old('suara_nafas', '0') == 'Snoring') checked @endif>
-                                                <label class="form-check-label" for="suara_nafas2">
-                                                    Snoring
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="suara_nafas" value="Stidor" id="suara_nafas3" @if(old('suara_nafas', '0') == 'Stidor') checked @endif>
-                                                <label class="form-check-label" for="suara_nafas3">
-                                                    Stidor
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="suara_nafas" value="Tidak Ada" id="suara_nafas4" @if(old('suara_nafas', '0') == 'Tidak Ada') checked @endif>
-                                                <label class="form-check-label" for="suara_nafas4">
-                                                    Tidak Ada
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-header card-success">
-                                <h4 class="card-title">B2 (Blood)</h4>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Nyeri Dada</label>
-                                    <div class="col-md-12">
-                                        <div class="form-group" style="display: flex; flex-direction: row;">
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="nyeri_dada" value="Tidak Ada" id="nyeri_dada1" @if(old('nyeri_dada', '0' )=='Tidak Ada' ) checked @endif>
-                                                <label class="form-check-label" for="nyeri_dada1">
-                                                    Tidak Ada
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="nyeri_dada" value="Ada" id="nyeri_dada2" @if(old('nyeri_dada', '0' )=='Ada' ) checked @endif>
-                                                <label class="form-check-label" for="nyeri_dada2">
-                                                    Ada
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Akral</label>
-                                    <div class="col-md-12">
-                                        <div class="form-group" style="display: flex; flex-direction: row;">
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="akral" value="Hangat" id="akral1" @if(old('akral', '0' )=='Hangat' ) checked @endif>
-                                                <label class="form-check-label" for="akral1">
-                                                    Hangat
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="akral" value="Kering" id="akral2" @if(old('akral', '0' )=='Kering' ) checked @endif>
-                                                <label class="form-check-label" for="akral2">
-                                                    Kering
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="akral" value="Dingin" id="akral3" @if(old('akral', '0' )=='Dingin' ) checked @endif>
-                                                <label class="form-check-label" for="akral3">
-                                                    Dingin
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Pendarahan</label>
-                                    <div class="col-md-12">
-                                        <div class="form-group" style="display: flex; flex-direction: row;">
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="pendarahan" value="Ada" id="pendarahan1" @if(old('pendarahan', '0') == 'Ada') checked @endif>
-                                                <label class="form-check-label" for="pendarahan1">
-                                                    Ada
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="pendarahan" value="Tidak Ada" id="pendarahan2" @if(old('pendarahan', '0') == 'Tidak Ada') checked @endif>
-                                                <label class="form-check-label" for="pendarahan2">
-                                                    Tidak Ada
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Cyanosis</label>
-                                    <div class="col-md-12">
-                                        <div class="form-group" style="display: flex; flex-direction: row;">
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="cyanosis" value="Tidak Ada" id="cyanosis1" @if(old('cyanosis', '0') == 'Tidak Ada') checked @endif>
-                                                <label class="form-check-label" for="cyanosis1">
-                                                    Tidak Ada
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="cyanosis" value="Ada" id="cyanosis2" @if(old('cyanosis', '0') == 'Ada') checked @endif>
-                                                <label class="form-check-label" for="cyanosis2">
-                                                    Ada
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>CRT</label>
-                                    <div class="col-md-12">
-                                        <div class="form-group" style="display: flex; flex-direction: row;">
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="crt" value="1-2" id="crt1" @if(old('crt', '0') == '1-2') checked @endif>
-                                                <label class="form-check-label" for="crt1">
-                                                    1-2
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="crt" value="2" id="crt2" @if(old('crt', '0') == '2') checked @endif>
-                                                <label class="form-check-label" for="crt2">
-                                                    2
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Turgor</label>
-                                    <div class="col-md-12">
-                                        <div class="form-group" style="display: flex; flex-direction: row;">
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="turgor" value="Elastis" id="turgor1" @if(old('turgor', '0') == 'Elastis') checked @endif>
-                                                <label class="form-check-label" for="turgor1">
-                                                    Elastis
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="turgor" value="Tidak Elastis" id="turgor2" @if(old('turgor', '0') == 'Tidak Elastis') checked @endif>
-                                                <label class="form-check-label" for="turgor2">
-                                                    Tidak Elastis
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <label class="d-block">Cacat Tubuh</label>
+                                    <input type="text" name="cacat_tubuh" class="form-control @error('cacat_tubuh') is-invalid @enderror">
+                                    @error('cacat_tubuh')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="card-header card-success">
@@ -853,266 +607,6 @@
                                                 <input class="form-check-input" type="radio" name="pusing" value="Ada" id="pusing2" @if(old('pusing', '0') == 'Ada') checked @endif>
                                                 <label class="form-check-label" for="pusing2">
                                                     Ada
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-header card-success">
-                                <h4 class="card-title">B4 (BAK)</h4>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>BAK</label>
-                                    <div class="col-md-12">
-                                        <div class="form-group" style="display: flex; flex-direction: row;">
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="bak" value="Spontan" id="bak1" @if(old('bak', '0') == 'Spontan') checked @endif>
-                                                <label class="form-check-label" for="bak1">
-                                                    Spontan
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="bak" value="Tidak Spontan" id="bak2" @if(old('bak', '0') == 'Tidak Spontan') checked @endif>
-                                                <label class="form-check-label" for="bak2">
-                                                    Tidak Spontan
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Nyeri Tekan</label>
-                                    <div class="col-md-12">
-                                        <div class="form-group" style="display: flex; flex-direction: row;">
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="nyeri_tekan_bak" value="Tidak Ada" id="nyeri_tekan_bak1" @if(old('nyeri_tekan_bak', '0') == 'Tidak Ada') checked @endif>
-                                                <label class="form-check-label" for="nyeri_tekan_bak1">
-                                                    Tidak Ada
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="nyeri_tekan_bak" value="Ada" id="nyeri_tekan_bak2" @if(old('nyeri_tekan_bak', '0') == 'Ada') checked @endif>
-                                                <label class="form-check-label" for="nyeri_tekan_bak2">
-                                                    Ada
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="d-block">Produksi Urine</label>
-                                    <input type="text" name="produksi_urine" class="form-control @error('produksi_urine') is-invalid @enderror">
-                                    @error('produksi_urine')
-                                    <span class="text-danger" style="font-size: 12px;">
-                                        {{ $message }}
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="card-header card-success">
-                                <h4 class="card-title">B5 (Bowel)</h4>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>BAB</label>
-                                    <div class="col-md-12">
-                                        <div class="form-group" style="display: flex; flex-direction: row;">
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="bab" value="Normal" id="bab1" @if(old('bab', '0' )=='Normal' ) checked @endif>
-                                                <label class="form-check-label" for="bab1">
-                                                    Normal
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="bab" value="Cair" id="bab2" @if(old('bab', '0' )=='Cair' ) checked @endif>
-                                                <label class="form-check-label" for="bab2">
-                                                    Cair
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="bab" value="Konstipasi" id="bab3" @if(old('bab', '0' )=='Konstipasi' ) checked @endif>
-                                                <label class="form-check-label" for="bab3">
-                                                    Konstipasi
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Abdomen</label>
-                                    <div class="col-md-12">
-                                        <div class="form-group" style="display: flex; flex-direction: row;">
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="abdomen" value="Supel" id="abdomen1" @if(old('abdomen', '0' )=='Supel' ) checked @endif>
-                                                <label class="form-check-label" for="abdomen1">
-                                                    Supel
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="abdomen" value="Kembang" id="abdomen2" @if(old('abdomen', '0' )=='Kembang' ) checked @endif>
-                                                <label class="form-check-label" for="abdomen2">
-                                                    Kembang
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="abdomen" value="Ascites" id="abdomen3" @if(old('abdomen', '0' )=='Ascites' ) checked @endif>
-                                                <label class="form-check-label" for="abdomen3">
-                                                    Ascites
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="abdomen" value="Tegang" id="abdomen4" @if(old('abdomen', '0' )=='Tegang' ) checked @endif>
-                                                <label class="form-check-label" for="abdomen4">
-                                                    Tegang
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Nyeri Tekan</label>
-                                    <div class="col-md-12">
-                                        <div class="form-group" style="display: flex; flex-direction: row;">
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="nyeri_tekan_bowel" value="Ada" id="nyeri_tekan_bowel1" @if(old('nyeri_tekan_bowel', '0') == 'Ada') checked @endif>
-                                                <label class="form-check-label" for="nyeri_tekan_bowel1">
-                                                    Ada
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="nyeri_tekan_bowel" value="Tidak Ada" id="nyeri_tekan_bowel2" @if(old('nyeri_tekan_bowel', '0') == 'Tidak Ada') checked @endif>
-                                                <label class="form-check-label" for="nyeri_tekan_bowel2">
-                                                    Tidak Ada
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Jejas Abdomen</label>
-                                    <div class="col-md-12">
-                                        <div class="form-group" style="display: flex; flex-direction: row;">
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="jejas_abdomen" value="Tidak Ada" id="jejas_abdomen1" @if(old('jejas_abdomen', '0') == 'Tidak Ada') checked @endif>
-                                                <label class="form-check-label" for="jejas_abdomen1">
-                                                    Tidak Ada
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="jejas_abdomen" value="Ada" id="jejas_abdomen2" @if(old('jejas_abdomen', '0') == 'Ada') checked @endif>
-                                                <label class="form-check-label" for="jejas_abdomen2">
-                                                    Ada
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-header card-success">
-                                <h4 class="card-title">B6 (Bone)</h4>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Pergerakan Sendi</label>
-                                    <div class="col-md-12">
-                                        <div class="form-group" style="display: flex; flex-direction: row;">
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="pergerakan_sendi" value="Bebas" id="pergerakan_sendi1" @if(old('pergerakan_sendi', '0' )=='Bebas' ) checked @endif>
-                                                <label class="form-check-label" for="pergerakan_sendi1">
-                                                    Bebas
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="pergerakan_sendi" value="Terbatas" id="pergerakan_sendi2" @if(old('pergerakan_sendi', '0' )=='Terbatas' ) checked @endif>
-                                                <label class="form-check-label" for="pergerakan_sendi2">
-                                                    Terbatas
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Dislokasi</label>
-                                    <div class="col-md-12">
-                                        <div class="form-group" style="display: flex; flex-direction: row;">
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="dislokasi" value="Ada" id="dislokasi1" @if(old('dislokasi', '0') == 'Ada') checked @endif>
-                                                <label class="form-check-label" for="dislokasi1">
-                                                    Ada
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="dislokasi" value="Tidak Ada" id="dislokasi2" @if(old('dislokasi', '0') == 'Tidak Ada') checked @endif>
-                                                <label class="form-check-label" for="dislokasi2">
-                                                    Tidak Ada
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Fraktur</label>
-                                    <div class="col-md-12">
-                                        <div class="form-group" style="display: flex; flex-direction: row;">
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="fraktur" value="Tidak Ada" id="fraktur1" @if(old('fraktur', '0') == 'Tidak Ada') checked @endif>
-                                                <label class="form-check-label" for="fraktur1">
-                                                    Tidak Ada
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="fraktur" value="Ada" id="fraktur2" @if(old('fraktur', '0') == 'Ada') checked @endif>
-                                                <label class="form-check-label" for="fraktur2">
-                                                    Ada
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Luka</label>
-                                    <div class="col-md-12">
-                                        <div class="form-group" style="display: flex; flex-direction: row;">
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="luka" value="Tidak Ada" id="luka1" @if(old('luka', '0') == 'Tidak Ada') checked @endif>
-                                                <label class="form-check-label" for="luka1">
-                                                    Tidak Ada
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="luka" value="Ada" id="luka2" @if(old('luka', '0') == 'Ada') checked @endif>
-                                                <label class="form-check-label" for="luka2">
-                                                    Ada
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="luka" value="Bersih" id="luka3" @if(old('luka', '0') == 'Bersih') checked @endif>
-                                                <label class="form-check-label" for="luka3">
-                                                    Bersih
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="luka" value="Kotor" id="luka4" @if(old('luka', '0') == 'Kotor') checked @endif>
-                                                <label class="form-check-label" for="luka4">
-                                                    Kotor
                                                 </label>
                                             </div>
                                         </div>

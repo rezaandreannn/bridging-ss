@@ -26,18 +26,20 @@ class Berkas_rm_controller extends Controller
         $this->rekam_medis = $rekam_medis;
         $this->rajaldokter = new RajalDokter;
         $this->rawatinap = new RawatInap;
-    }   
+    }
 
     public function cetakResep($noReg, $kode_transaksi)
     {
         $data = $this->rekam_medis->cetakResep($noReg, $kode_transaksi);
         $biodata = $this->rekam_medis->getBiodata($noReg);
+        $antrian = $this->rekam_medis->getAntrianObat($kode_transaksi);
+        // dd($antrian);
         $date = date('dMY');
         $tanggal = Carbon::now();
 
         $filename = 'resep-' . $date . '-' . $kode_transaksi;
 
-        $pdf = PDF::loadview('pages.rekam_medis.resep', ['data' => $data, 'biodata' => $biodata, 'tanggal' => $tanggal]);
+        $pdf = PDF::loadview('pages.rekam_medis.resep', ['data' => $data, 'biodata' => $biodata, 'tanggal' => $tanggal, 'antrian' => $antrian]);
         // Set paper size to A5
         $pdf->setPaper('A5');
         return $pdf->stream($filename . '.pdf');
@@ -200,6 +202,7 @@ class Berkas_rm_controller extends Controller
             ->where('a.FS_KD_REG', $noReg)
             ->first();
 
+
         // $data = $this->rekam_medis->getNoPRB($noReg);
         $biodata = $this->rekam_medis->getBiodata($noReg);
         $date = date('dMY');
@@ -258,6 +261,7 @@ class Berkas_rm_controller extends Controller
         $biodata = $this->rekam_medis->getBiodata($noReg);
         // dd($biodata);
         $asesmenPerawat = $this->rekam_medis->cetakRmRajal($noReg);
+
         $asesmenDokterRj = $this->rekam_medis->asesmenDokterRjBynoReg($noReg);
         $masalahKeperawatan = $this->rekam_medis->masalahKepByNoreg($noReg);
         $rencanaKeperawatan = $this->rekam_medis->rencanaKepByNoreg($noReg);

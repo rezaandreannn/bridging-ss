@@ -108,7 +108,7 @@ $dayList = array(
                 <td style="padding-top:50px;text-decoration:underline">
                    
                 </td>
-                <td class="ttd" style="text-align: left; padding-left:420px;">Metro, {{ $tanggal->format('d-m-Y') }}</td>
+                <td class="ttd" style="text-align: left; padding-left:420px;">Metro, {{ date('d-m-Y', strtotime($resep->mdd)) }}</td>
                 
             </tr>
             <tr>
