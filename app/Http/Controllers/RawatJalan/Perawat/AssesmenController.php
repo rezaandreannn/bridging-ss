@@ -59,7 +59,7 @@ class AssesmenController extends Controller
         // die;
 
 
-        return view($this->view . 'index', compact('title', 'dokters', 'data', 'rajalModel'));
+        return view($this->view . 'perawat.index', compact('title', 'dokters', 'data', 'rajalModel'));
     }
 
     public function add($noReg)
@@ -69,7 +69,7 @@ class AssesmenController extends Controller
         $rencana_perawatan = $this->rajal->rencana_perawatan();
         $biodata = $this->rajal->pasien_bynoreg($noReg);
 
-        return view($this->view . 'add', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'biodata', 'noReg'));
+        return view($this->view . 'perawat.add', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'biodata', 'noReg'));
     }
 
     //Tampilan Report PDF Resume Pasien
@@ -78,7 +78,7 @@ class AssesmenController extends Controller
         $title = $this->prefix . ' ' . 'Resume Pasien';
         $data = $this->rajal->resumeMedisPasienByMR($noMR);
         $pasien = $this->pasien->biodataPasienByMr($noMR);
-        return view($this->view . 'resume', compact('title', 'data', 'pasien'));
+        return view($this->view . 'perawat.resume', compact('title', 'data', 'pasien'));
     }
 
     //Tampilan History Pasien
@@ -87,7 +87,7 @@ class AssesmenController extends Controller
         $title = $this->prefix . ' ' . 'Resume Pasien';
         $data = $this->rajal->history($noMR);
         $pasien = $this->pasien->biodataPasienByMr($noMR);
-        return view($this->view . 'history', compact('title', 'data', 'pasien'));
+        return view($this->view . 'perawat.history', compact('title', 'data', 'pasien'));
     }
 
     // Cetak PDF Profil Ringkas Medis Rawat Jalan
@@ -102,7 +102,7 @@ class AssesmenController extends Controller
         $paperSize = 'A4'; // Options: 'A4', 'letter', etc.
         $paperOrientation = 'portrait'; // Options: 'portrait', 'landscape'
 
-        $pdf = PDF::loadview('pages.rj.profil', ['data' => $data, 'pasien' => $pasien])
+        $pdf = PDF::loadview('pages.rj.perawat.profil', ['data' => $data, 'pasien' => $pasien])
             ->setPaper($paperSize, $paperOrientation);
         return $pdf->download($filename . '.pdf');
     }
@@ -117,7 +117,7 @@ class AssesmenController extends Controller
         // dd($rajal);
         // die;
 
-        return view($this->view . 'editSKDP', compact('title', 'biodata', 'alasanSkdp', 'skdp', 'rencanaSkdp'));
+        return view($this->view . 'perawat.editSKDP', compact('title', 'biodata', 'alasanSkdp', 'skdp', 'rencanaSkdp'));
     }
 
     public function updateSKDP(Request $request, $noReg)
@@ -397,7 +397,7 @@ class AssesmenController extends Controller
 
         // die;
 
-        return view($this->view . 'edit', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'biodata', 'asasmen_perawat', 'riwayat', 'masalah_perGet', 'rencana_perGet', 'noReg'));
+        return view($this->view . 'perawat.edit', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'biodata', 'asasmen_perawat', 'riwayat', 'masalah_perGet', 'rencana_perGet', 'noReg'));
     }
 
     /**

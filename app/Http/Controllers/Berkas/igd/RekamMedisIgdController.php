@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Berkas\igd;
 
+use Carbon\Carbon;
 use App\Models\Rajal;
 use App\Models\Pasien;
-use App\Models\Rekam_medis;
 use App\Models\RanapDokter;
+use App\Models\Rekam_medis;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 
 class RekamMedisIgdController extends Controller
@@ -53,6 +55,22 @@ class RekamMedisIgdController extends Controller
 
 
         return view($this->view . 'index', compact('title', 'biodatas', 'cek_mr', 'dataPasien'));
+    }
+
+    public function cetakResepIGD($nomr, $noReg)
+    {
+        $biodatas = $this->pasien->biodataPasienByMr($nomr);
+        $dataResepIgd = $this->rekam_medis->dataResepIGD($noReg);
+        // dd($dataResepIgd);
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+
+        $filename = 'resep-' . $date;
+
+        $pdf = PDF::loadview('pages.rekam_medis.igd.resep', ['data' => $dataResepIgd, 'biodata' => $biodatas, 'tanggal' => $tanggal]);
+        // Set paper size to A5
+        $pdf->setPaper('A5');
+        return $pdf->stream($filename . '.pdf');
     }
 
     /**

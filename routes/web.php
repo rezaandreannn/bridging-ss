@@ -209,7 +209,7 @@ Route::middleware('auth')->group(function () {
         // rujukan fisioterapi
         Route::get('rujukan/add', [InformedConcentController::class, 'create_rujukan'])->name('rujukan.add');
         Route::post('rujukan/add', [InformedConcentController::class, 'store_rujukan'])->name('rujukan.store');
-        
+
         // diagnosis medis
         Route::get('master_data/diagnosis_medis/list', [DiagnosisMedisController::class, 'index'])->name('diagnosisMedis.index');
         Route::post('master_data/diagnosis_medis/add_proses', [DiagnosisMedisController::class, 'store'])->name('diagnosisMedis.store');
@@ -357,27 +357,26 @@ Route::middleware('auth')->group(function () {
     // Riwayat Rekam Medis
     Route::prefix('rm')->group(function () {
 
-        Route::get('riwayaRekamMedis/bymr/list', [RekamMedisByMrController::class, 'index'])->name('rm.bymr');
-        Route::get('riwayaRekamMedis/bymr/detailBerkas/{noReg}', [RekamMedisByMrController::class, 'detail_berkas'])->name('rm.detail');
-        Route::get('riwayaRekamMedis/bymr/detailBerkas/cppt/{noReg}', [RekamMedisByMrController::class, 'detail_cppt'])->name('rm.cppt');
-        Route::get('riwayaRekamMedis/bymr/resumeRanap/{noReg}', [RekamMedisByMrController::class, 'resumeRanap'])->name('rm.ranap');
-        Route::get('riwayaRekamMedis/bymr/resumeRajal/{noReg}', [RekamMedisByMrController::class, 'resumeRajal'])->name('rm.rajal');
+        Route::get('riwayatRekamMedis/bymr/list', [RekamMedisByMrController::class, 'index'])->name('rm.bymr');
+        Route::get('riwayatRekamMedis/bymr/detailBerkas/{noReg}', [RekamMedisByMrController::class, 'detail_berkas'])->name('rm.detail');
+        Route::get('riwayatRekamMedis/bymr/detailBerkas/cppt/{noReg}', [RekamMedisByMrController::class, 'detail_cppt'])->name('rm.cppt');
+        Route::get('riwayatRekamMedis/bymr/resumeRanap/{noReg}', [RekamMedisByMrController::class, 'resumeRanap'])->name('rm.ranap');
+        Route::get('riwayatRekamMedis/bymr/resumeRajal/{noReg}', [RekamMedisByMrController::class, 'resumeRajal'])->name('rm.rajal');
         // harian
-        Route::get('riwayaRekamMedis/harian/list', [RekamMedisHarianController::class, 'index'])->name('rm.harian');
+        Route::get('riwayatRekamMedis/harian/list', [RekamMedisHarianController::class, 'index'])->name('rm.harian');
         // IGD
-        Route::get('riwayaRekamMedis/igd/list', [RekamMedisIgdController::class, 'index'])->name('rm.igd');
+        Route::get('riwayatRekamMedis/igd/list', [RekamMedisIgdController::class, 'index'])->name('rm.igd');
+        Route::get('riwayatRekamMedis/berkasIGD/cetakResep/{nomr}/{noReg}', [RekamMedisIgdController::class, 'cetakResepIGD'])->name('rm.cetakResepIGD');
     });
 
     // Riwayat Rekam Medis
     Route::prefix('koding')->group(function () {
 
         Route::get('kodingDiagnosa/rajal/list', [KodingRajalController::class, 'index'])->name('koding.index');
-        Route::get('kodingDiagnosa/rajal/addDiagnosa/{noReg}',[KodingRajalController::class, 'create'])->name('koding.add');
-        Route::get('kodingDiagnosa/rajal/editDiagnosa/{noReg}',[KodingRajalController::class, 'show'])->name('koding.showEdit');
-        Route::post('kodingDiagnosa/rajal/addProsesDiagnosa/{noReg}',[KodingRajalController::class, 'store'])->name('koding.addproses');
-        Route::put('kodingDiagnosa/rajal/updateProsesDiagnosa/{noReg}',[KodingRajalController::class, 'update'])->name('koding.updateproses');
- 
-    
+        Route::get('kodingDiagnosa/rajal/addDiagnosa/{noReg}', [KodingRajalController::class, 'create'])->name('koding.add');
+        Route::get('kodingDiagnosa/rajal/editDiagnosa/{noReg}', [KodingRajalController::class, 'show'])->name('koding.showEdit');
+        Route::post('kodingDiagnosa/rajal/addProsesDiagnosa/{noReg}', [KodingRajalController::class, 'store'])->name('koding.addproses');
+        Route::put('kodingDiagnosa/rajal/updateProsesDiagnosa/{noReg}', [KodingRajalController::class, 'update'])->name('koding.updateproses');
     });
 
     // MANAGE USER

@@ -88,14 +88,14 @@
                                     <td>
                                         <a href="{{ route('rj.rmDokter', ['noReg' => $pasien->No_Reg, 'noMR'=> $pasien->No_MR]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> RM</a>
                                         @if($pasien->Tanggal>=$tglKemarin)
-                                        <a href="#" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Edit Perawat</a>
+                                        <a href="{{ route('rj.edit', ['noReg' =>$pasien->No_Reg]) }}" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Edit Perawat</a>
                                         @if($pasien->Kode_Dokter == $userLogin)
                                         <a href="#" class="btn btn-sm btn-danger"><i class="fas fa-download"></i> Edit Dokter</a>
                                         @endif
                                         @endif
 
                                         @if($pasien->FS_CARA_PULANG == '1')
-                                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> RB</a>
+                                        <a href="{{ route('rj.prb', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> RB</a>
                                         @endif
 
                                         @if($pasien->FS_CARA_PULANG == '2')

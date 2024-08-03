@@ -200,6 +200,8 @@ class Rekam_medis extends Model
         return $data;
     }
 
+    // Rekam Medis IGD
+
     function rekamMedisIgd($No_MR)
     {
 
@@ -231,6 +233,33 @@ class Rekam_medis extends Model
             ->get();
         return $data;
     }
+
+    public function dataResepIGD($noReg)
+    {
+        // $sql = "SELECT a.*,c.NAMA_DOKTER,b.user_name,KODE_DOKTER, d.NAMALENGKAP 
+        // FROM PKU.dbo.IGD_AWAL_MEDIS a
+        // LEFT JOIN PKU.dbo.TAC_COM_USER b ON a.MDB=b.user_id
+        // LEFT JOIN DOKTER c ON b.user_name=c.KODE_DOKTER
+        // LEFT JOIN DB_RSMM.dbo.TUSER d ON b.user_name=d.NAMAUSER
+        // WHERE a.FS_KD_REG = ? AND a.id = ?";
+        $db = DB::connection('db_rsmm')->getDatabaseName();
+        $data = DB::connection('pku')
+            ->table('IGD_AWAL_MEDIS as a')
+            ->leftJoin($db . '.dbo.DOKTER as c', 'a.MDB', '=', 'c.KODE_DOKTER')
+
+
+            ->select(
+                'a.*',
+
+                'c.Nama_Dokter',
+
+
+            )
+            ->where('a.FS_KD_REG', $noReg)
+            ->first();
+        return $data;
+    }
+    // Penutup Rekam Medis IGD
 
     // rekam medis harian by dokter dan tanggal
 

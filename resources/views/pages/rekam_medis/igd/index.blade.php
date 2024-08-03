@@ -147,7 +147,7 @@
                                         @endif
                                         
                                         @if($pasien->FS_TERAPI != '')
-                                        <a href="#" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Resep</a>
+                                        <a href="{{ route('rm.cetakResepIGD', ['nomr' => $pasien->No_MR,'noReg'=> $pasien->No_Reg]) }}" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Resep</a>
                                         @endif
 
                                         @if($pasien->lab != '')
