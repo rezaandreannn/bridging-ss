@@ -406,6 +406,22 @@ class Fisioterapi extends Model
         return $data;
     }
 
+    public function getDiagnosisKlinis()
+    {
+        $data = DB::connection('pku')
+            ->table('fis_master_diagnosis_fungsi')
+            ->get();
+        return $data;
+    }
+    
+    public function getDiagnosisMedis()
+    {
+        $data = DB::connection('pku')
+            ->table('fis_master_diagnosis_medis')
+            ->get();
+        return $data;
+    }
+
     public function dataEditPasienCPPT($id)
     {
         $data = DB::connection('pku')
