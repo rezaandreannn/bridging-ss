@@ -367,6 +367,8 @@ Route::middleware('auth')->group(function () {
         // IGD
         Route::get('riwayatRekamMedis/igd/list', [RekamMedisIgdController::class, 'index'])->name('rm.igd');
         Route::get('riwayatRekamMedis/berkasIGD/cetakResep/{nomr}/{noReg}', [RekamMedisIgdController::class, 'cetakResepIGD'])->name('rm.cetakResepIGD');
+        Route::get('riwayatRekamMedis/berkasIGD/cetakRad/{nomr}/{noReg}', [RekamMedisIgdController::class, 'cetakRadIGD'])->name('rm.cetakRadIGD');
+        Route::get('riwayatRekamMedis/berkasIGD/cetakLab/{nomr}/{noReg}', [RekamMedisIgdController::class, 'cetakLabIGD'])->name('rm.cetakLabIGD');
     });
 
     // Riwayat Rekam Medis

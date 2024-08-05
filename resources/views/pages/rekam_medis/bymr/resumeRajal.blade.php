@@ -73,7 +73,7 @@
                 font-size: 14px;
                 padding-right: 50px;
                 padding: 10px;
-                margin: auto;
+                margin: auto; 
             }
 
             .table-css {
@@ -156,64 +156,54 @@
         </table>
         <table style="border: 1px solid black;" class="isi" width="100%">
             <tr>
-                <td class="text2" colspan="6" style="text-align: center; border: 1px solid black;"><b>RINGKASAN RAWAT JALAN</b></td>
+                <td class="text2" colspan="6" style="color:white;background-color:black;  text-align: center; border: 1px solid black;"><b>RESUME MEDIS RAWAT JALAN</b></td>
             </tr>
             <tr>
-                <td class="text3" width="100"><b>Tanggal Pelayanan</b></td>
-                <td class="text3" colspan="5"> {{date('d M Y', strtotime($asesmenDokterRj->mdd))}}</td>
-            </tr>
-            <tr>
-                <td class="text3" colspan="3">Indikasi rawat :</td>
-                <td class="text3" colspan="3">Diagnosa saat masuk : {{ $asesmenDokterRj->FS_ANAMNESA}}</td>
-            </tr>
-            <tr>
-                <td class="text3">Ringkasan Riwayat Pasien</td>
-                <td class="text3" colspan="5"> {{ $asesmenDokterRj->FS_RIW_PENYAKIT_DAHULU}}</td>
-            </tr>
-            <tr>
-                <td class="text3">Pemeriksaan Fisik</td>
-                <td class="text3" colspan="5"> , {{ $asesmenDokterRj->FS_CATATAN_FISIK}}</td>
-            </tr>
-            <tr>
-                <td class="text3">Pemeriksaan Penunjang</td>
+                <td class="text3">Keluhan utama saat masuk rumah sakit</td>
                 <td class="text3" colspan="5"> </td>
-            </tr>
-            <tr>
-                <td class="text3">Terapi / Pengobatan </td>
-                <td class="text3" colspan="5"> {{ $asesmenDokterRj->FS_TERAPI}}</td>
-            </tr>
-            <tr>
-                <td class="text3">Hasil Laboratorium</td>
-                <td class="text3" colspan="5"> </td>
-            </tr>
-            <tr>
-                <td class="text3">Alergi</td>
-                <td class="text3" colspan="5"> {{ $asesmenDokterRj->FS_ALERGI}}</td>
-            </tr>
-            <tr>
-                <td class="text3">Tanggal Kontrol</td>
-                <td class="text3" colspan="5"> {{date('d M Y', strtotime($asesmenDokterRj->mdd))}}</td>
             </tr>
             <tr>
                 <td class="text3">Diagnosa Utama</td>
                 <td class="text3" colspan="3"> {{ $asesmenDokterRj->FS_DIAGNOSA}}</td>
                 <td class="text3" colspan="2">ICD 10:</td>
             </tr>
-            {{-- <tr>
-                <td class="text3">Diagnosa Utama</td>
-                <td class="text3" colspan="5"> {{ $asesmenDokterRj->FS_DIAGNOSA}}</td>
-            </tr> --}}
             <tr>
                 <td class="text3">Diagnosa Sekunder</td>
-                <td class="text3" colspan="5"> {{ $biodata->FS_DIAGNOSA_SEKUNDER}}</td>
+                <td class="text3" colspan="3"> {{ $asesmenDokterRj->FS_DIAGNOSA}}</td>
+                <td class="text3" colspan="2">ICD 10:</td>
             </tr>
             <tr>
-                <td class="text3">Tindakan / Prosedur</td>
-                <td class="text3" colspan="3"> {{ $asesmenDokterRj->FS_TINDAKAN}}</td>
-                <td class="text3" colspan="2">ICD 9 : </td>
+                <td class="text3">Prosedur Tindakan</td>
+                <td class="text3" colspan="5" height="30px"></td>
             </tr>
             <tr>
-                <td class="text3" colspan="6"><b>Terapi yang diberikan dokter</b></td>
+                <td class="text3">Keterangan</td>
+                <td class="text3" colspan="5" height="50px"></td>
+            </tr>
+            <tr>
+                <td class="text3">Alergi</td>
+                <td class="text3" colspan="3">Obat: </td>
+                <td class="text3" colspan="2">Makanan: </td>
+            </tr>
+            <tr>
+                <td class="text3">Pemeriksaan Fisik</td>
+                <td class="text3" colspan="5"> Tanda-tanda vital {{ $asesmenDokterRj->FS_CATATAN_FISIK}}</td>
+            </tr>
+            <tr>
+                <td class="text3">Pemeriksaan Penunjang</td>
+                <td class="text3" colspan="5" height="50px"> </td>
+            </tr>
+            <tr>
+                <td class="text3">Kondisi Keluar</td>
+                <td class="text3" colspan="5"></td>
+            </tr>
+            <tr>
+                <td class="text3">Instruksi dan edukasi lanjutan</td>
+                <td class="text3" colspan="3">Tanggal Kontrol: {{date('d M Y', strtotime($asesmenDokterRj->mdd))}}</td>
+                <td class="text3" colspan="2">Di: </td>
+            </tr>
+            <tr>
+                <td class="text3" colspan="6" height="50px"><b>Terapi yang diberikan dokter</b></td>
             </tr>
         </table>
         <table width="100%" style="border-top:none;">
@@ -232,6 +222,22 @@
                 @endforeach
             </tbody>
         </table>
+        {{-- <table width="100%" style="border-top:none;">
+            <thead>
+                <tr>
+                    <th class="tabel1">Pemeriksaan Lab</th>
+                    <th class="tabel1">Hasil</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($labs as $lab)
+                <tr>
+                    <td class="text8">{{$lab->Pemeriksaan}}</td>
+                    <td class="text8">{{$lab->Hasil}}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table> --}}
         <table  width="100%">
             <tr>
                 <td style="padding-top: 100px;" class="text5"></td>
@@ -253,120 +259,4 @@
             </tr>
         </table>
     </body>
-</html>
-
-<!DOCTYPE html>
-<?php
-date_default_timezone_set('Asia/Jakarta');
-    $dayList = array(
-        'Sun' => 'Minggu',
-        'Mon' => 'Senin',
-        'Tue' => 'Selasa',
-        'Wed' => 'Rabu',
-        'Thu' => 'Kamis',
-        'Fri' => 'Jumat',
-        'Sat' => 'Sabtu'
-);
-?>
-<html lang="en">
-
-<head>
- 
-</head>
-
-<body>
-    <center>
-        <table width="100%">
-            <tr>
-                <td><img src="img/logo.png" width="50" height="50" /></td>
-                <td>
-                    <center>
-                        <font size="2"><b>MAJELIS PEMBINAAN KESEHATAN UMUM</b></font><br />
-                        <font size="2"><b>RSU MUHAMMADIYAH METRO </b></font><br />
-                        <font style="font-size: 8px;">JL Soekarno Hatta No. 42 Mulyojati 16B, Fax: (0725) 47760 Metro Barat - Kota Metro 34125</font><br />
-                        <font style="font-size: 8px;">Email : info.rsumm@gmail.com , Telp: (0721) 49490-7850378 , Website : www.rsumm.co.id</font>
-                    </center>
-                </td>
-                <td><img src="img/larsibaru.png" width="50" height="50" /></td>
-            </tr>
-            <tr>
-                <td colspan="3">
-                    <hr />
-                </td>
-            </tr>
-        </table>
-        <table width="100%">
-            <tr>
-                <td style="text-align: center">
-                    <u><b>SURAT KETERANGAN KONTROL KEMBALI KE RSUMM</b></u>
-                </td>
-            </tr>
-        </table>
-        <table width="100%">
-            <tr>
-                <td>No MR </td>
-                <td>: {{ $biodata->NO_MR}}</td>
-            </tr>
-            <tr>
-                <td>Nama</td>
-                <td>: {{ $biodata->NAMA_PASIEN}}</td>
-            </tr>
-            <tr>
-                <td width="100">Diagnosa </td>
-                <td width="200">: {{ $asesmenDokterRj->FS_ANAMNESA}}</td>
-            </tr>
-            <tr>
-                <td width="100">Terapi</td>
-                <td width="200">:</td>
-            </tr>
-            <tr>
-                <td colspan="4"></td>
-            </tr>
-        </table>
-        <table width="100%" style="border-top:none;">
-            <thead>
-                <tr>
-                    <th class="tabel1">Nama Obat</th>
-                    <th class="tabel1">Cara Pemakaian</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($resep as $reseps)
-                <tr>
-                    <td class="text8">{{$reseps->Nama_Obat}}</td>
-                    <td class="text8">{{$reseps->Dosis}}</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-        <table width="100%">
-                <tr>
-                    <td>
-                        Pasien dapat kontrol kembali ke Rumah Sakit pada hari Kamis,01 Jan 1970 , di
-                        Demikian hal ini kami sampaikan untuk dapat dipergunakan sebagaimana perlu, Terimakasih
-                    </td>
-                </tr>
-                <table  width="100%">
-                    <tr>
-                        <td style="padding-top: 100px;" class="text5"></td>
-                        <td style="padding-top: 100px;" class="text5">Tanggal 27-07-2024, Jam 11.00</td>
-                    </tr>
-                    <tr>
-                        <td class="text5"></td>
-                        <td class="text5">Tanda Tangan dan Nama DPJP</td>
-                    </tr>
-                    <tr>
-                        <tr>
-                            <td class="text5" style="padding-left: 30px;"></td>
-                            <td class="text5" style="padding-left: 30px;"><img src="img/barcode.jpeg" width="50" height="50" /></td>
-                        </tr>
-                    </tr>
-                    <tr>
-                        <td class="text5" style="padding-left: 30px;"></td>
-                        <td class="text5" style="padding-left: 30px;">(Perawat)</td>
-                    </tr>
-                </table>
-    </center>
-</body>
-
 </html>

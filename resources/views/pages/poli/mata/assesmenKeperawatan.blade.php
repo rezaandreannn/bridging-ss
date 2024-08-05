@@ -655,12 +655,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Edukasi</label>
-                                    <select name="edukasi" id="" class="form-control select2 @error('edukasi')  is-invalid @enderror">
-                                        <option value="" selected disabled>--- Pilih Data ---</option>
-                                        <option value="Perjalanan Penyakit" @if(old('edukasi')=='Perjalanan Penyakit' ) selected @endif>Perjalanan Penyakit</option>
-                                        <option value="Diagnosa" @if(old('edukasi')=='Diagnosa' ) selected @endif>Diagnosa</option>
-                                        <option value="Pengobatan" @if(old('edukasi')=='Pengobatan' ) selected @endif>Pengobatan</option>
-                                    </select>
+                                    <input type="text" name="edukasi" class="form-control @error('edukasi') is-invalid @enderror">
                                     @error('edukasi')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}

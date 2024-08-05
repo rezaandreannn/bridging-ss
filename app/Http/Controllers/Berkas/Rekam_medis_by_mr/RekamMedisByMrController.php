@@ -119,6 +119,8 @@ class RekamMedisByMrController extends Controller
     public function resumeRajal($noReg)
     {
         $resep = $this->rajaldokter->resep($noReg);
+        $labs = $this->rajaldokter->lab($noReg);
+        // dd($labs);
         $biodata = $this->rekam_medis->getBiodata($noReg);
         // dd($biodata);
         $asesmenPerawat = $this->rekam_medis->cetakRmRajal($noReg);
@@ -131,7 +133,7 @@ class RekamMedisByMrController extends Controller
 
         $title = 'Cetak RM';
 
-        $pdf = PDF::loadview('pages.rekam_medis.bymr.resumeRajal', ['tanggal' => $tanggal, 'title' => $title, 'resep' => $resep, 'biodata' => $biodata, 'asesmenPerawat' => $asesmenPerawat, 'asesmenDokterRj' => $asesmenDokterRj]);
+        $pdf = PDF::loadview('pages.rekam_medis.bymr.resumeRajal', ['tanggal' => $tanggal, 'title' => $title, 'labs' => $labs, 'resep' => $resep, 'biodata' => $biodata, 'asesmenPerawat' => $asesmenPerawat, 'asesmenDokterRj' => $asesmenDokterRj]);
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
     }
