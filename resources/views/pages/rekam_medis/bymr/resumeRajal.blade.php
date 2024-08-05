@@ -160,7 +160,7 @@
             </tr>
             <tr>
                 <td class="text3">Keluhan utama saat masuk rumah sakit</td>
-                <td class="text3" colspan="5"> </td>
+                <td class="text3" colspan="5"> {{ $asesmenDokterRj->FS_ANAMNESA}} </td>
             </tr>
             <tr>
                 <td class="text3">Diagnosa Utama</td>
@@ -169,12 +169,18 @@
             </tr>
             <tr>
                 <td class="text3">Diagnosa Sekunder</td>
-                <td class="text3" colspan="3"> {{ $asesmenDokterRj->FS_DIAGNOSA}}</td>
+                <td class="text3" colspan="3"> {{ $asesmenDokterRj->FS_DIAGNOSA_SEKUNDER}}</td>
                 <td class="text3" colspan="2">ICD 10:</td>
             </tr>
             <tr>
                 <td class="text3">Prosedur Tindakan</td>
-                <td class="text3" colspan="5" height="30px"></td>
+                <td class="text3" colspan="5" height="30px"> 
+                    @if ($asesmenDokterRj->FS_TINDAKAN == '')
+                    {{$asesmenDokterRj->FS_TINDAKAN}}
+                    @else
+                        {{'tidak ada'}}
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td class="text3">Keterangan</td>
@@ -195,11 +201,25 @@
             </tr>
             <tr>
                 <td class="text3">Kondisi Keluar</td>
-                <td class="text3" colspan="5"></td>
+                <td class="text3" colspan="5">
+                    @if ($asesmenDokterRj->FS_CARA_PULANG == '2')
+                    {{'Kontrol'}}
+                    @elseif ($asesmenDokterRj->FS_CARA_PULANG == '0')
+                    {{'Kontrol'}}
+                    @elseif ($asesmenDokterRj->FS_CARA_PULANG == '3')
+                    {{'Lain lain : Rawat Inap'}}
+                    @elseif ($asesmenDokterRj->FS_CARA_PULANG == '4')
+                    {{'Lain lain : Rujuk Luar RS'}}
+                    @elseif ($asesmenDokterRj->FS_CARA_PULANG == '6')
+                    {{'Lain lain : Rujuk Internal'}}
+                    @elseif ($asesmenDokterRj->FS_CARA_PULANG == '7')
+                    {{'Lain lain : Kembali Ke Faskes Primer'}}
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td class="text3">Instruksi dan edukasi lanjutan</td>
-                <td class="text3" colspan="3">Tanggal Kontrol: {{date('d M Y', strtotime($asesmenDokterRj->mdd))}}</td>
+                <td class="text3" colspan="3">Tanggal Kontrol: {{date('d M Y', strtotime($asesmenDokterRj->FS_SKDP_KONTROL))}}</td>
                 <td class="text3" colspan="2">Di: </td>
             </tr>
             <tr>
@@ -241,7 +261,7 @@
         <table  width="100%">
             <tr>
                 <td style="padding-top: 100px;" class="text5"></td>
-                <td style="padding-top: 100px;" class="text5">Tanggal 27-07-2024, Jam 11.00</td>
+                <td style="padding-top: 100px;" class="text5">Tanggal {{date('d M Y', strtotime($asesmenDokterRj->mdd))}}, Jam {{$asesmenDokterRj->FS_JAM_TRS}}</td>
             </tr>
             <tr>
                 <td class="text5">Tanda Tangan Pasien / Keluarga</td>
@@ -249,13 +269,18 @@
             </tr>
             <tr>
                 <tr>
-                    <td class="text5" style="padding-left: 30px;"><img src="img/barcode.jpeg" width="50" height="50" /></td>
-                    <td class="text5" style="padding-left: 30px;"><img src="img/barcode.jpeg" width="50" height="50" /></td>
+                    <td class="text5" style="padding-left: 50px;">
+                        {!! DNS2D::getBarcodeHTML($biodata->NAMA_PASIEN, 'QRCODE', 2, 2) !!}
+                    </td>
+                    <td class="text5" style="padding-left: 50px;">
+                        {!! DNS2D::getBarcodeHTML($asesmenDokterRj->Nama_Dokter, 'QRCODE', 2, 2) !!}
+                        {{-- <img src="img/barcode.jpeg" width="50" height="50" /> --}}
+                    </td>
                 </tr>
             </tr>
             <tr>
-                <td class="text5" style="padding-left: 30px;">(Perawat)</td>
-                <td class="text5" style="padding-left: 30px;">(Perawat)</td>
+                <td class="text5" style="padding-left: 30px;">({{$biodata->NAMA_PASIEN}})</td>
+                <td class="text5" style="padding-left: 30px;">({{$asesmenDokterRj->Nama_Dokter}})</td>
             </tr>
         </table>
     </body>

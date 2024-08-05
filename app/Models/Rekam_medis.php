@@ -417,9 +417,10 @@ class Rekam_medis extends Model
             ->leftJoin('TAC_COM_USER as tcu', 'trm.mdb', '=', 'tcu.user_id')
             ->leftJoin($db_rsmm . '.dbo.DOKTER as d', 'tcu.user_name', '=', 'd.Kode_Dokter')
             ->leftJoin($db_rsmm . '.dbo.TUSER as u', 'tcu.user_name', '=', 'u.NAMAUSER')
+            ->leftJoin('TAC_RJ_SKDP as skdp', 'trm.FS_KD_REG', '=', 'skdp.FS_KD_REG')
+            // ->leftJoin('TAC_ASES_PER2 as tap', 'trm.FS_KD_REG', '=', 'tap.FS_KD_REG')
 
             // ->leftJoin('ANTRIAN as a', 'p.No_MR', '=', 'a.No_MR')
-            // ->leftJoin('M_RUANG as mr', 'p.Kode_Ruang', '=', 'mr.Kode_Ruang')
             // ->leftJoin($pku . '.dbo.TAC_RJ_MEDIS as trm', 'p.No_Reg', '=', 'trm.FS_KD_REG')
             // ->leftJoin($pku . '.dbo.TAC_RJ_STATUS as trs', 'p.No_Reg', '=', 'trs.FS_KD_REG')
 
@@ -429,6 +430,7 @@ class Rekam_medis extends Model
                 'tcu.user_name',
                 'd.Nama_Dokter',
                 'd.Kode_Dokter',
+                'skdp.FS_SKDP_KONTROL',
 
                 'u.NAMALENGKAP as NamaLengkap',
             )
