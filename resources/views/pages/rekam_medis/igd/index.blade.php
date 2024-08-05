@@ -151,11 +151,11 @@
                                         @endif
 
                                         @if($pasien->lab != '')
-                                        <a href="#" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Lab</a>
+                                        <a href="{{ route('rm.cetakLabIGD', ['nomr' => $pasien->No_MR,'noReg'=> $pasien->No_Reg]) }}" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Lab</a>
                                         @endif
                                         
                                         @if($pasien->rad != '')
-                                        <a href="#" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Radiologi</a>
+                                        <a href="{{ route('rm.cetakRadIGD', ['nomr' => $pasien->No_MR,'noReg'=> $pasien->No_Reg]) }}" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Radiologi</a>
                                         @endif
 
                                         <a href="#" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Lembar Verif</a>

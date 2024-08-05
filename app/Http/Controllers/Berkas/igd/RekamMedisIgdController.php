@@ -9,6 +9,7 @@ use App\Models\RanapDokter;
 use App\Models\Rekam_medis;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class RekamMedisIgdController extends Controller
@@ -60,14 +61,46 @@ class RekamMedisIgdController extends Controller
     public function cetakResepIGD($nomr, $noReg)
     {
         $biodatas = $this->pasien->biodataPasienByMr($nomr);
-        $dataResepIgd = $this->rekam_medis->dataResepIGD($noReg);
-        // dd($dataResepIgd);
+        $dataPasienIGD = $this->rekam_medis->dataPasienIGD($noReg);
+        // dd($dataPasienIGD);
         $date = date('dMY');
         $tanggal = Carbon::now();
 
-        $filename = 'resep-' . $date;
+        $filename = 'ResepIGD-' . $date;
 
-        $pdf = PDF::loadview('pages.rekam_medis.igd.resep', ['data' => $dataResepIgd, 'biodata' => $biodatas, 'tanggal' => $tanggal]);
+        $pdf = PDF::loadview('pages.rekam_medis.igd.resep', ['data' => $dataPasienIGD, 'biodata' => $biodatas, 'tanggal' => $tanggal]);
+        // Set paper size to A5
+        $pdf->setPaper('A5');
+        return $pdf->stream($filename . '.pdf');
+    }
+
+    public function cetakRadIGD($nomr, $noReg)
+    {
+        $biodatas = $this->pasien->biodataPasienByMr($nomr);
+        $dataPasienIGD = $this->rekam_medis->dataPasienIGD($noReg);
+        // dd($dataPasienIGD);
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+
+        $filename = 'RadiologiIGD-' . $date;
+
+        $pdf = PDF::loadview('pages.rekam_medis.igd.radiologi', ['data' => $dataPasienIGD, 'biodata' => $biodatas, 'tanggal' => $tanggal]);
+        // Set paper size to A5
+        $pdf->setPaper('A5');
+        return $pdf->stream($filename . '.pdf');
+    }
+
+    public function cetakLabIGD($nomr, $noReg)
+    {
+        $biodatas = $this->pasien->biodataPasienByMr($nomr);
+        $dataPasienIGD = $this->rekam_medis->dataPasienIGD($noReg);
+        // dd($dataPasienIGD);
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+
+        $filename = 'LabIGD-' . $date;
+
+        $pdf = PDF::loadview('pages.rekam_medis.igd.lab', ['data' => $dataPasienIGD, 'biodata' => $biodatas, 'tanggal' => $tanggal]);
         // Set paper size to A5
         $pdf->setPaper('A5');
         return $pdf->stream($filename . '.pdf');
