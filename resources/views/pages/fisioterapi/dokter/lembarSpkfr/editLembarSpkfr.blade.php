@@ -61,7 +61,7 @@
                                             <select name="diagnosis_medis" class="form-control select2" data-placeholder="Pilih Kode ICD 10" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                                 <option value="" selected disabled>-- Pilih Diagnosa --</option>
                                                 @foreach ($diagnosisMedis as $diagMedis)
-                                                <option value="{{$diagMedis->nama_diagnosis_medis}}">{{$diagMedis->nama_diagnosis_medis}}</option>
+                                                <option value="{{$diagMedis->id}}" {{ $lembarSpkfr->diagnosis_medis == $diagMedis->id ? 'selected' : '' }}>{{$diagMedis->nama_diagnosis_medis}}</option>
                                         
                                                 @endforeach
                                             </select>
@@ -73,7 +73,7 @@
                                             <select name="diagnosis_fungsi" class="form-control select2" data-placeholder="Pilih Kode ICD 10" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                                 <option value="" selected disabled>-- Pilih Diagnosa --</option>
                                                 @foreach ($diagnosisFungsi as $diagFungsi)
-                                                <option value="{{$diagFungsi->nama_diagnosis_fungsi}}">{{$diagFungsi->nama_diagnosis_fungsi}}</option>
+                                                <option value="{{$diagFungsi->id}}" {{ $lembarSpkfr->diagnosis_fungsi == $diagFungsi->id ? 'selected' : '' }}>{{$diagFungsi->nama_diagnosis_fungsi}}</option>
                                         
                                                 @endforeach
                                             </select>

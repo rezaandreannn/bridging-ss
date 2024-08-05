@@ -178,7 +178,7 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{$cppt->TANGGAL_FISIO}} & {{ date('G:i', strtotime($cppt->JAM_FISIO))}} WIB</td>
-                                            <td>S = {{$cppt->ANAMNESA}} <br>O = TD = {{$cppt->TEKANAN_DARAH}}, N = {{$cppt->NADI}}, T = {{$cppt->SUHU}}</td>
+                                            <td>S = {{$cppt->ANAMNESA}} <br>O = TD = {{$cppt->TEKANAN_DARAH}}, N = {{$cppt->NADI}}, T = {{$cppt->SUHU}} , Lainnya = {{$cppt->LAINNYA}}</td>
                                             <td>{{$cppt->DIAGNOSA}}</td>
                                             <td>{{$cppt->JENIS_FISIO}}</td>
                                             <td>@if($cppt->KODE_DOKTER == '151')

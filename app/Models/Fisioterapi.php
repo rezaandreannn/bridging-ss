@@ -422,6 +422,16 @@ class Fisioterapi extends Model
         return $data;
     }
 
+    public function getAsesmenDokter($noReg)
+    {
+        $data = DB::connection('pku')
+            ->table('fis_asesmen_dokter')
+            ->select('diagnosa_klinis')
+            ->where('no_registrasi',$noReg)
+            ->get();
+        return $data;
+    }
+
     public function dataEditPasienCPPT($id)
     {
         $data = DB::connection('pku')

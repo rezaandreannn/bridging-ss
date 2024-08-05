@@ -126,11 +126,13 @@ class AssesmenDokterController extends Controller
     public function createUjiFungsi($NoMr)
     {
         $biodatas = $this->pasien->biodataPasienByMr($NoMr);
+        $diagnosisFungsiGet = $this->fisio->getAsesmenDokter($biodatas->No_Reg)->first();
+        // dd($diagnosisFungsiGet);
         $asesmenDokterGet = DB::connection('pku')->table('fis_asesmen_dokter')->where('no_registrasi', $biodatas->No_Reg)->first();
         $diagnosisKlinis = $this->fisio->getDiagnosisKlinis();
 
         $title = $this->prefix . ' ' . 'Lembar Uji Fungsi';
-        return view($this->view . 'dokter.lembarUjiFungsi.lembarUjiFungsi', compact('title', 'biodatas', 'asesmenDokterGet','diagnosisKlinis'));
+        return view($this->view . 'dokter.lembarUjiFungsi.lembarUjiFungsi', compact('title', 'biodatas', 'asesmenDokterGet','diagnosisKlinis','diagnosisFungsiGet'));
     }
 
     public function editUjiFungsi($NoMr)
@@ -160,6 +162,7 @@ class AssesmenDokterController extends Controller
                 'prosedur_kfr' => $request->input('prosedur_kfr'),
                 'kesimpulan' => $request->input('kesimpulan'),
                 'rekomendasi' => $request->input('rekomendasi'),
+                'edukasi' => $request->input('edukasi'),
                 'create_by' => auth()->user()->username,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')
@@ -189,6 +192,7 @@ class AssesmenDokterController extends Controller
                 'prosedur_kfr' => $request->input('prosedur_kfr'),
                 'kesimpulan' => $request->input('kesimpulan'),
                 'rekomendasi' => $request->input('rekomendasi'),
+                'edukasi' => $request->input('edukasi'),
                 'create_by' => auth()->user()->username,
                 'updated_at' => date('Y-m-d H:i:s')
             ]);
@@ -211,10 +215,12 @@ class AssesmenDokterController extends Controller
         $asesmenDokter = DB::connection('pku')->table('fis_asesmen_dokter')->where('no_registrasi', $biodatas->No_Reg)->first();
         $diagnosisFungsi = $this->fisio->getDiagnosisKlinis();
         $diagnosisMedis = $this->fisio->getDiagnosisMedis();
+        $diagnosisFungsiGet = $this->fisio->getAsesmenDokter($biodatas->No_Reg)->first();
+        
 
 
         $title = $this->prefix . ' ' . 'Lembar SPKFR';
-        return view($this->view . 'dokter.lembarSpkfr.lembarSpkfr', compact('title', 'biodatas', 'asesmenDokter','diagnosisFungsi','diagnosisMedis'));
+        return view($this->view . 'dokter.lembarSpkfr.lembarSpkfr', compact('title', 'biodatas', 'asesmenDokter','diagnosisFungsi','diagnosisMedis','diagnosisFungsiGet'));
     }
 
     public function storeSpkfr(Request $request)

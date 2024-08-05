@@ -76,11 +76,11 @@
                         </div>
                         <div class="card-stats-items">
                             <div class="card-stats-item">
-                                <div class="card-stats-item-count">{{$countPasienIgdRajal}}</div>
+                                <div class="card-stats-item-count">{{$countPasienIgdRajal ?? ''}}</div>
                                 <div class="card-stats-item-label">Rawat Jalan</div>
                             </div>
                             <div class="card-stats-item">
-                                <div class="card-stats-item-count">{{$countPasienIgdRanap}}</div>
+                                <div class="card-stats-item-count">{{$countPasienIgdRanap ?? ''}}</div>
                                 <div class="card-stats-item-label">Rawat Inap</div>
                             </div>
                         </div>
@@ -93,7 +93,7 @@
                             <h4>Total Pasien IGD</h4>
                         </div>
                         <div class="card-body">
-                            {{$totalPasienIgdToday}}
+                            {{$totalPasienIgdToday ?? ''}}
                         </div>
                     </div>
                 </div>
@@ -106,11 +106,11 @@
                         </div>
                         <div class="card-stats-items">
                             <div class="card-stats-item">
-                                <div class="card-stats-item-count">{{$countPasienRajal}}</div>
+                                <div class="card-stats-item-count">{{$countPasienRajal ?? ''}}</div>
                                 <div class="card-stats-item-label">Rawat Jalan</div>
                             </div>
                             <div class="card-stats-item">
-                                <div class="card-stats-item-count">{{$countPasienRanap}}</div>
+                                <div class="card-stats-item-count">{{$countPasienRanap ?? ''}}</div>
                                 <div class="card-stats-item-label">Rawat Inap</div>
                             </div>
                         </div>
@@ -123,7 +123,7 @@
                             <h4>Total Pasien</h4>
                         </div>
                         <div class="card-body">
-                            {{$totalPasienToday}}
+                            {{$totalPasienToday  ?? ''}}
                         </div>
                     </div>
                 </div>
@@ -137,11 +137,11 @@
                         </div>
                         <div class="card-stats-items">
                             <div class="card-stats-item">
-                                <div class="card-stats-item-count">{{$countPasienFisioterapi}}</div>
+                                <div class="card-stats-item-count">{{$countPasienFisioterapi ?? ''}}</div>
                                 <div class="card-stats-item-label">Fisioterapi</div>
                             </div>
                             <div class="card-stats-item">
-                                <div class="card-stats-item-count">{{$countPasienSPKFR}}</div>
+                                <div class="card-stats-item-count">{{$countPasienSPKFR ?? ''}}</div>
                                 <div class="card-stats-item-label">SPKFR</div>
                             </div>
                         </div>
@@ -154,7 +154,7 @@
                             <h4>Total Pasien</h4>
                         </div>
                         <div class="card-body">
-                            {{$totalFisioSkpfr}}
+                            {{$totalFisioSkpfr ?? ''}}
                         </div>
                     </div>
                 </div>

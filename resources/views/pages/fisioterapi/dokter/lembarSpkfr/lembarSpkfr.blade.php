@@ -92,9 +92,9 @@
                                         <div class="form-group">
                                             <label>Diagnosis Fungsi (ICD-10)</label>
                                             <select name="diagnosis_fungsi" class="form-control select2" data-placeholder="Pilih Kode ICD 10" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                                                <option value="" selected disabled>-- Pilih Diagnosa --</option>
+                                                <option value="" disabled>-- Pilih Diagnosa --</option>
                                                 @foreach ($diagnosisFungsi as $diagFungsi)
-                                                <option value="{{$diagFungsi->nama_diagnosis_fungsi}}">{{$diagFungsi->nama_diagnosis_fungsi}}</option>
+                                                <option value="{{$diagFungsi->id}} {{ $diagnosisFungsiGet == $diagFungsi->id ? 'selected' : '' }}">{{$diagFungsi->nama_diagnosis_fungsi}}</option>
                                         
                                                 @endforeach
                                             </select>

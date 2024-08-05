@@ -47,9 +47,9 @@
                                         <div class="form-group">
                                             <label>Diagnosis Fungsional / Diagnosis Klinis : <code>*</code></label>
                                             <select name="diagnosis_fungsional" class="form-control select2" data-placeholder="Pilih Kode ICD 10" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                                                <option value="" selected disabled>-- Pilih Diagnosa --</option>
+                                                <option value="" disabled>-- Pilih Diagnosa --</option>
                                                 @foreach ($diagnosisKlinis as $item)
-                                                <option value="{{$item->nama_diagnosis_fungsi}}">{{$item->nama_diagnosis_fungsi}}</option>
+                                                <option value="{{$item->id}}" {{ $lembarUjiFungsiGet->diagnosis_fungsional == $item->id ? 'selected' : '' }}>{{$item->nama_diagnosis_fungsi}}</option>
                                         
                                                 @endforeach
                                             </select>
@@ -61,12 +61,7 @@
                                             <textarea class="form-control" rows="3" name="prosedur_kfr" value="" placeholder="Masukan ...">{{$lembarUjiFungsiGet->prosedur_kfr}}</textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Hasil yang didapat : </label>
-                                            <textarea class="form-control" rows="3" name="hasil_pemeriksaan" value="" placeholder="Masukan ...">{{$lembarUjiFungsiGet->hasil_pemeriksaan}}</textarea>
-                                        </div>
-                                    </div>
+                       
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Kesimpulan : </label>
@@ -82,7 +77,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Edukasi : </label>
-                                            <textarea class="form-control" rows="3" name="edukasi" value="" placeholder="Masukan ..."></textarea>
+                                            <textarea class="form-control" rows="3" name="edukasi" value="" placeholder="Masukan ...">{{$lembarUjiFungsiGet->edukasi}}</textarea>
                                         </div>
                                     </div>
                                     {{-- <div class="col-md-9">
