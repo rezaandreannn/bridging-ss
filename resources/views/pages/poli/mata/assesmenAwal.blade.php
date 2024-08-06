@@ -79,7 +79,10 @@
                     @include('components.biodata-pasien-bynoreg')
                     <!-- components biodata pasien by no reg -->
                     <div class="card card-primary">
-                        <div class="card-body">
+                        <div class="card-header card-success card-khusus-header">
+                            <h6 class="card-khusus-title">Form Poli Mata</h6>
+                        </div>
+                        <div class="card-body card-khusus-body">
                             <form action="" method="POST">
                                 @csrf
                                 <div class="row">
@@ -1157,7 +1160,7 @@
                                         </div>  
                             </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body card-khusus-body">
                             <label>*Bismillahirohmanirrohim, saya dengan sadar dan penuh tanggung jawab mengisikan formulir ini dengan data yang benar </label>
                             <div class="text-left">
                                 {{-- <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button> --}}

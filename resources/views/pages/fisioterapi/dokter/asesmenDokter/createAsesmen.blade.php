@@ -34,7 +34,7 @@
 
                     <div class="card card-primary">
                         <div class="card-header card-success card-khusus-header">
-                            <h6 class="card-title-khusus">Form Dokter Fisioterapi</h6>
+                            <h6 class="card-khusus-title">Form Dokter Fisioterapi</h6>
                         </div>
                         <div class="card-body card-khusus-body">
                             <form action="{{ route('asesmenStore.dokter') }}" method="POST">
