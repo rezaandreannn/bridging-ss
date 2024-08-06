@@ -80,7 +80,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Diagnosa <code>*</code></label>
-                                            <textarea class="form-control" rows="2" name="DIAGNOSA" value="" placeholder="Masukan ..." @if ((auth()->user()->roles->pluck('name')[0])!='dokter fisioterapi') readonly  @endif>@if($cekasesmenDokter==true) {{$asesmenDokterFisio->nama_diagnosis_fungsi}} @elseif ($cektransaksicppt==true){{$transaksiFisio->DIAGNOSA}} @else @endif</textarea>
+                                            <textarea class="form-control" rows="2" name="DIAGNOSA" value="" placeholder="Masukan ..." @if ((auth()->user()->roles->pluck('name')[0])!='dokter fisioterapi') readonly  @endif>@if($cekasesmenDokter==true) {{$asesmenDokterFisio->nama_diagnosis_medis}} @elseif ($cektransaksicppt==true){{$transaksiFisio->DIAGNOSA}} @else @endif</textarea>
                                         </div>
                                     </div>
                                   

@@ -447,9 +447,9 @@ class Fisioterapi extends Model
         ->table('fis_asesmen_dokter as ad')
         ->select(
             'ad.*',
-            'diag_fungsi.nama_diagnosis_fungsi',
+            'diag_medis.nama_diagnosis_medis',
         )
-        ->Join('fis_master_diagnosis_fungsi as diag_fungsi', 'ad.diagnosa_klinis', '=', 'diag_fungsi.id')
+        ->Join('fis_master_diagnosis_medis as diag_medis', 'ad.diagnosa_klinis', '=', 'diag_medis.id')
         ->where('ad.no_registrasi', $No_Reg)->first();
         return $data;
     }

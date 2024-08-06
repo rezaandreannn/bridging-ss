@@ -218,10 +218,10 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Diagnosa Klinis <code>*</code></label>
-                                            <select name="diagnosa_klinis" class="form-control select2" data-placeholder="Pilih Kode ICD 10" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                                                <option value="" disabled>-- Pilih Diagnosa --</option>
-                                                @foreach ($diagnosisKlinis as $item)
-                                                <option value="{{$item->id}}" {{$asesmenDokterGet->diagnosa_klinis == $item->id ? 'selected' : '' }}>{{$item->nama_diagnosis_fungsi}}</option>
+                                            <select name="diagnosa_klinis" class="form-control select2" data-placeholder="Pilih Diagnosa" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                                <option value="" selected disabled>-- Pilih Diagnosa --</option>
+                                                @foreach ($diagnosisMedis as $item)
+                                                <option value="{{$item->id}}" {{$asesmenDokterGet->diagnosa_klinis == $item->id ? 'selected' : '' }}>{{$item->nama_diagnosis_medis}}</option>
                                         
                                                 @endforeach
                                             </select>

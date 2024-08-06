@@ -210,7 +210,7 @@
             </tr>
             <tr>
                 <td class="text4">Diagnosa Klinis</td>
-                <td class="text4" colspan="2">: {{ $asesmenDokter->nama_diagnosis_fungsi}}</td>
+                <td class="text4" colspan="2">: {{ $asesmenDokter->nama_diagnosis_medis}}</td>
             </tr>
             <tr>
                 <td class="text3"><b>5. Perencanaan</b></td>
@@ -323,7 +323,7 @@
             </tr>
             <tr>
                 <td class="text2">Diagnosis Fungsional / Diagnosis Medis</td>
-                <td class="text2" colspan="2">: {{ $lembarUjiFungsi->nama_diagnosis_fungsi}}</td>
+                <td class="text2" colspan="2">: {{ $lembarUjiFungsi->nama_diagnosis_medis}}</td>
             </tr>
         </table>
         <table style="border: 1px solid black; border-top: none;border-bottom: none;" width="100%">

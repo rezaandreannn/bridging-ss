@@ -48,8 +48,8 @@
                                             <label>Diagnosis Fungsional / Diagnosis Klinis : <code>*</code></label>
                                             <select name="diagnosis_fungsional" class="form-control select2" data-placeholder="Pilih Kode ICD 10" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                                 <option value="" disabled>-- Pilih Diagnosa --</option>
-                                                @foreach ($diagnosisKlinis as $item)
-                                                <option value="{{$item->id}}" {{ $lembarUjiFungsiGet->diagnosis_fungsional == $item->id ? 'selected' : '' }}>{{$item->nama_diagnosis_fungsi}}</option>
+                                                @foreach ($diagnosisMedis as $item)
+                                                <option value="{{$item->id}}" {{ $lembarUjiFungsiGet->diagnosis_fungsional == $item->id ? 'selected' : '' }}>{{$item->nama_diagnosis_medis}}</option>
                                         
                                                 @endforeach
                                             </select>
