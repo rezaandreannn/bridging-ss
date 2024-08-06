@@ -302,8 +302,7 @@ Route::middleware('auth')->group(function () {
         Route::get('rawat_jalan/hasil_echo/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakHasilEcho'])->name('rj.hasilEcho');
         // Report Rekam Medis Rawat Jalan
         Route::get('rawat_jalan/cetak_rm/{noReg}/{noMR}', [Berkas_rm_controller::class, 'cetakRM'])->name('rj.rmDokter');
-        // Report Rekam Medis IGD
-        Route::get('riwayaRekamMedis/berkasIgd/{noReg}', [Berkas_rm_controller::class, 'cetakRMIgd'])->name('rm.berkasIgd');
+
 
 
 
@@ -356,16 +355,19 @@ Route::middleware('auth')->group(function () {
 
     // Riwayat Rekam Medis
     Route::prefix('rm')->group(function () {
-
+        // ------------------- Berkas By MR -------------------- //
         Route::get('riwayatRekamMedis/bymr/list', [RekamMedisByMrController::class, 'index'])->name('rm.bymr');
         Route::get('riwayatRekamMedis/bymr/detailBerkas/{noReg}', [RekamMedisByMrController::class, 'detail_berkas'])->name('rm.detail');
         Route::get('riwayatRekamMedis/bymr/detailBerkas/cppt/{noReg}', [RekamMedisByMrController::class, 'detail_cppt'])->name('rm.cppt');
         Route::get('riwayatRekamMedis/bymr/resumeRanap/{noReg}', [RekamMedisByMrController::class, 'resumeRanap'])->name('rm.ranap');
         Route::get('riwayatRekamMedis/bymr/resumeRajal/{noReg}', [RekamMedisByMrController::class, 'resumeRajal'])->name('rm.rajal');
-        // harian
+        // ------------------- Berkas Harian ------------------- //
         Route::get('riwayatRekamMedis/harian/list', [RekamMedisHarianController::class, 'index'])->name('rm.harian');
-        // IGD
+        // ------------------- Berkas IGD ---------------------- //
         Route::get('riwayatRekamMedis/igd/list', [RekamMedisIgdController::class, 'index'])->name('rm.igd');
+        // Report Rekam Medis IGD
+        Route::get('riwayaRekamMedis/berkasIgd/cetakRM/{noReg}', [Berkas_rm_controller::class, 'cetakRMIgd'])->name('rm.berkasIgd');
+        // Report Berkas IGD
         Route::get('riwayatRekamMedis/berkasIGD/cetakResep/{nomr}/{noReg}', [RekamMedisIgdController::class, 'cetakResepIGD'])->name('rm.cetakResepIGD');
         Route::get('riwayatRekamMedis/berkasIGD/cetakRad/{nomr}/{noReg}', [RekamMedisIgdController::class, 'cetakRadIGD'])->name('rm.cetakRadIGD');
         Route::get('riwayatRekamMedis/berkasIGD/cetakLab/{nomr}/{noReg}', [RekamMedisIgdController::class, 'cetakLabIGD'])->name('rm.cetakLabIGD');

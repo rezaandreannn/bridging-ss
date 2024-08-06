@@ -38,7 +38,7 @@ class DiagnosisFungsiController extends Controller
         $diagnosisFungsi = $this->mdFisio->getDiagnosisFungsi();
 
         // dd($diagnosisMedis);
-        $title = $this->prefix . ' ' . 'Diagnosis Medis';
+        $title = $this->prefix . ' ' . 'Diagnosis Fungsi';
         return view($this->view . 'diagnosis_fungsi.index', compact('title', 'diagnosisFungsi'));
         //
     }
@@ -69,23 +69,22 @@ class DiagnosisFungsiController extends Controller
         try {
             DB::connection('pku')->beginTransaction();
 
-        $diagnosisfungsi = DB::connection('pku')->table('fis_master_diagnosis_fungsi')->insert([
-            'nama_diagnosis_fungsi' => $request->input('nama_diagnosis_fungsi'),
-            'created_by' => auth()->user()->id,
-            'created_at' => now(),
-            'updated_at' => now(),
-     
-        ]);
-        DB::connection('pku')->commit();
+            $diagnosisfungsi = DB::connection('pku')->table('fis_master_diagnosis_fungsi')->insert([
+                'nama_diagnosis_fungsi' => $request->input('nama_diagnosis_fungsi'),
+                'created_by' => auth()->user()->id,
+                'created_at' => now(),
+                'updated_at' => now(),
 
-        return redirect()->route('diagnosisFungsi.index')->with('success', 'Diagnosis Fungsi Berhasil Ditambahkan!');
-    } catch (\Exception $e) {
-        // Rollback transaksi jika terjadi kesalahan
-        DB::connection('pku')->rollback();
+            ]);
+            DB::connection('pku')->commit();
 
-        return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
-    }
+            return redirect()->route('diagnosisFungsi.index')->with('success', 'Diagnosis Fungsi Berhasil Ditambahkan!');
+        } catch (\Exception $e) {
+            // Rollback transaksi jika terjadi kesalahan
+            DB::connection('pku')->rollback();
 
+            return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -127,22 +126,21 @@ class DiagnosisFungsiController extends Controller
         try {
             DB::connection('pku')->beginTransaction();
 
-        $diagnosisfungsi = DB::connection('pku')->table('fis_master_diagnosis_fungsi')->where('id',$id)->update([
-            'nama_diagnosis_fungsi' => $request->input('nama_diagnosis_fungsi'),
-            'created_by' => auth()->user()->id,
-            'updated_at' => now(),
-     
-        ]);
-        DB::connection('pku')->commit();
+            $diagnosisfungsi = DB::connection('pku')->table('fis_master_diagnosis_fungsi')->where('id', $id)->update([
+                'nama_diagnosis_fungsi' => $request->input('nama_diagnosis_fungsi'),
+                'created_by' => auth()->user()->id,
+                'updated_at' => now(),
 
-        return redirect()->route('diagnosisFungsi.index')->with('success', 'Diagnosis Fungsi Berhasil Diedit!');
-    } catch (\Exception $e) {
-        // Rollback transaksi jika terjadi kesalahan
-        DB::connection('pku')->rollback();
+            ]);
+            DB::connection('pku')->commit();
 
-        return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
-    }
+            return redirect()->route('diagnosisFungsi.index')->with('success', 'Diagnosis Fungsi Berhasil Diedit!');
+        } catch (\Exception $e) {
+            // Rollback transaksi jika terjadi kesalahan
+            DB::connection('pku')->rollback();
 
+            return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
+        }
     }
 
     /**

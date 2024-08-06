@@ -140,22 +140,22 @@
                                         {{$pasien->Medis}}
                                     </td>
                                     <td>
-                                        <a href="{{ route('rm.berkasIgd', ['noReg' => $pasien->No_Reg]) }}" class="btn btn-sm btn-info"><i class="fas fa-download"></i> RM</a>
+                                        <a href="{{ route('rm.berkasIgd', ['noReg' => $pasien->No_Reg]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> RM</a>
 
                                         @if($pasien->D_PLANNING == 'Rujuk Internal')
                                         <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujuk Internal</a>
                                         @endif
                                         
                                         @if($pasien->FS_TERAPI != '')
-                                        <a href="{{ route('rm.cetakResepIGD', ['nomr' => $pasien->No_MR,'noReg'=> $pasien->No_Reg]) }}" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Resep</a>
+                                        <a href="{{ route('rm.cetakResepIGD', ['nomr' => $pasien->No_MR,'noReg'=> $pasien->No_Reg]) }}" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Resep</a>
                                         @endif
 
                                         @if($pasien->lab != '')
-                                        <a href="{{ route('rm.cetakLabIGD', ['nomr' => $pasien->No_MR,'noReg'=> $pasien->No_Reg]) }}" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Lab</a>
+                                        <a href="{{ route('rm.cetakLabIGD', ['nomr' => $pasien->No_MR,'noReg'=> $pasien->No_Reg]) }}" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Lab</a>
                                         @endif
                                         
                                         @if($pasien->rad != '')
-                                        <a href="{{ route('rm.cetakRadIGD', ['nomr' => $pasien->No_MR,'noReg'=> $pasien->No_Reg]) }}" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Radiologi</a>
+                                        <a href="{{ route('rm.cetakRadIGD', ['nomr' => $pasien->No_MR,'noReg'=> $pasien->No_Reg]) }}" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Radiologi</a>
                                         @endif
 
                                         <a href="#" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Lembar Verif</a>

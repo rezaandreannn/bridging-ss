@@ -31,14 +31,12 @@
                     <!-- components biodata pasien by no mr -->
                     @include('components.biodata-pasien-fisio-bymr')
                     <!-- components biodata pasien by no mr -->
-                    <div class="card card-primary">
-                        <div class="card-header card-success">
-                            <h4 class="card-title">Form Dokter Fisioterapi</h4>
-                        </div>
-                    </div>
 
                     <div class="card card-primary">
-                        <div class="card-body">
+                        <div class="card-header card-success card-khusus-header">
+                            <h6 class="card-title-khusus">Form Dokter Fisioterapi</h6>
+                        </div>
+                        <div class="card-body card-khusus-body">
                             <form action="{{ route('asesmenStore.dokter') }}" method="POST">
                                 @csrf
                                 <div class="row">
@@ -426,7 +424,7 @@
                                     </div>
                                 </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body card-khusus-body">
                             <label>*Bismillahirohmanirrohim, saya dengan sadar dan penuh tanggung jawab mengisikan formulir ini dengan data yang benar </label>
                             <div class="text-left">
                                 <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button>
@@ -436,9 +434,9 @@
                         </form>
                     </div>
                     <div class="card">
-                        <div class="card-body">
-                            <h4 style="text-align: center">History Kunjungan</h4>
-                            <h5 style="text-align: center">* untuk melihat history kunjungan pilih tanggal di bawah ini</h5>
+                        <div class="card-body card-khusus-body">
+                            <h4 style="text-align: center;color:black">History Kunjungan</h4>
+                            <h5 style="text-align: center;color:black">* untuk melihat history kunjungan pilih tanggal di bawah ini</h5>
                         </div>
                     </div>
                     <div class="card">

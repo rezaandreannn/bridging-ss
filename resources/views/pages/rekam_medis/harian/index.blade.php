@@ -87,11 +87,16 @@
                                     </td>
                                     <td>
                                         <a href="{{ route('rj.rmDokter', ['noReg' => $pasien->No_Reg, 'noMR'=> $pasien->No_MR]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> RM</a>
+                                        
                                         @if($pasien->Tanggal>=$tglKemarin)
-                                        <a href="{{ route('rj.edit', ['noReg' =>$pasien->No_Reg]) }}" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Edit Perawat</a>
-                                        @if($pasien->Kode_Dokter == $userLogin)
-                                        <a href="#" class="btn btn-sm btn-danger"><i class="fas fa-download"></i> Edit Dokter</a>
-                                        @endif
+                                            @if($pasien->FS_STATUS != '')
+                                            <a href="{{ route('rj.edit', ['noReg' =>$pasien->No_Reg]) }}" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Edit Perawat</a>
+                                            @else
+                                            <a href="{{ route('rj.add', ['noReg' =>$pasien->No_Reg]) }}" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Edit Perawat</a>
+                                            @endif
+                                            @if($pasien->Kode_Dokter == $userLogin)
+                                            <a href="#" class="btn btn-sm btn-danger"><i class="fas fa-download"></i> Edit Dokter</a>
+                                            @endif
                                         @endif
 
                                         @if($pasien->FS_CARA_PULANG == '1')

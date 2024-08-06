@@ -269,10 +269,10 @@
             </tr>
             <tr>
                 <tr>
-                    <td class="text5" style="padding-left: 50px;">
+                    <td class="text5" style="padding-left: 150px;">
                         {!! DNS2D::getBarcodeHTML($biodata->NAMA_PASIEN, 'QRCODE', 2, 2) !!}
                     </td>
-                    <td class="text5" style="padding-left: 50px;">
+                    <td class="text5" style="padding-left: 150px;">
                         {!! DNS2D::getBarcodeHTML($asesmenDokterRj->Nama_Dokter, 'QRCODE', 2, 2) !!}
                         {{-- <img src="img/barcode.jpeg" width="50" height="50" /> --}}
                     </td>
