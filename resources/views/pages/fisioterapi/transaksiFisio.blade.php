@@ -82,12 +82,12 @@
                                                 <a href="{{ route('cppt.cetakCPPT', [
                                             'kode_transaksi' => $transaksi->KODE_TRANSAKSI_FISIO,
                                             'no_mr' => $transaksi->NO_MR_PASIEN
-                                            ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-secondary"><i class="fa fa-print"></i> CPPT</a>
+                                            ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-success"><i class="fa fa-print"></i> CPPT</a>
                                                 
                                                 <a href="{{ route('cppt.buktiLayanan', [
                                             'kode_transaksi' => $transaksi->KODE_TRANSAKSI_FISIO,
                                             'no_mr' => $transaksi->NO_MR_PASIEN
-                                            ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-secondary"><i class="fa fa-print"></i> Bukti Pelayanan</a>
+                                            ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-success"><i class="fa fa-print"></i> Bukti Pelayanan</a>
                                                 @if($fisioModel->countCpptByKodeTr($transaksi->ID_TRANSAKSI) >= $transaksi->JUMLAH_TOTAL_FISIO)
 
                                                 @else

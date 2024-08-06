@@ -24,40 +24,69 @@ class BerkasFisioterapi extends Model
                 'p.No_MR',
                 'p.Tanggal',
                 'rp.Nama_Pasien'
-            )
+                )
             ->where('p.No_MR', $no_mr)
             ->whereIn('p.Kode_Dokter', array('151', '028'))
             ->get();
-        return $data;
-    }
-
-    public function getAsesmenDokter($no_reg)
-    {
-
-        $data = DB::connection('pku')
+            return $data;
+        }
+        
+        public function getAsesmenDokter($no_reg)
+        {
+            
+            $data = DB::connection('pku')
             ->table('fis_asesmen_dokter as ad')
-            ->leftJoin('TTD_PETUGAS_MASTER as tpm', 'ad.create_by', '=', 'tpm.USERNAME')
-            ->where('no_registrasi', $no_reg)
-            ->first();
-        return $data;
-    }
-
-    public function getLembarUjiFungsi($no_reg)
-    {
-
-        $data = DB::connection('pku')
-            ->table('fis_lembar_uji_fungsi')
-            ->where('no_registrasi', $no_reg)
-            ->first();
-        return $data;
-    }
-
-    public function getLembarSpkfr($no_reg)
-    {
-
-        $data = DB::connection('pku')
-            ->table('fis_lembar_spkfr')
-            ->where('no_registrasi', $no_reg)
+            ->select(
+                'ad.*',
+                'diag_medis.nama_diagnosis_medis'
+                
+                )
+                ->leftJoin('fis_master_diagnosis_medis as diag_medis', 'ad.diagnosa_klinis', '=', 'diag_medis.id')
+                ->where('no_registrasi', $no_reg)
+                ->first();
+                return $data;
+            }
+            
+            public function getLembarUjiFungsi($no_reg)
+            {
+                
+                $data = DB::connection('pku')
+                ->table('fis_lembar_uji_fungsi as lem_uji')
+                ->select(
+                    'lem_uji.*',
+                    'diag_medis.nama_diagnosis_medis'
+                    
+                    )
+                ->Join('fis_master_diagnosis_medis as diag_medis', 'lem_uji.diagnosis_fungsional', '=', 'diag_medis.id')
+                ->where('lem_uji.no_registrasi', $no_reg)
+                ->first();
+                return $data;
+            }
+            
+            public function getTerapiDokter($no_reg)
+            {
+                
+                $data = DB::connection('pku')
+                ->table('fis_tr_jenis as terapi')
+                ->Join('TAC_COM_FISIOTERAPI_MASTER as tcf', 'terapi.id_jenis_fisioterapi', '=', 'tcf.ID_JENIS_FISIO')
+                ->where('terapi.no_registrasi', $no_reg)
+                ->get();
+                return $data;
+            }
+            
+            public function getLembarSpkfr($no_reg)
+            {
+                
+                $data = DB::connection('pku')
+            ->table('fis_lembar_spkfr as spkfr')
+            ->select(
+                'spkfr.*',
+                'diag_fungsi.nama_diagnosis_fungsi',
+                'diag_medis.nama_diagnosis_medis'
+            )
+            ->Join('fis_master_diagnosis_fungsi as diag_fungsi', 'spkfr.diagnosis_fungsi', '=', 'diag_fungsi.id')
+            ->Join('fis_master_diagnosis_medis as diag_medis', 'spkfr.diagnosis_medis', '=', 'diag_medis.id')
+            ->where('spkfr.no_registrasi', $no_reg)
             ->first();
         return $data;
     }

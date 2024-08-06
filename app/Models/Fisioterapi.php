@@ -441,4 +441,16 @@ class Fisioterapi extends Model
             ->first();
         return $data;
     }
+    public function getAsesmenDokterByNoreg($No_Reg)
+    {
+        $data = DB::connection('pku')
+        ->table('fis_asesmen_dokter as ad')
+        ->select(
+            'ad.*',
+            'diag_medis.nama_diagnosis_medis',
+        )
+        ->Join('fis_master_diagnosis_medis as diag_medis', 'ad.diagnosa_klinis', '=', 'diag_medis.id')
+        ->where('ad.no_registrasi', $No_Reg)->first();
+        return $data;
+    }
 }
