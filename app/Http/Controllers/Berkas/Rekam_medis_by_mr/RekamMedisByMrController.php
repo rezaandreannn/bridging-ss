@@ -120,12 +120,10 @@ class RekamMedisByMrController extends Controller
     {
         $resep = $this->rajaldokter->resep($noReg);
         $labs = $this->rajaldokter->lab($noReg);
-        // dd($labs);
         $biodata = $this->rekam_medis->getBiodata($noReg);
         // dd($biodata);
         $asesmenPerawat = $this->rekam_medis->cetakRmRajal($noReg);
         $asesmenDokterRj = $this->rekam_medis->asesmenDokterRjBynoReg($noReg);
-        // dd($asesmenDokterRj);
         // Cetak PDF
         $date = date('dMY');
         $tanggal = Carbon::now();

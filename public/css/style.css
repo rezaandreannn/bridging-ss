@@ -222,6 +222,9 @@ ol {
 .custom-file-label {
     background-color: #fdfdff;
     border-color: #e4e6fc;
+    /* box-shadow: 0 4px 8px rgb(5, 5, 5); */
+    
+    
 }
 .form-control:focus,
 .input-group-text:focus,
@@ -237,6 +240,7 @@ select.form-control:not([size]):not([multiple]),
     font-size: 14px;
     padding: 10px 15px;
     height: 42px;
+    /* box-shadow: 0 4px 8px rgb(103, 119, 239); */
 }
 
 textarea.form-control {
@@ -290,7 +294,7 @@ select.form-control:not([size]):not([multiple]) {
 .form-group .control-label,
 .form-group > label {
     font-weight: 600;
-    color: #34395e;
+    color: black;
     font-size: 12px;
     letter-spacing: 0.5px;
 }
@@ -787,6 +791,23 @@ select.form-control:not([size]):not([multiple]) {
     background-color: transparent;
     padding: 20px 25px;
 }
+
+/* CSS KHUSUS */
+.card .card-khusus-header {
+    background-color: #6777ef;
+}
+.card .card-khusus-title {
+    color: white;
+}
+.card .card-khusus-body {
+    background-color: #e8f0fa;
+}
+
+.inputan-khusus {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.381);
+}
+/* PENUTUP */
+
 .card .navbar {
     position: static;
 }
@@ -3823,6 +3844,7 @@ body.layout-3 .main-footer {
 .main-sidebar .sidebar-menu {
     padding: 0;
     margin: 0;
+    /* background-color: #c8c8c8; */
 }
 .main-sidebar .sidebar-menu li {
     display: block;

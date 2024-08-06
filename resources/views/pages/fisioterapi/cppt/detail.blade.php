@@ -36,11 +36,11 @@
 
             <div class="row">
                 <div class="col-12">
-                    <div class="card card-primary">
-                        <div class="card-header card-success">
-                            <h4 class="card-title">Tambah Data CPPT Fisioterapi</h4>
+                    <div class="card card-primary ">
+                        <div class="card-header card-success card-khusus-header">
+                            <h6 class="card-khusus-title">Tambah Data CPPT Fisioterapi</h6>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body card-khusus-body">
                             <form action="{{ route('cppt.tambahData') }}" method="POST">
                                 @csrf
                                 <div class="row">
@@ -139,7 +139,7 @@
                                     </div>
                                 </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body card-khusus-body">
                             <label>*Bismillahirohmanirrohim, saya dengan sadar dan penuh tanggung jawab mengisikan formulir ini dengan data yang benar </label>
                             <div class="text-left">
                                 <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button>

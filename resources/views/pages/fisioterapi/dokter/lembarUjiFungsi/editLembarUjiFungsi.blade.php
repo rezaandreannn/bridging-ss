@@ -32,10 +32,10 @@
                     @include('components.biodata-pasien-fisio-bymr')
                     <!-- components biodata pasien by no mr -->
                     <div class="card card-primary">
-                        <div class="card-header card-success">
-                            <a href="{{ route('list_pasiens.dokter')}}" class="btn btn-sm btn-primary"><i class="fas fa-arrow-rotate-back"></i> Kembali</a>
+                        <div class="card-header card-success card-khusus-header">
+                            <a href="{{ route('list_pasiens.dokter')}}" class="btn btn-sm btn-success"><i class="fas fa-arrow-rotate-back"></i> Kembali</a>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body card-khusus-body">
                             <form action="{{ route('update.ujiFungsi') }}" method="POST">
                                 @csrf
                                 @method('PUT')
@@ -100,7 +100,7 @@
                                     </div> --}}
                                 </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body card-khusus-body">
                             <div class="text-left">
                                 <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button>
 

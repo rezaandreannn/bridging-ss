@@ -32,8 +32,7 @@
                     @include('components.biodata-pasien-fisio-bymr')
                     <!-- components biodata pasien by no mr -->
                     <div class="card card-primary">
-                        <div class="card-body">
-                       
+                        <div class="card-body card-khusus-body">
                             <form action="{{ route('store.ujiFungsi') }}" method="POST">
                                 @csrf
                                 <div class="row">
@@ -130,7 +129,7 @@
                                     </div> --}}
                                 </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body card-khusus-body">
                             <div class="text-left">
                                 <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button>
 

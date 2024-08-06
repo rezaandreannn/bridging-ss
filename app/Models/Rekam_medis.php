@@ -397,9 +397,6 @@ class Rekam_medis extends Model
                 'trj.INTERVENSI2',
                 // PEMERIKSAN TTV
                 'u.NAMALENGKAP'
-
-
-
             )
             ->where('tap.FS_KD_REG', $noReg)
             ->where('vs.FS_KD_REG', $noReg)
@@ -441,16 +438,6 @@ class Rekam_medis extends Model
 
     public function detailCpptByNoreg($noReg)
     {
-
-        //   $sql = "SELECT a.*,b.NAMALENGKAP,d.role_id,RIGHT(mdd_date,2) 'TGL',
-        // e.NAMALENGKAP 'FS_NM_MEDIS_VERIF'
-        // FROM PKU.dbo.TAC_RI_CPPT a
-        // LEFT JOIN DB_RSMM.dbo.TUSER b ON a.mdb=b.NAMAUSER
-        // LEFT JOIN PKU.dbo.TAC_COM_USER c ON a.mdb=c.user_name
-        // LEFT JOIN PKU.dbo.TAC_COM_ROLE_USER d ON c.user_id=d.user_id
-        // LEFT JOIN DB_RSMM.dbo.TUSER e ON a.FS_KD_MEDIS_VERIF = e.NAMAUSER
-        // WHERE FS_KD_REG = ? AND FD_TGL_VOID='3000-01-01'
-        // ORDER BY mdd_date DESC,mdd_time DESC";
 
         $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
         $data = DB::connection('pku')
