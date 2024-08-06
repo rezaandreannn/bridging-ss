@@ -65,7 +65,7 @@
                                             <select name="diagnosis_medis" class="form-control select2" data-placeholder="Pilih Kode ICD 10" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                                 <option value="" selected disabled>-- Pilih Diagnosa --</option>
                                                 @foreach ($diagnosisMedis as $diagMedis)
-                                                <option value="{{$diagMedis->nama_diagnosis_medis}}">{{$diagMedis->nama_diagnosis_medis}}</option>
+                                                <option value="{{$diagMedis->id}}">{{$diagMedis->nama_diagnosis_medis}}</option>
                                         
                                                 @endforeach
                                             </select>

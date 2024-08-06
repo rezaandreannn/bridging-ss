@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('diagnosis_fungsi');
             $table->string('pemeriksaan_penunjang')->nullable();
             $table->string('tata_laksana_kfr');
-            $table->string('penyakit_akibat_kerja');
-            $table->string('deskripsi_akibat_kerja');
+            $table->string('penyakit_akibat_kerja')->nullable();
+            $table->string('deskripsi_akibat_kerja')->nullable();
             $table->string('create_by');
             $table->timestamps();
         });
