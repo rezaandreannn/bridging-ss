@@ -64,8 +64,8 @@
                                     <input type="hidden" name="NO_MR" value="{{ $biodata->NO_MR}}" />
 
                                   
-                                    <textarea class="form-control" rows="3" name="FS_ANAMNESA" value="" placeholder="Masukan ..."></textarea>
-                                    @error('FS_ANAMNESA')
+                                    <textarea class="form-control" rows="3" name="anamnesa" value="" placeholder="Masukan ..."></textarea>
+                                    @error('anamnesa')
                                         <span class="text-danger" style="font-size: 12px;">
                                             {{ $message }}
                                         </span>
@@ -76,7 +76,12 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Pemeriksaan Fisik</label>
-                                    <textarea class="form-control" rows="3" name="FS_EDUKASI" value="" placeholder="Masukan ..."></textarea>
+                                    <textarea class="form-control" rows="3" name="pemeriksaan_fisik" value="" placeholder="Masukan ..."></textarea>
+                                    @error('pemeriksaan_fisik')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -92,51 +97,72 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Suhu</label>
-                                    <input type="text" class="form-control" name="FS_SUHU" value="">
+                                    <label>Suhu</label> <code> (gunakan tanda . contoh : 36.5)</code>
+                                    <input type="text" class="form-control" name="suhu" value="" id="suhu" placeholder="masukkan hanya angka">
+                                    @error('suhu')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Nadi</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" onkeypress="return hanyaAngka(event)" name="FS_NADI" value="">
+                                        <input type="text" class="form-control" id="nadi"  name="nadi" value="" placeholder="masukkan hanya angka">
                                         <div class="input-group-append">
                                             <span class="input-group-text">x/menit</span>
                                         </div>
                                     </div>
+                                    @error('nadi')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Respirasi</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" name="FS_R" value="">
+                                        <input type="text" class="form-control" id="respirasi" name="respirasi" value="" placeholder="masukkan hanya angka">
                                         <div class="input-group-append">
                                             <span class="input-group-text">x/menit</span>
                                         </div>
                                     </div>
+                                    @error('respirasi')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Tekanan Darah</label>
+                                    <label>Tekanan Darah</label> <code> (contoh : 110/90)</code>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" name="FS_TD" value="">
+                                        <input type="text" class="form-control" id="td" name="td" value="" placeholder="masukkan hanya angka">
                                         <div class="input-group-append">
                                             <span class="input-group-text">mmHg</span>
                                         </div>
                                     </div>
+                                    @error('td')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Tinggi Badan</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" onkeypress="return hanyaAngka(event)" name="FS_TB" value="">
+                                        <input type="text" class="form-control" id="tb"  name="tb" value="" placeholder="masukkan hanya angka">
                                         <div class="input-group-append">
                                             <span class="input-group-text">cm</span>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -144,7 +170,7 @@
                                 <div class="form-group">
                                     <label>Berat Badan</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" onkeypress="return hanyaAngka(event)" name="FS_BB" value="">
+                                        <input type="text" class="form-control" id="bb"  name="bb" value="" placeholder="masukkan hanya angka">
                                         <div class="input-group-append">
                                             <span class="input-group-text">kg</span>
                                         </div>
@@ -448,7 +474,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Penurunan berat badan yang tidak diinginkan selama 6 bulan terakhir</label>
-                                    <select name="FS_NUTRISI1" class="form-control select2" onchange="sn1(this)">
+                                    <select name="skrining_nutrisi1" class="form-control select2" onchange="sn1(this)">
                                         <option value="">-- pilih --</option>
                                         <option value="0">Tidak</option>
                                         <option value="1">Tidak Yakin</option>
@@ -457,7 +483,7 @@
                                         <option value="4">Ya (11-15 Kg)</option>
                                         <option value="5">Ya (>15 Kg)</option>
                                     </select>
-                                    @error('FS_NUTRISI1')
+                                    @error('skrining_nutrisi1')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}
                                     </span>
@@ -468,12 +494,12 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Asupan makanan menurun dikarenakan adanya penurunan nafsu makan</label>
-                                    <select name="FS_NUTRISI2" class="form-control select2" onchange="sn2(this)">
+                                    <select name="skrining_nutrisi2" class="form-control select2" onchange="sn2(this)">
                                         <option value="">-- pilih --</option>
                                         <option value="0">Tidak</option>
                                         <option value="1">Ya</option>
                                     </select>
-                                    @error('FS_NUTRISI2')
+                                    @error('skrining_nutrisi2')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}
                                     </span>
@@ -673,6 +699,57 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+
+<script>
+    document.getElementById('td').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('suhu').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('nadi').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('bb').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('tb').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('respirasi').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+</script>
 
 <script type="text/javascript">
     function click1(selected) {

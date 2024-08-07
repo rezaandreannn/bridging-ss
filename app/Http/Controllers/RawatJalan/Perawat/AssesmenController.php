@@ -173,9 +173,14 @@ class AssesmenController extends Controller
     {
         // Make a POST request to the API endpoint
         $request->validate([
-            'FS_ANAMNESA' => 'required',
-            'FS_NUTRISI1' => 'required',
-            'FS_NUTRISI2' => 'required',
+            'anamnesa' => 'required',
+            'skrining_nutrisi1' => 'required',
+            'skrining_nutrisi2' => 'required',
+            'pemeriksaan_fisik' => 'required',
+            'suhu' => 'required',
+            'nadi' => 'required',
+            'respirasi' => 'required',
+            'td' => 'required',
 
         ]);
 
@@ -201,12 +206,12 @@ class AssesmenController extends Controller
             $vital_sign = DB::connection('pku')->table('TAC_RJ_VITAL_SIGN')->insert([
 
                 'FS_KD_REG' => $request->input('FS_KD_REG'),
-                'FS_SUHU' => $request->input('FS_SUHU'),
-                'FS_NADI' => $request->input('FS_NADI'),
-                'FS_R' => $request->input('FS_R'),
-                'FS_TD' => $request->input('FS_TD'),
-                'FS_TB' => $request->input('FS_TB'),
-                'FS_BB' => $request->input('FS_BB'),
+                'FS_SUHU' => $request->input('suhu'),
+                'FS_NADI' => $request->input('nadi'),
+                'FS_R' => $request->input('respirasi'),
+                'FS_TD' => $request->input('td'),
+                'FS_TB' => $request->input('tb'),
+                'FS_BB' => $request->input('bb'),
                 'FS_KD_MEDIS' => $request->input('KODE_DOKTER'),
                 'mdb' => $userEmr->user_id,
                 'mdd' => date('Y-m-d'),
@@ -255,7 +260,7 @@ class AssesmenController extends Controller
                 'FS_AGAMA' => $request->input('FS_AGAMA'),
                 'FS_NILAI_KHUSUS' => $request->input('FS_NILAI_KHUSUS'),
                 'FS_NILAI_KHUSUS2' => $request->input('FS_NILAI_KHUSUS'),
-                'FS_ANAMNESA' => $request->input('FS_ANAMNESA'),
+                'FS_ANAMNESA' => $request->input('anamnesa'),
                 'FS_PENGELIHATAN' => $request->input('FS_PENGELIHATAN'),
                 'FS_PENCIUMAN' => $request->input('FS_PENCIUMAN'),
                 'FS_PENDENGARAN' => $request->input('FS_PENDENGARAN'),
@@ -264,7 +269,7 @@ class AssesmenController extends Controller
                 'FS_RIW_TUMBUH' => $request->input('FS_RIW_TUMBUH')  ? $request->input('FS_RIW_TUMBUH') : '0',
                 'FS_RIW_TUMBUH_KET' => $request->input('FS_RIW_TUMBUH_KET')  ? $request->input('FS_RIW_TUMBUH_KET') : '0',
                 'FS_HIGH_RISK' => '',
-                'FS_EDUKASI' => $request->input('FS_EDUKASI'),
+                'FS_EDUKASI' => $request->input('pemeriksaan_fisik'),
                 'FS_SKDP_FASKES' => $request->input('FS_SKDP_FASKES'),
                 'mdb' => $userEmr->user_id,
                 'mdd' => date('Y-m-d'),
@@ -283,8 +288,8 @@ class AssesmenController extends Controller
             $jatuh = DB::connection('pku')->table('TAC_RJ_NUTRISI')->insert([
 
                 'FS_KD_REG' => $request->input('FS_KD_REG'),
-                'FS_NUTRISI1' => $request->input('FS_NUTRISI1'),
-                'FS_NUTRISI2' => $request->input('FS_NUTRISI2'),
+                'FS_NUTRISI1' => $request->input('skrining_nutrisi1'),
+                'FS_NUTRISI2' => $request->input('skrining_nutrisi2'),
                 'FS_NUTRISI_ANAK1' => $request->input('FS_NUTRISI_ANAK1') ? $request->input('FS_NUTRISI_ANAK1') : '',
                 'FS_NUTRISI_ANAK2' => $request->input('FS_NUTRISI_ANAK2')  ? $request->input('FS_NUTRISI_ANAK2') : '',
                 'FS_NUTRISI_ANAK3' => $request->input('FS_NUTRISI_ANAK3')  ? $request->input('FS_NUTRISI_ANAK3') : '',
