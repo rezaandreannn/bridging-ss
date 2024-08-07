@@ -92,16 +92,16 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Suhu</label>
-                                    <input type="text" class="form-control" name="FS_SUHU" value="">
+                                    <label>Suhu</label> <code>gunakan tanda . contoh : 36.5</code>
+                                    <input type="text" class="form-control" name="FS_SUHU" value="" placeholder="masukkan angka">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Nadi</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" onkeypress="return hanyaAngka(event)" name="FS_NADI" value="">
-                                        <div class="input-group-append">
+                                        <input type="text" class="form-control" id="nadi"  name="FS_NADI" value="">
+                                        <div class="input-group-append" placeholder="masukkan angka">
                                             <span class="input-group-text">x/menit</span>
                                         </div>
                                     </div>
@@ -111,7 +111,7 @@
                                 <div class="form-group">
                                     <label>Respirasi</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" name="FS_R" value="">
+                                        <input type="text" class="form-control" id="respirasi" name="FS_R" value="" placeholder="masukkan angka">
                                         <div class="input-group-append">
                                             <span class="input-group-text">x/menit</span>
                                         </div>
@@ -120,9 +120,9 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Tekanan Darah</label>
+                                    <label>Tekanan Darah</label> <code>contoh : 110/90</code>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" name="FS_TD" value="">
+                                        <input type="text" class="form-control" id="td" name="FS_TD" value="" placeholder="masukkan angka">
                                         <div class="input-group-append">
                                             <span class="input-group-text">mmHg</span>
                                         </div>
@@ -133,7 +133,7 @@
                                 <div class="form-group">
                                     <label>Tinggi Badan</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" onkeypress="return hanyaAngka(event)" name="FS_TB" value="">
+                                        <input type="text" class="form-control" id="tb"  name="FS_TB" value="" placeholder="masukkan angka">
                                         <div class="input-group-append">
                                             <span class="input-group-text">cm</span>
                                         </div>
@@ -144,7 +144,7 @@
                                 <div class="form-group">
                                     <label>Berat Badan</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" onkeypress="return hanyaAngka(event)" name="FS_BB" value="">
+                                        <input type="text" class="form-control" id="bb"  name="FS_BB" value="" placeholder="masukkan angka">
                                         <div class="input-group-append">
                                             <span class="input-group-text">kg</span>
                                         </div>
@@ -673,6 +673,49 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+
+<script>
+    document.getElementById('td').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('suhu').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('nadi').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('bb').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('respirasi').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+</script>
 
 <script type="text/javascript">
     function click1(selected) {
