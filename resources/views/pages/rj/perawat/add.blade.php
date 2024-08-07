@@ -494,7 +494,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Asupan makanan menurun dikarenakan adanya penurunan nafsu makan</label>
-                                    <select name="skrining_nutrisi1" class="form-control select2" onchange="sn2(this)">
+                                    <select name="skrining_nutrisi2" class="form-control select2" onchange="sn2(this)">
                                         <option value="">-- pilih --</option>
                                         <option value="0">Tidak</option>
                                         <option value="1">Ya</option>
