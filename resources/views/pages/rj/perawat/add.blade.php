@@ -64,8 +64,8 @@
                                     <input type="hidden" name="NO_MR" value="{{ $biodata->NO_MR}}" />
 
                                   
-                                    <textarea class="form-control" rows="3" name="FS_ANAMNESA" value="" placeholder="Masukan ..."></textarea>
-                                    @error('FS_ANAMNESA')
+                                    <textarea class="form-control" rows="3" name="anamnesa" value="" placeholder="Masukan ..."></textarea>
+                                    @error('anamnesa')
                                         <span class="text-danger" style="font-size: 12px;">
                                             {{ $message }}
                                         </span>
@@ -76,7 +76,12 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Pemeriksaan Fisik</label>
-                                    <textarea class="form-control" rows="3" name="FS_EDUKASI" value="" placeholder="Masukan ..."></textarea>
+                                    <textarea class="form-control" rows="3" name="pemeriksaan_fisik" value="" placeholder="Masukan ..."></textarea>
+                                    @error('pemeriksaan_fisik')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -448,7 +453,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Penurunan berat badan yang tidak diinginkan selama 6 bulan terakhir</label>
-                                    <select name="FS_NUTRISI1" class="form-control select2" onchange="sn1(this)">
+                                    <select name="skrining_nutrisi1" class="form-control select2" onchange="sn1(this)">
                                         <option value="">-- pilih --</option>
                                         <option value="0">Tidak</option>
                                         <option value="1">Tidak Yakin</option>
@@ -457,7 +462,7 @@
                                         <option value="4">Ya (11-15 Kg)</option>
                                         <option value="5">Ya (>15 Kg)</option>
                                     </select>
-                                    @error('FS_NUTRISI1')
+                                    @error('skrining_nutrisi1')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}
                                     </span>
@@ -468,12 +473,12 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Asupan makanan menurun dikarenakan adanya penurunan nafsu makan</label>
-                                    <select name="FS_NUTRISI2" class="form-control select2" onchange="sn2(this)">
+                                    <select name="skrining_nutrisi1" class="form-control select2" onchange="sn2(this)">
                                         <option value="">-- pilih --</option>
                                         <option value="0">Tidak</option>
                                         <option value="1">Ya</option>
                                     </select>
-                                    @error('FS_NUTRISI2')
+                                    @error('skrining_nutrisi2')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}
                                     </span>
