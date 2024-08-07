@@ -154,6 +154,10 @@ class AssesmenDokterController extends Controller
     {
         $validatedData = $request->validate([
             'diagnosis_fungsional' => 'required',
+            'prosedur_kfr' => 'required',
+            'kesimpulan' => 'required',
+            'rekomendasi' => 'required',
+            'edukasi' => 'required',
         ]);
 
         try {
@@ -235,6 +239,9 @@ class AssesmenDokterController extends Controller
 
         $validatedData = $request->validate([
             'pemeriksaan_fisik' => 'required',
+            'diagnosis_medis' => 'required',
+            'diagnosis_fungsi' => 'required',
+            'tata_laksana_kfr' => 'required',
         ]);
 
         try {

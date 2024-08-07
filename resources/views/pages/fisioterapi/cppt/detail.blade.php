@@ -131,8 +131,8 @@
                                         <div class="form-group">
                                             <label>Cara Pulang </label>
                                             <select name="CARA_PULANG" id="" class="form-control select2">
-                                                <option value="" selected disabled>--Pilih--</option>
-                                                <option value="KONSULTASI">KONSULTASI</option>
+                                                <option value="" disabled>--Pilih--</option>
+                                                <option value="KONSULTASI" selected>KONSULTASI</option>
                                                 <option value="RUJUK">RUJUK</option>
                                             </select>
                                         </div>

@@ -150,13 +150,8 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Deskrispsi suspek penyakit akibat kerja <code>Isi jika ya</code></label>
-                                            <input type="text" class="form-control @error('pemeriksaan_fisik') is-invalid  
-                                                @enderror" name="deskripsi_akibat_kerja" value="{{ old('deskripsi_akibat_kerja')}}"  placeholder="Masukan ..."></input>
-                                            @error('deskripsi_akibat_kerja')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                            @enderror
+                                            <input type="text" class="form-control" name="deskripsi_akibat_kerja" value="{{ old('deskripsi_akibat_kerja')}}"  placeholder="Masukan ..."></input>
+                                        
                                         </div>
                                     </div>
                                 </div>
