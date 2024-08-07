@@ -337,6 +337,7 @@ class AssesmenDokterController extends Controller
     {
         $validatedData = $request->validate([
             'anamnesa' => 'required',
+            'diagnosa_klinis' => 'required',
         ]);
 
         try {
