@@ -141,7 +141,7 @@
                                         </div>
                                         @enderror
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Diagnosa (A)</label>
                                             <textarea name="diagnosa" style="height: 70px;" class="form-control  @error('diagnosa') is-invalid  
@@ -153,22 +153,7 @@
                                         </div>
                                         @enderror
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Kode Diagnosa (ICD 10)</label>
-                                            <select name="periksa_lab[]" class="form-control select2" multiple="multiple" data-placeholder="Pilih Kode ICD 10" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                                                <option value="" disabled>-- Pilih Kode ICD 10 --</option>
-                                                @foreach ($masterIcd10 as $icd10)
-                                                <option value="{{$icd10->icd10_code}}">{{$icd10->icd10_code}} || {{$icd10->icd10_en}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        @error('hasil_usg')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                    </div>
+                  
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Hasil USG</label>

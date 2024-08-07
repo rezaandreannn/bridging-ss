@@ -48,12 +48,12 @@ class RajalDokterController extends Controller
         $getHasilLab = $this->rajaldokter->getHasilLab($noReg);
         $vitalSign = $this->rajaldokter->getVitalSign($noReg);
         $skalaNyeri = $this->rajaldokter->getSkalaNyeri($noReg);
-        $masterIcd10 = $this->rajaldokter->getIcd10Dokter();
+        // $masterIcd10 = $this->rajaldokter->getIcd10Dokter();
         // dd($masterIcd10);
         $biodatas = $this->pasien->biodataPasienByMr($noMR);
         $history = $this->rajaldokter->getHistoryPasien($noMR);
 
-        return view($this->view . 'add', compact('title', 'biodatas', 'history', 'dokterModel','masterLab','masterRadiologi','masterObat','asesmenPerawat','getHasilLab','vitalSign','skalaNyeri','masterIcd10'));
+        return view($this->view . 'add', compact('title', 'biodatas', 'history', 'dokterModel','masterLab','masterRadiologi','masterObat','asesmenPerawat','getHasilLab','vitalSign','skalaNyeri'));
     }
 
     public function copyDokter($noReg, $noMR)

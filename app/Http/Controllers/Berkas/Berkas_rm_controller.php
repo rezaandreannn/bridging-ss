@@ -257,7 +257,7 @@ class Berkas_rm_controller extends Controller
     {
         $resep = $this->rajaldokter->resep($noReg);
         $labs = $this->rajaldokter->lab($noReg);
-        dd($labs);
+        // dd($labs);
         $rads = $this->rajaldokter->radiologi($noReg);
         $biodata = $this->rekam_medis->getBiodata($noReg);
         // dd($biodata);

@@ -97,51 +97,72 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Suhu</label> <code>gunakan tanda . contoh : 36.5</code>
-                                    <input type="text" class="form-control" name="FS_SUHU" value="" placeholder="masukkan angka">
+                                    <label>Suhu</label> <code> (gunakan tanda . contoh : 36.5)</code>
+                                    <input type="text" class="form-control" name="suhu" value="" id="suhu" placeholder="masukkan hanya angka">
+                                    @error('suhu')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Nadi</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="nadi"  name="FS_NADI" value="">
-                                        <div class="input-group-append" placeholder="masukkan angka">
+                                        <input type="text" class="form-control" id="nadi"  name="nadi" value="" placeholder="masukkan hanya angka">
+                                        <div class="input-group-append">
                                             <span class="input-group-text">x/menit</span>
                                         </div>
                                     </div>
+                                    @error('nadi')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Respirasi</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="respirasi" name="FS_R" value="" placeholder="masukkan angka">
+                                        <input type="text" class="form-control" id="respirasi" name="respirasi" value="" placeholder="masukkan hanya angka">
                                         <div class="input-group-append">
                                             <span class="input-group-text">x/menit</span>
                                         </div>
                                     </div>
+                                    @error('respirasi')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Tekanan Darah</label> <code>contoh : 110/90</code>
+                                    <label>Tekanan Darah</label> <code> (contoh : 110/90)</code>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="td" name="FS_TD" value="" placeholder="masukkan angka">
+                                        <input type="text" class="form-control" id="td" name="td" value="" placeholder="masukkan hanya angka">
                                         <div class="input-group-append">
                                             <span class="input-group-text">mmHg</span>
                                         </div>
                                     </div>
+                                    @error('td')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Tinggi Badan</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="tb"  name="FS_TB" value="" placeholder="masukkan angka">
+                                        <input type="text" class="form-control" id="tb"  name="tb" value="" placeholder="masukkan hanya angka">
                                         <div class="input-group-append">
                                             <span class="input-group-text">cm</span>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -149,7 +170,7 @@
                                 <div class="form-group">
                                     <label>Berat Badan</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="bb"  name="FS_BB" value="" placeholder="masukkan angka">
+                                        <input type="text" class="form-control" id="bb"  name="bb" value="" placeholder="masukkan hanya angka">
                                         <div class="input-group-append">
                                             <span class="input-group-text">kg</span>
                                         </div>
@@ -705,6 +726,14 @@
         }
     });
     document.getElementById('bb').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('tb').addEventListener('keypress', function(event) {
         const keyCode = event.keyCode;
         const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
 

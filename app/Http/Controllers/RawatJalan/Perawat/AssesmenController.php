@@ -177,6 +177,10 @@ class AssesmenController extends Controller
             'skrining_nutrisi1' => 'required',
             'skrining_nutrisi2' => 'required',
             'pemeriksaan_fisik' => 'required',
+            'suhu' => 'required',
+            'nadi' => 'required',
+            'respirasi' => 'required',
+            'td' => 'required',
 
         ]);
 
@@ -202,12 +206,12 @@ class AssesmenController extends Controller
             $vital_sign = DB::connection('pku')->table('TAC_RJ_VITAL_SIGN')->insert([
 
                 'FS_KD_REG' => $request->input('FS_KD_REG'),
-                'FS_SUHU' => $request->input('FS_SUHU'),
-                'FS_NADI' => $request->input('FS_NADI'),
-                'FS_R' => $request->input('FS_R'),
-                'FS_TD' => $request->input('FS_TD'),
-                'FS_TB' => $request->input('FS_TB'),
-                'FS_BB' => $request->input('FS_BB'),
+                'FS_SUHU' => $request->input('suhu'),
+                'FS_NADI' => $request->input('nadi'),
+                'FS_R' => $request->input('respirasi'),
+                'FS_TD' => $request->input('td'),
+                'FS_TB' => $request->input('tb'),
+                'FS_BB' => $request->input('bb'),
                 'FS_KD_MEDIS' => $request->input('KODE_DOKTER'),
                 'mdb' => $userEmr->user_id,
                 'mdd' => date('Y-m-d'),
