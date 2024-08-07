@@ -69,7 +69,7 @@
                             <tbody>
                                 @foreach ($listpasien as $pasien)
                                 <tr>
-                                    <td>{{ $pasien->Nomor }}</td>
+                                    <td><span class="badge badge-pill badge-success">{{ $pasien->Nomor }}</span></td>
                                     <td>{{ $pasien->No_MR }}</td>
                                     <td>{{ $pasien->Nama_Pasien }}</td>
                                     <td>{{ $pasien->Alamat }}</td>
