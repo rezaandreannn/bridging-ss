@@ -26,15 +26,16 @@ class Fisioterapi extends Model
     use HasFactory;
 
 
-    public function getDokterFisio(){
-            $data= DB::connection('db_rsmm')
-        ->table('DOKTER as d')
-        ->select(
-            'd.Kode_Dokter',
-            'd.Nama_Dokter'
-        )
-        ->whereIn('d.Spesialis', array('SPESIALIS REHABILITASI MEDIK','FISIOTERAPI'))
-        ->get();
+    public function getDokterFisio()
+    {
+        $data = DB::connection('db_rsmm')
+            ->table('DOKTER as d')
+            ->select(
+                'd.Kode_Dokter',
+                'd.Nama_Dokter'
+            )
+            ->whereIn('d.Spesialis', array('SPESIALIS REHABILITASI MEDIK', 'FISIOTERAPI'))
+            ->get();
 
         return $data;
     }
@@ -79,7 +80,7 @@ class Fisioterapi extends Model
             //           ->from('DOKTER as d')
             //           ->whereIn('d.Spesialis', array('SPESIALIS REHABILITASI MEDIK','FISIOTERAPI'));
             // })
-      
+
             ->where('p.Kode_Dokter', $kode_dokter)
             ->where('a.Dokter', $kode_dokter)
             ->where('a.Tanggal', $date)
@@ -123,15 +124,15 @@ class Fisioterapi extends Model
             )
             ->whereIn('p.Kode_Dokter', function ($query) {
                 $query->select('d.Kode_Dokter')
-                      ->from('DOKTER as d')
-                      ->whereIn('d.Spesialis', array('SPESIALIS REHABILITASI MEDIK','FISIOTERAPI'));
+                    ->from('DOKTER as d')
+                    ->whereIn('d.Spesialis', array('SPESIALIS REHABILITASI MEDIK', 'FISIOTERAPI'));
             })
             ->whereIn('a.Dokter', function ($query) {
                 $query->select('d.Kode_Dokter')
-                      ->from('DOKTER as d')
-                      ->whereIn('d.Spesialis', array('SPESIALIS REHABILITASI MEDIK','FISIOTERAPI'));
+                    ->from('DOKTER as d')
+                    ->whereIn('d.Spesialis', array('SPESIALIS REHABILITASI MEDIK', 'FISIOTERAPI'));
             })
-      
+
             // ->where('p.Kode_Dokter', $kode_dokter)
             // ->where('a.Dokter', $kode_dokter)
             ->where('a.Tanggal', $date)
@@ -182,7 +183,8 @@ class Fisioterapi extends Model
             ->table('ANTRIAN as A')
             ->join('PENDAFTARAN as P', 'A.No_MR', '=', 'P.No_MR')
             ->join('REGISTER_PASIEN as RP', 'P.No_MR', '=', 'RP.No_MR')
-            ->leftJoin($dbpku . '.dbo.TAC_RJ_STATUS as st', 'P.NO_REG', '=', 'st.FS_KD_REG')->select(
+            ->leftJoin($dbpku . '.dbo.TAC_RJ_STATUS as st', 'P.NO_REG', '=', 'st.FS_KD_REG')
+            ->select(
                 'A.Nomor',
                 'RP.No_MR',
                 'RP.Nama_Pasien',
@@ -220,7 +222,7 @@ class Fisioterapi extends Model
 
     public function cekInformedConcent($no_reg)
     {
-    
+
 
         $data = DB::connection('pku')
             ->table('INFORMED_CONCENT_FISIOTERAPI')
@@ -228,16 +230,16 @@ class Fisioterapi extends Model
             ->where('KODE_REGISTER', $no_reg)
             ->first();
 
-            if ($data != null) {
-                return true;
-            } else {
-                return false;
-            }
+        if ($data != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function cekSuratRujukan($no_reg)
     {
-    
+
 
         $data = DB::connection('pku')
             ->table('fis_surat_rujukan')
@@ -245,16 +247,16 @@ class Fisioterapi extends Model
             ->where('kode_registrasi', $no_reg)
             ->first();
 
-            if ($data != null) {
-                return true;
-            } else {
-                return false;
-            }
+        if ($data != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function getInformedConcent($no_reg)
     {
-    
+
         $db_emr = DB::connection('sqlsrv')->getDatabaseName();
         $data = DB::connection('pku')
             ->table('INFORMED_CONCENT_FISIOTERAPI as ics')
@@ -272,7 +274,7 @@ class Fisioterapi extends Model
 
     public function getSuratRujukan($no_reg)
     {
-    
+
         $db_emr = DB::connection('sqlsrv')->getDatabaseName();
         $data = DB::connection('pku')
             ->table('fis_surat_rujukan as fsr')
@@ -329,18 +331,17 @@ class Fisioterapi extends Model
     public function cek_cppt($noMr)
     {
         $data = DB::connection('pku')->table('TRANSAKSI_FISIOTERAPI as TS')
-        ->Join('TR_CPPT_FISIOTERAPI as TRC', 'TS.ID_TRANSAKSI', '=', 'TRC.ID_TRANSAKSI_FISIO')->select(
-            'TRC.ID_TRANSAKSI_FISIO'
-        )
+            ->Join('TR_CPPT_FISIOTERAPI as TRC', 'TS.ID_TRANSAKSI', '=', 'TRC.ID_TRANSAKSI_FISIO')->select(
+                'TRC.ID_TRANSAKSI_FISIO'
+            )
             ->where('TS.NO_MR_PASIEN', $noMr)
-            ->orderBy('TS.KODE_TRANSAKSI_FISIO','DESC')
+            ->orderBy('TS.KODE_TRANSAKSI_FISIO', 'DESC')
             ->first();
-            if ($data != null) {
-                return true;
-            } else {
-                return false;
-            }
-         
+        if ($data != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 
@@ -413,7 +414,7 @@ class Fisioterapi extends Model
             ->get();
         return $data;
     }
-    
+
     public function getDiagnosisMedis()
     {
         $data = DB::connection('pku')
@@ -427,7 +428,7 @@ class Fisioterapi extends Model
         $data = DB::connection('pku')
             ->table('fis_asesmen_dokter')
             ->select('diagnosa_klinis')
-            ->where('no_registrasi',$noReg)
+            ->where('no_registrasi', $noReg)
             ->get();
         return $data;
     }
@@ -444,13 +445,13 @@ class Fisioterapi extends Model
     public function getAsesmenDokterByNoreg($No_Reg)
     {
         $data = DB::connection('pku')
-        ->table('fis_asesmen_dokter as ad')
-        ->select(
-            'ad.*',
-            'diag_medis.nama_diagnosis_medis',
-        )
-        ->Join('fis_master_diagnosis_medis as diag_medis', 'ad.diagnosa_klinis', '=', 'diag_medis.id')
-        ->where('ad.no_registrasi', $No_Reg)->first();
+            ->table('fis_asesmen_dokter as ad')
+            ->select(
+                'ad.*',
+                'diag_medis.nama_diagnosis_medis',
+            )
+            ->Join('fis_master_diagnosis_medis as diag_medis', 'ad.diagnosa_klinis', '=', 'diag_medis.id')
+            ->where('ad.no_registrasi', $No_Reg)->first();
         return $data;
     }
 }

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Berkas;
 
+use App\Models\Igd;
+use App\Models\Rajal;
 use App\Models\Pasien;
+use App\Models\RawatInap;
 use App\Models\RajalDokter;
 use App\Models\Rekam_medis;
 use Illuminate\Http\Request;
@@ -10,7 +13,6 @@ use Illuminate\Support\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\RawatInap;
 
 class Berkas_rm_controller extends Controller
 {
@@ -19,6 +21,8 @@ class Berkas_rm_controller extends Controller
     protected $rajaldokter;
     protected $rawatinap;
     protected $rekam_medis;
+    protected $igd;
+    protected $rajal;
     protected $routeIndex;
 
     public function __construct(Rekam_medis $rekam_medis)
@@ -26,6 +30,8 @@ class Berkas_rm_controller extends Controller
         $this->rekam_medis = $rekam_medis;
         $this->rajaldokter = new RajalDokter;
         $this->rawatinap = new RawatInap;
+        $this->igd = new Igd;
+        $this->rajal = new Rajal;
     }
 
     public function cetakResep($noReg, $kode_transaksi)
@@ -257,7 +263,6 @@ class Berkas_rm_controller extends Controller
     {
         $resep = $this->rajaldokter->resep($noReg);
         $labs = $this->rajaldokter->lab($noReg);
-        dd($labs);
         $rads = $this->rajaldokter->radiologi($noReg);
         $biodata = $this->rekam_medis->getBiodata($noReg);
         // dd($biodata);
@@ -285,11 +290,16 @@ class Berkas_rm_controller extends Controller
         $labs = $this->rajaldokter->lab($noReg);
         $rads = $this->rajaldokter->radiologi($noReg);
         $biodata = $this->rekam_medis->getBiodata($noReg);
-        // dd($biodata);
-        $asesmenPerawat = $this->rekam_medis->cetakRmRajal($noReg);
-        $asesmenDokterRj = $this->rekam_medis->asesmenDokterRjBynoReg($noReg);
+        // ----- IGD ----- //
+        $triase = $this->igd->getDataTriaseByNoReg($noReg);
+        $perawatIGD = $this->igd->getDataPerawatByNoReg($noReg);
+        // dd($perawatIGD);
+        // ----- Rajal ----- //
+        $asesmenPerawat = $this->rajal->assesmenPerawatIGD($noReg);
         $masalahKeperawatan = $this->rekam_medis->masalahKepByNoreg($noReg);
         $rencanaKeperawatan = $this->rekam_medis->rencanaKepByNoreg($noReg);
+        // dd($asesmenPerawat);
+
         // Cetak PDF
         // dd($asesmenDokterRj);
         $date = date('dMY');
@@ -298,7 +308,7 @@ class Berkas_rm_controller extends Controller
 
         $title = 'Cetak RM';
 
-        $pdf = PDF::loadview('pages.rekam_medis.igd.cetakRM', ['tanggal' => $tanggal, 'title' => $title, 'resep' => $resep, 'labs' => $labs, 'rads' => $rads, 'biodata' => $biodata, 'perawat' => $asesmenPerawat, 'masalahKeperawatan' => $masalahKeperawatan, 'rencanaKeperawatan' => $rencanaKeperawatan, 'asesmenDokterRj' => $asesmenDokterRj]);
+        $pdf = PDF::loadview('pages.rekam_medis.igd.cetakRM', ['tanggal' => $tanggal, 'title' => $title, 'triase' => $triase, 'perawatIGD' => $perawatIGD, 'resep' => $resep, 'labs' => $labs, 'rads' => $rads, 'biodata' => $biodata, 'assesmenPerawat' => $asesmenPerawat, 'masalahKeperawatan' => $masalahKeperawatan, 'rencanaKeperawatan' => $rencanaKeperawatan]);
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
     }
