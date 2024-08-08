@@ -94,10 +94,10 @@ class Rajal extends Model
     public function assesmenPerawatIGD($noReg)
     {
         $data = DB::connection('pku')->table('TAC_ASES_PER2')
-            ->join('TAC_RJ_VITAL_SIGN', 'TAC_ASES_PER2.FS_KD_REG', '=', 'TAC_RJ_VITAL_SIGN.FS_KD_REG')
-            ->join('TAC_RJ_NYERI', 'TAC_ASES_PER2.FS_KD_REG', '=', 'TAC_RJ_NYERI.FS_KD_REG')
-            ->join('TAC_RJ_NUTRISI', 'TAC_ASES_PER2.FS_KD_REG', '=', 'TAC_RJ_NUTRISI.FS_KD_REG')
-            ->join('TAC_RJ_ALERGI', 'TAC_ASES_PER2.FS_KD_REG', '=', 'TAC_RJ_ALERGI.FS_KD_REG')
+            ->leftjoin('TAC_RJ_VITAL_SIGN', 'TAC_ASES_PER2.FS_KD_REG', '=', 'TAC_RJ_VITAL_SIGN.FS_KD_REG')
+            ->leftjoin('TAC_RJ_NYERI', 'TAC_ASES_PER2.FS_KD_REG', '=', 'TAC_RJ_NYERI.FS_KD_REG')
+            ->leftjoin('TAC_RJ_NUTRISI', 'TAC_ASES_PER2.FS_KD_REG', '=', 'TAC_RJ_NUTRISI.FS_KD_REG')
+            ->leftjoin('TAC_RJ_ALERGI', 'TAC_ASES_PER2.FS_KD_REG', '=', 'TAC_RJ_ALERGI.FS_KD_REG')
             ->where('TAC_ASES_PER2.FS_KD_REG', $noReg)
             ->first();
 
@@ -125,6 +125,15 @@ class Rajal extends Model
             ->where('FS_KD_REG', $noReg)->get();
         return $data;
     }
+
+    public function getKodeDokterIGD($noReg)
+    {
+        $data = DB::connection('db_rsmm')->table('DOKTER')
+            ->where('Kode_Dokter', $noReg)->first();
+        return $data;
+    }
+
+
 
 
     public function rencanaPerawatanGetByNoreg($noReg)
