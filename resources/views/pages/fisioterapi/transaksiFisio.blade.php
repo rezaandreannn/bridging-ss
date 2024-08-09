@@ -127,7 +127,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Cetak CPPT</h4>
+                <h4 class="modal-title">Tambah Transaksi</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -146,7 +146,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Jumlah Maksimal Fisio <code>jika tidak terapi isi dengan 0</code> </label>
-                                <input type="number" name="JUMLAH_TOTAL_FISIO" class="form-control" placeholder="Di isi dengan angka">
+                                <input type="number" name="JUMLAH_TOTAL_FISIO" class="form-control" placeholder="Di isi dengan angka" value="8">
                             </div>
                         </div>
                     </div>

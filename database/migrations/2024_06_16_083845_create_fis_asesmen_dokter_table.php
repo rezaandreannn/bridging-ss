@@ -34,6 +34,7 @@ return new class extends Migration
             $table->string('status_psikologi')->nullable();
             $table->string('status_mental')->nullable();
             $table->string('diagnosa_klinis');
+            $table->string('terapi')->nullable();
             $table->string('rencana_tindakan')->nullable();
             $table->text('jenis_tindakan')->nullable();
             $table->string('rencana_rujukan')->nullable();

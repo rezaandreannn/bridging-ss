@@ -160,7 +160,7 @@ Route::middleware('auth')->group(function () {
         Route::get('asesmen_pasien', [AssesmenController::class, 'index'])->name('asesmen_pasien.index');
         Route::get('perawat/list_pasien', [FisioController::class, 'index'])->name('list-pasien.index');
         Route::get('perawat/transaksi_fisio', [FisioController::class, 'transaksi'])->name('transaksi_fisio.fisio');
-        Route::post('perawat/transaksi_fisio', [FisioController::class, 'store'])->name('transaksi_fisio.store');
+        Route::post('perawat/transaksi_fisio/add', [FisioController::class, 'store'])->name('transaksi_fisio.store');
         Route::put('perawat/transaksi_fisio/{id}', [FisioController::class, 'update'])->name('transaksi_fisio.update');
         Route::delete('perawat/transaksi_fisio/{id}', [FisioController::class, 'delete'])->name('transaksi_fisio.delete');
 
@@ -178,8 +178,10 @@ Route::middleware('auth')->group(function () {
         // Fisioterapi Dokter
         Route::get('dokter/list_pasiens', [AssesmenDokterController::class, 'index'])->name('list_pasiens.dokter');
         Route::get('dokter/assesmen_dokter/{NoMr}', [AssesmenDokterController::class, 'create'])->name('add.dokter');
+        Route::get('dokter/assesmen_dokter2/{NoMr}', [AssesmenDokterController::class, 'create_new'])->name('add.dokterNew');
         Route::get('dokter/assesmen_dokter/edit/{NoMr}', [AssesmenDokterController::class, 'editAsesmen'])->name('edit_asesmen.dokter');
         Route::post('dokter/assesmen_dokter/add', [AssesmenDokterController::class, 'store'])->name('asesmenStore.dokter');
+        Route::post('dokter/assesmen_dokter/add2', [AssesmenDokterController::class, 'store_new'])->name('asesmenStore.dokterNew');
         Route::put('dokter/assesmen_dokter/update', [AssesmenDokterController::class, 'update'])->name('asesmenUpdate.dokter');
 
         // uji fungsi
