@@ -210,7 +210,7 @@
             </tr>
             <tr>
                 <td class="text4">Diagnosa Klinis</td>
-                <td class="text4" colspan="2">: {{ $asesmenDokter->nama_diagnosis_medis}}</td>
+                <td class="text4" colspan="2">: {{ $asesmenDokter->diagnosa_klinis}}</td>
             </tr>
             <tr>
                 <td class="text3"><b>5. Perencanaan</b></td>
@@ -219,11 +219,7 @@
             <tr>
                 <td class="text4">Terapi</td>
                 <td class="text4" colspan="2">: 
-                    @forelse ($terapis as $item)
-                        {{$item->NAMA_TERAPI}} <br>
-                    @empty
-                        
-                    @endforelse
+                    {{ $asesmenDokter->terapi}}
                 </td>
             </tr>
             <tr>
@@ -323,7 +319,7 @@
             </tr>
             <tr>
                 <td class="text2">Diagnosis Fungsional / Diagnosis Medis</td>
-                <td class="text2" colspan="2">: {{ $lembarUjiFungsi->nama_diagnosis_medis}}</td>
+                <td class="text2" colspan="2">: {{ $lembarUjiFungsi->diagnosis_fungsional}}</td>
             </tr>
         </table>
         <table style="border: 1px solid black; border-top: none;border-bottom: none;" width="100%">
@@ -433,11 +429,11 @@
             </tr>
             <tr>
                 <td class="text3">Diagnosis Medis (ICD-10)</td>
-                <td class="text3" colspan="2">: {{ $lembarSpkfr->nama_diagnosis_medis}}</td>
+                <td class="text3" colspan="2">: {{ $lembarSpkfr->diagnosis_medis}}</td>
             </tr>
             <tr>
                 <td class="text3">Diagnosis Fungsi (ICD-10)</td>
-                <td class="text3" colspan="2">: {{ $lembarSpkfr->nama_diagnosis_fungsi}}</td>
+                <td class="text3" colspan="2">: {{ $lembarSpkfr->diagnosis_fungsi}}</td>
             </tr>
             <tr>
                 <td class="text3">Tata Laksana KFR (ICD 9 CM)</td>

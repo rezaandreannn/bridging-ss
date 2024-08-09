@@ -46,13 +46,8 @@
                                        
                                         <div class="form-group">
                                             <label>Diagnosis Fungsional / Diagnosis Klinis : <code>*</code></label>
-                                            <select name="diagnosis_fungsional" class="form-control select2" data-placeholder="Pilih Kode ICD 10" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                                                <option value="" disabled>-- Pilih Diagnosa --</option>
-                                                @foreach ($diagnosisMedis as $item)
-                                                <option value="{{$item->id}}" {{ $lembarUjiFungsiGet->diagnosis_fungsional == $item->id ? 'selected' : '' }}>{{$item->nama_diagnosis_medis}}</option>
-                                        
-                                                @endforeach
-                                            </select>
+                                            <textarea class="form-control" rows="3" name="diagnosis_fungsional" value="" placeholder="Masukan ...">{{$lembarUjiFungsiGet->diagnosis_fungsional}}</textarea>
+                              
                                         </div>
                                     </div>
                                     <div class="col-md-12">

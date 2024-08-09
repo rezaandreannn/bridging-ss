@@ -258,7 +258,7 @@ class FisioController extends Controller
             //     return redirect()->route('ttd.pasien', ['no_mr' => $request->input('NO_MR_PASIEN')]);
             // } else {
                 if ((auth()->user()->roles->pluck('name')[0]) == 'dokter fisioterapi') {
-                    return redirect()->route('add.spkfr', ['NoMr' => $request->input('NO_MR_PASIEN')])->with('success', 'CPPT Berhasil Ditambahkan!');
+                    return redirect()->route('list_pasiens.dokter')->with('success', 'CPPT Berhasil Ditambahkan!');
                 } else {
                     return redirect()->route('cppt.detail', ['id' => $request->input('ID_TRANSAKSI'), 'kode_transaksi' => $request->input('KODE_TRANSAKSI_FISIO'), 'no_mr' => $request->input('NO_MR_PASIEN')])->with('success', 'CPPT Berhasil Ditambahkan!');
                 }

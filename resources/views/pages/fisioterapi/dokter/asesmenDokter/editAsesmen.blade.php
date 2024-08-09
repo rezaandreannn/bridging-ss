@@ -218,13 +218,9 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Diagnosa Klinis <code>*</code></label>
-                                            <select name="diagnosa_klinis" class="form-control select2" data-placeholder="Pilih Diagnosa" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                                                <option value="" selected disabled>-- Pilih Diagnosa --</option>
-                                                @foreach ($diagnosisMedis as $item)
-                                                <option value="{{$item->id}}" {{$asesmenDokterGet->diagnosa_klinis == $item->id ? 'selected' : '' }}>{{$item->nama_diagnosis_medis}}</option>
-                                        
-                                                @endforeach
-                                            </select>
+                                            <textarea name="diagnosa_klinis" class="form-control  @error('diagnosa_klinis') is-invalid  
+                                            @enderror" rows="3" placeholder="Masukan ...">{{$asesmenDokterGet->diagnosa_klinis}}</textarea>
+                                
                                         </div>
                                         @error('diagnosa_klinis')
                                         <div class="invalid-feedback">
@@ -250,20 +246,8 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Terapi <code>*</code></label>
-                                            <select name="jenis_terapi_fisio[]" class="form-control select2" multiple="multiple" data-placeholder="Pilih Jenis Fisio" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                                                <option value="" disabled>-- Pilih Jenis Fisio --</option>
-                                                @forelse ($terapiFisioGet as $terapiGet)
-                                                @foreach ($jenisterapifisio as $terapi)
-                                                <option value="{{ $terapi->ID_JENIS_FISIO }}" {{ $terapi->ID_JENIS_FISIO == $terapiGet->id_jenis_fisioterapi ? "selected" : "" }}>{{ $terapi->NAMA_TERAPI }}</option>
-                                                @endforeach
-                                                @empty
-                                                @foreach ($jenisterapifisio as $terapi)
-                                                <option value="{{ $terapi->ID_JENIS_FISIO }}">{{ $terapi->NAMA_TERAPI }}</option>
-                                                @endforeach
-                                                @endforelse
-
-
-                                            </select>
+                                            <textarea name="jenis_terapi_fisio" class="form-control  @error('jenis_terapi_fisio') is-invalid  
+                                            @enderror" rows="3" placeholder="Masukan ...">{{$asesmenDokterGet->terapi}}</textarea>
                                             @error('jenis_terapi_fisio')
                                             <span class="text-danger" style="font-size: 12px;">
                                                 {{ $message }}
@@ -430,6 +414,74 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Instrumen Uji Fungsi / Prosedur KFR : <code>*</code></label>
+                                            <textarea class="form-control @error('prosedur_kfr') is-invalid  
+                                                @enderror" rows="3" name="prosedur_kfr"  placeholder="Masukan ...">{{$lembarUjiFungsiGet->prosedur_kfr}}</textarea>
+                                                @error('prosedur_kfr')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Kesimpulan : </label>
+                                            <textarea class="form-control @error('kesimpulan') is-invalid  
+                                                @enderror" rows="3" name="kesimpulan"  placeholder="Masukan ...">{{$lembarUjiFungsiGet->kesimpulan}}</textarea>
+                                                @error('kesimpulan')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Rekomendasi : </label>
+                                            <textarea class="form-control @error('rekomendasi') is-invalid  
+                                                @enderror" rows="3" name="rekomendasi"  placeholder="Masukan ...">{{$lembarUjiFungsiGet->rekomendasi}}</textarea>
+                                                @error('rekomendasi')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                                @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Edukasi : </label>
+                                            <textarea class="form-control" rows="3" name="edukasi"  placeholder="Masukan ...">{{$lembarUjiFungsiGet->edukasi}}</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Suspek Penyakit Akibat Kerja</label>
+
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="penyakit_akibat_kerja" value="Ya" id="penyakit_akibat_kerja1" @if($lembarSpkfr->penyakit_akibat_kerja=='Ya' ) checked @endif>
+                                                <label class="form-check-label">
+                                                    Ya
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="penyakit_akibat_kerja" value="Tidak" id="penyakit_akibat_kerja2" @if($lembarSpkfr->penyakit_akibat_kerja=='Tidak' ) checked @endif>
+                                                <label class="form-check-label" >
+                                                    Tidak
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Deskrispsi suspek penyakit akibat kerja <code>Isi jika ya</code></label>
+                                            <input type="text" class="form-control" name="deskripsi_akibat_kerja" value="{{$lembarSpkfr->deskripsi_akibat_kerja}}"  placeholder="Masukan ..."></input>
+                                        
                                         </div>
                                     </div>
                                 </div>

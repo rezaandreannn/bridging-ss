@@ -80,7 +80,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Diagnosa <code>*</code></label>
-                                            <textarea class="form-control" rows="2" name="DIAGNOSA" value="" placeholder="Masukan ..." @if ((auth()->user()->roles->pluck('name')[0])!='dokter fisioterapi') readonly  @endif>@if($cekasesmenDokter==true) {{$asesmenDokterFisio->nama_diagnosis_medis}} @elseif ($cektransaksicppt==true){{$transaksiFisio->DIAGNOSA}} @else @endif</textarea>
+                                            <textarea class="form-control" rows="2" name="DIAGNOSA" value="" placeholder="Masukan ..." @if ((auth()->user()->roles->pluck('name')[0])!='dokter fisioterapi') readonly  @endif>@if($cekasesmenDokter==true) {{$asesmenDokterFisio->diagnosa_klinis}} @elseif ($cektransaksicppt==true){{$transaksiFisio->DIAGNOSA}} @else @endif</textarea>
                                         </div>
                                     </div>
                                   
@@ -109,28 +109,33 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-body">
+                                              <h6 class="card-subtitle mb-2"> <span class="badge badge-pill badge-info"><i class="fas fa-info"></i></span> Terapi yang diberikan dokter</h6>
+                                              <hr>
+                                              <p>{{$asesmenDokterFisio->terapi}}</p>
+                                            </div>
+                                          </div>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                    </div>
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Jenis Fisio</label>
                                             <select name="JENIS_FISIO[]" class="form-control select2" multiple="multiple" data-placeholder="Pilih Jenis Fisio" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                                 <option value="" disabled>-- Pilih Jenis Fisio --</option>
-                                            
-
-                                                @forelse ($terapiFisioGet as $terapiGet)
-                                                @foreach ($jenisfisio as $terapi)
-                                                <option value="{{ $terapi->NAMA_TERAPI }}" {{ $terapi->ID_JENIS_FISIO == $terapiGet->id_jenis_fisioterapi ? "selected" : "" }}>{{ $terapi->NAMA_TERAPI }}</option>
-                                                @endforeach
-                                                @empty
                                                 @foreach ($jenisfisio as $terapi)
                                                 <option value="{{ $terapi->NAMA_TERAPI }}">{{ $terapi->NAMA_TERAPI }}</option>
                                                 @endforeach
-                                                @endforelse
+                                          
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Cara Pulang </label>
-                                            <select name="CARA_PULANG" id="" class="form-control select2">
+                                            <select name="CARA_PULANG" id="" class="form-control select2" onchange="click_kondisi_pulang(this)">
                                                 <option value="" disabled>--Pilih--</option>
                                                 <option value="KONSULTASI" selected>KONSULTASI</option>
                                                 <option value="RUJUK">RUJUK</option>
@@ -138,6 +143,42 @@
                                         </div>
                                     </div>
                                 </div>
+                        </div>
+
+                        <div id="form2" style="display: none">
+                            <div class="card-header card-success card-khusus-header">
+                                <h6 class="card-khusus-title">Tambah Surat Rujukan</h6>
+                            </div>
+                            <div class="card-body card-khusus-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Tujuan Rujukan <code>*</code></label>
+                                        <input type="hidden" name="kode_registrasi" value="" class="form-control">
+                                        <input type="text" name="tujuan_rujukan" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Alamat Tujuan Rujukan</label>
+                                        <input type="text" name="alamat_rujukan" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Alasan dirujuk</label>
+                                        <input type="text" name="alasan_rujuk" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>penerima telepon di RS tujuan</label>
+                                        <input type="number" name="nohp_tujuan" class="form-control">
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            
                         </div>
                         <div class="card-body card-khusus-body">
                             <label>*Bismillahirohmanirrohim, saya dengan sadar dan penuh tanggung jawab mengisikan formulir ini dengan data yang benar </label>
@@ -256,6 +297,21 @@
         }
     });
 </script>
+
+<SCript>
+        function click_kondisi_pulang(selected) {
+        $("#form2").hide();
+
+        var checkbox1 = selected.value
+
+        if (checkbox1 == "RUJUK") {
+            $("#form2").show();
+        }  else {
+            $("#form2").hide();
+        
+        }
+    }
+</SCript>
 
 <!-- Delete Data -->
 <script>
