@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Fisio;
 
+use Carbon\Carbon;
 use App\Models\Pasien;
 use GuzzleHttp\Client;
 use App\Models\JenisFisio;
@@ -251,29 +252,29 @@ class FisioController extends Controller
                 'CREATE_AT' => now(),
                 'CREATE_BY' => auth()->user()->id,
             ]);
-            
+
             $cek_ttd_pasien =  DB::connection('pku')->table('TTD_PASIEN_MASTER')->where('NO_MR_PASIEN', $request->input('NO_MR_PASIEN'))->count();
-            
+
             // if ($cek_ttd_pasien < '1') {
             //     return redirect()->route('ttd.pasien', ['no_mr' => $request->input('NO_MR_PASIEN')]);
             // } else {
-                if ((auth()->user()->roles->pluck('name')[0]) == 'dokter fisioterapi') {
-                    return redirect()->route('add.spkfr', ['NoMr' => $request->input('NO_MR_PASIEN')])->with('success', 'CPPT Berhasil Ditambahkan!');
-                } else {
-                    return redirect()->route('cppt.detail', ['id' => $request->input('ID_TRANSAKSI'), 'kode_transaksi' => $request->input('KODE_TRANSAKSI_FISIO'), 'no_mr' => $request->input('NO_MR_PASIEN')])->with('success', 'CPPT Berhasil Ditambahkan!');
-                }
-                
-                // return redirect()->route('cppt.detail', ['no_mr' => $request->input('NO_MR'), 'kode_transaksi' => $request->input('KD_TRANSAKSI_FISIO')])->with('success', 'CPPT Berhasil Diperbarui!');
+            if ((auth()->user()->roles->pluck('name')[0]) == 'dokter fisioterapi') {
+                return redirect()->route('add.spkfr', ['NoMr' => $request->input('NO_MR_PASIEN')])->with('success', 'CPPT Berhasil Ditambahkan!');
+            } else {
+                return redirect()->route('cppt.detail', ['id' => $request->input('ID_TRANSAKSI'), 'kode_transaksi' => $request->input('KODE_TRANSAKSI_FISIO'), 'no_mr' => $request->input('NO_MR_PASIEN')])->with('success', 'CPPT Berhasil Ditambahkan!');
+            }
+
+            // return redirect()->route('cppt.detail', ['no_mr' => $request->input('NO_MR'), 'kode_transaksi' => $request->input('KD_TRANSAKSI_FISIO')])->with('success', 'CPPT Berhasil Diperbarui!');
             // }
         }
     }
-    
+
     // Edit Data CPPT Fisioterapi
     public function edit_cppt($id)
     {
         // Memecah string menjadi array
         $jenis_terapi_fisio =  DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')->where('ID_CPPT_FISIO', $id)->first();
-        
+
         $data = array();
         $string = $jenis_terapi_fisio->JENIS_FISIO;
         $string = trim($string, ','); // Menghapus koma di awal dan akhir string (jika ada)
@@ -282,20 +283,20 @@ class FisioController extends Controller
             $jenis_fisio = explode(', ', $string);
         }
         $title = $this->prefix . ' ' . 'CPPT';
-        
+
         $jenisfisio = $this->jenisFisio->getDataJenisFisio();
         $data = $this->fisio->dataEditPasienCPPT($id);
-        
+
         return view($this->view . 'cppt.edit', compact('title', 'data', 'jenisfisio', 'jenis_fisio'));
     }
-    
+
     // Proses Edit Data CPPT Fisioterapi
     public function editDataCPPT(Request $request, $id)
     {
         $validatedData = $request->validate([
             'ANAMNESA' => 'required',
         ]);
-        
+
         $jenis_terapi = $request->input('JENIS_FISIO');
         $terapi = '';
         if (!empty($jenis_terapi)) {
@@ -303,7 +304,7 @@ class FisioController extends Controller
                 $terapi = $value . ', ' . $terapi;
             }
         }
-        
+
         $data = DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')->where('ID_CPPT_FISIO', $id)->update([
             'DIAGNOSA' => $request->input('DIAGNOSA'),
             'TEKANAN_DARAH' => $request->input('TEKANAN_DARAH'),
@@ -316,7 +317,7 @@ class FisioController extends Controller
             'ANAMNESA' => $request->input('ANAMNESA'),
             'LAINNYA' => $request->input('LAINNYA'),
             'CREATE_AT' => now(),
-            
+
         ]);
 
         if ((auth()->user()->roles->pluck('name')[0]) == 'dokter fisioterapi') {
