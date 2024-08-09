@@ -68,19 +68,6 @@ class RekamMedisByMrController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function detail_berkas($noReg)
-    {
-        $title = $this->prefix . ' ' . 'Berkas';
-        $biodata = $this->rajal->pasien_bynoreg($noReg);
-        $medis = $this->ranap->dataMedis($noReg);
-        $perawat = $this->ranap->dataPerawat($noReg);
-        $bidan = $this->ranap->dataBidan($noReg);
-        $rencana = $this->ranap->dataRencanaPulang($noReg);
-        $resume = $this->ranap->dataResume($noReg);
-
-        return view($this->view . 'detailBerkas', compact('title', 'biodata', 'medis', 'perawat', 'bidan', 'rencana', 'resume'));
-    }
-
     public function detail_cppt($noReg)
     {
         $title = $this->prefix . ' ' . 'Berkas Cppt';

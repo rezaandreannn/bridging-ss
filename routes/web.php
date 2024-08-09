@@ -36,6 +36,8 @@ use App\Http\Controllers\Mapping\MappingEncounterController;
 use App\Http\Controllers\Fisio\Dokter\AssesmenDokterController;
 use App\Http\Controllers\Fisio\MasterData\KesimpulanController;
 use App\Http\Controllers\RawatJalan\Perawat\AssesmenController;
+use App\Http\Controllers\RawatInap\Detail\BerkasRanapController;
+use App\Http\Controllers\RawatInap\Detail\DetailRanapController;
 use App\Http\Controllers\RawatInap\Dokter\RanapDokterController;
 use App\Http\Controllers\RawatJalan\Dokter\RajalDokterController;
 use App\Http\Controllers\Case\Encounter\EncounterCreateController;
@@ -323,11 +325,14 @@ Route::middleware('auth')->group(function () {
 
     // Rawat Inap berkas
     Route::prefix('ri')->group(function () {
-        // Rawat Inap Dokter
-        Route::get('ranap/berkas/{noReg}', [BerkasController::class, 'index'])->name('ri.dokterBerkas');
-        Route::get('ranap/berkas/detailRencana/{noReg}', [BerkasController::class, 'rencanaKeperawatan'])->name('ri.detailRencana');
-        Route::get('ranap/berkas/detailTindakan/{noReg}', [BerkasController::class, 'tindakanKeperawatan'])->name('ri.detailTindakan');
-        Route::get('ranap/berkas/detailObat/{noReg}', [BerkasController::class, 'pemberianObat'])->name('ri.detailObat');
+        // Rawat Inap Berkas
+        Route::get('detail/Berkas/{noReg}', [BerkasRanapController::class, 'index'])->name('rm.detail');
+        Route::get('detail/cetakKeperawatanRanap/{noReg}', [BerkasRanapController::class, 'AssesmenAwalKeperawatanRanap'])->name('ri.cetakKeperawatanRanap');
+
+        // Detail Rawat Inap
+        Route::get('detail/berkasRencana/{noReg}', [DetailRanapController::class, 'rencanaKeperawatan'])->name('ri.detailRencana');
+        Route::get('detail/berkasTindakan/{noReg}', [DetailRanapController::class, 'tindakanKeperawatan'])->name('ri.detailTindakan');
+        Route::get('detail/berkasObat/{noReg}', [DetailRanapController::class, 'pemberianObat'])->name('ri.detailObat');
     });
 
     //IGD
@@ -361,7 +366,6 @@ Route::middleware('auth')->group(function () {
     Route::prefix('rm')->group(function () {
         // ------------------- Berkas By MR -------------------- //
         Route::get('riwayatRekamMedis/bymr/list', [RekamMedisByMrController::class, 'index'])->name('rm.bymr');
-        Route::get('riwayatRekamMedis/bymr/detailBerkas/{noReg}', [RekamMedisByMrController::class, 'detail_berkas'])->name('rm.detail');
         Route::get('riwayatRekamMedis/bymr/detailBerkas/cppt/{noReg}', [RekamMedisByMrController::class, 'detail_cppt'])->name('rm.cppt');
         Route::get('riwayatRekamMedis/bymr/resumeRanap/{noReg}', [RekamMedisByMrController::class, 'resumeRanap'])->name('rm.ranap');
         Route::get('riwayatRekamMedis/bymr/resumeRajal/{noReg}', [RekamMedisByMrController::class, 'resumeRajal'])->name('rm.rajal');

@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Berkas\Ranap;
+namespace App\Http\Controllers\RawatInap\Detail;
 
+use Carbon\Carbon;
 use App\Models\Rajal;
 use App\Models\Pasien;
 use App\Models\RanapDokter;
 use App\Models\Rekam_medis;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 
-class BerkasController extends Controller
+class BerkasRanapController extends Controller
 {
     protected $view;
     protected $routeIndex;
@@ -35,33 +37,36 @@ class BerkasController extends Controller
         $biodata = $this->rajal->pasien_bynoreg($noReg);
         $medis = $this->ranap->dataMedis($noReg);
         $perawat = $this->ranap->dataPerawat($noReg);
+        // dd($perawat);
         $bidan = $this->ranap->dataBidan($noReg);
         $rencana = $this->ranap->dataRencanaPulang($noReg);
         $resume = $this->ranap->dataResume($noReg);
 
-        return view($this->view . 'berkas', compact('title', 'biodata', 'medis', 'perawat', 'bidan', 'rencana', 'resume'));
+        return view($this->view . 'detailBerkas', compact('title', 'biodata', 'medis', 'perawat', 'bidan', 'rencana', 'resume'));
     }
 
-    public function rencanaKeperawatan($noReg)
+    public function AssesmenAwalKeperawatanRanap($noReg)
     {
-        $title = 'Detail Rencana Keperawatan';
-        $biodata = $this->rajal->pasien_bynoreg($noReg);
-        return view($this->view . 'detail.rencanaKeperawatan', compact('title', 'biodata'));
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+        // ----- Rajal ----- //
+        $assesmenPerawat = $this->rajal->assesmenPerawatIGD($noReg);
+        $perawat = $this->ranap->dataPerawat($noReg);
+        $masalahKeperawatan = $this->rekam_medis->masalahKepByNoreg($noReg);
+        $rencanaKeperawatan = $this->rekam_medis->rencanaKepByNoreg($noReg);
+
+        // Cetak PDF
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+        $filename = 'RM -' . $date;
+
+        $title = 'Cetak RM';
+
+        $pdf = PDF::loadview('pages.ranap.berkas.keperawatanRanap', ['tanggal' => $tanggal, 'perawat' => $perawat, 'title' => $title, 'assesmenPerawat' => $assesmenPerawat, 'biodata' => $biodata, 'masalahKeperawatan' => $masalahKeperawatan, 'rencanaKeperawatan' => $rencanaKeperawatan]);
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
     }
 
-    public function tindakanKeperawatan($noReg)
-    {
-        $title = 'Detail Tindakan Keperawatan';
-        $biodata = $this->rajal->pasien_bynoreg($noReg);
-        return view($this->view . 'detail.tindakanKeperawatan', compact('title', 'biodata'));
-    }
 
-    public function pemberianObat($noReg)
-    {
-        $title = 'Detail Catatan Pemberian Obat';
-        $biodata = $this->rajal->pasien_bynoreg($noReg);
-        return view($this->view . 'detail.pemberianObat', compact('title', 'biodata'));
-    }
 
     /**
      * Show the form for creating a new resource.
