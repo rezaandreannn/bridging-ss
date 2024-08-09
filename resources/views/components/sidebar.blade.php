@@ -223,7 +223,7 @@
                     </li>
                 </ul>
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('rm/riwayaRekamMedis/harian/*') ? 'active' : '' }}">
+                    <li class="{{ Request::is('rm/riwayatRekamMedis/harian/*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('rm.harian')}}">Berkas RM Harian</a>
                     </li>
                 </ul>
@@ -238,7 +238,7 @@
 
             @can('koding')
             <li class="menu-header">Petugas Koding</li>
-            <li class="nav-item dropdown  {{ Request::is('rm/*') ? 'active' : '' }}">
+            <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Koding</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('rm/riwayaRekamMedis/bymr/*') ? 'active' : '' }}">

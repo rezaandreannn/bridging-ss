@@ -290,18 +290,14 @@ class Berkas_rm_controller extends Controller
         $labs = $this->rajaldokter->lab($noReg);
         $rads = $this->rajaldokter->radiologi($noReg);
         $biodata = $this->rekam_medis->getBiodata($noReg);
-        // dd($biodata);
         // ----- IGD ----- //
         $triase = $this->igd->getDataTriaseByNoReg($noReg);
         $perawatIGD = $this->igd->getDataPerawatByNoReg($noReg);
         $medis = $this->igd->getDataMedisByNoReg($noReg);
-        // dd($medis);
         // ----- Rajal ----- //
         $asesmenPerawat = $this->rajal->assesmenPerawatIGD($noReg);
-        $getDokter = new Rajal();
         $masalahKeperawatan = $this->rekam_medis->masalahKepByNoreg($noReg);
         $rencanaKeperawatan = $this->rekam_medis->rencanaKepByNoreg($noReg);
-        // dd($asesmenPerawat);
 
         // Cetak PDF
         // dd($asesmenDokterRj);
@@ -311,7 +307,7 @@ class Berkas_rm_controller extends Controller
 
         $title = 'Cetak RM';
 
-        $pdf = PDF::loadview('pages.rekam_medis.igd.cetakRM', ['tanggal' => $tanggal, 'title' => $title, 'triase' => $triase, 'getDokter' => $getDokter, 'perawatIGD' => $perawatIGD, 'medis' => $medis, 'resep' => $resep, 'labs' => $labs, 'rads' => $rads, 'biodata' => $biodata, 'assesmenPerawat' => $asesmenPerawat, 'masalahKeperawatan' => $masalahKeperawatan, 'rencanaKeperawatan' => $rencanaKeperawatan]);
+        $pdf = PDF::loadview('pages.rekam_medis.igd.cetakRM', ['tanggal' => $tanggal, 'title' => $title, 'triase' => $triase, 'perawatIGD' => $perawatIGD, 'medis' => $medis, 'resep' => $resep, 'labs' => $labs, 'rads' => $rads, 'biodata' => $biodata, 'assesmenPerawat' => $asesmenPerawat, 'masalahKeperawatan' => $masalahKeperawatan, 'rencanaKeperawatan' => $rencanaKeperawatan]);
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
     }

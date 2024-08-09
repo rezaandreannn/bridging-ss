@@ -201,6 +201,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/diagnosa_fisioterapi', [FisioController::class, 'diagnosaDokter'])->name('diagnosa.dokter');
         Route::get('cetak_cppt/{no_mr}', [FisioController::class, 'cetakFormulir'])->name('cppt.cetakFormulir');
 
+
+
         // informed concent
         Route::get('informed_concent/list_pasien', [InformedConcentController::class, 'index'])->name('informed_concent.index');
         Route::get('informed_concent/add', [InformedConcentController::class, 'create'])->name('informed_concent.add');
@@ -239,6 +241,8 @@ Route::middleware('auth')->group(function () {
         Route::get('berkas_fisio/rujukan', [BerkasFisioController::class, 'cetak_rujukan'])->name('berkas.rujukan');
         Route::get('berkas_fisio/informed', [BerkasFisioController::class, 'cetak_informed'])->name('berkas.informed');
         Route::get('/berkas_fisio/harian', [BerkasFisioController::class, 'berkas'])->name('berkas.harian');
+        // Bukti Pelayanan Alat Kesehatan
+        Route::get('berkas_fisio/pelayanan_alat/{no_mr}', [BerkasFisioController::class, 'berkasAlat'])->name('berkas.alat');
     });
 
     // Poli Mata
@@ -363,16 +367,18 @@ Route::middleware('auth')->group(function () {
         Route::get('riwayatRekamMedis/bymr/detailBerkas/cppt/{noReg}', [RekamMedisByMrController::class, 'detail_cppt'])->name('rm.cppt');
         Route::get('riwayatRekamMedis/bymr/resumeRanap/{noReg}', [RekamMedisByMrController::class, 'resumeRanap'])->name('rm.ranap');
         Route::get('riwayatRekamMedis/bymr/resumeRajal/{noReg}', [RekamMedisByMrController::class, 'resumeRajal'])->name('rm.rajal');
+
         // ------------------- Berkas Harian ------------------- //
         Route::get('riwayatRekamMedis/harian/list', [RekamMedisHarianController::class, 'index'])->name('rm.harian');
+
         // ------------------- Berkas IGD ---------------------- //
         Route::get('riwayatRekamMedis/igd/list', [RekamMedisIgdController::class, 'index'])->name('rm.igd');
         // Report Rekam Medis IGD
-        Route::get('riwayaRekamMedis/berkasIgd/cetakRM/{noReg}', [Berkas_rm_controller::class, 'cetakRMIgd'])->name('rm.berkasIgd');
+        Route::get('riwayaRekamMedis/igd/berkasIGD/cetakRM/{noReg}', [Berkas_rm_controller::class, 'cetakRMIgd'])->name('rm.berkasIgd');
         // Report Berkas IGD
-        Route::get('riwayatRekamMedis/berkasIGD/cetakResep/{nomr}/{noReg}', [RekamMedisIgdController::class, 'cetakResepIGD'])->name('rm.cetakResepIGD');
-        Route::get('riwayatRekamMedis/berkasIGD/cetakRad/{nomr}/{noReg}', [RekamMedisIgdController::class, 'cetakRadIGD'])->name('rm.cetakRadIGD');
-        Route::get('riwayatRekamMedis/berkasIGD/cetakLab/{nomr}/{noReg}', [RekamMedisIgdController::class, 'cetakLabIGD'])->name('rm.cetakLabIGD');
+        Route::get('riwayatRekamMedis/igd/berkasIGD/cetakResep/{nomr}/{noReg}', [RekamMedisIgdController::class, 'cetakResepIGD'])->name('rm.cetakResepIGD');
+        Route::get('riwayatRekamMedis/igd/berkasIGD/cetakRad/{nomr}/{noReg}', [RekamMedisIgdController::class, 'cetakRadIGD'])->name('rm.cetakRadIGD');
+        Route::get('riwayatRekamMedis/igd/berkasIGD/cetakLab/{nomr}/{noReg}', [RekamMedisIgdController::class, 'cetakLabIGD'])->name('rm.cetakLabIGD');
     });
 
     // Riwayat Rekam Medis

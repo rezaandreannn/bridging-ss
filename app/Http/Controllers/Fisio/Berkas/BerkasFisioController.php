@@ -60,13 +60,28 @@ class BerkasFisioController extends Controller
         return view($this->view . 'cppt', compact('title', 'biodatas', 'transaksis', 'fisioModel'));
     }
 
+    public function berkasAlat($no_mr)
+    {
+        // Cetak PDF
+        $date = date('dMY');
+        $filename = 'Pelayanan-' . $date;
+
+        $title = $this->prefix . ' ' . 'Alat';
+        $biodata = $this->pasien->biodataPasienByMr($no_mr);
+        $usia = Carbon::parse($biodata->TGL_LAHIR)->age;
+
+        $pdf = PDF::loadview('pages.fisioterapi.cetak.pelayananAlat', ['title' => $title, 'biodata' => $biodata, 'usia' => $usia]);
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
+    }
+
     public function cetak_rm_dokter($no_reg)
     {
         set_time_limit(300);
         $asesmenDokter = $this->berkasFisio->getAsesmenDokter($no_reg);
         $namaDokter = DB::connection('db_rsmm')->table('DOKTER')->select('Nama_Dokter')->where('Kode_Dokter', $asesmenDokter->create_by)->first();
         $terapis = $this->berkasFisio->getTerapiDokter($no_reg);
-        
+
         $lembarUjiFungsi = $this->berkasFisio->getLembarUjiFungsi($no_reg);
         $lembarSpkfr = $this->berkasFisio->getLembarSpkfr($no_reg);
         // dd($lembarSpkfr);
@@ -83,7 +98,7 @@ class BerkasFisioController extends Controller
 
         $title = $this->prefix . ' ' . 'Harian';
 
-        $pdf = PDF::loadview('pages.fisioterapi.berkas.formulir', ['tanggal' => $tanggal, 'title' => $title, 'asesmenDokter' => $asesmenDokter, 'lembarUjiFungsi' => $lembarUjiFungsi, 'lembarSpkfr' => $lembarSpkfr, 'biodata' => $biodata, 'usia' => $usia, 'namaDokter' => $namaDokter, 'ttdPasien' => $ttdPasien,'terapis'=>$terapis]);
+        $pdf = PDF::loadview('pages.fisioterapi.berkas.formulir', ['tanggal' => $tanggal, 'title' => $title, 'asesmenDokter' => $asesmenDokter, 'lembarUjiFungsi' => $lembarUjiFungsi, 'lembarSpkfr' => $lembarSpkfr, 'biodata' => $biodata, 'usia' => $usia, 'namaDokter' => $namaDokter, 'ttdPasien' => $ttdPasien, 'terapis' => $terapis]);
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
     }
