@@ -54,7 +54,7 @@
                                             <td>
                                                 @if ($perawat != null)
                                                     @if($perawat->mdd != '')
-                                                    <a href="" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Cetak</a>
+                                                    <a href="{{ route('ri.cetakKeperawatanRanap', ['noReg' => $perawat->FS_KD_REG]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Cetak</a>
                                                     @endif
                                                 @endif
                                             </td>
@@ -89,8 +89,9 @@
                                         </tr>
                                         <tr>
                                             <td>CPPT</td>
+                                      
                                             <td>
-                                                <a href="" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Detail</a>
+                                                <a href="{{ route('rm.cppt', ['noReg' => $biodata->NO_REG]) }}" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Detail</a>
                                             </td>
                                         </tr>
                                         <tr>
@@ -136,6 +137,36 @@
                                                     @endif
                                                 @endif
                                             </td>
+                                        </tr>
+                                    </tbody>    
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h4 class="card-title">File Scan</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table-striped table" id="table-1">
+                                    <thead>
+                                        <tr>
+                                            <th>Tanggal Uploud</th>
+                                            <th>Kode Reg</th>
+                                            <th>Jenis Berkas</th>
+                                            <th>Nama Berkas</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>22-08-2024</td>
+                                            <td>24-0000002</td>
+                                            <td>Ranap</td>
+                                            <td>Ranap</td>
+                                            <td><a href="" class="btn btn-sm btn-info"><i class="fas fa-edit"></i>Detail</a></td>
                                         </tr>
                                     </tbody>    
                                 </table>

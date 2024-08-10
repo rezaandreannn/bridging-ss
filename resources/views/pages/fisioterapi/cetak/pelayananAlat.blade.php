@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lab</title>
+    <title>Pelayanan Alat</title>
     <style>
         table tr td {
             font-size: 13px;
