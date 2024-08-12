@@ -387,6 +387,7 @@ class AssesmenController extends Controller
 
         $asasmen_perawat = $this->rajal->asasmenPerawatGet($noReg);
         $riwayat = $this->rajal->riwayatGet($noReg);
+        // dd($riwayat);
 
         // dd($masalah_perGet);
         $selected = false;
