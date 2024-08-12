@@ -222,12 +222,12 @@
                     {{ $asesmenDokter->terapi}}
                 </td>
             </tr>
-            <tr>
+            {{-- <tr>
                 <td class="text4">Rencana Tindakan</td>
                 <td class="text4" colspan="2">: {{ $asesmenDokter->rencana_tindakan}}
                     @if($asesmenDokter->rencana_tindakan == 'Ya'),{{ $asesmenDokter->deskripsi_tindakan ?? ''}} @endif
                 </td>
-            </tr>
+            </tr> --}}
             <tr>
                 <td class="text4">Rujuk</td>
                 <td class="text4" colspan="2">: {{ $asesmenDokter->rencana_rujukan}}
@@ -454,7 +454,11 @@
                 <td style="padding-top: 100px;" class="text5">Dokter Pemeriksa</td>
             </tr>
             <tr>
-                <td class="text5" style="padding-left: 150px">{!! DNS2D::getBarcodeHTML($biodata->NAMA_PASIEN, 'QRCODE', 3, 3) !!}</td>
+                <td class="text5">
+                    <img src="storage/ttd/{{$ttdPasien->IMAGE}}" width="80" height="100" />
+                    {{-- <img src="img/logo.png" width="50" height="50" /> --}}
+                    {{-- {!! DNS2D::getBarcodeHTML($biodata->NAMA_PASIEN, 'QRCODE', 3, 3) !!} --}}
+                </td>
                 <td class="text5" style="padding-left: 130px">{!! DNS2D::getBarcodeHTML($namaDokter->Nama_Dokter, 'QRCODE', 3, 3) !!}</td>
             </tr>
             <tr>

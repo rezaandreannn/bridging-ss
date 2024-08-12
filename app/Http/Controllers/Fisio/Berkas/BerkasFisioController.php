@@ -84,9 +84,9 @@ class BerkasFisioController extends Controller
 
         $lembarUjiFungsi = $this->berkasFisio->getLembarUjiFungsi($no_reg);
         $lembarSpkfr = $this->berkasFisio->getLembarSpkfr($no_reg);
-        // dd($lembarSpkfr);
         $biodata = $this->rajal->pasien_bynoreg($no_reg);
-        $ttdPasien = DB::connection('pku')->table('TTD_PASIEN_MASTER')->select('IMAGE')->where('NO_MR_PASIEN', $biodata->NO_MR)->first();
+        $ttdPasien = $this->berkasFisio->getTtdPasienByMr($biodata->NO_MR);
+        // dd($ttdPasien);
 
         $usia = Carbon::parse($biodata->TGL_LAHIR)->age;
 

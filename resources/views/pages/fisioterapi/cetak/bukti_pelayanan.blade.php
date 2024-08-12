@@ -157,7 +157,8 @@
             <td style="text-align: center">{{ $item->TANGGAL_FISIO }}</td>
             <td style="text-align: center">
                 <div class="gambar">
-                    {!! DNS2D::getBarcodeHTML($item->PASIEN_USERNAME, 'QRCODE', 2, 2) !!}
+                    {{-- {!! DNS2D::getBarcodeHTML($item->PASIEN_USERNAME, 'QRCODE', 2, 2) !!} --}}
+                    <img src="storage/ttd/{{$ttdPasien->IMAGE}}" width="60" height="80" />
                 </div>
             </td>
             <td style="text-align: center">
