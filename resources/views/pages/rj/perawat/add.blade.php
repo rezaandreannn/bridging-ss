@@ -37,18 +37,17 @@
             <form action="{{ route('rj.store') }}" method="post">
                 @csrf
                 <div class="card mb-3" style="background-color: #ec5353;">
-                <div class="container-fluid mt-2">
-                    <div class="row">
-                    <div class="col-md-12">
-                        <label><color style="color : yellow;">High Risk :</color> <color style="color : white;">{{$biodata->FS_HIGH_RISK!='' ? $biodata->FS_HIGH_RISK : '-' }} </color></label>
-                    </div>
-                    <div class="col-md-12">
-                        <label><color style="color : yellow;">Alergi :</color> <color style="color : white;">{{$biodata->FS_ALERGI!='' ? $biodata->FS_ALERGI : '-' }} ( {{$biodata->FS_REAK_ALERGI!='' ? $biodata->FS_REAK_ALERGI : '-' }} )</color></label>
+                    <div class="container-fluid mt-2">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label><color style="color : yellow;">High Risk :</color> <color style="color : white;">{{$biodata->FS_HIGH_RISK!='' ? $biodata->FS_HIGH_RISK : '-' }} </color></label>
+                            </div>
+                            <div class="col-md-12">
+                                <label><color style="color : yellow;">Alergi :</color> <color style="color : white;">{{$biodata->FS_ALERGI!='' ? $biodata->FS_ALERGI : '-' }} ( {{$biodata->FS_REAK_ALERGI!='' ? $biodata->FS_REAK_ALERGI : '-' }} )</color></label>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            
-                </div>
-</div>
                 <div class="card mb-3">
                     <div class="card-header">
                         <h4 class="card-title">Allowanamnesa dan Pemeriksaan Fisik</h4>
@@ -72,7 +71,6 @@
                                         @enderror
                                 </div>
                             </div>
-
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Pemeriksaan Fisik</label>

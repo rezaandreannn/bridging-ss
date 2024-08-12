@@ -343,7 +343,7 @@ class AssesmenController extends Controller
                 //     return redirect()->route('ttd.pasien2', ['no_mr' => $request->input('NO_MR'), 'kode_dokter' => $request->input('KODE_DOKTER')]);
                 // } else {
 
-                    return redirect('rj/rawat_jalan?kode_dokter=' . $request->input('KODE_DOKTER'))->with('success', 'Data Pasien Added successfully!');
+                return redirect('rj/rawat_jalan?kode_dokter=' . $request->input('KODE_DOKTER'))->with('success', 'Data Pasien Added successfully!');
                 // }
             } else {
 
@@ -384,6 +384,7 @@ class AssesmenController extends Controller
         $biodata = $this->rajal->pasien_bynoreg($noReg);
 
         $asasmen_perawat = $this->rajal->asasmenPerawatGet($noReg);
+        // dd($biodata);
         $riwayat = $this->rajal->riwayatGet($noReg);
 
         // dd($masalah_perGet);

@@ -28,25 +28,26 @@
         <div class="section-body">
             <!-- components biodata pasien by no reg -->
             @include('components.biodata-pasien-bynoreg')
+            <form action="" method="POST">
+            @csrf
             <!-- components biodata pasien by no reg -->
-            <div class="card card-primary">
-                <div class="card-header card-success card-khusus-header">
-                    <h6 class="card-khusus-title">Form Keperawatan</h6>
-                </div>
-                <div class="card-body card-khusus-body">
-                    <form action="" method="POST">
-                        @csrf
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h4 class="card-title">Allowanamnesa & Riwayat Alergi</h4>
+                    </div>
+                    <!-- include form -->
+                    <div class="card-body">
                         <div class="row">
-                            <div class="card-header card-success">
-                                <h4 class="card-title">Subjektif</h4>
-                            </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Keluhan Utama <code>*</code></label>
-                                    <textarea name="keluhan_utama" class="form-control  @error('keluhan_utama') is-invalid  
+                                    <label>Keluhan Utama (Anamnesa) <code>*</code></label>
+                                    <input type="hidden" name="FS_KD_REG" value="{{ $noReg }}" />
+                                    <input type="hidden" name="KODE_DOKTER" value="{{ $biodata->Kode_Dokter}}" />
+                                    <input type="hidden" name="NO_MR" value="{{ $biodata->NO_MR}}" />
+                                    <textarea name="FS_ANAMNESA" class="form-control  @error('FS_ANAMNESA') is-invalid  
                                         @enderror" rows="3" placeholder="Masukan ..."></textarea>
                                 </div>
-                                @error('keluhan_utama')
+                                @error('FS_ANAMNESA')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -54,104 +55,43 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Keluhan Penyakit Sekarang</label>
-                                    <input type="text" name="keluhan_penyakit" class="form-control @error('keluhan_penyakit') is-invalid @enderror">
-                                    @error('keluhan_penyakit')
-                                    <span class="text-danger" style="font-size: 12px;">
-                                        {{ $message }}
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Status Kehamilan</label>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="status_kehamilan" value="Tidak" id="status_kehamilan1" @if(old('Tidak', '0' )=='Tidak' ) checked @endif>
-                                                <label class="form-check-label" for="status_kehamilan1">
-                                                    Tidak
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="status_kehamilan" value="Ya" id="status_kehamilan2" @if(old('status_kehamilan', '0' )=='Ya' ) checked @endif>
-                                                <label class="form-check-label" for="status_kehamilan2">
-                                                    Ya
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
                                     <label>Riwayat Penyakit Dahulu</label>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="riwayat_penyakit" value="Tidak Ada" id="riwayat_penyakit1" @if(old('riwayat_penyakit', '0' )=='Tidak Ada' ) checked @endif>
-                                                    <label class="form-check-label" for="riwayat_penyakit1">
-                                                        Tidak Ada
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="riwayat_penyakit" value="Ada" id="riwayat_penyakit1" @if(old('riwayat_penyakit', '0' )=='Ada' ) checked @endif>
-                                                    <label class="form-check-label" for="riwayat_penyakit1">
-                                                        Ada
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input type="text" name="riwayat_penyakit" class="form-control @error('riwayat_penyakit') is-invalid  
-                                        @enderror" value="{{old('riwayat_penyakit')}}" placeholder="Dengan Penyakit....">
-                                        </div>
-                                        @error('jenis_tindakan')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                    </div>
+                                    <input type="text" class="form-control" name="FS_RIW_PENYAKIT_DAHULU" value="{{$biodata->FS_RIW_PENYAKIT_DAHULU!='' ? $biodata->FS_RIW_PENYAKIT_DAHULU : '-' }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Riwayat Alergi</label>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="riwayat_alergi" value="Tidak Ada" id="riwayat_alergi1" @if(old('riwayat_alergi', '0' )=='Tidak Ada' ) checked @endif>
-                                                    <label class="form-check-label" for="riwayat_alergi1">
-                                                        Tidak Ada
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="riwayat_alergi" value="Ada" id="riwayat_alergi2" @if(old('riwayat_alergi', '0' )=='Ada' ) checked @endif>
-                                                    <label class="form-check-label" for="riwayat_alergi2">
-                                                        Ada
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input type="text" name="riwayat_alergi" class="form-control @error('riwayat_alergi') is-invalid  
-                                        @enderror" value="{{old('riwayat_alergi')}}" placeholder="Ada...">
-                                        </div>
-                                        @error('riwayat_alergi')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                    </div>
+                                    <label>Riwayat Penyakit keluarga</label>
+                                    <input type="text" class="form-control" name="FS_RIW_PENYAKIT_DAHULU2" value="{{$biodata->FS_RIW_PENYAKIT_DAHULU2!='' ? $biodata->FS_RIW_PENYAKIT_DAHULU2 : '-' }}">
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Riwayat Alergi<code>*</code></label>
+                                    <input type="text" class="form-control" name="FS_ALERGI" value="{{$biodata->FS_ALERGI!='' ? $biodata->FS_ALERGI : '-' }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Reaksi Alergi<code>*</code></label>
+                                    <input type="text" class="form-control" name="FS_REAK_ALERGI" value="{{$biodata->FS_REAK_ALERGI!='' ? $biodata->FS_REAK_ALERGI : '-' }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- include form -->
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h4 class="card-title">Spiritual dan Kultural pasien</h4>
+                    </div>
+                    <!-- include form -->
+                    <div class="card-body">
+                        <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="d-block">Agama</label>
-                                    <select name="agama" id="" class="form-control select2 @error('agama')  is-invalid @enderror">
+                                    <select name="FS_AGAMA" id="agama" class="form-control select2 @error('agama')  is-invalid @enderror">
                                         <option value="" selected disabled>--Pilih Agama--</option>
                                         <option value="Islam" @if(old('agama')=='Islam' ) selected @endif>Islam</option>
                                         <option value="Kristen" @if(old('agama')=='Kristen' ) selected @endif>Kristen</option>
@@ -170,13 +110,13 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="d-block">Status Pernikahan</label>
-                                    <select name="status_nikah" id="" class="form-control select2 @error('status_nikah')  is-invalid @enderror">
+                                    <select name="PERNIKAHAN" id="pernikahan" class="form-control select2 @error('pernikahan')  is-invalid @enderror">
                                         <option value="" selected disabled>--Pilih Status--</option>
-                                        <option value="Single" @if(old('status_nikah')=='Single' ) selected @endif>Single</option>
-                                        <option value="Menikah" @if(old('status_nikah')=='Menikah' ) selected @endif>Menikah</option>
-                                        <option value="Janda/Duda" @if(old('status_nikah')=='Janda/Duda' ) selected @endif>Janda/Duda</option>
+                                        <option value="Single" @if(old('pernikahan')=='Single' ) selected @endif>Single</option>
+                                        <option value="Menikah" @if(old('pernikahan')=='Menikah' ) selected @endif>Menikah</option>
+                                        <option value="Janda/Duda" @if(old('pernikahan')=='Janda/Duda' ) selected @endif>Janda/Duda</option>
                                     </select>
-                                    @error('status_nikah')
+                                    @error('pernikahan')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}
                                     </span>
@@ -186,7 +126,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="d-block">Pekerjaan</label>
-                                    <select name="pekerjaan" id="" class="form-control select2 @error('pekerjaan')  is-invalid @enderror">
+                                    <select name="JOB" id="job" class="form-control select2 @error('pekerjaan')  is-invalid @enderror">
                                         <option value="" selected disabled>--Pilih Pekerjaan--</option>
                                         <option value="PNS" @if(old('pekerjaan')=='PNS' ) selected @endif>PNS</option>
                                         <option value="Karyawan Swasta" @if(old('pekerjaan')=='Karyawan Swasta' ) selected @endif>Karyawan Swasta</option>
@@ -199,30 +139,36 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="card-header card-success">
-                                <h4 class="card-title">Objektif</h4>
-                            </div>
+                        </div>
+                    </div>
+                    <!-- include form -->
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h4 class="card-title">Status Psikologis, Sosial dan Fungsional</h4>
+                    </div>
+                    <!-- include form -->
+                    <div class="card-body">
+                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Status Psikologi</label>
-                                    <select name="status_psikologi" id="" class="form-control select2 @error('status_psikologi')  is-invalid @enderror">
-                                        <option value="" selected disabled>--Pilih Status Psikologi--</option>
-                                        <option value="Tenang" @if(old('status_psikologi')=='Tenang' ) selected @endif>Tenang</option>
-                                        <option value="Cemas" @if(old('status_psikologi')=='Cemas' ) selected @endif>Cemas</option>
-                                        <option value="Marah" @if(old('status_psikologi')=='Marah' ) selected @endif>Marah</option>
-                                        <option value="Depresi" @if(old('status_psikologi')=='Depresi' ) selected @endif>Depresi</option>
+                                    <label>Status Psikologis</label>
+                                    <select name="FS_STATUS_PSIK" id="" class="form-control select2">
+                                        <option value="">-- pilih --</option>
+                                        <option value="1" onclick='document.getElementById("civstaton3").disabled = true' selected>Tenang</option>
+                                        <option value="2" onclick='document.getElementById("civstaton3").disabled = true'>Cemas</option>
+                                        <option value="3" onclick='document.getElementById("civstaton3").disabled = true'>Takut</option>
+                                        <option value="4" onclick='document.getElementById("civstaton3").disabled = true'>Marah</option>
+                                        <option value="5" onclick='document.getElementById("civstaton3").disabled = true'>Sedih</option>
+                                        <option VALUE="6" onclick='document.getElementById("civstaton3").disabled = false'>Lainnya</option>
                                     </select>
-                                    @error('status_psikologi')
-                                    <span class="text-danger" style="font-size: 12px;">
-                                        {{ $message }}
-                                    </span>
-                                    @enderror
+                                    <input type="hidden" name="FS_STATUS_PSIK2" value="" id="civstaton3" size="32">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Status Mental</label>
-                                    <select name="status_mental" id="" class="form-control select2 @error('status_mental')  is-invalid @enderror">
+                                    <select name="STATUS_MENTAL" id="" class="form-control select2 @error('status_mental')  is-invalid @enderror">
                                         <option value="" selected disabled>--Pilih Status Mental--</option>
                                         <option value="Kooperatif" @if(old('status_mental')=='Kooperatif' ) selected @endif>Kooperatif</option>
                                         <option value="Tidak Kooperatif" @if(old('status_mental')=='Tidak Kooperatif' ) selected @endif>Tidak Kooperatif</option>
@@ -238,8 +184,66 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label>Status fungsional</label>
+                                    <select name="FS_ST_FUNGSIONAL" id="" class="form-control select2">
+                                        <option value="">-- pilih --</option>
+                                        <option value="1" selected>Mandiri</option>
+                                        <option value="2">Perlu Bantuan</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Penglihatan</label>
+                                    <select name="FS_PENGELIHATAN" id="" class="form-control select2">
+                                        <option value="">-- pilih --</option>
+                                        <option value="1" selected>Normal</option>
+                                        <option value="2">Kabur</option>
+                                        <option value="3">Kaca Mata</option>
+                                        <option value="4">Lensa Kontak</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Penciuman</label>
+                                    <select name="FS_PENCIUMAN" id="" class="form-control select2">
+                                        <option value="">-- pilih --</option>
+                                        <option value="1" selected>Normal</option>
+                                        <option value="2">Tidak Normal</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Pendengaran</label>
+                                    <select name="FS_PENDENGARAN" id="" class="form-control select2">
+                                        <option value="">-- pilih --</option>
+                                        <option value="1" selected>Normal</option>
+                                        <option value="2">Tidak Normal (Kanan)</option>
+                                        <option value="3">Tidak Normal (Kiri)</option>
+                                        <option value="4">Tidak Normal (Kanan & Kiri)</option>
+                                        <option value="5">Alat Bantu Dengar (Kanan)</option>
+                                        <option value="6">Alat Bantu Dengar (Kiri)</option>
+                                        <option value="7">Alat Bantu Dengar (Kanan & Kiri)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- include form -->
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h4 class="card-title">Pemeriksaan Fisik</h4>
+                    </div>
+                    <!-- include form -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label>Keadaan Umum</label>
-                                    <input type="text" name="keadaan_umum" class="form-control @error('keadaan_umum') is-invalid  
+                                    <input type="text" name="KEADAAN_UMUM" class="form-control @error('keadaan_umum') is-invalid  
                                         @enderror" value="{{ old('keadaan_umum')}}">
                                 </div>
                                 @error('keadaan_umum')
@@ -251,7 +255,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Kesadaran</label>
-                                    <input type="text" name="kesadaran" class="form-control @error('kesadaran') is-invalid  
+                                    <input type="text" name="KESADARAN" class="form-control @error('kesadaran') is-invalid  
                                         @enderror" value="{{ old('kesadaran')}}">
                                 </div>
                                 @error('kesadaran')
@@ -260,24 +264,21 @@
                                 </div>
                                 @enderror
                             </div>
-                            <div class="card-header card-success">
-                                <h4 class="card-title">Pemeriksaan Fisik</h4>
-                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>R</label>
                                     <div class="input-group">
-                                        <input type="text" name="vital_r" class="form-control @error('vital_r') is-invalid  
+                                        <input type="text" name="respirasi" id="respirasi" placeholder="masukkan hanya angka" class="form-control @error('respirasi') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <b>x/menit</b>
                                             </div>
                                         </div>
-                                        @error('vital_r')
-                                        <div class="invalid-feedback">
+                                        @error('respirasi')
+                                        <span class="text-danger" style="font-size: 12px;">
                                             {{ $message }}
-                                        </div>
+                                        </span>
                                         @enderror
                                     </div>
                                 </div>
@@ -286,7 +287,7 @@
                                 <div class="form-group">
                                     <label>Nadi</label>
                                     <div class="input-group">
-                                        <input type="text" name="nadi" class="form-control @error('nadi') is-invalid  
+                                        <input type="text" name="nadi" id="nadi" placeholder="masukkan hanya angka" class="form-control @error('nadi') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
@@ -294,18 +295,18 @@
                                             </div>
                                         </div>
                                         @error('nadi')
-                                        <div class="invalid-feedback">
+                                        <span class="text-danger" style="font-size: 12px;">
                                             {{ $message }}
-                                        </div>
+                                        </span>
                                         @enderror
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>TD</label>
+                                    <label>TD</label><code> (contoh : 110/90)</code>
                                     <div class="input-group">
-                                        <input type="text" name="td" class="form-control @error('td') is-invalid  
+                                        <input type="text" name="td" id="td" placeholder="masukkan hanya angka" class="form-control @error('td') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
@@ -313,18 +314,18 @@
                                             </div>
                                         </div>
                                         @error('td')
-                                        <div class="invalid-feedback">
+                                        <span class="text-danger" style="font-size: 12px;">
                                             {{ $message }}
-                                        </div>
+                                        </span>
                                         @enderror
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Suhu</label>
+                                    <label>Suhu</label><code> (gunakan tanda . contoh : 36.5)</code>
                                     <div class="input-group">
-                                        <input type="text" name="suhu" class="form-control @error('suhu') is-invalid  
+                                        <input type="text" name="suhu" id="suhu" placeholder="masukkan hanya angka" class="form-control @error('suhu') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
@@ -332,9 +333,9 @@
                                             </div>
                                         </div>
                                         @error('suhu')
-                                        <div class="invalid-feedback">
+                                        <span class="text-danger" style="font-size: 12px;">
                                             {{ $message }}
-                                        </div>
+                                        </span>
                                         @enderror
                                     </div>
                                 </div>
@@ -343,17 +344,17 @@
                                 <div class="form-group">
                                     <label>Berat Badan</label>
                                     <div class="input-group">
-                                        <input type="text" name="berat_badan" class="form-control @error('berat_badan') is-invalid  
+                                        <input type="text" name="bb" id="bb" placeholder="masukkan hanya angka" class="form-control @error('bb') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <b>Kg</b>
                                             </div>
                                         </div>
-                                        @error('berat_badan')
-                                        <div class="invalid-feedback">
+                                        @error('bb')
+                                        <span class="text-danger" style="font-size: 12px;">
                                             {{ $message }}
-                                        </div>
+                                        </span>
                                         @enderror
                                     </div>
                                 </div>
@@ -362,14 +363,14 @@
                                 <div class="form-group">
                                     <label>Tinggi Badan</label>
                                     <div class="input-group">
-                                        <input type="text" name="berat_badan" class="form-control @error('berat_badan') is-invalid  
+                                        <input type="text" name="tb" id="tb" placeholder="masukkan hanya angka" class="form-control @error('tb') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <b>M/Cm</b>
                                             </div>
                                         </div>
-                                        @error('berat_badan')
+                                        @error('tb')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -381,7 +382,7 @@
                                 <div class="form-group">
                                     <label>Lingkar Kepala</label>
                                     <div class="input-group">
-                                        <input type="text" name="lingkar_kepala" class="form-control @error('lingkar_kepala') is-invalid  
+                                        <input type="text" name="LINGKAR_KEPALA" class="form-control @error('lingkar_kepala') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
@@ -398,9 +399,68 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="d-block">Alat Bantu/Protesa</label>
-                                    <input type="text" name="alat_bantu" class="form-control @error('alat_bantu') is-invalid @enderror">
-                                    @error('alat_bantu')
+                                    <label>Status Gizi</label>
+                                    <div class="col-md-6">
+                                        <div class="form-group" style="display: flex; flex-direction: row;">
+                                            <div class="form-check" style="margin-right: 10px;">
+                                                <input class="form-check-input" type="radio" name="STATUS_GIZI" value="Baik" id="status_gizi1" @if(old('STATUS_GIZI', '0') == 'Baik') checked @endif>
+                                                <label class="form-check-label" for="status_gizi1">
+                                                    Baik
+                                                </label>
+                                            </div>
+                                            <div class="form-check" style="margin-right: 10px;">
+                                                <input class="form-check-input" type="radio" name="STATUS_GIZI" value="Cukup" id="status_gizi2" @if(old('STATUS_GIZI', '0') == 'Cukup') checked @endif>
+                                                <label class="form-check-label" for="status_gizi2">
+                                                    Cukup
+                                                </label>
+                                            </div>
+                                            <div class="form-check" style="margin-right: 10px;">
+                                                <input class="form-check-input" type="radio" name="STATUS_GIZI" value="Kurang" id="status_gizi3" @if(old('STATUS_GIZI', '0') == 'Kurang') checked @endif>
+                                                <label class="form-check-label" for="status_gizi3">
+                                                    Kurang
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- include form -->
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h4 class="card-title">Kebutuhan Fungsional & Brain</h4>
+                    </div>
+                    <!-- include form -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Visus</label>
+                                    <div class="col-md-12">
+                                        <div class="form-group" style="display: flex; flex-direction: row;">
+                                            <div class="input-group" style="margin-right: 10px;">
+                                                <label for="VISUS_OD" class="mr-2 mt-2">
+                                                    OD
+                                                </label>
+                                                <input type="text" placeholder="Inputan Mata Kanan" class="form-control" name="VISUS_OD" id="VISUS_OD">
+                                            </div>
+                                            <div class="input-group" style="margin-right: 10px;">
+                                                <label for="VISUS_OS" class="mr-2 mt-2">
+                                                    OS
+                                                </label>
+                                                <input type="text" placeholder="Inputan Mata Kiri" class="form-control" name="VISUS_OS" id="VISUS_OS">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="d-block">Protesa</label>
+                                    <input type="text" name="PROTESA" class="form-control @error('PROTESA') is-invalid @enderror">
+                                    @error('PROTESA')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}
                                     </span>
@@ -409,29 +469,13 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Status Gizi</label>
-                                    <div class="col-md-6">
-                                        <div class="form-group" style="display: flex; flex-direction: row;">
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="kesadaran" value="Baik" id="kesadaran_baik" @if(old('kesadaran', '0') == 'Baik') checked @endif>
-                                                <label class="form-check-label" for="kesadaran_baik">
-                                                    Baik
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="status_gizi" value="Cukup" id="status_gizi1" @if(old('status_gizi', '0') == 'Cukup') checked @endif>
-                                                <label class="form-check-label" for="status_gizi1">
-                                                    Cukup
-                                                </label>
-                                            </div>
-                                            <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="status_gizi" value="Kurang" id="status_gizi2" @if(old('status_gizi', '0') == 'Kurang') checked @endif>
-                                                <label class="form-check-label" for="status_gizi2">
-                                                    Kurang
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <label class="d-block">Cacat Tubuh</label>
+                                    <input type="text" name="CACAT" class="form-control @error('CACAT') is-invalid @enderror">
+                                    @error('CACAT')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -440,13 +484,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group" style="display: flex; flex-direction: row;">
                                             <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="adl" value="Mandiri" id="adl1" @if(old('adl', '0') == 'Mandiri') checked @endif>
+                                                <input class="form-check-input" type="radio" name="ADL" value="Mandiri" id="adl1" @if(old('ADL', '0') == 'Mandiri') checked @endif>
                                                 <label class="form-check-label" for="adl1">
                                                     Mandiri
                                                 </label>
                                             </div>
                                             <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="adl" value="Dibantu" id="adl2" @if(old('adl', '0') == 'Dibantu') checked @endif>
+                                                <input class="form-check-input" type="radio" name="ADL" value="Dibantu" id="adl2" @if(old('ADL', '0') == 'Dibantu') checked @endif>
                                                 <label class="form-check-label" for="adl2">
                                                     Dibantu
                                                 </label>
@@ -454,83 +498,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>                           
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Apakah Pasien tampak tidak seimbang(Sempoyongan/limbung)?</label>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="get_up" value="Ya" id="get_up1" @if(old('get_up', '0' )=='Ya' ) checked @endif>
-                                                <label class="form-check-label" for="get_up1">
-                                                    Ya
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="get_up" value="Tidak" id="get_up2" @if(old('get_up', '0' )=='Tidak' ) checked @endif>
-                                                <label class="form-check-label" for="get_up2">
-                                                    Tidak
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Apakah Pasien memegang pinggiran kursi/benda lain saat akan duduk?</label>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="go_test" value="Ya" id="go_test1" @if(old('go_test', '0' )=='Ya' ) checked @endif>
-                                                <label class="form-check-label" for="go_test1">
-                                                    Ya
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="go_test" value="Tidak" id="go_test2" @if(old('go_test', '0' )=='Tidak' ) checked @endif>
-                                                <label class="form-check-label" for="go_test2">
-                                                    Tidak
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Visus</label>
-                                    <div class="col-md-12">
-                                        <div class="form-group" style="display: flex; flex-direction: row;">
-                                            <div class="input-group" style="margin-right: 10px;">
-                                                <label for="visus_od" class="mr-2 mt-2">
-                                                    OD
-                                                </label>
-                                                <input type="text" class="form-control" name="visus_od" id="visus_od">
-                                            </div>
-                                            <div class="input-group" style="margin-right: 10px;">
-                                                <label for="visus_os" class="mr-2 mt-2">
-                                                    OS
-                                                </label>
-                                                <input type="text" class="form-control" name="visus_os" id="visus_os">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="d-block">Cacat Tubuh</label>
-                                    <input type="text" name="cacat_tubuh" class="form-control @error('cacat_tubuh') is-invalid @enderror">
-                                    @error('cacat_tubuh')
-                                    <span class="text-danger" style="font-size: 12px;">
-                                        {{ $message }}
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="card-header card-success">
-                                <h4 class="card-title">B3 (Brain)</h4>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -538,13 +505,13 @@
                                     <div class="col-md-12">
                                         <div class="form-group" style="display: flex; flex-direction: row;">
                                             <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="reflek_cahaya" value="Positif" id="reflek_cahaya1" @if(old('reflek_cahaya', '0' )=='Positif' ) checked @endif>
+                                                <input class="form-check-input" type="radio" name="REFLEK_CAHAYA" value="Positif" id="reflek_cahaya1" @if(old('REFLEK_CAHAYA', '0' )=='Positif' ) checked @endif>
                                                 <label class="form-check-label" for="reflek_cahaya1">
                                                     Positif
                                                 </label>
                                             </div>
                                             <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="reflek_cahaya" value="Negatif" id="reflek_cahaya2" @if(old('reflek_cahaya', '0' )=='Negatif' ) checked @endif>
+                                                <input class="form-check-input" type="radio" name="REFLEK_CAHAYA" value="Negatif" id="reflek_cahaya2" @if(old('REFLEK_CAHAYA', '0' )=='Negatif' ) checked @endif>
                                                 <label class="form-check-label" for="reflek_cahaya2">
                                                     Negatif
                                                 </label>
@@ -559,13 +526,13 @@
                                     <div class="col-md-12">
                                         <div class="form-group" style="display: flex; flex-direction: row;">
                                             <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="pupil" value="Isokor" id="pupil1" @if(old('pupil', '0' )=='Isokor' ) checked @endif>
+                                                <input class="form-check-input" type="radio" name="PUPIL" value="Isokor" id="pupil1" @if(old('PUPIL', '0' )=='Isokor' ) checked @endif>
                                                 <label class="form-check-label" for="pupil1">
                                                     Isokor
                                                 </label>
                                             </div>
                                             <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="pupil" value="Anisokor" id="pupil2" @if(old('pupil', '0' )=='Anisokor' ) checked @endif>
+                                                <input class="form-check-input" type="radio" name="PUPIL" value="Anisokor" id="pupil2" @if(old('PUPIL', '0' )=='Anisokor' ) checked @endif>
                                                 <label class="form-check-label" for="pupil2">
                                                     Anisokor
                                                 </label>
@@ -580,13 +547,13 @@
                                     <div class="col-md-12">
                                         <div class="form-group" style="display: flex; flex-direction: row;">
                                             <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="kelumpuhan" value="Ada" id="kelumpuhan1" @if(old('kelumpuhan', '0') == 'Ada') checked @endif>
+                                                <input class="form-check-input" type="radio" name="LUMPUH" value="Ada" id="kelumpuhan1" @if(old('LUMPUH', '0') == 'Ada') checked @endif>
                                                 <label class="form-check-label" for="kelumpuhan1">
                                                     Ada
                                                 </label>
                                             </div>
                                             <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="kelumpuhan" value="Tidak Ada" id="kelumpuhan2" @if(old('kelumpuhan', '0') == 'Tidak Ada') checked @endif>
+                                                <input class="form-check-input" type="radio" name="LUMPUH" value="Tidak Ada" id="kelumpuhan2" @if(old('LUMPUH', '0') == 'Tidak Ada') checked @endif>
                                                 <label class="form-check-label" for="kelumpuhan2">
                                                     Tidak Ada
                                                 </label>
@@ -601,13 +568,13 @@
                                     <div class="col-md-12">
                                         <div class="form-group" style="display: flex; flex-direction: row;">
                                             <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="pusing" value="Tidak Ada" id="pusing1" @if(old('pusing', '0') == 'Tidak Ada') checked @endif>
+                                                <input class="form-check-input" type="radio" name="PUSING" value="Tidak Ada" id="pusing1" @if(old('PUSING', '0') == 'Tidak Ada') checked @endif>
                                                 <label class="form-check-label" for="pusing1">
                                                     Tidak Ada
                                                 </label>
                                             </div>
                                             <div class="form-check" style="margin-right: 10px;">
-                                                <input class="form-check-input" type="radio" name="pusing" value="Ada" id="pusing2" @if(old('pusing', '0') == 'Ada') checked @endif>
+                                                <input class="form-check-input" type="radio" name="PUSING" value="Ada" id="pusing2" @if(old('PUSING', '0') == 'Ada') checked @endif>
                                                 <label class="form-check-label" for="pusing2">
                                                     Ada
                                                 </label>
@@ -616,12 +583,72 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-header card-success">
-                                <h4 class="card-title">Analisis & Rencana</h4>
+                        </div>
+                    </div>
+                    <!-- include form -->
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h4 class="card-title">Asesmen Jatuh</h4>
+                    </div>
+                    <!-- include form -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group clearfix">
+                                    <label>Pasien berjalan tidak seimbang / sempoyongan</label>
+                                    <select name="FS_CARA_BERJALAN1" class="form-control select2" onchange="click1(this)">
+                                        <option value="">--Pilih Data--</option>
+                                        <option value="0">TIDAK</option>
+                                        <option value="1">YA</option>
+                                    </select>
+                                </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group clearfix">
+                                    <label>
+                                        Pasien berjalan menggunakan alat bantu
+                                    </label>
+                                    <select name="FS_CARA_BERJALAN2" class="form-control select2" onchange="click2(this)">
+                                        <option value="">--Pilih Data--</option>
+                                        <option value="0">TIDAK</option>
+                                        <option value="1">YA</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group clearfix">
+                                    <label for="check3">
+                                        Pada saat akan duduk pasien memegang benda untuk menopang
+                                    </label>
+                                    <select name="FS_CARA_DUDUK" class="form-control select2" onchange="click3(this)">
+                                        <option value="">--Pilih Data--</option>
+                                        <option value="0">TIDAK</option>
+                                        <option value="1">YA</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <input type="hidden" id="hasil_check1">
+                            <input type="hidden" id="hasil_check2">
+                            <input type="hidden" id="hasil_check3">
+                            <label for="kesimpulan" class="col-sm-2 col-form-label">Kesimpulan : </label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control-plaintext" id="kesimpulan_asesmen_jatuh" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- include form -->
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h4 class="card-title">Analisis & Rencana</h4>
+                    </div>
+                    <!-- include form -->
+                    <div class="card-body">
+                        <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Diagnosa Keperawatan Kebidanan</label>
+                                    <label>Diagnosa Keperawatan</label>
                                     <textarea name="diagnosa_keperawatan" class="form-control  @error('diagnosa_keperawatan') is-invalid  
                                         @enderror" rows="3" placeholder="Masukan ..."></textarea>
                                 </div>
@@ -633,9 +660,13 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Masalah Keperawatan Kebidanan</label>
-                                    <textarea name="masalah_keperawatan" class="form-control  @error('masalah_keperawatan') is-invalid  
-                                        @enderror" rows="3" placeholder="Masukan ..."></textarea>
+                                    <label>Masalah Keperawatan</label>
+                                    <select name="tujuan[]" id="masalah_perawatan" class="form-control select2" multiple="multiple" data-placeholder="Pilih Masalah Keperawatan" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                        <option value="">-- pilih --</option>
+                                        @foreach ($masalah_perawatan as $mk)
+                                        <option value="{{ $mk->FS_KD_DAFTAR_DIAGNOSA }}" >{{ $mk->FS_NM_DIAGNOSA }}</tion>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 @error('masalah_keperawatan')
                                 <div class="invalid-feedback">
@@ -645,11 +676,15 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Tindakan Keperawatan/Kebidanan</label>
-                                    <textarea name="tindakan_keperawatan" class="form-control  @error('tindakan_keperawatan') is-invalid  
-                                        @enderror" rows="3" placeholder="Masukan ..."></textarea>
+                                    <label>Rencana Keperawatan</label>
+                                    <select multiple name="tembusan[]" id="rencana_perawatan" class="form-control select2" multiple="multiple" data-placeholder="Pilih Rencana Keperawatan" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                        <option value="">-- pilih --</option>
+                                        @foreach ($rencana_perawatan as $rp)
+                                        <option value="{{ $rp->FS_KD_TRS }}" >{{ $rp->FS_NM_REN_KEP }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                @error('tindakan_keperawatan')
+                                @error('rencana_perawatan')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -699,16 +734,15 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     </div>
+                    <!-- include form -->
                 </div>
-                <div class="card-body card-khusus-body">
-                    <label>*Bismillahirohmanirrohim, saya dengan sadar dan penuh tanggung jawab mengisikan formulir ini dengan data yang benar </label>
-                    <div class="text-left">
+                <div class="text-left">
                         {{-- <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button> --}}
                         <a href="{{ route('poliMata.assesmenAwal', ['noReg' => $biodata->NO_REG]) }}" class="btn btn-primary mb-2"><i class="fas fa-save"></i>     Simpan</a>
-                    </div>
                 </div>
-                </form>
+            </form>
             </div>
         </div>
     </section>
@@ -732,6 +766,91 @@
         document.getElementById("filterForm").value = "";
         alert('Filter telah direset!');
         window.location.href = "{{ route('rm.bymr') }}";
+    }
+</script>
+{{-- SCRIPT VITAL SIGN --}}
+<script>
+    document.getElementById('td').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('suhu').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('nadi').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('bb').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('tb').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('respirasi').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+</script>
+{{-- SCRIPT ASSESMEN JATUH --}}
+<script type="text/javascript">
+     function click1(selected) {
+        var checkbox1 = selected.value
+        $("#hasil_check1").html(checkbox1);
+        score_skrining_asasmen_jatuh();
+    }
+
+    function click2(selected) {
+        var checkbox2 = selected.value
+        $("#hasil_check2").html(checkbox2);
+        score_skrining_asasmen_jatuh();
+    }
+
+    function click3(selected) {
+        var checkbox3 = selected.value
+        $("#hasil_check3").html(checkbox3);
+        score_skrining_asasmen_jatuh();
+    }
+
+     // score skrining asesmen jatuh
+     function score_skrining_asasmen_jatuh() {
+        var score_jatuh = parseInt($("#hasil_check1").text()) + parseInt($("#hasil_check2").text()) + parseInt($("#hasil_check3").text());
+        $("#totalscore_jatuh").html(score_jatuh);
+
+        if (score_jatuh >= 3) {
+            $("#kesimpulan_asesmen_jatuh").val("RISIKO TINGGI");
+        } else if (score_jatuh == 2) {
+            $("#kesimpulan_asesmen_jatuh").val("RISIKO SEDANG");
+        } else if (score_jatuh <= 1) {
+            $("#kesimpulan_asesmen_jatuh").val("RISIKO RENDAH");
+        }
     }
 </script>
 
