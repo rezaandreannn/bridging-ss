@@ -291,7 +291,7 @@
             
             @endcan
 
-            {{-- @can('ttd')
+            @can('ttd')
             <li class="menu-header">Tanda Tangan</li>
             <li class="nav-item dropdown {{ Request::is('ttd/*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-signature"></i> <span>Tanda Tangan</span></a>
@@ -306,7 +306,7 @@
                     </li>
                 </ul>
             </li>
-            @endcan --}}
+            @endcan
            
 
             @can('manage user')
