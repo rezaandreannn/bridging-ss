@@ -156,7 +156,7 @@
                                 <div class="form-group">
                                     <label>Tinggi Badan</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="tb"  name="tb" value="" placeholder="masukkan hanya angka">
+                                        <input type="text" class="form-control" id="tb"  name="tb" value="-" placeholder="masukkan hanya angka">
                                         <div class="input-group-append">
                                             <span class="input-group-text">cm</span>
                                         </div>
@@ -168,7 +168,7 @@
                                 <div class="form-group">
                                     <label>Berat Badan</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="bb"  name="bb" value="" placeholder="masukkan hanya angka">
+                                        <input type="text" class="form-control" id="bb"  name="bb" value="-" placeholder="masukkan hanya angka">
                                         <div class="input-group-append">
                                             <span class="input-group-text">kg</span>
                                         </div>
@@ -213,6 +213,7 @@
                                             <option value="2">Seperti Terbakar</option>
                                             <option value="3">Seperti Tertimpa Beban</option>
                                             <option value="4">Ngilu</option>
+                                            <option value="5">Sedang</option>
                                         </select>
                                     </div>
                                 </div>

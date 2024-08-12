@@ -88,4 +88,19 @@ class BerkasFisioterapi extends Model
             ->first();
         return $data;
     }
+
+            public function getTtdPasienByMr($no_mr)
+            {
+                
+                $data = DB::connection('pku')
+            ->table('TTD_PASIEN_MASTER')
+            ->select(
+                'IMAGE',
+  
+            )
+      
+            ->where('NO_MR_PASIEN', $no_mr)
+            ->first();
+        return $data;
+    }
 }

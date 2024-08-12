@@ -181,6 +181,8 @@ class AssesmenController extends Controller
             'nadi' => 'required',
             'respirasi' => 'required',
             'td' => 'required',
+            'bb' => 'required',
+            'tb' => 'required',
 
         ]);
 
@@ -386,6 +388,7 @@ class AssesmenController extends Controller
         $asasmen_perawat = $this->rajal->asasmenPerawatGet($noReg);
         // dd($biodata);
         $riwayat = $this->rajal->riwayatGet($noReg);
+        // dd($riwayat);
 
         // dd($masalah_perGet);
         $selected = false;

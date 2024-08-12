@@ -10,6 +10,7 @@ use App\Models\Fisioterapi;
 use App\Models\TandaTangan;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\BerkasFisioterapi;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -25,6 +26,7 @@ class FisioController extends Controller
     protected $jenisFisio;
     protected $ttd;
     protected $httpClient;
+    protected $berkasFisio;
     protected $simrsUrlApi;
 
     public function __construct(Fisioterapi $fisio)
@@ -36,7 +38,9 @@ class FisioController extends Controller
         $this->prefix = 'Fisioterapi';
         $this->pasien = new Pasien;
         $this->jenisFisio = new JenisFisio;
+        $this->berkasFisio = new BerkasFisioterapi();
         $this->ttd = new TandaTangan;
+        
 
         $this->httpClient = new Client([
             'headers' => [
@@ -258,7 +262,7 @@ class FisioController extends Controller
             // if ($cek_ttd_pasien < '1') {
             //     return redirect()->route('ttd.pasien', ['no_mr' => $request->input('NO_MR_PASIEN')]);
             // } else {
-<<<<<<< HEAD
+
                 if ((auth()->user()->roles->pluck('name')[0]) == 'dokter fisioterapi') {
                     return redirect()->route('list_pasiens.dokter')->with('success', 'CPPT Berhasil Ditambahkan!');
                 } else {
@@ -266,15 +270,6 @@ class FisioController extends Controller
                 }
                 
                 // return redirect()->route('cppt.detail', ['no_mr' => $request->input('NO_MR'), 'kode_transaksi' => $request->input('KD_TRANSAKSI_FISIO')])->with('success', 'CPPT Berhasil Diperbarui!');
-=======
-            if ((auth()->user()->roles->pluck('name')[0]) == 'dokter fisioterapi') {
-                return redirect()->route('add.spkfr', ['NoMr' => $request->input('NO_MR_PASIEN')])->with('success', 'CPPT Berhasil Ditambahkan!');
-            } else {
-                return redirect()->route('cppt.detail', ['id' => $request->input('ID_TRANSAKSI'), 'kode_transaksi' => $request->input('KODE_TRANSAKSI_FISIO'), 'no_mr' => $request->input('NO_MR_PASIEN')])->with('success', 'CPPT Berhasil Ditambahkan!');
-            }
-
-            // return redirect()->route('cppt.detail', ['no_mr' => $request->input('NO_MR'), 'kode_transaksi' => $request->input('KD_TRANSAKSI_FISIO')])->with('success', 'CPPT Berhasil Diperbarui!');
->>>>>>> 9c0fd338fd757a08d4b3c6dedf01a63f00fa0e81
             // }
         }
     }
@@ -425,10 +420,12 @@ class FisioController extends Controller
 
 
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
+        $ttdPasien = $this->berkasFisio->getTtdPasienByMr($biodatas->NO_MR);
+        // dd($ttdPasien);
 
         $date = date('dMY');
         $filename = 'BuktiLayanan-' . $date;
-        $pdf = PDF::loadview($this->view . 'cetak/bukti_pelayanan', ['title' => $title, 'data' => $data, 'biodatas' => $biodatas, 'lastCppt' => $lastCppt, 'firstCppt' => $firstCppt, 'cekFirstCppt' => $cekFirstCppt]);
+        $pdf = PDF::loadview($this->view . 'cetak/bukti_pelayanan', ['title' => $title, 'data' => $data, 'biodatas' => $biodatas, 'lastCppt' => $lastCppt, 'firstCppt' => $firstCppt, 'cekFirstCppt' => $cekFirstCppt,'ttdPasien'=> $ttdPasien]);
         return $pdf->stream($filename . '.pdf');
     }
 
