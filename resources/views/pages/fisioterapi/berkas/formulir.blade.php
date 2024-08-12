@@ -225,19 +225,19 @@
             <tr>
                 <td class="text4">Rencana Tindakan</td>
                 <td class="text4" colspan="2">: {{ $asesmenDokter->rencana_tindakan}}
-                    @if($asesmenDokter->rencana_tindakan == 'Ya'),{{ $asesmenDokter->deskripsi_tindakan}} @endif
+                    @if($asesmenDokter->rencana_tindakan == 'Ya'),{{ $asesmenDokter->deskripsi_tindakan ?? ''}} @endif
                 </td>
             </tr>
             <tr>
                 <td class="text4">Rujuk</td>
                 <td class="text4" colspan="2">: {{ $asesmenDokter->rencana_rujukan}}
-                    @if($asesmenDokter->rencana_rujukan == 'Ya'),{{ $asesmenDokter->deskripsi_rujukan}} @endif
+                    @if($asesmenDokter->rencana_rujukan == 'Ya'),{{ $asesmenDokter->deskripsi_rujukan ?? ''}} @endif
                 </td>
             </tr>
             <tr>
                 <td class="text4">Konsul</td>
                 <td class="text4" colspan="2">: {{ $asesmenDokter->rencana_konsul}}
-                    @if($asesmenDokter->rencana_konsul == 'Ya'),{{ $asesmenDokter->deskripsi_konsul}} @endif
+                    @if($asesmenDokter->rencana_konsul == 'Ya'),{{ $asesmenDokter->deskripsi_konsul ?? ''}} @endif
                 </td>
             </tr>
             <tr>
