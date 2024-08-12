@@ -171,6 +171,7 @@
                                             <option value="2" {{ ($asasmen_perawat->FS_NYERIQ=='2') ? 'selected' : '' }}>Seperti Terbakar</option>
                                             <option value="3" {{ ($asasmen_perawat->FS_NYERIQ=='3') ? 'selected' : '' }}>Seperti Tertimpa Beban</option>
                                             <option value="4" {{ ($asasmen_perawat->FS_NYERIQ=='4') ? 'selected' : '' }}>Ngilu</option>
+                                            <option value="5" {{ ($asasmen_perawat->FS_NYERIQ=='5') ? 'selected' : '' }}>Sedang</option>
                                         </select>
                                     </div>
                                 </div>
