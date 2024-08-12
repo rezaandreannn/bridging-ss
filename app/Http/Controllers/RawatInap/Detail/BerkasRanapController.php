@@ -51,6 +51,7 @@ class BerkasRanapController extends Controller
         // ----- Rajal ----- //
         $assesmenPerawat = $this->rajal->assesmenPerawatIGD($noReg);
         $perawat = $this->ranap->dataPerawat($noReg);
+        // dd($perawat);
         $masalahKeperawatan = $this->rekam_medis->masalahKepByNoreg($noReg);
         $rencanaKeperawatan = $this->rekam_medis->rencanaKepByNoreg($noReg);
 
