@@ -26,6 +26,7 @@ class BerkasFisioterapi extends Model
                 'rp.Nama_Pasien'
                 )
             ->where('p.No_MR', $no_mr)
+            ->orderBy('p.Tanggal', 'desc')
             ->whereIn('p.Kode_Dokter', array('151', '028'))
             ->get();
             return $data;
@@ -46,6 +47,22 @@ class BerkasFisioterapi extends Model
                 ->first();
                 return $data;
             }
+
+            public function cekAsesmenDokter($no_reg)
+            {
+                
+                $data = DB::connection('pku')
+                ->table('fis_asesmen_dokter')
+                ->select('no_registrasi')
+                    ->where('no_registrasi', $no_reg)
+                    ->first();
+                    
+                    if ($data != null) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
             
             public function getLembarUjiFungsi($no_reg)
             {

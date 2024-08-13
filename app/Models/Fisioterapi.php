@@ -50,12 +50,14 @@ class Fisioterapi extends Model
         // ->get();
 
         // dd($query);
+        $dbpku = DB::connection('pku')->getDatabaseName();
         $date = date('Y-m-d');
         $data = DB::connection('db_rsmm')
             ->table('ANTRIAN as a')
             ->Join('REGISTER_PASIEN as rp', 'a.No_MR', '=', 'rp.No_MR')
             ->Join('PENDAFTARAN as p', 'a.No_MR', '=', 'p.No_MR')
             ->Join('DOKTER as d', 'p.KODE_DOKTER', '=', 'd.KODE_DOKTER')
+            ->leftJoin($dbpku . '.dbo.TR_CPPT_FISIOTERAPI as cppt', 'p.No_Reg', '=', 'cppt.no_registrasi')
             ->select(
                 'a.NOMOR',
 
@@ -67,7 +69,8 @@ class Fisioterapi extends Model
                 'rp.PROVINSI',
                 'rp.NO_MR',
                 'p.NO_REG',
-                'p.KODEREKANAN'
+                'p.KODEREKANAN',
+                'cppt.jenis_fisio'
 
             )
             // ->whereIn('p.Kode_Dokter', function ($query) {
@@ -108,6 +111,7 @@ class Fisioterapi extends Model
             ->Join('REGISTER_PASIEN as rp', 'a.No_MR', '=', 'rp.No_MR')
             ->Join('PENDAFTARAN as p', 'a.No_MR', '=', 'p.No_MR')
             ->Join('DOKTER as d', 'p.KODE_DOKTER', '=', 'd.KODE_DOKTER')
+            
             ->select(
                 'a.NOMOR',
 
@@ -120,6 +124,7 @@ class Fisioterapi extends Model
                 'rp.NO_MR',
                 'p.NO_REG',
                 'p.KODEREKANAN'
+             
 
             )
             ->whereIn('p.Kode_Dokter', function ($query) {
@@ -328,14 +333,23 @@ class Fisioterapi extends Model
         }
     }
 
-    public function cek_cppt($noMr)
+    public function cek_cppt($no_reg)
     {
-        $data = DB::connection('pku')->table('TRANSAKSI_FISIOTERAPI as TS')
-            ->Join('TR_CPPT_FISIOTERAPI as TRC', 'TS.ID_TRANSAKSI', '=', 'TRC.ID_TRANSAKSI_FISIO')->select(
-                'TRC.ID_TRANSAKSI_FISIO'
-            )
-            ->where('TS.NO_MR_PASIEN', $noMr)
-            ->orderBy('TS.KODE_TRANSAKSI_FISIO', 'DESC')
+        $data = DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')
+            ->select('no_registrasi')
+            ->where('no_registrasi', $no_reg)
+            ->first();
+        if ($data != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function cek_status_terapi($no_reg)
+    {
+        $data = DB::connection('pku')->table('fis_status_terapi')
+            ->select('no_registrasi')
+            ->where('no_registrasi', $no_reg)
             ->first();
         if ($data != null) {
             return true;

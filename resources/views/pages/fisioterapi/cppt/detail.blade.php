@@ -50,6 +50,7 @@
                                             <input type="hidden" class="form-control" value="{{ $cppt->ID_TRANSAKSI }}" name="ID_TRANSAKSI" readonly>
                                             <input type="text" class="form-control" value="{{ $cppt->KODE_TRANSAKSI_FISIO}}" name="KODE_TRANSAKSI_FISIO" readonly>
                                             <input type="hidden" class="form-control" name="NO_MR_PASIEN" value="{{ $cppt->NO_MR_PASIEN }}" readonly>
+                                            <input type="hidden" class="form-control" name="no_registrasi" value="{{ $biodatas->No_Reg }}" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -73,7 +74,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Anamnesa / Allow Anamnesa <code>*</code></label>
-                                            <textarea class="form-control" rows="2" name="ANAMNESA"  placeholder="Masukan ...">@if ($cekasesmenperawat == true){{$asesmen_perawat->FS_ANAMNESA}} @elseif ($cektransaksicppt==true) {{$transaksiFisio->ANAMNESA}} @elseif($cekasesmenDokter==true) {{$asesmenDokterFisio->anamnesa}} @else @endif</textarea>
+                                            <textarea class="form-control" rows="2" name="ANAMNESA"  placeholder="Masukan ...">@if ($cekasesmenDokter==true) {{$asesmenDokterFisio->anamnesa}} @elseif ($cektransaksicppt==true) {{$transaksiFisio->ANAMNESA}} @elseif ($cekasesmenperawat == true){{$asesmen_perawat->FS_ANAMNESA}} @else @endif</textarea>
                                         </div>
                                     </div>
                                     
@@ -113,7 +114,7 @@
                                             <div class="card-body">
                                               <h6 class="card-subtitle mb-2"> <span class="badge badge-pill badge-info"><i class="fas fa-info"></i></span> Terapi yang diberikan dokter</h6>
                                               <hr>
-                                              <p>{{$asesmenDokterFisio->terapi}}</p>
+                                              <p>{{$asesmenDokterFisio->terapi ?? ''}}</p>
                                             </div>
                                           </div>
                                     </div>

@@ -49,6 +49,7 @@ class AssesmenDokterController extends Controller
     {
         //
         $listpasien = $this->fisio->getPasienRehabMedis(auth()->user()->username);
+        // dd($listpasien);
         $fisioterapi = new Fisioterapi();
         $title = $this->prefix . ' ' . 'List Pasien';
         return view($this->view . 'dokter.index', compact('title', 'listpasien', 'fisioterapi'));
@@ -504,8 +505,8 @@ class AssesmenDokterController extends Controller
                 'orthosis' => $request->input('orthosis'),
                 'diagnosa_klinis' => $request->input('diagnosa_klinis'),
                 'terapi' => $request->input('jenis_terapi_fisio'),
-                'rencana_tindakan' => $request->input('rencana_tindakan'),
-                'jenis_tindakan' => $request->input('jenis_tindakan') ? $request->input('jenis_tindakan') : null,
+                'rencana_tindakan' => 'Ya',
+                'jenis_tindakan' =>  null,
                 'rencana_rujukan' => $request->input('rencana_rujukan'),
                 'deskripsi_rujukan' => $request->input('deskripsi_rujukan') ? $request->input('deskripsi_rujukan') : null,
                 'rencana_konsul' => $request->input('rencana_konsul'),
@@ -604,8 +605,6 @@ class AssesmenDokterController extends Controller
                 'orthosis' => $request->input('orthosis'),
                 'diagnosa_klinis' => $request->input('diagnosa_klinis'),
                 'terapi' => $request->input('jenis_terapi_fisio'),
-                'rencana_tindakan' => $request->input('rencana_tindakan'),
-                'jenis_tindakan' => $request->input('jenis_tindakan') ? $request->input('jenis_tindakan') : null,
                 'rencana_rujukan' => $request->input('rencana_rujukan'),
                 'deskripsi_rujukan' => $request->input('deskripsi_rujukan') ? $request->input('deskripsi_rujukan') : null,
                 'rencana_konsul' => $request->input('rencana_konsul'),
