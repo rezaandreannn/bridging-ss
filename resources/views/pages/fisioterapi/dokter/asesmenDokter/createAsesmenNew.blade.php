@@ -256,7 +256,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <!-- <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Rencana Tindakan</label>
                                             <div class="row">
@@ -288,7 +288,7 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Rujuk</label>
