@@ -27,7 +27,7 @@ use App\Http\Controllers\IGD\Layanan\SkriningController;
 use App\Http\Controllers\Fisio\InformedConcentController;
 use App\Http\Controllers\Kunjungan\PendaftaranController;
 use App\Http\Controllers\MasterData\JenisFisioController;
-use App\Http\Controllers\Poli\Mata\AssesmenMataController;
+use App\Http\Controllers\Poli\Mata\Perawat\AssesmenMataController;
 use App\Http\Controllers\MasterData\OrganizationController;
 use App\Http\Controllers\Berkas\igd\RekamMedisIgdController;
 use App\Http\Controllers\Fisio\Berkas\BerkasFisioController;
@@ -250,7 +250,10 @@ Route::middleware('auth')->group(function () {
     // Poli Mata
     Route::prefix('pm')->group(function () {
         Route::get('/polimata', [AssesmenMataController::class, 'index'])->name('poliMata.index');
-        Route::get('/polimata/assesmen_keperawatan/{noReg}', [AssesmenMataController::class, 'assesmenKeperawatan'])->name('poliMata.assesmenKeperawatan');
+        Route::post('/polimata', [AssesmenMataController::class, 'store'])->name('poliMata.store');
+        Route::get('/polimata/assesmen_keperawatan/{noReg}', [AssesmenMataController::class, 'Add'])->name('poliMata.assesmenKeperawatanAdd');
+        Route::get('/polimata/assesmen_keperawatan/edit/{noReg}', [AssesmenMataController::class, 'Edit'])->name('poliMata.assesmenKeperawatanEdit');
+        Route::put('/polimata/assesmen_keperawatan/{noReg}', [AssesmenMataController::class, 'update'])->name('poliMata.assesmenKeperawatanUpdate');
         Route::get('/polimata/assesmen_awal/{noReg}', [AssesmenMataController::class, 'create'])->name('poliMata.assesmenAwal');
         Route::get('/polimata/assesmen_mata/{noReg}', [AssesmenMataController::class, 'assesmenMata'])->name('poliMata.assesmenMata');
     });

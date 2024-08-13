@@ -51,7 +51,6 @@ class AssesmenController extends Controller
 
 
         $data = $this->antrean->getDataPasienRajal($kode_dokter);
-
         // menampilkan role user yang login
         // $user = auth()->user()->roles->pluck('name')[0]; 
 
@@ -232,7 +231,6 @@ class AssesmenController extends Controller
                 'mdb' => $userEmr->user_id,
                 'mdd' => date('Y-m-d'),
                 'FS_NYERI' => $request->input('FS_NYERI'),
-
             ]);
 
             $jatuh = DB::connection('pku')->table('TAC_RJ_JATUH')->insert([
@@ -386,7 +384,7 @@ class AssesmenController extends Controller
         $biodata = $this->rajal->pasien_bynoreg($noReg);
 
         $asasmen_perawat = $this->rajal->asasmenPerawatGet($noReg);
-        // dd($biodata);
+        // dd($asasmen_perawat);
         $riwayat = $this->rajal->riwayatGet($noReg);
         // dd($riwayat);
 

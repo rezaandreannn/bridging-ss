@@ -407,13 +407,13 @@
                                     <label>Pendengaran</label>
                                     <select name="FS_PENDENGARAN" id="" class="form-control select2">
                                         <option value="">-- pilih --</option>
-                                        <option value="1" {{ ($asasmen_perawat->FS_PENCIUMAN=='1') ? 'selected' : ''}}>Normal</option>
-                                        <option value="2" {{ ($asasmen_perawat->FS_PENCIUMAN=='2') ? 'selected' : ''}}>Tidak Normal (Kanan)</option>
-                                        <option value="3" {{ ($asasmen_perawat->FS_PENCIUMAN=='3') ? 'selected' : ''}}>Tidak Normal (Kiri)</option>
-                                        <option value="4" {{ ($asasmen_perawat->FS_PENCIUMAN=='4') ? 'selected' : ''}}>Tidak Normal (Kanan & Kiri)</option>
-                                        <option value="5" {{ ($asasmen_perawat->FS_PENCIUMAN=='5') ? 'selected' : ''}}>Alat Bantu Dengar (Kanan)</option>
-                                        <option value="6" {{ ($asasmen_perawat->FS_PENCIUMAN=='6') ? 'selected' : ''}}>Alat Bantu Dengar (Kiri)</option>
-                                        <option value="7" {{ ($asasmen_perawat->FS_PENCIUMAN=='7') ? 'selected' : ''}}>Alat Bantu Dengar (Kanan & Kiri)</option>
+                                        <option value="1" {{ ($asasmen_perawat->FS_PENDENGARAN=='1') ? 'selected' : ''}}>Normal</option>
+                                        <option value="2" {{ ($asasmen_perawat->FS_PENDENGARAN=='2') ? 'selected' : ''}}>Tidak Normal (Kanan)</option>
+                                        <option value="3" {{ ($asasmen_perawat->FS_PENDENGARAN=='3') ? 'selected' : ''}}>Tidak Normal (Kiri)</option>
+                                        <option value="4" {{ ($asasmen_perawat->FS_PENDENGARAN=='4') ? 'selected' : ''}}>Tidak Normal (Kanan & Kiri)</option>
+                                        <option value="5" {{ ($asasmen_perawat->FS_PENDENGARAN=='5') ? 'selected' : ''}}>Alat Bantu Dengar (Kanan)</option>
+                                        <option value="6" {{ ($asasmen_perawat->FS_PENDENGARAN=='6') ? 'selected' : ''}}>Alat Bantu Dengar (Kiri)</option>
+                                        <option value="7" {{ ($asasmen_perawat->FS_PENDENGARAN=='7') ? 'selected' : ''}}>Alat Bantu Dengar (Kanan & Kiri)</option>
                                     </select>
                                 </div>
                             </div>

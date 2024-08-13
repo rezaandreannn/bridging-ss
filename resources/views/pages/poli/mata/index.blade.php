@@ -25,6 +25,39 @@
         </div>
 
         <div class="section-body">
+            <div class="card card-primary">
+                {{-- <form id="filterForm" action="{{ route('transaksi_fisio.fisio') }}" method="get"> --}}
+                <form id="filterForm" action="" method="get">
+                    <div class="card-header">
+                        <h4>Poli Mata</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="section-title">Pilih Dokter</div>
+                                <div class="input-group">
+                                    {{-- <select name="no_mr" id="" class="form-control select2">
+                                        <option value="" selected disabled>-- Pilih Pasien --</option>
+                                        @foreach ($listpasien as $pasien)
+                                        <option value="{{ $pasien->NO_MR }}">{{ $pasien->NAMA_PASIEN }}</option>
+                                        @endforeach
+                                    </select> --}}
+                                    <select class="form-control select2" name="kode_dokter" >
+                                        <option value="" selected disabled>-- Pilih Dokter --</option>
+                                        @foreach ($dokters as $dokter)
+                                        <option value="{{ $dokter->Kode_Dokter }}" {{ request('kode_dokter') == $dokter->Kode_Dokter ? 'selected' : '' }}>{{ $dokter->Nama_Dokter }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
+                        <button type="button" class="btn btn-danger" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
+                    </div>
+                </form>
+            </div>
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
@@ -43,11 +76,11 @@
                                 @foreach ($pasien as $data)
                                 <tr>
                                     <td>
-                                        <span class="badge badge-pill badge-success">{{ $data->NOMOR }}</span>
+                                        <span class="badge badge-pill badge-success">{{ $data->nomor_antrean }}</span>
                                     </td>
-                                    <td>{{$data->NO_MR}}</td>
-                                    <td>{{$data->NAMA_PASIEN}}</td>
-                                    <td>{{$data->ALAMAT}}</td>
+                                    <td>{{$data->no_mr}}</td>
+                                    <td>{{$data->nama_pasien}}</td>
+                                    <td>{{$data->Alamat}}</td>
                                     <td>@if($data->FS_STATUS == '')
                                         <span class="badge badge-pill badge-warning">Perawat</span>
                                         @elseif($data->FS_STATUS == 1)
@@ -61,7 +94,12 @@
                                         @endif
                                     </td>
                                     <td width="20%">
-                                        <a href="{{ route('poliMata.assesmenKeperawatan', ['noReg' => $data->NO_REG]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
+                                        @if($data->FS_STATUS != '')
+                                        <a href="{{ route('poliMata.assesmenKeperawatanEdit', ['noReg' => $data->No_Reg]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Edit</a>
+                                        @else
+                                        <a href="{{ route('poliMata.assesmenKeperawatanAdd', ['noReg' => $data->No_Reg]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
+                                        @endif
+                                       
                                     </td>
                                 </tr>
                                 @endforeach
@@ -85,5 +123,13 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+
+<script>
+    function resetForm() {
+        document.getElementById("filterForm").value = "";
+        alert('Filter telah direset!');
+        window.location.href = "{{ route('poliMata.index') }}";
+    }
+</script>
 
 @endpush

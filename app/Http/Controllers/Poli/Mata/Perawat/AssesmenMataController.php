@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Poli\Mata;
+namespace App\Http\Controllers\Poli\Mata\Perawat;
 
 use App\Models\Rajal;
 use App\Models\Pasien;
+use App\Models\Antrean;
 use App\Models\PoliMata;
 use App\Models\RajalDokter;
 use App\Models\Rekam_medis;
@@ -22,6 +23,7 @@ class AssesmenMataController extends Controller
     protected $rajaldokter;
     protected $rajal;
     protected $rekam_medis;
+    protected $antrean;
 
     public function __construct(PoliMata $poliMata)
     {
@@ -32,14 +34,17 @@ class AssesmenMataController extends Controller
         $this->view = 'pages.poli.mata.';
         $this->prefix = 'Poli';
         $this->pasien = new Pasien;
+        $this->antrean = new Antrean();
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $title = $this->prefix . ' ' . 'Mata';
-        $pasien = $this->rajaldokter->getPasienByDokter(auth()->user()->username);
+        $kode_dokter = $request->input('kode_dokter');
+        $dokters = $this->poliMata->getDokterMata();
+        $pasien = $this->antrean->getDataPasienRajal($kode_dokter);
         // dd($pasien);
-        return view($this->view . 'index', compact('title', 'pasien'));
+        return view($this->view . 'index', compact('title', 'pasien', 'dokters'));
     }
 
     /**
@@ -47,13 +52,13 @@ class AssesmenMataController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function assesmenKeperawatan($noReg)
+    public function Add($noReg)
     {
         $title = $this->prefix . ' ' . 'Mata Assesmen Keperawatan';
         $biodata = $this->rekam_medis->getBiodata($noReg);
         $masalah_perawatan = $this->rajal->masalah_perawatan();
         $rencana_perawatan = $this->rajal->rencana_perawatan();
-        return view($this->view . 'assesmenKeperawatan', compact('title', 'biodata', 'masalah_perawatan', 'rencana_perawatan', 'noReg'));
+        return view($this->view . 'addKeperawatan', compact('title', 'biodata', 'masalah_perawatan', 'rencana_perawatan', 'noReg'));
     }
 
     public function create($noReg)
@@ -80,8 +85,6 @@ class AssesmenMataController extends Controller
     {
         // Make a POST request to the API endpoint
         $request->validate([
-            'anamnesa' => 'required',
-            'pemeriksaan_fisik' => 'required',
             'suhu' => 'required',
             'nadi' => 'required',
             'respirasi' => 'required',
@@ -101,7 +104,6 @@ class AssesmenMataController extends Controller
                 'FS_JNS_ASESMEN' => 'A',
                 'mdb' => $userEmr->user_id,
                 'mdd' => now(),
-
             ]);
 
             $alergi = DB::connection('db_rsmm')->table('REGISTER_PASIEN')->where('NO_MR', $request->input('NO_MR'))->update([
@@ -166,7 +168,7 @@ class AssesmenMataController extends Controller
             ]);
 
             DB::connection('pku')->table('poli_mata_asesmen')->insert([
-                'NO_REG' => $request->input('NO_REG'),
+                'FS_KD_REG' => $request->input('FS_KD_REG'),
                 'KEADAAN_UMUM' => $request->input('KEADAAN_UMUM'),
                 'KESADARAN' => $request->input('KESADARAN'),
                 'STATUS_MENTAL' => $request->input('KESADARAN'),
@@ -208,6 +210,7 @@ class AssesmenMataController extends Controller
                 }
             }
             DB::connection('pku')->commit();
+
             return redirect('rj/rawat_jalan?kode_dokter=' . $request->input('KODE_DOKTER'))->with('success', 'Data Pasien Added successfully!');
         } catch (\Exception $e) {
             //throw $th;
@@ -233,9 +236,31 @@ class AssesmenMataController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($noReg)
     {
-        //
+        $title = $this->prefix . ' ' . 'Mata Edit Data';
+        $masalah_perawatan = $this->rajal->masalah_perawatan();
+        $rencana_perawatan = $this->rajal->rencana_perawatan();
+
+        $masalah_perGet = $this->rajal->masalahPerawatanGetByNoreg($noReg);
+        $rencana_perGet = $this->rajal->rencanaPerawatanGetByNoreg($noReg);
+        $biodata = $this->rajal->pasien_bynoreg($noReg);
+
+        $asasmen_perawat = $this->poliMata->asasmenPerawatGet($noReg);
+        // dd($asasmen_perawat);
+        $riwayat = $this->rajal->riwayatGet($noReg);
+        // dd($riwayat);
+
+        $selected = false;
+        foreach ($masalah_perawatan as $mp) {
+            foreach ($masalah_perGet as  $value) {
+                if ($mp->FS_KD_DAFTAR_DIAGNOSA == $value->FS_KD_MASALAH_KEP) {
+                    $selected = true;
+                    break;
+                }
+            }
+        }
+        return view($this->view . 'editKeperawatan', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'biodata', 'asasmen_perawat', 'riwayat', 'masalah_perGet', 'rencana_perGet', 'noReg'));
     }
 
     /**

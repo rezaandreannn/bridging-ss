@@ -40,7 +40,7 @@ class FisioController extends Controller
         $this->jenisFisio = new JenisFisio;
         $this->berkasFisio = new BerkasFisioterapi();
         $this->ttd = new TandaTangan;
-        
+
 
         $this->httpClient = new Client([
             'headers' => [
@@ -263,13 +263,13 @@ class FisioController extends Controller
             //     return redirect()->route('ttd.pasien', ['no_mr' => $request->input('NO_MR_PASIEN')]);
             // } else {
 
-                if ((auth()->user()->roles->pluck('name')[0]) == 'dokter fisioterapi') {
-                    return redirect()->route('list_pasiens.dokter')->with('success', 'CPPT Berhasil Ditambahkan!');
-                } else {
-                    return redirect()->route('cppt.detail', ['id' => $request->input('ID_TRANSAKSI'), 'kode_transaksi' => $request->input('KODE_TRANSAKSI_FISIO'), 'no_mr' => $request->input('NO_MR_PASIEN')])->with('success', 'CPPT Berhasil Ditambahkan!');
-                }
-                
-                // return redirect()->route('cppt.detail', ['no_mr' => $request->input('NO_MR'), 'kode_transaksi' => $request->input('KD_TRANSAKSI_FISIO')])->with('success', 'CPPT Berhasil Diperbarui!');
+            if ((auth()->user()->roles->pluck('name')[0]) == 'dokter fisioterapi') {
+                return redirect()->route('list_pasiens.dokter')->with('success', 'CPPT Berhasil Ditambahkan!');
+            } else {
+                return redirect()->route('cppt.detail', ['id' => $request->input('ID_TRANSAKSI'), 'kode_transaksi' => $request->input('KODE_TRANSAKSI_FISIO'), 'no_mr' => $request->input('NO_MR_PASIEN')])->with('success', 'CPPT Berhasil Ditambahkan!');
+            }
+
+            // return redirect()->route('cppt.detail', ['no_mr' => $request->input('NO_MR'), 'kode_transaksi' => $request->input('KD_TRANSAKSI_FISIO')])->with('success', 'CPPT Berhasil Diperbarui!');
             // }
         }
     }
@@ -425,7 +425,7 @@ class FisioController extends Controller
 
         $date = date('dMY');
         $filename = 'BuktiLayanan-' . $date;
-        $pdf = PDF::loadview($this->view . 'cetak/bukti_pelayanan', ['title' => $title, 'data' => $data, 'biodatas' => $biodatas, 'lastCppt' => $lastCppt, 'firstCppt' => $firstCppt, 'cekFirstCppt' => $cekFirstCppt,'ttdPasien'=> $ttdPasien]);
+        $pdf = PDF::loadview($this->view . 'cetak/bukti_pelayanan', ['title' => $title, 'data' => $data, 'biodatas' => $biodatas, 'lastCppt' => $lastCppt, 'firstCppt' => $firstCppt, 'cekFirstCppt' => $cekFirstCppt, 'ttdPasien' => $ttdPasien]);
         return $pdf->stream($filename . '.pdf');
     }
 
