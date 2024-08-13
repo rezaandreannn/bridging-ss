@@ -54,12 +54,13 @@ class FisioController extends Controller
     public function index(Request $request)
     {
 
+        $fisioterapi = new Fisioterapi();
         $kode_dokter = $request->input('kode_dokter');
         $dokters = $this->fisio->getDokterFisio();
         $listpasien = $this->fisio->pasienCpptdanFisioterapi($kode_dokter);
         // dd($listpasien);
         $title = $this->prefix . ' ' . 'CPPT Index';
-        return view($this->view . 'listPasienCpptFisio', compact('title', 'listpasien', 'dokters'));
+        return view($this->view . 'listPasienCpptFisio', compact('title', 'listpasien', 'dokters','fisioterapi'));
     }
 
     // Detail Pasien Transaksi Fisioterapi
@@ -124,6 +125,21 @@ class FisioController extends Controller
 
         return redirect()->back()->with('success', 'Transaksi Berhasil Ditambahkan!');
     }
+    // Proses Tambah Data Transaksi Fisioterapi
+    public function storeTindakan(Request $request)
+    {
+
+
+        $data = DB::connection('pku')->table('fis_status_terapi')->insert([
+            'no_registrasi' => $request->no_reg,
+            'created_by' => auth()->user()->id,
+            'created_at' => now(),
+            'updated_at' => now(),
+          
+        ]);
+
+        return redirect()->back()->with('success', 'Terapi Telah Dilakukan!');
+    }
 
     // Update Data Transaksi Fisioterapi
     public function update(Request $request, $id_transaksi)
@@ -169,6 +185,7 @@ class FisioController extends Controller
         $title = $this->prefix . ' Tambah CPPT';
 
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
+        // dd($biodatas);
         $terapiFisioGet = DB::connection('pku')->table('fis_tr_jenis')->where('kode_tr_fisio', $request->kode_transaksi)->get();
         $asesmen_perawat = DB::connection('pku')->table('TAC_ASES_PER2')->where('FS_KD_REG', $biodatas->No_Reg)->first();
         $asesmenDokterFisio = $this->fisio->getAsesmenDokterByNoreg($biodatas->No_Reg);
@@ -253,6 +270,7 @@ class FisioController extends Controller
                 'CARA_PULANG' => $request->input('CARA_PULANG'),
                 'ANAMNESA' => $request->input('ANAMNESA'),
                 'LAINNYA' => $request->input('LAINNYA'),
+                'no_registrasi' => $request->input('no_registrasi'),
                 'CREATE_AT' => now(),
                 'CREATE_BY' => auth()->user()->id,
             ]);

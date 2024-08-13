@@ -161,6 +161,7 @@ Route::middleware('auth')->group(function () {
         Route::get('perawat/list_pasien', [FisioController::class, 'index'])->name('list-pasien.index');
         Route::get('perawat/transaksi_fisio', [FisioController::class, 'transaksi'])->name('transaksi_fisio.fisio');
         Route::post('perawat/transaksi_fisio/add', [FisioController::class, 'store'])->name('transaksi_fisio.store');
+        Route::get('perawat/transaksi_fisio/addtindakan', [FisioController::class, 'storeTindakan'])->name('transaksi_fisio.addtindakan');
         Route::put('perawat/transaksi_fisio/{id}', [FisioController::class, 'update'])->name('transaksi_fisio.update');
         Route::delete('perawat/transaksi_fisio/{id}', [FisioController::class, 'delete'])->name('transaksi_fisio.delete');
 

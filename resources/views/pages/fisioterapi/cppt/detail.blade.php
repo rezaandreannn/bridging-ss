@@ -50,6 +50,7 @@
                                             <input type="hidden" class="form-control" value="{{ $cppt->ID_TRANSAKSI }}" name="ID_TRANSAKSI" readonly>
                                             <input type="text" class="form-control" value="{{ $cppt->KODE_TRANSAKSI_FISIO}}" name="KODE_TRANSAKSI_FISIO" readonly>
                                             <input type="hidden" class="form-control" name="NO_MR_PASIEN" value="{{ $cppt->NO_MR_PASIEN }}" readonly>
+                                            <input type="hidden" class="form-control" name="no_registrasi" value="{{ $biodatas->No_Reg }}" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-6">

@@ -78,7 +78,7 @@
                                         <div class="badge badge-success">Dokter Selesai</div>
                                         <div class="badge badge-warning">Perawat Belum</div>
                                         @elseif($fisioterapi->cek_asesmen_dokter_fisio($pasien->NO_REG)==true && $pasien->FS_STATUS == '1')
-                                        <div class="badge badge-success">Selesai</div>
+                                        <div class="badge badge-success"><i class="fa-solid fa-check"></i></div>
                                         @elseif($pasien->FS_STATUS == '')
                                         <div class="badge badge-warning text-white">Perawat</div>
                                         @elseif($pasien->FS_STATUS == '1')
@@ -88,8 +88,8 @@
                                     </td>
                                 
                                     <td>
-                                        @if ($fisioterapi->cek_cppt($pasien->No_MR)==true)
-                                        <div class="badge badge-success">sudah</div>  
+                                        @if ($fisioterapi->cek_cppt($pasien->NO_REG)==true)
+                                        <div class="badge badge-success"><i class="fa-solid fa-check"></i></div>  
                                         @else
                                         <div class="badge badge-danger">belum</div>
                                         @endif
