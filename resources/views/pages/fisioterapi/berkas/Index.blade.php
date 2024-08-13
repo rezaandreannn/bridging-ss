@@ -35,7 +35,7 @@
                             <div class="col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label for="No_mr">No MR</label>
-                                    <input type="number" class="form-control" id="no_mr" name="no_mr">
+                                    <input type="number" class="form-control" id="no_mr" name="no_mr" value="{{request('no_mr')}}">
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-2 filter-buttons">
@@ -77,10 +77,12 @@
                                     <td>{{$pasien->Medis}}</td>
                                     <td width="20%">  
                                         @if($pasien->Kode_Dokter == '151')
-                                        <a href="{{ route('berkas.cetakRmFisio', ['no_reg' => $pasien->No_Reg]) }}" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Asesmen Dokter</a>
+                                        @if($berkasfisio->cekAsesmenDokter($pasien->No_Reg) == true)
+                                        <a href="{{ route('berkas.cetakRmFisio', ['no_reg' => $pasien->No_Reg]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Asesmen Dokter</a>
+                                        @endif
                                         @endif
                                         <a href="{{ route('berkas.cppt', ['no_mr' => $pasien->No_MR]) }}" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Cppt</a>
-                                        <a href="{{ route('berkas.alat', ['no_mr' => $pasien->No_MR]) }}" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Pelayanan Alat</a>
+                                        {{-- <a href="{{ route('berkas.alat', ['no_mr' => $pasien->No_MR]) }}" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Pelayanan Alat</a> --}}
                                         {{-- <a href="{{ route('berkas.rujukan') }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Rujukan</a>
                                         <a href="{{ route('berkas.informed') }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Informed</a> --}}
                                     </td>

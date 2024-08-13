@@ -36,10 +36,11 @@ class BerkasFisioController extends Controller
     {
         $title = $this->prefix . ' ' . 'Pasien';
         $no_mr = $request->input('no_mr');
+        $berkasfisio = new BerkasFisioterapi();
         $data = $this->berkasFisio->getFisioterapiHistory($no_mr);
 
         // dd($data);
-        return view($this->view . 'index', compact('title', 'data'));
+        return view($this->view . 'index', compact('title', 'data','berkasfisio'));
     }
 
     public function berkas()
