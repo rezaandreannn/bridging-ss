@@ -331,7 +331,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Reaksi Alergi<code>*</code></label>
-                                    <input type="text" class="form-control" name="FS_REAK_ALERGI" value="{{$biodata->FS_REAK_ALERGI!='' ? $biodata->FS_REAK_ALERGI : '-' }}">
+                                    <input type="text" class="form-control" name="FS_REAK_ALERGI" value="{{$biodata->FS_ALERGI!='' ? $biodata->FS_ALERGI : '-' }}">
                                 </div>
                             </div>
                             <!-- include form -->
@@ -519,9 +519,6 @@
                                     <select name="tujuan[]" id="masalah_perawatan" class="form-control select2" multiple="multiple" data-placeholder="Pilih Masalah Keperawatan" style="width: 100%;">
 
                                         <option value="">-- pilih --</option>
-
-
-
                                         @forelse ($masalah_perGet as $mp)
                                         @foreach ($masalah_perawatan as $mk)
                                         <option value="{{ $mk->FS_KD_DAFTAR_DIAGNOSA }}" {{ $mk->FS_KD_DAFTAR_DIAGNOSA == $mp->FS_KD_MASALAH_KEP ? "selected" : "" }}>{{ $mk->FS_NM_DIAGNOSA }}</option>

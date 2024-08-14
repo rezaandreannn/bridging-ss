@@ -84,8 +84,13 @@
             <li class="nav-item dropdown {{ Request::is('pm*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-eye"></i> <span>Poli Mata</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('pm/polimata') ? 'active' : '' }}">
+                    <li class="{{ Request::is('pm/polimata/perawat*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('poliMata.index') }}">Assesmen Awal</a>
+                    </li>
+                </ul>
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('pm/polimata/dokter*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('poliMata.indexDokter') }}">Assesmen Dokter</a>
                     </li>
                 </ul>
             </li>

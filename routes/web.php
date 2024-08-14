@@ -47,6 +47,7 @@ use App\Http\Controllers\Fisio\MasterData\DiagnosisFungsiController;
 use App\Http\Controllers\Berkas\Rekam_medis_by_mr\RekamMedisByMrController;
 use App\Http\Controllers\Berkas\Rekam_medis_harian\RekamMedisHarianController;
 use App\Http\Controllers\IGD\Layanan\AssesmenController as LayananAssesmenController;
+use App\Http\Controllers\Poli\Mata\Dokter\AssesmenDokterMataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -250,13 +251,16 @@ Route::middleware('auth')->group(function () {
 
     // Poli Mata
     Route::prefix('pm')->group(function () {
-        Route::get('/polimata', [AssesmenMataController::class, 'index'])->name('poliMata.index');
-        Route::post('/polimata', [AssesmenMataController::class, 'store'])->name('poliMata.store');
-        Route::get('/polimata/assesmen_keperawatan/{noReg}', [AssesmenMataController::class, 'Add'])->name('poliMata.assesmenKeperawatanAdd');
-        Route::get('/polimata/assesmen_keperawatan/edit/{noReg}', [AssesmenMataController::class, 'Edit'])->name('poliMata.assesmenKeperawatanEdit');
-        Route::put('/polimata/assesmen_keperawatan/{noReg}', [AssesmenMataController::class, 'update'])->name('poliMata.assesmenKeperawatanUpdate');
-        Route::get('/polimata/assesmen_awal/{noReg}', [AssesmenMataController::class, 'create'])->name('poliMata.assesmenAwal');
-        Route::get('/polimata/assesmen_mata/{noReg}', [AssesmenMataController::class, 'assesmenMata'])->name('poliMata.assesmenMata');
+        // Poli Mata Perawat
+        Route::get('/polimata/perawat', [AssesmenMataController::class, 'index'])->name('poliMata.index');
+        Route::post('/polimata/perawat', [AssesmenMataController::class, 'store'])->name('poliMata.store');
+        Route::get('/polimata/perawat/assesmen_keperawatan/{noReg}', [AssesmenMataController::class, 'Add'])->name('poliMata.assesmenKeperawatanAdd');
+        Route::get('/polimata/perawat/assesmen_keperawatan/edit/{noReg}', [AssesmenMataController::class, 'Edit'])->name('poliMata.assesmenKeperawatanEdit');
+        Route::put('/polimata/perawat/assesmen_keperawatan/{noReg}', [AssesmenMataController::class, 'update'])->name('poliMata.assesmenKeperawatanUpdate');
+        // Poli Mata Dokter
+        Route::get('/polimata/dokter', [AssesmenDokterMataController::class, 'index'])->name('poliMata.indexDokter');
+        Route::get('/polimata/dokter/assesmen_awal/{noReg}', [AssesmenDokterMataController::class, 'add'])->name('poliMata.assesmenAwal');
+        // Route::get('/polimata/dokter/assesmen_mata/{noReg}', [AssesmenMataController::class, 'assesmenMata'])->name('poliMata.assesmenMata');
     });
 
     Route::prefix('ttd')->group(function () {

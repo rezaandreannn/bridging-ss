@@ -80,7 +80,7 @@
                     <!-- components biodata pasien by no reg -->
                     <div class="card card-primary">
                         <div class="card-header card-success card-khusus-header">
-                            <h6 class="card-khusus-title">Form Poli Mata</h6>
+                            <h6 class="card-khusus-title">Form Poli Mata Dokter</h6>
                         </div>
                         <div class="card-body card-khusus-body">
                             <form action="" method="POST">
@@ -91,9 +91,9 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>Anamnesa / Allow Anamnesa <code>*</code></label>
+                                            <label>Keluhan utama (Anamnesa)<code>*</code></label>
                                             <textarea name="anamnesa" class="form-control  @error('anamnesa') is-invalid  
-                                                @enderror" rows="3" placeholder="Masukan ..."></textarea>
+                                                @enderror" rows="3" placeholder="Masukan ...">{{ $asasmen_perawat->FS_ANAMNESA }}</textarea>
                                         </div>
                                         @error('anamnesa')
                                         <div class="invalid-feedback">
@@ -101,7 +101,7 @@
                                         </div>
                                         @enderror
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Riwayat Penyakit Sekarang</label>
                                             <input type="text" name="riwayat_penyakit" class="form-control @error('riwayat_penyakit') is-invalid @enderror">
@@ -114,90 +114,39 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Keluhan Utama</label>
-                                            <input type="text" name="keluhan_utama" class="form-control @error('keluhan_utama') is-invalid @enderror">
-                                            @error('keluhan_utama')
-                                            <span class="text-danger" style="font-size: 12px;">
-                                                {{ $message }}
-                                            </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
                                             <label>Riwayat Penyakit Dahulu</label>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="riwayat_penyakit" value="Tidak Ada" id="riwayat_penyakit1" @if(old('riwayat_penyakit', '0' )=='Tidak Ada' ) checked @endif>
-                                                            <label class="form-check-label" for="riwayat_penyakit1">
-                                                                Tidak Ada
-                                                            </label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="riwayat_penyakit" value="Ada" id="riwayat_penyakit1" @if(old('riwayat_penyakit', '0' )=='Ada' ) checked @endif>
-                                                            <label class="form-check-label" for="riwayat_penyakit1">
-                                                                Ada
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <input type="text" name="riwayat_penyakit" class="form-control @error('riwayat_penyakit') is-invalid  
-                                                @enderror" value="{{old('riwayat_penyakit')}}" placeholder="Dengan Penyakit....">
-                                                </div>
-                                                @error('jenis_tindakan')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                                @enderror
-                                            </div>
+                                            <input type="text" class="form-control" name="FS_RIW_PENYAKIT_DAHULU" value="{{$biodata->FS_RIW_PENYAKIT_DAHULU!='' ? $biodata->FS_RIW_PENYAKIT_DAHULU : '-' }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Riwayat Alergi</label>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="riwayat_alergi" value="Tidak Ada" id="riwayat_alergi1" @if(old('riwayat_alergi', '0' )=='Tidak Ada' ) checked @endif>
-                                                            <label class="form-check-label" for="riwayat_alergi1">
-                                                                Tidak Ada
-                                                            </label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="riwayat_alergi" value="Ada" id="riwayat_alergi2" @if(old('riwayat_alergi', '0' )=='Ada' ) checked @endif>
-                                                            <label class="form-check-label" for="riwayat_alergi2">
-                                                                Ada
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <input type="text" name="riwayat_alergi" class="form-control @error('riwayat_alergi') is-invalid  
-                                                @enderror" value="{{old('riwayat_alergi')}}" placeholder="Ada...">
-                                                </div>
-                                                @error('riwayat_alergi')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                                @enderror
-                                            </div>
+                                            <label>Riwayat Penyakit keluarga</label>
+                                            <input type="text" class="form-control" name="FS_RIW_PENYAKIT_DAHULU2" value="{{$biodata->FS_RIW_PENYAKIT_DAHULU2!='' ? $biodata->FS_RIW_PENYAKIT_DAHULU2 : '-' }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Riwayat Alergi<code>*</code></label>
+                                            <input type="text" class="form-control" name="FS_ALERGI" value="{{$biodata->FS_ALERGI!='' ? $biodata->FS_ALERGI : '-' }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Reaksi Alergi<code>*</code></label>
+                                            <input type="text" class="form-control" name="FS_REAK_ALERGI" value="{{$biodata->FS_REAK_ALERGI!='' ? $biodata->FS_REAK_ALERGI : '-' }}">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="d-block">Agama</label>
-                                            <select name="agama" id="" class="form-control select2 @error('agama')  is-invalid @enderror">
-                                                <option value="" selected disabled>--Pilih Agama--</option>
-                                                <option value="Islam" @if(old('agama')=='Islam' ) selected @endif>Islam</option>
-                                                <option value="Kristen" @if(old('agama')=='Kristen' ) selected @endif>Kristen</option>
-                                                <option value="Katolik" @if(old('agama')=='Katolik' ) selected @endif>Katolik</option>
-                                                <option value="Hindu" @if(old('agama')=='Hindu' ) selected @endif>Hindu</option>
-                                                <option value="Buddha" @if(old('agama')=='Buddha' ) selected @endif>Buddha</option>
-                                                <option value="Khonghucu" @if(old('agama')=='Khonghucu' ) selected @endif>Khonghucu</option>
+                                            <select name="FS_AGAMA" id="" class="form-control select2">
+                                                <option value="">-- Pilih Agama --</option>
+                                                <option value="1" {{ ($asasmen_perawat->FS_AGAMA=='1') ? 'selected' : ''}}>Islam</option>
+                                                <option value="2" {{ ($asasmen_perawat->FS_AGAMA=='2') ? 'selected' : ''}}>Kristen</option>
+                                                <option value="3" {{ ($asasmen_perawat->FS_AGAMA=='3') ? 'selected' : ''}}>Katholik</option>
+                                                <option value="4" {{ ($asasmen_perawat->FS_AGAMA=='4') ? 'selected' : ''}}>Hindu</option>
+                                                <option value="5" {{ ($asasmen_perawat->FS_AGAMA=='5') ? 'selected' : ''}}>Budha</option>
+                                                <option value="6" {{ ($asasmen_perawat->FS_AGAMA=='6') ? 'selected' : ''}}>Konghucu</option>
                                             </select>
                                             @error('agama')
                                             <span class="text-danger" style="font-size: 12px;">
@@ -209,13 +158,13 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="d-block">Status Pernikahan</label>
-                                            <select name="status_nikah" id="" class="form-control select2 @error('status_nikah')  is-invalid @enderror">
-                                                <option value="" selected disabled>--Pilih Status--</option>
-                                                <option value="Single" @if(old('status_nikah')=='Single' ) selected @endif>Single</option>
-                                                <option value="Menikah" @if(old('status_nikah')=='Menikah' ) selected @endif>Menikah</option>
-                                                <option value="Janda/Duda" @if(old('status_nikah')=='Janda/Duda' ) selected @endif>Janda/Duda</option>
+                                            <select name="PERNIKAHAN" id="pernikahan" class="form-control select2 @error('pernikahan')  is-invalid @enderror">
+                                                <option value="">-- Pilih Status --</option>
+                                                <option value="1" {{ ($asasmen_perawat->PERNIKAHAN=='1') ? 'selected' : ''}}>Single</option>
+                                                <option value="2" {{ ($asasmen_perawat->PERNIKAHAN=='2') ? 'selected' : ''}}>Menikah</option>
+                                                <option value="3" {{ ($asasmen_perawat->PERNIKAHAN=='3') ? 'selected' : ''}}>Janda/Duda</option>
                                             </select>
-                                            @error('status_nikah')
+                                            @error('pernikahan')
                                             <span class="text-danger" style="font-size: 12px;">
                                                 {{ $message }}
                                             </span>
@@ -225,13 +174,13 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="d-block">Pekerjaan</label>
-                                            <select name="pekerjaan" id="" class="form-control select2 @error('pekerjaan')  is-invalid @enderror">
-                                                <option value="" selected disabled>--Pilih Pekerjaan--</option>
-                                                <option value="PNS" @if(old('pekerjaan')=='PNS' ) selected @endif>PNS</option>
-                                                <option value="Karyawan Swasta" @if(old('pekerjaan')=='Karyawan Swasta' ) selected @endif>Karyawan Swasta</option>
-                                                <option value="Lainnya" @if(old('pekerjaan')=='Lainnya' ) selected @endif>Lainnya</option>
+                                            <select name="JOB" id="job" class="form-control select2 @error('job')  is-invalid @enderror">
+                                                <option value="">-- Pilih Pekerjaan --</option>
+                                                <option value="1" {{ ($asasmen_perawat->PERNIKAHAN=='1') ? 'selected' : ''}}>PNS</option>
+                                                <option value="2" {{ ($asasmen_perawat->PERNIKAHAN=='2') ? 'selected' : ''}}>Karyawan Swasta</option>
+                                                <option value="3" {{ ($asasmen_perawat->PERNIKAHAN=='3') ? 'selected' : ''}}>Lainnya</option>
                                             </select>
-                                            @error('pekerjaan')
+                                            @error('job')
                                             <span class="text-danger" style="font-size: 12px;">
                                                 {{ $message }}
                                             </span>
@@ -244,13 +193,16 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Status Psikologi</label>
-                                            <select name="status_psikologi" id="" class="form-control select2 @error('status_psikologi')  is-invalid @enderror">
-                                                <option value="" selected disabled>--Pilih Status Psikologi--</option>
-                                                <option value="Tenang" @if(old('status_psikologi')=='Tenang' ) selected @endif>Tenang</option>
-                                                <option value="Cemas" @if(old('status_psikologi')=='Cemas' ) selected @endif>Cemas</option>
-                                                <option value="Marah" @if(old('status_psikologi')=='Marah' ) selected @endif>Marah</option>
-                                                <option value="Depresi" @if(old('status_psikologi')=='Depresi' ) selected @endif>Depresi</option>
+                                            <select name="FS_STATUS_PSIK" id="" class="form-control select2">
+                                                <option value="">-- pilih --</option>
+                                                <option value="1" {{ ($asasmen_perawat->FS_STATUS_PSIK=='1') ? 'selected' : ''}} onclick='document.getElementById("civstaton3").disabled = true' selected>Tenang</option>
+                                                <option value="2" {{ ($asasmen_perawat->FS_STATUS_PSIK=='2') ? 'selected' : ''}} onclick='document.getElementById("civstaton3").disabled = true'>Cemas</option>
+                                                <option value="3" {{ ($asasmen_perawat->FS_STATUS_PSIK=='3') ? 'selected' : ''}} onclick='document.getElementById("civstaton3").disabled = true'>Takut</option>
+                                                <option value="4" {{ ($asasmen_perawat->FS_STATUS_PSIK=='4') ? 'selected' : ''}} onclick='document.getElementById("civstaton3").disabled = true'>Marah</option>
+                                                <option value="5" {{ ($asasmen_perawat->FS_STATUS_PSIK=='5') ? 'selected' : ''}} onclick='document.getElementById("civstaton3").disabled = true'>Sedih</option>
+                                                <option VALUE="6" {{ ($asasmen_perawat->FS_STATUS_PSIK=='6') ? 'selected' : ''}} onclick='document.getElementById("civstaton3").disabled = false'>Lainnya</option>
                                             </select>
+                                            <input type="hidden" name="FS_STATUS_PSIK2" value="" id="civstaton3" size="32">
                                             @error('status_psikologi')
                                             <span class="text-danger" style="font-size: 12px;">
                                                 {{ $message }}
@@ -261,12 +213,12 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Status Mental</label>
-                                            <select name="status_mental" id="" class="form-control select2 @error('status_mental')  is-invalid @enderror">
-                                                <option value="" selected disabled>--Pilih Status Mental--</option>
-                                                <option value="Kooperatif" @if(old('status_mental')=='Kooperatif' ) selected @endif>Kooperatif</option>
-                                                <option value="Tidak Kooperatif" @if(old('status_mental')=='Tidak Kooperatif' ) selected @endif>Tidak Kooperatif</option>
-                                                <option value="Gelisah/Delirium/Berontak" @if(old('status_mental')=='Gelisah/Delirium/Berontak' ) selected @endif>Gelisah/Delirium/Berontak</option>
-                                                <option value="Ketidak Mampuan Dalam Mengikuti Perintah" @if(old('status_mental')=='Ketidak Mampuan Dalam Mengikuti Perintah' ) selected @endif>Ketidak Mampuan Dalam Mengikuti Perintah</option>
+                                            <select name="STATUS_MENTAL" id="status_mental" class="form-control select2 @error('status_mental')  is-invalid @enderror">
+                                                <option value="">-- Pilih Status Mental --</option>
+                                                <option value="1" {{ ($asasmen_perawat->STATUS_MENTAL=='1') ? 'selected' : ''}}>Kooperatif</option>
+                                                <option value="2" {{ ($asasmen_perawat->STATUS_MENTAL=='2') ? 'selected' : ''}}>Tidak Kooperatif</option>
+                                                <option value="3" {{ ($asasmen_perawat->STATUS_MENTAL=='3') ? 'selected' : ''}}>Gelisah/Delirium/Berontak</option>
+                                                <option value="4" {{ ($asasmen_perawat->STATUS_MENTAL=='4') ? 'selected' : ''}}>Ketidak Mampuan Dalam Mengikuti Perintah</option>
                                             </select>
                                             @error('status_mental')
                                             <span class="text-danger" style="font-size: 12px;">

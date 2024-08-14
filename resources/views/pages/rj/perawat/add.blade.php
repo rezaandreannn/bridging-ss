@@ -61,20 +61,18 @@
                                     <input type="hidden" name="FS_KD_REG" value="{{ $noReg }}" />
                                     <input type="hidden" name="KODE_DOKTER" value="{{ $biodata->Kode_Dokter}}" />
                                     <input type="hidden" name="NO_MR" value="{{ $biodata->NO_MR}}" />
-
-                                  
                                     <textarea class="form-control" rows="3" name="anamnesa" value="" placeholder="Masukan ..."></textarea>
-                                    @error('anamnesa')
-                                        <span class="text-danger" style="font-size: 12px;">
-                                            {{ $message }}
-                                        </span>
+                                        @error('anamnesa')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
                                         @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Pemeriksaan Fisik</label>
-                                    <textarea class="form-control" rows="3" name="pemeriksaan_fisik" value="" placeholder="Masukan ..."></textarea>
+                                    <textarea class="form-control" rows="3" name="FS_PEMERIKSAAN_FISIK" value="" placeholder="Masukan ..."></textarea>
                                     @error('pemeriksaan_fisik')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}
