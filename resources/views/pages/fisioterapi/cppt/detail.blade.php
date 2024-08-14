@@ -114,7 +114,7 @@
                                             <div class="card-body">
                                               <h6 class="card-subtitle mb-2"> <span class="badge badge-pill badge-info"><i class="fas fa-info"></i></span> Terapi yang diberikan dokter</h6>
                                               <hr>
-                                              <p>{{$asesmenDokterFisio->terapi ?? ''}}</p>
+                                              <p>{{$terapiDokterLastFisio->terapi ?? ''}}</p>
                                             </div>
                                           </div>
                                     </div>

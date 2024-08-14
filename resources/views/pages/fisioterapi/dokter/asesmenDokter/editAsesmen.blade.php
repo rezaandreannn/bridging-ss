@@ -46,7 +46,7 @@
                                             <label>Kode Registrasi Pendaftaran </label>
                                             <input type="text" name="no_registrasi" class="form-control" value="{{$biodatas->No_Reg}}" readonly>
                                             <input type="hidden" name="NO_MR" class="form-control" value="{{$biodatas->NO_MR}}" readonly>
-                                            <input type="hidden" name="kode_transaksi_fisio" class="form-control" value="{{$asesmenDokterGet->kode_transaksi_fisio}}" readonly>
+                                            {{-- <input type="hidden" name="kode_transaksi_fisio" class="form-control" value="{{$asesmenDokterGet->kode_transaksi_fisio}}" readonly> --}}
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -193,8 +193,15 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Orthosis</label>
-                                            <input type="text" name="orthosis" class="form-control @error('orthosis') is-invalid  
-                                                @enderror" value="{{$asesmenDokterGet->orthosis}}">
+
+                                                <select name="orthosis" id="" class="form-control select2 @error('orthosis') is-invalid  
+                                                @enderror" >
+                                                    <option value="" selected disabled>pilih</option>
+                                                    <option value="">Tidak Ada</option>
+                                                    <option value="LS corset" @if($asesmenDokterGet->orthosis=='LS corset' ) selected @endif>LS corset</option>
+                                                    <option value="Neck Soft Collar" @if($asesmenDokterGet->orthosis=='Neck Soft Collar' ) selected @endif>Neck Soft Collar</option>
+                                                    <option value="Axillary crutch" @if($asesmenDokterGet->orthosis=='Axillary crutch' ) selected @endif>Axillary crutch</option>
+                                                </select>
                                         </div>
                                         @error('orthosis')
                                         <div class="invalid-feedback">
@@ -291,7 +298,6 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Rujuk</label>
-                                            <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <div class="form-check">
@@ -308,19 +314,26 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <input type="text" name="deskripsi_rujukan" class="form-control @error('deskripsi_rujukan') is-invalid  
-                                                @enderror" value="{{$asesmenDokterGet->deskripsi_rujukan}}" placeholder="Rujukan Ke">
-                                                </div>
-                                                @error('deskripsi_rujukan')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                                @enderror
-                                            </div>
                                         </div>
                                     </div>
+
                                     <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Rujukan Ke : </label>
+                                            <input type="text" name="deskripsi_rujukan" class="form-control @error('deskripsi_rujukan') is-invalid  
+                                            @enderror" value="{{$asesmenDokterGet->deskripsi_rujukan}}" placeholder="Rujukan Ke">
+                                            @error('deskripsi_rujukan')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                    
+                                   
+                                        </div>
+                                    </div>
+
+                             
+                                    {{-- <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Konsul</label>
 
@@ -357,7 +370,7 @@
                                             {{ $message }}
                                         </div>
                                         @enderror
-                                    </div>
+                                    </div> --}}
 
 
                                     <div class="col-md-6">

@@ -45,7 +45,8 @@
                                             <label>Kode Registrasi Pendaftaran </label>
                                             <input type="text" name="no_registrasi" class="form-control" value="{{$biodatas->No_Reg}}" readonly>
                                             <input type="hidden" name="NO_MR" class="form-control" value="{{$biodatas->NO_MR}}" readonly>
-                                            <input type="hidden" name="kode_transaksi_fisio" class="form-control" value="{{$kode_transaksi_fisio}}" readonly>
+                                            <input type="hidden" name="tanggal" class="form-control" value="{{$biodatas->Tanggal}}" readonly>
+                                            {{-- <input type="hidden" name="kode_transaksi_fisio" class="form-control" value="{{$kode_transaksi_fisio}}" readonly> --}}
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -196,6 +197,7 @@
 
                                             <select name="orthosis" id="" class="form-control select2" >
                                                 <option value="" selected disabled>pilih</option>
+                                                <option value="">Tidak Ada</option>
                                                 <option value="LS corset">LS corset</option>
                                                 <option value="Neck Soft Collar">Neck Soft Collar</option>
                                                 <option value="Axillary crutch">Axillary crutch</option>
@@ -292,7 +294,6 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Rujuk</label>
-                                            <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <div class="form-check">
@@ -309,19 +310,25 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <input type="text" name="deskripsi_rujukan" class="form-control @error('deskripsi_rujukan') is-invalid  
-                                                @enderror" value="{{old('deskripsi_rujukan')}}" placeholder="Rujukan Ke">
-                                                </div>
-                                                @error('deskripsi_rujukan')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                                @enderror
-                                            </div>
                                         </div>
                                     </div>
+
                                     <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Rujukan Ke : </label>
+                                                <input type="text" name="deskripsi_rujukan" class="form-control @error('deskripsi_rujukan') is-invalid  
+                                            @enderror" value="{{old('deskripsi_rujukan')}}" placeholder="Rujukan Ke">
+                                            @error('deskripsi_rujukan')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                            @enderror
+                                    
+                                   
+                                        </div>
+                                    </div>
+
+                                    {{-- <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Konsul</label>
 
@@ -358,7 +365,7 @@
                                             {{ $message }}
                                         </div>
                                         @enderror
-                                    </div>
+                                    </div> --}}
 
 
                                     <div class="col-md-6">
