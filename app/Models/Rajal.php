@@ -200,6 +200,24 @@ class Rajal extends Model
         }
     }
 
+    public function cek_order_alkes($noReg)
+    {
+        
+        $data = DB::connection('pku')
+            ->table('fis_order_alkes')
+            ->select(
+                'no_registrasi'
+            )
+            ->where('no_registrasi', $noReg)
+            ->first();
+
+        if ($data != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function masalah_perawatan()
     {
         $data = DB::connection('pku')->table('TAC_COM_DAFTAR_DIAG')->get();

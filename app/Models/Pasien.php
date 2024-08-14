@@ -173,6 +173,7 @@ class Pasien extends Model
                 'a.FS_HIGH_RISK',
                 'b.No_MR',
                 'b.No_Reg',
+                'b.Tanggal',
                 'c.NAMA_DOKTER',
                 'c.SPESIALIS',
                 'd.NAMAREKANAN',

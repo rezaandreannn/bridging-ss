@@ -49,7 +49,7 @@
                                         <div class="form-group">
                                             <label>Pemeriksaan Fisik dan Uji Fungsi </label>
                                             <input type="hidden" class="form-control" name="no_registrasi" value="{{$asesmenDokter->no_registrasi}}" placeholder="Masukan ..."></input>
-                                            <input type="hidden" class="form-control" name="kode_transaksi_fisio" value="{{$asesmenDokter->kode_transaksi_fisio}}" placeholder="Masukan ..."></input>
+                                            {{-- <input type="hidden" class="form-control" name="kode_transaksi_fisio" value="{{$asesmenDokter->kode_transaksi_fisio}}" placeholder="Masukan ..."></input> --}}
                                             <input type="text" class="form-control @error('pemeriksaan_fisik') is-invalid  
                                                 @enderror" name="pemeriksaan_fisik" value="{{ old('pemeriksaan_fisik')}}"  placeholder="Masukan ..."></input>
                                                 @error('pemeriksaan_fisik')

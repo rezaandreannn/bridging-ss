@@ -39,7 +39,7 @@
                                     <div class="col-md-12">
                                         <input type="hidden" name="no_mr" class="form-control" value="{{$biodatas->NO_MR}}" readonly>
                                         <input type="hidden" name="no_registrasi" class="form-control" value="{{$biodatas->No_Reg}}" readonly>
-                                        <input type="hidden" name="kode_transaksi_fisio" class="form-control" value="{{$asesmenDokterGet->kode_transaksi_fisio}}" readonly>
+                                        {{-- <input type="hidden" name="kode_transaksi_fisio" class="form-control" value="{{$asesmenDokterGet->kode_transaksi_fisio}}" readonly> --}}
                                       
                                         <div class="form-group">
                                             <label>Diagnosis Fungsional / Diagnosis Klinis : <code>*</code></label>

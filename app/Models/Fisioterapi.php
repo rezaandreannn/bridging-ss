@@ -359,6 +359,7 @@ class Fisioterapi extends Model
     }
 
 
+
     // // Get Kode Transaksi
     public function getLastTransaksiFisio()
     {
@@ -465,6 +466,35 @@ class Fisioterapi extends Model
             )
       
             ->where('ad.no_registrasi', $No_Reg)->first();
+        return $data;
+    }
+
+    public function terapiDokterLastFisio($no_mr)
+    {
+        $pku = DB::connection('pku')->getDatabaseName();
+        $data = DB::connection('db_rsmm')
+            ->table('pendaftaran as p')
+            ->join('dokter as d', 'p.Kode_Dokter', '=', 'd.Kode_Dokter')
+            ->leftjoin($pku . '.dbo.fis_asesmen_dokter as ad', 'p.No_Reg', '=', 'ad.no_registrasi')
+            ->select(
+                'p.No_Reg',
+                'p.Tanggal',
+                'p.Kode_Dokter',
+                'd.Nama_Dokter',
+                'ad.terapi'
+            )
+      
+            ->where('p.No_MR', $no_mr)
+            ->where('d.Spesialis', 'SPESIALIS REHABILITASI MEDIK')
+            ->orderBy('p.Tanggal', 'desc')
+            ->first();
+        // $data = DB::connection('pku')
+        //     ->table('fis_asesmen_dokter as ad')
+        //     ->select(
+        //         'ad.*',
+        //     )
+      
+        //     ->where('ad.no_registrasi', $No_Reg)->first();
         return $data;
     }
 }

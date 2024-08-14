@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Fisio;
 
 use Carbon\Carbon;
+use App\Models\Rajal;
 use App\Models\Pasien;
 use GuzzleHttp\Client;
 use App\Models\JenisFisio;
@@ -25,6 +26,7 @@ class FisioController extends Controller
     protected $pasien;
     protected $jenisFisio;
     protected $ttd;
+    protected $rajal;
     protected $httpClient;
     protected $berkasFisio;
     protected $simrsUrlApi;
@@ -32,6 +34,7 @@ class FisioController extends Controller
     public function __construct(Fisioterapi $fisio)
     {
 
+        $this->rajal = new Rajal();
         $this->fisio = $fisio;
         $this->view = 'pages.fisioterapi.';
         $this->routeIndex = 'cppt.fisio';
@@ -189,7 +192,8 @@ class FisioController extends Controller
         $terapiFisioGet = DB::connection('pku')->table('fis_tr_jenis')->where('kode_tr_fisio', $request->kode_transaksi)->get();
         $asesmen_perawat = DB::connection('pku')->table('TAC_ASES_PER2')->where('FS_KD_REG', $biodatas->No_Reg)->first();
         $asesmenDokterFisio = $this->fisio->getAsesmenDokterByNoreg($biodatas->No_Reg);
-        // dd($asesmenDokterFisio);
+        $terapiDokterLastFisio =  $this->fisio->terapiDokterLastFisio($biodatas->NO_MR);
+        // dd($terapiDokterLastFisio);
         $transaksiFisio = DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')->where('ID_TRANSAKSI_FISIO', $id)->orderBy('ID_CPPT_FISIO', 'ASC')->first();
         $ttv = DB::connection('pku')->table('TAC_RJ_VITAL_SIGN')->where('FS_KD_REG', $biodatas->No_Reg)->first();
 
@@ -221,7 +225,7 @@ class FisioController extends Controller
 
         $cppt =  DB::connection('pku')->table('TRANSAKSI_FISIOTERAPI')->where('ID_TRANSAKSI', $id)->first();
         $jenisfisio = DB::connection('pku')->table('TAC_COM_FISIOTERAPI_MASTER')->get();
-        return view($this->view . 'cppt.detail', compact('title', 'biodatas', 'data', 'cppt', 'jenisfisio', 'terapiFisioGet', 'ttv', 'cekttv', 'asesmen_perawat', 'cekasesmenperawat', 'asesmenDokterFisio', 'cekasesmenDokter', 'transaksiFisio', 'cektransaksicppt'));
+        return view($this->view . 'cppt.detail', compact('title', 'biodatas', 'data', 'cppt', 'jenisfisio', 'terapiFisioGet', 'ttv', 'cekttv', 'asesmen_perawat', 'cekasesmenperawat', 'asesmenDokterFisio', 'cekasesmenDokter', 'transaksiFisio', 'cektransaksicppt', 'terapiDokterLastFisio'));
     }
 
     // public function tambah_cppt(Request $request, $id)
@@ -296,10 +300,14 @@ class FisioController extends Controller
     public function edit_cppt($id)
     {
         // Memecah string menjadi array
-        $jenis_terapi_fisio =  DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')->where('ID_CPPT_FISIO', $id)->first();
+        $getTransaksiCppt =  DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')->where('ID_CPPT_FISIO', $id)->first();
+        // dd($getTransaksiCppt);
+
+        $biodata = $this->rajal->pasien_bynoreg($getTransaksiCppt->no_registrasi);
+        // dd($biodata);
 
         $data = array();
-        $string = $jenis_terapi_fisio->JENIS_FISIO;
+        $string = $getTransaksiCppt->JENIS_FISIO;
         $string = trim($string, ','); // Menghapus koma di awal dan akhir string (jika ada)
         $jenis_fisio = array();
         if (!empty($string)) {
@@ -310,7 +318,7 @@ class FisioController extends Controller
         $jenisfisio = $this->jenisFisio->getDataJenisFisio();
         $data = $this->fisio->dataEditPasienCPPT($id);
 
-        return view($this->view . 'cppt.edit', compact('title', 'data', 'jenisfisio', 'jenis_fisio'));
+        return view($this->view . 'cppt.edit', compact('title', 'data', 'jenisfisio', 'jenis_fisio','biodata'));
     }
 
     // Proses Edit Data CPPT Fisioterapi
@@ -320,6 +328,7 @@ class FisioController extends Controller
             'ANAMNESA' => 'required',
         ]);
 
+
         $jenis_terapi = $request->input('JENIS_FISIO');
         $terapi = '';
         if (!empty($jenis_terapi)) {
@@ -328,20 +337,42 @@ class FisioController extends Controller
             }
         }
 
-        $data = DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')->where('ID_CPPT_FISIO', $id)->update([
-            'DIAGNOSA' => $request->input('DIAGNOSA'),
-            'TEKANAN_DARAH' => $request->input('TEKANAN_DARAH'),
-            'NADI' => $request->input('NADI'),
-            'SUHU' => $request->input('SUHU'),
-            'JENIS_FISIO' => $terapi,
-            'TANGGAL_FISIO' => $request->input('TANGGAL_FISIO'),
-            'JAM_FISIO' => $request->input('JAM_FISIO'),
-            'CARA_PULANG' => $request->input('CARA_PULANG'),
-            'ANAMNESA' => $request->input('ANAMNESA'),
-            'LAINNYA' => $request->input('LAINNYA'),
-            'CREATE_AT' => now(),
+        if($request->input('Kode_Dokter')=='028'){
+            $data = DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')->where('ID_CPPT_FISIO', $id)->update([
+                'DIAGNOSA' => $request->input('DIAGNOSA'),
+                'TEKANAN_DARAH' => $request->input('TEKANAN_DARAH'),
+                'NADI' => $request->input('NADI'),
+                'SUHU' => $request->input('SUHU'),
+                'JENIS_FISIO' => $terapi,
+                'TANGGAL_FISIO' => $request->input('TANGGAL_FISIO'),
+                'JAM_FISIO' => $request->input('JAM_FISIO'),
+                'CARA_PULANG' => $request->input('CARA_PULANG'),
+                'ANAMNESA' => $request->input('ANAMNESA'),
+                'LAINNYA' => $request->input('LAINNYA'),
+                'CREATE_AT' => now(),
+                'CREATE_BY' => auth()->user()->id
+    
+            ]);
+        }
+        else {
 
-        ]);
+            $data = DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')->where('ID_CPPT_FISIO', $id)->update([
+                'DIAGNOSA' => $request->input('DIAGNOSA'),
+                'TEKANAN_DARAH' => $request->input('TEKANAN_DARAH'),
+                'NADI' => $request->input('NADI'),
+                'SUHU' => $request->input('SUHU'),
+                'JENIS_FISIO' => $terapi,
+                'TANGGAL_FISIO' => $request->input('TANGGAL_FISIO'),
+                'JAM_FISIO' => $request->input('JAM_FISIO'),
+                'CARA_PULANG' => $request->input('CARA_PULANG'),
+                'ANAMNESA' => $request->input('ANAMNESA'),
+                'LAINNYA' => $request->input('LAINNYA'),
+                'CREATE_AT' => now(),
+    
+            ]);
+        }
+
+       
 
         if ((auth()->user()->roles->pluck('name')[0]) == 'dokter fisioterapi') {
             return redirect()->route('list_pasiens.dokter')->with('success', 'Lembar Cppt Berhasil Diperbarui!');

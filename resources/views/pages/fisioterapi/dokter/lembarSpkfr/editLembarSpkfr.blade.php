@@ -50,7 +50,7 @@
                                         <div class="form-group">
                                             <label>Pemeriksaan Fisik dan Uji Fungsi </label>
                                             <input type="hidden" class="form-control" name="no_registrasi" value="{{$lembarSpkfr->no_registrasi}}" ></input>
-                                            <input type="hidden" class="form-control" name="kode_transaksi_fisio" value="{{$lembarSpkfr->kode_transaksi_fisio}}"></input>
+                                            {{-- <input type="hidden" class="form-control" name="kode_transaksi_fisio" value="{{$lembarSpkfr->kode_transaksi_fisio}}"></input> --}}
                                             <input type="text" class="form-control" name="pemeriksaan_fisik" value="{{$lembarSpkfr->pemeriksaan_fisik}}" ></input>
                                         </div>
                                     </div>
