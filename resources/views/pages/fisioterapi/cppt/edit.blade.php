@@ -26,6 +26,9 @@
         </div>
 
         <div class="section-body">
+               <!-- Detail Pasien -->
+               @include('components.biodata-pasien-bynoreg')
+               <!-- Tutup Detail Pasien -->
             <div class="row">
                 <div class="col-12">
                     <div class="card card-primary">
@@ -42,6 +45,7 @@
                                             <label>Kode Transaksi </label>
                                             <input type="hidden" class="form-control" value="{{ $data->ID_TRANSAKSI }}" name="ID_TRANSAKSI" readonly>
                                             <input type="hidden" name="NO_MR_PASIEN" class="form-control" value="{{ $data->NO_MR_PASIEN}}" readonly>
+                                            <input type="hidden" name="Kode_Dokter" class="form-control" value="{{ $biodata->Kode_Dokter}}" readonly>
                                             <input type="text" name="KODE_TRANSAKSI_FISIO" class="form-control" value="{{ $data->KODE_TRANSAKSI_FISIO}}" readonly>
                                         </div>
                                     </div>
