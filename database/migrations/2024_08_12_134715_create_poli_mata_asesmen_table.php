@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::connection('pku')->create('poli_mata_asesmen', function (Blueprint $table) {
             $table->id();
             $table->string('FS_KD_REG');
+            $table->string('RIWAYAT_SEKARANG')->nullable();
             $table->string('KEADAAN_UMUM')->nullable();
             $table->string('KESADARAN')->nullable();
             $table->string('PROTESA')->nullable();

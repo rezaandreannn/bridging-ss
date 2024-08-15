@@ -133,7 +133,6 @@ class AssesmenMataController extends Controller
                 'FS_RIW_TUMBUH' => $request->input('FS_RIW_TUMBUH')  ? $request->input('FS_RIW_TUMBUH') : '0',
                 'FS_RIW_TUMBUH_KET' => $request->input('FS_RIW_TUMBUH_KET')  ? $request->input('FS_RIW_TUMBUH_KET') : '0',
                 'FS_HIGH_RISK' => '',
-                'FS_PEMERIKSAAN_FISIK' => $request->input('FS_PEMERIKSAAN_FISIK'),
                 'FS_EDUKASI' => $request->input('FS_EDUKASI'),
                 'FS_SKDP_FASKES' => $request->input('FS_SKDP_FASKES'),
                 'mdb' => $userEmr->user_id,
@@ -208,7 +207,7 @@ class AssesmenMataController extends Controller
             }
             DB::connection('pku')->commit();
 
-            return redirect('pm/polimata?kode_dokter=' . $request->input('KODE_DOKTER'))->with('success', 'Data Pasien Added successfully!');
+            return redirect('pm/polimata/perawat?kode_dokter=' . $request->input('KODE_DOKTER'))->with('success', 'Data Pasien Added successfully!');
         } catch (\Exception $e) {
             //throw $th;
             DB::connection('pku')->rollBack();
@@ -244,7 +243,7 @@ class AssesmenMataController extends Controller
         $biodata = $this->rajal->pasien_bynoreg($noReg);
 
         $asasmen_perawat = $this->poliMata->asasmenPerawatGet($noReg);
-        dd($asasmen_perawat);
+        // dd($asasmen_perawat);
         $riwayat = $this->rajal->riwayatGet($noReg);
         // dd($riwayat);
 
@@ -303,7 +302,6 @@ class AssesmenMataController extends Controller
             'FS_RIW_TUMBUH_KET' => $request->input('FS_RIW_TUMBUH_KET')  ? $request->input('FS_RIW_TUMBUH_KET') : '0',
             'FS_HIGH_RISK' => '',
             'FS_EDUKASI' => $request->input('FS_EDUKASI'),
-            'FS_PEMERIKSAAN_FISIK' => $request->input('FS_PEMERIKSAAN_FISIK'),
             'FS_SKDP_FASKES' => $request->input('FS_SKDP_FASKES'),
             'mdb' => $userEmr->user_id,
             'mdd' => date('Y-m-d'),
@@ -376,7 +374,7 @@ class AssesmenMataController extends Controller
         }
 
 
-        return redirect('pm/polimata?kode_dokter=' . $request->input('KODE_DOKTER'))->with('success', 'Edit successfully!');
+        return redirect('pm/polimata/perawat?kode_dokter=' . $request->input('KODE_DOKTER'))->with('success', 'Edit successfully!');
     }
 
     /**

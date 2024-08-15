@@ -46,8 +46,24 @@ class AssesmenDokterMataController extends Controller
         $title = $this->prefix . ' ' . 'Mata Assesmen Dokter';
         $biodata = $this->rekam_medis->getBiodata($noReg);
         $asasmen_perawat = $this->poliMata->asasmenPerawatGet($noReg);
+
+        $masalah_perawatan = $this->rajal->masalah_perawatan();
+        $rencana_perawatan = $this->rajal->rencana_perawatan();
+
+        $masalah_perGet = $this->rajal->masalahPerawatanGetByNoreg($noReg);
+        $rencana_perGet = $this->rajal->rencanaPerawatanGetByNoreg($noReg);
+
+        $selected = false;
+        foreach ($masalah_perawatan as $mp) {
+            foreach ($masalah_perGet as  $value) {
+                if ($mp->FS_KD_DAFTAR_DIAGNOSA == $value->FS_KD_MASALAH_KEP) {
+                    $selected = true;
+                    break;
+                }
+            }
+        }
         // dd($asasmen_perawat);
-        return view($this->view . 'dokter.assesmenAwal', compact('title', 'biodata', 'asasmen_perawat'));
+        return view($this->view . 'dokter.assesmenAwal', compact('title', 'biodata', 'asasmen_perawat', 'masalah_perGet', 'rencana_perGet', 'masalah_perawatan', 'rencana_perawatan'));
     }
 
     /**
