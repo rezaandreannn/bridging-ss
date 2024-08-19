@@ -308,6 +308,7 @@ Route::middleware('auth')->group(function () {
 
         // Report PDF
         Route::get('rawat_jalan/resep/{kode_transaksi}/{noReg}', [Berkas_rm_controller::class, 'cetakResep'])->name('rj.resep');
+        Route::get('rawat_jalan/cetakpengajuanalkes/{noReg}', [Berkas_rm_controller::class, 'cetakPengajuanAlkes'])->name('rj.alkes');
         Route::get('rawat_jalan/skdp/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakSKDP'])->name('rj.skdp');
         Route::get('rawat_jalan/radiologi/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakRAD'])->name('rj.radiologi');
         Route::get('rawat_jalan/lab/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakLAB'])->name('rj.lab');

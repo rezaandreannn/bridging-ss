@@ -51,20 +51,13 @@
             </table>
             <table width="100%">
                 <tr>
-                    <td class="text">
-                        <b>No Antrian Obat : {{ $antrian->FS_KD_ANTRIAN}}</b>
-                    </td>
-                </tr>
-            </table>
-            <table width="100%">
-                <tr>
-                    <td class="text5">{{ $data->NAMALENGKAP}}</td>
+                    <td class="text5">{{ $data->NAMA_DOKTER}}</td>
                 </tr>
                 <tr>
                     <td class="text5">SIP : </td>
                 </tr>
                 <tr>
-                    <td class="text5" style="text-align: right;">{{ date('d-m-Y', strtotime($data->mdd)) }}</td>
+                    <td class="text5" style="text-align: right;">{{ date('d-m-Y', strtotime($data->created_at)) }}</td>
                 </tr>
                 <tr>
                     <td colspan="4" style="padding: 0;">
@@ -72,7 +65,12 @@
                     </td>
                 </tr>
             </table>
-            <p style="font-size: 12px; text-align:left;">{!! nl2br(trim($data->FS_TERAPI)) !!}</p>
+            <p style="font-size: 12px; text-align:left; padding-bottom:50px">
+                /R {{$data->jenis_alat}} No 1 <br>
+                S imm 
+                <br>
+                ---------------------------------
+            </p>
             <table width="100%">
                 <tr>
                     <td colspan="4">
@@ -101,17 +99,12 @@
                         Perempuan
                         @endif</td>
                 </tr>
-   
 
                 <tr>
                     <td class="text1">Diagnosa</td>
-                    <td class="text1">: {{ $biodata->FS_DIAGNOSA}}</td>
+                    <td class="text1">: {{ $data->diagnosa_klinis}}</td>
                     <td class="text1">Alergi</td>
                     <td class="text1">: {{ $biodata->FS_ALERGI}}</td>
-                </tr>
-                <tr>
-                    <td class="text1">Diagnosa Sekunder</td>
-                    <td class="text1">: {{ $biodata->FS_DIAGNOSA_SEKUNDER}}</td>
                 </tr>
             </table>
             <table width="100%">
