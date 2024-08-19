@@ -77,7 +77,7 @@
                                 @foreach ($listpasien as $pasien)
                                 <tr>
                                     <td width="5%"> <span class="badge badge-pill badge-success">{{ $pasien->NOMOR }}</span></td>
-                                    <td width="10%">{{ date('Y-m-d', strtotime($pasien->TANGGAL))}}</td>
+                                    <td width="5%">{{ date('Y-m-d', strtotime($pasien->TANGGAL))}}</td>
                                     <td width="15%">{{$pasien->NAMA_PASIEN}}</td>
                                     <td width="10%">{{$pasien->NO_MR}}</td>
                                     <td width="15%">{{$pasien->jenis_fisio}}</td>
@@ -88,18 +88,22 @@
                                         <div class="badge badge-danger">belum diperiksa</div>
                                         @endif
                                     </td>
-                                    <td width="10%">
+                                    <td width="5%">
                                         @if ($fisioterapi->cek_status_terapi($pasien->NO_REG)==true)
                                         <div class="badge badge-success"><i class="fa-solid fa-check"></i></div> 
                                         @else
-                                         <div class="badge badge-danger"><i class="fa-solid fa-x"></i></div> 
-                                         @endif
+                                        <div class="badge badge-danger"><i class="fa-solid fa-x"></i></div> 
+                                        @endif
                                         
                                     </td>
                                     <td width="20%">
                                         <a href="{{ route('transaksi_fisio.fisio', ['no_mr' => $pasien->NO_MR]) }}" class="btn btn-sm btn-info"><i class="fas fa-plus"></i> Open Cppt</a>
                                         @if ($fisioterapi->cek_status_terapi($pasien->NO_REG)==false)
                                         <a href="{{ route('transaksi_fisio.addtindakan', ['no_reg' => $pasien->NO_REG]) }}" onclick="return confirm('Ingin lakukan terapi ?')" class="btn btn-success btn-sm"><i class="fa-solid fa-stethoscope"></i> Lakukan Terapi</a>
+                                        @endif
+                                     <!-- order alat fisioterapi -->
+                                        @if($rajalModel->cek_order_alkes($pasien->NO_REG) == true)
+                                        <a href="{{ route('rj.alkes', [$pasien->NO_REG])  }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> alkes</a>
                                         @endif
                                     </td>
                                 </tr>

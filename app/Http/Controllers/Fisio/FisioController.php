@@ -58,12 +58,13 @@ class FisioController extends Controller
     {
 
         $fisioterapi = new Fisioterapi();
+        $rajalModel = new Rajal();
         $kode_dokter = $request->input('kode_dokter');
         $dokters = $this->fisio->getDokterFisio();
         $listpasien = $this->fisio->pasienCpptdanFisioterapi($kode_dokter);
         // dd($listpasien);
         $title = $this->prefix . ' ' . 'CPPT Index';
-        return view($this->view . 'listPasienCpptFisio', compact('title', 'listpasien', 'dokters','fisioterapi'));
+        return view($this->view . 'listPasienCpptFisio', compact('title', 'listpasien', 'dokters','fisioterapi','rajalModel'));
     }
 
     // Detail Pasien Transaksi Fisioterapi
