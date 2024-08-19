@@ -72,7 +72,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Pemeriksaan Fisik</label>
-                                    <textarea class="form-control" rows="3" name="FS_PEMERIKSAAN_FISIK" value="" placeholder="Masukan ..."></textarea>
+                                    <textarea class="form-control" rows="3" name="pemeriksaan_fisik" value="" placeholder="Masukan ..."></textarea>
                                     @error('pemeriksaan_fisik')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}
