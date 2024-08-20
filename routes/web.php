@@ -163,6 +163,7 @@ Route::middleware('auth')->group(function () {
         Route::get('perawat/transaksi_fisio', [FisioController::class, 'transaksi'])->name('transaksi_fisio.fisio');
         Route::post('perawat/transaksi_fisio/add', [FisioController::class, 'store'])->name('transaksi_fisio.store');
         Route::get('perawat/transaksi_fisio/addtindakan', [FisioController::class, 'storeTindakan'])->name('transaksi_fisio.addtindakan');
+        Route::put('perawat/transaksi_fisio/addtindakan', [FisioController::class, 'update_alkes'])->name('transaksi_fisio.update_alkes');
         Route::put('perawat/transaksi_fisio/{id}', [FisioController::class, 'update'])->name('transaksi_fisio.update');
         Route::delete('perawat/transaksi_fisio/{id}', [FisioController::class, 'delete'])->name('transaksi_fisio.delete');
 
@@ -309,6 +310,7 @@ Route::middleware('auth')->group(function () {
 
         // Report PDF
         Route::get('rawat_jalan/resep/{kode_transaksi}/{noReg}', [Berkas_rm_controller::class, 'cetakResep'])->name('rj.resep');
+        Route::get('rawat_jalan/cetakpengajuanalkes/{noReg}', [Berkas_rm_controller::class, 'cetakPengajuanAlkes'])->name('rj.alkes');
         Route::get('rawat_jalan/skdp/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakSKDP'])->name('rj.skdp');
         Route::get('rawat_jalan/radiologi/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakRAD'])->name('rj.radiologi');
         Route::get('rawat_jalan/lab/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakLAB'])->name('rj.lab');

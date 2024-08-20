@@ -65,7 +65,9 @@ class DiagnosisMedisController extends Controller
     {
         //
         $validatedData = $request->validate([
-            'nama_diagnosis_medis' => ['required', new UniqueInConnection('fis_master_diagnosis_medis', 'nama_diagnosis_medis', 'pku')],
+            'nama_diagnosis_medis' => [
+                'required', new UniqueInConnection('fis_master_diagnosis_medis', 'nama_diagnosis_medis', 'pku')
+            ],
         ]);
 
         try {

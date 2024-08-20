@@ -51,6 +51,24 @@ class Berkas_rm_controller extends Controller
         return $pdf->stream($filename . '.pdf');
     }
 
+    public function cetakPengajuanAlkes($noReg)
+    {
+        $data = $this->rekam_medis->cetakAlkes($noReg);
+        // dd($data);
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+      
+        // dd($antrian);
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+
+        $filename = 'resep-' . $date . '-' . $noReg;
+
+        $pdf = PDF::loadview('pages.rekam_medis.resepAlkes', ['data' => $data, 'biodata' => $biodata, 'tanggal' => $tanggal]);
+        // Set paper size to A5
+        $pdf->setPaper('A5');
+        return $pdf->stream($filename . '.pdf');
+    }
+
     public function cetakSKDP($noReg, $kode_transaksi)
     {
         $resep = $this->rekam_medis->cetakResep($noReg, $kode_transaksi);

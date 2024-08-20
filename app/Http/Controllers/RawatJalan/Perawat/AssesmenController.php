@@ -9,6 +9,7 @@ use GuzzleHttp\Client;
 use App\Models\Antrean;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Rules\UniqueInConnection;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
@@ -172,10 +173,25 @@ class AssesmenController extends Controller
     {
         // Make a POST request to the API endpoint
         $request->validate([
+            'FS_KD_REG' => [
+                'required',
+                new UniqueInConnection('TAC_RJ_STATUS', 'FS_KD_REG', 'pku')
+            ],
+            'FS_KD_REG' => [
+                'required',
+                new UniqueInConnection('TAC_ASES_PER2', 'FS_KD_REG', 'pku')
+            ],
+            'FS_KD_REG' => [
+                'required',
+                new UniqueInConnection('TAC_RJ_VITAL_SIGN', 'FS_KD_REG', 'pku')
+            ],
             'anamnesa' => 'required',
             'skrining_nutrisi1' => 'required',
             'skrining_nutrisi2' => 'required',
             'pemeriksaan_fisik' => 'required',
+            'FS_CARA_BERJALAN1' => 'required',
+            'FS_CARA_BERJALAN2' => 'required',
+            'FS_CARA_DUDUK' => 'required',
             'suhu' => 'required',
             'nadi' => 'required',
             'respirasi' => 'required',

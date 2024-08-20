@@ -136,7 +136,7 @@
                                         @endif
                                     <!-- order alat fisioterapi -->
                                         @if($rajalModel->cek_order_alkes($item->No_Reg) == true)
-                                        <a href="#" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-success"><i class="fas fa-download"></i> alkes</a>
+                                        <a href="{{ route('rj.alkes', [$item->No_Reg])  }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-success"><i class="fas fa-download"></i> alkes</a>
                                         @endif
                                         <!-- Resep -->
                                         @if($item->FS_TERAPI != '')

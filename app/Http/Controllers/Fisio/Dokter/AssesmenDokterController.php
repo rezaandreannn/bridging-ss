@@ -627,6 +627,7 @@ class AssesmenDokterController extends Controller
                         'tanggal_masuk' => $request->input('tanggal'),
                         'tanggal_pulang' => $request->input('tanggal'),
                         'create_by' => auth()->user()->username,
+                        'created_at' => date('Y-m-d H:i:s'),
                         'updated_at' => date('Y-m-d H:i:s')
                     ]);
                 }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('no_registrasi');
             $table->string('jenis_alat')->nullable();
             $table->string('biaya')->nullable();
+            $table->string('lingkar_pinggang')->nullable();
             $table->string('no_sep')->nullable();
             $table->string('jenis_rawat')->nullable();
             $table->string('ruangan_rawat')->nullable();

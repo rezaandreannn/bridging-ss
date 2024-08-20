@@ -75,14 +75,14 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Suhu</label>
-                                    <input type="text" name="FS_SUHU" class="form-control" name="FS_SUHU" value="{{ $asasmen_perawat->FS_SUHU }}">
+                                    <input type="text" name="FS_SUHU" class="form-control" name="FS_SUHU" id="suhu" value="{{ $asasmen_perawat->FS_SUHU }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Nadi</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" onkeypress="return hanyaAngka(event)" name="FS_NADI" value="{{ $asasmen_perawat->FS_NADI }}">
+                                        <input type="text" class="form-control" name="FS_NADI" id="nadi" value="{{ $asasmen_perawat->FS_NADI }}">
                                         <div class="input-group-append">
                                             <span class="input-group-text">x/menit</span>
                                         </div>
@@ -93,7 +93,7 @@
                                 <div class="form-group">
                                     <label>Respirasi</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" name="FS_R" value="{{ $asasmen_perawat->FS_R }}">
+                                        <input type="text" class="form-control" name="FS_R" id="respirasi" value="{{ $asasmen_perawat->FS_R }}">
                                         <div class="input-group-append">
                                             <span class="input-group-text">x/menit</span>
                                         </div>
@@ -104,7 +104,7 @@
                                 <div class="form-group">
                                     <label>Tekanan Darah</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" name="FS_TD" value="{{ $asasmen_perawat->FS_TD }}">
+                                        <input type="text" class="form-control" name="FS_TD" id="tekananDarah" value="{{ $asasmen_perawat->FS_TD }}">
                                         <div class="input-group-append">
                                             <span class="input-group-text">mmHg</span>
                                         </div>
@@ -115,7 +115,7 @@
                                 <div class="form-group">
                                     <label>Tinggi Badan</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" onkeypress="return hanyaAngka(event)" name="FS_TB" value="{{ $asasmen_perawat->FS_TB }}">
+                                        <input type="text" class="form-control" id="tb" name="FS_TB" value="{{ $asasmen_perawat->FS_TB }}">
                                         <div class="input-group-append">
                                             <span class="input-group-text">cm</span>
                                         </div>
@@ -126,7 +126,7 @@
                                 <div class="form-group">
                                     <label>Berat Badan</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" onkeypress="return hanyaAngka(event)" name="FS_BB" value="{{ $asasmen_perawat->FS_BB }}">
+                                        <input type="text" class="form-control" id="bb" name="FS_BB" value="{{ $asasmen_perawat->FS_BB }}">
                                         <div class="input-group-append">
                                             <span class="input-group-text">kg</span>
                                         </div>
@@ -726,6 +726,59 @@
             $("#kesimpulan_asesmen_jatuh").val("RISIKO RENDAH");
         }
     }
+</script>
+
+<!-- Membatasi inputan huruf -->
+<script>
+    document.getElementById('tekananDarah').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('suhu').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('nadi').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('respirasi').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('tb').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('bb').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+
 </script>
 
 @endpush
