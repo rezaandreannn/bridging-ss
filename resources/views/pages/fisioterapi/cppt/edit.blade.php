@@ -103,6 +103,18 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="card-body">
+                                              <h6 class="card-subtitle mb-2"> <span class="badge badge-pill badge-info"><i class="fas fa-info"></i></span> Terapi yang diberikan dokter</h6>
+                                              <hr>
+                                              <p>{{$terapiDokterLastFisio->terapi ?? ''}}</p>
+                                            </div>
+                                          </div>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                    </div>
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Jenis Fisio</label>
                                             <select name="JENIS_FISIO[]" class="form-control select2" multiple="multiple" data-placeholder="Pilih Jenis Fisio" data-dropdown-css-class="select2-purple" style="width: 100%;">

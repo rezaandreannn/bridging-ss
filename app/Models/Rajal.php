@@ -218,6 +218,21 @@ class Rajal extends Model
         }
     }
 
+    public function cek_lingkar_pinggang($noReg)
+    {
+        
+        $data = DB::connection('pku')
+            ->table('fis_order_alkes')
+            ->select(
+                'no_registrasi',
+                'lingkar_pinggang'
+            )
+            ->where('no_registrasi', $noReg)
+            ->first();
+
+     return $data;
+    }
+
     public function masalah_perawatan()
     {
         $data = DB::connection('pku')->table('TAC_COM_DAFTAR_DIAG')->get();

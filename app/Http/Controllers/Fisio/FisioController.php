@@ -169,6 +169,8 @@ class FisioController extends Controller
         return redirect()->back()->with('success', 'Transaksi Berhasil Diperbarui!');
     }
 
+
+
     // Delete Data Transaksi Fisioterapi
     public function delete($id_transaksi)
     {
@@ -318,8 +320,10 @@ class FisioController extends Controller
 
         $jenisfisio = $this->jenisFisio->getDataJenisFisio();
         $data = $this->fisio->dataEditPasienCPPT($id);
+        $terapiDokterLastFisio =  $this->fisio->terapiDokterLastFisio($biodata->NO_MR);
+        // dd($terapiDokterLastFisio);
 
-        return view($this->view . 'cppt.edit', compact('title', 'data', 'jenisfisio', 'jenis_fisio','biodata'));
+        return view($this->view . 'cppt.edit', compact('title', 'data', 'jenisfisio', 'jenis_fisio','biodata','terapiDokterLastFisio'));
     }
 
     // Proses Edit Data CPPT Fisioterapi
@@ -478,6 +482,31 @@ class FisioController extends Controller
         $pdf = PDF::loadview($this->view . 'cetak/bukti_pelayanan', ['title' => $title, 'data' => $data, 'biodatas' => $biodatas, 'lastCppt' => $lastCppt, 'firstCppt' => $firstCppt, 'cekFirstCppt' => $cekFirstCppt, 'ttdPasien' => $ttdPasien]);
         return $pdf->stream($filename . '.pdf');
     }
+        // ------------------------
+        // alat kesehatan fisioterapi
+        // ------------------------
+
+        public function update_alkes(Request $request)
+        {
+            $validatedData = $request->validate([
+                'no_registrasi' => 'required',
+            ]);
+    
+    
+            $data = DB::connection('pku')->table('fis_order_alkes')->where('no_registrasi', $request->input('no_registrasi'))->update([
+
+                'lingkar_pinggang' => $request->input('lingkar_pinggang')
+            ]);
+
+           if($data>0){
+               return redirect()->back()->with('success', 'Lingkar Pinggang Berhasil Diperbarui!');
+            }
+            else {
+               return redirect()->back()->with('danger', 'Lingkar Pinggang gagal Diperbarui!');
+
+           }
+    
+        }
 
     // ---------------------
     // Fisioterapi Dokter
