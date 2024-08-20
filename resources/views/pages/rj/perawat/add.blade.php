@@ -289,6 +289,11 @@
                                         <option value="0">TIDAK</option>
                                         <option value="1">YA</option>
                                     </select>
+                                    @error('FS_CARA_BERJALAN1')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
                                 </div>
                                 <div class="form-group clearfix">
                                     <label>
@@ -299,7 +304,11 @@
                                         <option value="0">TIDAK</option>
                                         <option value="1">YA</option>
                                     </select>
-
+                                    @error('FS_CARA_BERJALAN2')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
                                 </div>
                                 <div class="form-group clearfix">
                                     <label for="check3">
@@ -310,6 +319,11 @@
                                         <option value="0">TIDAK</option>
                                         <option value="1">YA</option>
                                     </select>
+                                    @error('FS_CARA_DUDUK')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                             <input type="hidden" id="hasil_check1">
