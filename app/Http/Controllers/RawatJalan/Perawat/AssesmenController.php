@@ -181,6 +181,10 @@ class AssesmenController extends Controller
                 'required',
                 new UniqueInConnection('TAC_ASES_PER2', 'FS_KD_REG', 'pku')
             ],
+            'FS_KD_REG' => [
+                'required',
+                new UniqueInConnection('TAC_RJ_VITAL_SIGN', 'FS_KD_REG', 'pku')
+            ],
             'anamnesa' => 'required',
             'skrining_nutrisi1' => 'required',
             'skrining_nutrisi2' => 'required',
