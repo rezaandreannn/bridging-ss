@@ -62,7 +62,7 @@
                                     </td>
                                     <td width="20%">
                                         @if($data->FS_STATUS != '')
-                                        <a href="{{ route('poliMata.assesmenAwal', ['noReg' => $data->NO_REG]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Edit</a>
+                                        <a href="{{ route('poliMata.assesmenAwal',$data->NO_REG) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
                                         @else
                                         <a href="{{ route('poliMata.assesmenKeperawatanAdd', ['noReg' => $data->NO_REG]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
                                         @endif
