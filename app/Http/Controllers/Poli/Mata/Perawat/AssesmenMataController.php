@@ -42,7 +42,6 @@ class AssesmenMataController extends Controller
         $title = $this->prefix . ' ' . 'Mata';
         $kode_dokter = $request->input('kode_dokter');
         $dokters = $this->poliMata->getDokterMata();
-        // dd($dokters);
         $pasien = $this->antrean->getDataPasienRajal($kode_dokter);
         // dd($pasien);
         return view($this->view . 'perawat.index', compact('title', 'pasien', 'dokters'));
@@ -124,7 +123,7 @@ class AssesmenMataController extends Controller
                 'SUKU' => $request->input('SUKU'),
                 'FS_NILAI_KHUSUS' => $request->input('FS_NILAI_KHUSUS'),
                 'FS_NILAI_KHUSUS2' => $request->input('FS_NILAI_KHUSUS'),
-                'FS_ANAMNESA' => $request->input('anamnesa'),
+                'FS_ANAMNESA' => $request->input('FS_ANAMNESA'),
                 'FS_PENGELIHATAN' => $request->input('FS_PENGELIHATAN'),
                 'FS_PENCIUMAN' => $request->input('FS_PENCIUMAN'),
                 'FS_PENDENGARAN' => $request->input('FS_PENDENGARAN'),
@@ -292,7 +291,7 @@ class AssesmenMataController extends Controller
             'SUKU' => $request->input('SUKU'),
             'FS_NILAI_KHUSUS' => $request->input('FS_NILAI_KHUSUS'),
             'FS_NILAI_KHUSUS2' => $request->input('FS_NILAI_KHUSUS'),
-            'FS_ANAMNESA' => $request->input('anamnesa'),
+            'FS_ANAMNESA' => $request->input('FS_ANAMNESA'),
             'FS_PENGELIHATAN' => $request->input('FS_PENGELIHATAN'),
             'FS_PENCIUMAN' => $request->input('FS_PENCIUMAN'),
             'FS_PENDENGARAN' => $request->input('FS_PENDENGARAN'),

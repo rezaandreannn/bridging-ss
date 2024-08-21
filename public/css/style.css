@@ -799,6 +799,14 @@ select.form-control:not([size]):not([multiple]) {
 .card .card-khusus-title {
     color: white;
 }
+
+/* .card .card-fixed {
+    position: fixed; 
+    z-index: 1000; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
+    background-color: #fff;
+} */
+
 .card .card-khusus-body {
     background-color: #e8f0fa;
 }

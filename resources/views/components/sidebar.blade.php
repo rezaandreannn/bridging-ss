@@ -79,7 +79,7 @@
                 @endcan
             </li>
             @endcan
-            @can('poli mata')
+            @can('poli mata perawat')
             <li class="menu-header">Poli</li>
             <li class="nav-item dropdown {{ Request::is('pm*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-eye"></i> <span>Poli Mata</span></a>
@@ -88,6 +88,12 @@
                         <a class="nav-link" href="{{ route('poliMata.index') }}">Assesmen Awal</a>
                     </li>
                 </ul>
+            </li>
+            @endcan
+            @can('poli mata dokter')
+            <li class="menu-header">Poli</li>
+            <li class="nav-item dropdown {{ Request::is('pm*') ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-eye"></i> <span>Poli Mata</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('pm/polimata/dokter*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('poliMata.indexDokter') }}">Assesmen Dokter</a>

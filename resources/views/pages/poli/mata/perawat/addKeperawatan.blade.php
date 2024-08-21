@@ -44,7 +44,7 @@
                                     <input type="hidden" name="FS_KD_REG" value="{{ $noReg }}" />
                                     <input type="hidden" name="KODE_DOKTER" value="{{ $biodata->Kode_Dokter}}" />
                                     <input type="hidden" name="NO_MR" value="{{ $biodata->NO_MR}}" />
-                                    <textarea name="anamnesa" class="form-control  @error('anamnesa') is-invalid  
+                                    <textarea name="FS_ANAMNESA" class="form-control  @error('anamnesa') is-invalid  
                                         @enderror" rows="3" placeholder="Masukan ..."></textarea>
                                 </div>
                                 @error('anamnesa')

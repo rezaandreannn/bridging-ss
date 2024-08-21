@@ -10,13 +10,23 @@ class PoliMata extends Model
 {
     public function getDokterMata()
     {
+        // $data = DB::connection('db_rsmm')
+        //     ->table('DOKTER as d')
+        //     ->select(
+        //         'd.Kode_Dokter',
+        //         'd.Nama_Dokter'
+        //     )
+        //     ->whereIn('d.Spesialis', array('SPESIALIS MATA'))
+        //     ->get();
+
+        // return $data;
         $data = DB::connection('db_rsmm')
             ->table('DOKTER as d')
             ->select(
                 'd.Kode_Dokter',
                 'd.Nama_Dokter'
             )
-            ->whereIn('d.Spesialis', array('SPESIALIS MATA'))
+            ->whereIn('d.Kode_Dokter', array('148', '156'))
             ->get();
 
         return $data;
@@ -29,6 +39,21 @@ class PoliMata extends Model
             ->join('TAC_RJ_VITAL_SIGN', 'TAC_ASES_PER2.FS_KD_REG', '=', 'TAC_RJ_VITAL_SIGN.FS_KD_REG')
             ->join('TAC_RJ_JATUH', 'TAC_ASES_PER2.FS_KD_REG', '=', 'TAC_RJ_JATUH.FS_KD_REG')
             ->join('poli_mata_asesmen', 'TAC_ASES_PER2.FS_KD_REG', '=', 'poli_mata_asesmen.FS_KD_REG')
+            ->leftJoin($dbpku . '.dbo.REGISTER_PASIEN', 'TAC_ASES_PER2.FS_KD_REG', '=', 'REGISTER_PASIEN.No_MR')
+            ->where('TAC_ASES_PER2.FS_KD_REG', $noReg)
+            ->first();
+
+        return $data;
+    }
+
+    public function asasmenDokterGet($noReg)
+    {
+        $dbpku = DB::connection('db_rsmm')->getDatabaseName();
+        $data = DB::connection('pku')->table('TAC_ASES_PER2')
+            ->join('TAC_RJ_VITAL_SIGN', 'TAC_ASES_PER2.FS_KD_REG', '=', 'TAC_RJ_VITAL_SIGN.FS_KD_REG')
+            ->join('TAC_RJ_JATUH', 'TAC_ASES_PER2.FS_KD_REG', '=', 'TAC_RJ_JATUH.FS_KD_REG')
+            ->join('poli_mata_asesmen', 'TAC_ASES_PER2.FS_KD_REG', '=', 'poli_mata_asesmen.FS_KD_REG')
+            ->join('poli_mata_asesmen_dokter', 'TAC_ASES_PER2.FS_KD_REG', '=', 'poli_mata_asesmen.FS_KD_REG')
             ->leftJoin($dbpku . '.dbo.REGISTER_PASIEN', 'TAC_ASES_PER2.FS_KD_REG', '=', 'REGISTER_PASIEN.No_MR')
             ->where('TAC_ASES_PER2.FS_KD_REG', $noReg)
             ->first();

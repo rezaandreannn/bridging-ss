@@ -211,7 +211,6 @@ class AssesmenController extends Controller
             DB::connection('pku')->beginTransaction();
 
             $status_rj = DB::connection('pku')->table('TAC_RJ_STATUS')->insert([
-
                 'FS_KD_REG' => $request->input('FS_KD_REG'),
                 'FS_STATUS' => '1',
                 'FS_FORM' => '1',
