@@ -44,7 +44,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Kode Registrasi Pendaftaran </label>
-                                            <input type="text" name="no_registrasi" class="form-control" value="{{$biodatas->No_Reg}}" readonly>
+                                            <input type="text" name="no_registrasi" class="form-control" value="{{$biodatas->NO_REG}}" readonly>
                                             <input type="hidden" name="NO_MR" class="form-control" value="{{$biodatas->NO_MR}}" readonly>
                                             {{-- <input type="hidden" name="kode_transaksi_fisio" class="form-control" value="{{$asesmenDokterGet->kode_transaksi_fisio}}" readonly> --}}
                                         </div>

@@ -110,7 +110,7 @@ class AssesmenDokterController extends Controller
     //     return view($this->view . 'dokter.asesmenDokter.createAsesmen', compact('title', 'biodatas', 'jenisterapifisio', 'kode_transaksi_fisio', 'ttv', 'asesmen_perawat', 'history','diagnosisMedis'));
     // }
 
-    public function create_new($NoMr)
+    public function create_new($NoMr,$noReg)
     {
         //
 
@@ -145,9 +145,11 @@ class AssesmenDokterController extends Controller
 
         $jenisterapifisio = DB::connection('pku')->table('TAC_COM_FISIOTERAPI_MASTER')->get();
 
-        $biodatas = $this->pasien->biodataPasienByMr($NoMr);
-        $ttv = DB::connection('pku')->table('TAC_RJ_VITAL_SIGN')->where('FS_KD_REG', $biodatas->No_Reg)->first();
-        $asesmen_perawat = DB::connection('pku')->table('TAC_ASES_PER2')->where('FS_KD_REG', $biodatas->No_Reg)->first();
+        // $biodatas = $this->pasien->biodataPasienByMr($NoMr);
+        $biodatas = $this->rajal->pasien_bynoreg($noReg);
+        // dd($biodatas);
+        $ttv = DB::connection('pku')->table('TAC_RJ_VITAL_SIGN')->where('FS_KD_REG', $biodatas->NO_REG)->first();
+        $asesmen_perawat = DB::connection('pku')->table('TAC_ASES_PER2')->where('FS_KD_REG', $biodatas->NO_REG)->first();
         $history = $this->rajaldokter->getHistoryPasien($NoMr);
         $diagnosisMedis = $this->fisio->getDiagnosisMedis();
 
@@ -157,20 +159,21 @@ class AssesmenDokterController extends Controller
         return view($this->view . 'dokter.asesmenDokter.createAsesmenNew', compact('title', 'biodatas', 'jenisterapifisio','ttv', 'asesmen_perawat', 'history','diagnosisMedis'));
     }
 
-    public function editAsesmen($NoMr)
+    public function editAsesmen($NoMr,$noReg)
     {
 
 
         $jenisterapifisio = DB::connection('pku')->table('TAC_COM_FISIOTERAPI_MASTER')->get();
 
-        $biodatas = $this->pasien->biodataPasienByMr($NoMr);
-        $ttv = DB::connection('pku')->table('TAC_RJ_VITAL_SIGN')->where('FS_KD_REG', $biodatas->No_Reg)->first();
-        $asesmenDokterGet = DB::connection('pku')->table('fis_asesmen_dokter')->where('no_registrasi', $biodatas->No_Reg)->first();
-        $terapiFisioGet = DB::connection('pku')->table('fis_tr_jenis')->where('no_registrasi', $biodatas->No_Reg)->get();
+        $biodatas = $this->rajal->pasien_bynoreg($noReg);
+        $ttv = DB::connection('pku')->table('TAC_RJ_VITAL_SIGN')->where('FS_KD_REG', $biodatas->NO_REG)->first();
+        $asesmenDokterGet = DB::connection('pku')->table('fis_asesmen_dokter')->where('no_registrasi', $biodatas->NO_REG)->first();
+        // dd($asesmenDokterGet);
+        $terapiFisioGet = DB::connection('pku')->table('fis_tr_jenis')->where('no_registrasi', $biodatas->NO_REG)->get();
         // $diagnosisKlinis = $this->fisio->getDiagnosisKlinis();
         $diagnosisMedis = $this->fisio->getDiagnosisMedis();
-        $lembarUjiFungsiGet = DB::connection('pku')->table('fis_lembar_uji_fungsi')->where('no_registrasi', $biodatas->No_Reg)->first();
-        $lembarSpkfr = DB::connection('pku')->table('fis_lembar_spkfr')->where('no_registrasi', $biodatas->No_Reg)->first();
+        $lembarUjiFungsiGet = DB::connection('pku')->table('fis_lembar_uji_fungsi')->where('no_registrasi', $biodatas->NO_REG)->first();
+        $lembarSpkfr = DB::connection('pku')->table('fis_lembar_spkfr')->where('no_registrasi', $biodatas->NO_REG)->first();
 
 
         $title = $this->prefix . ' ' . 'Edit Assesmen Dokter';

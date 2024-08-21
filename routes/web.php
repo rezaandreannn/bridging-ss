@@ -181,8 +181,8 @@ Route::middleware('auth')->group(function () {
         // Fisioterapi Dokter
         Route::get('dokter/list_pasiens', [AssesmenDokterController::class, 'index'])->name('list_pasiens.dokter');
         Route::get('dokter/assesmen_dokter/{NoMr}', [AssesmenDokterController::class, 'create'])->name('add.dokter');
-        Route::get('dokter/assesmen_dokter2/{NoMr}', [AssesmenDokterController::class, 'create_new'])->name('add.dokterNew');
-        Route::get('dokter/assesmen_dokter/edit/{NoMr}', [AssesmenDokterController::class, 'editAsesmen'])->name('edit_asesmen.dokter');
+        Route::get('dokter/assesmen_dokter2/{NoMr}/{noReg}', [AssesmenDokterController::class, 'create_new'])->name('add.dokterNew');
+        Route::get('dokter/assesmen_dokter/edit/{NoMr}/{noReg}', [AssesmenDokterController::class, 'editAsesmen'])->name('edit_asesmen.dokter');
         Route::post('dokter/assesmen_dokter/add', [AssesmenDokterController::class, 'store'])->name('asesmenStore.dokter');
         Route::post('dokter/assesmen_dokter/add2', [AssesmenDokterController::class, 'store_new'])->name('asesmenStore.dokterNew');
         Route::put('dokter/assesmen_dokter/update', [AssesmenDokterController::class, 'update'])->name('asesmenUpdate.dokter');

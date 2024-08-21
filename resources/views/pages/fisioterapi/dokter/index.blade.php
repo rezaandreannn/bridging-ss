@@ -102,7 +102,7 @@
                                         {{-- <a href="{{ route('add.dokter', $pasien->No_MR)}}" class="btn btn-sm btn-primary"><i class="fas fa-notes-medical"></i> Entry</a> --}}
                                         {{-- tombol lama --}}
 
-                                        <a href="{{ route('add.dokterNew', $pasien->No_MR)}}" class="btn btn-sm btn-primary"><i class="fas fa-notes-medical"></i> Entry</a>
+                                        <a href="{{ route('add.dokterNew', ['NoMr' => $pasien->No_MR, 'noReg' => $pasien->NO_REG])}}" class="btn btn-sm btn-primary"><i class="fas fa-notes-medical"></i> Entry</a>
                                         @endif
                                     </td>
                                 </tr>
@@ -140,7 +140,7 @@
                             <tbody>
                                 <tr>
                                     <td>Asesmen Dokterr</td>
-                                    <td> <a href="{{ route('edit_asesmen.dokter', $pasien->No_MR)}}" class="btn btn-sm btn-warning"><i class="fas fa fa-edit"></i> Edit</a></td>
+                                    <td> <a href="{{ route('edit_asesmen.dokter', ['NoMr' => $pasien->No_MR, 'noReg' => $pasien->NO_REG])}}" class="btn btn-sm btn-warning"><i class="fas fa fa-edit"></i> Edit</a></td>
                                 </tr>
                                 {{-- <tr>
                                     <td>Lembar Uji Fungsi</td>
