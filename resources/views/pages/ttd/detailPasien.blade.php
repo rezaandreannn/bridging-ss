@@ -42,6 +42,7 @@
                                     <th>No</th>
                                     <th>Nama Pasien</th>
                                     <th>No MR</th>
+                                    <th>No Registrasi</th>
                                     <th>Dibuat</th>
                                     <th>Tanda tangan</th>
                                     <th>Action</th>
@@ -53,6 +54,7 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $ttd->Nama_Pasien }}</td>
                                     <td>{{ $ttd->NO_MR_PASIEN }}</td>
+                                    <td>{{ $ttd->NO_REGISTRASI }}</td>
                                     <td>{{ $ttd->CREATE_AT }}</td>
                                     <td>
                                         <a href="#" data-toggle="modal" data-target="#gambarModal{{ $ttd->ID_TTD_PASIEN }}">Lihat Tanda Tangan</a>
