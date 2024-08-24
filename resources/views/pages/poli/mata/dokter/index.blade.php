@@ -61,10 +61,17 @@
                                         @endif
                                     </td>
                                     <td width="20%">
-                                        @if($data->FS_STATUS != '')
-                                        <a href="{{ route('poliMata.assesmenAwal',$data->NO_REG) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
-                                        @else
-                                        <a href="{{ route('poliMata.assesmenKeperawatanAdd', ['noReg' => $data->NO_REG]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
+                                        @if($data->FS_STATUS == 1)
+                                            @if($poliMata->cekDokter($data->NO_REG) == true)
+                                            <a href="{{ route('poliMata.assesmenAwalEdit', ['noReg' => $data->NO_REG]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Edit</a>
+                                            @else
+                                            <a href="{{ route('poliMata.assesmenAwal',$data->NO_REG) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
+                                            @endif
+                                            {{-- @if($poliMata->cekAsesmenDokter($data->NO_REG) == true)
+                                            <a href="{{ route('poliMata.assesmenAwalEdit', ['noReg' => $data->NO_REG]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Edit</a>
+                                            @else
+                                            <a href="{{ route('poliMata.assesmenAwal',$data->NO_REG) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
+                                            @endif --}}
                                         @endif
                                        
                                     </td>

@@ -45,6 +45,46 @@ class RajalDokter extends Model
         return $data;
     }
 
+    public function getPasienByDokterMata($kode_dokter)
+    {
+        $dbpku = DB::connection('pku')->getDatabaseName();
+        $date = now();
+
+        $data = DB::connection('db_rsmm')
+            ->table('ANTRIAN as a')
+            ->leftJoin('REGISTER_PASIEN as rp', 'a.No_MR', '=', 'rp.No_MR')
+            ->leftJoin('PENDAFTARAN as c', 'a.No_MR', '=', 'c.No_MR')
+            ->leftJoin($dbpku . '.dbo.TAC_RJ_STATUS as s', 'c.NO_REG', '=', 's.FS_KD_REG')
+            ->leftJoin($dbpku . '.dbo.TAC_RJ_MEDIS as m', 'c.NO_REG', '=', 'm.FS_KD_REG')
+            ->leftJoin($dbpku . '.dbo.poli_mata_asesmen as mata', 'c.NO_REG', '=', 'mata.NO_REG')
+            ->leftJoin('DOKTER as d', 'm.mdb', '=', 'd.KODE_DOKTER')
+            ->select(
+                'a.NOMOR',
+                'a.NO_MR',
+                'rp.NAMA_PASIEN',
+                'rp.ALAMAT',
+                'rp.NO_MR',
+                'rp.KOTA',
+                'rp.PROVINSI',
+                'c.NO_REG',
+                's.FS_STATUS',
+                'm.mdb',
+                'm.FS_TERAPI',
+                'm.FS_KD_TRS',
+                'mata.CREATE_BY',
+                'd.KODE_DOKTER',
+                'd.NAMA_DOKTER'
+            )
+            ->whereDate('a.TANGGAL', $date)
+            ->whereDate('c.TANGGAL', $date)
+            ->where('c.Kode_Dokter', $kode_dokter)
+            ->orderBy('a.NOMOR', 'ASC')
+            ->get()
+            ->toArray();
+
+        return $data;
+    }
+
     public function getHistoryPasien($noMR)
     {
         $dbpku = DB::connection('pku')->getDatabaseName();
@@ -184,7 +224,7 @@ class RajalDokter extends Model
     }
 
     public function getMasterLab()
-    {   
+    {
         $data = DB::connection('db_rsmm')
             ->table('LAB_JENISPERIKSA as a')
             ->select(
@@ -198,7 +238,7 @@ class RajalDokter extends Model
         return $data;
     }
     public function getMasterRadiologi()
-    {   
+    {
 
         $data = DB::connection('db_rsmm')
             ->table('M_RINCI_HEADER as a')
@@ -206,42 +246,42 @@ class RajalDokter extends Model
                 'a.No_Rinci',
                 'a.Ket_Tindakan'
             )
-            ->where('No_Rinci','like','B%')
+            ->where('No_Rinci', 'like', 'B%')
             ->get();
         return $data;
     }
 
     public function getMasterObat()
-    {   
+    {
 
         $data = DB::connection('db_rsmm')
             ->table('Obat as a')
             ->select(
                 'a.Nama_Obat',
-           
+
             )
             ->get();
         return $data;
     }
 
     public function getAsesmenPerawat($noReg)
-    {   
+    {
 
         $data = DB::connection('pku')
             ->table('TAC_ASES_PER2 as a')
             ->select(
                 'a.fs_skdp_faskes',
                 'a.fs_anamnesa',
-           
+
             )
-            ->where('FS_KD_REG',$noReg)
+            ->where('FS_KD_REG', $noReg)
             ->first();
         return $data;
     }
 
 
     public function getHasilLab($noReg)
-    {   
+    {
 
         $data = DB::connection('db_rsmm')
             ->table('TR_MASTER_LAB as a')
@@ -258,9 +298,9 @@ class RajalDokter extends Model
                 'lh.nilai_normal',
                 'lh.pemeriksaan',
                 'd.nama_dokter',
-           
+
             )
-            ->where('a.No_Reg',$noReg)
+            ->where('a.No_Reg', $noReg)
             ->orderBy('a.no_kelompok')
             ->orderBy('a.no_Jenis')
             ->orderBy('a.tanggal')
@@ -269,53 +309,51 @@ class RajalDokter extends Model
     }
 
     public function getVitalSign($noReg)
-    {   
+    {
 
         $data = DB::connection('pku')
             ->table('TAC_RJ_VITAL_SIGN as a')
 
             ->select(
                 'a.*'
-           
+
             )
-            ->where('a.FS_KD_REG',$noReg)
+            ->where('a.FS_KD_REG', $noReg)
             ->first();
         return $data;
     }
     public function getSkalaNyeri($noReg)
-    {   
+    {
 
         $data = DB::connection('pku')
             ->table('TAC_RJ_NYERI as a')
 
             ->select(
                 'a.*'
-           
+
             )
-            ->where('a.FS_KD_REG',$noReg)
+            ->where('a.FS_KD_REG', $noReg)
             ->first();
         return $data;
     }
 
     public function getIcd10Dokter()
-    {   
+    {
 
         $data = DB::connection('bridging_ss')
-        ->table('satusehat_icd10')
-        ->where('icd10_code', 'like','Z%')
-        ->orWhere('icd10_code', 'like','A%')
-        ->get();
-    return $data;
-
+            ->table('satusehat_icd10')
+            ->where('icd10_code', 'like', 'Z%')
+            ->orWhere('icd10_code', 'like', 'A%')
+            ->get();
+        return $data;
     }
 
     public function getIcd10()
-    {   
+    {
 
         $data = DB::connection('bridging_ss')
-        ->table('satusehat_icd10')
-        ->get();
-    return $data;
-
+            ->table('satusehat_icd10')
+            ->get();
+        return $data;
     }
 }

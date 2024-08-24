@@ -41,7 +41,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="hidden" name="FS_KD_REG" value="{{ $noReg }}" />
+                                    <input type="hidden" name="NO_REG" value="{{ $noReg }}" />
                                     <input type="hidden" name="KODE_DOKTER" value="{{ $biodata->Kode_Dokter}}" />
                                     <input type="hidden" name="NO_MR" value="{{ $biodata->NO_MR}}" />
                                     <label>Keluhan Utama (Anamnesa) <code>*</code></label>
@@ -159,9 +159,9 @@
                                     <label class="d-block">Pekerjaan</label>
                                     <select name="JOB" id="job" class="form-control select2 @error('job')  is-invalid @enderror">
                                         <option value="">-- Pilih Pekerjaan --</option>
-                                        <option value="1" {{ ($asasmen_perawat->PERNIKAHAN=='1') ? 'selected' : ''}}>PNS</option>
-                                        <option value="2" {{ ($asasmen_perawat->PERNIKAHAN=='2') ? 'selected' : ''}}>Karyawan Swasta</option>
-                                        <option value="3" {{ ($asasmen_perawat->PERNIKAHAN=='3') ? 'selected' : ''}}>Lainnya</option>
+                                        <option value="1" {{ ($asasmen_perawat->JOB=='1') ? 'selected' : ''}}>PNS</option>
+                                        <option value="2" {{ ($asasmen_perawat->JOB=='2') ? 'selected' : ''}}>Karyawan Swasta</option>
+                                        <option value="3" {{ ($asasmen_perawat->JOB=='3') ? 'selected' : ''}}>Lainnya</option>
                                     </select>
                                     @error('job')
                                     <span class="text-danger" style="font-size: 12px;">
@@ -240,8 +240,9 @@
                                         <option value="">-- pilih --</option>
                                         <option value="1" {{ ($asasmen_perawat->FS_PENGELIHATAN=='1') ? 'selected' : ''}}>Normal</option>
                                         <option value="2" {{ ($asasmen_perawat->FS_PENGELIHATAN=='2') ? 'selected' : ''}}>Kabur</option>
-                                        <option value="3" {{ ($asasmen_perawat->FS_PENGELIHATAN=='3') ? 'selected' : ''}}>Kaca Mata</option>
-                                        <option value="4" {{ ($asasmen_perawat->FS_PENGELIHATAN=='4') ? 'selected' : ''}}>Lensa Kontak</option>
+                                        <option value="3" {{ ($asasmen_perawat->FS_PENGELIHATAN=='3') ? 'selected' : ''}}>Buram Berkabut</option>
+                                        <option value="4" {{ ($asasmen_perawat->FS_PENGELIHATAN=='4') ? 'selected' : ''}}>Kaca Mata</option>
+                                        <option value="5" {{ ($asasmen_perawat->FS_PENGELIHATAN=='5') ? 'selected' : ''}}>Lensa Kontak</option>
                                     </select>
                                 </div>
                             </div>
@@ -284,8 +285,12 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Keadaan Umum</label>
-                                    <input type="text" name="KEADAAN_UMUM" class="form-control @error('keadaan_umum') is-invalid  
-                                        @enderror" value="{{ $asasmen_perawat->KEADAAN_UMUM }}">
+                                    <select name="KEADAAN_UMUM" id="" class="form-control select2">
+                                        <option value="">-- pilih --</option>
+                                        <option value="1" {{ ($asasmen_perawat->KEADAAN_UMUM=='1') ? 'selected' : ''}}>Baik</option>
+                                        <option value="2" {{ ($asasmen_perawat->KEADAAN_UMUM=='2') ? 'selected' : ''}}>Sedang</option>
+                                        <option value="3" {{ ($asasmen_perawat->KEADAAN_UMUM=='3') ? 'selected' : ''}}>Buruk</option>
+                                    </select>
                                 </div>
                                 @error('keadaan_umum')
                                 <div class="invalid-feedback">
@@ -499,13 +504,23 @@
                             </div>  
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="d-block">Protesa</label>
-                                    <input type="text" name="PROTESA" value="{{ $asasmen_perawat->PROTESA }}" class="form-control @error('PROTESA') is-invalid @enderror">
-                                    @error('PROTESA')
-                                    <span class="text-danger" style="font-size: 12px;">
-                                        {{ $message }}
-                                    </span>
-                                    @enderror
+                                    <label>NCT</label>
+                                    <div class="col-md-12">
+                                        <div class="form-group" style="display: flex; flex-direction: row;">
+                                            <div class="input-group" style="margin-right: 10px;">
+                                                <label for="NCT_TOD" class="mr-2 mt-2">
+                                                    TOD
+                                                </label>
+                                                <input type="text" placeholder="Inputan Mata Kanan" value="{{ $asasmen_perawat->NCT_TOD }}" class="form-control" name="NCT_TOD" id="NCT_TOD">
+                                            </div>
+                                            <div class="input-group" style="margin-right: 10px;">
+                                                <label for="NCT_TOS" class="mr-2 mt-2">
+                                                    TOS
+                                                </label>
+                                                <input type="text" placeholder="Inputan Mata Kiri" value="{{ $asasmen_perawat->NCT_TOS }}" class="form-control" name="NCT_TOS" id="NCT_TOS">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -687,7 +702,7 @@
                     <!-- include form -->
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-12">
+                            {{-- <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Diagnosa Keperawatan</label>
                                     <textarea name="diagnosa_keperawatan" class="form-control  @error('diagnosa_keperawatan') is-invalid  
@@ -698,7 +713,7 @@
                                     {{ $message }}
                                 </div>
                                 @enderror
-                            </div>
+                            </div> --}}
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Masalah Keperawatan</label>
@@ -725,7 +740,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Rencana Keperawatan</label>
+                                    <label>Tindakan Keperawatan</label>
                                     <select multiple name="tembusan[]" id="rencana_perawatan" class="form-control select2" multiple="multiple" data-placeholder="Pilih Rencana Keperawatan" style="width: 100%;">
                                         <option value="">-- pilih --</option>
 
@@ -747,18 +762,7 @@
                                 </div>
                                 @enderror
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Edukasi</label>
-                                    <input type="text" name="FS_EDUKASI" value="{{$asasmen_perawat->FS_EDUKASI}}" class="form-control @error('edukasi') is-invalid @enderror">
-                                    @error('edukasi')
-                                    <span class="text-danger" style="font-size: 12px;">
-                                        {{ $message }}
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Tanggal Expired Rujukan (jika pasien BPJS)</label>
                                     <input type="date" name="FS_SKDP_FASKES" id="" value="{{$asasmen_perawat->FS_SKDP_FASKES}}" class="form-control" value="">
