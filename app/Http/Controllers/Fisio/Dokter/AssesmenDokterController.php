@@ -170,6 +170,7 @@ class AssesmenDokterController extends Controller
 
         // $biodatas = $this->pasien->biodataPasienByMr($NoMr);
         $biodatas = $this->rajal->pasien_bynoreg($noRegBaru);
+        
         $biodataLama = $this->rajal->pasien_bynoreg($noRegLama);
         // dd($biodatas);
         $ttv = DB::connection('pku')->table('TAC_RJ_VITAL_SIGN')->where('FS_KD_REG', $biodatas->NO_REG)->first();
