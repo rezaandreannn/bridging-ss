@@ -62,7 +62,7 @@ class FisioController extends Controller
         $kode_dokter = $request->input('kode_dokter');
         $dokters = $this->fisio->getDokterFisio();
         $listpasien = $this->fisio->pasienCpptdanFisioterapi($kode_dokter);
-        // dd($listpasien);
+        // dd($dokters);
         $title = $this->prefix . ' ' . 'CPPT Index';
         return view($this->view . 'listPasienCpptFisio', compact('title', 'listpasien', 'dokters','fisioterapi','rajalModel'));
     }
@@ -430,12 +430,11 @@ class FisioController extends Controller
         $data = DB::connection('pku')
             ->table('TR_CPPT_FISIOTERAPI as a')
             ->join('TRANSAKSI_FISIOTERAPI as tf', 'a.ID_TRANSAKSI_FISIO', '=', 'tf.ID_TRANSAKSI')
-            ->leftJoin('TTD_PASIEN_MASTER as b', 'tf.NO_MR_PASIEN', '=', 'b.NO_MR_PASIEN')
+            ->leftJoin('TTD_PASIEN_MASTER as b', 'a.no_registrasi', '=', 'b.NO_REGISTRASI')
             ->leftJoin($db_emr_new . '.dbo.users as u', 'a.create_by', '=', 'u.id')
             ->leftJoin('TTD_PETUGAS_MASTER as tpm', 'u.username', '=', 'tpm.USERNAME')
             ->select(
                 'a.*',
-                'b.NO_MR_PASIEN as PASIEN_USERNAME',
                 'b.IMAGE as ttd_pasien',
                 'tpm.IMAGE AS ttd_petugas',
                 'u.name'
@@ -443,6 +442,8 @@ class FisioController extends Controller
             ->where('tf.KODE_TRANSAKSI_FISIO', '=', $id)
             ->orderBy('a.ID_CPPT_FISIO', 'ASC')
             ->get();
+
+            // dd($data);
 
         $lastCppt = DB::connection('pku')
             ->table('TR_CPPT_FISIOTERAPI')
@@ -470,8 +471,6 @@ class FisioController extends Controller
         }
 
         // dd($data);
-
-
 
         $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
         $ttdPasien = $this->berkasFisio->getTtdPasienByMr($biodatas->NO_MR);

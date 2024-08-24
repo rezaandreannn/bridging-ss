@@ -54,7 +54,11 @@ class TandaTanganController extends Controller
     {
         $title = 'Index Tanda Tangan Pasien';
         $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
-        $ttdDetail =  DB::connection('pku')->table('TTD_PASIEN_MASTER as tpm')->join($db_rsmm.'.dbo.REGISTER_PASIEN as rp', 'rp.No_MR', '=', 'tpm.NO_MR_PASIEN')->get();
+        $ttdDetail =  DB::connection('pku')->table('TTD_PASIEN_MASTER as tpm')
+        ->join($db_rsmm.'.dbo.REGISTER_PASIEN as rp', 'rp.No_MR', '=', 'tpm.NO_MR_PASIEN')
+        ->join($db_rsmm.'.dbo.PENDAFTARAN as p', 'tpm.NO_MR_PASIEN', '=', 'p.No_MR')
+        ->whereDate('tpm.CREATE_AT',date('Y-m-d'))
+        ->where('p.Tanggal',date('Y-m-d'))->get();
         // dd($ttdDetail);
         return view($this->viewPath . 'detailPasien', compact('title', 'ttdDetail'));
     }
@@ -93,63 +97,73 @@ class TandaTanganController extends Controller
         return view($this->viewPath . 'ttdPasien2', compact('title', 'biodatas', 'data', 'kode_dokter', 'No_Mr'));
     }
 
-    public function ttdPasienStore(Request $request)
-    {
-        if (!$request->has('signed') || empty($request->signed)) {
-            return redirect()->back()->with('warning', 'Tanda tangan harus diisi');
-        } else {
-            $image_parts = explode(";base64,", $request->signed);
-            $image_type_aux = explode("image/", $image_parts[0]);
-            $image_type = $image_type_aux[1];
-            $image_base64 = base64_decode($image_parts[1]);
+    // public function ttdPasienStore(Request $request)
+    // {
+    //     if (!$request->has('signed') || empty($request->signed)) {
+    //         return redirect()->back()->with('warning', 'Tanda tangan harus diisi');
+    //     } else {
+    //         $image_parts = explode(";base64,", $request->signed);
+    //         $image_type_aux = explode("image/", $image_parts[0]);
+    //         $image_type = $image_type_aux[1];
+    //         $image_base64 = base64_decode($image_parts[1]);
 
-            // Use uniqid to generate a unique file name
-            $file_name = uniqid($request->input('NO_MR_PASIEN') . '-' . date('Y-m-d') . '-') . '.' . $image_type;
+    //         // Use uniqid to generate a unique file name
+    //         $file_name = uniqid($request->input('NO_MR_PASIEN') . '-' . date('Y-m-d') . '-') . '.' . $image_type;
 
-            // Save the image to storage
-            Storage::put('public/ttd/' . $file_name, $image_base64);
+    //         // Save the image to storage
+    //         Storage::put('public/ttd/' . $file_name, $image_base64);
 
-            // Insert data into the database
-            DB::connection('pku')->table('TTD_PASIEN_MASTER')->insert([
-                'NO_MR_PASIEN' => $request->input('NO_MR_PASIEN'),
-                'IMAGE' => $file_name,
-                'CREATE_AT' => now()
-            ]);
-            if ((auth()->user()->roles->pluck('name')[0]) == 'dokter fisioterapi') {
-                return redirect()->route('add.spkfr', ['NoMr' => $request->input('NO_MR_PASIEN')])->with('success', 'Tanda Tangan Berhasil Ditambahkan!');
-            } else {
-                return redirect()->route('cppt.detail', [
-                    'id' => $request->input('ID_TRANSAKSI'),
-                    'no_mr' => $request->input('NO_MR_PASIEN'),
-                    'kode_transaksi' => $request->input('KODE_TRANSAKSI_FISIO')
-                ])->with('success', 'Tanda Tangan Berhasil Ditambahkan!');
-            }
-            // Redirect with success message
+    //         // Insert data into the database
+    //         DB::connection('pku')->table('TTD_PASIEN_MASTER')->insert([
+    //             'NO_MR_PASIEN' => $request->input('NO_MR_PASIEN'),
+    //             'IMAGE' => $file_name,
+    //             'CREATE_AT' => now()
+    //         ]);
+    //         if ((auth()->user()->roles->pluck('name')[0]) == 'dokter fisioterapi') {
+    //             return redirect()->route('add.spkfr', ['NoMr' => $request->input('NO_MR_PASIEN')])->with('success', 'Tanda Tangan Berhasil Ditambahkan!');
+    //         } else {
+    //             return redirect()->route('cppt.detail', [
+    //                 'id' => $request->input('ID_TRANSAKSI'),
+    //                 'no_mr' => $request->input('NO_MR_PASIEN'),
+    //                 'kode_transaksi' => $request->input('KODE_TRANSAKSI_FISIO')
+    //             ])->with('success', 'Tanda Tangan Berhasil Ditambahkan!');
+    //         }
+    //         // Redirect with success message
 
-        }
-    }
+    //     }
+    // }
 
     public function ttdPasienStoreByPetugas(Request $request)
     {
         if (!$request->has('signed') || empty($request->signed)) {
             return redirect()->back()->with('warning', 'Tanda tangan harus diisi');
         } else {
+
+            $No_MR = DB::connection('db_rsmm')
+            ->table('PENDAFTARAN')
+            ->select('No_MR')
+            ->where('No_Reg', $request->input('NO_REG'))
+            ->first();
+
+
+
             $image_parts = explode(";base64,", $request->signed);
             $image_type_aux = explode("image/", $image_parts[0]);
             $image_type = $image_type_aux[1];
             $image_base64 = base64_decode($image_parts[1]);
 
             // Use uniqid to generate a unique file name
-            $file_name = uniqid($request->input('NO_MR_PASIEN') . '-' . date('Y-m-d') . '-') . '.' . $image_type;
+            $file_name = uniqid($request->input('NO_REG') . '-' . date('Y-m-d') . '-') . '.' . $image_type;
 
             // Save the image to storage
             Storage::put('public/ttd/' . $file_name, $image_base64);
 
             // Insert data into the database
             DB::connection('pku')->table('TTD_PASIEN_MASTER')->insert([
-                'NO_MR_PASIEN' => $request->input('NO_MR_PASIEN'),
+                'NO_MR_PASIEN' => $No_MR->No_MR,
                 'IMAGE' => $file_name,
-                'CREATE_AT' => now()
+                'CREATE_AT' => now(),
+                'NO_REGISTRASI' => $request->input('NO_REG')
             ]);
     
                 return redirect()->route('ttd.pasien.bypetugas')->with('success', 'Tanda Tangan Berhasil Ditambahkan!');

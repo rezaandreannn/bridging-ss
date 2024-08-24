@@ -30,7 +30,7 @@
         <div class="section-header">
             <h1>Tanda Tangan Pasien</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="">CPPT</a></div>
+                <div class="breadcrumb-item active"><a href="">Tanda Tangan</a></div>
                 <div class="breadcrumb-item">Tanda Tangan Pasien</div>
             </div>
         </div>
@@ -44,10 +44,10 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Nama Pasien</label>
-                                    <select name="NO_MR_PASIEN" class="form-control select2" style="width: 100%;">
+                                    <select name="NO_REG" class="form-control select2" style="width: 100%;">
                                         <option value="" selected>-- Pilih Pasien --</option>
                                         @foreach ($listPasien as $pasien)
-                                        <option value="{{$pasien->NO_MR}}">{{$pasien->NAMA_PASIEN}} - {{$pasien->NO_MR}}</option>
+                                        <option value="{{$pasien->NO_REG}}">{{$pasien->NAMA_PASIEN}} - {{$pasien->NO_MR}}</option>
                                         @endforeach
                                   
                                     </select>
