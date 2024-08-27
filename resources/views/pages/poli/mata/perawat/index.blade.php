@@ -99,6 +99,10 @@
                                         @else
                                         <a href="{{ route('poliMata.assesmenKeperawatanAdd', ['noReg' => $data->No_Reg]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
                                         @endif
+                                        {{-- Resep --}}
+                                        @if($data->FS_TERAPI != '')
+                                        <a href="{{ route('polimata.resep', [$data->No_Reg, $data->FS_KD_TRS])  }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Resep</a>
+                                        @endif
                                        
                                     </td>
                                 </tr>

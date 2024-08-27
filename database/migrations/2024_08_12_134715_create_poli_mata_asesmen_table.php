@@ -15,11 +15,10 @@ return new class extends Migration
     {
         Schema::connection('pku')->create('poli_mata_asesmen', function (Blueprint $table) {
             $table->id();
-            $table->string('FS_KD_REG');
+            $table->string('NO_REG');
             $table->string('RIWAYAT_SEKARANG')->nullable();
             $table->string('KEADAAN_UMUM')->nullable();
             $table->string('KESADARAN')->nullable();
-            $table->string('PROTESA')->nullable();
             $table->string('STATUS_MENTAL')->nullable();
             $table->string('LINGKAR_KEPALA');
             $table->string('STATUS_GIZI')->nullable();
@@ -27,11 +26,14 @@ return new class extends Migration
             $table->string('ADL')->nullable();
             $table->string('VISUS_OD')->nullable();
             $table->string('VISUS_OS')->nullable();
+            $table->string('NCT_TOD')->nullable();
+            $table->string('NCT_TOS')->nullable();
             $table->string('REFLEK_CAHAYA')->nullable();
             $table->string('PUPIL')->nullable();
             $table->string('LUMPUH')->nullable();
             $table->string('PUSING')->nullable();
             $table->string('CREATE_BY');
+            $table->string('UPDATE_BY')->nullable();
             $table->timestamps();
         });
     }

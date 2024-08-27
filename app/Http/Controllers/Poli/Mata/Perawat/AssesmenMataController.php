@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Poli\Mata\Perawat;
 
+use Carbon\Carbon;
 use App\Models\Rajal;
 use App\Models\Pasien;
 use App\Models\Antrean;
@@ -11,6 +12,7 @@ use App\Models\Rekam_medis;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AssesmenMataController extends Controller
 {
@@ -74,6 +76,25 @@ class AssesmenMataController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    public function cetakResep($noReg, $kode_transaksi)
+    {
+        $data = $this->poliMata->cetakResep($noReg, $kode_transaksi);
+        // dd($data);
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+        $antrian = $this->rekam_medis->getAntrianObat($kode_transaksi);
+        // dd($antrian);
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+
+        $filename = 'resep-' . $date . '-' . $kode_transaksi;
+
+        $pdf = PDF::loadview('pages.poli.mata.perawat.resep', ['data' => $data, 'biodata' => $biodata, 'tanggal' => $tanggal, 'antrian' => $antrian]);
+        // Set paper size to A5
+        $pdf->setPaper('A5');
+        return $pdf->stream($filename . '.pdf');
+    }
+
     public function store(Request $request)
     {
         // Make a POST request to the API endpoint
@@ -86,17 +107,17 @@ class AssesmenMataController extends Controller
 
         try {
 
-            $userEmr = $this->rajal->getUserEmr(auth()->user()->username);
+            // $userEmr = $this->rajal->getUserEmr(auth()->user()->username);
             // dd($userEmr);
 
             DB::connection('pku')->beginTransaction();
 
             $status_rj = DB::connection('pku')->table('TAC_RJ_STATUS')->insert([
-                'FS_KD_REG' => $request->input('FS_KD_REG'),
+                'FS_KD_REG' => $request->input('NO_REG'),
                 'FS_STATUS' => '1',
                 'FS_FORM' => '1',
                 'FS_JNS_ASESMEN' => 'A',
-                'mdb' => $userEmr->user_id,
+                'mdb' => auth()->user()->username,
                 'mdd' => now(),
             ]);
 
@@ -108,7 +129,7 @@ class AssesmenMataController extends Controller
             ]);
 
             $riwayat = DB::connection('pku')->table('TAC_ASES_PER2')->insert([
-                'FS_KD_REG' => $request->input('FS_KD_REG'),
+                'FS_KD_REG' => $request->input('NO_REG'),
                 'FS_RIW_PENYAKIT_DAHULU' => '',
                 'FS_RIW_PENYAKIT_DAHULU2' => '',
                 'FS_RIW_PENYAKIT_KEL' => '',
@@ -132,14 +153,13 @@ class AssesmenMataController extends Controller
                 'FS_RIW_TUMBUH' => $request->input('FS_RIW_TUMBUH')  ? $request->input('FS_RIW_TUMBUH') : '0',
                 'FS_RIW_TUMBUH_KET' => $request->input('FS_RIW_TUMBUH_KET')  ? $request->input('FS_RIW_TUMBUH_KET') : '0',
                 'FS_HIGH_RISK' => '',
-                'FS_EDUKASI' => $request->input('FS_EDUKASI'),
                 'FS_SKDP_FASKES' => $request->input('FS_SKDP_FASKES'),
-                'mdb' => $userEmr->user_id,
+                'mdb' => auth()->user()->username,
                 'mdd' => date('Y-m-d'),
             ]);
 
             $pemeriksaan_fisik = DB::connection('pku')->table('TAC_RJ_VITAL_SIGN')->insert([
-                'FS_KD_REG' => $request->input('FS_KD_REG'),
+                'FS_KD_REG' => $request->input('NO_REG'),
                 'FS_SUHU' => $request->input('suhu'),
                 'FS_NADI' => $request->input('nadi'),
                 'FS_R' => $request->input('respirasi'),
@@ -147,38 +167,40 @@ class AssesmenMataController extends Controller
                 'FS_TB' => $request->input('tb'),
                 'FS_BB' => $request->input('bb'),
                 'FS_KD_MEDIS' => $request->input('KODE_DOKTER'),
-                'mdb' => $userEmr->user_id,
+                'mdb' => auth()->user()->username,
                 'mdd' => date('Y-m-d'),
                 'FS_JAM_TRS' => date('H:i:s'),
             ]);
 
             $asesmen_jauh = DB::connection('pku')->table('TAC_RJ_JATUH')->insert([
-                'FS_KD_REG' => $request->input('FS_KD_REG'),
+                'FS_KD_REG' => $request->input('NO_REG'),
                 'FS_CARA_BERJALAN1' => $request->input('FS_CARA_BERJALAN1'),
                 'FS_CARA_BERJALAN2' => $request->input('FS_CARA_BERJALAN2'),
                 'FS_CARA_DUDUK' => $request->input('FS_CARA_DUDUK'),
                 'mdb' => date('Y-m-d'),
-                'mdd' => $userEmr->user_id,
+                'mdd' => auth()->user()->username,
             ]);
 
             DB::connection('pku')->table('poli_mata_asesmen')->insert([
-                'FS_KD_REG' => $request->input('FS_KD_REG'),
+                'NO_REG' => $request->input('NO_REG'),
                 'RIWAYAT_SEKARANG' => $request->input('RIWAYAT_SEKARANG'),
                 'KEADAAN_UMUM' => $request->input('KEADAAN_UMUM'),
                 'KESADARAN' => $request->input('KESADARAN'),
-                'STATUS_MENTAL' => $request->input('KESADARAN'),
+                'STATUS_MENTAL' => $request->input('STATUS_MENTAL'),
                 'LINGKAR_KEPALA' => $request->input('LINGKAR_KEPALA'),
                 'STATUS_GIZI' => $request->input('STATUS_GIZI'),
                 'CACAT' => $request->input('CACAT'),
                 'ADL' => $request->input('ADL'),
                 'VISUS_OD' => $request->input('VISUS_OD'),
                 'VISUS_OS' => $request->input('VISUS_OS'),
+                'NCT_TOD' => $request->input('NCT_TOD'),
+                'NCT_TOS' => $request->input('NCT_TOS'),
                 'REFLEK_CAHAYA' => $request->input('REFLEK_CAHAYA'),
                 'PUPIL' => $request->input('PUPIL'),
                 'LUMPUH' => $request->input('LUMPUH'),
                 'PUSING' => $request->input('PUSING'),
-                'PROTESA' => $request->input('PROTESA'),
-                'CREATE_BY' => $userEmr->user_id,
+                'created_at' => now(),
+                'CREATE_BY' => auth()->user()->username,
             ]);
 
             $masalah_kep = $request->input('tujuan');
@@ -186,7 +208,7 @@ class AssesmenMataController extends Controller
                 foreach ($masalah_kep as $value) {
                     $insert_masalah_kep = DB::connection('pku')->table('TAC_RJ_MASALAH_KEP')->insert([
 
-                        'FS_KD_REG' => $request->input('FS_KD_REG'),
+                        'FS_KD_REG' => $request->input('NO_REG'),
                         'FS_KD_MASALAH_KEP' => $value,
 
                     ]);
@@ -198,7 +220,7 @@ class AssesmenMataController extends Controller
                 foreach ($rencana_kep as $value) {
                     $insert_rencana_kep = DB::connection('pku')->table('TAC_RJ_REN_KEP')->insert([
 
-                        'FS_KD_REG' => $request->input('FS_KD_REG'),
+                        'FS_KD_REG' => $request->input('NO_REG'),
                         'FS_KD_REN_KEP' => $value,
 
                     ]);
@@ -244,17 +266,7 @@ class AssesmenMataController extends Controller
         $asasmen_perawat = $this->poliMata->asasmenPerawatGet($noReg);
         // dd($asasmen_perawat);
         $riwayat = $this->rajal->riwayatGet($noReg);
-        // dd($riwayat);
 
-        $selected = false;
-        foreach ($masalah_perawatan as $mp) {
-            foreach ($masalah_perGet as  $value) {
-                if ($mp->FS_KD_DAFTAR_DIAGNOSA == $value->FS_KD_MASALAH_KEP) {
-                    $selected = true;
-                    break;
-                }
-            }
-        }
         return view($this->view . 'perawat.editKeperawatan', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'biodata', 'asasmen_perawat', 'riwayat', 'masalah_perGet', 'rencana_perGet', 'noReg'));
     }
 
@@ -267,7 +279,7 @@ class AssesmenMataController extends Controller
      */
     public function update(Request $request, $noReg)
     {
-        $userEmr = $this->rajal->getUserEmr(auth()->user()->username);
+        // $userEmr = $this->rajal->getUserEmr(auth()->user()->username);
 
         $alergi = DB::connection('db_rsmm')->table('REGISTER_PASIEN')->where('NO_MR', $request->input('NO_MR'))->update([
             'FS_ALERGI' => $request->input('FS_ALERGI'),
@@ -300,9 +312,8 @@ class AssesmenMataController extends Controller
             'FS_RIW_TUMBUH' => $request->input('FS_RIW_TUMBUH')  ? $request->input('FS_RIW_TUMBUH') : '0',
             'FS_RIW_TUMBUH_KET' => $request->input('FS_RIW_TUMBUH_KET')  ? $request->input('FS_RIW_TUMBUH_KET') : '0',
             'FS_HIGH_RISK' => '',
-            'FS_EDUKASI' => $request->input('FS_EDUKASI'),
             'FS_SKDP_FASKES' => $request->input('FS_SKDP_FASKES'),
-            'mdb' => $userEmr->user_id,
+            'mdb' => auth()->user()->username,
             'mdd' => date('Y-m-d'),
         ]);
 
@@ -314,7 +325,7 @@ class AssesmenMataController extends Controller
             'FS_TB' => $request->input('tb'),
             'FS_BB' => $request->input('bb'),
             'FS_KD_MEDIS' => $request->input('KODE_DOKTER'),
-            'mdb' => $userEmr->user_id,
+            'mdb' => auth()->user()->username,
             'mdd' => date('Y-m-d'),
             'FS_JAM_TRS' => date('H:i:s'),
         ]);
@@ -324,10 +335,10 @@ class AssesmenMataController extends Controller
             'FS_CARA_BERJALAN2' => $request->input('FS_CARA_BERJALAN2'),
             'FS_CARA_DUDUK' => $request->input('FS_CARA_DUDUK'),
             'mdb' => date('Y-m-d'),
-            'mdd' => $userEmr->user_id,
+            'mdd' => auth()->user()->username,
         ]);
 
-        DB::connection('pku')->table('poli_mata_asesmen')->where('FS_KD_REG', $noReg)->update([
+        DB::connection('pku')->table('poli_mata_asesmen')->where('NO_REG', $noReg)->update([
             'RIWAYAT_SEKARANG' => $request->input('RIWAYAT_SEKARANG'),
             'KEADAAN_UMUM' => $request->input('KEADAAN_UMUM'),
             'KESADARAN' => $request->input('KESADARAN'),
@@ -338,12 +349,14 @@ class AssesmenMataController extends Controller
             'ADL' => $request->input('ADL'),
             'VISUS_OD' => $request->input('VISUS_OD'),
             'VISUS_OS' => $request->input('VISUS_OS'),
+            'NCT_TOD' => $request->input('NCT_TOD'),
+            'NCT_TOS' => $request->input('NCT_TOS'),
             'REFLEK_CAHAYA' => $request->input('REFLEK_CAHAYA'),
             'PUPIL' => $request->input('PUPIL'),
             'LUMPUH' => $request->input('LUMPUH'),
             'PUSING' => $request->input('PUSING'),
-            'PROTESA' => $request->input('PROTESA'),
-            'CREATE_BY' => $userEmr->user_id,
+            'updated_at' => now(),
+            'UPDATE_BY' => auth()->user()->username,
         ]);
 
         $masalah_kep = $request->input('tujuan');
@@ -351,10 +364,8 @@ class AssesmenMataController extends Controller
         if (!empty($masalah_kep)) {
             foreach ($masalah_kep as $value) {
                 $insert_masalah_kep = DB::connection('pku')->table('TAC_RJ_MASALAH_KEP')->insert([
-
                     'FS_KD_REG' => $noReg,
                     'FS_KD_MASALAH_KEP' => $value,
-
                 ]);
             }
         }
@@ -364,10 +375,8 @@ class AssesmenMataController extends Controller
         if (!empty($rencana_kep)) {
             foreach ($rencana_kep as $value) {
                 $insert_rencana_kep = DB::connection('pku')->table('TAC_RJ_REN_KEP')->insert([
-
                     'FS_KD_REG' => $noReg,
                     'FS_KD_REN_KEP' => $value,
-
                 ]);
             }
         }

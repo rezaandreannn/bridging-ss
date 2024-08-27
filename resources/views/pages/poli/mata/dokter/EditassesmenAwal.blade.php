@@ -77,8 +77,9 @@
                 <div class="col-12">
                     <!-- components biodata pasien by no reg -->
                     @include('components.biodata-pasien-bynoreg')
-                    <form action="{{ route('poliMata.assesmenAwalStore') }}" method="POST">
+                    <form action="{{ route('poliMata.assesmenAwalUpdate', $asasmen_perawat->FS_KD_REG) }}" method="POST">
                     @csrf
+                    @method('put')
                     <!-- components biodata pasien by no reg -->
                     <div class="card mb-3">
                         <div class="card-header card-khusus-header">
@@ -245,12 +246,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Keadaan Umum</label>
-                                        <select name="KEADAAN_UMUM" id="keadaan_umum" class="form-control select2 @error('keadaan_umum')  is-invalid @enderror">
-                                            <option value="">-- Pilih Status Mental --</option>
-                                            <option value="1" {{ ($asasmen_perawat->KEADAAN_UMUM=='1') ? 'selected' : ''}}>Baik</option>
-                                            <option value="2" {{ ($asasmen_perawat->KEADAAN_UMUM=='2') ? 'selected' : ''}}>Sedang</option>
-                                            <option value="3" {{ ($asasmen_perawat->KEADAAN_UMUM=='3') ? 'selected' : ''}}>Buruk</option>
-                                        </select>
+                                        <input type="text" name="KEADAAN_UMUM" class="form-control @error('keadaan_umum') is-invalid  
+                                            @enderror" value="{{ $asasmen_perawat->KEADAAN_UMUM }}">
                                     </div>
                                     @error('keadaan_umum')
                                     <div class="invalid-feedback">
@@ -570,13 +567,13 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="KONJUNGTIVA" value="1" id="konjungtiva1">
+                                                    <input class="form-check-input" type="radio" name="KONJUNGTIVA" value="1" id="konjungtiva1" {{ ($asasmen_perawat->KONJUNGTIVA=='1') ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="konjungtiva1">
                                                         Pucat
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="KONJUNGTIVA" value="2" id="konjungtiva2">
+                                                    <input class="form-check-input" type="radio" name="KONJUNGTIVA" value="2" id="konjungtiva2" {{ ($asasmen_perawat->KONJUNGTIVA=='2') ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="konjungtiva2">
                                                         Pink
                                                     </label>
@@ -591,13 +588,13 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="SKELERA" value="1" id="skelera1">
+                                                    <input class="form-check-input" type="radio" name="SKELERA" value="1" id="skelera1" {{ ($asasmen_perawat->SKELERA=='1') ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="skelera1">
                                                         Ikterik
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="SKELERA" value="0" id="skelera2">
+                                                    <input class="form-check-input" type="radio" name="SKELERA" value="0" id="skelera2" {{ ($asasmen_perawat->SKELERA=='0') ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="skelera2">
                                                         Tidak Ikterik
                                                     </label>
@@ -612,13 +609,13 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="BIBIR_LIDAH" value="1" id="bibir_lidah1">
+                                                    <input class="form-check-input" type="radio" name="BIBIR_LIDAH" value="1" id="bibir_lidah1" {{ ($asasmen_perawat->BIBIR_LIDAH=='1') ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="bibir_lidah1">
                                                         Sianosis
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="BIBIR_LIDAH" value="0" id="bibir_lidah2">
+                                                    <input class="form-check-input" type="radio" name="BIBIR_LIDAH" value="0" id="bibir_lidah2" {{ ($asasmen_perawat->BIBIR_LIDAH=='0') ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="bibir_lidah2">
                                                         Tidak
                                                     </label>
@@ -640,22 +637,22 @@
                                 {{-- <div class="row">
                                     <h4 class="custom-judul my-1">Pemeriksaan Fisik Mata</h4>
                                 </div> --}}
-                                    <div class="row align-items-center">
-                                        <div class="col-md-4 col-4 text-right text-right-mobile no-padding">
-                                            <p class="no-margin">O.D</p>
-                                            <p class="no-margin">Status Presen</p>
+                                        <div class="row align-items-center">
+                                            <div class="col-md-4 col-4 text-right text-right-mobile no-padding">
+                                                <p class="no-margin">O.D</p>
+                                                <p class="no-margin">Status Presen</p>
+                                            </div>
+                                            <div class="col-md-4 col-4 text-center no-padding my-mobile">
+                                                <img src="{{ asset('img/mata.png') }}" alt="Right Eye" class="eye-image">
+                                            </div>
+                                            <div class="col-md-4 col-4 text-left text-left-mobile no-padding">
+                                                <p class="no-margin">OS</p>
+                                                <p class="no-margin">Kedudukan / Gerak Bola Mata</p>
+                                            </div>
                                         </div>
-                                        <div class="col-md-4 col-4 text-center no-padding my-mobile">
-                                            <img src="{{ asset('img/mata.png') }}" alt="Right Eye" class="eye-image">
-                                        </div>
-                                        <div class="col-md-4 col-4 text-left text-left-mobile no-padding">
-                                            <p class="no-margin">OS</p>
-                                            <p class="no-margin">Kedudukan / Gerak Bola Mata</p>
-                                        </div>
-                                    </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <input type="text" name="palpebra_kiri" value="{{$asasmen_perawat->palpebra_kiri ?? ''}}" class="form-control @error('palpebra_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
+                                                <input type="text" name="palpebra_kiri" value="{{$asasmen_perawat->palpebra_kiri}}" class="form-control @error('palpebra_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
                                             </div>
                                             @error('palpebra_kiri')
                                             <span class="text-danger" style="font-size: 12px;">
@@ -668,7 +665,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <input type="text" name="palpebra_kanan" value="{{$asasmen_perawat->palpebra_kanan ?? ''}}" class="form-control @error('palpebra_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
+                                                <input type="text" name="palpebra_kanan" value="{{$asasmen_perawat->palpebra_kanan}}" class="form-control @error('palpebra_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
                                             </div>
                                             @error('palpebra_kanan')
                                             <span class="text-danger" style="font-size: 12px;">
@@ -678,7 +675,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <input type="text" name="conjuctiva_kiri" value="{{$asasmen_perawat->conjuctiva_kiri ?? ''}}" class="form-control @error('conjuctiva_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
+                                                <input type="text" name="conjuctiva_kiri" value="{{$asasmen_perawat->conjuctiva_kiri}}" class="form-control @error('conjuctiva_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
                                             </div>
                                             @error('conjuctiva_kiri')
                                             <span class="text-danger" style="font-size: 12px;">
@@ -691,7 +688,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <input type="text" name="conjuctiva_kanan" value="{{$asasmen_perawat->conjuctiva_kanan ?? ''}}" class="form-control @error('conjuctiva_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
+                                                <input type="text" name="conjuctiva_kanan" value="{{$asasmen_perawat->conjuctiva_kanan}}" class="form-control @error('conjuctiva_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
                                             </div>
                                             @error('conjuctiva_kanan')
                                             <span class="text-danger" style="font-size: 12px;">
@@ -701,7 +698,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <input type="text" name="cornea_kiri" value="{{$asasmen_perawat->cornea_kiri ?? ''}}" class="form-control @error('cornea_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
+                                                <input type="text" name="cornea_kiri" value="{{$asasmen_perawat->cornea_kiri}}" class="form-control @error('cornea_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
                                             </div>
                                             @error('cornea_kiri')
                                             <span class="text-danger" style="font-size: 12px;">
@@ -714,7 +711,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <input type="text" name="cornea_kanan" value="{{$asasmen_perawat->cornea_kanan ?? ''}}" class="form-control @error('cornea_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
+                                                <input type="text" name="cornea_kanan" value="{{$asasmen_perawat->cornea_kanan}}" class="form-control @error('cornea_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
                                             </div>
                                             @error('cornea_kanan')
                                             <span class="text-danger" style="font-size: 12px;">
@@ -724,7 +721,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <input type="text" name="coa_kiri" value="{{$asasmen_perawat->coa_kiri ?? ''}}" class="form-control @error('coa_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
+                                                <input type="text" name="coa_kiri" value="{{$asasmen_perawat->coa_kiri}}" class="form-control @error('coa_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
                                             </div>
                                             @error('coa_kiri')
                                             <span class="text-danger" style="font-size: 12px;">
@@ -737,7 +734,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <input type="text" name="coa_kanan" value="{{$asasmen_perawat->coa_kanan ?? ''}}" class="form-control @error('coa_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
+                                                <input type="text" name="coa_kanan" value="{{$asasmen_perawat->coa_kanan}}" class="form-control @error('coa_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
                                             </div>
                                             @error('coa_kanan')
                                             <span class="text-danger" style="font-size: 12px;">
@@ -747,7 +744,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <input type="text" name="iris_kiri" value="{{$asasmen_perawat->iris_kiri ?? ''}}" class="form-control @error('iris_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
+                                                <input type="text" name="iris_kiri" value="{{$asasmen_perawat->iris_kiri}}" class="form-control @error('iris_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
                                             </div>
                                             @error('iris_kiri')
                                             <span class="text-danger" style="font-size: 12px;">
@@ -760,7 +757,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <input type="text" name="iris_kanan" value="{{$asasmen_perawat->iris_kanan ?? ''}}" class="form-control @error('iris_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
+                                                <input type="text" name="iris_kanan" value="{{$asasmen_perawat->iris_kanan}}" class="form-control @error('iris_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
                                             </div>
                                             @error('iris_kanan')
                                             <span class="text-danger" style="font-size: 12px;">
@@ -770,7 +767,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <input type="text" name="pupil_kiri" value="{{$asasmen_perawat->pupil_kiri ?? ''}}" class="form-control @error('pupil_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
+                                                <input type="text" name="pupil_kiri" value="{{$asasmen_perawat->pupil_kiri}}" class="form-control @error('pupil_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
                                             </div>
                                             @error('pupil_kiri')
                                             <span class="text-danger" style="font-size: 12px;">
@@ -783,7 +780,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <input type="text" name="pupil_kanan" value="{{$asasmen_perawat->pupil_kanan ?? ''}}" class="form-control @error('pupil_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
+                                                <input type="text" name="pupil_kanan" value="{{$asasmen_perawat->pupil_kanan}}" class="form-control @error('pupil_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
                                             </div>
                                             @error('pupil_kanan')
                                             <span class="text-danger" style="font-size: 12px;">
@@ -793,7 +790,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <input type="text" name="lensa_kiri" value="{{$asasmen_perawat->lensa_kiri ?? ''}}" class="form-control @error('lensa_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
+                                                <input type="text" name="lensa_kiri" value="{{$asasmen_perawat->lensa_kiri}}" class="form-control @error('lensa_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
                                             </div>
                                             @error('lensa_kiri')
                                             <span class="text-danger" style="font-size: 12px;">
@@ -806,7 +803,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <input type="text" name="lensa_kanan" value="{{$asasmen_perawat->lensa_kanan ?? ''}}" class="form-control @error('lensa_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
+                                                <input type="text" name="lensa_kanan" value="{{$asasmen_perawat->lensa_kanan}}" class="form-control @error('lensa_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
                                             </div>
                                             @error('lensa_kanan')
                                             <span class="text-danger" style="font-size: 12px;">
@@ -816,7 +813,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <input type="text" name="vitreosh_kiri" value="{{$asasmen_perawat->vitreosh_kiri ?? ''}}" class="form-control @error('vitreosh_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
+                                                <input type="text" name="vitreosh_kiri" value="{{$asasmen_perawat->vitreosh_kiri}}" class="form-control @error('vitreosh_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
                                             </div>
                                             @error('vitreosh_kiri')
                                             <span class="text-danger" style="font-size: 12px;">
@@ -829,7 +826,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <input type="text" name="vitreosh_kanan" value="{{$asasmen_perawat->vitreosh_kanan ?? ''}}" class="form-control @error('vitreosh_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
+                                                <input type="text" name="vitreosh_kanan" value="{{$asasmen_perawat->vitreosh_kanan}}" class="form-control @error('vitreosh_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
                                             </div>
                                             @error('vitreosh_kanan')
                                             <span class="text-danger" style="font-size: 12px;">
@@ -839,7 +836,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <input type="text" name="biometri_kiri" value="{{$asasmen_perawat->biometri_kiri ?? ''}}" class="form-control @error('biometri_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
+                                                <input type="text" name="biometri_kiri" value="{{$asasmen_perawat->biometri_kiri}}" class="form-control @error('biometri_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
                                             </div>
                                             @error('biometri_kiri')
                                             <span class="text-danger" style="font-size: 12px;">
@@ -852,7 +849,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <input type="text" name="biometri_kanan"  value="{{$asasmen_perawat->biometri_kanan ?? ''}}" class="form-control @error('biometri_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
+                                                <input type="text" name="biometri_kanan"  value="{{$asasmen_perawat->biometri_kanan}}" class="form-control @error('biometri_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
                                             </div>
                                             @error('biometri_kanan')
                                             <span class="text-danger" style="font-size: 12px;">
@@ -860,6 +857,7 @@
                                             </span>
                                             @enderror
                                         </div>
+
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Visus</label>
@@ -901,20 +899,20 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>  
+                                        </div>
                                         {{-- <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Streak</label>
                                                 <div class="col-md-12">
                                                     <div class="form-group" style="display: flex; flex-direction: row;">
                                                         <div class="form-check" style="margin-right: 10px;">
-                                                            <input class="form-check-input" type="radio" name="discharge" value="1" id="discharge1">
+                                                            <input class="form-check-input" type="radio" name="discharge" value="1" {{ ($asasmen_perawat->discharge=='1') ? 'checked' : '' }} id="discharge1">
                                                             <label class="form-check-label" for="discharge1">
                                                                 Retinoskopi
                                                             </label>
                                                         </div>
                                                         <div class="form-check" style="margin-right: 10px;">
-                                                            <input class="form-check-input" type="radio" name="discharge" value="2" id="discharge2">
+                                                            <input class="form-check-input" type="radio" name="discharge" value="2" {{ ($asasmen_perawat->discharge=='2') ? 'checked' : '' }} id="discharge2">
                                                             <label class="form-check-label" for="discharge2">
                                                                 Keratomeri
                                                             </label>
@@ -932,13 +930,13 @@
                                                             <label for="tonometri_od" class="mr-2 mt-2">
                                                                 OD
                                                             </label>
-                                                            <input type="text" class="form-control" value="{{$asasmen_perawat->tonometri_od ?? ''}}"  name="tonometri_od" id="tonometri_od">
+                                                            <input type="text" class="form-control" value="{{$asasmen_perawat->tonometri_od}}"  name="tonometri_od" id="tonometri_od">
                                                         </div>
                                                         <div class="input-group" style="margin-right: 10px;">
                                                             <label for="tonometri_os" class="mr-2 mt-2">
                                                                 OS
                                                             </label>
-                                                            <input type="text" class="form-control" value="{{$asasmen_perawat->tonometri_os ?? ''}}" name="tonometri_os" id="tonometri_os">
+                                                            <input type="text" class="form-control" value="{{$asasmen_perawat->tonometri_os}}" name="tonometri_os" id="tonometri_os">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -953,13 +951,13 @@
                                                             <label for="aplansi_od" class="mr-2 mt-2">
                                                                 OD
                                                             </label>
-                                                            <input type="text" class="form-control" value="{{$asasmen_perawat->aplansi_od ?? ''}}" name="aplansi_od" id="aplansi_od">
+                                                            <input type="text" class="form-control" value="{{$asasmen_perawat->aplansi_od}}" name="aplansi_od" id="aplansi_od">
                                                         </div>
                                                         <div class="input-group" style="margin-right: 10px;">
                                                             <label for="aplansi_os" class="mr-2 mt-2">
                                                                 OS
                                                             </label>
-                                                            <input type="text" class="form-control" value="{{$asasmen_perawat->aplansi_os ?? ''}}" name="aplansi_os" id="aplansi_os">
+                                                            <input type="text" class="form-control" value="{{$asasmen_perawat->aplansi_os}}" name="aplansi_os" id="aplansi_os">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -974,13 +972,13 @@
                                                             <label for="anel_od" class="mr-2 mt-2">
                                                                 OD
                                                             </label>
-                                                            <input type="text" class="form-control" value="{{$asasmen_perawat->anel_od ?? ''}}" name="anel_od" id="anel_od">
+                                                            <input type="text" class="form-control" value="{{$asasmen_perawat->anel_od}}" name="anel_od" id="anel_od">
                                                         </div>
                                                         <div class="input-group" style="margin-right: 10px;">
                                                             <label for="anel_os" class="mr-2 mt-2">
                                                                 OS
                                                             </label>
-                                                            <input type="text" class="form-control" value="{{$asasmen_perawat->anel_os ?? ''}}" name="anel_os" id="anel_os">
+                                                            <input type="text" class="form-control" value="{{$asasmen_perawat->anel_os}}" name="anel_os" id="anel_os">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -992,16 +990,16 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group" style="display: flex; flex-direction: row;">
                                                         <div class="input-group" style="margin-right: 10px;">
-                                                            <label for="ekstremitas_atas" class="mr-2 mt-2">
+                                                            <label for="ekstremitas_od" class="mr-2 mt-2">
                                                                 Atas
                                                             </label>
-                                                            <input type="text" class="form-control" value="{{$asasmen_perawat->ekstremitas_atas ?? ''}}" name="ekstremitas_atas" id="anel_od">
+                                                            <input type="text" class="form-control" value="{{$asasmen_perawat->ekstremitas_od}}" name="ekstremitas_od" id="ekstremitas_od">
                                                         </div>
                                                         <div class="input-group" style="margin-right: 10px;">
-                                                            <label for="ekstremitas_bawah" class="mr-2 mt-2">
+                                                            <label for="ekstremitas_os" class="mr-2 mt-2">
                                                                 Bawah
                                                             </label>
-                                                            <input type="text" class="form-control" value="{{$asasmen_perawat->ekstremitas_bawah ?? ''}}" name="ekstremitas_bawah" id="anel_os">
+                                                            <input type="text" class="form-control" value="{{$asasmen_perawat->ekstremitas_os}}" name="ekstremitas_os" id="ekstremitas_os">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1051,7 +1049,7 @@
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>Bagian</label>
-                                            <select name=" bagian" class="form-control select2" data-placeholder="Pilih Periksa Radiologi" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                            <select name=" bagian" class="form-control" data-placeholder="Pilih Periksa Radiologi" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                                 <option value="" selected>-- Pilih Bagian --</option>
                                                 <option value="Sinistra" >Sinistra</option>
                                                 <option value="Dextra" >Dextra</option>
@@ -1138,8 +1136,19 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
+                                        <label>Terapi</label>
+                                        <input type="text" name="FS_TERAPI" class="form-control @error('terapi') is-invalid @enderror">
+                                        @error('terapi')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
                                         <label>Edukasi</label>
-                                        <input type="text" name="FS_EDUKASI" value="" class="form-control @error('edukasi') is-invalid @enderror">
+                                        <input type="text" name="FS_EDUKASI" value="{{$asasmen_perawat->FS_EDUKASI}}" class="form-control @error('edukasi') is-invalid @enderror">
                                     </div>
                                     @error('edukasi')
                                     <div class="invalid-feedback">
@@ -1221,7 +1230,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="terapi">Terapi</label>
-                                        <textarea rows="7" cols="50" style="height: 180px;" name="FS_TERAPI" class="form-control resep" id="terapi"></textarea>
+                                        <textarea rows="7" cols="50" style="height: 180px;" name="FS_TERAPI" class="form-control resep" id="terapi">{{ $asasmen_perawat->FS_TERAPI }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -1314,7 +1323,8 @@
                 </div>
             </div>
         </div>
-    </section>
+</div>
+</section>
 </div>
 
 @endsection

@@ -262,13 +262,16 @@ Route::middleware('auth')->group(function () {
         // Poli Mata Perawat
         Route::get('/polimata/perawat', [AssesmenMataController::class, 'index'])->name('poliMata.index');
         Route::post('/polimata/perawat', [AssesmenMataController::class, 'store'])->name('poliMata.store');
+        Route::get('/polimata/perawat/resep/{kode_transaksi}/{noReg}', [AssesmenMataController::class, 'cetakResep'])->name('polimata.resep');
         Route::get('/polimata/perawat/assesmen_keperawatan/{noReg}', [AssesmenMataController::class, 'Add'])->name('poliMata.assesmenKeperawatanAdd');
         Route::get('/polimata/perawat/assesmen_keperawatan/edit/{noReg}', [AssesmenMataController::class, 'Edit'])->name('poliMata.assesmenKeperawatanEdit');
         Route::put('/polimata/perawat/assesmen_keperawatan/edit/{noReg}', [AssesmenMataController::class, 'update'])->name('poliMata.assesmenKeperawatanUpdate');
         // Poli Mata Dokter
         Route::get('/polimata/dokter', [AssesmenDokterMataController::class, 'index'])->name('poliMata.indexDokter');
         Route::get('/polimata/dokter/assesmen_awal/{noReg}', [AssesmenDokterMataController::class, 'add'])->name('poliMata.assesmenAwal');
-        Route::post('/polimata/dokter/assesmen_awal', [AssesmenDokterMataController::class, 'store'])->name('poliMata.assesmenAwalUpdate');
+        Route::post('/polimata/dokter/assesmen_awal', [AssesmenDokterMataController::class, 'store'])->name('poliMata.assesmenAwalStore');
+        Route::get('/polimata/dokter/assesmen_awal/edit/{noReg}', [AssesmenDokterMataController::class, 'edit'])->name('poliMata.assesmenAwalEdit');
+        Route::put('/polimata/dokter/assesmen_awal/edit/{noReg}', [AssesmenDokterMataController::class, 'update'])->name('poliMata.assesmenAwalUpdate');
         // Route::get('/polimata/dokter/assesmen_mata/{noReg}', [AssesmenMataController::class, 'assesmenMata'])->name('poliMata.assesmenMata');
     });
 
