@@ -37,10 +37,12 @@ class BerkasFisioController extends Controller
         $title = $this->prefix . ' ' . 'Pasien';
         $no_mr = $request->input('no_mr');
         $berkasfisio = new BerkasFisioterapi();
-        $data = $this->berkasFisio->getFisioterapiHistory($no_mr);
+        $pasienSpkfr = $this->berkasFisio->getFisioterapiHistorySpkfr($no_mr);
+        $pasienAlkes = $this->berkasFisio->getFisioterapAlkes($no_mr);
+        $fisioterapi = $this->berkasFisio->getFisioterapiHistoryFisioterapi($no_mr);
 
-        // dd($data);
-        return view($this->view . 'index', compact('title', 'data','berkasfisio'));
+        // dd($pasienAlkes);
+        return view($this->view . 'index', compact('title', 'fisioterapi','berkasfisio','pasienSpkfr','pasienAlkes'));
     }
 
     public function berkas()
@@ -50,13 +52,26 @@ class BerkasFisioController extends Controller
         return view($this->view . 'berkas', compact('title'));
     }
 
-    public function cppt_list($no_mr = "")
+    public function getFisioterapiDetailByDokter($no_reg)
+    {
+        $cekCpptFisio = $this->berkasFisio->getCpptFisioByNoreg($no_reg);
+       
+        $fisioterapiDetail = $this->berkasFisio->getFisioterapiByPelayananDokter($cekCpptFisio->ID_TRANSAKSI_FISIO);
+        // dd($fisioterapiDetail);
+        return view('partials.modal-detail-pasien-fisioterapi', ['fisioterapiDetail' => $fisioterapiDetail]);
+    }
+
+    public function cppt_list($no_mr = "", $no_reg)
     {
         $fisioModel = new Fisioterapi();
-        $biodatas = $this->pasien->biodataPasienByMr($no_mr);
+
+        $biodatas = $this->berkasFisio->biodataPasienByMr($no_mr);
         // dd($biodatas);
         // die;
-        $transaksis = $this->fisio->transaksiFisioByMr($no_mr);
+        $idTransaksiCppt = $this->berkasFisio->getIdTransaksiFisio($no_reg);
+        $idTransaksi = $idTransaksiCppt->ID_TRANSAKSI_FISIO;
+        // dd($idTransaksi);
+        $transaksis = $this->berkasFisio->transaksiFisioByMr($no_mr,$idTransaksi);
         $title = $this->prefix . ' ' . 'Form CPPT';
         return view($this->view . 'cppt', compact('title', 'biodatas', 'transaksis', 'fisioModel'));
     }
