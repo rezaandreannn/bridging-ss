@@ -49,53 +49,202 @@
                     </div>
                 </form>
             </div>
+ 
 
             <div class="card">
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table-striped table" id="table-1">
-                            <thead>
-                                <tr>
-                                    <th>Tanggal</th>
-                                    <th>NO RM dan Nama</th>
-                                    <th>Kode Reg</th>
-                                    <th>Dokter</th>
-                                    <th>Layanan</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                               @foreach ($data as $pasien)
-                                @php
-                                $tanggal = date('d-m-Y', strtotime($pasien->Tanggal));
-                                @endphp
-                               <tr>
-                                    <td>{{ $tanggal; }}</td>
-                                    <td><color style="color: red">({{$pasien->No_MR}})</color> - {{$pasien->Nama_Pasien}} </td>
-                                    <td>{{$pasien->No_Reg}}</td>
-                                    <td>{{$pasien->Nama_Dokter}}</td>
-                                    <td>{{$pasien->Medis}}</td>
-                                    <td width="20%">  
-                                        @if($pasien->Kode_Dokter == '151')
-                                        @if($berkasfisio->cekAsesmenDokter($pasien->No_Reg) == true)
-                                        <a href="{{ route('berkas.cetakRmFisio', ['no_reg' => $pasien->No_Reg]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Asesmen Dokter</a>
-                                        @endif
-                                        @endif
-                                        <a href="{{ route('berkas.cppt', ['no_mr' => $pasien->No_MR]) }}" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Cppt</a>
-                                        {{-- <a href="{{ route('berkas.alat', ['no_mr' => $pasien->No_MR]) }}" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Pelayanan Alat</a> --}}
-                                        {{-- <a href="{{ route('berkas.rujukan') }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Rujukan</a>
-                                        <a href="{{ route('berkas.informed') }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Informed</a> --}}
-                                    </td>
-                               </tr>
-                               @endforeach
-                            </tbody>
-                        </table>
+                    <ul class="nav nav-tabs" id="myTab2" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="spkfr" data-toggle="tab" href="#spkfr2" role="tab" aria-controls="spkfr2" aria-selected="true">Spesialis Rehabilitasi Medik</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="fisioterapi" data-toggle="tab" href="#fisioterapi2" role="tab" aria-controls="fisioterapi2" aria-selected="false">Fisioterapi</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="alkes" data-toggle="tab" href="#alkes2" role="tab" aria-controls="alkes2" aria-selected="false">Order Alat Kesehatan</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content tab-bordered" id="myTab3Content">
+                        <!-- Tab 1 SPKFR -->
+                        <div class="tab-pane fade show active" id="spkfr2" role="tabpanel" aria-labelledby="spkfr">
+                            <div class="table-responsive">
+                                <table class="table-striped table table-bordered" id="table-1">
+                                    <thead>
+                                        <tr>
+                                            <th>Tanggal</th>
+                                            <th>NO RM dan Nama</th>
+                                            <th>Dokter</th>
+                                            <th>Detail Fisioterapi</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($pasienSpkfr as $pasien)
+                                            @php
+                                            $tanggal = date('d-m-Y', strtotime($pasien->Tanggal));
+                                            @endphp
+                                            <tr>
+                                                <td width="10%">{{ $tanggal }}</td>
+                                                <td width="25%"><span style="color: red">({{ $pasien->No_MR }})</span> - {{ $pasien->Nama_Pasien }}</td>
+                                                <td width="15%">{{ $pasien->Nama_Dokter }}</td>
+                                                <td width="18%">  
+                                                    @if($pasien->Spesialis == 'SPESIALIS REHABILITASI MEDIK' && $berkasfisio->cekAsesmenDokter($pasien->No_Reg) == true )
+                                                    <a href="#" 
+                                                    data-toggle="modal" 
+                                                    data-target="#modal-detail-fisio{{ $pasien->No_Reg }}" 
+                                                    data-no-reg="{{ $pasien->No_Reg }}"
+                                                    class="btn btn-sm btn-info">
+                                                    <i class="fas fa-info"></i> Detail Fisioterapi
+                                                 </a>
+                                                 
+                                                    {{-- <a href="{{ route('berkas.detail_fisioterapi', ['no_reg' => $pasien->No_Reg]) }}" class="btn btn-sm btn-info"><i class="fas fa-info"></i> Detail Fisioterapi</a> --}}
+                                           
+                                                    @endif
+                                                </td>
+                                                <td width="20%">
+                                                    @if($pasien->Spesialis == 'SPESIALIS REHABILITASI MEDIK' && $berkasfisio->cekAsesmenDokter($pasien->No_Reg) == true )
+                                                        <a href="{{ route('berkas.cetakRmFisio', ['no_reg' => $pasien->No_Reg]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Asesmen Dokter</a>
+                                                        <a href="{{ route('berkas.cppt', ['no_mr' => $pasien->No_MR,'no_reg' => $pasien->No_Reg]) }}" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Cppt</a>
+                                                  
+                                                    @endif
+                                             
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+            
+                        <!-- Tab 2 fisioterapi -->
+                        <div class="tab-pane fade" id="fisioterapi2" role="tabpanel" aria-labelledby="fisioterapi">
+                            <div class="table-responsive">
+                                <table class="table-striped table table-bordered" id="table-2">
+                                    <thead>
+                                        <tr>
+                                            <th>Tanggal</th>
+                                            <th>NO RM dan Nama</th>
+                                            <th>Dokter</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($fisioterapi as $pasien)
+                                            @php
+                                            $tanggal = date('d-m-Y', strtotime($pasien->Tanggal));
+                                            @endphp
+                                            <tr>
+                                                <td width="5%">{{ $tanggal }}</td>
+                                                <td width="15%"><span style="color: red">({{ $pasien->No_MR }})</span> - {{ $pasien->Nama_Pasien }}</td>
+                                                <td width="5%">{{ $pasien->Nama_Dokter }}</td>
+                                                <td width="20%">
+                                       
+                                                @if($berkasfisio->cekCpptFisioterapi($pasien->No_Reg) == true)
+                                                    <a href="{{ route('berkas.cppt', ['no_mr' => $pasien->No_MR,'no_reg' => $pasien->No_Reg]) }}" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Cppt</a>
+                                                @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                                        
+                        <!-- Tab 3 order alkes -->
+                                        
+                        <div class="tab-pane fade" id="alkes2" role="tabpanel" aria-labelledby="alkes">
+                            <div class="table-responsive">
+                                <table class="table-striped table table-bordered" id="table-3">
+                                    <thead>
+                                        <tr>
+                                            <th>Tanggal</th>
+                                            <th>NO RM dan Nama</th>
+                                            <th>Dokter</th>
+                                            <th>Jenis Alat</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($pasienAlkes as $pasien)
+                                        @php
+                                        $tanggal = date('d-m-Y', strtotime($pasien->Tanggal));
+                                        @endphp
+                                        <tr>
+                                            <td>{{ $tanggal }}</td>
+                                            <td><span style="color: red">({{ $pasien->No_MR }})</span> - {{ $pasien->Nama_Pasien }}</td>
+                                            <td>{{ $pasien->Nama_Dokter }}</td>
+                                            <td>{{ $pasien->jenis_alat }}</td>
+                                            <td width="20%">                                               
+                                                @if($berkasfisio->cekCpptFisioterapi($pasien->No_Reg) == true)
+                                                    <a href="{{ route('berkas.cppt', ['no_mr' => $pasien->No_MR,'no_reg' => $pasien->No_Reg]) }}" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Edit Alkes</a>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+            
                     </div>
                 </div>
             </div>
+            
+            
         </div>
+
+
+        
+
+
+        {{-- <!-- Modal Structure -->
+        <div class="modal fade" id="modal-detail-fisio{{ $pasien->No_Reg }}" tabindex="-1" role="dialog" aria-labelledby="modalLabel{{ $pasien->No_Reg }}" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel{{ $pasien->No_Reg }}">Detail Fisioterapi</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Table to display data -->
+                        <div id="modal-body-content{{ $pasien->No_Reg }}">
+                            <!-- Data will be dynamically inserted here -->
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div> --}}
     </section>
 </div>
+
+        <!-- modal edit diagnosa -->
+<!-- Modal Structure -->
+@foreach ($pasienSpkfr as $pasien)
+<div class="modal fade" id="modal-detail-fisio{{ $pasien->No_Reg }}">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Riwayat Pelayanan Rehabilitasi Medik dan Fisioterapi</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Data will be dynamically inserted here -->
+            </div>
+            <div class="card-footer text-left">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
 @endsection
 
 @push('scripts')
@@ -116,5 +265,51 @@
         window.location.href = "{{ route('berkas.fisio') }}";
     }
 </script>
+
+
+<script>
+    $(document).ready(function() {
+        $('a[data-toggle="modal"]').on('click', function() {
+            var targetModal = $(this).data('target');
+            var noReg = $(this).data('no-reg');
+
+            $.ajax({
+                url: 'berkas_fisio/detail_fisioterapi/' + noReg,
+                type: 'GET',
+                success: function(response) {
+                    $(targetModal + ' .modal-body').html(response);
+                },
+                error: function(xhr) {
+                    $(targetModal + ' .modal-body').html('<p>An error occurred while fetching the data.</p>');
+                }
+            });
+        });
+    });
+</script>
+
+
+
+<script>
+    $(document).ready(function() {
+    // Persist selected tab
+    var selectedTab = localStorage.getItem('selectedTab') || '#spkfr2';
+    $('#myTab2 a[href="' + selectedTab + '"]').tab('show');
+
+    $('#myTab2 a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        var target = $(e.target).attr('href');
+        localStorage.setItem('selectedTab', target);
+        
+        // Initialize DataTables for table-3 when the tab is shown
+        if (target === '#alkes2' && !$.fn.DataTable.isDataTable('#table-3')) {
+            $('#table-3').DataTable();
+        }
+    });
+
+    // Initialize DataTables
+    $('#table-1').DataTable();
+    $('#table-2').DataTable();
+});
+</script>
+
 
 @endpush

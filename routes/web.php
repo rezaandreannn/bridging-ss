@@ -245,10 +245,14 @@ Route::middleware('auth')->group(function () {
     Route::prefix('berkas')->group(function () {
         Route::get('berkas_fisio', [BerkasFisioController::class, 'index'])->name('berkas.fisio');
         Route::get('berkas_fisio/cetak_rm_dokter/{no_reg}', [BerkasFisioController::class, 'cetak_rm_dokter'])->name('berkas.cetakRmFisio');
-        Route::get('berkas_fisio/cppt/{no_mr}', [BerkasFisioController::class, 'cppt_list'])->name('berkas.cppt');
+        Route::get('berkas_fisio/cppt/{no_mr}/{no_reg}', [BerkasFisioController::class, 'cppt_list'])->name('berkas.cppt');
         Route::get('berkas_fisio/rujukan', [BerkasFisioController::class, 'cetak_rujukan'])->name('berkas.rujukan');
         Route::get('berkas_fisio/informed', [BerkasFisioController::class, 'cetak_informed'])->name('berkas.informed');
         Route::get('/berkas_fisio/harian', [BerkasFisioController::class, 'berkas'])->name('berkas.harian');
+
+        // fisioterapi berdasarkan pelayanan dr bastian
+        Route::get('berkas_fisio/detail_fisioterapi/{no_reg}', [BerkasFisioController::class, 'getFisioterapiDetailByDokter'])->name('berkas.detail_fisioterapi');
+
         // Bukti Pelayanan Alat Kesehatan
         Route::get('berkas_fisio/pelayanan_alat/{no_mr}', [BerkasFisioController::class, 'berkasAlat'])->name('berkas.alat');
     });

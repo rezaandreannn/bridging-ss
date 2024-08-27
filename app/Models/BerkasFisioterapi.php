@@ -10,7 +10,67 @@ class BerkasFisioterapi extends Model
 {
     use HasFactory;
 
-    public function getFisioterapiHistory($no_mr)
+    public function getFisioterapiHistorySpkfr($no_mr)
+    {
+
+        $data = DB::connection('db_rsmm')
+            ->table('PENDAFTARAN as p')
+            ->Join('REGISTER_PASIEN as rp', 'p.No_MR', '=', 'rp.No_MR')
+            ->Join('DOKTER as d', 'p.KODE_DOKTER', '=', 'd.KODE_DOKTER')->select(
+                'p.No_Reg',
+                'd.Nama_Dokter',
+                'd.Spesialis',
+                'p.Medis',
+                'p.Kode_Dokter',
+                'p.No_MR',
+                'p.Tanggal',
+                'rp.Nama_Pasien'
+                )
+            ->where('p.No_MR', $no_mr)
+            ->orderBy('p.Tanggal', 'desc')
+            ->whereIn('p.Kode_Dokter', function ($query) {
+                $query->select('d.Kode_Dokter')
+                    ->from('DOKTER as d')
+                    ->whereIn('d.Spesialis', array('SPESIALIS REHABILITASI MEDIK'));
+            })
+        
+            ->get();
+            return $data;
+        }
+
+    public function getFisioterapAlkes($no_mr)
+    {
+        $pku = DB::connection('pku')->getDatabaseName();
+
+        
+        $data = DB::connection('db_rsmm')
+        ->table('PENDAFTARAN as p')
+        ->Join('REGISTER_PASIEN as rp', 'p.No_MR', '=', 'rp.No_MR')
+        ->Join($pku . '.dbo.fis_order_alkes as alkes', 'p.No_Reg', '=', 'alkes.no_registrasi')
+            ->Join('DOKTER as d', 'p.KODE_DOKTER', '=', 'd.KODE_DOKTER')->select(
+                'p.No_Reg',
+                'd.Nama_Dokter',
+                'd.Spesialis',
+                'p.Medis',
+                'p.Kode_Dokter',
+                'p.No_MR',
+                'p.Tanggal',
+                'rp.Nama_Pasien',
+                'alkes.jenis_alat'
+                )
+            ->where('p.No_MR', $no_mr)
+            ->orderBy('p.Tanggal', 'desc')
+            ->whereIn('p.Kode_Dokter', function ($query) {
+                $query->select('d.Kode_Dokter')
+                    ->from('DOKTER as d')
+                    ->whereIn('d.Spesialis', array('SPESIALIS REHABILITASI MEDIK'));
+            })
+        
+            ->get();
+            return $data;
+        }
+
+    public function getFisioterapiHistoryFisioterapi($no_mr)
     {
 
         $data = DB::connection('db_rsmm')
@@ -27,11 +87,57 @@ class BerkasFisioterapi extends Model
                 )
             ->where('p.No_MR', $no_mr)
             ->orderBy('p.Tanggal', 'desc')
-            ->whereIn('p.Kode_Dokter', array('151', '028'))
+            ->whereIn('p.Kode_Dokter', function ($query) {
+                $query->select('d.Kode_Dokter')
+                    ->from('DOKTER as d')
+                    ->whereIn('d.Spesialis', array('FISIOTERAPI'));
+            })
+        
             ->get();
             return $data;
         }
+
+        public function getCpptFisioByNoreg($no_reg){
+
+            $cekCppt = DB::connection('pku')
+                    ->table('TR_CPPT_FISIOTERAPI')
+                    ->select('ID_TRANSAKSI_FISIO')
+                    ->where('no_registrasi',$no_reg)
+                    ->first();
+
+            return $cekCppt;
+
+        }
+
+    public function getFisioterapiByPelayananDokter($id_transaksi)
+    {
+
+        $excludedRegs = DB::connection('pku')
+        ->table('TR_CPPT_FISIOTERAPI')
+        ->where('ID_TRANSAKSI_FISIO',$id_transaksi)
+        ->pluck('no_registrasi')
+        ->toArray();
         
+        
+        
+        $data = DB::connection('db_rsmm')
+        ->table('PENDAFTARAN as p')
+        ->Join('REGISTER_PASIEN as rp', 'p.No_MR', '=', 'rp.No_MR')
+        ->Join('DOKTER as d', 'p.KODE_DOKTER', '=', 'd.KODE_DOKTER')->select(
+                'p.No_Reg',
+                'd.Nama_Dokter',
+                'p.Medis',
+                'p.Kode_Dokter',
+                'p.No_MR',
+                'p.Tanggal',
+                'rp.Nama_Pasien'
+                )
+                ->orderBy('p.Tanggal', 'desc')
+                ->whereIn('p.No_Reg', $excludedRegs)
+                ->get();
+                return $data;
+            }
+            
         public function getAsesmenDokter($no_reg)
         {
             
@@ -119,5 +225,100 @@ class BerkasFisioterapi extends Model
             ->where('NO_MR_PASIEN', $no_mr)
             ->first();
         return $data;
+    }
+
+    public function transaksiFisioByMr($no_mr,$id_transaksi)
+    {
+        // $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/transaksi/' . $no_mr);
+        // $response = $request->getBody()->getContents();
+        // $data = json_decode($response, true);
+        // return $data['data'];
+
+        $data = DB::connection('pku')
+            ->table('TRANSAKSI_FISIOTERAPI')
+            ->where('NO_MR_PASIEN', $no_mr)
+            ->where('ID_TRANSAKSI',$id_transaksi)
+            ->orderBy('ID_TRANSAKSI', 'DESC')
+            ->get();
+        return $data;
+    }
+
+ public function getIdTransaksiFisio($no_reg)
+    {
+        // $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/transaksi/' . $no_mr);
+        // $response = $request->getBody()->getContents();
+        // $data = json_decode($response, true);
+        // return $data['data'];
+
+        $data = DB::connection('pku')
+            ->table('TR_CPPT_FISIOTERAPI')
+            ->select('ID_TRANSAKSI_FISIO')
+            ->where('no_registrasi', $no_reg)
+         
+            ->first();
+        return $data;
+    }
+
+    public function biodataPasienByMr($no_mr)
+    {
+        $data = DB::connection('db_rsmm')
+            ->table('REGISTER_PASIEN as a')
+            ->leftJoin('PENDAFTARAN as b', 'a.No_MR', '=', 'b.No_MR')
+            ->leftJoin('DOKTER as c', 'b.KODE_DOKTER', '=', 'c.KODE_DOKTER')
+            ->leftJoin('REKANAN as d', 'b.KODEREKANAN', '=', 'd.KODEREKANAN')
+            ->select(
+                'a.NAMA_PASIEN',
+                'a.NO_MR',
+                'a.HP1',
+                'a.HP2',
+                'a.ALAMAT',
+                'a.KOTA',
+                'a.PROVINSI',
+                'a.JENIS_KELAMIN',
+                'a.TGL_LAHIR',
+                'a.FS_REAK_ALERGI',
+                'a.FS_RIW_PENYAKIT_DAHULU',
+                'a.FS_ALERGI',
+                'a.FS_RIW_PENYAKIT_DAHULU2',
+                'a.FS_HIGH_RISK',
+                'b.No_MR',
+                'b.No_Reg',
+                'b.Tanggal',
+                'c.NAMA_DOKTER',
+                'c.SPESIALIS',
+                'd.NAMAREKANAN',
+            )
+            ->where('a.NO_MR', $no_mr)
+            ->whereIn('b.Kode_Dokter', function ($query) {
+                $query->select('c.Kode_Dokter')
+                    ->from('DOKTER as c')
+                    ->whereIn('c.Spesialis', array('SPESIALIS REHABILITASI MEDIK','FISIOTERAPI'));
+            })
+            ->orderBy('b.No_Reg', 'DESC')
+            ->limit('1')
+            ->first();
+        return $data;
+    }
+
+ public function cekCpptFisioterapi($no_reg)
+    {
+        // $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/transaksi/' . $no_mr);
+        // $response = $request->getBody()->getContents();
+        // $data = json_decode($response, true);
+        // return $data['data'];
+
+        $data = DB::connection('pku')
+            ->table('TR_CPPT_FISIOTERAPI')
+            ->select('no_registrasi')
+            ->where('no_registrasi', $no_reg)
+         
+            ->first();
+
+            if($data!=null){
+                return true;
+            }else{
+                return false;
+            }
+       
     }
 }
