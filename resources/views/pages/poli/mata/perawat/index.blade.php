@@ -103,6 +103,12 @@
                                         @if($data->FS_TERAPI != '')
                                         <a href="{{ route('polimata.resep', [$data->No_Reg, $data->FS_KD_TRS])  }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Resep</a>
                                         @endif
+                                        @if($poliMata->cekDokter($data->No_Reg) == true)
+                                            <a href="{{ route('polimata.cetakRM', [$data->No_Reg]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> RM</a>
+                                        @endif
+                                        @if($poliMata->cekDokter($data->No_Reg) == true)
+                                            <a href="{{ route('polimata.cetakResume', [$data->No_Reg]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Resume</a>
+                                        @endif
                                        
                                     </td>
                                 </tr>

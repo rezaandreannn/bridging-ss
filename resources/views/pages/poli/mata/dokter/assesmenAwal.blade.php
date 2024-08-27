@@ -93,7 +93,7 @@
                                         <input type="hidden" name="KODE_DOKTER" value="{{ $biodata->Kode_Dokter}}" />
                                         <input type="hidden" name="NO_MR" value="{{ $biodata->NO_MR}}" />
                                         <label>Keluhan Utama (Anamnesa) <code>*</code></label>
-                                        <textarea name="FS_ANAMNESA" class="form-control  @error('anamnesa') is-invalid  
+                                        <textarea name="anamnesa" class="form-control  @error('anamnesa') is-invalid  
                                             @enderror" rows="3" placeholder="Masukan ...">{{ $asasmen_perawat->FS_ANAMNESA }}</textarea>
                                     </div>
                                     @error('anamnesa')
@@ -105,7 +105,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Riwayat Penyakit Sekarang</label>
-                                        <textarea class="form-control  @error('riwayat_sekarang') is-invalid @enderror" rows="3" name="RIWAYAT_SEKARANG" value="" placeholder="Masukan ...">{{ $asasmen_perawat->RIWAYAT_SEKARANG }}</textarea>
+                                        <textarea class="form-control  @error('riwayat_sekarang') is-invalid @enderror" rows="3" name="riwayat_penyakit" value="" placeholder="Masukan ...">{{ $asasmen_perawat->RIWAYAT_SEKARANG }}</textarea>
                                         @error('riwayat_sekarang')
                                         <span class="text-danger" style="font-size: 12px;">
                                             {{ $message }}
@@ -116,87 +116,25 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Riwayat Penyakit Dahulu</label>
-                                        <input type="text" class="form-control" name="FS_RIW_PENYAKIT_DAHULU" value="{{$biodata->FS_RIW_PENYAKIT_DAHULU!='' ? $biodata->FS_RIW_PENYAKIT_DAHULU : '-' }}">
+                                        <input type="text" class="form-control" name="FS_RIW_PENYAKIT_DAHULU" value="{{$biodata->FS_RIW_PENYAKIT_DAHULU!='' ? $biodata->FS_RIW_PENYAKIT_DAHULU : '-' }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Riwayat Penyakit keluarga</label>
-                                        <input type="text" class="form-control" name="FS_RIW_PENYAKIT_DAHULU2" value="{{$biodata->FS_RIW_PENYAKIT_DAHULU2!='' ? $biodata->FS_RIW_PENYAKIT_DAHULU2 : '-' }}">
+                                        <input type="text" class="form-control" name="FS_RIW_PENYAKIT_DAHULU2" value="{{$biodata->FS_RIW_PENYAKIT_DAHULU2!='' ? $biodata->FS_RIW_PENYAKIT_DAHULU2 : '-' }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Riwayat Alergi<code>*</code></label>
-                                        <input type="text" class="form-control" name="FS_ALERGI" value="{{$biodata->FS_ALERGI!='' ? $biodata->FS_ALERGI : '-' }}">
+                                        <input type="text" class="form-control" name="FS_ALERGI" value="{{$biodata->FS_ALERGI!='' ? $biodata->FS_ALERGI : '-' }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Reaksi Alergi<code>*</code></label>
-                                        <input type="text" class="form-control" name="FS_REAK_ALERGI" value="{{$biodata->FS_REAK_ALERGI!='' ? $biodata->FS_REAK_ALERGI : '-' }}">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- include form -->
-                    </div>
-                    <div class="card mb-3">
-                        <div class="card-header card-khusus-header">
-                            <h6 class="card-khusus-title">Spiritual dan Kultural pasien</h6>
-                        </div>
-                        <!-- include form -->
-                        <div class="card-body card-khusus-body">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label class="d-block">Agama</label>
-                                        <select name="FS_AGAMA" id="" class="form-control select2">
-                                            <option value="">-- Pilih Agama --</option>
-                                            <option value="1" {{ ($asasmen_perawat->FS_AGAMA=='1') ? 'selected' : ''}}>Islam</option>
-                                            <option value="2" {{ ($asasmen_perawat->FS_AGAMA=='2') ? 'selected' : ''}}>Kristen</option>
-                                            <option value="3" {{ ($asasmen_perawat->FS_AGAMA=='3') ? 'selected' : ''}}>Katholik</option>
-                                            <option value="4" {{ ($asasmen_perawat->FS_AGAMA=='4') ? 'selected' : ''}}>Hindu</option>
-                                            <option value="5" {{ ($asasmen_perawat->FS_AGAMA=='5') ? 'selected' : ''}}>Budha</option>
-                                            <option value="6" {{ ($asasmen_perawat->FS_AGAMA=='6') ? 'selected' : ''}}>Konghucu</option>
-                                        </select>
-                                        @error('agama')
-                                        <span class="text-danger" style="font-size: 12px;">
-                                            {{ $message }}
-                                        </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label class="d-block">Status Pernikahan</label>
-                                        <select name="PERNIKAHAN" id="pernikahan" class="form-control select2 @error('pernikahan')  is-invalid @enderror">
-                                            <option value="">-- Pilih Status --</option>
-                                            <option value="1" {{ ($asasmen_perawat->PERNIKAHAN=='1') ? 'selected' : ''}}>Single</option>
-                                            <option value="2" {{ ($asasmen_perawat->PERNIKAHAN=='2') ? 'selected' : ''}}>Menikah</option>
-                                            <option value="3" {{ ($asasmen_perawat->PERNIKAHAN=='3') ? 'selected' : ''}}>Janda/Duda</option>
-                                        </select>
-                                        @error('pernikahan')
-                                        <span class="text-danger" style="font-size: 12px;">
-                                            {{ $message }}
-                                        </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label class="d-block">Pekerjaan</label>
-                                        <select name="JOB" id="job" class="form-control select2 @error('job')  is-invalid @enderror">
-                                            <option value="">-- Pilih Pekerjaan --</option>
-                                            <option value="1" {{ ($asasmen_perawat->JOB=='1') ? 'selected' : ''}}>PNS</option>
-                                            <option value="2" {{ ($asasmen_perawat->JOB=='2') ? 'selected' : ''}}>Karyawan Swasta</option>
-                                            <option value="3" {{ ($asasmen_perawat->JOB=='3') ? 'selected' : ''}}>Lainnya</option>
-                                        </select>
-                                        @error('job')
-                                        <span class="text-danger" style="font-size: 12px;">
-                                            {{ $message }}
-                                        </span>
-                                        @enderror
+                                        <input type="text" class="form-control" name="FS_REAK_ALERGI" value="{{$biodata->FS_REAK_ALERGI!='' ? $biodata->FS_REAK_ALERGI : '-' }}" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -213,22 +151,21 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Status Psikologis</label>
-                                        <select name="FS_STATUS_PSIK" id="" class="form-control select2">
+                                        <select name="status_psikologi" id="" class="form-control select2">
                                             <option value="">-- pilih --</option>
-                                            <option value="1" {{ ($asasmen_perawat->FS_STATUS_PSIK=='1') ? 'selected' : ''}} onclick='document.getElementById("civstaton3").disabled = true' selected>Tenang</option>
-                                            <option value="2" {{ ($asasmen_perawat->FS_STATUS_PSIK=='2') ? 'selected' : ''}} onclick='document.getElementById("civstaton3").disabled = true'>Cemas</option>
-                                            <option value="3" {{ ($asasmen_perawat->FS_STATUS_PSIK=='3') ? 'selected' : ''}} onclick='document.getElementById("civstaton3").disabled = true'>Takut</option>
-                                            <option value="4" {{ ($asasmen_perawat->FS_STATUS_PSIK=='4') ? 'selected' : ''}} onclick='document.getElementById("civstaton3").disabled = true'>Marah</option>
-                                            <option value="5" {{ ($asasmen_perawat->FS_STATUS_PSIK=='5') ? 'selected' : ''}} onclick='document.getElementById("civstaton3").disabled = true'>Sedih</option>
-                                            <option VALUE="6" {{ ($asasmen_perawat->FS_STATUS_PSIK=='6') ? 'selected' : ''}} onclick='document.getElementById("civstaton3").disabled = false'>Lainnya</option>
+                                            <option value="1" {{ ($asasmen_perawat->FS_STATUS_PSIK=='1') ? 'selected' : ''}} selected>Tenang</option>
+                                            <option value="2" {{ ($asasmen_perawat->FS_STATUS_PSIK=='2') ? 'selected' : ''}}>Cemas</option>
+                                            <option value="3" {{ ($asasmen_perawat->FS_STATUS_PSIK=='3') ? 'selected' : ''}}>Takut</option>
+                                            <option value="4" {{ ($asasmen_perawat->FS_STATUS_PSIK=='4') ? 'selected' : ''}}>Marah</option>
+                                            <option value="5" {{ ($asasmen_perawat->FS_STATUS_PSIK=='5') ? 'selected' : ''}}>Sedih</option>
+                                            <option VALUE="6" {{ ($asasmen_perawat->FS_STATUS_PSIK=='6') ? 'selected' : ''}}>Lainnya</option>
                                         </select>
-                                        <input type="hidden" name="FS_STATUS_PSIK2" value="" id="civstaton3" size="32">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Status Mental</label>
-                                        <select name="STATUS_MENTAL" id="status_mental" class="form-control select2 @error('status_mental')  is-invalid @enderror">
+                                        <select name="status_mental" id="status_mental" class="form-control select2 @error('status_mental')  is-invalid @enderror">
                                             <option value="">-- Pilih Status Mental --</option>
                                             <option value="1" {{ ($asasmen_perawat->STATUS_MENTAL=='1') ? 'selected' : ''}}>Kooperatif</option>
                                             <option value="2" {{ ($asasmen_perawat->STATUS_MENTAL=='2') ? 'selected' : ''}}>Tidak Kooperatif</option>
@@ -245,7 +182,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Keadaan Umum</label>
-                                        <select name="KEADAAN_UMUM" id="keadaan_umum" class="form-control select2 @error('keadaan_umum')  is-invalid @enderror">
+                                        <select name="keadaan_umum" id="keadaan_umum" class="form-control select2 @error('keadaan_umum')  is-invalid @enderror">
                                             <option value="">-- Pilih Status Mental --</option>
                                             <option value="1" {{ ($asasmen_perawat->KEADAAN_UMUM=='1') ? 'selected' : ''}}>Baik</option>
                                             <option value="2" {{ ($asasmen_perawat->KEADAAN_UMUM=='2') ? 'selected' : ''}}>Sedang</option>
@@ -261,7 +198,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Kesadaran</label>
-                                        <input type="text" name="KESADARAN" class="form-control @error('kesadaran') is-invalid  
+                                        <input type="text" name="kesadaran" class="form-control @error('kesadaran') is-invalid  
                                             @enderror" value="{{ $asasmen_perawat->KESADARAN }}">
                                     </div>
                                     @error('kesadaran')
@@ -312,7 +249,7 @@
                                     <div class="form-group">
                                         <label>TD</label><code> (contoh : 110/90)</code>
                                         <div class="input-group">
-                                            <input type="text" name="td" id="td" value="{{ $asasmen_perawat->FS_TD }}" placeholder="masukkan hanya angka" class="form-control @error('td') is-invalid  
+                                            <input type="text" name="tekanan_darah" id="td" value="{{ $asasmen_perawat->FS_TD }}" placeholder="masukkan hanya angka" class="form-control @error('td') is-invalid  
                                             @enderror">
                                             <div class="input-group-append">
                                                 <div class="input-group-text">
@@ -350,7 +287,7 @@
                                     <div class="form-group">
                                         <label>Berat Badan</label>
                                         <div class="input-group">
-                                            <input type="text" name="bb" id="bb" value="{{ $asasmen_perawat->FS_BB }}" placeholder="masukkan hanya angka" class="form-control @error('bb') is-invalid  
+                                            <input type="text" name="berat_badan" id="bb" value="{{ $asasmen_perawat->FS_BB }}" placeholder="masukkan hanya angka" class="form-control @error('bb') is-invalid  
                                             @enderror">
                                             <div class="input-group-append">
                                                 <div class="input-group-text">
@@ -369,7 +306,7 @@
                                     <div class="form-group">
                                         <label>Tinggi Badan</label>
                                         <div class="input-group">
-                                            <input type="text" name="tb" id="tb" value="{{ $asasmen_perawat->FS_TB }}" placeholder="masukkan hanya angka" class="form-control @error('tb') is-invalid  
+                                            <input type="text" name="tinggi_badan" id="tb" value="{{ $asasmen_perawat->FS_TB }}" placeholder="masukkan hanya angka" class="form-control @error('tb') is-invalid  
                                             @enderror">
                                             <div class="input-group-append">
                                                 <div class="input-group-text">
@@ -384,7 +321,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Lingkar Kepala</label>
                                         <div class="input-group">
@@ -429,7 +366,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 {{-- <div class="col-md-6">
                                     <div class="form-group">
                                         <label>GCS</label>
@@ -473,7 +410,7 @@
                         </div>
                         <!-- include form -->
                     </div>
-                    <div class="card mb-3">
+                    {{-- <div class="card mb-3">
                         <div class="card-header card-khusus-header">
                             <h6 class="card-khusus-title">Kebutuhan Fungsional & Asesmen Jatuh</h6>
                         </div>
@@ -549,14 +486,14 @@
                                 <input type="hidden" id="hasil_check1">
                                 <input type="hidden" id="hasil_check2">
                                 <input type="hidden" id="hasil_check3">
-                                <label for="kesimpulan" class="col-sm-2 col-form-label">Kesimpulan : </label>
+                                <label for="kesimpulan" class="col-sm-12 col-form-label">Kesimpulan : </label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control-plaintext" id="kesimpulan_asesmen_jatuh" readonly>
                                 </div>
                             </div>
                         </div>
                         <!-- include form -->
-                    </div>
+                    </div> --}}
                     <div class="card mb-3">
                         <div class="card-header card-khusus-header">
                             <h6 class="card-khusus-title">Kepala Leher</h6>
@@ -869,13 +806,13 @@
                                                             <label for="VISUS_OD" class="mr-2 mt-2">
                                                                 OD
                                                             </label>
-                                                            <input type="text" placeholder="Inputan Mata Kanan" value="{{ $asasmen_perawat->VISUS_OD }}" class="form-control" name="VISUS_OD" id="VISUS_OD">
+                                                            <input type="text" placeholder="Inputan Mata Kanan" value="{{ $refraksi->VISUS_OD }}" class="form-control" name="VISUS_OD" id="VISUS_OD" readonly>
                                                         </div>
                                                         <div class="input-group" style="margin-right: 10px;">
                                                             <label for="VISUS_OS" class="mr-2 mt-2">
                                                                 OS
                                                             </label>
-                                                            <input type="text" placeholder="Inputan Mata Kiri" value="{{ $asasmen_perawat->VISUS_OS }}" class="form-control" name="VISUS_OS" id="VISUS_OS">
+                                                            <input type="text" placeholder="Inputan Mata Kiri" value="{{ $refraksi->VISUS_OS }}" class="form-control" name="VISUS_OS" id="VISUS_OS" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -890,13 +827,13 @@
                                                             <label for="NCT_TOD" class="mr-2 mt-2">
                                                                 TOD
                                                             </label>
-                                                            <input type="text" placeholder="Inputan Mata Kanan" value="{{ $asasmen_perawat->NCT_TOD }}" class="form-control" name="NCT_TOD" id="NCT_TOD">
+                                                            <input type="text" placeholder="Inputan Mata Kanan" value="{{ $refraksi->NCT_TOD }}" class="form-control" name="NCT_TOD" id="NCT_TOD" readonly>
                                                         </div>
                                                         <div class="input-group" style="margin-right: 10px;">
                                                             <label for="NCT_TOS" class="mr-2 mt-2">
                                                                 TOS
                                                             </label>
-                                                            <input type="text" placeholder="Inputan Mata Kiri" value="{{ $asasmen_perawat->NCT_TOS }}" class="form-control" name="NCT_TOS" id="NCT_TOS">
+                                                            <input type="text" placeholder="Inputan Mata Kiri" value="{{ $refraksi->NCT_TOS }}" class="form-control" name="NCT_TOS" id="NCT_TOS" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1079,7 +1016,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Diagnosa</label>
-                                        <textarea name="diagnosa_keperawatan" class="form-control  @error('diagnosa_keperawatan') is-invalid  
+                                        <textarea name="DIAGNOSA" class="form-control  @error('diagnosa_keperawatan') is-invalid  
                                             @enderror" rows="3" placeholder="Masukan ..."></textarea>
                                     </div>
                                     @error('diagnosa_keperawatan')
@@ -1182,17 +1119,17 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="d-block">Kondisi Pulang</label>
-                                        <select name="FS_CARA_PULANG" id="kondisi" class="form-control select2">
-                                            <option value="">-- Pilih Cara Pulang --</option>
-                                            <option value="1">Tidak Control</option>
-                                            <option value="2">Kontrol</option>
-                                            <option value="3">Rawat Inap</option>
-                                            <option value="4">Rujuk Luar RS</option>
-                                            <option value="6">Rujuk Internal</option>
-                                            <option value="7">Kembali Ke Faskes Primer</option>
-                                            <option value="8">PRB</option>
+                                        <select name="FS_CARA_PULANG" id="kondisi" class="form-control select2 @error('cara_pulang')  is-invalid @enderror" onchange="click_kondisi_pulang(this)">
+                                            <option value="" selected disabled>--Pilih Cara Pulang--</option>
+                                            <option value="0" @if(old('cara_pulang')=='0' ) selected @endif>Tidak Kontrol</option>
+                                            <option value="2" @if(old('cara_pulang')=='2' ) selected @endif>Kontrol</option>
+                                            <option value="3" @if(old('cara_pulang')=='3' ) selected @endif>Rawat Inap</option>
+                                            <option value="4" @if(old('cara_pulang')=='4' ) selected @endif>Rawat Luar RS</option>
+                                            <option value="6" @if(old('cara_pulang')=='6' ) selected @endif>Rawat Internal</option>
+                                            <option value="7" @if(old('cara_pulang')=='7' ) selected @endif>Kembali Ke Faskes Primer</option>
+                                            <option value="8" @if(old('cara_pulang')=='8' ) selected @endif>PRB</option>
                                         </select>
-                                        @error('FS_CARA_PULANG')
+                                        @error('cara_pulang')
                                         <span class="text-danger" style="font-size: 12px;">
                                             {{ $message }}
                                         </span>
@@ -1224,84 +1161,92 @@
                                         <textarea rows="7" cols="50" style="height: 180px;" name="FS_TERAPI" class="form-control resep" id="terapi"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Tanggal Expired Rujukan (jika pasien BPJS)</label>
-                                        <input type="date" name="FS_SKDP_FASKES" id="" value="{{$asasmen_perawat->FS_SKDP_FASKES}}" class="form-control" value="">
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <!-- include form -->
                     </div>
-                    <div class="card mb-3" id="form2" style="display: none;">
-                        <div class="card-header">
-                            <h4 class="card-title">Surat Keterangan Dalam Perawatan</h4>
+                    {{-- surat rujuk luar rs --}}
+                    <div class="card card-secondary" id="form3" style="display: none">
+                        <div class="card-header card-success">
+                            <h4 class="card-title">SURAT RUJUKAN LUAR RS</h4>
                         </div>
                         <!-- include form -->
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group clearfix">
-                                        <label>Belum dapat dikembalikan ke Fasilitas Perujuk dengan alasan</label>
-                                        <select name="FS_SKDP_1" class="form-control select2">
-                                            <option value="">--Pilih Alasan--</option>
-                                            <option value="1" selected>Untuk Melihat Perkembangan Penyakit</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group clearfix">
-                                        <label>
-                                            Rencana tindak lanjut yang akan dilakukan pada kunjungan selanjutnya
-                                        </label>
-                                        <select name="FS_SKDP_2" class="form-control select2">
-                                            <option value="">--Pilih Rencana Tindakan--</option>
-                                            <option value="1" selected>Menegakkan Diagnosis dan Memberikan Terapi Definitif</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group clearfix">
-                                        <label for="check3">
-                                            Rencana Kontrol Berikutnya
-                                        </label>
-                                        <select name="FS_RENCANA_KONTROL" class="form-control select2">
-                                            <option value="">--Pilih Data--</option>
-                                            <option value="1 Minggu Kedepan">1 Minggu Kedepan</option>
-                                            <option value="2 Minggu Kedepan">2 Minggu Kedepan</option>
-                                            <option value="Sebulan Kedepan" selected>Sebulan Kedepan</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group clearfix">
-                                        <label for="check3">
-                                            Tanggal Kontrol Berikutnya
-                                        </label>
-                                        <input type="date" class="form-control" name="FS_SKDP_KONTROL" id="">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group clearfix">
-                                        <label for="check3">
-                                            Tanggal Expired Rujukan Faskes
-                                        </label>
-                                        <input type="date" class="form-control" name="FS_SKDP_FASKES" id="">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Keterangan/Pesan</label>
-                                        <textarea class="form-control" rows="3" name="FS_PESAN" value="" placeholder="Masukan ..."></textarea>
-                                        @error('riwayat_sekarang')
-                                        <span class="text-danger" style="font-size: 12px;">
-                                            {{ $message }}
-                                        </span>
-                                        @enderror
+                            <!-- <div class="row"> -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="FS_TUJUAN_RUJUKAN_LUAR_RS">Kepada : <code>* Wajib Diisi</code></label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" name="FS_TUJUAN_RUJUKAN_LUAR_RS" id="FS_TUJUAN_RUJUKAN_LUAR_RS">
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <label for="FS_TUJUAN_RUJUKAN_LUAR_RS2">Rumah Sakit Tujuan : <code>* Wajib Diisi</code></label>
+                                <div class="input-group mb-3">
+                                    <input type="text" name="FS_TUJUAN_RUJUKAN_LUAR_RS2" id="FS_TUJUAN_RUJUKAN_LUAR_RS2" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="FS_ALASAN_RUJUK_LUAR_RS">Alasan Dirujuk : <code>* Wajib Diisi</code></label>
+                                <div class="input-group mb-3">
+                                    <textarea class="form-control" rows="3" name="FS_ALASAN_RUJUK_LUAR_RS" id="FS_ALASAN_RUJUK_LUAR_RS" value="" placeholder="Masukan ..."></textarea>
+                                </div>
+                            </div>
+                            <!-- </div> -->
+                        </div>
+                        <!-- include form -->
+                    </div>
+                    {{-- surat  rujuk internal --}}
+                    <div class="card card-secondary" id="form4" style="display: none">
+                        <div class="card-header card-success">
+                            <h4 class="card-title">SURAT RUJUKAN INTERNAL</h4>
+                        </div>
+                        <!-- include form -->
+                        <div class="card-body">
+                            <!-- <div class="row"> -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="FS_TUJUAN_RUJUKAN">Kepada : <code>* Wajib Diisi</code></label>
+                                    <div class="input-group mb-3">
+                                        <select name="FS_TUJUAN_RUJUKAN" id="FS_TUJUAN_RUJUKAN" class="form-control select2bs4">
+                                            <option value="">-- pilih dokter --</option>
+                                
+                                        </select>
+                                        <input type="hidden" name="FS_TUJUAN_RUJUKAN2" size="55" value="RSU Muhammadiyah Metro" />
+                                    </div>
+                                </div>
+                            </div>
+            
+                            <div class="col-md-6">
+                                <label for="FS_ALASAN_RUJUK">Alasan Dirujuk : <code>* Wajib Diisi</code></label>
+                                <div class="input-group mb-3">
+                                    <textarea class="form-control" rows="3" name="FS_ALASAN_RUJUK" id="FS_ALASAN_RUJUK" value="" placeholder="Masukan ..."></textarea>
+                                </div>
+                            </div>
+                            <!-- </div> -->
+                        </div>
+                        <!-- include form -->
+                    </div>
+                    {{-- SURAT DIKEMBALIKAN KE FASKER PRIMER --}}
+                    <div class="card card-secondary" id="form5" style="display: none">
+                        <div class="card-header card-success">
+                            <h4 class="card-title">SURAT DIKEMBALIKAN KE FASKER PRIMER</h4>
+                        </div>
+                        <!-- include form -->
+                        <div class="card-body">
+                            <!-- <div class="row"> -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="FS_TGL_PRB">Kontrol setelah dari FKTP ke RS tanggal : <code>* Wajib Diisi</code></label>
+                                    <div class="input-group mb-3">
+                                        <input type="hidden" name="FS_KD_TRS" />
+                                        <input type="date" name="FS_TGL_PRB" class="form-control" id="FS_TGL_PRB">
+                                        <input type="hidden" name="FS_TUJUAN" value="-" />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- </div> -->
                         </div>
                         <!-- include form -->
                     </div>
@@ -1332,17 +1277,67 @@
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
 
 <script>
-    $(document).ready(function() {
-        $("#kondisi").on("change", function () {
-            $("#form2").hide();
+    function click_kondisi_pulang(selected) {
+        $("#form2").hide();
+        $("#form3").hide();
+        $("#form4").hide();
+        $("#form5").hide();
+        var checkbox1 = selected.value
 
-            if ($(this).val() == "2") {
-                $("#form2").show();
-            } else {
-                $("#form2").hide();
+        if (checkbox1 == "2") {
+            $("#form2").show();
+        } else if (checkbox1 == "4") {
+            $("#form3").show();
+        } else if (checkbox1 == "6") {
+            $("#form4").show();
+        } else if (checkbox1 == "7") {
+            $("#form5").show();
+
+        } else {
+            $("#form2").hide();
+            $("#form3").hide();
+            $("#form4").hide();
+            $("#form5").hide();
+        }
+    }
+</script>
+
+<script>
+    function click_alasan_skdp(selected) {
+
+        var FS_SKDP_1 = $("#FS_SKDP_1").val();
+
+        $.ajax({
+            type: "GET",
+            url: "{{ route('rj.skdp_rencana_kontrol') }}",
+            data: {
+                FS_SKDP_1: FS_SKDP_1
+            },
+            async: false,
+            dataType: 'json',
+
+            success: function(data) {
+                //jika data sukses diambil dari server kita tampilkan
+                //di <select id=kota
+
+
+        
+                var html = '';
+                var i;
+                let array = data.data;
+
+
+                for (i = 0; i < array.length; i++) {
+                    
+                
+                    html += '<option value=' + array[i].FS_KD_TRS + '>' + array[i].FS_NM_SKDP_RENCANA + '</option>';
+                    
+                }
+                $('#rencana_skdp').html(html);
+
             }
         });
-    });
+    }
 </script>
 
 {{-- Resep --}}

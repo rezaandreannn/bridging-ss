@@ -39,6 +39,80 @@ class AssesmenMataController extends Controller
         $this->antrean = new Antrean();
     }
 
+    // --------- REFRAKSI OPTISI ---------------
+    public function refraksi(Request $request)
+    {
+        $title = $this->prefix . ' ' . 'Mata';
+        $kode_dokter = $request->input('kode_dokter');
+        $dokters = $this->poliMata->getDokterMata();
+        $refraksi = $this->poliMata->getDataRefraksi();
+        // dd($refraksi);
+        $pasien = $this->antrean->getDataPasienRajal($kode_dokter);
+        $biodata = $this->antrean->getPasienRajal($kode_dokter);
+        // dd($biodata);
+        $poliMata = new PoliMata();
+        return view($this->view . 'refraksi.index', compact('title', 'pasien', 'dokters', 'poliMata', 'biodata', 'refraksi'));
+    }
+
+    public function refraksiStore(Request $request)
+    {
+        try {
+
+            // $userEmr = $this->rajal->getUserEmr(auth()->user()->username);
+            // dd($userEmr);
+
+            DB::connection('pku')->beginTransaction();
+
+            DB::connection('pku')->table('poli_mata_refraksi')->insert([
+                'NO_REG' => $request->input('NO_REG'),
+                'VISUS_OD' => $request->input('VISUS_OD'),
+                'VISUS_OS' => $request->input('VISUS_OS'),
+                'NCT_TOD' => $request->input('NCT_TOD'),
+                'NCT_TOS' => $request->input('NCT_TOS'),
+                'created_at' => now(),
+                'CREATE_REFRAKSI' => auth()->user()->username,
+            ]);
+
+            DB::connection('pku')->commit();
+            // return redirect('pm/polimata/perawat?kode_dokter=' . $request->input('KODE_DOKTER'))->with('success', 'Data Berhasil Masuk!!');
+            return redirect()->back()->with('success', 'Data Berhasil Masuk!!');
+        } catch (\Exception $e) {
+            //throw $th;
+            DB::connection('pku')->rollBack();
+            return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function refraksiUpdate(Request $request, $noReg)
+    {
+        try {
+
+            // $userEmr = $this->rajal->getUserEmr(auth()->user()->username);
+            // dd($userEmr);
+
+            DB::connection('pku')->beginTransaction();
+
+            DB::connection('pku')->table('poli_mata_refraksi')->where('NO_REG', $noReg)->update([
+                'VISUS_OD' => $request->input('VISUS_OD'),
+                'VISUS_OS' => $request->input('VISUS_OS'),
+                'NCT_TOD' => $request->input('NCT_TOD'),
+                'NCT_TOS' => $request->input('NCT_TOS'),
+                'updated_at' => now(),
+                'UPDATE_REFRAKSI' => auth()->user()->username,
+            ]);
+
+            DB::connection('pku')->commit();
+            return redirect()->back()->with('success', 'Data berhasil diedit!!');
+            // return redirect()->route('poliMata.refraksi')->with('success', 'Data Berhasil Masuk!!');
+        } catch (\Exception $e) {
+            //throw $th;
+            DB::connection('pku')->rollBack();
+            return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
+        }
+    }
+
+    // -----------------------------------------
+
     public function index(Request $request)
     {
         $title = $this->prefix . ' ' . 'Mata';
@@ -46,7 +120,9 @@ class AssesmenMataController extends Controller
         $dokters = $this->poliMata->getDokterMata();
         $pasien = $this->antrean->getDataPasienRajal($kode_dokter);
         // dd($pasien);
-        return view($this->view . 'perawat.index', compact('title', 'pasien', 'dokters'));
+        $poliMata = new PoliMata();
+        // dd($pasien);
+        return view($this->view . 'perawat.index', compact('title', 'pasien', 'dokters', 'poliMata'));
     }
 
     /**
@@ -80,7 +156,6 @@ class AssesmenMataController extends Controller
     public function cetakResep($noReg, $kode_transaksi)
     {
         $data = $this->poliMata->cetakResep($noReg, $kode_transaksi);
-        // dd($data);
         $biodata = $this->rekam_medis->getBiodata($noReg);
         $antrian = $this->rekam_medis->getAntrianObat($kode_transaksi);
         // dd($antrian);
@@ -92,6 +167,62 @@ class AssesmenMataController extends Controller
         $pdf = PDF::loadview('pages.poli.mata.perawat.resep', ['data' => $data, 'biodata' => $biodata, 'tanggal' => $tanggal, 'antrian' => $antrian]);
         // Set paper size to A5
         $pdf->setPaper('A5');
+        return $pdf->stream($filename . '.pdf');
+    }
+
+    public function cetakRM($noReg)
+    {
+        // $resep = $this->poliMata->resep($noReg);
+        $resep = $this->rajaldokter->resep($noReg);
+
+        $labs = $this->rajaldokter->lab($noReg);
+        $rads = $this->rajaldokter->radiologi($noReg);
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+
+        $asasmen_perawat = $this->poliMata->asasmenPerawatGet($noReg);
+        $asasmen_dokter = $this->poliMata->asasmenDokter($noReg);
+        // dd($asasmen_dokter);
+
+        $masalahKeperawatan = $this->rekam_medis->masalahKepByNoreg($noReg);
+        $rencanaKeperawatan = $this->rekam_medis->rencanaKepByNoreg($noReg);
+
+        // Cetak PDF
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+        $filename = 'RM -' . $date;
+
+        $title = 'Cetak RM';
+
+        $pdf = PDF::loadview('pages.poli.mata.cetak.rm', ['tanggal' => $tanggal, 'title' => $title, 'resep' => $resep, 'labs' => $labs, 'rads' => $rads, 'biodata' => $biodata, 'perawat' => $asasmen_perawat, 'masalahKeperawatan' => $masalahKeperawatan, 'rencanaKeperawatan' => $rencanaKeperawatan, 'dokter' => $asasmen_dokter]);
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
+    }
+
+    public function cetakResume($noReg)
+    {
+        // $resep = $this->poliMata->resep($noReg);
+        $resep = $this->rajaldokter->resep($noReg);
+
+        $labs = $this->rajaldokter->lab($noReg);
+        $rads = $this->rajaldokter->radiologi($noReg);
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+
+        $asasmen_perawat = $this->poliMata->asasmenPerawatGet($noReg);
+        $asasmen_dokter = $this->poliMata->asasmenDokter($noReg);
+        // dd($asasmen_dokter);
+
+        $masalahKeperawatan = $this->rekam_medis->masalahKepByNoreg($noReg);
+        $rencanaKeperawatan = $this->rekam_medis->rencanaKepByNoreg($noReg);
+
+        // Cetak PDF
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+        $filename = 'RM -' . $date;
+
+        $title = 'Cetak RM';
+
+        $pdf = PDF::loadview('pages.poli.mata.cetak.resumeRajal', ['tanggal' => $tanggal, 'title' => $title, 'resep' => $resep, 'labs' => $labs, 'rads' => $rads, 'biodata' => $biodata, 'perawat' => $asasmen_perawat, 'masalahKeperawatan' => $masalahKeperawatan, 'rencanaKeperawatan' => $rencanaKeperawatan, 'dokter' => $asasmen_dokter]);
+        $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
     }
 
@@ -191,10 +322,6 @@ class AssesmenMataController extends Controller
                 'STATUS_GIZI' => $request->input('STATUS_GIZI'),
                 'CACAT' => $request->input('CACAT'),
                 'ADL' => $request->input('ADL'),
-                'VISUS_OD' => $request->input('VISUS_OD'),
-                'VISUS_OS' => $request->input('VISUS_OS'),
-                'NCT_TOD' => $request->input('NCT_TOD'),
-                'NCT_TOS' => $request->input('NCT_TOS'),
                 'REFLEK_CAHAYA' => $request->input('REFLEK_CAHAYA'),
                 'PUPIL' => $request->input('PUPIL'),
                 'LUMPUH' => $request->input('LUMPUH'),
@@ -228,7 +355,7 @@ class AssesmenMataController extends Controller
             }
             DB::connection('pku')->commit();
 
-            return redirect('pm/polimata/perawat?kode_dokter=' . $request->input('KODE_DOKTER'))->with('success', 'Data Pasien Added successfully!');
+            return redirect('pm/polimata/perawat?kode_dokter=' . $request->input('KODE_DOKTER'))->with('success', 'Data Berhasil Ditambahkan!');
         } catch (\Exception $e) {
             //throw $th;
             DB::connection('pku')->rollBack();
@@ -347,10 +474,6 @@ class AssesmenMataController extends Controller
             'STATUS_GIZI' => $request->input('STATUS_GIZI'),
             'CACAT' => $request->input('CACAT'),
             'ADL' => $request->input('ADL'),
-            'VISUS_OD' => $request->input('VISUS_OD'),
-            'VISUS_OS' => $request->input('VISUS_OS'),
-            'NCT_TOD' => $request->input('NCT_TOD'),
-            'NCT_TOS' => $request->input('NCT_TOS'),
             'REFLEK_CAHAYA' => $request->input('REFLEK_CAHAYA'),
             'PUPIL' => $request->input('PUPIL'),
             'LUMPUH' => $request->input('LUMPUH'),
@@ -382,7 +505,7 @@ class AssesmenMataController extends Controller
         }
 
 
-        return redirect('pm/polimata/perawat?kode_dokter=' . $request->input('KODE_DOKTER'))->with('success', 'Edit successfully!');
+        return redirect('pm/polimata/perawat?kode_dokter=' . $request->input('KODE_DOKTER'))->with('success', 'Edit data berhasil!!');
     }
 
     /**

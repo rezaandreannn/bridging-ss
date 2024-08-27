@@ -51,11 +51,11 @@
             </table>
             <table width="100%">
                 <tr>
-                    <td class="text5">{{ $data->mdd}}</td>
+                    <td class="text5">{{ $data->NAMA_DOKTER}}</td>
                 </tr>
-                <tr>
+                {{-- <tr>
                     <td class="text5">SIP : </td>
-                </tr>
+                </tr> --}}
                 <tr>
                     <td class="text5" style="text-align: right;">{{ date('d-m-Y', strtotime($data->mdb)) }}</td>
                 </tr>

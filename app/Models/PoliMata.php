@@ -66,6 +66,23 @@ class PoliMata extends Model
         }
     }
 
+    public function cekRefraksi($noReg)
+    {
+        $data = DB::connection('pku')
+            ->table('poli_mata_refraksi')
+            ->select(
+                'NO_REG'
+            )
+            ->where('NO_REG', $noReg)
+            ->first();
+
+        if ($data != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // public function asasmenPerawatGet($noReg)
     // {
     //     $dbpku = DB::connection('db_rsmm')->getDatabaseName();
@@ -90,6 +107,24 @@ class PoliMata extends Model
             ->leftJoin($dbpku . '.dbo.REGISTER_PASIEN', 'TAC_ASES_PER2.FS_KD_REG', '=', 'REGISTER_PASIEN.No_MR')
             ->where('TAC_ASES_PER2.FS_KD_REG', $noReg)
             ->first();
+        return $data;
+    }
+
+    public function getDataRefraksi()
+    {
+        $data = DB::connection('pku')
+            ->table('poli_mata_refraksi')
+            ->get();
+
+        return $data;
+    }
+
+    public function getRefraksi($noReg)
+    {
+        $data = DB::connection('pku')
+            ->table('poli_mata_refraksi')
+            ->where('poli_mata_refraksi.NO_REG', $noReg)
+            ->first();
 
         return $data;
     }
@@ -110,29 +145,34 @@ class PoliMata extends Model
     //     return $data;
     // }
 
+
     // TESTING
     public function asasmenDokter($noReg)
     {
         $dbpku = DB::connection('db_rsmm')->getDatabaseName();
-        $data = DB::connection('pku')->table('TAC_ASES_PER2')
-            ->join('TAC_RJ_VITAL_SIGN', 'TAC_ASES_PER2.FS_KD_REG', '=', 'TAC_RJ_VITAL_SIGN.FS_KD_REG')
-            ->join('TAC_RJ_JATUH', 'TAC_ASES_PER2.FS_KD_REG', '=', 'TAC_RJ_JATUH.FS_KD_REG')
-            ->join('TAC_RJ_MEDIS', 'TAC_ASES_PER2.FS_KD_REG', '=', 'TAC_RJ_MEDIS.FS_KD_REG')
-            ->join('poli_mata_asesmen', 'TAC_ASES_PER2.FS_KD_REG', '=', 'poli_mata_asesmen.NO_REG')
-            ->join('poli_mata_dokter', 'TAC_ASES_PER2.FS_KD_REG', '=', 'poli_mata_dokter.NO_REG')
-            ->leftJoin($dbpku . '.dbo.REGISTER_PASIEN', 'TAC_ASES_PER2.FS_KD_REG', '=', 'REGISTER_PASIEN.No_MR')
+        $data = DB::connection('pku')->table('poli_mata_dokter')
+            ->join('poli_mata_refraksi', 'poli_mata_dokter.NO_REG', '=', 'poli_mata_dokter.NO_REG')
+            ->join('TAC_RJ_MEDIS', 'poli_mata_dokter.NO_REG', '=', 'TAC_RJ_MEDIS.FS_KD_REG')
+            ->leftJoin($dbpku . '.dbo.DOKTER as c', 'poli_mata_dokter.CREATE_BY', '=', 'c.KODE_DOKTER')
             ->select(
-                'TAC_ASES_PER2.*',
-                'TAC_RJ_VITAL_SIGN.*',
-                'TAC_RJ_JATUH.*',
-                'TAC_RJ_MEDIS.FS_TERAPI',
-                'poli_mata_asesmen.*',
                 'poli_mata_dokter.*',
-                'REGISTER_PASIEN.*',
+                'poli_mata_refraksi.*',
+                'TAC_RJ_MEDIS.FS_TERAPI',
+                'c.NAMA_DOKTER',
+                'c.KODE_DOKTER',
             )
-            ->where('TAC_ASES_PER2.FS_KD_REG', $noReg)
+            ->where('poli_mata_dokter.NO_REG', $noReg)
             ->first();
 
+        return $data;
+    }
+
+    public function resep($noReg)
+    {
+        $data = DB::connection('pku')
+            ->table('TAC_RJ_MEDIS as a')
+            ->where('a.FS_KD_REG', $noReg)
+            ->get();
         return $data;
     }
 
@@ -147,7 +187,7 @@ class PoliMata extends Model
             ->leftJoin('TAC_COM_USER as b', 'a.mdb', '=', 'b.user_id')
             ->leftJoin('poli_mata_asesmen', 'a.FS_KD_REG', '=', 'poli_mata_asesmen.NO_REG')
             ->leftJoin('poli_mata_dokter', 'a.FS_KD_REG', '=', 'poli_mata_dokter.NO_REG')
-            ->leftJoin($dbRsmm . '.dbo.DOKTER as c', 'b.user_name', '=', 'c.KODE_DOKTER')
+            ->leftJoin($dbRsmm . '.dbo.DOKTER as c', 'poli_mata_dokter.CREATE_BY', '=', 'c.KODE_DOKTER')
             ->leftJoin($dbRsmm . '.dbo.TUSER as d', 'b.user_name', '=', 'd.NAMAUSER')
             ->select(
                 'a.FS_TERAPI',

@@ -480,7 +480,7 @@
                     <!-- include form -->
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Visus</label>
                                     <div class="col-md-12">
@@ -521,7 +521,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="d-block">Cacat Tubuh</label>

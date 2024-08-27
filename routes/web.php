@@ -259,9 +259,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/polimata/perawat', [AssesmenMataController::class, 'index'])->name('poliMata.index');
         Route::post('/polimata/perawat', [AssesmenMataController::class, 'store'])->name('poliMata.store');
         Route::get('/polimata/perawat/resep/{kode_transaksi}/{noReg}', [AssesmenMataController::class, 'cetakResep'])->name('polimata.resep');
+        Route::get('/polimata/perawat/cetak_rm/{noReg}', [AssesmenMataController::class, 'cetakRM'])->name('polimata.cetakRM');
+        Route::get('/polimata/perawat/cetak_resume/{noReg}', [AssesmenMataController::class, 'cetakResume'])->name('polimata.cetakResume');
         Route::get('/polimata/perawat/assesmen_keperawatan/{noReg}', [AssesmenMataController::class, 'Add'])->name('poliMata.assesmenKeperawatanAdd');
         Route::get('/polimata/perawat/assesmen_keperawatan/edit/{noReg}', [AssesmenMataController::class, 'Edit'])->name('poliMata.assesmenKeperawatanEdit');
         Route::put('/polimata/perawat/assesmen_keperawatan/edit/{noReg}', [AssesmenMataController::class, 'update'])->name('poliMata.assesmenKeperawatanUpdate');
+        // Refraksi Optisi
+        Route::get('/polimata/refraksi', [AssesmenMataController::class, 'refraksi'])->name('poliMata.refraksi');
+        Route::post('/polimata/refraksi', [AssesmenMataController::class, 'refraksiStore'])->name('poliMata.refraksiStore');
+        Route::put('/polimata/refraksi/{noReg}', [AssesmenMataController::class, 'refraksiUpdate'])->name('poliMata.refraksiUpdate');
         // Poli Mata Dokter
         Route::get('/polimata/dokter', [AssesmenDokterMataController::class, 'index'])->name('poliMata.indexDokter');
         Route::get('/polimata/dokter/assesmen_awal/{noReg}', [AssesmenDokterMataController::class, 'add'])->name('poliMata.assesmenAwal');

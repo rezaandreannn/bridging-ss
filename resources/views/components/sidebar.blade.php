@@ -79,28 +79,32 @@
                 @endcan
             </li>
             @endcan
-            @can('poli mata perawat')
+           
             <li class="menu-header">Poli</li>
             <li class="nav-item dropdown {{ Request::is('pm*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-eye"></i> <span>Poli Mata</span></a>
+                @can('poli mata perawat')
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('pm/polimata/perawat*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('poliMata.index') }}">Assesmen Awal</a>
                     </li>
                 </ul>
-            </li>
-            @endcan
-            @can('poli mata dokter')
-            <li class="menu-header">Poli</li>
-            <li class="nav-item dropdown {{ Request::is('pm*') ? 'active' : '' }}">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-eye"></i> <span>Poli Mata</span></a>
+                @endcan
+                @can('refraksi optisi')
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('pm/polimata/perawat*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('poliMata.refraksi') }}">Refraksi Optisi</a>
+                    </li>
+                </ul>
+                @endcan
+                @can('poli mata dokter')
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('pm/polimata/dokter*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('poliMata.indexDokter') }}">Assesmen Dokter</a>
                     </li>
                 </ul>
+                @endcan
             </li>
-            @endcan
             @can('nurse record')
             <li class="menu-header">Rawat Jalan</li>
             <li class="nav-item dropdown {{ Request::is('rj*') ? 'active' : '' }}">
