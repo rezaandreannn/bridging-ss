@@ -2335,7 +2335,7 @@
                         Marah
                     @elseif($medis->FS_STATUS_PSIK == '5')
                         Sedih
-                    @elseif($medis->AGAMA == '6')
+                    @elseif($medis->FS_STATUS_PSIK == '6')
                         {{$medis->FS_STATUS_PSIK2}}
                     @else
                         -
