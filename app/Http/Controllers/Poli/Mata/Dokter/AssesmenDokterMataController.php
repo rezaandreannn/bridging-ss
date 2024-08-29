@@ -49,6 +49,8 @@ class AssesmenDokterMataController extends Controller
         $title = $this->prefix . ' ' . 'Mata Assesmen Dokter';
         $biodata = $this->rekam_medis->getBiodata($noReg);
         $alasanSkdp = $this->rajal->getAlesanSkdp();
+        $skdp = $this->rajal->getSkdp($noReg);
+        // dd($alasanSkdp);
         $asasmen_perawat = $this->poliMata->asasmenPerawatGet($noReg);
         $refraksi = $this->poliMata->getRefraksi($noReg);
         // dd($refraksi);
@@ -65,7 +67,7 @@ class AssesmenDokterMataController extends Controller
         $masalah_perGet = $this->rajal->masalahPerawatanGetByNoreg($noReg);
         $rencana_perGet = $this->rajal->rencanaPerawatanGetByNoreg($noReg);
         // dd($asasmen_perawat);
-        return view($this->view . 'dokter.assesmenAwal', compact('title', 'biodata', 'refraksi', 'alasanSkdp', 'asasmen_perawat', 'masterLab', 'masterRadiologi', 'masterObat', 'masalah_perGet', 'rencana_perGet', 'masalah_perawatan', 'rencana_perawatan', 'noReg'));
+        return view($this->view . 'dokter.assesmenAwal', compact('title', 'biodata', 'refraksi', 'alasanSkdp', 'skdp', 'asasmen_perawat', 'masterLab', 'masterRadiologi', 'masterObat', 'masalah_perGet', 'rencana_perGet', 'masalah_perawatan', 'rencana_perawatan', 'noReg'));
     }
 
     /**
@@ -169,9 +171,23 @@ class AssesmenDokterMataController extends Controller
             //     'CREATE_BY' => auth()->user()->username,
             // ]);
 
+            DB::connection('pku')->table('TAC_RJ_SKDP')->insert([
+                'FS_KD_REG' => $request->input('NO_REG'),
+                'FS_SKDP_1' => $request->input('FS_SKDP_1'),
+                'FS_SKDP_2' => $request->input('FS_SKDP_2'),
+                'FS_SKDP_KET' => $request->input('FS_SKDP_KET') ?? '',
+                'FS_SKDP_KONTROL' => $request->input('FS_SKDP_KONTROL') ?? '',
+                'FS_SKDP_FASKES' => $request->input('FS_SKDP_FASKES'),
+                'FS_PESAN' => $request->input('FS_PESAN'),
+                'FS_RENCANA_KONTROL' => $request->input('FS_RENCANA_KONTROL'),
+                'mdd' => date('Y-m-d'),
+                'mdb' => auth()->user()->username,
+            ]);
+
             DB::connection('pku')->table('TAC_RJ_MEDIS')->insert([
                 'FS_KD_REG' => $request->input('NO_REG'),
-                'FS_TERAPI' => $request->input('FS_TERAPI'),
+                'FS_TERAPI' => $request->input('FS_TERAPI') ?? '',
+                'FS_CARA_PULANG' => $request->input('FS_CARA_PULANG'),
                 'mdd' => date('Y-m-d'),
                 'mdb' => auth()->user()->username,
             ]);
@@ -290,14 +306,10 @@ class AssesmenDokterMataController extends Controller
     {
         $title = $this->prefix . ' ' . 'Mata Assesmen Dokter Edit';
         $biodata = $this->rekam_medis->getBiodata($noReg);
-        $asasmen_perawat = $this->poliMata->asasmenDokter($noReg);
+        $asasmen_dokter = $this->poliMata->asasmenDokter($noReg);
+        // dd($asasmen_dokter);
         $alasanSkdp = $this->rajal->getAlesanSkdp();
-        // dd($alasanSkdp);
         $skdp = $this->rajal->getSkdp($noReg);
-        // dd($skdp);
-        // dd($asasmen_perawat);
-        // $asasmen_perawat = $this->poliMata->asasmenDokterGet($noReg);
-        // dd($asasmen_perawat);
 
         // Data Master
         $masterLab = $this->rajaldokter->getMasterLab();
@@ -311,7 +323,7 @@ class AssesmenDokterMataController extends Controller
         $rencana_perGet = $this->rajal->rencanaPerawatanGetByNoreg($noReg);
 
         // dd($asasmen_perawat);
-        return view($this->view . 'dokter.EditassesmenAwal', compact('title', 'biodata', 'alasanSkdp', 'skdp', 'asasmen_perawat', 'masterLab', 'masterRadiologi', 'masterObat', 'masalah_perGet', 'rencana_perGet', 'masalah_perawatan', 'rencana_perawatan', 'noReg'));
+        return view($this->view . 'dokter.EditassesmenAwal', compact('title', 'biodata', 'alasanSkdp', 'skdp', 'asasmen_dokter', 'masterLab', 'masterRadiologi', 'masterObat', 'masalah_perGet', 'rencana_perGet', 'masalah_perawatan', 'rencana_perawatan', 'noReg'));
     }
 
     /**
@@ -418,6 +430,18 @@ class AssesmenDokterMataController extends Controller
             //     'updated_at' => now(),
             //     'CREATE_BY' => auth()->user()->username,
             // ]);
+            DB::connection('pku')->table('TAC_RJ_SKDP')->where('FS_KD_REG', $request->input('NO_REG'))->update([
+                'FS_SKDP_1' => $request->input('FS_SKDP_1'),
+                'FS_SKDP_2' => $request->input('FS_SKDP_2'),
+                'FS_SKDP_KET' => $request->input('FS_SKDP_KET') ?? '',
+                'FS_SKDP_KONTROL' => $request->input('FS_SKDP_KONTROL') ?? '',
+                'FS_SKDP_FASKES' => $request->input('FS_SKDP_FASKES'),
+                'FS_PESAN' => $request->input('FS_PESAN'),
+                'FS_RENCANA_KONTROL' => $request->input('FS_RENCANA_KONTROL'),
+                'mdd' => date('Y-m-d'),
+                'mdb' => auth()->user()->username,
+            ]);
+
             DB::connection('pku')->table('TAC_RJ_MEDIS')->where('FS_KD_REG', $request->input('NO_REG'))->update([
                 'FS_KD_REG' => $request->input('NO_REG'),
                 'FS_TERAPI' => $request->input('FS_TERAPI'),

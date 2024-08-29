@@ -79,7 +79,7 @@
                 @endcan
             </li>
             @endcan
-           
+            
             <li class="menu-header">Poli</li>
             <li class="nav-item dropdown {{ Request::is('pm*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-eye"></i> <span>Poli Mata</span></a>

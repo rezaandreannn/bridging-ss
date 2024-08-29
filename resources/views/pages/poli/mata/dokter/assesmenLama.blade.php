@@ -10,18 +10,7 @@
 <!-- Select -->
 <link rel="stylesheet" href="{{ asset('library/selectric/public/selectric.css') }}">
 <link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
-<link rel="stylesheet" href="{{ asset('ttd/css/jquery.signature.css') }}">
-
 <style>
-    .kbw-signature {
-        width: 100%;
-        height: 250px;
-    }
-
-    #sig canvas {
-        width: 100% !important;
-        height: auto;
-    }
     .eye-image {
          max-width: 100%;
          }
@@ -601,21 +590,212 @@
                                             <p class="no-margin">Kedudukan / Gerak Bola Mata</p>
                                         </div>
                                     </div>
-                                        <div class="col-md-6">
-                                            <label class="" for="">Mata Kiri:</label>
-                                            <br />
-                                            <div id="signat"></div>
-                                            <br />
-                                            <button id="clear">Hapus Gambar</button>
-                                            <textarea id="signature64" name="signed" style="display: none"></textarea>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="text" name="palpebra_kiri" value="{{$asasmen_perawat->palpebra_kiri ?? ''}}" class="form-control @error('palpebra_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
+                                            </div>
+                                            @error('palpebra_kiri')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
+                                            @enderror
                                         </div>
-                                        <div class="col-md-6">
-                                            <label class="" for="">Mata Kanan:</label>
-                                            <br />
-                                            <div id="signat2"></div>
-                                            <br />
-                                            <button id="clear2">Hapus Gambar</button>
-                                            <textarea id="signature64" name="signed" style="display: none"></textarea>
+                                        <div class="col-md-4">
+                                            <h4 style="text-align: center">PALPEBRA</h4>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="text" name="palpebra_kanan" value="{{$asasmen_perawat->palpebra_kanan ?? ''}}" class="form-control @error('palpebra_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
+                                            </div>
+                                            @error('palpebra_kanan')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="text" name="conjuctiva_kiri" value="{{$asasmen_perawat->conjuctiva_kiri ?? ''}}" class="form-control @error('conjuctiva_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
+                                            </div>
+                                            @error('conjuctiva_kiri')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h4 style="text-align: center">CONJUCTIVA</h4>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="text" name="conjuctiva_kanan" value="{{$asasmen_perawat->conjuctiva_kanan ?? ''}}" class="form-control @error('conjuctiva_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
+                                            </div>
+                                            @error('conjuctiva_kanan')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="text" name="cornea_kiri" value="{{$asasmen_perawat->cornea_kiri ?? ''}}" class="form-control @error('cornea_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
+                                            </div>
+                                            @error('cornea_kiri')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h4 style="text-align: center">CORNEA</h4>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="text" name="cornea_kanan" value="{{$asasmen_perawat->cornea_kanan ?? ''}}" class="form-control @error('cornea_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
+                                            </div>
+                                            @error('cornea_kanan')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="text" name="coa_kiri" value="{{$asasmen_perawat->coa_kiri ?? ''}}" class="form-control @error('coa_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
+                                            </div>
+                                            @error('coa_kiri')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h4 style="text-align: center">COA</h4>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="text" name="coa_kanan" value="{{$asasmen_perawat->coa_kanan ?? ''}}" class="form-control @error('coa_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
+                                            </div>
+                                            @error('coa_kanan')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="text" name="iris_kiri" value="{{$asasmen_perawat->iris_kiri ?? ''}}" class="form-control @error('iris_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
+                                            </div>
+                                            @error('iris_kiri')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h4 style="text-align: center">IRIS</h4>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="text" name="iris_kanan" value="{{$asasmen_perawat->iris_kanan ?? ''}}" class="form-control @error('iris_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
+                                            </div>
+                                            @error('iris_kanan')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="text" name="pupil_kiri" value="{{$asasmen_perawat->pupil_kiri ?? ''}}" class="form-control @error('pupil_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
+                                            </div>
+                                            @error('pupil_kiri')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h4 style="text-align: center">PUPIL</h4>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="text" name="pupil_kanan" value="{{$asasmen_perawat->pupil_kanan ?? ''}}" class="form-control @error('pupil_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
+                                            </div>
+                                            @error('pupil_kanan')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="text" name="lensa_kiri" value="{{$asasmen_perawat->lensa_kiri ?? ''}}" class="form-control @error('lensa_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
+                                            </div>
+                                            @error('lensa_kiri')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h4 style="text-align: center">LENSA</h4>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="text" name="lensa_kanan" value="{{$asasmen_perawat->lensa_kanan ?? ''}}" class="form-control @error('lensa_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
+                                            </div>
+                                            @error('lensa_kanan')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="text" name="vitreosh_kiri" value="{{$asasmen_perawat->vitreosh_kiri ?? ''}}" class="form-control @error('vitreosh_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
+                                            </div>
+                                            @error('vitreosh_kiri')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h4 style="text-align: center">VITREOSH</h4>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="text" name="vitreosh_kanan" value="{{$asasmen_perawat->vitreosh_kanan ?? ''}}" class="form-control @error('vitreosh_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
+                                            </div>
+                                            @error('vitreosh_kanan')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="text" name="biometri_kiri" value="{{$asasmen_perawat->biometri_kiri ?? ''}}" class="form-control @error('biometri_kiri') is-invalid @enderror" placeholder="Inputan Mata Kiri">
+                                            </div>
+                                            @error('biometri_kiri')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h4 style="text-align: center">BIOMETRI</h4>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input type="text" name="biometri_kanan"  value="{{$asasmen_perawat->biometri_kanan ?? ''}}" class="form-control @error('biometri_kanan') is-invalid @enderror" placeholder="Inputan Mata Kanan">
+                                            </div>
+                                            @error('biometri_kanan')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
+                                            @enderror
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -1076,33 +1256,9 @@
 <script src="{{ asset('library/selectric/public/jquery.selectric.min.js') }}"></script>
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script>
-<script src="{{ asset('ttd/js/jquery.signature.min.js') }}"></script>
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
-
-<script type="text/javascript">
-    var sig = $("#signat").signature({
-        syncField: "#signature64",
-        syncFormat: "PNG"
-    });
-    $('#clear').click(function(e) {
-        e.preventDefault();
-        sig.signature('clear');
-        $("#signature64").val('');
-    });
-</script>
-<script type="text/javascript">
-    var sig = $("#signat2").signature({
-        syncField: "#signature64",
-        syncFormat: "PNG"
-    });
-    $('#clear2').click(function(e) {
-        e.preventDefault();
-        sig.signature('clear2');
-        $("#signature64").val('');
-    });
-</script>
 
 <script>
     function click_kondisi_pulang(selected) {

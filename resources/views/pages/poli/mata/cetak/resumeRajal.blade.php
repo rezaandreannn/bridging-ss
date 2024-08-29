@@ -196,7 +196,19 @@
             <tr>
                 <td class="text3">Kondisi Keluar</td>
                 <td class="text3" colspan="5">
-                   
+                    @if ($dokter->FS_CARA_PULANG == '2')
+                    {{'Kontrol'}}
+                    @elseif ($dokter->FS_CARA_PULANG == '0')
+                    {{'Kontrol'}}
+                    @elseif ($dokter->FS_CARA_PULANG == '3')
+                    {{'Lain lain : Rawat Inap'}}
+                    @elseif ($dokter->FS_CARA_PULANG == '4')
+                    {{'Lain lain : Rujuk Luar RS'}}
+                    @elseif ($dokter->FS_CARA_PULANG == '6')
+                    {{'Lain lain : Rujuk Internal'}}
+                    @elseif ($dokter->FS_CARA_PULANG == '7')
+                    {{'Lain lain : Kembali Ke Faskes Primer'}}
+                    @endif
                 </td>
             </tr>
             <tr>

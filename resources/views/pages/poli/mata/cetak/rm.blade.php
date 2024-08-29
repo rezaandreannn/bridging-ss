@@ -897,7 +897,9 @@
         <table width="100%">
             <thead>
                 <tr>
-                    <th class="tabel1">Resep Obat</th>
+                    <th class="tabel1">Nama Obat</th>
+                    <th class="tabel1">Jumlah</th>
+                    <th class="tabel1">Cara Pemakaian</th>
                 </tr>
             </thead>
             <tbody>

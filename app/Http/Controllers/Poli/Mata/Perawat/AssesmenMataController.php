@@ -181,7 +181,7 @@ class AssesmenMataController extends Controller
 
         $asasmen_perawat = $this->poliMata->asasmenPerawatGet($noReg);
         $asasmen_dokter = $this->poliMata->asasmenDokter($noReg);
-        // dd($asasmen_dokter);
+        // $getHasilLab = $this->rajaldokter->getHasilLab($noReg);
 
         $masalahKeperawatan = $this->rekam_medis->masalahKepByNoreg($noReg);
         $rencanaKeperawatan = $this->rekam_medis->rencanaKepByNoreg($noReg);

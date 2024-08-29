@@ -158,6 +158,7 @@ class PoliMata extends Model
                 'poli_mata_dokter.*',
                 'poli_mata_refraksi.*',
                 'TAC_RJ_MEDIS.FS_TERAPI',
+                'TAC_RJ_MEDIS.FS_CARA_PULANG',
                 'c.NAMA_DOKTER',
                 'c.KODE_DOKTER',
             )
