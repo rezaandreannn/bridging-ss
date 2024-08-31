@@ -70,7 +70,7 @@
 
                                             </td>
                                             <td width="20%">
-                                                @if($fisioModel->countCpptByKodeTr($transaksi->ID_TRANSAKSI) >= $transaksi->JUMLAH_TOTAL_FISIO)
+                                                @if($fisioModel->countCpptByKodeTr($transaksi->ID_TRANSAKSI) >= $transaksi->JUMLAH_TOTAL_FISIO && $fisioModel->cekLastCpptByKodeTr($transaksi->ID_TRANSAKSI)->JENIS_FISIO != '')
 
                                                 @else
                                                 <a href="{{ route('cppt.detail', [

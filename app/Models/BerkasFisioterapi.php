@@ -47,6 +47,7 @@ class BerkasFisioterapi extends Model
         ->table('PENDAFTARAN as p')
         ->Join('REGISTER_PASIEN as rp', 'p.No_MR', '=', 'rp.No_MR')
         ->Join($pku . '.dbo.fis_order_alkes as alkes', 'p.No_Reg', '=', 'alkes.no_registrasi')
+        ->leftJoin($pku . '.dbo.fis_verifikasi_alkes_by_bpjs as verif', 'p.No_Reg', '=', 'verif.no_registrasi')
             ->Join('DOKTER as d', 'p.KODE_DOKTER', '=', 'd.KODE_DOKTER')->select(
                 'p.No_Reg',
                 'd.Nama_Dokter',
@@ -56,7 +57,8 @@ class BerkasFisioterapi extends Model
                 'p.No_MR',
                 'p.Tanggal',
                 'rp.Nama_Pasien',
-                'alkes.jenis_alat'
+                'alkes.jenis_alat',
+                'verif.no_registrasi'
                 )
             ->where('p.No_MR', $no_mr)
             ->orderBy('p.Tanggal', 'desc')
@@ -319,6 +321,30 @@ class BerkasFisioterapi extends Model
             }else{
                 return false;
             }
+       
+    }
+
+ public function cekRincianAlkes($no_reg)
+    {
+        // $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/transaksi/' . $no_mr);
+        // $response = $request->getBody()->getContents();
+        // $data = json_decode($response, true);
+        // return $data['data'];
+
+        $data = DB::connection('pku')
+            ->table('fis_order_alkes')
+            ->select(
+                'lingkar_pinggang',
+                'no_sep',
+                'biaya'
+                )
+            ->where('no_registrasi', $no_reg)
+         
+            ->first();
+
+            // dd($data);
+
+        return $data;
        
     }
 }

@@ -140,6 +140,7 @@
                                                 <td width="20%">
                                        
                                                 @if($berkasfisio->cekCpptFisioterapi($pasien->No_Reg) == true)
+                                    
                                                     <a href="{{ route('berkas.cppt', ['no_mr' => $pasien->No_MR,'no_reg' => $pasien->No_Reg]) }}" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Cppt</a>
                                                 @endif
                                                 </td>
@@ -160,9 +161,11 @@
                                         <tr>
                                             <th>Tanggal</th>
                                             <th>NO RM dan Nama</th>
+                                            <th>No Reg</th>
                                             <th>Dokter</th>
                                             <th>Jenis Alat</th>
                                             <th>Aksi</th>
+                                            <th>Berkas</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -173,11 +176,20 @@
                                         <tr>
                                             <td>{{ $tanggal }}</td>
                                             <td><span style="color: red">({{ $pasien->No_MR }})</span> - {{ $pasien->Nama_Pasien }}</td>
+                                            <td>{{ $pasien->No_Reg }}</td>
                                             <td>{{ $pasien->Nama_Dokter }}</td>
                                             <td>{{ $pasien->jenis_alat }}</td>
                                             <td width="20%">                                               
-                                                @if($berkasfisio->cekCpptFisioterapi($pasien->No_Reg) == true)
-                                                    <a href="{{ route('berkas.cppt', ['no_mr' => $pasien->No_MR,'no_reg' => $pasien->No_Reg]) }}" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Edit Alkes</a>
+                          
+                                                <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modal-edit-alkes{{$pasien->No_Reg}}"><i class="fa fa-edit"></i> Edit alkes</button> 
+                                             
+                                           
+                                            </td>
+                                            <td width="20%">
+                                                <a href="{{ route('rj.alkes', [$pasien->No_Reg])  }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Resep alkes</a>
+
+                                                @if($pasien->no_registrasi != null)
+                                                <a href="{{ route('rj.alkes', [$pasien->No_Reg])  }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Cetak Form Alkes</a>
                                                 @endif
                                             </td>
                                         </tr>
@@ -222,6 +234,77 @@
         </div> --}}
     </section>
 </div>
+
+{{-- modal edit rincian alkes --}}
+@foreach ($pasienAlkes as $item)
+<div class="modal fade" id="modal-edit-alkes{{$item->No_Reg}}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Rincian Order Alat Kesehatan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <form id="formAlkes" action="{{ route('transaksi_fisio.update_alkes_bpjs') }}" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="card-body">
+                    
+                <div class="container">
+                                <p><b>Nama : {{$item->Nama_Pasien}} <br> No MR : {{$item->No_MR}} <br> </b></p>
+                            </div>
+                        <div class="col-md-12">
+                            @php
+                            $lingkar_pinggang=$berkasfisio->cekRincianAlkes($item->No_Reg)->lingkar_pinggang;
+                            $no_sep=$berkasfisio->cekRincianAlkes($item->No_Reg)->no_sep;
+                            $biaya=$berkasfisio->cekRincianAlkes($item->No_Reg)->biaya;
+                            @endphp
+                            <div class="form-group">
+                                <label>Ukuran Lingkar Pinggang</label>
+                                <input type="hidden" name="no_registrasi" value="{{$item->No_Reg}}">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control"  name="lingkar_pinggang" value="{{$lingkar_pinggang ?? ''}}" id="lingkar_pinggang" @if ($lingkar_pinggang!=null) readonly @endif>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">cm</span>
+                                    </div>
+                                </div>
+                       
+                            </div>
+                            <div class="form-group">
+                                <label>No SEP</label>
+                                {{-- <input type="hidden" name="no_registrasi" value="{{$item->No_Reg}}"> --}}
+                                <input type="text" class="form-control"  name="no_sep" value="{{$no_sep ?? ''}}" id="no_sep">
+                      
+                       
+                            </div>
+                            <div class="form-group">
+                                <label>Biaya</label>
+                                {{-- <input type="hidden" name="no_registrasi" value="{{$item->No_Reg}}"> --}}
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control"  name="biaya" value="{{$biaya ?? ''}}" id="biaya" placeholder="masukkan hanya angka">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">Rp.</span>
+                                    </div>
+                                </div>
+                       
+                            </div>
+                        </div>
+                
+                </div>
+
+            </div>
+            <div class="card-footer text-left">
+                <p> <b>Pastikan mengisi dengan benar dan sesuai</b></p>
+                <button type="submit" class="btn btn-primary"><i class="fa fa-print"></i> Simpan & Aprrove</button>
+                <button type="button" class="btn btn-info" data-dismiss="modal">Tutup</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+@endforeach
 
         <!-- modal edit diagnosa -->
 <!-- Modal Structure -->
@@ -310,6 +393,17 @@
     $('#table-2').DataTable();
 });
 </script>
+
+<script>
+
+    $(document).ready(function() {
+        $('#formAlkes input').on('keypress', function(event) {
+            if (event.which === 13) {
+                event.preventDefault(); // Mencegah pengiriman form
+            }
+        });
+    });
+    </script>
 
 
 @endpush

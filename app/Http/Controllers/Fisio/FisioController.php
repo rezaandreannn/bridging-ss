@@ -196,7 +196,7 @@ class FisioController extends Controller
         $asesmen_perawat = DB::connection('pku')->table('TAC_ASES_PER2')->where('FS_KD_REG', $biodatas->No_Reg)->first();
         $asesmenDokterFisio = $this->fisio->getAsesmenDokterByNoreg($biodatas->No_Reg);
         $terapiDokterLastFisio =  $this->fisio->terapiDokterLastFisio($biodatas->NO_MR);
-        // dd($terapiDokterLastFisio);
+        dd($terapiDokterLastFisio);
         $transaksiFisio = DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')->where('ID_TRANSAKSI_FISIO', $id)->orderBy('ID_CPPT_FISIO', 'ASC')->first();
         $ttv = DB::connection('pku')->table('TAC_RJ_VITAL_SIGN')->where('FS_KD_REG', $biodatas->No_Reg)->first();
 
@@ -502,6 +502,41 @@ class FisioController extends Controller
             }
             else {
                return redirect()->back()->with('danger', 'Lingkar Pinggang gagal Diperbarui!');
+
+           }
+    
+        }
+
+        public function update_alkes_bpjs(Request $request)
+        {
+            $validatedData = $request->validate([
+                'no_registrasi' => 'required',
+            ]);
+    
+    
+            $data = DB::connection('pku')->table('fis_order_alkes')->where('no_registrasi', $request->input('no_registrasi'))->update([
+
+                'lingkar_pinggang' => $request->input('lingkar_pinggang'),
+                'no_sep' => $request->input('no_sep'),
+                'biaya' => $request->input('biaya')
+            ]);
+
+            $data = DB::connection('pku')->table('fis_verifikasi_alkes_by_bpjs')->insert([
+
+                'no_registrasi' => $request->input('no_registrasi'),
+                'created_by' => auth()->user()->id,
+                'updated_by' => auth()->user()->id,
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+
+            
+
+           if($data>0){
+               return redirect()->back()->with('success', 'Alat Kesehatan berhasil di verifikasi!');
+            }
+            else {
+               return redirect()->back()->with('danger', 'Alat Kesehatan gagal di verifikasi!');
 
            }
     
