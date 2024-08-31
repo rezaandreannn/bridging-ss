@@ -17,11 +17,7 @@
         width: 100%;
         height: 250px;
     }
-
-    #sig canvas {
-        width: 100% !important;
-        height: auto;
-    }
+    
     .eye-image {
          max-width: 100%;
          }
@@ -67,6 +63,10 @@
         .my-1 {
                 margin-bottom: -30px !important;
         }
+        .kbw-signature {
+            width: 100%;
+            height: 250px;
+        }
  </style>
 <!-- <link rel="stylesheet" href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}"> -->
 @endpush
@@ -88,7 +88,7 @@
                 <div class="col-12">
                     <!-- components biodata pasien by no reg -->
                     @include('components.biodata-pasien-bynoreg')
-                    <form action="{{ route('poliMata.assesmenAwalStore') }}" method="POST">
+                    <form id="myForm" action="{{ route('poliMata.assesmenAwalStore') }}" method="POST">
                     @csrf
                     <!-- components biodata pasien by no reg -->
                     <div class="card mb-3">
@@ -116,7 +116,13 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Riwayat Penyakit Sekarang</label>
-                                        <textarea class="form-control  @error('riwayat_sekarang') is-invalid @enderror" rows="3" name="riwayat_penyakit" value="" placeholder="Masukan ...">{{ $asasmen_perawat->RIWAYAT_SEKARANG }}</textarea>
+                                        <select name="RIWAYAT_SEKARANG" id="riwayat_sekarang" class="form-control select2" multiple="multiple" data-placeholder="Pilih Penyakit Sekarang" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                            @foreach ($penyakitSekarang as $penyakit)
+                                                <option value="{{ $penyakit->id }}" {{ in_array($penyakit->id, explode(',', $asasmen_perawat->RIWAYAT_SEKARANG)) ? 'selected' : '' }}>
+                                                    {{ $penyakit->nama_penyakit_sekarang }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                         @error('riwayat_sekarang')
                                         <span class="text-danger" style="font-size: 12px;">
                                             {{ $message }}
@@ -607,7 +613,7 @@
                                             <div id="signat"></div>
                                             <br />
                                             <button id="clear">Hapus Gambar</button>
-                                            <textarea id="signature64" name="signed" style="display: none"></textarea>
+                                            <textarea id="signature1" name="signed_kiri" style="display: none"></textarea>
                                         </div>
                                         <div class="col-md-6">
                                             <label class="" for="">Mata Kanan:</label>
@@ -615,7 +621,17 @@
                                             <div id="signat2"></div>
                                             <br />
                                             <button id="clear2">Hapus Gambar</button>
-                                            <textarea id="signature64" name="signed" style="display: none"></textarea>
+                                            <textarea id="signature2" name="signed_kanan" style="display: none"></textarea>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="">Deskripsi Kiri :</label>
+                                                <input type="text" class="form-control" name="DESKRIPSI_KIRI" id="">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="">Deskripsi Kanan :</label>
+                                            <input type="text" class="form-control" name="DESKRIPSI_KANAN" id="">
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -1081,26 +1097,37 @@
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
 
+<script>
+
+    $(document).ready(function() {
+        $('#myForm input').on('keypress', function(event) {
+            if (event.which === 13) {
+                event.preventDefault(); // Mencegah pengiriman form
+            }
+        });
+    });
+    </script>
+
 <script type="text/javascript">
+
     var sig = $("#signat").signature({
-        syncField: "#signature64",
+        syncField: "#signature1",
         syncFormat: "PNG"
     });
     $('#clear').click(function(e) {
         e.preventDefault();
         sig.signature('clear');
-        $("#signature64").val('');
+        $("#signature1").val('');
     });
-</script>
-<script type="text/javascript">
-    var sig = $("#signat2").signature({
-        syncField: "#signature64",
+
+    var sig2 = $("#signat2").signature({
+        syncField: "#signature2",
         syncFormat: "PNG"
     });
     $('#clear2').click(function(e) {
         e.preventDefault();
-        sig.signature('clear2');
-        $("#signature64").val('');
+        sig2.signature('clear');
+        $("#signature2").val('');
     });
 </script>
 

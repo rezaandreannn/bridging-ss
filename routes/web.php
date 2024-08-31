@@ -48,6 +48,7 @@ use App\Http\Controllers\Berkas\Rekam_medis_by_mr\RekamMedisByMrController;
 use App\Http\Controllers\Berkas\Rekam_medis_harian\RekamMedisHarianController;
 use App\Http\Controllers\IGD\Layanan\AssesmenController as LayananAssesmenController;
 use App\Http\Controllers\Poli\Mata\Dokter\AssesmenDokterMataController;
+use App\Http\Controllers\Poli\Mata\MasterData\PenyakitSekarangController;
 
 /*
 |--------------------------------------------------------------------------
@@ -280,6 +281,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/polimata/dokter/assesmen_awal/edit/{noReg}', [AssesmenDokterMataController::class, 'edit'])->name('poliMata.assesmenAwalEdit');
         Route::put('/polimata/dokter/assesmen_awal/edit/{noReg}', [AssesmenDokterMataController::class, 'update'])->name('poliMata.assesmenAwalUpdate');
         // Route::get('/polimata/dokter/assesmen_mata/{noReg}', [AssesmenMataController::class, 'assesmenMata'])->name('poliMata.assesmenMata');
+
+
+        // Master Data
+        // diagnosis fungsi
+        Route::get('master_data/penyakit_sekarang/list', [PenyakitSekarangController::class, 'index'])->name('penyakitSekarang.index');
+        Route::post('master_data/penyakit_sekarang/add_proses', [PenyakitSekarangController::class, 'store'])->name('penyakitSekarang.store');
+        Route::put('master_data/penyakit_sekarang/update_proses/{id}', [PenyakitSekarangController::class, 'update'])->name('penyakitSekarang.update');
+        Route::delete('master_data/penyakit_sekarang/delete_proses/{id}', [PenyakitSekarangController::class, 'destroy'])->name('penyakitSekarang.destroy');
     });
 
     Route::prefix('ttd')->group(function () {

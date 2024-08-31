@@ -136,7 +136,8 @@ class AssesmenMataController extends Controller
         $biodata = $this->rekam_medis->getBiodata($noReg);
         $masalah_perawatan = $this->rajal->masalah_perawatan();
         $rencana_perawatan = $this->rajal->rencana_perawatan();
-        return view($this->view . 'perawat.addKeperawatan', compact('title', 'biodata', 'masalah_perawatan', 'rencana_perawatan', 'noReg'));
+        $penyakitSekarang = $this->poliMata->getPenyakit();
+        return view($this->view . 'perawat.addKeperawatan', compact('title', 'biodata', 'penyakitSekarang', 'masalah_perawatan', 'rencana_perawatan', 'noReg'));
     }
 
     public function assesmenMata($noReg)
@@ -386,6 +387,8 @@ class AssesmenMataController extends Controller
         $masalah_perawatan = $this->rajal->masalah_perawatan();
         $rencana_perawatan = $this->rajal->rencana_perawatan();
 
+        $penyakitSekarang = $this->poliMata->getPenyakit();
+
         $masalah_perGet = $this->rajal->masalahPerawatanGetByNoreg($noReg);
         $rencana_perGet = $this->rajal->rencanaPerawatanGetByNoreg($noReg);
         $biodata = $this->rajal->pasien_bynoreg($noReg);
@@ -394,7 +397,7 @@ class AssesmenMataController extends Controller
         // dd($asasmen_perawat);
         $riwayat = $this->rajal->riwayatGet($noReg);
 
-        return view($this->view . 'perawat.editKeperawatan', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'biodata', 'asasmen_perawat', 'riwayat', 'masalah_perGet', 'rencana_perGet', 'noReg'));
+        return view($this->view . 'perawat.editKeperawatan', compact('title', 'masalah_perawatan', 'rencana_perawatan', 'penyakitSekarang', 'biodata', 'asasmen_perawat', 'riwayat', 'masalah_perGet', 'rencana_perGet', 'noReg'));
     }
 
     /**
@@ -465,8 +468,16 @@ class AssesmenMataController extends Controller
             'mdd' => auth()->user()->username,
         ]);
 
+        // Convert the 'RIWAYAT_SEKARANG' array to a comma-separated string
+        $riwayat_sekarang = $request->input('RIWAYAT_SEKARANG');
+
+        if (is_array($riwayat_sekarang)) {
+            $riwayat_sekarang = implode(',', $riwayat_sekarang);
+        }
+
+
         DB::connection('pku')->table('poli_mata_asesmen')->where('NO_REG', $noReg)->update([
-            'RIWAYAT_SEKARANG' => $request->input('RIWAYAT_SEKARANG'),
+            'RIWAYAT_SEKARANG' => $riwayat_sekarang,
             'KEADAAN_UMUM' => $request->input('KEADAAN_UMUM'),
             'KESADARAN' => $request->input('KESADARAN'),
             'STATUS_MENTAL' => $request->input('STATUS_MENTAL'),

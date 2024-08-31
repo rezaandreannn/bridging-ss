@@ -207,4 +207,26 @@ class PoliMata extends Model
             ->first();
         return $data;
     }
+
+    // Master Data Penyakit Sekarang Poli Mata
+    public function getPenyakitSekarang()
+    {
+        $dbRsmm = DB::connection('sqlsrv')->getDatabaseName();
+        $data = DB::connection('pku')
+            ->table('poli_mata_master_data_penyakitsekarang as a')
+            ->leftJoin($dbRsmm . '.dbo.users as b', 'a.created_by', '=', 'b.id')
+            ->select(
+                'a.*',
+                'b.name'
+            )
+            ->get();
+
+        return $data;
+    }
+
+    public function getPenyakit()
+    {
+        $data = DB::connection('pku')->table('poli_mata_master_data_penyakitsekarang')->get();
+        return $data;
+    }
 }
