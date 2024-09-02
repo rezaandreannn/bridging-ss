@@ -55,6 +55,10 @@
                  margin-top: 2rem !important;
                  margin-bottom: 1rem !important;
              }
+            .kbw-signature {
+                width: 100%;
+                height: 250px;
+            }
         }
         .my-0 {
                 margin-top: -10px !important;
@@ -62,10 +66,6 @@
         }
         .my-1 {
                 margin-bottom: -30px !important;
-        }
-        .kbw-signature {
-            width: 100%;
-            height: 250px;
         }
  </style>
 <!-- <link rel="stylesheet" href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}"> -->
@@ -1098,7 +1098,6 @@
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
 
 <script>
-
     $(document).ready(function() {
         $('#myForm input').on('keypress', function(event) {
             if (event.which === 13) {
@@ -1106,7 +1105,7 @@
             }
         });
     });
-    </script>
+</script>
 
 <script type="text/javascript">
 

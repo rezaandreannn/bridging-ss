@@ -175,6 +175,7 @@ class AssesmenMataController extends Controller
     {
         // $resep = $this->poliMata->resep($noReg);
         $resep = $this->rajaldokter->resep($noReg);
+        // dd($resep);
 
         $labs = $this->rajaldokter->lab($noReg);
         $rads = $this->rajaldokter->radiologi($noReg);
@@ -182,6 +183,9 @@ class AssesmenMataController extends Controller
 
         $asasmen_perawat = $this->poliMata->asasmenPerawatGet($noReg);
         $asasmen_dokter = $this->poliMata->asasmenDokter($noReg);
+        $gambarMataKiri = $this->poliMata->getGambarMataKiri($noReg);
+        $gambarMataKanan = $this->poliMata->getGambarMataKanan($noReg);
+        // dd($asasmen_dokter);
         // $getHasilLab = $this->rajaldokter->getHasilLab($noReg);
 
         $masalahKeperawatan = $this->rekam_medis->masalahKepByNoreg($noReg);
@@ -194,7 +198,7 @@ class AssesmenMataController extends Controller
 
         $title = 'Cetak RM';
 
-        $pdf = PDF::loadview('pages.poli.mata.cetak.rm', ['tanggal' => $tanggal, 'title' => $title, 'resep' => $resep, 'labs' => $labs, 'rads' => $rads, 'biodata' => $biodata, 'perawat' => $asasmen_perawat, 'masalahKeperawatan' => $masalahKeperawatan, 'rencanaKeperawatan' => $rencanaKeperawatan, 'dokter' => $asasmen_dokter]);
+        $pdf = PDF::loadview('pages.poli.mata.cetak.rm', ['tanggal' => $tanggal, 'mataKiri' => $gambarMataKiri, 'mataKanan' => $gambarMataKanan, 'title' => $title, 'resep' => $resep, 'labs' => $labs, 'rads' => $rads, 'biodata' => $biodata, 'perawat' => $asasmen_perawat, 'masalahKeperawatan' => $masalahKeperawatan, 'rencanaKeperawatan' => $rencanaKeperawatan, 'dokter' => $asasmen_dokter]);
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
     }
@@ -218,11 +222,41 @@ class AssesmenMataController extends Controller
         // Cetak PDF
         $date = date('dMY');
         $tanggal = Carbon::now();
-        $filename = 'RM -' . $date;
+        $filename = 'Resume -' . $date;
 
         $title = 'Cetak RM';
 
         $pdf = PDF::loadview('pages.poli.mata.cetak.resumeRajal', ['tanggal' => $tanggal, 'title' => $title, 'resep' => $resep, 'labs' => $labs, 'rads' => $rads, 'biodata' => $biodata, 'perawat' => $asasmen_perawat, 'masalahKeperawatan' => $masalahKeperawatan, 'rencanaKeperawatan' => $rencanaKeperawatan, 'dokter' => $asasmen_dokter]);
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
+    }
+
+    public function cetakSKDP($noReg, $kode_transaksi)
+    {
+        $resep = $this->poliMata->cetakResep($noReg, $kode_transaksi);
+
+        $data = DB::connection('pku')
+            ->table('TAC_RJ_SKDP as a')
+            ->leftJoin('TAC_COM_PARAMETER_SKDP_ALASAN as b', 'a.FS_SKDP_1', '=', 'b.FS_KD_TRS')
+            ->leftJoin('TAC_COM_PARAMETER_SKDP_RENCANA as c', 'a.FS_SKDP_2', '=', 'c.FS_KD_TRS')
+            ->select(
+                'a.*',
+                'b.FS_NM_SKDP_ALASAN',
+                'c.FS_NM_SKDP_RENCANA',
+            )
+            ->where('a.FS_KD_REG', $noReg)
+            ->first();
+        // dd($resep);
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+
+        // Cetak PDF
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+        $filename = 'SKDP -' . $date;
+
+        $title = 'Cetak RM';
+
+        $pdf = PDF::loadview('pages.poli.mata.cetak.cetakSKDP', ['tanggal' => $tanggal, 'title' => $title, 'resep' => $resep, 'data' => $data, 'biodata' => $biodata]);
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
     }

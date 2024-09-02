@@ -172,11 +172,6 @@
                 <td class="text3" colspan="2">ICD 10:</td>
             </tr>
             <tr>
-                <td class="text3">Diagnosa Sekunder</td>
-                <td class="text3" colspan="3"> {{ $dokter->DIAGNOSA}}</td>
-                <td class="text3" colspan="2">ICD 10:</td>
-            </tr>
-            <tr>
                 <td class="text3">Keterangan</td>
                 <td class="text3" colspan="5" height="50px"></td>
             </tr>

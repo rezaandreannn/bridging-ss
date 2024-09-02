@@ -33,8 +33,16 @@
         .text8 {
             font-size: 12px;
             border: 1px solid black;
-            padding: 2px;
             text-align: left;
+        }
+        .gambar-mata {
+            font-size: 15px;
+            border: 1px solid black;
+            text-align: center;
+        }
+        .text-mata {
+            font-size: 12px;
+            border: 1px solid black;
         }
 
         .logo-cell {
@@ -858,6 +866,27 @@
                     <hr />
                 </td>
             </tr>
+        </table>
+        <p class="text7"><b>HASIL GAMBAR</b></p>
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th class="tabel1" colspan="2">Mata Kiri</th>
+                    <th class="tabel1" colspan="2">Mata Kanan</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        @foreach ($mataKiri as $kiri)
+                        <td class="gambar-mata"> <img src="storage/gambar_mata/{{$kiri->GAMBAR}}" width="60" height="80" /></td>
+                        <td class="text-mata" width="150px"> {{$kiri->DESKRIPSI}}</td>
+                        @endforeach
+                        @foreach ($mataKanan as $kanan)
+                        <td class="gambar-mata"> <img src="storage/gambar_mata/{{$kanan->GAMBAR}}" width="60" height="80" /></td>
+                        <td class="text-mata" width="150px"> {{$kanan->DESKRIPSI}}</td>
+                        @endforeach
+                    </tr>
+            </tbody>
         </table>
         <p class="text7"><b>HASIL RADIOLOGI</b></p>
         <table width="100%">

@@ -153,16 +153,69 @@ class PoliMata extends Model
         $data = DB::connection('pku')->table('poli_mata_dokter')
             ->join('poli_mata_refraksi', 'poli_mata_dokter.NO_REG', '=', 'poli_mata_dokter.NO_REG')
             ->join('TAC_RJ_MEDIS', 'poli_mata_dokter.NO_REG', '=', 'TAC_RJ_MEDIS.FS_KD_REG')
+            ->join('poli_mata_gambar', 'poli_mata_dokter.NO_REG', '=', 'poli_mata_gambar.NO_REG')
             ->leftJoin($dbpku . '.dbo.DOKTER as c', 'poli_mata_dokter.CREATE_BY', '=', 'c.KODE_DOKTER')
             ->select(
                 'poli_mata_dokter.*',
                 'poli_mata_refraksi.*',
+                'poli_mata_gambar.*',
                 'TAC_RJ_MEDIS.FS_TERAPI',
                 'TAC_RJ_MEDIS.FS_CARA_PULANG',
                 'c.NAMA_DOKTER',
                 'c.KODE_DOKTER',
             )
             ->where('poli_mata_dokter.NO_REG', $noReg)
+            ->first();
+
+        return $data;
+    }
+
+    public function getGambarMataKiri($noReg)
+    {
+        $data = DB::connection('pku')->table('poli_mata_gambar')
+            ->select(
+                'poli_mata_gambar.*',
+            )
+            ->where('NO_REG', $noReg)
+            ->where('TIPE', 'Mata Kiri')
+            ->get();
+
+        return $data;
+    }
+
+    public function getMataKiri($noReg)
+    {
+        $data = DB::connection('pku')->table('poli_mata_gambar')
+            ->select(
+                'poli_mata_gambar.*',
+            )
+            ->where('NO_REG', $noReg)
+            ->where('TIPE', 'Mata Kiri')
+            ->first();
+
+        return $data;
+    }
+    public function getGambarMataKanan($noReg)
+    {
+        $data = DB::connection('pku')->table('poli_mata_gambar')
+            ->select(
+                'poli_mata_gambar.*',
+            )
+            ->where('NO_REG', $noReg)
+            ->where('TIPE', 'Mata Kanan')
+            ->get();
+
+        return $data;
+    }
+
+    public function getMataKanan($noReg)
+    {
+        $data = DB::connection('pku')->table('poli_mata_gambar')
+            ->select(
+                'poli_mata_gambar.*',
+            )
+            ->where('NO_REG', $noReg)
+            ->where('TIPE', 'Mata Kanan')
             ->first();
 
         return $data;

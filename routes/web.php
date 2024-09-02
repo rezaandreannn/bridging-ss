@@ -263,9 +263,11 @@ Route::middleware('auth')->group(function () {
         // Poli Mata Perawat
         Route::get('/polimata/perawat', [AssesmenMataController::class, 'index'])->name('poliMata.index');
         Route::post('/polimata/perawat', [AssesmenMataController::class, 'store'])->name('poliMata.store');
+        // Cetak Berkas
         Route::get('/polimata/perawat/resep/{kode_transaksi}/{noReg}', [AssesmenMataController::class, 'cetakResep'])->name('polimata.resep');
         Route::get('/polimata/perawat/cetak_rm/{noReg}', [AssesmenMataController::class, 'cetakRM'])->name('polimata.cetakRM');
         Route::get('/polimata/perawat/cetak_resume/{noReg}', [AssesmenMataController::class, 'cetakResume'])->name('polimata.cetakResume');
+        Route::get('/polimata/perawat/cetak_skdp/{kode_transaksi}/{noReg}', [AssesmenMataController::class, 'cetakSKDP'])->name('polimata.cetakSKDP');
         Route::get('/polimata/perawat/assesmen_keperawatan/{noReg}', [AssesmenMataController::class, 'Add'])->name('poliMata.assesmenKeperawatanAdd');
         Route::get('/polimata/perawat/assesmen_keperawatan/edit/{noReg}', [AssesmenMataController::class, 'Edit'])->name('poliMata.assesmenKeperawatanEdit');
         Route::put('/polimata/perawat/assesmen_keperawatan/edit/{noReg}', [AssesmenMataController::class, 'update'])->name('poliMata.assesmenKeperawatanUpdate');

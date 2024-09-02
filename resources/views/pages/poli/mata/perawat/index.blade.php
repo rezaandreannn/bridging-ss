@@ -18,9 +18,9 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('rj.dokter') }}">Pemeriksaan Medis</a></div>
-                <div class="breadcrumb-item"><a href="{{ route('rj.dokter') }}">Poli</a></div>
-                <div class="breadcrumb-item">Mata</div>
+                <div class="breadcrumb-data active"><a href="{{ route('rj.dokter') }}">Pemeriksaan Medis</a></div>
+                <div class="breadcrumb-data"><a href="{{ route('rj.dokter') }}">Poli</a></div>
+                <div class="breadcrumb-data">Mata</div>
             </div>
         </div>
 
@@ -103,11 +103,29 @@
                                         @if($data->FS_TERAPI != '')
                                         <a href="{{ route('polimata.resep', [$data->No_Reg, $data->FS_KD_TRS])  }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Resep</a>
                                         @endif
+                                        {{-- Cetak RM --}}
                                         @if($poliMata->cekDokter($data->No_Reg) == true)
                                             <a href="{{ route('polimata.cetakRM', [$data->No_Reg]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> RM</a>
                                         @endif
+                                        {{-- Cetak Resume --}}
                                         @if($poliMata->cekDokter($data->No_Reg) == true)
                                             <a href="{{ route('polimata.cetakResume', [$data->No_Reg]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Resume</a>
+                                        @endif
+
+                                        <!-- pasien kontrol -->
+                                        @if($data->FS_CARA_PULANG == 2)
+                                        <a href="{{ route('polimata.cetakSKDP', [$data->No_Reg, $data->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> SKDP</a>
+                                        <!-- pasien rujuk luar rs -->
+                                        @elseif ($data->FS_CARA_PULANG == 4)
+                                        <a href="{{ route('rj.rujukanRS', [$data->No_Reg, $data->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujukan RS</a>
+                                        <!-- pasien dengan rujuk internal -->
+                                        @elseif ($data->FS_CARA_PULANG == 6)
+                                        <a href="{{ route('rj.rujukanInternal', [$data->No_Reg, $data->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujukan Internal</a>
+                                        <!-- pasien dikembalikan ke faskes primer -->
+                                        @elseif ($data->FS_CARA_PULANG == 7)
+                                        <a href="{{ route('rj.faskes', [$data->No_Reg, $data->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Faskes</a>
+                                        @elseif ($data->FS_CARA_PULANG == 8)
+                                        <a href="{{ route('rj.prb', [$data->No_Reg, $data->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> PRB</a>
                                         @endif
                                        
                                     </td>
