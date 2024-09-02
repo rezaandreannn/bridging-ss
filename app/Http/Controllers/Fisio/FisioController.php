@@ -12,6 +12,7 @@ use App\Models\TandaTangan;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\BerkasFisioterapi;
+use App\Rules\UniqueInConnection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -249,6 +250,8 @@ class FisioController extends Controller
 
         $validatedData = $request->validate([
             'ANAMNESA' => 'required',
+            'no_registrasi' => ['required', new UniqueInConnection('TR_CPPT_FISIOTERAPI', 'no_registrasi', 'pku')],
+            'LAINNYA' => 'max:255',
         ]);
 
         if ($cekJumlahFisio >= $jumlahMaxFisio) {
@@ -326,11 +329,39 @@ class FisioController extends Controller
         return view($this->view . 'cppt.edit', compact('title', 'data', 'jenisfisio', 'jenis_fisio','biodata','terapiDokterLastFisio'));
     }
 
+    // Edit Data Riwaya CPPT  Fisioterapi
+    public function edit_cppt_riwayat($id)
+    {
+        // Memecah string menjadi array
+        $getTransaksiCppt =  DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')->where('ID_CPPT_FISIO', $id)->first();
+        // dd($getTransaksiCppt);
+
+        $biodata = $this->rajal->pasien_bynoreg($getTransaksiCppt->no_registrasi);
+        // dd($biodata);
+
+        $data = array();
+        $string = $getTransaksiCppt->JENIS_FISIO;
+        $string = trim($string, ','); // Menghapus koma di awal dan akhir string (jika ada)
+        $jenis_fisio = array();
+        if (!empty($string)) {
+            $jenis_fisio = explode(', ', $string);
+        }
+        $title = $this->prefix . ' ' . 'CPPT';
+
+        $jenisfisio = $this->jenisFisio->getDataJenisFisio();
+        $data = $this->fisio->dataEditPasienCPPT($id);
+        $terapiDokterLastFisio =  $this->fisio->terapiDokterLastFisio($biodata->NO_MR);
+        // dd($terapiDokterLastFisio);
+
+        return view($this->view . 'cppt.editRiwayat', compact('title', 'data', 'jenisfisio', 'jenis_fisio','biodata','terapiDokterLastFisio'));
+    }
+
     // Proses Edit Data CPPT Fisioterapi
     public function editDataCPPT(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'ANAMNESA' => 'required',
+            'ANAMNESA' => 'required|max:255',
+            'LAINNYA' => 'max:255',
         ]);
 
 
@@ -384,10 +415,41 @@ class FisioController extends Controller
         } else {
             return redirect()->route('cppt.detail', ['id' => $request->input('ID_TRANSAKSI'), 'kode_transaksi' => $request->input('KODE_TRANSAKSI_FISIO'), 'no_mr' => $request->input('NO_MR_PASIEN')])->with('success', 'CPPT Berhasil Diperbarui!');
         }
+    }
+    // Proses Edit Data Riwayat CPPT Fisioterapi
+    public function editDataRiwayatCPPT(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'ANAMNESA' => 'required|max:255',
+            'LAINNYA' => 'max:255',
+        ]);
 
-        // return redirect()->back()->with('success', 'CPPT Berhasil Ditambahkan!');
 
-        // return redirect()->route('cppt.detail', ['id' => $id,  'no_mr' => $request->input('NO_MR_PASIEN'), 'kode_transaksi' => $request->input('kode_transaksi')])->with('success', 'CPPT Berhasil Diperbarui!');
+        $jenis_terapi = $request->input('JENIS_FISIO');
+        $terapi = '';
+        if (!empty($jenis_terapi)) {
+            foreach ($jenis_terapi as  $value) {
+                $terapi = $value . ', ' . $terapi;
+            }
+        }
+
+            $data = DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')->where('ID_CPPT_FISIO', $id)->update([
+                'DIAGNOSA' => $request->input('DIAGNOSA'),
+                'TEKANAN_DARAH' => $request->input('TEKANAN_DARAH'),
+                'NADI' => $request->input('NADI'),
+                'SUHU' => $request->input('SUHU'),
+                'JENIS_FISIO' => $terapi,
+                'CARA_PULANG' => $request->input('CARA_PULANG'),
+                'ANAMNESA' => $request->input('ANAMNESA'),
+                'LAINNYA' => $request->input('LAINNYA'),
+    
+            ]);
+
+        if ((auth()->user()->roles->pluck('name')[0]) == 'dokter fisioterapi') {
+            return redirect()->route('list_pasiens.dokter')->with('success', 'Lembar Cppt Berhasil Diperbarui!');
+        } else {
+            return redirect()->route('cppt.detail', ['id' => $request->input('ID_TRANSAKSI'), 'kode_transaksi' => $request->input('KODE_TRANSAKSI_FISIO'), 'no_mr' => $request->input('NO_MR_PASIEN')])->with('success', 'CPPT Berhasil Diperbarui!');
+        }
     }
 
     // Delete Data CPPT Fisioterapi
@@ -504,6 +566,64 @@ class FisioController extends Controller
                return redirect()->back()->with('danger', 'Lingkar Pinggang gagal Diperbarui!');
 
            }
+    
+        }
+
+        public function update_alkes_bpjs(Request $request)
+        {
+            $validatedData = $request->validate([
+                'no_registrasi' => 'required',
+            ]);
+
+            try {
+                DB::connection('pku')->beginTransaction();
+    
+                $data = DB::connection('pku')->table('fis_order_alkes')->where('no_registrasi', $request->input('no_registrasi'))->update([
+
+                    'lingkar_pinggang' => $request->input('lingkar_pinggang'),
+                    'no_sep' => $request->input('no_sep'),
+                    'biaya' => $request->input('biaya')
+                ]); 
+
+            if($data>0){
+
+                $cekVerifikasi = DB::connection('pku')->table('fis_verifikasi_alkes_by_bpjs')->where('no_registrasi', $request->input('no_registrasi'))->first();
+
+                if($cekVerifikasi == null){
+                    $verifikasi = DB::connection('pku')->table('fis_verifikasi_alkes_by_bpjs')->insert([
+    
+                        'no_registrasi' => $request->input('no_registrasi'),
+                        'created_by' => auth()->user()->id,
+                        'updated_by' => auth()->user()->id,
+                        'created_at' => now(),
+                        'updated_at' => now()
+                    ]);
+
+                }else{
+                    $data = DB::connection('pku')->table('fis_verifikasi_alkes_by_bpjs')->where('no_registrasi', $request->input('no_registrasi'))->update([
+
+                        'no_registrasi' => $request->input('no_registrasi'),
+                        'updated_by' => auth()->user()->id,
+                        'updated_at' => now()
+                    ]); 
+                }
+
+                DB::connection('pku')->commit();
+
+                return redirect()->back()->with('success', 'Alat Kesehatan berhasil di verifikasi!');
+             }
+             else {
+                DB::connection('pku')->rollback();
+                return redirect()->back()->with('danger', 'Alat Kesehatan gagal di verifikasi!');
+ 
+            }
+            // return redirect()->route('add.ujifungsi', ['NoMr' => $request->input('NO_MR')])->with('success', 'Asesmen Berhasil Ditambahkan!');
+        } catch (\Exception $e) {
+            // Rollback transaksi jika terjadi kesalahan
+            DB::connection('pku')->rollback();
+
+            return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
+        }
     
         }
 

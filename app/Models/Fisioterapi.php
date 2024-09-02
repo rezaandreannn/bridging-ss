@@ -303,6 +303,16 @@ class Fisioterapi extends Model
         return $data;
     }
 
+    public function cekLastCpptByKodeTr($id)
+    {
+        $data = DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')
+        ->select('JENIS_FISIO')
+        ->where('ID_TRANSAKSI_FISIO', $id)
+        ->orderBy('ID_CPPT_FISIO','desc')
+        ->first();
+        return $data;
+    }
+
     public function jumlahMaxFisioByKodeTr($id)
     {
         $data = DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')->where('ID_TRANSAKSI_FISIO', $id)->count();

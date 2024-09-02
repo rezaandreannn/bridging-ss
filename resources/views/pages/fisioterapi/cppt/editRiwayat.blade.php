@@ -33,10 +33,10 @@
                 <div class="col-12">
                     <div class="card card-primary">
                         <div class="card-header card-success card-khusus-header">
-                            <h6 class="card-khusus-title">Edit Data CPPT Fisioterapi</h6>
+                            <h6 class="card-khusus-title">Edit Data Riwayat CPPT Fisioterapi</h6>
                         </div>
                         <div class="card-body card-khusus-body">
-                            <form action="{{ route('cppt.updateData', $data->ID_CPPT_FISIO) }}" method="POST">
+                            <form action="{{ route('cppt.updateRiwayatCppt', $data->ID_CPPT_FISIO) }}" method="POST">
                                 @csrf
                                 @method('PUT')
                                 <div class="row">

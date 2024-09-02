@@ -76,17 +76,25 @@ class BerkasFisioController extends Controller
         return view($this->view . 'cppt', compact('title', 'biodatas', 'transaksis', 'fisioModel'));
     }
 
-    public function berkasAlat($no_mr)
+    public function buktiPelayananOrderAlkes($no_reg)
     {
+
+        // dd('ok');
         // Cetak PDF
         $date = date('dMY');
         $filename = 'Pelayanan-' . $date;
 
         $title = $this->prefix . ' ' . 'Alat';
-        $biodata = $this->pasien->biodataPasienByMr($no_mr);
+        $biodata = $this->rajal->pasien_bynoreg($no_reg);
+        $alkes = $this->berkasFisio->cetakBerkasAlkes($no_reg);
+        // $biodata = $this->pasien->biodataPasienByMr($no_reg);
         $usia = Carbon::parse($biodata->TGL_LAHIR)->age;
+        $ttdPasien = $this->berkasFisio->getTtdPasienByMr($biodata->NO_MR);
+        $ttdPasienByNoreg = $this->berkasFisio->getTtdPasienByNoReg($no_reg);
 
-        $pdf = PDF::loadview('pages.fisioterapi.cetak.pelayananAlat', ['title' => $title, 'biodata' => $biodata, 'usia' => $usia]);
+        // dd($ttdPasienByNoreg);
+
+        $pdf = PDF::loadview('pages.fisioterapi.cetak.pelayananAlat', ['title' => $title, 'biodata' => $biodata, 'usia' => $usia, 'alkes'=>$alkes, 'ttdPasien'=>$ttdPasien, 'ttdPasienByNoreg'=>$ttdPasienByNoreg]);
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
     }
