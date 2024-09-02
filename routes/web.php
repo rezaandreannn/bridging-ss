@@ -175,7 +175,10 @@ Route::middleware('auth')->group(function () {
         Route::post('perawat/cppt', [FisioController::class, 'tambahDataCPPT'])->name('cppt.tambahData');
         Route::delete('perawat/cppt/{id}', [FisioController::class, 'deleteDataCPPT'])->name('cppt.deleteData');
         Route::get('perawat/edit_cppt/{id}', [FisioController::class, 'edit_cppt'])->name('cppt.edit');
+
+        Route::get('perawat/edit_cppt_riwayat/{id}', [FisioController::class, 'edit_cppt_riwayat'])->name('cppt.editRiwayat');
         Route::put('perawat/cppt/{id}', [FisioController::class, 'editDataCPPT'])->name('cppt.updateData');
+        Route::put('perawat/cppt_riwayat/{id}', [FisioController::class, 'editDataRiwayatCPPT'])->name('cppt.updateRiwayatCppt');
 
         Route::get('cetak_cppt/{kode_transaksi}/{no_mr}', [FisioController::class, 'cetak_cppt'])->name('cppt.cetakCPPT');
         Route::get('bukti_layanan/{kode_transaksi}/{no_mr}', [FisioController::class, 'bukti_layanan'])->name('cppt.buktiLayanan');
@@ -256,7 +259,7 @@ Route::middleware('auth')->group(function () {
         Route::get('berkas_fisio/detail_fisioterapi/{no_reg}', [BerkasFisioController::class, 'getFisioterapiDetailByDokter'])->name('berkas.detail_fisioterapi');
 
         // Bukti Pelayanan Alat Kesehatan
-        Route::get('berkas_fisio/pelayanan_alat/{no_mr}', [BerkasFisioController::class, 'berkasAlat'])->name('berkas.alat');
+        Route::get('berkas_fisio/pelayanan_alat/{no_reg}', [BerkasFisioController::class, 'buktiPelayananOrderAlkes'])->name('berkas.alat');
     });
 
     // Poli Mata

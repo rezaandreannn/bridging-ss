@@ -164,6 +164,7 @@
                                             <th>No Reg</th>
                                             <th>Dokter</th>
                                             <th>Jenis Alat</th>
+                                            <th>Status</th>
                                             <th>Aksi</th>
                                             <th>Berkas</th>
                                         </tr>
@@ -179,6 +180,11 @@
                                             <td>{{ $pasien->No_Reg }}</td>
                                             <td>{{ $pasien->Nama_Dokter }}</td>
                                             <td>{{ $pasien->jenis_alat }}</td>
+                                            <td>
+                                                @if ($pasien->lingkar_pinggang != null)
+                                                <div class="badge badge-success"><i class="fa-solid fa-check"></i> Farmasi</div> 
+                                                @endif
+                                            </td>
                                             <td width="20%">                                               
                           
                                                 <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modal-edit-alkes{{$pasien->No_Reg}}"><i class="fa fa-edit"></i> Edit alkes</button> 
@@ -188,8 +194,11 @@
                                             <td width="20%">
                                                 <a href="{{ route('rj.alkes', [$pasien->No_Reg])  }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Resep alkes</a>
 
+                                        
                                                 @if($pasien->no_registrasi != null)
-                                                <a href="{{ route('rj.alkes', [$pasien->No_Reg])  }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Cetak Form Alkes</a>
+             
+                                                <a href="{{ route('berkas.alat', ['no_reg' => $pasien->No_Reg
+                                            ])}}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Cetak Form Alkes</a>
                                                 @endif
                                             </td>
                                         </tr>

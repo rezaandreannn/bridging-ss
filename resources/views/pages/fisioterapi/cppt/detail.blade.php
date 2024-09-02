@@ -106,7 +106,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Lain-lain</label>
-                                            <textarea name="LAINNYA" class="form-control" rows="2"></textarea>
+                                            <textarea name="LAINNYA" style="height: 80px;" class="form-control" rows="2"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -230,10 +230,18 @@
                                                 @endif
                                             </td>
                                             <td width="20%">
+
                                                 @php
                                                 $tanggalFisio = Carbon::parse($cppt->TANGGAL_FISIO)->toDateString();
                                                 $tanggalSekarang = Carbon::now()->toDateString();
                                                 @endphp
+
+                                                @if((auth()->user()->roles->pluck('name')[0]) == 'fisioterapi')
+                                                @if ($tanggalFisio !== $tanggalSekarang)
+                                                <a href="{{ route('cppt.editRiwayat', ['id' => $cppt->ID_CPPT_FISIO]) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i>Edit Riwayat</a>
+                                                @endif
+                                                @endif
+                                      
                                                 @if ($tanggalFisio === $tanggalSekarang)
                                                 <a href="{{ route('cppt.edit', ['id' => $cppt->ID_CPPT_FISIO]) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i>Edit</a>
                                                 <form id="delete-form-{{$cppt->ID_CPPT_FISIO}}" action="{{ route('cppt.deleteData', $cppt->ID_CPPT_FISIO) }}" method="POST" style="display: none;">

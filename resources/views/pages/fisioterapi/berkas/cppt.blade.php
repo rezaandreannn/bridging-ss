@@ -66,10 +66,12 @@
 
                                             </td>
                                             <td width="20%">
-                                                          {{-- <a href="{{ route('cppt.detail', [
-                                            'id' => $transaksi->ID_TRANSAKSI,
-                                            'no_mr' => $transaksi->NO_MR_PASIEN,'kode_transaksi' => $transaksi->KODE_TRANSAKSI_FISIO
-                                            ]) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i>Tambah CPPT</a> --}}
+                                            @if((auth()->user()->roles->pluck('name')[0]) == 'fisioterapi')
+                                                <a href="{{ route('cppt.detail', [
+                                                'id' => $transaksi->ID_TRANSAKSI,
+                                                'no_mr' => $transaksi->NO_MR_PASIEN,'kode_transaksi' => $transaksi->KODE_TRANSAKSI_FISIO
+                                                ]) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i>Tambah CPPT</a>
+                                            @endif
 
                                                 <a href="{{ route('cppt.cetakCPPT', [
                                             'kode_transaksi' => $transaksi->KODE_TRANSAKSI_FISIO,
