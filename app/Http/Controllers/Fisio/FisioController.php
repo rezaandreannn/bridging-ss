@@ -627,6 +627,63 @@ class FisioController extends Controller
     
         }
 
+        public function update_alkes_farmasi(Request $request)
+        {
+            $validatedData = $request->validate([
+                'no_registrasi' => 'required',
+            ]);
+
+            try {
+                DB::connection('pku')->beginTransaction();
+    
+                $data = DB::connection('pku')->table('fis_order_alkes')->where('no_registrasi', $request->input('no_registrasi'))->update([
+
+                    'lingkar_pinggang' => $request->input('lingkar_pinggang'),
+                    'biaya' => $request->input('biaya')
+                ]); 
+
+            if($data>0){
+
+                $cekVerifikasi = DB::connection('pku')->table('fis_verifikasi_alkes_by_farmasi')->where('no_registrasi', $request->input('no_registrasi'))->first();
+
+                if($cekVerifikasi == null){
+                    $verifikasi = DB::connection('pku')->table('fis_verifikasi_alkes_by_farmasi')->insert([
+    
+                        'no_registrasi' => $request->input('no_registrasi'),
+                        'created_by' => auth()->user()->id,
+                        'updated_by' => auth()->user()->id,
+                        'created_at' => now(),
+                        'updated_at' => now()
+                    ]);
+
+                }else{
+                    $data = DB::connection('pku')->table('fis_verifikasi_alkes_by_farmasi')->where('no_registrasi', $request->input('no_registrasi'))->update([
+
+                        'no_registrasi' => $request->input('no_registrasi'),
+                        'updated_by' => auth()->user()->id,
+                        'updated_at' => now()
+                    ]); 
+                }
+
+                DB::connection('pku')->commit();
+
+                return redirect()->back()->with('success', 'Alat Kesehatan berhasil di verifikasi!');
+             }
+             else {
+                DB::connection('pku')->rollback();
+                return redirect()->back()->with('danger', 'Alat Kesehatan gagal di verifikasi!');
+ 
+            }
+            // return redirect()->route('add.ujifungsi', ['NoMr' => $request->input('NO_MR')])->with('success', 'Asesmen Berhasil Ditambahkan!');
+        } catch (\Exception $e) {
+            // Rollback transaksi jika terjadi kesalahan
+            DB::connection('pku')->rollback();
+
+            return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
+        }
+    
+        }
+
     // ---------------------
     // Fisioterapi Dokter
     // ---------------------

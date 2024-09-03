@@ -21,13 +21,14 @@ use App\Http\Controllers\Manage\PermissionController;
 use App\Http\Controllers\MasterData\DokterController;
 use App\Http\Controllers\MasterData\PasienController;
 use App\Http\Controllers\Encounter\RecourceController;
+use App\Http\Controllers\Farmasi\OrderAlkesController;
 use App\Http\Controllers\Berkas\Ranap\BerkasController;
 use App\Http\Controllers\MasterData\LocationController;
 use App\Http\Controllers\IGD\Layanan\SkriningController;
 use App\Http\Controllers\Fisio\InformedConcentController;
 use App\Http\Controllers\Kunjungan\PendaftaranController;
 use App\Http\Controllers\MasterData\JenisFisioController;
-use App\Http\Controllers\Poli\Mata\Perawat\AssesmenMataController;
+use App\Http\Controllers\Farmasi\MasterDataAlkesController;
 use App\Http\Controllers\MasterData\OrganizationController;
 use App\Http\Controllers\Berkas\igd\RekamMedisIgdController;
 use App\Http\Controllers\Fisio\Berkas\BerkasFisioController;
@@ -41,14 +42,15 @@ use App\Http\Controllers\RawatInap\Detail\DetailRanapController;
 use App\Http\Controllers\RawatInap\Dokter\RanapDokterController;
 use App\Http\Controllers\RawatJalan\Dokter\RajalDokterController;
 use App\Http\Controllers\Case\Encounter\EncounterCreateController;
+use App\Http\Controllers\Poli\Mata\Perawat\AssesmenMataController;
 use App\Http\Controllers\Fisio\MasterData\DiagnosisMedisController;
 use App\Http\Controllers\PetugasKoding\Rajal\KodingRajalController;
 use App\Http\Controllers\Fisio\MasterData\DiagnosisFungsiController;
+use App\Http\Controllers\Poli\Mata\Dokter\AssesmenDokterMataController;
+use App\Http\Controllers\Poli\Mata\MasterData\PenyakitSekarangController;
 use App\Http\Controllers\Berkas\Rekam_medis_by_mr\RekamMedisByMrController;
 use App\Http\Controllers\Berkas\Rekam_medis_harian\RekamMedisHarianController;
 use App\Http\Controllers\IGD\Layanan\AssesmenController as LayananAssesmenController;
-use App\Http\Controllers\Poli\Mata\Dokter\AssesmenDokterMataController;
-use App\Http\Controllers\Poli\Mata\MasterData\PenyakitSekarangController;
 
 /*
 |--------------------------------------------------------------------------
@@ -114,6 +116,13 @@ Route::middleware('auth')->group(function () {
         Route::post('/jenisFisio', [JenisFisioController::class, 'store'])->name('jenisFisio.store');
         Route::put('/jenisFisio/{id}', [JenisFisioController::class, 'update'])->name('jenisFisio.update');
         Route::delete('/jenisFisio/{id}', [JenisFisioController::class, 'destroy'])->name('jenisFisio.delete');
+
+        // master data farmasi
+         Route::get('farmasi', [MasterDataAlkesController::class, 'index'])->name('masterData.index');
+
+         Route::post('farmasi/alkes/add_proses', [MasterDataAlkesController::class, 'store'])->name('masterAlkes.store');
+
+         Route::delete('farmasi/alkes/delete_proses/{id}', [MasterDataAlkesController::class, 'destroy'])->name('masterAlkes.destroy');
     });
 
     // ENCOUNTER 
@@ -156,6 +165,19 @@ Route::middleware('auth')->group(function () {
         Route::post('encounter', [MappingEncounterController::class, 'store'])->name('encounter.store');
         Route::put('/encounter{id}', [MappingEncounterController::class, 'update'])->name('encounter.update');
     });
+    
+    // MAPPING DATA
+    Route::prefix('farmasi')->group(function () {
+        // ENCOUNTER
+        Route::get('orderAlkes', [OrderAlkesController::class, 'index'])->name('orderAlkes.index');
+        Route::get('encounter/{id}/edit', [MappingEncounterController::class, 'edit'])->name('encounter.edit');
+        Route::get('encounter/create', [MappingEncounterController::class, 'create'])->name('encounter.create');
+        Route::post('encounter', [MappingEncounterController::class, 'store'])->name('encounter.store');
+        Route::put('/encounter{id}', [MappingEncounterController::class, 'update'])->name('encounter.update');
+
+
+
+    });
 
     Route::prefix('fisioterapi')->group(function () {
         // Fisioterapi
@@ -165,7 +187,11 @@ Route::middleware('auth')->group(function () {
         Route::post('perawat/transaksi_fisio/add', [FisioController::class, 'store'])->name('transaksi_fisio.store');
         Route::get('perawat/transaksi_fisio/addtindakan', [FisioController::class, 'storeTindakan'])->name('transaksi_fisio.addtindakan');
         Route::put('perawat/transaksi_fisio/editAlkesByFisioterapi', [FisioController::class, 'update_alkes'])->name('transaksi_fisio.update_alkes');
+
         Route::put('perawat/transaksi_fisio/editAlkesByBpjs', [FisioController::class, 'update_alkes_bpjs'])->name('transaksi_fisio.update_alkes_bpjs');
+        
+        Route::put('perawat/transaksi_fisio/editAlkesByFarmasi', [FisioController::class, 'update_alkes_farmasi'])->name('transaksi_fisio.update_alkes_farmasi');
+
         Route::put('perawat/transaksi_fisio/{id}', [FisioController::class, 'update'])->name('transaksi_fisio.update');
         Route::delete('perawat/transaksi_fisio/{id}', [FisioController::class, 'delete'])->name('transaksi_fisio.delete');
 
@@ -236,6 +262,7 @@ Route::middleware('auth')->group(function () {
         // diagnosis fungsi
         Route::get('master_data/diagnosis_fungsi/list', [DiagnosisFungsiController::class, 'index'])->name('diagnosisFungsi.index');
         Route::post('master_data/diagnosis_fungsi/add_proses', [DiagnosisFungsiController::class, 'store'])->name('diagnosisFungsi.store');
+
         Route::put('master_data/diagnosis_fungsi/update_proses/{id}', [DiagnosisFungsiController::class, 'update'])->name('diagnosisFungsi.update');
         Route::delete('master_data/diagnosis_fungsi/delete_proses/{id}', [DiagnosisFungsiController::class, 'destroy'])->name('diagnosisFungsi.destroy');
 

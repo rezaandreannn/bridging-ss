@@ -32,6 +32,9 @@
                     <li class="{{ Request::is('md/jenisFisio*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('jenisFisio.index') }}">Jenis Fisio</a>
                     </li>
+                    <li class="{{ Request::is('md/farmasi*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('masterData.index') }}">Alat Kesehatan</a>
+                    </li>
                 </ul>
             </li>
             @endcan
@@ -267,6 +270,10 @@
                     </li>
                 </ul>
             </li>
+            @endcan
+            @can('farmasi')
+            <li class="menu-header">Farmasi</li>
+            <li class="{{ Request::is('farmasi/orderAlkes') ? 'active' : '' }}"><a class="nav-link" href="{{ route('orderAlkes.index') }}"><i class="fas fa-dashboard"></i> <span>Order Alat Kesehatan</span></a></li>
             @endcan
 
 
