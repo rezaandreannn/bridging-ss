@@ -94,11 +94,16 @@
                                                 
                                                 <button data-toggle="modal" data-target="#modal-edit-tranksasi18{{$transaksi->ID_TRANSAKSI}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</button>
 
+                                                @if($fisioModel->countCpptByKodeTr($transaksi->ID_TRANSAKSI)>1)
+                                   
+                                                @else
                                                 <form id="delete-form-{{$transaksi->ID_TRANSAKSI}}" action="{{ route('transaksi_fisio.delete', $transaksi->ID_TRANSAKSI) }}" method="POST" style="display: none;">
                                                     @method('delete')
                                                     @csrf
                                                 </form>
                                                 <a class="btn btn-sm btn-danger" confirm-delete="true" data-menuId="{{$transaksi->ID_TRANSAKSI}}" href="#"><i class="fas fa-trash"></i> Hapus</a>
+                                                @endif
+                                                
                                                 @endif
                                                 
                                                 {{-- <a href="{{ route('form.dokter', ['no_mr' => $transaksi->NO_MR_PASIEN]) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i>CPPT Dokter</a> --}}

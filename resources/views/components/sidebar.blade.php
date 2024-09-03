@@ -131,7 +131,7 @@
 
             @can('fisioterapi')
             <li class="menu-header">Fisioterapi</li>
-            <li class="nav-item dropdown  {{ Request::is('fisioterapi/master_data/*') ? 'active' : '' }}">
+            <!-- <li class="nav-item dropdown  {{ Request::is('fisioterapi/master_data/*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Master Data</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('fisioterapi/master_data/diagnosis_medis/*') ? 'active' : '' }}">
@@ -149,7 +149,7 @@
                     </li>
                 </ul>
         
-            </li>
+            </li> -->
           
             <li class="nav-item dropdown {{ Request::is('fisioterapi/perawat*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Fisioterapi</span></a>
@@ -170,6 +170,10 @@
                 </ul>
             </li>
             @endcan
+            @can('berkas fisio')
+            @can('claim bpjs')
+            <li class="menu-header">Fisioterapi</li>
+            @endcan
             <li class="nav-item dropdown {{ Request::is('berkas/berkas_fisio*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Berkas</span></a>
                 <ul class="dropdown-menu">
@@ -183,6 +187,8 @@
                     </li>
                 </ul> -->
             </li>
+            @endcan
+
             @can('igd')
             <li class="menu-header">IGD</li>
             <li class="nav-item dropdown {{ Request::is('igd*') ? 'active' : '' }}">
@@ -263,6 +269,8 @@
             </li>
             @endcan
 
+
+            @can('claim bpjs')
             <li class="menu-header">Klaim</li>
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Berkas Klaim</span></a>
@@ -283,6 +291,7 @@
                 </ul>
         
             </li>
+            @endcan
 
             @can('koding')
             <li class="menu-header">Petugas Koding</li>

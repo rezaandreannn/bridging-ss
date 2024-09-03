@@ -182,14 +182,14 @@
                                             <td>{{ $pasien->jenis_alat }}</td>
                                             <td>
                                                 @if ($pasien->lingkar_pinggang != null)
-                                                <div class="badge badge-success"><i class="fa-solid fa-check"></i> Farmasi</div> 
+                                                <div class="badge badge-success"><i class="fa-solid fa-check"></i> Fisioterapi</div> 
                                                 @endif
                                             </td>
                                             <td width="20%">                                               
-                          
-                                                <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modal-edit-alkes{{$pasien->No_Reg}}"><i class="fa fa-edit"></i> Edit alkes</button> 
+                                            @can('verif alkes')
+                                                <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modal-edit-alkes{{$pasien->No_Reg}}"><i class="fa fa-edit"></i> Verif alkes</button> 
                                              
-                                           
+                                           @endcan
                                             </td>
                                             <td width="20%">
                                                 <a href="{{ route('rj.alkes', [$pasien->No_Reg])  }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Resep alkes</a>
