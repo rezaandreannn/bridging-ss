@@ -912,7 +912,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Edukasi</label>
-                                        <input type="text" name="FS_EDUKASI" value="" class="form-control @error('edukasi') is-invalid @enderror">
+                                        <input type="text" name="edukasi" value="" class="form-control @error('edukasi') is-invalid @enderror">
                                     </div>
                                     @error('edukasi')
                                     <div class="invalid-feedback">
@@ -941,10 +941,10 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <input type="text" name="konsul" class="form-control @error('konsul') is-invalid  
-                                            @enderror" value="{{old('konsul')}}" placeholder="Kebagian konsul ...">
+                                                <input type="text" name="keterangan_konsul" class="form-control @error('keterangan_konsul') is-invalid  
+                                            @enderror" value="{{old('keterangan_konsul')}}" placeholder="Kebagian konsul ...">
                                             </div>
-                                            @error('konsul')
+                                            @error('keterangan_konsul')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>

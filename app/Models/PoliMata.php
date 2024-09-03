@@ -195,6 +195,7 @@ class PoliMata extends Model
 
         return $data;
     }
+
     public function getGambarMataKanan($noReg)
     {
         $data = DB::connection('pku')->table('poli_mata_gambar')

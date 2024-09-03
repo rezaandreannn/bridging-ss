@@ -597,11 +597,19 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label for="">Preview Mata Kiri :</label>
-                                            <img src="{{ asset('storage/gambar_mata/'. $MataKiri->GAMBAR) }}" width="100%" height="250" />
+                                            @if(isset($MataKiri) && $MataKiri->GAMBAR)
+                                                <img src="{{ asset('storage/gambar_mata/'. $MataKiri->GAMBAR) }}" width="100%" height="250" />
+                                            @else
+                                                <p>No image available</p>
+                                            @endif
                                         </div>
                                         <div class="col-md-6">
                                             <label for="">Preview Mata Kanan :</label>
-                                            <img src="{{ asset('storage/gambar_mata/'. $MataKanan->GAMBAR) }}" width="100%" height="250" />
+                                            @if(isset($MataKanan) && $MataKanan->GAMBAR)
+                                                <img src="{{ asset('storage/gambar_mata/'. $MataKanan->GAMBAR) }}" width="100%" height="250" />
+                                            @else
+                                                <p>No image available</p>
+                                            @endif
                                         </div>
                                         <div class="col-md-6">
                                             <label class="" for="">Mata Kiri:</label>
@@ -609,6 +617,7 @@
                                             <div id="signat"></div>
                                             <br />
                                             <button id="clear">Hapus Gambar</button>
+                                            <input type="hidden" name="id" value="{{ $MataKiri->id }}" />
                                             <textarea id="signature1" name="signed_kiri" style="display: none"></textarea>
                                         </div>
                                         <div class="col-md-6">
@@ -617,17 +626,18 @@
                                             <div id="signat2"></div>
                                             <br />
                                             <button id="clear2">Hapus Gambar</button>
+                                            <input type="hidden" name="id" value="{{ $MataKanan->id }}" />
                                             <textarea id="signature2" name="signed_kanan" style="display: none"></textarea>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="">Deskripsi Kiri :</label>
-                                                <input type="text" class="form-control" name="DESKRIPSI_KIRI" value="{{ $MataKiri->DESKRIPSI }}" id="">
+                                                <input type="text" class="form-control" name="DESKRIPSI_KIRI" value="{{ $MataKiri->DESKRIPSI ?? ''}}" id="">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="">Deskripsi Kanan :</label>
-                                            <input type="text" class="form-control" name="DESKRIPSI_KANAN" value="{{ $MataKanan->DESKRIPSI }}" id="">
+                                            <input type="text" class="form-control" name="DESKRIPSI_KANAN" value="{{ $MataKanan->DESKRIPSI ?? ''}}" id="">
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -908,7 +918,8 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Edukasi</label>
-                                        <input type="text" name="FS_EDUKASI" class="form-control @error('edukasi') is-invalid @enderror">
+                                        <textarea name="edukasi" class="form-control  @error('edukasi') is-invalid  
+                                        @enderror" rows="3" placeholder="Masukan ...">{{ $asasmen_dokter->edukasi }}</textarea>
                                     </div>
                                     @error('edukasi')
                                     <div class="invalid-feedback">
@@ -937,10 +948,10 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <input type="text" name="konsul" class="form-control @error('konsul') is-invalid  
-                                            @enderror" value="{{old('konsul')}}" placeholder="Kebagian konsul ...">
+                                                <input type="text" name="keterangan_konsul" class="form-control @error('keterangan_konsul') is-invalid  
+                                            @enderror" value="{{old('keterangan_konsul')}}" placeholder="Kebagian konsul ...">
                                             </div>
-                                            @error('konsul')
+                                            @error('keterangan_konsul')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
@@ -994,6 +1005,78 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <!-- include form -->
+                    </div>
+                    {{-- surat menyurat  --}}
+                    <div class="card card-secondary" id="form2" style="display: none">
+                        <div class="card-header card-success">
+                            <h4 class="card-title">Surat Keterangan Dalam Perawatan</h4>
+                        </div>
+                        <!-- include form -->
+                        <div class="card-body">
+                            <!-- <div class="row"> -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Belum dapat dikembalikan ke Fasilitas Perujuk dengan alasan</label>
+                                    <div class="input-group mb-3">
+                                        <select name="FS_SKDP_1" id="FS_SKDP_1" class="form-control" onchange="click_alasan_skdp(this)">
+                                            <option value="">-- pilih --</option>
+                                            @foreach ($alasanSkdp as $skdpalasan)
+                                            <option value="{{$skdpalasan->FS_KD_TRS}}" {{ ($skdp->FS_SKDP_1 == $skdpalasan->FS_KD_TRS ) ? 'selected' : '' }}>{{$skdpalasan->FS_NM_SKDP_ALASAN}}</option>
+    
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Rencana tindak lanjut yang akan dilakukan pada kunjungan selanjutnya :</label>
+                                <div class="input-group mb-3">
+                                    <select name="FS_SKDP_2" id="rencana_skdp" class="form-control">
+                                        <option value="1">--Pilih Rencana Tindakan--</option>
+                                        @foreach ($rencanaSkdp as $renSkdp)
+                                        <option value="{{$renSkdp->FS_KD_TRS}}" {{ ($skdp->FS_SKDP_2 == $renSkdp->FS_KD_TRS ) ? 'selected' : '' }}>{{$renSkdp->FS_NM_SKDP_RENCANA}}</option>
+                                        @endforeach
+                                    </select>
+                                    <input type="text" name="FS_SKDP_KET" class="form-control" value="{{$skdp->FS_SKDP_KET}}" placeholder="keterangan">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Rencana Kontrol Berikutnya : </label>
+                                <div class="input-group mb-3">
+                                    <select class="form-control selectric" name="FS_RENCANA_KONTROL">
+                                        <option value="1 Minggu Kedepan"  {{ ($skdp->FS_RENCANA_KONTROL == '1 Minggu Kedepan' ) ? 'selected' : '' }}>1 Minggu Kedepan</option>
+                                        <option value="2 Minggu Kedepan" {{ ($skdp->FS_RENCANA_KONTROL == '2 Minggu Kedepan' ) ? 'selected' : '' }}>2 Minggu Kedepan</option>
+                                        <option value="Sebulan Kedepan" {{ ($skdp->FS_RENCANA_KONTROL == 'Sebulan Kedepan' ) ? 'selected' : '' }}>Sebulan Kedepan</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-6">
+                                    <label>contoh </label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" name="kontrol"  class="form-control" id="kontrol_rencana">
+                                    </div>
+                                </div> -->
+                            <div class="col-md-6">
+                                <label>Tanggal Kontrol Berikutnya : </label>
+                                <div class="input-group mb-3">
+                                    <input type="date" name="FS_SKDP_KONTROL" value="{{$skdp->FS_SKDP_KONTROL ?? ''}}" class="form-control" id="tgl_kontrol_berikutnya">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Tanggal Expired Rujukan Faskes : </label>
+                                <div class="input-group mb-3">
+                                    <input type="date" name="FS_SKDP_FASKES" value="{{$skdp->FS_SKDP_FASKES ?? ''}}" id="FS_SKDP_FASKES" class="form-control" >
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Keterangan Atau Pesan : </label>
+                                <div class="input-group mb-3">
+                                    <textarea class="form-control" rows="3" name="FS_PESAN" value="{{$skdp->FS_PESAN ?? ''}}"  placeholder="Masukan ..."></textarea>
+                                </div>
+                            </div>
+                            <!-- </div> -->
                         </div>
                         <!-- include form -->
                     </div>
@@ -1086,7 +1169,6 @@
 </script>
 
 <script>
-    <script>
     function click_alasan_skdp(selected) {
 
         var FS_SKDP_1 = $("#FS_SKDP_1").val();
@@ -1122,7 +1204,6 @@
             }
         });
     }
-</script>
 </script>
 
 {{-- Resep --}}

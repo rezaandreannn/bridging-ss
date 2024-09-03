@@ -92,29 +92,6 @@ class AssesmenDokterMataController extends Controller
         try {
             DB::connection('pku')->beginTransaction();
 
-            // DB::connection('pku')->table('poli_mata_asesmen_dokter')->insert([
-            //     'NO_REG' => $request->input('NO_REG'),
-            //     'DIAGNOSA' => $request->input('DIAGNOSA'),
-            //     'KONJUNGTIVA' => $request->input('KONJUNGTIVA'),
-            //     'SKELERA' => $request->input('SKELERA'),
-            //     'BIBIR_LIDAH' => $request->input('BIBIR_LIDAH'),
-            //     'gambar_kiri' => $request->input('gambar_kiri'),
-            //     'gambar_kanan' => $request->input('gambar_kanan'),
-            //     'deskripsi_kiri' => $request->input('deskripsi_kiri'),
-            //     'deskripsi_kanan' => $request->input('deskripsi_kanan'),
-            //     'discharge' => $request->input('discharge'),
-            //     'tonometri_od' => $request->input('tonometri_od'),
-            //     'tonometri_os' => $request->input('tonometri_os'),
-            //     'aplansi_od' => $request->input('aplansi_od'),
-            //     'aplansi_os' => $request->input('aplansi_os'),
-            //     'anel_od' => $request->input('anel_od'),
-            //     'anel_os' => $request->input('anel_os'),
-            //     'ekstremitas_od' => $request->input('ekstremitas_od'),
-            //     'ekstremitas_os' => $request->input('ekstremitas_os'),
-            //     'created_at' => now(),
-            //     'CREATE_BY' => auth()->user()->username,
-            // ]);
-
             DB::connection('pku')->table('TAC_RJ_SKDP')->insert([
                 'FS_KD_REG' => $request->input('NO_REG'),
                 'FS_SKDP_1' => $request->input('FS_SKDP_1'),
@@ -170,7 +147,6 @@ class AssesmenDokterMataController extends Controller
             ]);
 
             // ------------------- Gambar Mata Kiri ----------------- //
-
             if ($request->signed_kiri != '') {
                 $image_parts = explode(";base64,", $request->signed_kiri);
                 $image_type_aux = explode("image/", $image_parts[0]);
@@ -216,7 +192,6 @@ class AssesmenDokterMataController extends Controller
                     'CREATE_BY' => auth()->user()->username,
                 ]);
             }
-
             // ------------------------------------------------ //
 
             $masalah_kep = $request->input('tujuan');
@@ -281,14 +256,17 @@ class AssesmenDokterMataController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($noReg)
+    public function edit(Request $request, $noReg)
     {
         $title = $this->prefix . ' ' . 'Mata Assesmen Dokter Edit';
         $biodata = $this->rekam_medis->getBiodata($noReg);
         $asasmen_dokter = $this->poliMata->asasmenDokter($noReg);
         // dd($asasmen_dokter);
+
+        // SKDP
         $alasanSkdp = $this->rajal->getAlesanSkdp();
         $skdp = $this->rajal->getSkdp($noReg);
+        $rencanaSkdp = $this->rajal->get_rencana_skdp_by_noreg();
 
         // Data Master
         $masterLab = $this->rajaldokter->getMasterLab();
@@ -297,6 +275,7 @@ class AssesmenDokterMataController extends Controller
 
         // Gambar Mata
         $MataKiri = $this->poliMata->getMataKiri($noReg);
+        // dd($MataKiri);
         $MataKanan = $this->poliMata->getMataKanan($noReg);
 
         $masalah_perawatan = $this->rajal->masalah_perawatan();
@@ -306,7 +285,7 @@ class AssesmenDokterMataController extends Controller
         $rencana_perGet = $this->rajal->rencanaPerawatanGetByNoreg($noReg);
 
         // dd($asasmen_perawat);
-        return view($this->view . 'dokter.EditassesmenAwal', compact('title', 'biodata', 'MataKanan', 'MataKiri', 'alasanSkdp', 'skdp', 'asasmen_dokter', 'masterLab', 'masterRadiologi', 'masterObat', 'masalah_perGet', 'rencana_perGet', 'masalah_perawatan', 'rencana_perawatan', 'noReg'));
+        return view($this->view . 'dokter.EditassesmenAwal', compact('title', 'biodata', 'MataKanan', 'MataKiri', 'alasanSkdp', 'skdp', 'rencanaSkdp', 'asasmen_dokter', 'masterLab', 'masterRadiologi', 'masterObat', 'masalah_perGet', 'rencana_perGet', 'masalah_perawatan', 'rencana_perawatan', 'noReg'));
     }
 
     /**
@@ -316,32 +295,12 @@ class AssesmenDokterMataController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $noReg)
+    public function update(Request $request)
     {
         // $userEmr = $this->rajal->getUserEmr(auth()->user()->username);
         try {
             DB::connection('pku')->beginTransaction();
 
-            // DB::connection('pku')->table('poli_mata_asesmen_dokter')->where('NO_REG', $request->input('NO_REG'))->update([
-            //     'KONJUNGTIVA' => $request->input('KONJUNGTIVA'),
-            //     'SKELERA' => $request->input('SKELERA'),
-            //     'BIBIR_LIDAH' => $request->input('BIBIR_LIDAH'),
-            //     'gambar_kiri' => $request->input('gambar_kiri'),
-            //     'gambar_kanan' => $request->input('gambar_kanan'),
-            //     'deskripsi_kiri' => $request->input('deskripsi_kiri'),
-            //     'deskripsi_kanan' => $request->input('deskripsi_kanan'),
-            //     'discharge' => $request->input('discharge'),
-            //     'tonometri_od' => $request->input('tonometri_od'),
-            //     'tonometri_os' => $request->input('tonometri_os'),
-            //     'aplansi_od' => $request->input('aplansi_od'),
-            //     'aplansi_os' => $request->input('aplansi_os'),
-            //     'anel_od' => $request->input('anel_od'),
-            //     'anel_os' => $request->input('anel_os'),
-            //     'ekstremitas_od' => $request->input('ekstremitas_od'),
-            //     'ekstremitas_os' => $request->input('ekstremitas_os'),
-            //     'updated_at' => now(),
-            //     'CREATE_BY' => auth()->user()->username,
-            // ]);
             DB::connection('pku')->table('TAC_RJ_SKDP')->where('FS_KD_REG', $request->input('NO_REG'))->update([
                 'FS_SKDP_1' => $request->input('FS_SKDP_1'),
                 'FS_SKDP_2' => $request->input('FS_SKDP_2'),
@@ -382,6 +341,7 @@ class AssesmenDokterMataController extends Controller
                 'DIAGNOSA' => $request->input('DIAGNOSA'),
                 'edukasi' => $request->input('edukasi'),
                 'konsul' => $request->input('konsul'),
+                'keterangan_konsul' => $request->input('keterangan_konsul'),
                 'discharge' => $request->input('discharge'),
                 'tonometri_od' => $request->input('tonometri_od'),
                 'tonometri_os' => $request->input('tonometri_os'),
@@ -394,6 +354,73 @@ class AssesmenDokterMataController extends Controller
                 'created_at' => now(),
                 'CREATE_BY' => auth()->user()->username,
             ]);
+
+            // ------------------- Gambar Mata Kiri ----------------- //
+            if ($request->signed_kiri != '') {
+                $image_parts = explode(";base64,", $request->signed_kiri);
+                $image_type_aux = explode("image/", $image_parts[0]);
+                $image_type = $image_type_aux[1];
+                $image_base64 = base64_decode($image_parts[1]);
+
+                // Use uniqid to generate a unique file name
+                $file_name_kiri = uniqid($request->input('NO_REG') . '-' . 'Mata-Kiri' . '-' . date('Y-m-d') . '-') . '.' . $image_type;
+
+                // Retrieve the current record to get the old file name
+                $gambar_kiri = DB::connection('pku')->table('poli_mata_gambar')
+                    ->where('id', $request->input('id'))
+                    ->where('TIPE', 'Mata Kiri')
+                    ->first();
+
+                if ($gambar_kiri) {
+                    // Hapus gambar lama dari storage
+                    Storage::delete('public/gambar_mata/' . $gambar_kiri->GAMBAR);
+                    // Simpan gambar baru ke storage
+                    Storage::put('public/gambar_mata/' . $file_name_kiri, $image_base64);
+                    // Update the database record
+                    DB::connection('pku')->table('poli_mata_gambar')->where('id', $request->input('id'))->update([
+                        'NO_REG' => $request->input('NO_REG'),
+                        'GAMBAR' => $file_name_kiri,
+                        'DESKRIPSI' => $request->input('DESKRIPSI_KIRI'),
+                        'TIPE' => 'Mata Kiri',
+                        'UPDATE_BY' => auth()->user()->username,
+                    ]);
+                }
+            }
+            // -------------------------------------------------- //
+
+            // ----------------- Gambar Mata Kanan -------------- //
+            if ($request->signed_kanan != '') {
+                $image_parts = explode(";base64,", $request->signed_kanan);
+                $image_type_aux = explode("image/", $image_parts[0]);
+                $image_type = $image_type_aux[1];
+                $image_base64 = base64_decode($image_parts[1]);
+
+                // Use uniqid to generate a unique file name
+                $file_name_kanan = uniqid($request->input('NO_REG') . '-' . 'Mata-Kanan' . '-' . date('Y-m-d') . '-') . '.' . $image_type;
+
+                // Retrieve the current record to get the old file name
+                $gambar_kanan = DB::connection('pku')->table('poli_mata_gambar')
+                    ->where('id', $request->input('id'))
+                    ->where('TIPE', 'Mata Kanan')
+                    ->first();
+
+                if ($gambar_kanan) {
+                    // Hapus gambar lama dari storage
+                    Storage::delete('public/gambar_mata/' . $gambar_kanan->GAMBAR);
+                    // Simpan gambar baru ke storage
+                    Storage::put('public/gambar_mata/' . $file_name_kanan, $image_base64);
+                    // Update the database record
+                    DB::connection('pku')->table('poli_mata_gambar')->where('id', $request->input('id'))->update([
+                        'NO_REG' => $request->input('NO_REG'),
+                        'GAMBAR' => $file_name_kanan,
+                        'DESKRIPSI' => $request->input('DESKRIPSI_KANAN'),
+                        'TIPE' => 'Mata Kanan',
+                        'UPDATE_BY' => auth()->user()->username,
+                    ]);
+                }
+            }
+
+            // ------------------------------------------------ //
 
             $masalah_kep = $request->input('tujuan');
             DB::connection('pku')->table('TAC_RJ_MASALAH_KEP')->where('FS_KD_REG', $request->input('NO_REG'))->delete();
