@@ -60,7 +60,7 @@
                                             <td>{{$alkes->nama_alat}}</td>
                                             <td>{{$alkes->created_by}}</td>
                                             <td>
-                                                <a href="#" data-toggle="modal" data-target="#modal-edit-diagnosa-fungsi{{ $alkes->id }}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</a>
+                                                <a href="#" data-toggle="modal" data-target="#modal-edit-master-alkes{{ $alkes->id }}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</a>
 
                                                 <form id="delete-form-{{$alkes->id}}" action="{{ route('masterAlkes.destroy', $alkes->id) }}" method="POST" style="display: none;">
                                                     @method('delete')
@@ -115,27 +115,27 @@
 </div>
 
 <!-- modal edit alkes -->
-{{-- @foreach ($diagnosisFungsi as $item)
-<div class="modal fade" id="modal-edit-alkes{{$item->id}}">
+@foreach ($masterAlkes as $alkes)
+<div class="modal fade" id="modal-edit-master-alkes{{$alkes->id}}">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Edit Diagnosis Fungsi</h4>
+                <h4 class="modal-title">Edit Alat Kesehatan</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('diagnosisFungsi.update', $item->id) }}" method="POST">
+                <form action="{{ route('masterAlkes.update', $alkes->id) }}" method="POST">
                     @csrf
                     @method('put')
                     
                 <div class="card-body">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>Nama Diagnosa</label>
-                            <input type="text" name="nama_diagnosis_fungsi" class="form-control @error('nama_diagnosis_fungsi')  is-invalid @enderror" value="{{$item->nama_diagnosis_fungsi}}">
-                            @error('nama_diagnosis_fungsi')
+                            <label>Nama Alat Kesehatan</label>
+                            <input type="text" name="nama_alat" class="form-control @error('nama_alat')  is-invalid @enderror" value="{{$alkes->nama_alat}}">
+                            @error('nama_alat')
                             <span class="text-danger" style="font-size: 12px;">
                                 {{ $message }}
                             </span>
@@ -153,7 +153,7 @@
         </div>
     </div>
 </div>
-@endforeach --}}
+@endforeach
 
 
 <!-- modal add alkes -->
@@ -247,19 +247,37 @@
                 </button>
             </div>
             <div class="modal-body">
-            <form action="{{ route('diagnosisFungsi.store') }}" method="POST">
+            <form action="{{ route('masterHargaAlkes.store') }}" method="POST">
             @csrf
                 <div class="card-body">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>Nama Diagnosa</label>
-                            <input type="text" name="nama_diagnosis_fungsi" class="form-control @error('nama_diagnosis_fungsi')  is-invalid @enderror">
+                            <label>Nama Alat Kesehatan</label>
+                            <select name="id_alkes" id="id_alkes" class="form control select2 @error('nama_diagnosis_fungsi')  is-invalid @enderror">
+                            <option value="" disabled selected>Pilih Alat</option>
+                                @foreach ($masterAlkes as $row)   
+                                <option value="{{$row->id}}">{{$row->nama_alat}}</option>
+                                @endforeach
+
+                            </select>
                             @error('nama_diagnosis_fungsi')
                             <span class="text-danger" style="font-size: 12px;">
                                 {{ $message }}
                             </span>
                             @enderror
                         </div>
+                    </div>
+
+                    <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Harga</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" name="harga" value="" id="harga" placeholder="Masukkan hanya angka">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">Rp.</span>
+                                    </div>
+                                </div>
+                            </div>
                     </div>
     
                 </div>
@@ -361,5 +379,7 @@
         });
     });
     </script>
+
+    
 
 @endpush

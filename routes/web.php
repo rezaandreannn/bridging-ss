@@ -121,8 +121,12 @@ Route::middleware('auth')->group(function () {
          Route::get('farmasi', [MasterDataAlkesController::class, 'index'])->name('masterData.index');
 
          Route::post('farmasi/alkes/add_proses', [MasterDataAlkesController::class, 'store'])->name('masterAlkes.store');
-
+         
+         Route::put('farmasi/alkes/update_proses/{id}', [MasterDataAlkesController::class, 'update'])->name('masterAlkes.update');
+         
          Route::delete('farmasi/alkes/delete_proses/{id}', [MasterDataAlkesController::class, 'destroy'])->name('masterAlkes.destroy');
+
+         Route::post('farmasi/harga_alkes/add_proses', [MasterDataAlkesController::class, 'store_harga'])->name('masterHargaAlkes.store');
     });
 
     // ENCOUNTER 
