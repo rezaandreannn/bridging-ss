@@ -202,7 +202,7 @@ class Rajal extends Model
 
     public function cek_order_alkes($noReg)
     {
-        
+
         $data = DB::connection('pku')
             ->table('fis_order_alkes')
             ->select(
@@ -220,7 +220,7 @@ class Rajal extends Model
 
     public function cek_lingkar_pinggang($noReg)
     {
-        
+
         $data = DB::connection('pku')
             ->table('fis_order_alkes')
             ->select(
@@ -230,7 +230,7 @@ class Rajal extends Model
             ->where('no_registrasi', $noReg)
             ->first();
 
-     return $data;
+        return $data;
     }
 
     public function masalah_perawatan()
@@ -388,6 +388,7 @@ class Rajal extends Model
         $data = json_decode($response, true);
         return $data['data'];
     }
+
     // alasan skdp
     public function getAlesanSkdp()
     {

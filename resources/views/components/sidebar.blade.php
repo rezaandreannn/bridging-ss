@@ -85,16 +85,16 @@
             
             @can('poli mata')
             <li class="menu-header">Poli</li> 
+            @can('poli mata perawat')
             <li class="nav-item dropdown {{ Request::is('pm/master_data/*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Master Data</span></a>
-                @can('poli mata perawat')
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('pm/master_data/penyakit_sekarang/list*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('penyakitSekarang.index') }}">Penyakit Sekarang</a>
                     </li>
                 </ul>
-                @endcan
             </li>
+            @endcan
             <li class="nav-item dropdown {{ Request::is('pm/polimata/*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-eye"></i> <span>Poli Mata</span></a>
                 @can('poli mata perawat')

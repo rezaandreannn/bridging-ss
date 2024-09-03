@@ -34,6 +34,7 @@ return new class extends Migration
             $table->string('DIAGNOSA')->nullable();
             $table->string('edukasi')->nullable();
             $table->string('konsul')->nullable();
+            $table->string('keterangan_konsul')->nullable();
             $table->string('palpebra_kiri')->nullable();
             $table->string('palpebra_kanan')->nullable();
             $table->string('conjuctiva_kiri')->nullable();
