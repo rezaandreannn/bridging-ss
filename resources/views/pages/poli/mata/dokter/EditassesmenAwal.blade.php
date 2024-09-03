@@ -617,7 +617,7 @@
                                             <div id="signat"></div>
                                             <br />
                                             <button id="clear">Hapus Gambar</button>
-                                            <input type="hidden" name="id" value="{{ $MataKiri->id }}" />
+                                            <input type="hidden" name="id_kiri" value="{{ $MataKiri->id }}" />
                                             <textarea id="signature1" name="signed_kiri" style="display: none"></textarea>
                                         </div>
                                         <div class="col-md-6">
@@ -626,7 +626,7 @@
                                             <div id="signat2"></div>
                                             <br />
                                             <button id="clear2">Hapus Gambar</button>
-                                            <input type="hidden" name="id" value="{{ $MataKanan->id }}" />
+                                            <input type="hidden" name="id_kanan" value="{{ $MataKanan->id }}" />
                                             <textarea id="signature2" name="signed_kanan" style="display: none"></textarea>
                                         </div>
                                         <div class="col-md-6">

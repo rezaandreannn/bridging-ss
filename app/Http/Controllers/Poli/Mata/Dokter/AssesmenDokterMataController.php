@@ -367,7 +367,7 @@ class AssesmenDokterMataController extends Controller
 
                 // Retrieve the current record to get the old file name
                 $gambar_kiri = DB::connection('pku')->table('poli_mata_gambar')
-                    ->where('id', $request->input('id'))
+                    ->where('id', $request->input('id_kiri'))
                     ->where('TIPE', 'Mata Kiri')
                     ->first();
 
@@ -377,7 +377,7 @@ class AssesmenDokterMataController extends Controller
                     // Simpan gambar baru ke storage
                     Storage::put('public/gambar_mata/' . $file_name_kiri, $image_base64);
                     // Update the database record
-                    DB::connection('pku')->table('poli_mata_gambar')->where('id', $request->input('id'))->update([
+                    DB::connection('pku')->table('poli_mata_gambar')->where('id', $request->input('id_kiri'))->update([
                         'NO_REG' => $request->input('NO_REG'),
                         'GAMBAR' => $file_name_kiri,
                         'DESKRIPSI' => $request->input('DESKRIPSI_KIRI'),
@@ -400,7 +400,7 @@ class AssesmenDokterMataController extends Controller
 
                 // Retrieve the current record to get the old file name
                 $gambar_kanan = DB::connection('pku')->table('poli_mata_gambar')
-                    ->where('id', $request->input('id'))
+                    ->where('id', $request->input('id_kanan'))
                     ->where('TIPE', 'Mata Kanan')
                     ->first();
 
@@ -410,7 +410,7 @@ class AssesmenDokterMataController extends Controller
                     // Simpan gambar baru ke storage
                     Storage::put('public/gambar_mata/' . $file_name_kanan, $image_base64);
                     // Update the database record
-                    DB::connection('pku')->table('poli_mata_gambar')->where('id', $request->input('id'))->update([
+                    DB::connection('pku')->table('poli_mata_gambar')->where('id', $request->input('id_kanan'))->update([
                         'NO_REG' => $request->input('NO_REG'),
                         'GAMBAR' => $file_name_kanan,
                         'DESKRIPSI' => $request->input('DESKRIPSI_KANAN'),
