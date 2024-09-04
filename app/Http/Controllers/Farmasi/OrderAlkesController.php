@@ -41,23 +41,24 @@ class OrderAlkesController extends Controller
             }
             $pasienAlkes = $this->farmasi->getFisioterapAlkes($tanggal);
             $berkasfisio = new BerkasFisioterapi();
-            // dd($pasienAlkes);
-            // $kode_dokter = $request->input('kode_dokter');
-            // $dokters = $this->rajal->byKodeDokter();
-            // // dd($dokters);
-            // $dataPasien = [];
-            // if ($kode_dokter != null and $kode_dokter != null) {
-            //     $dataPasien = $this->rekam_medis->rekamMedisHarian($kode_dokter, $tanggal);
-            // }
-    
-            // $tglSekarang = strtotime(date('Y-m-d'));
-            // $tglKemarin = date('Y-m-d', strtotime("-1 day", $tglSekarang));
-            // $userLogin = auth()->user()->username;
-            // dd($dataPasien);
+            $masterHargaAlkes = $this->farmasi->getMasterHargaAlkes();
+            // dd($masterHargaAlkes);
     
     
-            return view($this->view . 'order_alkes.index', compact('title','pasienAlkes','berkasfisio'));
+            return view($this->view . 'order_alkes.index', compact('title','pasienAlkes','berkasfisio','masterHargaAlkes'));
         //
+    }
+
+    public function harga_alkes_by_ukuran_alat(Request $request)
+    {
+        $id = $request->input('ukuran');
+
+        $harga_alkes = $this->farmasi->getHargaAlkes($id);
+        //$data .= "<option>--Pilih Alasan--</option>";
+        // return json_encode($harga_alkes);
+        return response()->json([
+            'data' => $harga_alkes
+        ]);
     }
 
     /**

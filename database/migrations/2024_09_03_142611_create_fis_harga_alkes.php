@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('fis_harga_alkes', function (Blueprint $table) {
+        Schema::connection('pku')->create('fis_harga_alkes', function (Blueprint $table) {
             $table->id();
             $table->string('id_alkes');
-            $table->string('harga');
+            $table->string('ukuran');
+            $table->integer('harga');
             $table->string('created_by');
             $table->timestamps();
         });
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fis_harga_alkes');
+        Schema::connection('pku')->dropIfExists('fis_harga_alkes');
     }
 };

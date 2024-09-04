@@ -60,7 +60,7 @@
                                             <td>{{$alkes->nama_alat}}</td>
                                             <td>{{$alkes->created_by}}</td>
                                             <td>
-                                                <a href="#" data-toggle="modal" data-target="#modal-edit-diagnosa-fungsi{{ $alkes->id }}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</a>
+                                                <a href="#" data-toggle="modal" data-target="#modal-edit-master-alkes{{ $alkes->id }}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</a>
 
                                                 <form id="delete-form-{{$alkes->id}}" action="{{ route('masterAlkes.destroy', $alkes->id) }}" method="POST" style="display: none;">
                                                     @method('delete')
@@ -88,16 +88,32 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Harga Alat Kesehatan</th>
+                                            <th>Nama Alat</th>
+                                            <th>Ukuran</th>
+                                            <th>Harga</th>
                                             <th>Create By</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        @foreach ($masterHargaAlkes as $row)
+                                        <tr>
+                                              <td>{{$loop->iteration}}</td>
+                                              <td>{{$row->nama_alat}}</td>
+                                              <td>{{$row->ukuran}}</td>
+                                              <td>Rp. {{$row->harga}}</td>
+                                              <td>{{$row->created_by}}</td>
+                                              <td>
+                                                <a href="#" data-toggle="modal" data-target="#modal-edit-harga-alkes{{ $row->id }}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</a>
+
+                                                <form id="delete-form-harga-alkes-{{$row->id}}" action="{{ route('masterHargaAlkes.destroy', $row->id) }}" method="POST" style="display: none;">
+                                                    @method('delete')
+                                                    @csrf
+                                                </form>
+                                                <a class="btn btn-danger btn-sm" confirm-delete="true" data-menuId="{{$row->id}}" href="#"><i class="fas fa-trash"></i> Hapus</a>
+                                              </td>
+                                        </tr>  
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -115,27 +131,27 @@
 </div>
 
 <!-- modal edit alkes -->
-{{-- @foreach ($diagnosisFungsi as $item)
-<div class="modal fade" id="modal-edit-alkes{{$item->id}}">
+@foreach ($masterAlkes as $alkes)
+<div class="modal fade" id="modal-edit-master-alkes{{$alkes->id}}">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Edit Diagnosis Fungsi</h4>
+                <h4 class="modal-title">Edit Alat Kesehatan</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('diagnosisFungsi.update', $item->id) }}" method="POST">
+                <form action="{{ route('masterAlkes.update', $alkes->id) }}" method="POST">
                     @csrf
                     @method('put')
                     
                 <div class="card-body">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>Nama Diagnosa</label>
-                            <input type="text" name="nama_diagnosis_fungsi" class="form-control @error('nama_diagnosis_fungsi')  is-invalid @enderror" value="{{$item->nama_diagnosis_fungsi}}">
-                            @error('nama_diagnosis_fungsi')
+                            <label>Nama Alat Kesehatan</label>
+                            <input type="text" name="nama_alat" class="form-control @error('nama_alat')  is-invalid @enderror" value="{{$alkes->nama_alat}}">
+                            @error('nama_alat')
                             <span class="text-danger" style="font-size: 12px;">
                                 {{ $message }}
                             </span>
@@ -153,7 +169,7 @@
         </div>
     </div>
 </div>
-@endforeach --}}
+@endforeach
 
 
 <!-- modal add alkes -->
@@ -195,33 +211,44 @@
 
 
 <!-- modal edit harga alkes -->
-{{-- @foreach ($diagnosisFungsi as $item)
-<div class="modal fade" id="modal-edit-harga-alkes{{$item->id}}">
+@foreach ($masterHargaAlkes as $row)
+<div class="modal fade" id="modal-edit-harga-alkes{{$row->id}}">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Edit Diagnosis Fungsi</h4>
+                <h4 class="modal-title">Edit Harga Alkes</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('diagnosisFungsi.update', $item->id) }}" method="POST">
+                <form action="{{ route('masterHargaAlkes.update', $row->id) }}" method="POST">
                     @csrf
                     @method('put')
                     
                 <div class="card-body">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>Nama Diagnosa</label>
-                            <input type="text" name="nama_diagnosis_fungsi" class="form-control @error('nama_diagnosis_fungsi')  is-invalid @enderror" value="{{$item->nama_diagnosis_fungsi}}">
-                            @error('nama_diagnosis_fungsi')
+                            <label>Ukuran</label>
+                            <input type="text" name="ukuran" class="form-control @error('ukuran')  is-invalid @enderror" value="{{$row->ukuran}}">
+                            @error('ukuran')
                             <span class="text-danger" style="font-size: 12px;">
                                 {{ $message }}
                             </span>
                             @enderror
                         </div>
                     </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Harga</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" name="harga" value="{{$row->harga}}" id="harga" placeholder="Masukkan hanya angka">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">Rp.</span>
+                                </div>
+                            </div>
+                        </div>
+                </div>
     
                 </div>
             </div>
@@ -233,7 +260,7 @@
         </div>
     </div>
 </div>
-@endforeach --}}
+@endforeach
 
 
 <!-- modal add harga -->
@@ -247,19 +274,49 @@
                 </button>
             </div>
             <div class="modal-body">
-            <form action="{{ route('diagnosisFungsi.store') }}" method="POST">
+            <form action="{{ route('masterHargaAlkes.store') }}" method="POST">
             @csrf
                 <div class="card-body">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>Nama Diagnosa</label>
-                            <input type="text" name="nama_diagnosis_fungsi" class="form-control @error('nama_diagnosis_fungsi')  is-invalid @enderror">
+                            <label>Nama Alat Kesehatan</label>
+                            <select name="id_alkes" id="id_alkes" class="form control select2 @error('nama_diagnosis_fungsi')  is-invalid @enderror">
+                            <option value="" disabled selected>Pilih Alat</option>
+                                @foreach ($masterAlkes as $row)   
+                                <option value="{{$row->id}}">{{$row->nama_alat}}</option>
+                                @endforeach
+
+                            </select>
                             @error('nama_diagnosis_fungsi')
                             <span class="text-danger" style="font-size: 12px;">
                                 {{ $message }}
                             </span>
                             @enderror
                         </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Ukuran</label>
+                            <input type="text" name="ukuran" id="ukuran" class="form-control">
+                            @error('ukuran')
+                            <span class="text-danger" style="font-size: 12px;">
+                                {{ $message }}
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Harga</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" name="harga" value="" id="harga" placeholder="Masukkan hanya angka">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">Rp.</span>
+                                    </div>
+                                </div>
+                            </div>
                     </div>
     
                 </div>
@@ -361,5 +418,38 @@
         });
     });
     </script>
+
+<script>
+    $(document).ready(function() {
+        // Inisialisasi DataTable
+        var table = $('#table-2').DataTable();
+    
+        // Event delegation untuk tombol delete
+        $('#table-2').on('click', '[confirm-delete="true"]', function(event) {
+            event.preventDefault();
+            var menuId = $(this).data('menuid');
+            Swal.fire({
+                title: 'Apakah Kamu Yakin?',
+                text: "Anda tidak akan dapat mengembalikan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#6777EF',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Hapus saja!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var form = $('#delete-form-harga-alkes-' + menuId);
+                    if (form.length) {
+                        form.submit();
+                    } else {
+                        console.error('Data will not be deleted!:', menuId);
+                    }
+                }
+            });
+        });
+    });
+    </script>
+
+    
 
 @endpush

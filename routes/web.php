@@ -77,7 +77,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
+    
     // MASTER DATA 
     Route::prefix('md')->middleware('auth')->group(function () {
         // ORGANIZATION
@@ -87,19 +87,19 @@ Route::middleware('auth')->group(function () {
         Route::get('/organization/{organization_id}/edit', [OrganizationController::class, 'edit'])->name('organization.edit');
         Route::post('/organization', [OrganizationController::class, 'store'])->name('organization.store');
         Route::put('/organization{organization_id}', [OrganizationController::class, 'update'])->name('organization.update');
-
+        
         // PASIEN
         Route::get('/patient', [PasienController::class, 'index'])->name('patient.index');
         Route::get('/patient/create', [PasienController::class, 'create'])->name('patient.create');
         Route::get('/patient/{noMr}', [PasienController::class, 'show'])->name('patient.show');
         Route::post('/patient', [PasienController::class, 'store'])->name('patient.store');
-
+        
         // DOKTER
         Route::get('/dokter', [DokterController::class, 'index'])->name('dokter.index');
         Route::get('/dokter/create', [DokterController::class, 'create'])->name('dokter.create');
         Route::get('/dokter/{kode_dokter}/edit', [DokterController::class, 'edit'])->name('dokter.edit');
         Route::get('/dokter/{kode_dokter}', [DokterController::class, 'show'])->name('dokter.show');
-
+        
         // LOCATION
         Route::get('/location', [LocationController::class, 'index'])->name('location.index');
         Route::get('/location/create', [LocationController::class, 'create'])->name('location.create');
@@ -107,39 +107,45 @@ Route::middleware('auth')->group(function () {
         Route::get('/location/{location_id}/edit', [LocationController::class, 'edit'])->name('location.edit');
         Route::post('/location', [LocationController::class, 'store'])->name('location.store');
         Route::patch('/location/{location_id}', [LocationController::class, 'update'])->name('location.update');
-
+        
         // ICD10
         Route::resource('icd10', Icd10Controller::class);
-
+        
         // Jenis Fisioterapi (Master Data)
         Route::get('/jenisFisio', [JenisFisioController::class, 'index'])->name('jenisFisio.index');
         Route::post('/jenisFisio', [JenisFisioController::class, 'store'])->name('jenisFisio.store');
         Route::put('/jenisFisio/{id}', [JenisFisioController::class, 'update'])->name('jenisFisio.update');
         Route::delete('/jenisFisio/{id}', [JenisFisioController::class, 'destroy'])->name('jenisFisio.delete');
-
+        
         // master data farmasi
-         Route::get('farmasi', [MasterDataAlkesController::class, 'index'])->name('masterData.index');
-
-         Route::post('farmasi/alkes/add_proses', [MasterDataAlkesController::class, 'store'])->name('masterAlkes.store');
-
-         Route::delete('farmasi/alkes/delete_proses/{id}', [MasterDataAlkesController::class, 'destroy'])->name('masterAlkes.destroy');
+        Route::get('farmasi', [MasterDataAlkesController::class, 'index'])->name('masterData.index');
+        
+        Route::post('farmasi/alkes/add_proses', [MasterDataAlkesController::class, 'store'])->name('masterAlkes.store');
+        
+        Route::put('farmasi/alkes/update_proses/{id}', [MasterDataAlkesController::class, 'update'])->name('masterAlkes.update');
+        
+        Route::delete('farmasi/alkes/delete_proses/{id}', [MasterDataAlkesController::class, 'destroy'])->name('masterAlkes.destroy');
+        
+        Route::post('farmasi/harga_alkes/add_proses', [MasterDataAlkesController::class, 'store_harga'])->name('masterHargaAlkes.store');
+        Route::put('farmasi/harga_alkes/update_proses/{id}', [MasterDataAlkesController::class, 'update_harga'])->name('masterHargaAlkes.update');
+        Route::delete('farmasi/harga_alkes/delete_proses/{id}', [MasterDataAlkesController::class, 'destroy_harga'])->name('masterHargaAlkes.destroy');
     });
-
+    
     // ENCOUNTER 
     Route::prefix('ss')->group(function () {
         Route::get('/encounter', [RecourceController::class, 'index'])->name('resource.index');
         Route::get('/encounter/{id}/edit', [RecourceController::class, 'edit'])->name('resource.edit');
     });
-
-
-
-
+    
+    
+    
+    
     // CASE 
     Route::prefix('case')->name('case.')->group(function () {
         Route::get('encounter/create/{noReg}', EncounterCreateController::class)->name('encounter.create');
     });
-
-
+    
+    
     // KUNJUNGAN
     Route::prefix('kj')->group(function () {
         // PENDAFTARAN
@@ -147,15 +153,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/pendaftaran/create', [PendaftaranController::class, 'create'])->name('pendaftaran.create');
         Route::post('/pendaftaran', [PendaftaranController::class, 'store'])->name('pendaftaran.store');
         Route::get('/pendaftaran/{noReg}', [PendaftaranController::class, 'show'])->name('pendaftaran.show');
-
+        
         // PASIEN
         Route::get('/antrean', [AntreanController::class, 'index'])->name('antrean.index');
         Route::get('/antrean/create', [AntreanController::class, 'create'])->name('antrean.create');
         Route::post('/antrean', [AntreanController::class, 'store'])->name('antrean.store');
         Route::get('/antrean/{no_mr}', [AntreanController::class, 'show'])->name('antrean.show');
     });
-
-
+    
+    
     // MAPPING DATA
     Route::prefix('mp')->name('mapping.')->group(function () {
         // ENCOUNTER
@@ -170,12 +176,11 @@ Route::middleware('auth')->group(function () {
     Route::prefix('farmasi')->group(function () {
         // ENCOUNTER
         Route::get('orderAlkes', [OrderAlkesController::class, 'index'])->name('orderAlkes.index');
-        Route::get('encounter/{id}/edit', [MappingEncounterController::class, 'edit'])->name('encounter.edit');
-        Route::get('encounter/create', [MappingEncounterController::class, 'create'])->name('encounter.create');
-        Route::post('encounter', [MappingEncounterController::class, 'store'])->name('encounter.store');
-        Route::put('/encounter{id}', [MappingEncounterController::class, 'update'])->name('encounter.update');
+        Route::get('orderAlkes/verifByFarmasi', [OrderAlkesController::class, 'harga_alkes_by_ukuran_alat'])->name('orderAlkes.verifFarmasi');
 
-
+     
+        
+        
 
     });
 

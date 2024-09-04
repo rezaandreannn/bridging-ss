@@ -56,4 +56,31 @@ class Farmasi extends Model
     
             return $data;
         }
+
+        public function getMasterHargaAlkes(){
+
+            $data=DB::connection('pku')
+            ->table('fis_harga_alkes as harga')
+            ->Join('fis_master_data_alkes as alkes', 'alkes.id', '=', 'harga.id_alkes')
+            ->select(
+                'harga.*',
+                'alkes.nama_alat'
+                )
+            ->get();
+    
+            return $data;
+        }
+
+        public function getHargaAlkes($id)
+        {
+            $data = DB::connection('pku')
+            ->table('fis_harga_alkes as harga')
+            ->Join('fis_master_data_alkes as alkes', 'alkes.id', '=', 'harga.id_alkes')
+            ->select(
+                'harga.*',
+                'alkes.nama_alat'
+                )
+            ->where('harga.id', $id)->first();
+            return $data;
+        }
 }

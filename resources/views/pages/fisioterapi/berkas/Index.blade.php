@@ -181,8 +181,11 @@
                                             <td>{{ $pasien->Nama_Dokter }}</td>
                                             <td>{{ $pasien->jenis_alat }}</td>
                                             <td>
-                                                @if ($pasien->lingkar_pinggang != null)
-                                                <div class="badge badge-success"><i class="fa-solid fa-check"></i> Fisioterapi</div> 
+                                                @if ($pasien->verif_farmasi != null)
+                                                <div class="badge badge-success"><i class="fa-solid fa-check"></i> Sudah diambil</div>
+                                                @elseif ($pasien->lingkar_pinggang != null)
+                                                <div class="badge badge-info"><i class="fa-solid fa-check"></i> Fisioterapi</div>
+
                                                 @endif
                                             </td>
                                             <td width="20%">                                               
