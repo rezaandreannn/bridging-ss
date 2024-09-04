@@ -183,6 +183,7 @@ class AssesmenMataController extends Controller
 
         $asasmen_perawat = $this->poliMata->asasmenPerawatGet($noReg);
         $asasmen_dokter = $this->poliMata->asasmenDokter($noReg);
+        // dd($asasmen_dokter);
         $gambarMataKiri = $this->poliMata->getGambarMataKiri($noReg);
         $gambarMataKanan = $this->poliMata->getGambarMataKanan($noReg);
         // dd($asasmen_dokter);
@@ -212,6 +213,9 @@ class AssesmenMataController extends Controller
         $rads = $this->rajaldokter->radiologi($noReg);
         $biodata = $this->rekam_medis->getBiodata($noReg);
 
+        $gambarMataKiri = $this->poliMata->getGambarMataKiri($noReg);
+        $gambarMataKanan = $this->poliMata->getGambarMataKanan($noReg);
+
         $asasmen_perawat = $this->poliMata->asasmenPerawatGet($noReg);
         $asasmen_dokter = $this->poliMata->asasmenDokter($noReg);
         // dd($asasmen_dokter);
@@ -226,7 +230,7 @@ class AssesmenMataController extends Controller
 
         $title = 'Cetak RM';
 
-        $pdf = PDF::loadview('pages.poli.mata.cetak.resumeRajal', ['tanggal' => $tanggal, 'title' => $title, 'resep' => $resep, 'labs' => $labs, 'rads' => $rads, 'biodata' => $biodata, 'perawat' => $asasmen_perawat, 'masalahKeperawatan' => $masalahKeperawatan, 'rencanaKeperawatan' => $rencanaKeperawatan, 'dokter' => $asasmen_dokter]);
+        $pdf = PDF::loadview('pages.poli.mata.cetak.resumeRajal', ['tanggal' => $tanggal, 'title' => $title, 'mataKiri' => $gambarMataKiri, 'mataKanan' => $gambarMataKanan, 'resep' => $resep, 'labs' => $labs, 'rads' => $rads, 'biodata' => $biodata, 'perawat' => $asasmen_perawat, 'masalahKeperawatan' => $masalahKeperawatan, 'rencanaKeperawatan' => $rencanaKeperawatan, 'dokter' => $asasmen_dokter]);
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
     }
@@ -246,7 +250,7 @@ class AssesmenMataController extends Controller
             )
             ->where('a.FS_KD_REG', $noReg)
             ->first();
-        // dd($resep);
+        // dd($data);
         $biodata = $this->rekam_medis->getBiodata($noReg);
 
         // Cetak PDF
@@ -349,7 +353,9 @@ class AssesmenMataController extends Controller
 
             DB::connection('pku')->table('poli_mata_asesmen')->insert([
                 'NO_REG' => $request->input('NO_REG'),
-                'RIWAYAT_SEKARANG' => $request->input('RIWAYAT_SEKARANG'),
+                'RIWAYAT_SEKARANG' => is_array($request->input('RIWAYAT_SEKARANG'))
+                    ? implode(',', $request->input('RIWAYAT_SEKARANG'))
+                    : $request->input('RIWAYAT_SEKARANG'),
                 'KEADAAN_UMUM' => $request->input('KEADAAN_UMUM'),
                 'KESADARAN' => $request->input('KESADARAN'),
                 'STATUS_MENTAL' => $request->input('STATUS_MENTAL'),
@@ -502,16 +508,11 @@ class AssesmenMataController extends Controller
             'mdd' => auth()->user()->username,
         ]);
 
-        // Convert the 'RIWAYAT_SEKARANG' array to a comma-separated string
-        $riwayat_sekarang = $request->input('RIWAYAT_SEKARANG');
-
-        if (is_array($riwayat_sekarang)) {
-            $riwayat_sekarang = implode(',', $riwayat_sekarang);
-        }
-
 
         DB::connection('pku')->table('poli_mata_asesmen')->where('NO_REG', $noReg)->update([
-            'RIWAYAT_SEKARANG' => $riwayat_sekarang,
+            'RIWAYAT_SEKARANG' => is_array($request->input('RIWAYAT_SEKARANG'))
+                ? implode(',', $request->input('RIWAYAT_SEKARANG'))
+                : $request->input('RIWAYAT_SEKARANG'),
             'KEADAAN_UMUM' => $request->input('KEADAAN_UMUM'),
             'KESADARAN' => $request->input('KESADARAN'),
             'STATUS_MENTAL' => $request->input('STATUS_MENTAL'),

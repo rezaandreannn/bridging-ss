@@ -541,7 +541,7 @@
     <table style="border: 1px solid black; border-top: none;" width="100%">
         <tr>
             <td style="padding-top: 50px;" width="60%" class="text5"></td>
-            <td style="padding-top: 50px;" class="text5">Tanggal {{$perawat->mdb}}</td>
+            <td style="padding-top: 50px;" class="text5">Tanggal {{date('d-m-Y', strtotime($perawat->mdb))}}</td>
         </tr>
         <tr>
             <td width="70%" class="text5"></td>
@@ -648,14 +648,6 @@
             </tr>
             <tr>
                 <td class="text3">: {{$dokter->anamnesa}}</td>
-                <td class="text3" colspan="2"></td>
-            </tr>
-            <tr>
-                <td class="text3"><b>Riwayat Penyakit</b></td>
-                <td class="text3" colspan="2"></td>
-            </tr>
-            <tr>
-                <td class="text3">: {{$dokter->riwayat_penyakit}}</td>
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>

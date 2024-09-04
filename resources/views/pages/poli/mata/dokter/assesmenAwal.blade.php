@@ -116,7 +116,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Riwayat Penyakit Sekarang</label>
-                                        <select name="RIWAYAT_SEKARANG" id="riwayat_sekarang" class="form-control select2" multiple="multiple" data-placeholder="Pilih Penyakit Sekarang" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                        <select multiple name="RIWAYAT_SEKARANG[]" id="riwayat_sekarang" class="form-control select2" multiple="multiple" data-placeholder="Pilih Penyakit Sekarang" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                             @foreach ($penyakitSekarang as $penyakit)
                                                 <option value="{{ $penyakit->id }}" {{ in_array($penyakit->id, explode(',', $asasmen_perawat->RIWAYAT_SEKARANG)) ? 'selected' : '' }}>
                                                     {{ $penyakit->nama_penyakit_sekarang }}
@@ -765,16 +765,16 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group" style="display: flex; flex-direction: row;">
                                                         <div class="input-group" style="margin-right: 10px;">
-                                                            <label for="ekstremitas_atas" class="mr-2 mt-2">
+                                                            <label for="ekstremitas_od" class="mr-2 mt-2">
                                                                 Atas
                                                             </label>
-                                                            <input type="text" class="form-control" value="{{$asasmen_perawat->ekstremitas_atas ?? ''}}" name="ekstremitas_atas" id="anel_od">
+                                                            <input type="text" class="form-control" value="{{$asasmen_perawat->ekstremitas_od ?? ''}}" name="ekstremitas_od" id="ekstremitas_od">
                                                         </div>
                                                         <div class="input-group" style="margin-right: 10px;">
-                                                            <label for="ekstremitas_bawah" class="mr-2 mt-2">
+                                                            <label for="ekstremitas_os" class="mr-2 mt-2">
                                                                 Bawah
                                                             </label>
-                                                            <input type="text" class="form-control" value="{{$asasmen_perawat->ekstremitas_bawah ?? ''}}" name="ekstremitas_bawah" id="anel_os">
+                                                            <input type="text" class="form-control" value="{{$asasmen_perawat->ekstremitas_os ?? ''}}" name="ekstremitas_os" id="ekstremitas_os">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -810,13 +810,13 @@
                                     <div class="row">
                                         <div class="form-group col-md-8">
                                             <label>Order Periksa Radiologi Control Selanjutnya</label>
-                                            <select name="periksa_radiologi[]" class="form-control select2" multiple="multiple" data-placeholder="Pilih Periksa Radiologi" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                            <select name="periksa_rad[]" class="form-control select2" multiple="multiple" data-placeholder="Pilih Periksa Radiologi" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                                 <option value="" disabled>-- Pilih Periksa Radiologi --</option>
                                                 @foreach ($masterRadiologi as $radiologi)
                                                 <option value="{{$radiologi->No_Rinci}}">{{$radiologi->Ket_Tindakan}}</option>
                                                 @endforeach
                                             </select>
-                                            @error('periksa_radiologi')
+                                            @error('periksa_rad')
                                             <span class="text-danger" style="font-size: 12px;">
                                                 {{ $message }}
                                             </span>
@@ -824,7 +824,7 @@
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>Bagian</label>
-                                            <select name=" bagian" class="form-control select2" data-placeholder="Pilih Periksa Radiologi" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                            <select name="FS_BAGIAN" class="form-control select2" data-placeholder="Pilih Periksa Bagian" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                                 <option value="" selected>-- Pilih Bagian --</option>
                                                 <option value="Sinistra" >Sinistra</option>
                                                 <option value="Dextra" >Dextra</option>
@@ -927,13 +927,13 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="konsul" value="Tidak" id="konsul1" @if(old('konsul', '0' )=='Tidak' ) checked @endif>
+                                                        <input class="form-check-input" type="radio" name="konsul" value="0" id="konsul1">
                                                         <label class="form-check-label" for="konsul1">
                                                             Tidak
                                                         </label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="konsul" value="Iya" id="konsul2" @if(old('konsul', '0' )=='Iya' ) checked @endif>
+                                                        <input class="form-check-input" type="radio" name="konsul" value="1" id="konsul2">
                                                         <label class="form-check-label" for="konsul2">
                                                             Iya, Kebagian
                                                         </label>
@@ -1051,7 +1051,7 @@
                             <div class="col-md-6">
                                 <label>Tanggal Kontrol Berikutnya : </label>
                                 <div class="input-group mb-3">
-                                    <input type="date" name="FS_SKDP_KONTROL" value="{{$skdp->FS_SKDP_KONTROL ?? ''}}" class="form-control" id="tgl_kontrol_berikutnya">
+                                    <input type="date" name="FS_SKDP_KONTROL" class="form-control" id="tgl_kontrol_berikutnya">
                                 </div>
                             </div>
                             <div class="col-md-6">

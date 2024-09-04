@@ -54,6 +54,7 @@ class AssesmenDokterMataController extends Controller
         $penyakitSekarang = $this->poliMata->getPenyakit();
 
         $asasmen_perawat = $this->poliMata->asasmenPerawatGet($noReg);
+        // dd($asasmen_perawat);
         $refraksi = $this->poliMata->getRefraksi($noReg);
         // dd($refraksi);
         // dd($asasmen_perawat);
@@ -116,7 +117,9 @@ class AssesmenDokterMataController extends Controller
             DB::connection('pku')->table('poli_mata_dokter')->insert([
                 'NO_REG' => $request->input('NO_REG'),
                 'anamnesa' => $request->input('anamnesa'),
-                'riwayat_penyakit' => $request->input('riwayat_penyakit'),
+                'RIWAYAT_SEKARANG' => is_array($request->input('RIWAYAT_SEKARANG'))
+                    ? implode(',', $request->input('RIWAYAT_SEKARANG'))
+                    : $request->input('RIWAYAT_SEKARANG'),
                 'status_psikologi' => $request->input('status_psikologi'),
                 'keadaan_umum' => $request->input('keadaan_umum'),
                 'kesadaran' => $request->input('kesadaran'),
@@ -133,6 +136,7 @@ class AssesmenDokterMataController extends Controller
                 'DIAGNOSA' => $request->input('DIAGNOSA'),
                 'edukasi' => $request->input('edukasi'),
                 'konsul' => $request->input('konsul'),
+                'keterangan_konsul' => $request->input('keterangan_konsul'),
                 'discharge' => $request->input('discharge'),
                 'tonometri_od' => $request->input('tonometri_od'),
                 'tonometri_os' => $request->input('tonometri_os'),
@@ -221,10 +225,24 @@ class AssesmenDokterMataController extends Controller
 
             $periksa_lab = $request->input('periksa_lab');
             if (!empty($periksa_lab)) {
-                foreach ($periksa_lab as $value) {
-                    $insert_lab = DB::connection('pku')->table('ta_trs_kartu_periksa4')->insert([
-                        'fs_kd_reg2' => $request->input('NO_REG'),
+                foreach ($periksa_lab as $key => $value) {
+                    DB::connection('pku')->table('ta_trs_kartu_periksa4')->insert([
+                        'fn_no_urut' => $key,
                         'fs_kd_tarif' => $value,
+                        'fs_kd_reg2' => $request->input('NO_REG'),
+                    ]);
+                }
+            }
+
+            $periksa_rad = $request->input('periksa_rad');
+            $fs_bagian = $request->input('FS_BAGIAN');
+            if (!empty($periksa_rad)) {
+                foreach ($periksa_lab as $key => $value) {
+                    DB::connection('pku')->table('ta_trs_kartu_periksa5')->insert([
+                        'fn_no_urut' => $key,
+                        'fs_kd_tarif' => $value,
+                        'fs_kd_reg2' => $request->input('NO_REG'),
+                        'fs_bagian' => $fs_bagian,
                     ]);
                 }
             }
@@ -263,6 +281,8 @@ class AssesmenDokterMataController extends Controller
         $asasmen_dokter = $this->poliMata->asasmenDokter($noReg);
         // dd($asasmen_dokter);
 
+        $penyakitSekarang = $this->poliMata->getPenyakit();
+
         // SKDP
         $alasanSkdp = $this->rajal->getAlesanSkdp();
         $skdp = $this->rajal->getSkdp($noReg);
@@ -270,13 +290,18 @@ class AssesmenDokterMataController extends Controller
 
         // Data Master
         $masterLab = $this->rajaldokter->getMasterLab();
+        $getLab = $this->rajaldokter->getLabByKodeReg($noReg);
         $masterRadiologi = $this->rajaldokter->getMasterRadiologi();
-        $masterObat = $this->rajaldokter->getMasterObat();
+        $getRad = $this->rajaldokter->getRadByKodeReg($noReg);
+        $getCekRad = $this->rajaldokter->getCekRad($noReg);
+        // dd($getCekRad);
 
+        $masterObat = $this->rajaldokter->getMasterObat();
         // Gambar Mata
         $MataKiri = $this->poliMata->getMataKiri($noReg);
         // dd($MataKiri);
         $MataKanan = $this->poliMata->getMataKanan($noReg);
+
 
         $masalah_perawatan = $this->rajal->masalah_perawatan();
         $rencana_perawatan = $this->rajal->rencana_perawatan();
@@ -285,7 +310,7 @@ class AssesmenDokterMataController extends Controller
         $rencana_perGet = $this->rajal->rencanaPerawatanGetByNoreg($noReg);
 
         // dd($asasmen_perawat);
-        return view($this->view . 'dokter.EditassesmenAwal', compact('title', 'biodata', 'MataKanan', 'MataKiri', 'alasanSkdp', 'skdp', 'rencanaSkdp', 'asasmen_dokter', 'masterLab', 'masterRadiologi', 'masterObat', 'masalah_perGet', 'rencana_perGet', 'masalah_perawatan', 'rencana_perawatan', 'noReg'));
+        return view($this->view . 'dokter.EditassesmenAwal', compact('title', 'biodata', 'penyakitSekarang', 'MataKanan', 'MataKiri', 'alasanSkdp', 'skdp', 'rencanaSkdp', 'asasmen_dokter', 'masterLab', 'getLab', 'masterRadiologi', 'getRad', 'getCekRad', 'masterObat', 'masalah_perGet', 'rencana_perGet', 'masalah_perawatan', 'rencana_perawatan', 'noReg'));
     }
 
     /**
@@ -323,7 +348,9 @@ class AssesmenDokterMataController extends Controller
             DB::connection('pku')->table('poli_mata_dokter')->where('NO_REG', $request->input('NO_REG'))->update([
                 'NO_REG' => $request->input('NO_REG'),
                 'anamnesa' => $request->input('anamnesa'),
-                'riwayat_penyakit' => $request->input('riwayat_penyakit'),
+                'RIWAYAT_SEKARANG' => is_array($request->input('RIWAYAT_SEKARANG'))
+                    ? implode(',', $request->input('RIWAYAT_SEKARANG'))
+                    : $request->input('RIWAYAT_SEKARANG'),
                 'status_psikologi' => $request->input('status_psikologi'),
                 'keadaan_umum' => $request->input('keadaan_umum'),
                 'kesadaran' => $request->input('kesadaran'),
@@ -421,6 +448,33 @@ class AssesmenDokterMataController extends Controller
             }
 
             // ------------------------------------------------ //
+
+
+            $periksa_lab = $request->input('periksa_lab');
+            DB::connection('pku')->table('ta_trs_kartu_periksa4')->where('fs_kd_reg2', $request->input('NO_REG'))->delete();
+            if (!empty($periksa_lab)) {
+                foreach ($periksa_lab as $key => $value) {
+                    DB::connection('pku')->table('ta_trs_kartu_periksa4')->insert([
+                        'fn_no_urut' => $key,
+                        'fs_kd_tarif' => $value,
+                        'fs_kd_reg2' => $request->input('NO_REG'),
+                    ]);
+                }
+            }
+
+            $periksa_rad = $request->input('periksa_rad');
+            $fs_bagian = $request->input('FS_BAGIAN');
+            DB::connection('pku')->table('ta_trs_kartu_periksa5')->where('fs_kd_reg2', $request->input('NO_REG'))->delete();
+            if (!empty($periksa_rad)) {
+                foreach ($periksa_rad as $key => $value) {
+                    DB::connection('pku')->table('ta_trs_kartu_periksa5')->insert([
+                        'fn_no_urut' => $key,
+                        'fs_kd_tarif' => $value,
+                        'fs_kd_reg2' => $request->input('NO_REG'),
+                        'fs_bagian' => $fs_bagian,
+                    ]);
+                }
+            }
 
             $masalah_kep = $request->input('tujuan');
             DB::connection('pku')->table('TAC_RJ_MASALAH_KEP')->where('FS_KD_REG', $request->input('NO_REG'))->delete();

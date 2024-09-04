@@ -242,8 +242,6 @@ class Rajal extends Model
     public function rencana_perawatan()
     {
         $data = DB::connection('pku')->table('TAC_COM_PARAM_REN_KEP')->get();
-
-
         return $data;
     }
 

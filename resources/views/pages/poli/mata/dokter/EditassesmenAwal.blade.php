@@ -114,7 +114,13 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Riwayat Penyakit Sekarang</label>
-                                        <textarea class="form-control  @error('riwayat_penyakit') is-invalid @enderror" rows="3" name="riwayat_penyakit" value="" placeholder="Masukan ...">{{ $asasmen_dokter->riwayat_penyakit }}</textarea>
+                                        <select multiple name="RIWAYAT_SEKARANG[]" id="riwayat_sekarang" class="form-control select2" multiple="multiple" data-placeholder="Pilih Penyakit Sekarang" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                            @foreach ($penyakitSekarang as $penyakit)
+                                                <option value="{{ $penyakit->id }}" {{ in_array($penyakit->id, explode(',', $asasmen_dokter->RIWAYAT_SEKARANG)) ? 'selected' : '' }}>
+                                                    {{ $penyakit->nama_penyakit_sekarang }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                         @error('riwayat_penyakit')
                                         <span class="text-danger" style="font-size: 12px;">
                                             {{ $message }}
@@ -617,7 +623,7 @@
                                             <div id="signat"></div>
                                             <br />
                                             <button id="clear">Hapus Gambar</button>
-                                            <input type="hidden" name="id_kiri" value="{{ $MataKiri->id }}" />
+                                            <input type="hidden" name="id_kiri" value="{{ $MataKiri->id ?? '' }}" />
                                             <textarea id="signature1" name="signed_kiri" style="display: none"></textarea>
                                         </div>
                                         <div class="col-md-6">
@@ -626,7 +632,7 @@
                                             <div id="signat2"></div>
                                             <br />
                                             <button id="clear2">Hapus Gambar</button>
-                                            <input type="hidden" name="id_kanan" value="{{ $MataKanan->id }}" />
+                                            <input type="hidden" name="id_kanan" value="{{ $MataKanan->id ?? '' }}" />
                                             <textarea id="signature2" name="signed_kanan" style="display: none"></textarea>
                                         </div>
                                         <div class="col-md-6">
@@ -801,9 +807,15 @@
                                         <label>Order Periksa Laboratorium Control Selanjutnya</label>
                                         <select name="periksa_lab[]" class="form-control select2" multiple="multiple" data-placeholder="Pilih Periksa Lab" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                             <option value="" disabled>-- Pilih Periksa Lab --</option>
-                                            @foreach ($masterLab as $lab)
-                                            <option value="{{$lab->No_Jenis}}">{{$lab->Jenis}}</option>
+                                            @forelse ($getLab as $gl)
+                                            @foreach ($masterLab as $ml)
+                                            <option value="{{ $ml->No_Jenis }}" {{ $ml->No_Jenis == $gl->fs_kd_tarif ? "selected" : "" }}>{{ $ml->Jenis }}</option>
                                             @endforeach
+                                            @empty
+                                            @foreach ($masterLab as $ml)
+                                            <option value="{{ $ml->No_Jenis }}">{{ $ml->Jenis }}</option>
+                                            @endforeach
+                                            @endforelse
                                         </select>
                                         @error('periksa_lab')
                                         <span class="text-danger" style="font-size: 12px;">
@@ -816,11 +828,17 @@
                                     <div class="row">
                                         <div class="form-group col-md-8">
                                             <label>Order Periksa Radiologi Control Selanjutnya</label>
-                                            <select name="periksa_radiologi[]" class="form-control select2" multiple="multiple" data-placeholder="Pilih Periksa Radiologi" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                            <select name="periksa_rad[]" class="form-control select2" multiple="multiple" data-placeholder="Pilih Periksa Radiologi" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                                 <option value="" disabled>-- Pilih Periksa Radiologi --</option>
-                                                @foreach ($masterRadiologi as $radiologi)
-                                                <option value="{{$radiologi->No_Rinci}}">{{$radiologi->Ket_Tindakan}}</option>
+                                                @forelse ($getRad as $gr)
+                                                @foreach ($masterRadiologi as $mr)
+                                                <option value="{{ $mr->No_Rinci }}" {{ $mr->No_Rinci == $gr->fs_kd_tarif ? "selected" : "" }}>{{ $mr->Ket_Tindakan }}</option>
                                                 @endforeach
+                                                @empty
+                                                @foreach ($masterRadiologi as $mr)
+                                                <option value="{{ $mr->No_Rinci }}">{{ $mr->Ket_Tindakan }}</option>
+                                                @endforeach
+                                                @endforelse
                                             </select>
                                             @error('periksa_radiologi')
                                             <span class="text-danger" style="font-size: 12px;">
@@ -830,11 +848,11 @@
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>Bagian</label>
-                                            <select name=" bagian" class="form-control" data-placeholder="Pilih Periksa Radiologi" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                            <select name="FS_BAGIAN" class="form-control select2" data-placeholder="Pilih Periksa Bagian" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                                 <option value="" selected>-- Pilih Bagian --</option>
-                                                <option value="Sinistra" >Sinistra</option>
-                                                <option value="Dextra" >Dextra</option>
-                                                <option value="Bilateral" >Bilateral</option>
+                                                <option value="Sinistra" {{ old('FS_BAGIAN', $getCekRad->fs_bagian) == 'Sinistra' ? 'selected' : '' }}>Sinistra</option>
+                                                <option value="Dextra" {{ old('FS_BAGIAN', $getCekRad->fs_bagian) == 'Dextra' ? 'selected' : '' }}>Dextra</option>
+                                                <option value="Bilateral" {{ old('FS_BAGIAN', $getCekRad->fs_bagian) == 'Bilateral' ? 'selected' : '' }}>Bilateral</option>
                                             </select>
                                             @error('bagian')
                                             <span class="text-danger" style="font-size: 12px;">
@@ -934,13 +952,13 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="konsul" value="Tidak" id="konsul1" @if(old('konsul', '0' )=='Tidak' ) checked @endif>
+                                                        <input class="form-check-input" type="radio" name="konsul" value="0" id="konsul1" {{ ($asasmen_dokter->konsul=='0') ? 'checked' : '' }}>
                                                         <label class="form-check-label" for="konsul1">
                                                             Tidak
                                                         </label>
                                                     </div>
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="konsul" value="Iya" id="konsul2" @if(old('konsul', '0' )=='Iya' ) checked @endif>
+                                                        <input class="form-check-input" type="radio" name="konsul" value="1" id="konsul2" {{ ($asasmen_dokter->konsul=='1') ? 'checked' : '' }}>
                                                         <label class="form-check-label" for="konsul2">
                                                             Iya, Kebagian
                                                         </label>
@@ -948,7 +966,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <input type="text" name="keterangan_konsul" class="form-control @error('keterangan_konsul') is-invalid  
+                                                <input type="text" name="keterangan_konsul" value="{{ $asasmen_dokter->keterangan_konsul }}" class="form-control @error('keterangan_konsul') is-invalid  
                                             @enderror" value="{{old('keterangan_konsul')}}" placeholder="Kebagian konsul ...">
                                             </div>
                                             @error('keterangan_konsul')

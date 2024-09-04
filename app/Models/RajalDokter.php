@@ -120,7 +120,7 @@ class RajalDokter extends Model
 
         return $data;
     }
-    
+
     public function getHistoryPasienFisio($noMR)
     {
         $dbpku = DB::connection('pku')->getDatabaseName();
@@ -274,6 +274,43 @@ class RajalDokter extends Model
             ->get();
         return $data;
     }
+
+    public function getLabByKodeReg($noReg)
+    {
+        $data = DB::connection('pku')
+            ->table('ta_trs_kartu_periksa4 as a')
+            ->select(
+                'a.*'
+            )
+            ->where('fs_kd_reg2', $noReg)
+            ->get();
+        return $data;
+    }
+    public function getRadByKodeReg($noReg)
+    {
+        $data = DB::connection('pku')
+            ->table('ta_trs_kartu_periksa5 as a')
+            ->select(
+                'a.*'
+            )
+            ->where('fs_kd_reg2', $noReg)
+            ->get();
+        return $data;
+    }
+
+    public function getCekRad($noReg)
+    {
+        $data = DB::connection('pku')
+            ->table('ta_trs_kartu_periksa5 as a')
+            ->select(
+                'a.*'
+            )
+            ->where('fs_kd_reg2', $noReg)
+            ->first();
+        return $data;
+    }
+
+
     public function getMasterRadiologi()
     {
 

@@ -90,6 +90,16 @@
                 padding-top: 8px;
             }
 
+            .gambar-mata {
+                font-size: 15px;
+                border: 1px solid black;
+                text-align: center;
+            }
+            .text-mata {
+                font-size: 12px;
+                border: 1px solid black;
+            }
+
             table {
                     width: 100%;
                     border-collapse: collapse;
@@ -163,10 +173,6 @@
                 <td class="text3" colspan="5"> {{ $dokter->anamnesa}} </td>
             </tr>
             <tr>
-                <td class="text3">Riwayat Penyakit</td>
-                <td class="text3" colspan="5"> {{ $dokter->riwayat_penyakit}} </td>
-            </tr>
-            <tr>
                 <td class="text3">Diagnosa Utama</td>
                 <td class="text3" colspan="3"> {{ $dokter->DIAGNOSA}}</td>
                 <td class="text3" colspan="2">ICD 10:</td>
@@ -215,7 +221,7 @@
                 <td class="text3" colspan="6" height="50px"><b>Terapi yang diberikan dokter</b></td>
             </tr>
         </table>
-        <table width="100%" style="border-top:none;">
+        <table width="100%">
             <thead>
                 <tr>
                     <th class="tabel1">Nama Obat</th>
@@ -231,22 +237,26 @@
                 @endforeach
             </tbody>
         </table>
-        {{-- <table width="100%" style="border-top:none;">
+        <table width="100%" style="border: 1px solid black;">
             <thead>
                 <tr>
-                    <th class="tabel1">Pemeriksaan Lab</th>
-                    <th class="tabel1">Hasil</th>
+                    <th class="tabel1" colspan="2">Mata Kiri</th>
+                    <th class="tabel1" colspan="2">Mata Kanan</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($labs as $lab)
-                <tr>
-                    <td class="text8">{{$lab->Pemeriksaan}}</td>
-                    <td class="text8">{{$lab->Hasil}}</td>
-                </tr>
-                @endforeach
+                    <tr>
+                        @foreach ($mataKiri as $kiri)
+                        <td class="gambar-mata"> <img src="storage/gambar_mata/{{$kiri->GAMBAR}}" width="60" height="80" /></td>
+                        <td class="text-mata" width="150px"> {{$kiri->DESKRIPSI}}</td>
+                        @endforeach
+                        @foreach ($mataKanan as $kanan)
+                        <td class="gambar-mata"> <img src="storage/gambar_mata/{{$kanan->GAMBAR}}" width="60" height="80" /></td>
+                        <td class="text-mata" width="150px"> {{$kanan->DESKRIPSI}}</td>
+                        @endforeach
+                    </tr>
             </tbody>
-        </table> --}}
+        </table>
         <table  width="100%">
             <tr>
                 <td style="padding-top: 100px;" class="text5"></td>

@@ -57,7 +57,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Riwayat Penyakit Sekarang</label>
-                                    <select name="RIWAYAT_SEKARANG" id="riwayat_sekarang" class="form-control select2" multiple="multiple" data-placeholder="Pilih Penyakit Sekarang" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                    <select multiple name="RIWAYAT_SEKARANG[]" id="riwayat_sekarang" class="form-control select2" multiple="multiple" data-placeholder="Pilih Penyakit Sekarang" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                         @foreach ($penyakitSekarang as $penyakit)
                                             <option value="{{ $penyakit->id }}" {{ in_array($penyakit->id, explode(',', $asasmen_perawat->RIWAYAT_SEKARANG)) ? 'selected' : '' }}>
                                                 {{ $penyakit->nama_penyakit_sekarang }}
