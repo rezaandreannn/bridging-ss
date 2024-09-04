@@ -119,7 +119,7 @@
                                 <label>Ukuran/Lingkar Pinggang</label>
                                 <input type="hidden" name="no_registrasi" value="{{$item->No_Reg}}">
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" name="lingkar_pinggang" value="{{$lingkar_pinggang ?? ''}}" id="lingkar_pinggang" @if ($lingkar_pinggang!=null) readonly @endif>
+                                    <input type="text" class="form-control" name="lingkar_pinggang" value="{{$lingkar_pinggang ?? ''}}" id="lingkar_pinggang" readonly>
                                     <div class="input-group-append">
                                         <span class="input-group-text">cm</span>
                                     </div>
@@ -127,16 +127,18 @@
                             </div>
                             <div class="form-group">
                                 <label>Ukuran</label>
-                                <select name="ukuran" id="ukuran" class="form-control select2">
-                                    <option value="">Pilih ukuran</option>
-                                    <option value="XL">XL</option>
-                                    <option value="S">S</option>
+                                <select name="ukuran" id="ukuran" class="form-control select2" onchange="click_ukuran(this)">
+                                    <option value="" selected disabled>Pilih ukuran</option>
+                                    @foreach ($masterHargaAlkes as $row)
+                                    <option value="{{$row->id}}">{{$row->nama_alat}} - {{ $row->ukuran }}</option>
+                                    @endforeach
+
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label>Biaya</label>
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" name="biaya" value="{{$biaya ?? ''}}" id="biaya" placeholder="Masukkan hanya angka">
+                                    <input type="text" class="form-control" name="biaya" value="{{$biaya ?? ''}}" id="biaya" placeholder="Masukkan hanya angka" readonly>
                                     <div class="input-group-append">
                                         <span class="input-group-text">Rp.</span>
                                     </div>
@@ -194,6 +196,40 @@
             modal.find('.select2').select2('destroy');
         });
     });
+</script>
+
+
+<script>
+    function click_ukuran(selectElement) {
+        // Get the selected ukuran value
+        var ukuran = $(selectElement).val();
+        
+        // Find the nearest modal
+        var modal = $(selectElement).closest('.modal');
+        
+        // Find the biaya input field within this modal
+        var biayaInput = modal.find('#biaya');
+
+        $.ajax({
+            type: "GET",
+            url: "{{ route('orderAlkes.verifFarmasi') }}",
+            data: {
+                ukuran: ukuran
+            },
+            dataType: 'json',
+            success: function(data) {
+                // Assuming data.data.harga is the correct field
+                var nilai = data.data.harga;
+
+                // Update the biaya field in the correct modal
+                biayaInput.val(nilai);
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error: ', status, error);
+                alert('An error occurred while fetching the biaya. Please try again.');
+            }
+        });
+    }
 </script>
 
 @endpush

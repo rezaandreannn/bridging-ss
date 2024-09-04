@@ -11,30 +11,45 @@
             <li class="{{ Request::is('dashboard') ? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-dashboard"></i> <span>Dashboard</span></a></li>
             <!-- <li class="menu-header">RSUMM</li> -->
             @can('master data')
+            <li class="menu-header">Master Data</li>
             <li class="nav-item dropdown {{ Request::is('md*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-database"></i> <span>Master Data</span></a>
                 <ul class="dropdown-menu">
+                    @can('master data pasien')
                     <li class="{{ Request::is('md/patient*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('patient.index') }}">Pasien</a>
                     </li>
+                    @endcan
+                    @can('master data dokter')
                     <li class="{{ Request::is('md/dokter*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('dokter.index') }}">Dokter</a>
                     </li>
+                    @endcan
+                    @can('master data organisasi')
                     <li class="{{ Request::is('md/organization*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('organization.index') }}">Organisasi</a>
                     </li>
+                    @endcan
+                    @can('master data lokasi')
                     <li class="{{ Request::is('md/location*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('location.index') }}">Lokasi</a>
                     </li>
+                    @endcan
+                    @can('master data icd 10')
                     <li class="{{ Request::is('md/icd10*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('icd10.index') }}">ICD 10</a>
                     </li>
+                    @endcan
+                    @can('master data jenis fisio')
                     <li class="{{ Request::is('md/jenisFisio*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('jenisFisio.index') }}">Jenis Fisio</a>
                     </li>
+                    @endcan
+                    @can('master data alat kesehatan')
                     <li class="{{ Request::is('md/farmasi*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('masterData.index') }}">Alat Kesehatan</a>
                     </li>
+                    @endcan
                 </ul>
             </li>
             @endcan
@@ -155,12 +170,8 @@
             </li> -->
           
             <li class="nav-item dropdown {{ Request::is('fisioterapi/perawat*') ? 'active' : '' }}">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Fisioterapi</span></a>
-                <!-- <ul class="dropdown-menu">
-                    <li class="{{ Request::is('fisioterapi/asesmen_pasien') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('asesmen_pasien.index') }}">Asesmen Perawat</a>
-                    </li>
-                </ul> -->
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical">
+            </i> <span>Fisioterapi</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('fisioterapi/perawat/*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('list-pasien.index') }}">CPPT Fisioterapi</a>
@@ -181,7 +192,7 @@
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Berkas</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('berkas/berkas_fisio*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('berkas.fisio')}}">Berkas Fisio Terapi</a>
+                        <a class="nav-link" href="{{ route('berkas.fisio')}}">Berkas Fisioterapi</a>
                     </li>
                 </ul>
                 <!-- <ul class="dropdown-menu">

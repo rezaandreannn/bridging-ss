@@ -637,8 +637,6 @@ class FisioController extends Controller
                 DB::connection('pku')->beginTransaction();
     
                 $data = DB::connection('pku')->table('fis_order_alkes')->where('no_registrasi', $request->input('no_registrasi'))->update([
-
-                    'lingkar_pinggang' => $request->input('lingkar_pinggang'),
                     'biaya' => $request->input('biaya')
                 ]); 
 

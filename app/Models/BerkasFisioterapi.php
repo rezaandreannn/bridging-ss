@@ -48,6 +48,7 @@ class BerkasFisioterapi extends Model
         ->Join('REGISTER_PASIEN as rp', 'p.No_MR', '=', 'rp.No_MR')
         ->Join($pku . '.dbo.fis_order_alkes as alkes', 'p.No_Reg', '=', 'alkes.no_registrasi')
         ->leftJoin($pku . '.dbo.fis_verifikasi_alkes_by_bpjs as verif', 'p.No_Reg', '=', 'verif.no_registrasi')
+        ->leftJoin($pku . '.dbo.fis_verifikasi_alkes_by_farmasi as farmasi', 'p.No_Reg', '=', 'farmasi.no_registrasi')
         ->Join('DOKTER as d', 'p.KODE_DOKTER', '=', 'd.KODE_DOKTER')->select(
             'p.No_Reg',
             'd.Nama_Dokter',
@@ -60,7 +61,8 @@ class BerkasFisioterapi extends Model
             'alkes.jenis_alat',
             'alkes.lingkar_pinggang',
             'alkes.biaya',
-            'verif.no_registrasi'
+            'verif.no_registrasi',
+            'farmasi.no_registrasi as verif_farmasi'
             )
             ->where('p.No_MR', $no_mr)
             ->orderBy('p.Tanggal', 'desc')

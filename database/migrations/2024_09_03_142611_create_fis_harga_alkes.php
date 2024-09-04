@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::connection('pku')->create('fis_harga_alkes', function (Blueprint $table) {
             $table->id();
             $table->string('id_alkes');
+            $table->string('ukuran');
             $table->integer('harga');
             $table->string('created_by');
             $table->timestamps();
