@@ -264,24 +264,30 @@
             <li class="menu-header">Rekam Medis</li>
             <li class="nav-item dropdown  {{ Request::is('rm/*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Riwayat Rekam Medis</span></a>
+                @can('rekam medis by mr')
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('rm/riwayaRekamMedis/bymr/*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('rm.bymr')}}">Berkas RM by MR</a>
                     </li>
                 </ul>
+                @endcan
+                @can('rekam medis harian')
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('rm/riwayatRekamMedis/harian/*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('rm.harian')}}">Berkas RM Harian</a>
                     </li>
                 </ul>
-      
+                @endcan
+                @can('rekam medis igd')
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('rm/riwayaRekamMedis/igd/*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('rm.igd')}}">Berkas RM IGD</a>
                     </li>
                 </ul>
+                @endcan
             </li>
             @endcan
+            
             @can('farmasi')
             <li class="menu-header">Farmasi</li>
             <li class="{{ Request::is('farmasi/orderAlkes') ? 'active' : '' }}"><a class="nav-link" href="{{ route('orderAlkes.index') }}"><i class="fas fa-dashboard"></i> <span>Order Alat Kesehatan</span></a></li>
