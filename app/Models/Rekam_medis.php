@@ -57,13 +57,16 @@ class Rekam_medis extends Model
             // Menggunakan nama basis data secara eksplisit dalam join
             ->leftJoin($dbRsmm . '.dbo.DOKTER as c', 'b.user_name', '=', 'c.KODE_DOKTER')
             ->leftJoin($dbRsmm . '.dbo.TUSER as d', 'b.user_name', '=', 'd.NAMAUSER')
+            ->leftJoin($dbRsmm . '.dbo.PENDAFTARAN as p', 'p.No_Reg', '=', 'alkes.no_registrasi')
+            ->leftJoin($dbRsmm . '.dbo.REGISTER_PASIEN as rp', 'rp.No_MR', '=', 'p.No_MR')
 
             ->select(
                 'alkes.*',
                 'c.NAMA_DOKTER',
                 'c.KODE_DOKTER',
                 'd.NAMALENGKAP',
-                'ad.diagnosa_klinis'
+                'ad.diagnosa_klinis',
+                'rp.Nama_Pasien'
             )
             ->where('alkes.no_registrasi', $noReg)
             ->first();

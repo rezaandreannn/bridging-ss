@@ -178,6 +178,10 @@ Route::middleware('auth')->group(function () {
         Route::get('orderAlkes', [OrderAlkesController::class, 'index'])->name('orderAlkes.index');
         Route::get('orderAlkes/verifByFarmasi', [OrderAlkesController::class, 'harga_alkes_by_ukuran_alat'])->name('orderAlkes.verifFarmasi');
 
+
+        Route::get('orderAlkes/cetakResepAlkes/{noReg}', [Berkas_rm_controller::class, 'cetakResepAlkes'])->name('rj.alkes');
+
+        Route::get('orderAlkes/cetakKwitansiAlkes/{noReg}', [Berkas_rm_controller::class, 'cetakKwitansiAlkes'])->name('orderAlkes.Kwitansi');
      
         
         
@@ -373,7 +377,8 @@ Route::middleware('auth')->group(function () {
 
         // Report PDF
         Route::get('rawat_jalan/resep/{kode_transaksi}/{noReg}', [Berkas_rm_controller::class, 'cetakResep'])->name('rj.resep');
-        Route::get('rawat_jalan/cetakpengajuanalkes/{noReg}', [Berkas_rm_controller::class, 'cetakPengajuanAlkes'])->name('rj.alkes');
+
+
         Route::get('rawat_jalan/skdp/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakSKDP'])->name('rj.skdp');
         Route::get('rawat_jalan/radiologi/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakRAD'])->name('rj.radiologi');
         Route::get('rawat_jalan/lab/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakLAB'])->name('rj.lab');

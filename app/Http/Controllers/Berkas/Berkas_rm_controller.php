@@ -13,6 +13,7 @@ use Illuminate\Support\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Helpers\NumberToWords;
 
 class Berkas_rm_controller extends Controller
 {
@@ -51,7 +52,7 @@ class Berkas_rm_controller extends Controller
         return $pdf->stream($filename . '.pdf');
     }
 
-    public function cetakPengajuanAlkes($noReg)
+    public function cetakResepAlkes($noReg)
     {
         $data = $this->rekam_medis->cetakAlkes($noReg);
         // dd($data);
@@ -63,9 +64,31 @@ class Berkas_rm_controller extends Controller
 
         $filename = 'resep-' . $date . '-' . $noReg;
 
-        $pdf = PDF::loadview('pages.rekam_medis.resepAlkes', ['data' => $data, 'biodata' => $biodata, 'tanggal' => $tanggal]);
+        $pdf = PDF::loadview('pages.rekam_medis.alat_kesehatan.resepAlkes', ['data' => $data, 'biodata' => $biodata, 'tanggal' => $tanggal]);
         // Set paper size to A5
         $pdf->setPaper('A5');
+        return $pdf->stream($filename . '.pdf');
+    }
+
+    public function cetakKwitansiAlkes($noReg)
+    {
+
+        // dd('ok');
+        $data = $this->rekam_medis->cetakAlkes($noReg);
+
+        $terbilang = NumberToWords::terbilang($data->biaya);
+        // dd($data);
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+      
+        // dd($antrian);
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+
+        $filename = 'resep-' . $date . '-' . $noReg;
+
+        $pdf = PDF::loadview('pages.rekam_medis.alat_kesehatan.kwitansi', ['data' => $data, 'biodata' => $biodata, 'tanggal' => $tanggal, 'biaya' => $terbilang]);
+        // Set paper size to A5
+        $pdf->setPaper('A5','landscape');
         return $pdf->stream($filename . '.pdf');
     }
 
