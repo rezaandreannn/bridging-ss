@@ -55,7 +55,7 @@ class NumberToWords
             $remainder = $angka % 100;
             return ($unit > 1 ? self::terbilang($unit) . ' ' : '') . 'Ratus' . ($remainder ? ' ' . self::terbilang($remainder) : '');
         }
-
+ 
         $unitIndex = 0;
         $units = ['', 'Ribu', 'Juta', 'Miliar', 'Triliun'];
 
