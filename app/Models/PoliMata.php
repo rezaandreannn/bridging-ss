@@ -150,21 +150,28 @@ class PoliMata extends Model
     public function asasmenDokter($noReg)
     {
         $dbpku = DB::connection('db_rsmm')->getDatabaseName();
-        $data = DB::connection('pku')->table('poli_mata_dokter')
-            ->join('poli_mata_refraksi', 'poli_mata_dokter.NO_REG', '=', 'poli_mata_dokter.NO_REG')
-            ->join('TAC_RJ_MEDIS', 'poli_mata_dokter.NO_REG', '=', 'TAC_RJ_MEDIS.FS_KD_REG')
-            ->join('poli_mata_gambar', 'poli_mata_dokter.NO_REG', '=', 'poli_mata_gambar.NO_REG')
-            ->leftJoin($dbpku . '.dbo.DOKTER as c', 'poli_mata_dokter.CREATE_BY', '=', 'c.KODE_DOKTER')
+        $data = DB::connection('pku')->table('poli_mata_dokter as pd')
+            ->join('poli_mata_refraksi as pr', 'pd.NO_REG', '=', 'pr.NO_REG')
+            ->join('TAC_RJ_MEDIS as tm', 'pd.NO_REG', '=', 'tm.FS_KD_REG')
+            ->join('poli_mata_gambar as pg', 'pd.NO_REG', '=', 'pg.NO_REG')
+            ->leftJoin($dbpku . '.dbo.DOKTER as c', 'pd.CREATE_BY', '=', 'c.KODE_DOKTER')
             ->select(
-                'poli_mata_dokter.*',
-                'poli_mata_refraksi.*',
-                'poli_mata_gambar.*',
-                'TAC_RJ_MEDIS.FS_TERAPI',
-                'TAC_RJ_MEDIS.FS_CARA_PULANG',
+                'pd.*',
+                'pg.GAMBAR',
+                'pg.TIPE',
+                'pg.DESKRIPSI',
+                'pr.VISUS_OD',
+                'pr.VISUS_OS',
+                'pr.NCT_TOD',
+                'pr.NCT_TOS',
+                'pr.CREATE_REFRAKSI',
+                'pr.UPDATE_REFRAKSI',
+                'tm.FS_TERAPI',
+                'tm.FS_CARA_PULANG',
                 'c.NAMA_DOKTER',
                 'c.KODE_DOKTER',
             )
-            ->where('poli_mata_dokter.NO_REG', $noReg)
+            ->where('pd.NO_REG', $noReg)
             ->first();
 
         return $data;

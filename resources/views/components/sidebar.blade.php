@@ -14,43 +14,62 @@
             <li class="menu-header">Master Data</li>
             <li class="nav-item dropdown {{ Request::is('md*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-database"></i> <span>Master Data</span></a>
-                <ul class="dropdown-menu">
-                    @can('master data pasien')
-                    <li class="{{ Request::is('md/patient*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('patient.index') }}">Pasien</a>
-                    </li>
-                    @endcan
-                    @can('master data dokter')
-                    <li class="{{ Request::is('md/dokter*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('dokter.index') }}">Dokter</a>
-                    </li>
-                    @endcan
-                    @can('master data organisasi')
-                    <li class="{{ Request::is('md/organization*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('organization.index') }}">Organisasi</a>
-                    </li>
-                    @endcan
-                    @can('master data lokasi')
-                    <li class="{{ Request::is('md/location*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('location.index') }}">Lokasi</a>
-                    </li>
-                    @endcan
-                    @can('master data icd 10')
-                    <li class="{{ Request::is('md/icd10*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('icd10.index') }}">ICD 10</a>
-                    </li>
-                    @endcan
-                    @can('master data jenis fisio')
-                    <li class="{{ Request::is('md/jenisFisio*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('jenisFisio.index') }}">Jenis Fisio</a>
-                    </li>
-                    @endcan
-                    @can('master data alat kesehatan')
-                    <li class="{{ Request::is('md/farmasi*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('masterData.index') }}">Alat Kesehatan</a>
-                    </li>
-                    @endcan
-                </ul>
+                @can('master data pasien')
+                    <ul class="dropdown-menu">
+                        <li class="{{ Request::is('md/patient*') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('patient.index') }}">Pasien</a>
+                        </li>
+                    </ul>
+                @endcan
+                @can('master data dokter')
+                    <ul class="dropdown-menu">
+                        <li class="{{ Request::is('md/dokter*') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('dokter.index') }}">Dokter</a>
+                        </li>
+                    </ul>
+                @endcan
+                @can('master data organisasi')
+                    <ul class="dropdown-menu">
+                        <li class="{{ Request::is('md/organization*') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('organization.index') }}">Organisasi</a>
+                        </li>
+                    </ul>
+                @endcan
+                @can('master data lokasi')
+                    <ul class="dropdown-menu">
+                        <li class="{{ Request::is('md/location*') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('location.index') }}">Lokasi</a>
+                        </li>
+                    </ul>
+                @endcan
+                @can('master data icd 10')
+                    <ul class="dropdown-menu">
+                        <li class="{{ Request::is('md/icd10*') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('icd10.index') }}">ICD 10</a>
+                        </li>
+                    </ul>
+                @endcan
+                @can('master data jenis fisio')
+                    <ul class="dropdown-menu">
+                        <li class="{{ Request::is('md/jenisFisio*') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('jenisFisio.index') }}">Jenis Fisio</a>
+                        </li>
+                    </ul>
+                @endcan
+                @can('master data alat kesehatan')
+                    <ul class="dropdown-menu">
+                        <li class="{{ Request::is('md/farmasi*') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('masterData.index') }}">Alat Kesehatan</a>
+                        </li>
+                    </ul>
+                @endcan
+                @can('master data riwayat penyakit')
+                    <ul class="dropdown-menu">
+                        <li class="{{ Request::is('pm/master_data/penyakit_sekarang/list*') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('penyakitSekarang.index') }}">Riwayat Penyakit</a>
+                        </li>
+                    </ul>
+                @endcan
             </li>
             @endcan
             @can('kunjungan')
@@ -98,35 +117,26 @@
             </li>
             @endcan
             
-            @can('poli mata')
-            <li class="menu-header">Poli</li> 
-            @can('poli mata perawat')
-            <li class="nav-item dropdown {{ Request::is('pm/master_data/*') ? 'active' : '' }}">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Master Data</span></a>
-                <ul class="dropdown-menu">
-                    <li class="{{ Request::is('pm/master_data/penyakit_sekarang/list*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('penyakitSekarang.index') }}">Penyakit Sekarang</a>
-                    </li>
-                </ul>
-            </li>
-            @endcan
+            @can('poliklinik')
+            <li class="menu-header">Poliklinik</li> 
+            @can('poliklinik mata')
             <li class="nav-item dropdown {{ Request::is('pm/polimata/*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-eye"></i> <span>Poli Mata</span></a>
-                @can('poli mata perawat')
+                @can('poliklinik mata assesmen perawat')
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('pm/polimata/perawat*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('poliMata.index') }}">Assesmen Awal</a>
+                        <a class="nav-link" href="{{ route('poliMata.index') }}">Assesmen Perawat</a>
                     </li>
                 </ul>
                 @endcan
-                @can('refraksi optisi')
+                @can('poliklinik mata refraksi optisi')
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('pm/polimata/perawat*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('poliMata.refraksi') }}">Refraksi Optisi</a>
                     </li>
                 </ul>
                 @endcan
-                @can('poli mata dokter')
+                @can('poliklinik mata assesmen dokter')
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('pm/polimata/dokter*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('poliMata.indexDokter') }}">Assesmen Dokter</a>
@@ -134,6 +144,7 @@
                 </ul>
                 @endcan
             </li>
+            @endcan
             @endcan
             @can('nurse record')
             <li class="menu-header">Rawat Jalan</li>

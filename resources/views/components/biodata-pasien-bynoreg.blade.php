@@ -1,4 +1,4 @@
-<div class="card author-box card-primary">
+<div class="card author-box card-primary card-fixed">
     <div class="card-body">
         <div class="author-box-name">
             <a href="#">{{ $biodata->NAMA_PASIEN}} - ({{ $biodata->NO_MR}})</a>

@@ -33,11 +33,11 @@
             @method('put')
             <!-- components biodata pasien by no reg -->
                 <div class="card mb-3">
-                    <div class="card-header">
-                        <h4 class="card-title">Allowanamnesa & Riwayat Alergi</h4>
+                    <div class="card-header card-khusus-header">
+                        <h6 class="card-khusus-title">Allowanamnesa & Riwayat Alergi</h6>
                     </div>
                     <!-- include form -->
-                    <div class="card-body">
+                    <div class="card-body card-khusus-body">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -100,11 +100,11 @@
                     <!-- include form -->
                 </div>
                 <div class="card mb-3">
-                    <div class="card-header">
-                        <h4 class="card-title">Spiritual dan Kultural pasien</h4>
+                    <div class="card-header card-khusus-header">
+                        <h6 class="card-khusus-title">Spiritual dan Kultural pasien</h6>
                     </div>
                     <!-- include form -->
-                    <div class="card-body">
+                    <div class="card-body card-khusus-body">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -181,11 +181,11 @@
                     <!-- include form -->
                 </div>
                 <div class="card mb-3">
-                    <div class="card-header">
-                        <h4 class="card-title">Status Psikologis, Sosial dan Fungsional</h4>
+                    <div class="card-header card-khusus-header">
+                        <h6 class="card-khusus-title">Status Psikologis, Sosial dan Fungsional</h6>
                     </div>
                     <!-- include form -->
-                    <div class="card-body">
+                    <div class="card-body card-khusus-body">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -282,11 +282,11 @@
                     <!-- include form -->
                 </div>
                 <div class="card mb-3">
-                    <div class="card-header">
-                        <h4 class="card-title">Pemeriksaan Fisik</h4>
+                    <div class="card-header card-khusus-header">
+                        <h6 class="card-khusus-title">Pemeriksaan Fisik</h6>
                     </div>
                     <!-- include form -->
-                    <div class="card-body">
+                    <div class="card-body card-khusus-body">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -481,11 +481,11 @@
                     <!-- include form -->
                 </div>
                 <div class="card mb-3">
-                    <div class="card-header">
-                        <h4 class="card-title">Kebutuhan Fungsional & Brain</h4>
+                    <div class="card-header card-khusus-header">
+                        <h6 class="card-khusus-title">Kebutuhan Fungsional & Brain</h6>
                     </div>
                     <!-- include form -->
-                    <div class="card-body">
+                    <div class="card-body card-khusus-body">
                         <div class="row">
                             {{-- <div class="col-md-6">
                                 <div class="form-group">
@@ -650,11 +650,11 @@
                     <!-- include form -->
                 </div>
                 <div class="card mb-3">
-                    <div class="card-header">
-                        <h4 class="card-title">Asesmen Jatuh</h4>
+                    <div class="card-header card-khusus-header">
+                        <h6 class="card-khusus-title">Asesmen Jatuh</h6>
                     </div>
                     <!-- include form -->
-                    <div class="card-body">
+                    <div class="card-body card-khusus-body">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group clearfix">
@@ -702,11 +702,11 @@
                     <!-- include form -->
                 </div>
                 <div class="card mb-3">
-                    <div class="card-header">
-                        <h4 class="card-title">Analisis & Rencana</h4>
+                    <div class="card-header card-khusus-header">
+                        <h6 class="card-khusus-title">Analisis & Rencana</h6>
                     </div>
                     <!-- include form -->
-                    <div class="card-body">
+                    <div class="card-body card-khusus-body">
                         <div class="row">
                             {{-- <div class="col-md-12">
                                 <div class="form-group">

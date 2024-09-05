@@ -1027,12 +1027,12 @@
                         <!-- include form -->
                     </div>
                     {{-- surat menyurat  --}}
-                    <div class="card card-secondary" id="form2" style="display: none">
-                        <div class="card-header card-success">
-                            <h4 class="card-title">Surat Keterangan Dalam Perawatan</h4>
+                    <div class="card" id="form2" style="display: none">
+                        <div class="card-header card-khusus-header">
+                            <h6 class="card-khusus-title">Surat Keterangan Dalam Perawatan</h6>
                         </div>
                         <!-- include form -->
-                        <div class="card-body">
+                        <div class="card-body card-khusus-body">
                             <!-- <div class="row"> -->
                             <div class="col-md-6">
                                 <div class="form-group">
