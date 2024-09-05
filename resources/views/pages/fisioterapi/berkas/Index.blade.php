@@ -197,6 +197,8 @@
                                             <td width="20%">
                                                 <a href="{{ route('rj.alkes', [$pasien->No_Reg])  }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Resep alkes</a>
 
+                                                <a href="{{ route('orderAlkes.Kwitansi', [$pasien->No_Reg])  }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Kwitansi</a>
+
                                         
                                                 @if($pasien->no_registrasi != null)
              
