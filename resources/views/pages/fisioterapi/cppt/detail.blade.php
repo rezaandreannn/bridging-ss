@@ -236,11 +236,20 @@
                                                 $tanggalSekarang = Carbon::now()->toDateString();
                                                 @endphp
 
-                                                @if((auth()->user()->roles->pluck('name')[0]) == 'fisioterapi')
+                                                
                                                 @if ($tanggalFisio !== $tanggalSekarang)
+                                                @can('edit riwayat cppt')
                                                 <a href="{{ route('cppt.editRiwayat', ['id' => $cppt->ID_CPPT_FISIO]) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i>Edit Riwayat</a>
+                                                @endcan
+                                                @can('hapus riwayat cppt')
+                                                <form id="delete-form-{{$cppt->ID_CPPT_FISIO}}" action="{{ route('cppt.deleteData', $cppt->ID_CPPT_FISIO) }}" method="POST" style="display: none;">
+                                                    @method('delete')
+                                                    @csrf
+                                                </form>
+                                                <a class="btn btn-sm btn-danger" confirm-delete="true" data-menuId="{{$cppt->ID_CPPT_FISIO}}" href="#"><i class="fas fa-trash"></i> Hapus Riwayat</a>
+                                                @endcan
                                                 @endif
-                                                @endif
+                                              
                                       
                                                 @if ($tanggalFisio === $tanggalSekarang)
                                                 <a href="{{ route('cppt.edit', ['id' => $cppt->ID_CPPT_FISIO]) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i>Edit</a>
