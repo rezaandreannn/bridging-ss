@@ -269,10 +269,14 @@ class AssesmenMataController extends Controller
     {
         // Make a POST request to the API endpoint
         $request->validate([
+            'FS_ANAMNESA' => 'max:255',
             'suhu' => 'required',
             'nadi' => 'required',
             'respirasi' => 'required',
             'td' => 'required',
+            'FS_CARA_BERJALAN1' => 'required',
+            'FS_CARA_BERJALAN2' => 'required',
+            'FS_CARA_DUDUK' => 'required',
         ]);
 
         try {

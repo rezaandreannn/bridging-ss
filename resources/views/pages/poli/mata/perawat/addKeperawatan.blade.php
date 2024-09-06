@@ -43,10 +43,9 @@
                                     <input type="hidden" name="NO_REG" value="{{ $noReg }}" />
                                     <input type="hidden" name="KODE_DOKTER" value="{{ $biodata->Kode_Dokter}}" />
                                     <input type="hidden" name="NO_MR" value="{{ $biodata->NO_MR}}" />
-                                    <textarea name="FS_ANAMNESA" class="form-control  @error('anamnesa') is-invalid  
-                                        @enderror" rows="3" placeholder="Masukan ..."></textarea>
+                                    <textarea name="FS_ANAMNESA" class="form-control  @error('FS_ANAMNESA') is-invalid @enderror" rows="3" placeholder="Masukan ..."></textarea>
                                 </div>
-                                @error('anamnesa')
+                                @error('FS_ANAMNESA')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -101,7 +100,7 @@
                         <h6 class="card-khusus-title">Spiritual dan Kultural pasien</h6>
                     </div>
                     <!-- include form -->
-                    <div class="card-khusus-body">
+                    <div class="card-body card-khusus-body">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -305,14 +304,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Kesadaran</label>
-                                    <input type="text" name="KESADARAN" class="form-control @error('kesadaran') is-invalid  
-                                        @enderror" value="{{ old('kesadaran')}}">
+                                    <input type="text" name="KESADARAN" class="form-control @error('kesadaran') is-invalid @enderror" value="{{ old('kesadaran')}}">
+                                        @error('kesadaran')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                 </div>
-                                @error('kesadaran')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                                @enderror
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -325,12 +323,12 @@
                                                 <b>x/menit</b>
                                             </div>
                                         </div>
-                                        @error('respirasi')
+                                    </div>
+                                    @error('respirasi')
                                         <span class="text-danger" style="font-size: 12px;">
                                             {{ $message }}
                                         </span>
-                                        @enderror
-                                    </div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -344,12 +342,12 @@
                                                 <b>x/menit</b>
                                             </div>
                                         </div>
-                                        @error('nadi')
-                                        <span class="text-danger" style="font-size: 12px;">
-                                            {{ $message }}
-                                        </span>
-                                        @enderror
                                     </div>
+                                    @error('nadi')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -363,12 +361,12 @@
                                                 <b>mmHg</b>
                                             </div>
                                         </div>
-                                        @error('td')
+                                    </div>
+                                    @error('td')
                                         <span class="text-danger" style="font-size: 12px;">
                                             {{ $message }}
                                         </span>
-                                        @enderror
-                                    </div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -382,12 +380,12 @@
                                                 <b>C</b>
                                             </div>
                                         </div>
-                                        @error('suhu')
+                                    </div>
+                                    @error('suhu')
                                         <span class="text-danger" style="font-size: 12px;">
                                             {{ $message }}
                                         </span>
-                                        @enderror
-                                    </div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -401,19 +399,19 @@
                                                 <b>Kg</b>
                                             </div>
                                         </div>
-                                        @error('bb')
+                                    </div>
+                                    @error('bb')
                                         <span class="text-danger" style="font-size: 12px;">
                                             {{ $message }}
                                         </span>
-                                        @enderror
-                                    </div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Tinggi Badan</label>
                                     <div class="input-group">
-                                        <input type="text" name="tb" id="tb" placeholder="masukkan hanya angka" class="form-control @error('tb') is-invalid  
+                                        <input type="text" name="tb" id="tb" placeholder="masukkan hanya angka" value="-" class="form-control @error('tb') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
@@ -657,36 +655,54 @@
                             <div class="col-md-6">
                                 <div class="form-group clearfix">
                                     <label>Pasien berjalan tidak seimbang / sempoyongan</label>
-                                    <select name="FS_CARA_BERJALAN1" class="form-control select2" onchange="click1(this)">
+                                    <select name="FS_CARA_BERJALAN1" class="form-control select2 @error('FS_CARA_BERJALAN1') is-invalid  
+                                        @enderror" onchange="click1(this)">
                                         <option value="">--Pilih Data--</option>
-                                        <option value="0">TIDAK</option>
-                                        <option value="1">YA</option>
+                                        <option value="0" {{ old('FS_CARA_BERJALAN1') == '0' ? 'selected' : '' }}>TIDAK</option>
+                                        <option value="1" {{ old('FS_CARA_BERJALAN1') == '1' ? 'selected' : '' }}>YA</option>
                                     </select>
                                 </div>
+                                @error('FS_CARA_BERJALAN1')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group clearfix">
                                     <label>
                                         Pasien berjalan menggunakan alat bantu
                                     </label>
-                                    <select name="FS_CARA_BERJALAN2" class="form-control select2" onchange="click2(this)">
+                                    <select name="FS_CARA_BERJALAN2" class="form-control select2 @error('FS_CARA_BERJALAN2') is-invalid  
+                                        @enderror" onchange="click2(this)">
                                         <option value="">--Pilih Data--</option>
-                                        <option value="0">TIDAK</option>
-                                        <option value="1">YA</option>
+                                        <option value="0" {{ old('FS_CARA_BERJALAN2') == '0' ? 'selected' : '' }}>TIDAK</option>
+                                        <option value="1" {{ old('FS_CARA_BERJALAN2') == '1' ? 'selected' : '' }}>YA</option>
                                     </select>
                                 </div>
+                                @error('FS_CARA_BERJALAN2')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group clearfix">
                                     <label for="check3">
                                         Pada saat akan duduk pasien memegang benda untuk menopang
                                     </label>
-                                    <select name="FS_CARA_DUDUK" class="form-control select2" onchange="click3(this)">
+                                    <select name="FS_CARA_DUDUK" class="form-control select2 @error('FS_CARA_DUDUK') is-invalid  
+                                        @enderror" onchange="click3(this)">
                                         <option value="">--Pilih Data--</option>
-                                        <option value="0">TIDAK</option>
-                                        <option value="1">YA</option>
+                                        <option value="0" {{ old('FS_CARA_DUDUK') == '0' ? 'selected' : '' }}>TIDAK</option>
+                                        <option value="1" {{ old('FS_CARA_DUDUK') == '1' ? 'selected' : '' }}>YA</option>
                                     </select>
                                 </div>
+                                @error('FS_CARA_DUDUK')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
                             <input type="hidden" id="hasil_check1">
                             <input type="hidden" id="hasil_check2">
