@@ -72,6 +72,13 @@
                                             <td width="20%">
                                                 @if($fisioModel->countCpptByKodeTr($transaksi->ID_TRANSAKSI) >= $transaksi->JUMLAH_TOTAL_FISIO && $fisioModel->cekLastCpptByKodeTr($transaksi->ID_TRANSAKSI)->JENIS_FISIO != '')
 
+                                                @can('tambah cppt admin')
+                                                <a href="{{ route('cppt.detail', [
+                                                    'id' => $transaksi->ID_TRANSAKSI,
+                                                    'no_mr' => $transaksi->NO_MR_PASIEN,'kode_transaksi' => $transaksi->KODE_TRANSAKSI_FISIO
+                                                    ]) }}" class="btn btn-sm btn-info"><i class="fa fa-edit"></i>Tambah CPPT</a>
+                                                @endcan
+
                                                 @else
                                                 <a href="{{ route('cppt.detail', [
                                             'id' => $transaksi->ID_TRANSAKSI,
