@@ -1038,7 +1038,7 @@
                                 <div class="form-group">
                                     <label>Belum dapat dikembalikan ke Fasilitas Perujuk dengan alasan</label>
                                     <div class="input-group mb-3">
-                                        <select name="FS_SKDP_1" id="FS_SKDP_1" class="form-control" onchange="click_alasan_skdp(this)">
+                                        <select name="FS_SKDP_1" id="FS_SKDP_1" class="form-control select2" onchange="click_alasan_skdp(this)">
                                             <option value="">-- pilih --</option>
                                             @foreach ($alasanSkdp as $skdpalasan)
                                             <option value="{{$skdpalasan->FS_KD_TRS}}" {{ ($skdp->FS_SKDP_1 == $skdpalasan->FS_KD_TRS ) ? 'selected' : '' }}>{{$skdpalasan->FS_NM_SKDP_ALASAN}}</option>
@@ -1051,7 +1051,7 @@
                             <div class="col-md-6">
                                 <label>Rencana tindak lanjut yang akan dilakukan pada kunjungan selanjutnya :</label>
                                 <div class="input-group mb-3">
-                                    <select name="FS_SKDP_2" id="rencana_skdp" class="form-control">
+                                    <select name="FS_SKDP_2" id="rencana_skdp" class="form-control select2">
                                         <option value="1">--Pilih Rencana Tindakan--</option>
                                         @foreach ($rencanaSkdp as $renSkdp)
                                         <option value="{{$renSkdp->FS_KD_TRS}}" {{ ($skdp->FS_SKDP_2 == $renSkdp->FS_KD_TRS ) ? 'selected' : '' }}>{{$renSkdp->FS_NM_SKDP_RENCANA}}</option>
@@ -1063,7 +1063,7 @@
                             <div class="col-md-6">
                                 <label>Rencana Kontrol Berikutnya : </label>
                                 <div class="input-group mb-3">
-                                    <select class="form-control selectric" name="FS_RENCANA_KONTROL">
+                                    <select class="form-control select2" name="FS_RENCANA_KONTROL">
                                         <option value="1 Minggu Kedepan"  {{ ($skdp->FS_RENCANA_KONTROL == '1 Minggu Kedepan' ) ? 'selected' : '' }}>1 Minggu Kedepan</option>
                                         <option value="2 Minggu Kedepan" {{ ($skdp->FS_RENCANA_KONTROL == '2 Minggu Kedepan' ) ? 'selected' : '' }}>2 Minggu Kedepan</option>
                                         <option value="Sebulan Kedepan" {{ ($skdp->FS_RENCANA_KONTROL == 'Sebulan Kedepan' ) ? 'selected' : '' }}>Sebulan Kedepan</option>

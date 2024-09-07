@@ -18,9 +18,9 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('rj.index') }}">Poli Mata</a></div>
-                <div class="breadcrumb-item"><a href="{{ route('rj.index') }}">Master Data</a></div>
-                <div class="breadcrumb-item">Penyakit Sekarang</div>
+                <div class="breadcrumb-item active"><a href="{{ route('penyakitSekarang.index') }}">Poli Mata</a></div>
+                <div class="breadcrumb-item"><a href="{{ route('penyakitSekarang.index') }}">Master Data</a></div>
+                <div class="breadcrumb-item">Riwayat Penyakit</div>
             </div>
         </div>
 
@@ -29,7 +29,7 @@
             <div class="card">
                 <div class="card-header">
                     <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add-penyakit-sekarang">
-                        <i class="fas fa-plus"></i> Penyakit Sekarang
+                        <i class="fas fa-plus"></i> Riwayat Penyakit
                     </button>
                 </div>
                 <div class="card-body">
@@ -38,7 +38,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
-                                    <th scope="col">Nama Penyakit Sekarang</th>
+                                    <th scope="col">Nama Riwayat Penyakit</th>
                                     <th scope="col">Created By</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
@@ -79,7 +79,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Edit Penyakit Sekarang</h4>
+                <h4 class="modal-title">Edit Riwayat Penyakit</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -92,7 +92,7 @@
                 <div class="card-body">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>Nama Penyakit Sekarang</label>
+                            <label>Nama Riwayat Penyakit</label>
                             <input type="text" name="nama_penyakit_sekarang" class="form-control @error('nama_penyakit_sekarang')  is-invalid @enderror" value="{{$item->nama_penyakit_sekarang}}">
                             @error('nama_penyakit_sekarang')
                             <span class="text-danger" style="font-size: 12px;">
@@ -120,7 +120,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Penyakit Sekarang</h4>
+                <h4 class="modal-title">Riwayat Penyakit</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -131,7 +131,7 @@
                 <div class="card-body">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>Nama Penyakit Sekarang</label>
+                            <label>Nama Riwayat Penyakit</label>
                             <input type="text" name="nama_penyakit_sekarang" class="form-control @error('nama_penyakit_sekarang')  is-invalid @enderror">
                             @error('nama_penyakit_sekarang')
                             <span class="text-danger" style="font-size: 12px;">

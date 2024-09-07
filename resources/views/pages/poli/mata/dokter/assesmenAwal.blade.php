@@ -1013,7 +1013,7 @@
                                 <div class="form-group">
                                     <label>Belum dapat dikembalikan ke Fasilitas Perujuk dengan alasan</label>
                                     <div class="input-group mb-3">
-                                        <select name="FS_SKDP_1" id="FS_SKDP_1" class="form-control" onchange="click_alasan_skdp(this)">
+                                        <select name="FS_SKDP_1" id="FS_SKDP_1" class="form-control select2" onchange="click_alasan_skdp(this)">
                                             <option value="">-- pilih --</option>
                                             @foreach ($alasanSkdp as $skdpalasan)
                                                 <option value="{{$skdpalasan->FS_KD_TRS}}" {{ ($skdpalasan->FS_KD_TRS ) ? 'selected' : '' }}>{{$skdpalasan->FS_NM_SKDP_ALASAN}}</option>
@@ -1025,7 +1025,7 @@
                             <div class="col-md-6">
                                 <label>Rencana tindak lanjut yang akan dilakukan pada kunjungan selanjutnya :</label>
                                 <div class="input-group mb-3">
-                                    <select name="FS_SKDP_2" id="rencana_skdp" class="form-control">
+                                    <select name="FS_SKDP_2" id="rencana_skdp" class="form-control select2">
                                         <option value="1">--Pilih Rencana Tindakan--</option>
                                     </select>
                                     <input type="text" name="FS_SKDP_KET" placeholder="keterangan.." />
@@ -1034,7 +1034,7 @@
                             <div class="col-md-6">
                                 <label>Rencana Kontrol Berikutnya : </label>
                                 <div class="input-group mb-3">
-                                    <select name="FS_RENCANA_KONTROL" id="FS_RENCANA_KONTROL" class="form-control" onchange="click_rencana_kontrol(this)">
+                                    <select name="FS_RENCANA_KONTROL" id="FS_RENCANA_KONTROL" class="form-control select2" onchange="click_rencana_kontrol(this)">
                                         <option value="">-- pilih --</option>
                                         <option value="1 Minggu">1 Minggu</option>
                                         <option value="2 Minggu">2 Minggu</option>

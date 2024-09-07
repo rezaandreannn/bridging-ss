@@ -18,9 +18,9 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-data active"><a href="{{ route('rj.dokter') }}">Pemeriksaan Medis</a></div>
-                <div class="breadcrumb-data"><a href="{{ route('rj.dokter') }}">Poli</a></div>
-                <div class="breadcrumb-data">Mata</div>
+                <div class="breadcrumb-item active"><a href="{{ route('poliMata.index') }}">Poli</a></div>
+                <div class="breadcrumb-item"><a href="{{ route('poliMata.index') }}">Mata</a></div>
+                <div class="breadcrumb-item">Perawat</div>
             </div>
         </div>
 

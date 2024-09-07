@@ -352,7 +352,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>TD</label><code> (contoh : 110/90)</code>
+                                    <label>Tekanan Darah</label><code> (contoh : 110/90)</code>
                                     <div class="input-group">
                                         <input type="text" name="td" id="td" placeholder="masukkan hanya angka" class="form-control @error('td') is-invalid  
                                         @enderror">
@@ -390,7 +390,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Berat Badan</label>
+                                    <label>Berat Badan</label><code> (jika kosong beri tanda -)</code>
                                     <div class="input-group">
                                         <input type="text" name="bb" id="bb" placeholder="masukkan hanya angka" class="form-control @error('bb') is-invalid  
                                         @enderror">
@@ -409,9 +409,9 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Tinggi Badan</label>
+                                    <label>Tinggi Badan</label><code> (jika kosong beri tanda -)</code>
                                     <div class="input-group">
-                                        <input type="text" name="tb" id="tb" placeholder="masukkan hanya angka" value="-" class="form-control @error('tb') is-invalid  
+                                        <input type="text" name="tb" id="tb" placeholder="masukkan hanya angka" class="form-control @error('tb') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
@@ -428,9 +428,9 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Lingkar Kepala</label>
+                                    <label>Lingkar Kepala</label><code> (jika kosong beri tanda -)</code>
                                     <div class="input-group">
-                                        <input type="text" name="LINGKAR_KEPALA" class="form-control @error('lingkar_kepala') is-invalid  
+                                        <input type="text" name="LINGKAR_KEPALA" id="lingkaran"  placeholder="masukkan hanya angka" class="form-control @error('lingkar_kepala') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
@@ -809,6 +809,14 @@
 </script>
 {{-- SCRIPT VITAL SIGN --}}
 <script>
+    document.getElementById('lingkaran').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
     document.getElementById('td').addEventListener('keypress', function(event) {
         const keyCode = event.keyCode;
         const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /

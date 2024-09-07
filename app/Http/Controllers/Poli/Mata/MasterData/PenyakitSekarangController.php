@@ -35,7 +35,7 @@ class PenyakitSekarangController extends Controller
         $penyakitSekarang = $this->poliMata->getPenyakitSekarang();
 
         // dd($diagnosisMedis);
-        $title = $this->prefix . ' ' . 'Penyakit Sekarang';
+        $title = $this->prefix . ' ' . 'Riwayat Penyakit';
         return view($this->view . 'penyakit_sekarang.index', compact('title', 'penyakitSekarang'));
     }
 
@@ -74,7 +74,7 @@ class PenyakitSekarangController extends Controller
             ]);
             DB::connection('pku')->commit();
 
-            return redirect()->route('penyakitSekarang.index')->with('success', 'Penyakit Sekarang Berhasil Ditambahkan!');
+            return redirect()->route('penyakitSekarang.index')->with('success', 'Riwayat Penyakit Berhasil Ditambahkan!');
         } catch (\Exception $e) {
             // Rollback transaksi jika terjadi kesalahan
             DB::connection('pku')->rollback();
@@ -130,7 +130,7 @@ class PenyakitSekarangController extends Controller
             ]);
             DB::connection('pku')->commit();
 
-            return redirect()->route('penyakitSekarang.index')->with('success', 'Penyakit Sekarang Berhasil Diedit!');
+            return redirect()->route('penyakitSekarang.index')->with('success', 'Riwayat Penyakit Berhasil Diedit!');
         } catch (\Exception $e) {
             // Rollback transaksi jika terjadi kesalahan
             DB::connection('pku')->rollback();
