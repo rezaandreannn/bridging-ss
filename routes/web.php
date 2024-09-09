@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\igd\TriaseController;
 use App\Http\Controllers\Fisio\FisioController;
 use App\Http\Controllers\Manage\RoleController;
 use App\Http\Controllers\Manage\UserController;
@@ -418,6 +419,10 @@ Route::middleware('auth')->group(function () {
 
     //IGD
     Route::prefix('igd')->group(function () {
+        
+        // triase
+        Route::get('triase/', [TriaseController::class, 'index'])->name('triase.index');
+        Route::get('triase/add', [TriaseController::class, 'create'])->name('triase.create');
         //Layanan IGD
         // ------------ EWS --------------- //
         Route::get('layananIGD/ewsDewasa', [EwsController::class, 'ewsDewasa'])->name('layanan.ewsDewasa');
