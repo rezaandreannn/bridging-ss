@@ -640,7 +640,7 @@
                 </td>
             </tr>
         </table>
-        <p class="text7"><b>ASESMEN Dokter</b></p>
+        <p class="text7"><b>Assesmen Dokter</b></p>
         <table style="border: 1px solid black; border-bottom:none; " width="100%">
             <tr>
                 <td class="text3"><b>Anamnesa</b></td>
@@ -648,6 +648,14 @@
             </tr>
             <tr>
                 <td class="text3">: {{$dokter->anamnesa}}</td>
+                <td class="text3" colspan="2"></td>
+            </tr>
+            <tr>
+                <td class="text3"><b>Riwayat Penyakit Sekarang</b></td>
+                <td class="text3" colspan="2"></td>
+            </tr>
+            <tr>
+                <td class="text3">: {{$dokter->RIWAYAT_SEKARANG}}</td>
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>
@@ -683,64 +691,19 @@
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>
-                <td class="text3"><b>Kepala Leher</b></td>
-                <td class="text3" colspan="2"></td>
-            </tr>
-            <tr>
-                <td class="text3">Konjungtiva : 
-                    @if($dokter->KONJUNGTIVA == '1')
-                    {{'Pucat'}}
-                    @elseif ($dokter->KONJUNGTIVA == '2')
-                    {{'Pink'}}
-                    @else 
-                    {{'-'}}
-                    @endif
-                </td>
-                <td class="text3" colspan="2"></td>
-            </tr>
-            <tr>
-                <td class="text3">Sklera : 
-                    @if($dokter->SKELERA == '1')
-                    {{'Ikterik'}}
-                    @elseif ($dokter->SKELERA == '2')
-                    {{'Tidak Ikterik'}}
-                    @else 
-                    {{'-'}}
-                    @endif
-                </td>
-                <td class="text3" colspan="2"></td>
-            </tr>
-            <tr>
-                <td class="text3">Bibir/Lidah : 
-                    @if($dokter->BIBIR_LIDAH == '1')
-                    {{'Sianosis'}}
-                    @elseif ($dokter->BIBIR_LIDAH == '2')
-                    {{'Tidak'}}
-                    @else 
-                    {{'-'}}
-                    @endif
-                </td>
-                <td class="text3" colspan="2"></td>
-            </tr>
-            @if ($dokter->ekstremitas_od !='')
-            <tr>
-                <td class="text3"><b>Ekstremitas</b></td>
-                <td class="text3" colspan="2"></td>
-            </tr>
-            <tr>
-                <td class="text3">
-                    {{$dokter->ekstremitas_od}}
-                    {{$dokter->ekstremitas_os}}
-                </td>
-                <td class="text3" colspan="2"></td>
-            </tr>
-            @endif
-            <tr>
                 <td class="text3"><b>Diagnosa (A)</b></td>
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>
                 <td class="text3">: {{$dokter->DIAGNOSA}}</td>
+                <td class="text3" colspan="2"></td>
+            </tr>
+            <tr>
+                <td class="text3"><b>Edukasi</b></td>
+                <td class="text3" colspan="2"></td>
+            </tr>
+            <tr>
+                <td class="text3">: {{$dokter->edukasi}}</td>
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>
@@ -752,35 +715,11 @@
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>
-                <td class="text3"><b>NCT</b></td>
+                <td class="text3"><b>Tonometri</b></td>
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>
                 <td class="text3">TOD : {{$dokter->NCT_TOD}} TOS :  {{$dokter->NCT_TOS}}</td>
-                <td class="text3" colspan="2"></td>
-            </tr>
-            <tr>
-                <td class="text3"><b>TONOMETRI</b></td>
-                <td class="text3" colspan="2"></td>
-            </tr>
-            <tr>
-                <td class="text3">OD : {{$dokter->tonometri_od}} OS : {{$dokter->tonometri_os}}</td>
-                <td class="text3" colspan="2"></td>
-            </tr>
-            <tr>
-                <td class="text3"><b>Aplansi</b></td>
-                <td class="text3" colspan="2"></td>
-            </tr>
-            <tr>
-                <td class="text3">OD : {{$dokter->aplansi_od}} OS: {{$dokter->aplansi_os}}</td>
-                <td class="text3" colspan="2"></td>
-            </tr>
-            <tr>
-                <td class="text3"><b>Anel</b></td>
-                <td class="text3" colspan="2"></td>
-            </tr>
-            <tr>
-                <td class="text3">OD : {{$dokter->anel_od}} OS: {{$dokter->anel_os}}</td>
                 <td class="text3" colspan="2"></td>
             </tr>
         </table>
@@ -800,7 +739,27 @@
                 <td class="text5">({{$dokter->NAMA_DOKTER}})</td>
             </tr>
         </table>
-
+        <p class="text7"><b>HASIL GAMBAR</b></p>
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th class="tabel1" colspan="2">Mata Kiri</th>
+                    <th class="tabel1" colspan="2">Mata Kanan</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        @foreach ($mataKiri as $kiri)
+                        <td class="gambar-mata"> <img src="storage/gambar_mata/{{$kiri->GAMBAR}}" width="60" height="80" /></td>
+                        <td class="text-mata" width="150px"> {{$kiri->DESKRIPSI}}</td>
+                        @endforeach
+                        @foreach ($mataKanan as $kanan)
+                        <td class="gambar-mata"> <img src="storage/gambar_mata/{{$kanan->GAMBAR}}" width="60" height="80" /></td>
+                        <td class="text-mata" width="150px"> {{$kanan->DESKRIPSI}}</td>
+                        @endforeach
+                    </tr>
+            </tbody>
+        </table>
     </body>
 </html>
 

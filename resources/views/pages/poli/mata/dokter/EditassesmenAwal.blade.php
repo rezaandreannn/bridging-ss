@@ -103,7 +103,7 @@
                                         <input type="hidden" name="NO_MR" value="{{ $biodata->NO_MR}}" />
                                         <label>Keluhan Utama (Anamnesa) <code>*</code></label>
                                         <textarea name="anamnesa" class="form-control  @error('anamnesa') is-invalid  
-                                            @enderror" rows="3" placeholder="Masukan ...">{{ $asasmen_dokter->anamnesa }}</textarea>
+                                            @enderror" style="height: 70px;" rows="7" placeholder="Masukan ...">{{ $asasmen_dokter->anamnesa }}</textarea>
                                     </div>
                                     @error('anamnesa')
                                     <div class="invalid-feedback">
@@ -114,13 +114,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Riwayat Penyakit Sekarang</label>
-                                        <select multiple name="RIWAYAT_SEKARANG[]" id="riwayat_sekarang" class="form-control select2" multiple="multiple" data-placeholder="Pilih Penyakit Sekarang" data-dropdown-css-class="select2-purple" style="width: 100%;">
-                                            @foreach ($penyakitSekarang as $penyakit)
-                                                <option value="{{ $penyakit->id }}" {{ in_array($penyakit->id, explode(',', $asasmen_dokter->RIWAYAT_SEKARANG)) ? 'selected' : '' }}>
-                                                    {{ $penyakit->nama_penyakit_sekarang }}
-                                                </option>
-                                            @endforeach
-                                        </select>
+                                        <input type="text" name="RIWAYAT_SEKARANG" class="form-control" id="riwayat_sekarang" style="height: 50px;" rows="3" value="{{ $asasmen_dokter->RIWAYAT_SEKARANG }}">
                                         @error('riwayat_penyakit')
                                         <span class="text-danger" style="font-size: 12px;">
                                             {{ $message }}
@@ -421,164 +415,6 @@
                         </div>
                         <!-- include form -->
                     </div>
-                    {{-- <div class="card mb-3">
-                        <div class="card-header card-khusus-header">
-                            <h6 class="card-khusus-title">Kebutuhan Fungsional & Asesmen Jatuh</h6>
-                        </div>
-                        <!-- include form -->
-                        <div class="card-body card-khusus-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="d-block">Cacat Tubuh</label>
-                                        <input type="text" name="CACAT" value="{{ $asasmen_dokter->CACAT }}" class="form-control @error('CACAT') is-invalid @enderror">
-                                        @error('CACAT')
-                                        <span class="text-danger" style="font-size: 12px;">
-                                            {{ $message }}
-                                        </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>ADL</label>
-                                        <div class="col-md-6">
-                                            <div class="form-group" style="display: flex; flex-direction: row;">
-                                                <div class="form-check" style="margin-right: 10px;">
-                                                    <input class="form-check-input" type="radio" name="ADL" value="1" id="adl1" {{ ($asasmen_dokter->ADL=='1') ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="adl1">
-                                                        Mandiri
-                                                    </label>
-                                                </div>
-                                                <div class="form-check" style="margin-right: 10px;">
-                                                    <input class="form-check-input" type="radio" name="ADL" value="2" id="adl2" {{ ($asasmen_dokter->ADL=='2') ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="adl2">
-                                                        Dibantu
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group clearfix">
-                                        <label>Pasien berjalan tidak seimbang / sempoyongan</label>
-                                        <select name="FS_CARA_BERJALAN1" class="form-control" onchange="click1(this)">
-                                            <option value="">--Pilih Data--</option>
-                                            <option value="0" {{ ($asasmen_dokter->FS_CARA_BERJALAN1=='0') ? 'selected' : '' }}>TIDAK</option>
-                                            <option value="1" {{ ($asasmen_dokter->FS_CARA_BERJALAN1=='1') ? 'selected' : '' }}>YA</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group clearfix">
-                                        <label>
-                                            Pasien berjalan menggunakan alat bantu
-                                        </label>
-                                        <select name="FS_CARA_BERJALAN2" class="form-control" onchange="click2(this)">
-                                            <option value="">--Pilih Data--</option>
-                                            <option value="0" {{ ($asasmen_dokter->FS_CARA_BERJALAN2=='0') ? 'selected' : '' }}>TIDAK</option>
-                                            <option value="1" {{ ($asasmen_dokter->FS_CARA_BERJALAN2=='1') ? 'selected' : '' }}>YA</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group clearfix">
-                                        <label for="check3">
-                                            Pada saat akan duduk pasien memegang benda untuk menopang
-                                        </label>
-                                        <select name="FS_CARA_DUDUK" class="form-control" onchange="click3(this)">
-                                            <option value="">--Pilih Data--</option>
-                                            <option value="0" {{ ($asasmen_dokter->FS_CARA_DUDUK=='0') ? 'selected' : '' }}>TIDAK</option>
-                                            <option value="1" {{ ($asasmen_dokter->FS_CARA_DUDUK=='1') ? 'selected' : '' }}>YA</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <input type="hidden" id="hasil_check1">
-                                <input type="hidden" id="hasil_check2">
-                                <input type="hidden" id="hasil_check3">
-                                <label for="kesimpulan" class="col-sm-2 col-form-label">Kesimpulan : </label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control-plaintext" id="kesimpulan_asesmen_jatuh" readonly>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- include form -->
-                    </div> --}}
-                    <div class="card mb-3">
-                        <div class="card-header card-khusus-header">
-                            <h6 class="card-khusus-title">Kepala Leher</h6>
-                        </div>
-                        <!-- include form -->
-                        <div class="card-body card-khusus-body">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Konjungtiva</label>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="KONJUNGTIVA" value="1" id="konjungtiva1" {{ ($asasmen_dokter->KONJUNGTIVA=='1') ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="konjungtiva1">
-                                                        Pucat
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="KONJUNGTIVA" value="2" id="konjungtiva2" {{ ($asasmen_dokter->KONJUNGTIVA=='2') ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="konjungtiva2">
-                                                        Pink
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Skelera</label>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="SKELERA" value="1" id="skelera1" {{ ($asasmen_dokter->SKELERA=='1') ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="skelera1">
-                                                        Ikterik
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="SKELERA" value="0" id="skelera2" {{ ($asasmen_dokter->SKELERA=='0') ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="skelera2">
-                                                        Tidak Ikterik
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Bibir/Lidah</label>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="BIBIR_LIDAH" value="1" id="bibir_lidah1" {{ ($asasmen_dokter->BIBIR_LIDAH=='1') ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="bibir_lidah1">
-                                                        Sianosis
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="BIBIR_LIDAH" value="0" id="bibir_lidah2" {{ ($asasmen_dokter->BIBIR_LIDAH=='0') ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="bibir_lidah2">
-                                                        Tidak
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- include form -->
-                    </div>
                     <div class="card">
                         <div class="card-header card-success card-khusus-header">
                             <h6 class="card-khusus-title">Pemeriksaan Fisik Mata</h6>
@@ -606,7 +442,7 @@
                                             @if(isset($MataKiri) && $MataKiri->GAMBAR)
                                                 <img src="{{ asset('storage/gambar_mata/'. $MataKiri->GAMBAR) }}" width="100%" height="250" />
                                             @else
-                                                <p>No image available</p>
+                                                <p>Gambar Tidak Ada</p>
                                             @endif
                                         </div>
                                         <div class="col-md-6">
@@ -614,7 +450,7 @@
                                             @if(isset($MataKanan) && $MataKanan->GAMBAR)
                                                 <img src="{{ asset('storage/gambar_mata/'. $MataKanan->GAMBAR) }}" width="100%" height="250" />
                                             @else
-                                                <p>No image available</p>
+                                                <p>Gambar Tidak Ada</p>
                                             @endif
                                         </div>
                                         <div class="col-md-6">
@@ -638,12 +474,14 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="">Deskripsi Kiri :</label>
-                                                <input type="text" class="form-control" name="DESKRIPSI_KIRI" value="{{ $MataKiri->DESKRIPSI ?? ''}}" id="">
+                                                <textarea rows="7" cols="50" style="height: 100px;" name="DESKRIPSI_KIRI" class="form-control">{{ $MataKiri->DESKRIPSI ?? ''}}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="">Deskripsi Kanan :</label>
-                                            <input type="text" class="form-control" name="DESKRIPSI_KANAN" value="{{ $MataKanan->DESKRIPSI ?? ''}}" id="">
+                                            <div class="form-group">
+                                                <label for="">Deskripsi Kanan :</label>
+                                                <textarea rows="7" cols="50" style="height: 100px;" name="DESKRIPSI_KANAN" class="form-control">{{ $MataKanan->DESKRIPSI ?? ''}}</textarea>
+                                            </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -654,13 +492,13 @@
                                                             <label for="VISUS_OD" class="mr-2 mt-2">
                                                                 OD
                                                             </label>
-                                                            <input type="text" placeholder="Inputan Mata Kanan" value="{{ $asasmen_dokter->VISUS_OD }}" class="form-control" name="VISUS_OD" id="VISUS_OD">
+                                                            <input type="text" placeholder="Inputan Mata Kanan" value="{{ $asasmen_dokter->VISUS_OD }}" class="form-control" name="VISUS_OD" readonly>
                                                         </div>
                                                         <div class="input-group" style="margin-right: 10px;">
                                                             <label for="VISUS_OS" class="mr-2 mt-2">
                                                                 OS
                                                             </label>
-                                                            <input type="text" placeholder="Inputan Mata Kiri" value="{{ $asasmen_dokter->VISUS_OS }}" class="form-control" name="VISUS_OS" id="VISUS_OS">
+                                                            <input type="text" placeholder="Inputan Mata Kiri" value="{{ $asasmen_dokter->VISUS_OS }}" class="form-control" name="VISUS_OS" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -668,125 +506,20 @@
                                         </div>  
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>NCT</label>
+                                                <label>Tonometri</label>
                                                 <div class="col-md-12">
                                                     <div class="form-group" style="display: flex; flex-direction: row;">
                                                         <div class="input-group" style="margin-right: 10px;">
                                                             <label for="NCT_TOD" class="mr-2 mt-2">
                                                                 TOD
                                                             </label>
-                                                            <input type="text" placeholder="Inputan Mata Kanan" value="{{ $asasmen_dokter->NCT_TOD }}" class="form-control" name="NCT_TOD" id="NCT_TOD">
+                                                            <input type="text" placeholder="Inputan Mata Kanan" value="{{ $asasmen_dokter->NCT_TOD }}" class="form-control" name="NCT_TOD" id="NCT_TOD" readonly>
                                                         </div>
                                                         <div class="input-group" style="margin-right: 10px;">
                                                             <label for="NCT_TOS" class="mr-2 mt-2">
                                                                 TOS
                                                             </label>
-                                                            <input type="text" placeholder="Inputan Mata Kiri" value="{{ $asasmen_dokter->NCT_TOS }}" class="form-control" name="NCT_TOS" id="NCT_TOS">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {{-- <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Streak</label>
-                                                <div class="col-md-12">
-                                                    <div class="form-group" style="display: flex; flex-direction: row;">
-                                                        <div class="form-check" style="margin-right: 10px;">
-                                                            <input class="form-check-input" type="radio" name="discharge" value="1" {{ ($asasmen_dokter->discharge=='1') ? 'checked' : '' }} id="discharge1">
-                                                            <label class="form-check-label" for="discharge1">
-                                                                Retinoskopi
-                                                            </label>
-                                                        </div>
-                                                        <div class="form-check" style="margin-right: 10px;">
-                                                            <input class="form-check-input" type="radio" name="discharge" value="2" {{ ($asasmen_dokter->discharge=='2') ? 'checked' : '' }} id="discharge2">
-                                                            <label class="form-check-label" for="discharge2">
-                                                                Keratomeri
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> --}}
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>TONOMETRI</label>
-                                                <div class="col-md-12">
-                                                    <div class="form-group" style="display: flex; flex-direction: row;">
-                                                        <div class="input-group" style="margin-right: 10px;">
-                                                            <label for="tonometri_od" class="mr-2 mt-2">
-                                                                OD
-                                                            </label>
-                                                            <input type="text" class="form-control" value="{{$asasmen_dokter->tonometri_od}}"  name="tonometri_od" id="tonometri_od">
-                                                        </div>
-                                                        <div class="input-group" style="margin-right: 10px;">
-                                                            <label for="tonometri_os" class="mr-2 mt-2">
-                                                                OS
-                                                            </label>
-                                                            <input type="text" class="form-control" value="{{$asasmen_dokter->tonometri_os}}" name="tonometri_os" id="tonometri_os">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>APLANSI</label>
-                                                <div class="col-md-12">
-                                                    <div class="form-group" style="display: flex; flex-direction: row;">
-                                                        <div class="input-group" style="margin-right: 10px;">
-                                                            <label for="aplansi_od" class="mr-2 mt-2">
-                                                                OD
-                                                            </label>
-                                                            <input type="text" class="form-control" value="{{$asasmen_dokter->aplansi_od}}" name="aplansi_od" id="aplansi_od">
-                                                        </div>
-                                                        <div class="input-group" style="margin-right: 10px;">
-                                                            <label for="aplansi_os" class="mr-2 mt-2">
-                                                                OS
-                                                            </label>
-                                                            <input type="text" class="form-control" value="{{$asasmen_dokter->aplansi_os}}" name="aplansi_os" id="aplansi_os">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>ANEL</label>
-                                                <div class="col-md-12">
-                                                    <div class="form-group" style="display: flex; flex-direction: row;">
-                                                        <div class="input-group" style="margin-right: 10px;">
-                                                            <label for="anel_od" class="mr-2 mt-2">
-                                                                OD
-                                                            </label>
-                                                            <input type="text" class="form-control" value="{{$asasmen_dokter->anel_od}}" name="anel_od" id="anel_od">
-                                                        </div>
-                                                        <div class="input-group" style="margin-right: 10px;">
-                                                            <label for="anel_os" class="mr-2 mt-2">
-                                                                OS
-                                                            </label>
-                                                            <input type="text" class="form-control" value="{{$asasmen_dokter->anel_os}}" name="anel_os" id="anel_os">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Ekstemitas</label>
-                                                <div class="col-md-12">
-                                                    <div class="form-group" style="display: flex; flex-direction: row;">
-                                                        <div class="input-group" style="margin-right: 10px;">
-                                                            <label for="ekstremitas_od" class="mr-2 mt-2">
-                                                                Atas
-                                                            </label>
-                                                            <input type="text" class="form-control" value="{{$asasmen_dokter->ekstremitas_od}}" name="ekstremitas_od" id="ekstremitas_od">
-                                                        </div>
-                                                        <div class="input-group" style="margin-right: 10px;">
-                                                            <label for="ekstremitas_os" class="mr-2 mt-2">
-                                                                Bawah
-                                                            </label>
-                                                            <input type="text" class="form-control" value="{{$asasmen_dokter->ekstremitas_os}}" name="ekstremitas_os" id="ekstremitas_os">
+                                                            <input type="text" placeholder="Inputan Mata Kiri" value="{{ $asasmen_dokter->NCT_TOS }}" class="form-control" name="NCT_TOS" id="NCT_TOS" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -850,9 +583,9 @@
                                             <label>Bagian</label>
                                             <select name="FS_BAGIAN" class="form-control select2" data-placeholder="Pilih Periksa Bagian" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                                 <option value="" selected>-- Pilih Bagian --</option>
-                                                <option value="Sinistra" {{ old('FS_BAGIAN', $getCekRad->fs_bagian) == 'Sinistra' ? 'selected' : '' }}>Sinistra</option>
-                                                <option value="Dextra" {{ old('FS_BAGIAN', $getCekRad->fs_bagian) == 'Dextra' ? 'selected' : '' }}>Dextra</option>
-                                                <option value="Bilateral" {{ old('FS_BAGIAN', $getCekRad->fs_bagian) == 'Bilateral' ? 'selected' : '' }}>Bilateral</option>
+                                                <option value="Sinistra" {{ old('FS_BAGIAN', $getCekRad->fs_bagian ?? '') == 'Sinistra' ? 'selected' : '' }}>Sinistra</option>
+                                                <option value="Dextra" {{ old('FS_BAGIAN', $getCekRad->fs_bagian ?? '') == 'Dextra' ? 'selected' : '' }}>Dextra</option>
+                                                <option value="Bilateral" {{ old('FS_BAGIAN', $getCekRad->fs_bagian ?? '') == 'Bilateral' ? 'selected' : '' }}>Bilateral</option>
                                             </select>
                                             @error('bagian')
                                             <span class="text-danger" style="font-size: 12px;">
@@ -877,7 +610,7 @@
                                     <div class="form-group">
                                         <label>Diagnosa</label>
                                         <textarea name="DIAGNOSA" class="form-control  @error('DIAGNOSA') is-invalid  
-                                            @enderror" rows="3" placeholder="Masukan ...">{{ $asasmen_dokter->DIAGNOSA }}</textarea>
+                                            @enderror" rows="3" placeholder="Masukan Diagnosa ...">{{ $asasmen_dokter->DIAGNOSA }}</textarea>
                                     </div>
                                     @error('DIAGNOSA')
                                     <div class="invalid-feedback">
@@ -885,7 +618,7 @@
                                     </div>
                                     @enderror
                                 </div>
-                                <div class="col-md-12">
+                                {{-- <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Masalah Kesehatan</label>
                                         <select name="tujuan[]" id="masalah_perawatan" class="form-control select2" multiple="multiple" data-placeholder="Pilih Masalah Keperawatan" style="width: 100%;">
@@ -932,12 +665,12 @@
                                         {{ $message }}
                                     </div>
                                     @enderror
-                                </div>
+                                </div> --}}
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Edukasi</label>
                                         <textarea name="edukasi" class="form-control  @error('edukasi') is-invalid  
-                                        @enderror" rows="3" placeholder="Masukan ...">{{ $asasmen_dokter->edukasi }}</textarea>
+                                        @enderror" rows="3" placeholder="Masukan Edukasi ...">{{ $asasmen_dokter->edukasi }}</textarea>
                                     </div>
                                     @error('edukasi')
                                     <div class="invalid-feedback">

@@ -54,12 +54,13 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Riwayat Penyakit Sekarang</label>
-                                    <select multiple name="RIWAYAT_SEKARANG[]" id="riwayat_sekarang" class="form-control select2" multiple="multiple" data-placeholder="Pilih Penyakit Sekarang" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                    <input type="text" name="RIWAYAT_SEKARANG" id="riwayat_sekarang" class="form-control" placeholder="Riwayat Penyakit">
+                                    {{-- <select multiple name="RIWAYAT_SEKARANG[]" id="riwayat_sekarang" class="form-control select2" multiple="multiple" data-placeholder="Pilih Penyakit Sekarang" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                         <option value="">-- pilih --</option>
                                         @foreach ($penyakitSekarang as $penyakit)
-                                        <option value="{{ $penyakit->id }}" >{{ $penyakit->nama_penyakit_sekarang }}</tion>
+                                        <option value="{{ $penyakit->id }}" >{{ $penyakit->nama_penyakit_sekarang }}</option>
                                         @endforeach
-                                    </select>
+                                    </select> --}}
                                     @error('riwayat_sekarang')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}

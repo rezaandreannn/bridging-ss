@@ -134,13 +134,13 @@
                                             <label for="VISUS_VOD" class="mr-2 mt-2">
                                                 OD
                                             </label>
-                                            <input type="text" placeholder="Inputan Mata Kanan" class="form-control" name="VISUS_OD" id="VISUS_OD">                                          
+                                            <input type="text" placeholder="Inputan Mata Kanan" class="form-control" name="VISUS_OD">                                          
                                         </div>
                                         <div class="input-group" style="margin-right: 10px;">
                                             <label for="VISUS_VOS" class="mr-2 mt-2">
                                                 OS
                                             </label>
-                                            <input type="text" placeholder="Inputan Mata Kiri" class="form-control" name="VISUS_OS" id="VISUS_OS">
+                                            <input type="text" placeholder="Inputan Mata Kiri" class="form-control" name="VISUS_OS">
                                         </div>
                                     </div>
                                 </div>
@@ -155,13 +155,13 @@
                                             <label for="NCT_TOD" class="mr-2 mt-2">
                                                 TOD
                                             </label>
-                                            <input type="text" placeholder="Inputan Mata Kanan" class="form-control" name="NCT_TOD" id="NCT_TOD">
+                                            <input type="text" placeholder="Inputan Mata Kanan" class="form-control" name="NCT_TOD">
                                         </div>
                                         <div class="input-group" style="margin-right: 10px;">
                                             <label for="NCT_TOS" class="mr-2 mt-2">
                                                 TOS
                                             </label>
-                                            <input type="text" placeholder="Inputan Mata Kiri" class="form-control" name="NCT_TOS" id="NCT_TOS">
+                                            <input type="text" placeholder="Inputan Mata Kiri" class="form-control" name="NCT_TOS">
                                         </div>
                                     </div>
                                 </div>
@@ -203,13 +203,13 @@
                                             <label for="VISUS_OD" class="mr-2 mt-2">
                                                 OD
                                             </label>
-                                            <input type="text" placeholder="Inputan Mata Kanan" value="{{$data->VISUS_OD}}" class="form-control" name="VISUS_OD"  id="VISUS_OD">
+                                            <input type="text" placeholder="Inputan Mata Kanan" value="{{$data->VISUS_OD}}" class="form-control" name="VISUS_OD">
                                         </div>
                                         <div class="input-group" style="margin-right: 10px;">
                                             <label for="VISUS_OS" class="mr-2 mt-2">
                                                 OS
                                             </label>
-                                            <input type="text" placeholder="Inputan Mata Kiri"  value="{{$data->VISUS_OS}}" class="form-control" name="VISUS_OS" id="VISUS_OS" >
+                                            <input type="text" placeholder="Inputan Mata Kiri"  value="{{$data->VISUS_OS}}" class="form-control" name="VISUS_OS">
                                         </div>
                                     </div>
                                 </div>
@@ -224,13 +224,13 @@
                                             <label for="NCT_TOD" class="mr-2 mt-2">
                                                 TOD
                                             </label>
-                                            <input type="text" id="NCT_TOD" placeholder="Inputan Mata Kanan"  value="{{$data->NCT_TOD}}" class="form-control" name="NCT_TOD">
+                                            <input type="text" placeholder="Inputan Mata Kanan"  value="{{$data->NCT_TOD}}" class="form-control" name="NCT_TOD">
                                         </div>
                                         <div class="input-group" style="margin-right: 10px;">
                                             <label for="NCT_TOS" class="mr-2 mt-2">
                                                 TOS
                                             </label>
-                                            <input type="text" id="NCT_TOS" placeholder="Inputan Mata Kiri" value="{{$data->NCT_TOS}}" class="form-control" name="NCT_TOS">
+                                            <input type="text" placeholder="Inputan Mata Kiri" value="{{$data->NCT_TOS}}" class="form-control" name="NCT_TOS">
                                         </div>
                                     </div>
                                 </div>
@@ -266,41 +266,6 @@
         alert('Filter telah direset!');
         window.location.href = "{{ route('poliMata.index') }}";
     }
-</script>
-
-<script>
-    document.getElementById('VISUS_OS').addEventListener('keypress', function(event) {
-        const keyCode = event.keyCode;
-        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
-
-        if (!allowedChars.test(event.key)) {
-            event.preventDefault();
-        }
-    });
-    document.getElementById('VISUS_OD').addEventListener('keypress', function(event) {
-        const keyCode = event.keyCode;
-        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
-
-        if (!allowedChars.test(event.key)) {
-            event.preventDefault();
-        }
-    });
-    document.getElementById('NCT_TOD').addEventListener('keypress', function(event) {
-        const keyCode = event.keyCode;
-        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
-
-        if (!allowedChars.test(event.key)) {
-            event.preventDefault();
-        }
-    });
-    document.getElementById('NCT_TOS').addEventListener('keypress', function(event) {
-        const keyCode = event.keyCode;
-        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
-
-        if (!allowedChars.test(event.key)) {
-            event.preventDefault();
-        }
-    });
 </script>
 
 @endpush

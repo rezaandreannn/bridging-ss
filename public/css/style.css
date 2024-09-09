@@ -800,14 +800,14 @@ select.form-control:not([size]):not([multiple]) {
     color: white;
 }
 
-.card-fixed {
+/* .card-fixed {
  position: sticky;
   top: 10px;
   background-color: white;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-}
+} */
 
 .card .card-khusus-body {
     background-color: #e8f0fa;

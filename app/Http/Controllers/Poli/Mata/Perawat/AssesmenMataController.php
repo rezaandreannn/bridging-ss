@@ -134,10 +134,13 @@ class AssesmenMataController extends Controller
     {
         $title = $this->prefix . ' ' . 'Mata Assesmen Keperawatan';
         $biodata = $this->rekam_medis->getBiodata($noReg);
+
+        // $masterLab = $this->rajaldokter->getMasterLab();
+        // $masterRadiologi = $this->rajaldokter->getMasterRadiologi();
+
         $masalah_perawatan = $this->rajal->masalah_perawatan();
         $rencana_perawatan = $this->rajal->rencana_perawatan();
-        $penyakitSekarang = $this->poliMata->getPenyakit();
-        return view($this->view . 'perawat.addKeperawatan', compact('title', 'biodata', 'penyakitSekarang', 'masalah_perawatan', 'rencana_perawatan', 'noReg'));
+        return view($this->view . 'perawat.addKeperawatan', compact('title', 'biodata', 'masalah_perawatan', 'rencana_perawatan', 'noReg'));
     }
 
     public function assesmenMata($noReg)
@@ -357,9 +360,10 @@ class AssesmenMataController extends Controller
 
             DB::connection('pku')->table('poli_mata_asesmen')->insert([
                 'NO_REG' => $request->input('NO_REG'),
-                'RIWAYAT_SEKARANG' => is_array($request->input('RIWAYAT_SEKARANG'))
-                    ? implode(',', $request->input('RIWAYAT_SEKARANG'))
-                    : $request->input('RIWAYAT_SEKARANG'),
+                // 'RIWAYAT_SEKARANG' => is_array($request->input('RIWAYAT_SEKARANG'))
+                //     ? implode(',', $request->input('RIWAYAT_SEKARANG'))
+                //     : $request->input('RIWAYAT_SEKARANG'),
+                'RIWAYAT_SEKARANG' => $request->input('RIWAYAT_SEKARANG'),
                 'KEADAAN_UMUM' => $request->input('KEADAAN_UMUM'),
                 'KESADARAN' => $request->input('KESADARAN'),
                 'STATUS_MENTAL' => $request->input('STATUS_MENTAL'),
@@ -395,6 +399,31 @@ class AssesmenMataController extends Controller
                         'FS_KD_REG' => $request->input('NO_REG'),
                         'FS_KD_REN_KEP' => $value,
 
+                    ]);
+                }
+            }
+
+            // Penunjang LAB & RADIOLOGI
+            $periksa_lab = $request->input('periksa_lab');
+            if (!empty($periksa_lab)) {
+                foreach ($periksa_lab as $key => $value) {
+                    DB::connection('pku')->table('ta_trs_kartu_periksa4')->insert([
+                        'fn_no_urut' => $key,
+                        'fs_kd_tarif' => $value,
+                        'fs_kd_reg2' => $request->input('NO_REG'),
+                    ]);
+                }
+            }
+
+            $periksa_rad = $request->input('periksa_rad');
+            $fs_bagian = $request->input('FS_BAGIAN');
+            if (!empty($periksa_rad)) {
+                foreach ($periksa_lab as $key => $value) {
+                    DB::connection('pku')->table('ta_trs_kartu_periksa5')->insert([
+                        'fn_no_urut' => $key,
+                        'fs_kd_tarif' => $value,
+                        'fs_kd_reg2' => $request->input('NO_REG'),
+                        'fs_bagian' => $fs_bagian,
                     ]);
                 }
             }

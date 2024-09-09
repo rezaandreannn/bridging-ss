@@ -57,20 +57,14 @@ class AssesmenDokterMataController extends Controller
         // dd($asasmen_perawat);
         $refraksi = $this->poliMata->getRefraksi($noReg);
         // dd($refraksi);
-        // dd($asasmen_perawat);
 
         // Data Master
         $masterLab = $this->rajaldokter->getMasterLab();
         $masterRadiologi = $this->rajaldokter->getMasterRadiologi();
         $masterObat = $this->rajaldokter->getMasterObat();
 
-        $masalah_perawatan = $this->rajal->masalah_perawatan();
-        $rencana_perawatan = $this->rajal->rencana_perawatan();
-
-        $masalah_perGet = $this->rajal->masalahPerawatanGetByNoreg($noReg);
-        $rencana_perGet = $this->rajal->rencanaPerawatanGetByNoreg($noReg);
         // dd($asasmen_perawat);
-        return view($this->view . 'dokter.assesmenAwal', compact('title', 'biodata', 'refraksi', 'penyakitSekarang', 'alasanSkdp', 'skdp', 'asasmen_perawat', 'masterLab', 'masterRadiologi', 'masterObat', 'masalah_perGet', 'rencana_perGet', 'masalah_perawatan', 'rencana_perawatan', 'noReg'));
+        return view($this->view . 'dokter.assesmenAwal', compact('title', 'biodata', 'refraksi', 'penyakitSekarang', 'alasanSkdp', 'skdp', 'asasmen_perawat', 'masterLab', 'masterRadiologi', 'masterObat', 'noReg'));
     }
 
     /**
@@ -117,9 +111,10 @@ class AssesmenDokterMataController extends Controller
             DB::connection('pku')->table('poli_mata_dokter')->insert([
                 'NO_REG' => $request->input('NO_REG'),
                 'anamnesa' => $request->input('anamnesa'),
-                'RIWAYAT_SEKARANG' => is_array($request->input('RIWAYAT_SEKARANG'))
-                    ? implode(',', $request->input('RIWAYAT_SEKARANG'))
-                    : $request->input('RIWAYAT_SEKARANG'),
+                'RIWAYAT_SEKARANG' => $request->input('RIWAYAT_SEKARANG'),
+                // 'RIWAYAT_SEKARANG' => is_array($request->input('RIWAYAT_SEKARANG'))
+                //     ? implode(',', $request->input('RIWAYAT_SEKARANG'))
+                //     : $request->input('RIWAYAT_SEKARANG'),
                 'status_psikologi' => $request->input('status_psikologi'),
                 'keadaan_umum' => $request->input('keadaan_umum'),
                 'kesadaran' => $request->input('kesadaran'),
@@ -130,22 +125,10 @@ class AssesmenDokterMataController extends Controller
                 'suhu' => $request->input('suhu'),
                 'berat_badan' => $request->input('berat_badan'),
                 'tinggi_badan' => $request->input('tinggi_badan'),
-                'KONJUNGTIVA' => $request->input('KONJUNGTIVA'),
-                'SKELERA' => $request->input('SKELERA'),
-                'BIBIR_LIDAH' => $request->input('BIBIR_LIDAH'),
                 'DIAGNOSA' => $request->input('DIAGNOSA'),
                 'edukasi' => $request->input('edukasi'),
                 'konsul' => $request->input('konsul'),
                 'keterangan_konsul' => $request->input('keterangan_konsul'),
-                'discharge' => $request->input('discharge'),
-                'tonometri_od' => $request->input('tonometri_od'),
-                'tonometri_os' => $request->input('tonometri_os'),
-                'aplansi_od' => $request->input('aplansi_od'),
-                'aplansi_os' => $request->input('aplansi_os'),
-                'anel_od' => $request->input('anel_od'),
-                'anel_os' => $request->input('anel_os'),
-                'ekstremitas_od' => $request->input('ekstremitas_od'),
-                'ekstremitas_os' => $request->input('ekstremitas_os'),
                 'created_at' => now(),
                 'CREATE_BY' => auth()->user()->username,
             ]);
@@ -170,6 +153,16 @@ class AssesmenDokterMataController extends Controller
                     'DESKRIPSI' => $request->input('DESKRIPSI_KIRI'),
                     'TIPE' => 'Mata Kiri',
                     'CREATE_BY' => auth()->user()->username,
+                    'created_at' => now(),
+                ]);
+            } else {
+                DB::connection('pku')->table('poli_mata_gambar')->insert([
+                    'NO_REG' => $request->input('NO_REG'),
+                    'GAMBAR' => null, // or set a default value if appropriate
+                    'DESKRIPSI' => $request->input('DESKRIPSI_KIRI'),
+                    'TIPE' => 'Mata Kiri',
+                    'CREATE_BY' => auth()->user()->username,
+                    'created_at' => now(),
                 ]);
             }
             // -------------------------------------------------- //
@@ -194,34 +187,44 @@ class AssesmenDokterMataController extends Controller
                     'DESKRIPSI' => $request->input('DESKRIPSI_KANAN'),
                     'TIPE' => 'Mata Kanan',
                     'CREATE_BY' => auth()->user()->username,
+                    'created_at' => now(),
+                ]);
+            } else {
+                DB::connection('pku')->table('poli_mata_gambar')->insert([
+                    'NO_REG' => $request->input('NO_REG'),
+                    'GAMBAR' => null,
+                    'DESKRIPSI' => $request->input('DESKRIPSI_KANAN'),
+                    'TIPE' => 'Mata Kanan',
+                    'CREATE_BY' => auth()->user()->username,
+                    'created_at' => now(),
                 ]);
             }
             // ------------------------------------------------ //
 
-            $masalah_kep = $request->input('tujuan');
-            DB::connection('pku')->table('TAC_RJ_MASALAH_KEP')->where('FS_KD_REG', $request->input('NO_REG'))->delete();
-            if (!empty($masalah_kep)) {
-                foreach ($masalah_kep as $value) {
-                    $insert_masalah_kep = DB::connection('pku')->table('TAC_RJ_MASALAH_KEP')->insert([
-                        'FS_KD_REG' => $request->input('NO_REG'),
-                        'FS_KD_MASALAH_KEP' => $value,
+            // $masalah_kep = $request->input('tujuan');
+            // DB::connection('pku')->table('TAC_RJ_MASALAH_KEP')->where('FS_KD_REG', $request->input('NO_REG'))->delete();
+            // if (!empty($masalah_kep)) {
+            //     foreach ($masalah_kep as $value) {
+            //         $insert_masalah_kep = DB::connection('pku')->table('TAC_RJ_MASALAH_KEP')->insert([
+            //             'FS_KD_REG' => $request->input('NO_REG'),
+            //             'FS_KD_MASALAH_KEP' => $value,
 
-                    ]);
-                }
-            }
+            //         ]);
+            //     }
+            // }
 
-            $rencana_kep = $request->input('tembusan');
-            DB::connection('pku')->table('TAC_RJ_REN_KEP')->where('FS_KD_REG', $request->input('NO_REG'))->delete();
-            if (!empty($rencana_kep)) {
-                foreach ($rencana_kep as $value) {
-                    $insert_rencana_kep = DB::connection('pku')->table('TAC_RJ_REN_KEP')->insert([
+            // $rencana_kep = $request->input('tembusan');
+            // DB::connection('pku')->table('TAC_RJ_REN_KEP')->where('FS_KD_REG', $request->input('NO_REG'))->delete();
+            // if (!empty($rencana_kep)) {
+            //     foreach ($rencana_kep as $value) {
+            //         $insert_rencana_kep = DB::connection('pku')->table('TAC_RJ_REN_KEP')->insert([
 
-                        'FS_KD_REG' => $request->input('NO_REG'),
-                        'FS_KD_REN_KEP' => $value,
+            //             'FS_KD_REG' => $request->input('NO_REG'),
+            //             'FS_KD_REN_KEP' => $value,
 
-                    ]);
-                }
-            }
+            //         ]);
+            //     }
+            // }
 
             $periksa_lab = $request->input('periksa_lab');
             if (!empty($periksa_lab)) {
@@ -303,14 +306,8 @@ class AssesmenDokterMataController extends Controller
         $MataKanan = $this->poliMata->getMataKanan($noReg);
 
 
-        $masalah_perawatan = $this->rajal->masalah_perawatan();
-        $rencana_perawatan = $this->rajal->rencana_perawatan();
-
-        $masalah_perGet = $this->rajal->masalahPerawatanGetByNoreg($noReg);
-        $rencana_perGet = $this->rajal->rencanaPerawatanGetByNoreg($noReg);
-
         // dd($asasmen_perawat);
-        return view($this->view . 'dokter.EditassesmenAwal', compact('title', 'biodata', 'penyakitSekarang', 'MataKanan', 'MataKiri', 'alasanSkdp', 'skdp', 'rencanaSkdp', 'asasmen_dokter', 'masterLab', 'getLab', 'masterRadiologi', 'getRad', 'getCekRad', 'masterObat', 'masalah_perGet', 'rencana_perGet', 'masalah_perawatan', 'rencana_perawatan', 'noReg'));
+        return view($this->view . 'dokter.EditassesmenAwal', compact('title', 'biodata', 'penyakitSekarang', 'MataKanan', 'MataKiri', 'alasanSkdp', 'skdp', 'rencanaSkdp', 'asasmen_dokter', 'masterLab', 'getLab', 'masterRadiologi', 'getRad', 'getCekRad', 'masterObat', 'noReg'));
     }
 
     /**
@@ -340,17 +337,18 @@ class AssesmenDokterMataController extends Controller
 
             DB::connection('pku')->table('TAC_RJ_MEDIS')->where('FS_KD_REG', $request->input('NO_REG'))->update([
                 'FS_KD_REG' => $request->input('NO_REG'),
-                'FS_TERAPI' => $request->input('FS_TERAPI'),
+                'FS_TERAPI' => $request->input('FS_TERAPI') ?? '',
+                'FS_CARA_PULANG' => $request->input('FS_CARA_PULANG'),
                 'mdd' => date('Y-m-d'),
                 'mdb' => auth()->user()->username,
             ]);
 
             DB::connection('pku')->table('poli_mata_dokter')->where('NO_REG', $request->input('NO_REG'))->update([
-                'NO_REG' => $request->input('NO_REG'),
                 'anamnesa' => $request->input('anamnesa'),
-                'RIWAYAT_SEKARANG' => is_array($request->input('RIWAYAT_SEKARANG'))
-                    ? implode(',', $request->input('RIWAYAT_SEKARANG'))
-                    : $request->input('RIWAYAT_SEKARANG'),
+                'RIWAYAT_SEKARANG' => $request->input('RIWAYAT_SEKARANG'),
+                // 'RIWAYAT_SEKARANG' => is_array($request->input('RIWAYAT_SEKARANG'))
+                //     ? implode(',', $request->input('RIWAYAT_SEKARANG'))
+                //     : $request->input('RIWAYAT_SEKARANG'),
                 'status_psikologi' => $request->input('status_psikologi'),
                 'keadaan_umum' => $request->input('keadaan_umum'),
                 'kesadaran' => $request->input('kesadaran'),
@@ -362,22 +360,9 @@ class AssesmenDokterMataController extends Controller
                 'berat_badan' => $request->input('berat_badan'),
                 'tinggi_badan' => $request->input('tinggi_badan'),
                 'DIAGNOSA' => $request->input('DIAGNOSA'),
-                'KONJUNGTIVA' => $request->input('KONJUNGTIVA'),
-                'SKELERA' => $request->input('SKELERA'),
-                'BIBIR_LIDAH' => $request->input('BIBIR_LIDAH'),
-                'DIAGNOSA' => $request->input('DIAGNOSA'),
                 'edukasi' => $request->input('edukasi'),
                 'konsul' => $request->input('konsul'),
                 'keterangan_konsul' => $request->input('keterangan_konsul'),
-                'discharge' => $request->input('discharge'),
-                'tonometri_od' => $request->input('tonometri_od'),
-                'tonometri_os' => $request->input('tonometri_os'),
-                'aplansi_od' => $request->input('aplansi_od'),
-                'aplansi_os' => $request->input('aplansi_os'),
-                'anel_od' => $request->input('anel_od'),
-                'anel_os' => $request->input('anel_os'),
-                'ekstremitas_od' => $request->input('ekstremitas_od'),
-                'ekstremitas_os' => $request->input('ekstremitas_os'),
                 'created_at' => now(),
                 'CREATE_BY' => auth()->user()->username,
             ]);
@@ -476,31 +461,31 @@ class AssesmenDokterMataController extends Controller
                 }
             }
 
-            $masalah_kep = $request->input('tujuan');
-            DB::connection('pku')->table('TAC_RJ_MASALAH_KEP')->where('FS_KD_REG', $request->input('NO_REG'))->delete();
-            if (!empty($masalah_kep)) {
-                foreach ($masalah_kep as $value) {
-                    $insert_masalah_kep = DB::connection('pku')->table('TAC_RJ_MASALAH_KEP')->insert([
+            // $masalah_kep = $request->input('tujuan');
+            // DB::connection('pku')->table('TAC_RJ_MASALAH_KEP')->where('FS_KD_REG', $request->input('NO_REG'))->delete();
+            // if (!empty($masalah_kep)) {
+            //     foreach ($masalah_kep as $value) {
+            //         $insert_masalah_kep = DB::connection('pku')->table('TAC_RJ_MASALAH_KEP')->insert([
 
-                        'FS_KD_REG' => $request->input('NO_REG'),
-                        'FS_KD_MASALAH_KEP' => $value,
+            //             'FS_KD_REG' => $request->input('NO_REG'),
+            //             'FS_KD_MASALAH_KEP' => $value,
 
-                    ]);
-                }
-            }
+            //         ]);
+            //     }
+            // }
 
-            $rencana_kep = $request->input('tembusan');
-            DB::connection('pku')->table('TAC_RJ_REN_KEP')->where('FS_KD_REG', $request->input('NO_REG'))->delete();
-            if (!empty($rencana_kep)) {
-                foreach ($rencana_kep as $value) {
-                    $insert_rencana_kep = DB::connection('pku')->table('TAC_RJ_REN_KEP')->insert([
+            // $rencana_kep = $request->input('tembusan');
+            // DB::connection('pku')->table('TAC_RJ_REN_KEP')->where('FS_KD_REG', $request->input('NO_REG'))->delete();
+            // if (!empty($rencana_kep)) {
+            //     foreach ($rencana_kep as $value) {
+            //         $insert_rencana_kep = DB::connection('pku')->table('TAC_RJ_REN_KEP')->insert([
 
-                        'FS_KD_REG' => $request->input('NO_REG'),
-                        'FS_KD_REN_KEP' => $value,
+            //             'FS_KD_REG' => $request->input('NO_REG'),
+            //             'FS_KD_REN_KEP' => $value,
 
-                    ]);
-                }
-            }
+            //         ]);
+            //     }
+            // }
             DB::connection('pku')->commit();
 
             return redirect('pm/polimata/dokter')->with('success', 'Edit Successfully!');
