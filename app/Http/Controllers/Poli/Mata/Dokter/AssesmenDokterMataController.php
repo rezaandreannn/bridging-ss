@@ -252,7 +252,15 @@ class AssesmenDokterMataController extends Controller
 
             DB::connection('pku')->commit();
 
-            return redirect('pm/polimata/dokter')->with('success', 'Edit Successfully!');
+
+            if ($request->input('FS_CARA_PULANG') == '4') {
+                // dd('ok');
+                return redirect()->route('kondisiPulang.rawatLuar', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil Ditambahkan!');
+            }
+            // return redirect('rajal/dokter/kondisi_pulang')->with('success', 'Berhasil Ditambahkan!');
+            else {
+                return redirect('pm/polimata/dokter')->with('success', 'Berhasil Ditambahkan!');
+            }
         } catch (\Exception $e) {
             //throw $th;
             DB::connection('pku')->rollBack();
@@ -488,7 +496,7 @@ class AssesmenDokterMataController extends Controller
             // }
             DB::connection('pku')->commit();
 
-            return redirect('pm/polimata/dokter')->with('success', 'Edit Successfully!');
+            return redirect('pm/polimata/dokter')->with('success', 'Berhasil Diedit!');
         } catch (\Exception $e) {
             //throw $th;
             DB::connection('pku')->rollBack();

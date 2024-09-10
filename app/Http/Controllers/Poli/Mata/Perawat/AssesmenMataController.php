@@ -48,6 +48,7 @@ class AssesmenMataController extends Controller
         $refraksi = $this->poliMata->getDataRefraksi();
         // dd($refraksi);
         $pasien = $this->antrean->getDataPasienRajal($kode_dokter);
+        // dd($pasien);
         $biodata = $this->antrean->getPasienRajal($kode_dokter);
         // dd($biodata);
         $poliMata = new PoliMata();
