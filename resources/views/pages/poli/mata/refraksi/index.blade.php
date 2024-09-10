@@ -148,7 +148,7 @@
                         </div>  
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>NCT</label>
+                                <label>Tonometri</label>
                                 <div class="col-md-12">
                                     <div class="form-group" style="display: flex; flex-direction: row;">
                                         <div class="input-group" style="margin-right: 10px;">
@@ -217,7 +217,7 @@
                         </div>  
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>NCT</label>
+                                <label>Tonometri</label>
                                 <div class="col-md-12">
                                     <div class="form-group" style="display: flex; flex-direction: row;">
                                         <div class="input-group" style="margin-right: 10px;">

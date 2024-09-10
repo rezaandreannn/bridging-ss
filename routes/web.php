@@ -52,6 +52,7 @@ use App\Http\Controllers\Poli\Mata\MasterData\PenyakitSekarangController;
 use App\Http\Controllers\Berkas\Rekam_medis_by_mr\RekamMedisByMrController;
 use App\Http\Controllers\Berkas\Rekam_medis_harian\RekamMedisHarianController;
 use App\Http\Controllers\IGD\Layanan\AssesmenController as LayananAssesmenController;
+use App\Http\Controllers\RawatJalan\Dokter\KondisiPulangController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,7 +79,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    
+
     // MASTER DATA 
     Route::prefix('md')->middleware('auth')->group(function () {
         // ORGANIZATION
@@ -88,19 +89,19 @@ Route::middleware('auth')->group(function () {
         Route::get('/organization/{organization_id}/edit', [OrganizationController::class, 'edit'])->name('organization.edit');
         Route::post('/organization', [OrganizationController::class, 'store'])->name('organization.store');
         Route::put('/organization{organization_id}', [OrganizationController::class, 'update'])->name('organization.update');
-        
+
         // PASIEN
         Route::get('/patient', [PasienController::class, 'index'])->name('patient.index');
         Route::get('/patient/create', [PasienController::class, 'create'])->name('patient.create');
         Route::get('/patient/{noMr}', [PasienController::class, 'show'])->name('patient.show');
         Route::post('/patient', [PasienController::class, 'store'])->name('patient.store');
-        
+
         // DOKTER
         Route::get('/dokter', [DokterController::class, 'index'])->name('dokter.index');
         Route::get('/dokter/create', [DokterController::class, 'create'])->name('dokter.create');
         Route::get('/dokter/{kode_dokter}/edit', [DokterController::class, 'edit'])->name('dokter.edit');
         Route::get('/dokter/{kode_dokter}', [DokterController::class, 'show'])->name('dokter.show');
-        
+
         // LOCATION
         Route::get('/location', [LocationController::class, 'index'])->name('location.index');
         Route::get('/location/create', [LocationController::class, 'create'])->name('location.create');
@@ -108,45 +109,45 @@ Route::middleware('auth')->group(function () {
         Route::get('/location/{location_id}/edit', [LocationController::class, 'edit'])->name('location.edit');
         Route::post('/location', [LocationController::class, 'store'])->name('location.store');
         Route::patch('/location/{location_id}', [LocationController::class, 'update'])->name('location.update');
-        
+
         // ICD10
         Route::resource('icd10', Icd10Controller::class);
-        
+
         // Jenis Fisioterapi (Master Data)
         Route::get('/jenisFisio', [JenisFisioController::class, 'index'])->name('jenisFisio.index');
         Route::post('/jenisFisio', [JenisFisioController::class, 'store'])->name('jenisFisio.store');
         Route::put('/jenisFisio/{id}', [JenisFisioController::class, 'update'])->name('jenisFisio.update');
         Route::delete('/jenisFisio/{id}', [JenisFisioController::class, 'destroy'])->name('jenisFisio.delete');
-        
+
         // master data farmasi
         Route::get('farmasi', [MasterDataAlkesController::class, 'index'])->name('masterData.index');
-        
+
         Route::post('farmasi/alkes/add_proses', [MasterDataAlkesController::class, 'store'])->name('masterAlkes.store');
-        
+
         Route::put('farmasi/alkes/update_proses/{id}', [MasterDataAlkesController::class, 'update'])->name('masterAlkes.update');
-        
+
         Route::delete('farmasi/alkes/delete_proses/{id}', [MasterDataAlkesController::class, 'destroy'])->name('masterAlkes.destroy');
-        
+
         Route::post('farmasi/harga_alkes/add_proses', [MasterDataAlkesController::class, 'store_harga'])->name('masterHargaAlkes.store');
         Route::put('farmasi/harga_alkes/update_proses/{id}', [MasterDataAlkesController::class, 'update_harga'])->name('masterHargaAlkes.update');
         Route::delete('farmasi/harga_alkes/delete_proses/{id}', [MasterDataAlkesController::class, 'destroy_harga'])->name('masterHargaAlkes.destroy');
     });
-    
+
     // ENCOUNTER 
     Route::prefix('ss')->group(function () {
         Route::get('/encounter', [RecourceController::class, 'index'])->name('resource.index');
         Route::get('/encounter/{id}/edit', [RecourceController::class, 'edit'])->name('resource.edit');
     });
-    
-    
-    
-    
+
+
+
+
     // CASE 
     Route::prefix('case')->name('case.')->group(function () {
         Route::get('encounter/create/{noReg}', EncounterCreateController::class)->name('encounter.create');
     });
-    
-    
+
+
     // KUNJUNGAN
     Route::prefix('kj')->group(function () {
         // PENDAFTARAN
@@ -154,15 +155,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/pendaftaran/create', [PendaftaranController::class, 'create'])->name('pendaftaran.create');
         Route::post('/pendaftaran', [PendaftaranController::class, 'store'])->name('pendaftaran.store');
         Route::get('/pendaftaran/{noReg}', [PendaftaranController::class, 'show'])->name('pendaftaran.show');
-        
+
         // PASIEN
         Route::get('/antrean', [AntreanController::class, 'index'])->name('antrean.index');
         Route::get('/antrean/create', [AntreanController::class, 'create'])->name('antrean.create');
         Route::post('/antrean', [AntreanController::class, 'store'])->name('antrean.store');
         Route::get('/antrean/{no_mr}', [AntreanController::class, 'show'])->name('antrean.show');
     });
-    
-    
+
+
     // MAPPING DATA
     Route::prefix('mp')->name('mapping.')->group(function () {
         // ENCOUNTER
@@ -172,7 +173,7 @@ Route::middleware('auth')->group(function () {
         Route::post('encounter', [MappingEncounterController::class, 'store'])->name('encounter.store');
         Route::put('/encounter{id}', [MappingEncounterController::class, 'update'])->name('encounter.update');
     });
-    
+
     // MAPPING DATA
     Route::prefix('farmasi')->group(function () {
         // ENCOUNTER
@@ -183,10 +184,6 @@ Route::middleware('auth')->group(function () {
         Route::get('orderAlkes/cetakResepAlkes/{noReg}', [Berkas_rm_controller::class, 'cetakResepAlkes'])->name('rj.alkes');
 
         Route::get('orderAlkes/cetakKwitansiAlkes/{noReg}', [Berkas_rm_controller::class, 'cetakKwitansiAlkes'])->name('orderAlkes.Kwitansi');
-     
-        
-        
-
     });
 
     Route::prefix('fisioterapi')->group(function () {
@@ -199,7 +196,7 @@ Route::middleware('auth')->group(function () {
         Route::put('perawat/transaksi_fisio/editAlkesByFisioterapi', [FisioController::class, 'update_alkes'])->name('transaksi_fisio.update_alkes');
 
         Route::put('perawat/transaksi_fisio/editAlkesByBpjs', [FisioController::class, 'update_alkes_bpjs'])->name('transaksi_fisio.update_alkes_bpjs');
-        
+
         Route::put('perawat/transaksi_fisio/editAlkesByFarmasi', [FisioController::class, 'update_alkes_farmasi'])->name('transaksi_fisio.update_alkes_farmasi');
 
         Route::put('perawat/transaksi_fisio/{id}', [FisioController::class, 'update'])->name('transaksi_fisio.update');
@@ -316,6 +313,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/polimata/refraksi', [AssesmenMataController::class, 'refraksi'])->name('poliMata.refraksi');
         Route::post('/polimata/refraksi', [AssesmenMataController::class, 'refraksiStore'])->name('poliMata.refraksiStore');
         Route::put('/polimata/refraksi/{noReg}', [AssesmenMataController::class, 'refraksiUpdate'])->name('poliMata.refraksiUpdate');
+
         // Poli Mata Dokter
         Route::get('/polimata/dokter', [AssesmenDokterMataController::class, 'index'])->name('poliMata.indexDokter');
         Route::get('/polimata/dokter/assesmen_awal/{noReg}', [AssesmenDokterMataController::class, 'add'])->name('poliMata.assesmenAwal');
@@ -403,6 +401,10 @@ Route::middleware('auth')->group(function () {
 
         Route::get('rajal/dokter/resep/{noReg}', [RajalDokterController::class, 'resepDokter'])->name('rj.dokterResep');
         Route::get('rajal/dokter/lab/{noReg}', [RajalDokterController::class, 'labDokter'])->name('rj.dokterLab');
+
+
+        // Kondisi Pulang
+        Route::get('rajal/dokter/kondisi_pulang/{noReg}', [KondisiPulangController::class, 'rujukLuarRS'])->name('kondisiPulang.rujukLuarRS');
     });
 
     // Rawat Inap berkas
@@ -419,7 +421,7 @@ Route::middleware('auth')->group(function () {
 
     //IGD
     Route::prefix('igd')->group(function () {
-        
+
         // triase
         Route::get('triase/', [TriaseController::class, 'index'])->name('triase.index');
         Route::get('triase/add', [TriaseController::class, 'create'])->name('triase.create');
