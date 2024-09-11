@@ -57,7 +57,7 @@ class Berkas_rm_controller extends Controller
         $data = $this->rekam_medis->cetakAlkes($noReg);
         // dd($data);
         $biodata = $this->rekam_medis->getBiodata($noReg);
-      
+
         // dd($antrian);
         $date = date('dMY');
         $tanggal = Carbon::now();
@@ -79,7 +79,7 @@ class Berkas_rm_controller extends Controller
         $terbilang = NumberToWords::terbilang($data->biaya);
         // dd($data);
         $biodata = $this->rekam_medis->getBiodata($noReg);
-      
+
         // dd($antrian);
         $date = date('dMY');
         $tanggal = Carbon::now();
@@ -88,7 +88,7 @@ class Berkas_rm_controller extends Controller
 
         $pdf = PDF::loadview('pages.rekam_medis.alat_kesehatan.kwitansi', ['data' => $data, 'biodata' => $biodata, 'tanggal' => $tanggal, 'biaya' => $terbilang]);
         // Set paper size to A5
-        $pdf->setPaper('A5','landscape');
+        $pdf->setPaper('A5', 'landscape');
         return $pdf->stream($filename . '.pdf');
     }
 
@@ -276,6 +276,7 @@ class Berkas_rm_controller extends Controller
 
         // $data = $this->rekam_medis->cetakPRB_Faskes($noReg);
         $biodata = $this->rekam_medis->getBiodata($noReg);
+        // dd($biodata);
         $date = date('dMY');
         $tanggal = Carbon::now();
 

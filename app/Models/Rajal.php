@@ -133,9 +133,6 @@ class Rajal extends Model
         return $data;
     }
 
-
-
-
     public function rencanaPerawatanGetByNoreg($noReg)
     {
         $data = DB::connection('pku')->table('TAC_RJ_REN_KEP')
@@ -312,6 +309,7 @@ class Rajal extends Model
                 'c.SPESIALIS',
                 'd.FS_DIAGNOSA',
                 'd.FS_DIAGNOSA_SEKUNDER',
+                'd.FS_KD_TRS',
                 'e.NAMAREKANAN',
                 'a.FS_ALERGI',
             )

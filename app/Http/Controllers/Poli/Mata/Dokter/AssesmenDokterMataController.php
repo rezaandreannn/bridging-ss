@@ -253,12 +253,15 @@ class AssesmenDokterMataController extends Controller
             DB::connection('pku')->commit();
 
 
-            if ($request->input('FS_CARA_PULANG') == '4') {
-                // dd('ok');
-                return redirect()->route('kondisiPulang.rawatLuar', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil Ditambahkan!');
-            }
-            // return redirect('rajal/dokter/kondisi_pulang')->with('success', 'Berhasil Ditambahkan!');
-            else {
+            if ($request->input('FS_CARA_PULANG') == '0') {
+                return redirect('pm/polimata/dokter')->with('success', 'Berhasil Ditambahkan!');
+            } elseif ($request->input('FS_CARA_PULANG') == '4') {
+                return redirect()->route('kondisiPulang.rujukLuarRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil Ditambahkan!');
+            } elseif ($request->input('FS_CARA_PULANG') == '6') {
+                return redirect()->route('kondisiPulang.rujukInternalRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil Ditambahkan!');
+            } elseif ($request->input('FS_CARA_PULANG') == '7') {
+                return redirect()->route('kondisiPulang.faskesPRB', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil Ditambahkan!');
+            } else {
                 return redirect('pm/polimata/dokter')->with('success', 'Berhasil Ditambahkan!');
             }
         } catch (\Exception $e) {

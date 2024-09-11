@@ -186,7 +186,7 @@ class PoliMata extends Model
             )
             ->where('NO_REG', $noReg)
             ->where('TIPE', 'Mata Kiri')
-            ->get();
+            ->first();
 
         return $data;
     }
@@ -212,7 +212,7 @@ class PoliMata extends Model
             )
             ->where('NO_REG', $noReg)
             ->where('TIPE', 'Mata Kanan')
-            ->get();
+            ->first();
 
         return $data;
     }

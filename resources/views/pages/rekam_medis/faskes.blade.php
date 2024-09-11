@@ -113,12 +113,12 @@ $dayList = array(
                 <td></td>
                 <td style="float: left; padding-left:350px;">
                     <!-- Menampilkan barcode dengan lebar 200px dan tinggi 200px -->
-                    {!! DNS2D::getBarcodeHTML($resep->NAMALENGKAP, 'QRCODE', 2, 2) !!}
+                    {!! DNS2D::getBarcodeHTML($biodata->NAMA_DOKTER, 'QRCODE', 2, 2) !!}
                 </td>
             </tr>
             <tr>
                 <td></td>
-                <td style="text-align: left; padding-left:350px;">{{ $resep->NAMALENGKAP ?? ''}}</td>
+                <td style="text-align: left; padding-left:350px;">{{ $biodata->NAMA_DOKTER ?? ''}}</td>
             </tr>
         </table>
     </center>
