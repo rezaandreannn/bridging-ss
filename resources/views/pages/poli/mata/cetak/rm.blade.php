@@ -755,7 +755,7 @@
                 <td class="text5">({{$dokter->NAMA_DOKTER}})</td>
             </tr>
         </table>
-       
+        @if(($mataKiri->GAMBAR != null) || ($mataKanan->GAMBAR != null))
         <p class="text7"><b>HASIL GAMBAR</b></p>
         <table width="100%">
             <thead>
@@ -784,7 +784,7 @@
                     </tr>
             </tbody>
         </table>
-        
+        @endif
     </body>
 </html>
 

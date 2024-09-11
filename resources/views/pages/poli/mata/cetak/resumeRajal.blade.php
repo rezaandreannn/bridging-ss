@@ -221,6 +221,7 @@
                 <td class="text3" colspan="6" height="50px"><b>Terapi yang diberikan dokter</b></td>
             </tr>
         </table>
+        @if(!empty($resep) && $resep->count() > 0)
         <table width="100%">
             <thead>
                 <tr>
@@ -237,6 +238,9 @@
                 @endforeach
             </tbody>
         </table>
+        @endif
+        
+        @if(($mataKiri->GAMBAR != null) || ($mataKanan->GAMBAR != null))
         <table width="100%" style="border: 1px solid black;">
             <thead>
                 <tr>
@@ -264,6 +268,7 @@
                     </tr>
             </tbody>
         </table>
+        @endif
         <table  width="100%">
             <tr>
                 <td style="padding-top: 100px;" class="text5"></td>
