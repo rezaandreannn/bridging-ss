@@ -776,8 +776,8 @@
                                             <option value="0" @if(old('cara_pulang')=='0' ) selected @endif>Tidak Kontrol</option>
                                             <option value="2" @if(old('cara_pulang')=='2' ) selected @endif>Kontrol</option>
                                             <option value="3" @if(old('cara_pulang')=='3' ) selected @endif>Rawat Inap</option>
-                                            <option value="4" @if(old('cara_pulang')=='4' ) selected @endif>Rawat Luar RS</option>
-                                            <option value="6" @if(old('cara_pulang')=='6' ) selected @endif>Rawat Internal</option>
+                                            <option value="4" @if(old('cara_pulang')=='4' ) selected @endif>Rujuk Luar RS</option>
+                                            <option value="6" @if(old('cara_pulang')=='6' ) selected @endif>Rujuk Internal</option>
                                             <option value="7" @if(old('cara_pulang')=='7' ) selected @endif>Kembali Ke Faskes Primer</option>
                                             <option value="8" @if(old('cara_pulang')=='8' ) selected @endif>PRB</option>
                                         </select>

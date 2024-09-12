@@ -94,7 +94,7 @@
                                                 <i class="fas fa-plus"></i> Edit
                                             </button>
                                             @else
-                                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add-refraksi">
+                                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add-refraksi{{$data->No_Reg}}">
                                                 <i class="fas fa-plus"></i> Entry
                                             </button>
                                             @endif
@@ -110,8 +110,10 @@
         </div>
     </section>
 </div>
+
 <!-- Tambah Data -->
-<div class="modal fade" id="modal-add-refraksi">
+@foreach ($pasien as $data)
+<div class="modal fade" id="modal-add-refraksi{{$data->No_Reg}}">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -123,11 +125,11 @@
             <form action="{{ route('poliMata.refraksiStore') }}" method="POST">
                 @csrf
                 <div class="modal-body">
+                    <input type="hidden" name="NO_REG" value="{{ $data->No_Reg }}">
                     <div class="card-body">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Visus</label>
-                                <input type="hidden" name="NO_REG" class="form-control" value="{{ $biodata->No_Reg ??''}}" readonly>
                                 <div class="col-md-12">
                                     <div class="form-group" style="display: flex; flex-direction: row;">
                                         <div class="input-group" style="margin-right: 10px;">
@@ -177,6 +179,7 @@
         </div>
     </div>
 </div>
+@endforeach
 
 {{-- Edit Data --}}
 @foreach ($refraksi as $data)

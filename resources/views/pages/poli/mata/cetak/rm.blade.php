@@ -241,7 +241,15 @@
         <tr>
             <td class="text3">Kesadaran</td>
             <td class="text3" colspan="2">:
-                {{$perawat->FS_BB}}
+                @if ($perawat->KESADARAN=='1')
+                {{'Baik'}}
+                @elseif ($perawat->KESADARAN=='2')
+                {{'Sedang'}}
+                @elseif ($perawat->KESADARAN=='3')
+                {{'Buruk'}}
+                @else
+                {{'-'}}
+                @endif
             </td>
         </tr>
         <tr>
@@ -722,6 +730,22 @@
                 <td class="text3">TOD : {{$dokter->NCT_TOD}} TOS :  {{$dokter->NCT_TOS}}</td>
                 <td class="text3" colspan="2"></td>
             </tr>
+            <tr>
+                <td class="text3"><b>Deskripsi Mata Kiri</b></td>
+                <td class="text3" colspan="2"></td>
+            </tr>
+            <tr>
+                <td class="text3">: {{$mataKiri->DESKRIPSI}}</td>
+                <td class="text3" colspan="2"></td>
+            </tr>
+            <tr>
+                <td class="text3"><b>Deskripsi Mata Kanan</b></td>
+                <td class="text3" colspan="2"></td>
+            </tr>
+            <tr>
+                <td class="text3">: {{$mataKanan->DESKRIPSI}}</td>
+                <td class="text3" colspan="2"></td>
+            </tr>
         </table>
         <table style="border: 1px solid black; border-top: none;" width="100%">
             <tr>
@@ -739,6 +763,7 @@
                 <td class="text5">({{$dokter->NAMA_DOKTER}})</td>
             </tr>
         </table>
+        @if(($mataKiri->GAMBAR != null) || ($mataKanan->GAMBAR != null))
         <p class="text7"><b>HASIL GAMBAR</b></p>
         <table width="100%">
             <thead>
@@ -749,17 +774,25 @@
             </thead>
             <tbody>
                     <tr>
-                        @foreach ($mataKiri as $kiri)
-                        <td class="gambar-mata"> <img src="storage/gambar_mata/{{$kiri->GAMBAR}}" width="60" height="80" /></td>
-                        <td class="text-mata" width="150px"> {{$kiri->DESKRIPSI}}</td>
-                        @endforeach
-                        @foreach ($mataKanan as $kanan)
-                        <td class="gambar-mata"> <img src="storage/gambar_mata/{{$kanan->GAMBAR}}" width="60" height="80" /></td>
-                        <td class="text-mata" width="150px"> {{$kanan->DESKRIPSI}}</td>
-                        @endforeach
+                        @if($mataKiri->GAMBAR != null)
+                            <td class="gambar-mata"> <img src="storage/gambar_mata/{{$mataKiri->GAMBAR}}" width="60" height="80" /></td>
+                            <td class="text-mata" width="150px"> {{$mataKiri->DESKRIPSI}}</td>
+                        @else
+                            <td class="gambar-mata"></td>
+                            <td class="text-mata" width="150px">{{$mataKiri->DESKRIPSI}}</td>
+                        @endif
+
+                        @if($mataKanan->GAMBAR != null)
+                        <td class="gambar-mata"> <img src="storage/gambar_mata/{{$mataKanan->GAMBAR}}" width="60" height="80" /></td>
+                        <td class="text-mata" width="150px">{{$mataKanan->DESKRIPSI}}</td>
+                        @else
+                            <td class="gambar-mata"></td>
+                            <td class="text-mata" width="150px">{{$mataKanan->DESKRIPSI}}</td>
+                        @endif
                     </tr>
             </tbody>
         </table>
+        @endif
     </body>
 </html>
 
@@ -817,27 +850,6 @@
                     <hr />
                 </td>
             </tr>
-        </table>
-        <p class="text7"><b>HASIL GAMBAR</b></p>
-        <table width="100%">
-            <thead>
-                <tr>
-                    <th class="tabel1" colspan="2">Mata Kiri</th>
-                    <th class="tabel1" colspan="2">Mata Kanan</th>
-                </tr>
-            </thead>
-            <tbody>
-                    <tr>
-                        @foreach ($mataKiri as $kiri)
-                        <td class="gambar-mata"> <img src="storage/gambar_mata/{{$kiri->GAMBAR}}" width="60" height="80" /></td>
-                        <td class="text-mata" width="150px"> {{$kiri->DESKRIPSI}}</td>
-                        @endforeach
-                        @foreach ($mataKanan as $kanan)
-                        <td class="gambar-mata"> <img src="storage/gambar_mata/{{$kanan->GAMBAR}}" width="60" height="80" /></td>
-                        <td class="text-mata" width="150px"> {{$kanan->DESKRIPSI}}</td>
-                        @endforeach
-                    </tr>
-            </tbody>
         </table>
         <p class="text7"><b>HASIL RADIOLOGI</b></p>
         <table width="100%">

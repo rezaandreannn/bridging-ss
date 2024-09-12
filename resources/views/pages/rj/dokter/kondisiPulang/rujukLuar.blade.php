@@ -77,9 +77,8 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('list-pasien.index') }}">Poli</a></div>
-                <div class="breadcrumb-item">Poli Mata</div>
-                <div class="breadcrumb-item">Assesmen Dokter</div>
+                <div class="breadcrumb-item active"><a href="#">Kondisi Pulang</a></div>
+                <div class="breadcrumb-item">Rujuk Internal RS</div>
             </div>
         </div>
 
@@ -88,7 +87,7 @@
                 <div class="col-12">
                     <!-- components biodata pasien by no reg -->
                     @include('components.biodata-pasien-bynoreg')
-                    <form id="myForm" action="{{ route('poliMata.assesmenAwalStore') }}" method="POST">
+                    <form id="myForm" action="{{ route('kondisiPulang.rujukLuarAdd') }}" method="POST">
                     @csrf
                     <div class="card card-secondary">
                         <div class="card-header card-success">
@@ -99,22 +98,23 @@
                             <!-- <div class="row"> -->
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="FS_TUJUAN_RUJUKAN_LUAR_RS">Kepada : <code>* Wajib Diisi</code></label>
+                                    <label for="FS_TUJUAN_RUJUKAN">Kepada : <code>* Wajib Diisi</code></label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" name="FS_TUJUAN_RUJUKAN_LUAR_RS" id="FS_TUJUAN_RUJUKAN_LUAR_RS">
+                                        <input type="hidden" name="FS_KD_REG" value="{{ $biodata->NO_REG }}" />
+                                        <input type="text" class="form-control" name="FS_TUJUAN_RUJUKAN" id="FS_TUJUAN_RUJUKAN">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <label for="FS_TUJUAN_RUJUKAN_LUAR_RS2">Rumah Sakit Tujuan : <code>* Wajib Diisi</code></label>
+                                <label for="FS_TUJUAN_RUJUKAN2">Rumah Sakit Tujuan : <code>* Wajib Diisi</code></label>
                                 <div class="input-group mb-3">
-                                    <input type="text" name="FS_TUJUAN_RUJUKAN_LUAR_RS2" id="FS_TUJUAN_RUJUKAN_LUAR_RS2" class="form-control">
+                                    <input type="text" name="FS_TUJUAN_RUJUKAN2" id="FS_TUJUAN_RUJUKAN2" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <label for="FS_ALASAN_RUJUK_LUAR_RS">Alasan Dirujuk : <code>* Wajib Diisi</code></label>
+                                <label for="FS_ALASAN_RUJUK">Alasan Dirujuk : <code>* Wajib Diisi</code></label>
                                 <div class="input-group mb-3">
-                                    <textarea class="form-control" rows="3" name="FS_ALASAN_RUJUK_LUAR_RS" id="FS_ALASAN_RUJUK_LUAR_RS" value="" placeholder="Masukan ..."></textarea>
+                                    <textarea class="form-control" rows="3" name="FS_ALASAN_RUJUK" id="FS_ALASAN_RUJUK" value="" placeholder="Masukan ..."></textarea>
                                 </div>
                             </div>
                             <!-- </div> -->

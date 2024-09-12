@@ -48,11 +48,10 @@ class AssesmenMataController extends Controller
         $refraksi = $this->poliMata->getDataRefraksi();
         // dd($refraksi);
         $pasien = $this->antrean->getDataPasienRajal($kode_dokter);
+        $pasiens = $this->antrean->getPasienRajal($kode_dokter);
         // dd($pasien);
-        $biodata = $this->antrean->getPasienRajal($kode_dokter);
-        // dd($biodata);
         $poliMata = new PoliMata();
-        return view($this->view . 'refraksi.index', compact('title', 'pasien', 'dokters', 'poliMata', 'biodata', 'refraksi'));
+        return view($this->view . 'refraksi.index', compact('title', 'pasien', 'pasiens', 'dokters', 'poliMata', 'refraksi'));
     }
 
     public function refraksiStore(Request $request)
@@ -179,7 +178,6 @@ class AssesmenMataController extends Controller
     {
         // $resep = $this->poliMata->resep($noReg);
         $resep = $this->rajaldokter->resep($noReg);
-        // dd($resep);
 
         $labs = $this->rajaldokter->lab($noReg);
         $rads = $this->rajaldokter->radiologi($noReg);
@@ -187,10 +185,9 @@ class AssesmenMataController extends Controller
 
         $asasmen_perawat = $this->poliMata->asasmenPerawatGet($noReg);
         $asasmen_dokter = $this->poliMata->asasmenDokter($noReg);
-        // dd($asasmen_dokter);
+
         $gambarMataKiri = $this->poliMata->getGambarMataKiri($noReg);
         $gambarMataKanan = $this->poliMata->getGambarMataKanan($noReg);
-        // dd($asasmen_dokter);
         // $getHasilLab = $this->rajaldokter->getHasilLab($noReg);
 
         $masalahKeperawatan = $this->rekam_medis->masalahKepByNoreg($noReg);

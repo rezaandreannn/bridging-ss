@@ -221,6 +221,7 @@
                 <td class="text3" colspan="6" height="50px"><b>Terapi yang diberikan dokter</b></td>
             </tr>
         </table>
+        @if(!empty($resep) && $resep->count() > 0)
         <table width="100%">
             <thead>
                 <tr>
@@ -237,6 +238,9 @@
                 @endforeach
             </tbody>
         </table>
+        @endif
+        
+        @if(($mataKiri->GAMBAR != null) || ($mataKanan->GAMBAR != null))
         <table width="100%" style="border: 1px solid black;">
             <thead>
                 <tr>
@@ -246,17 +250,25 @@
             </thead>
             <tbody>
                     <tr>
-                        @foreach ($mataKiri as $kiri)
-                        <td class="gambar-mata"> <img src="storage/gambar_mata/{{$kiri->GAMBAR}}" width="60" height="80" /></td>
-                        <td class="text-mata" width="150px"> {{$kiri->DESKRIPSI}}</td>
-                        @endforeach
-                        @foreach ($mataKanan as $kanan)
-                        <td class="gambar-mata"> <img src="storage/gambar_mata/{{$kanan->GAMBAR}}" width="60" height="80" /></td>
-                        <td class="text-mata" width="150px"> {{$kanan->DESKRIPSI}}</td>
-                        @endforeach
+                        @if($mataKiri->GAMBAR != null)
+                            <td class="gambar-mata"> <img src="storage/gambar_mata/{{$mataKiri->GAMBAR}}" width="60" height="80" /></td>
+                            <td class="text-mata" width="150px"> {{$mataKiri->DESKRIPSI}}</td>
+                        @else
+                            <td class="gambar-mata"></td>
+                            <td class="text-mata" width="150px">{{$mataKiri->DESKRIPSI}}</td>
+                        @endif
+
+                        @if($mataKanan->GAMBAR != null)
+                            <td class="gambar-mata"> <img src="storage/gambar_mata/{{$mataKanan->GAMBAR}}" width="60" height="80" /></td>
+                            <td class="text-mata" width="150px">{{$mataKanan->DESKRIPSI}}</td>
+                        @else
+                            <td class="gambar-mata"></td>
+                            <td class="text-mata" width="150px">{{$mataKanan->DESKRIPSI}}</td>
+                        @endif
                     </tr>
             </tbody>
         </table>
+        @endif
         <table  width="100%">
             <tr>
                 <td style="padding-top: 100px;" class="text5"></td>
