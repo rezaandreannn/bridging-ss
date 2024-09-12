@@ -22,15 +22,15 @@
                 @csrf
                 <div class="form-group @error('email') is-invalid  
                                                 @enderror">
-                    <label for="email">Email</label>
-                    <input id="email"
-                        type="email"
+                    <label for="login">Username atau Email</label>
+                    <input id="login"
+                        type="login"
                         class="form-control"
-                        name="email"
+                        name="login"
                         tabindex="1"
                         required
-                        autofocus value="{{ old('email')}}">
-                        @error('email')
+                        autofocus value="{{ old('login')}}">
+                        @error('login')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>

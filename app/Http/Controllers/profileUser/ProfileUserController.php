@@ -1,42 +1,37 @@
 <?php
 
-namespace App\Http\Controllers\igd;
+namespace App\Http\Controllers\profileUser;
 
-use App\Models\Rajal;
-use App\Models\Pasien;
-use App\Models\LayananIgd;
+use App\Models\ProfileUser;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class TriaseController extends Controller
+class ProfileUserController extends Controller
 {
     protected $view;
     protected $routeIndex;
     protected $prefix;
     protected $pasien;
     protected $rajal;
-    protected $layananIgd;
+    protected $profileUser;
 
-    public function __construct(LayananIgd $layananIgd)
+    public function __construct(ProfileUser $profileUser)
     {
-        $this->layananIgd = $layananIgd;
-        $this->view = 'pages.igd.triase.';
-        $this->pasien = new Pasien;
-        $this->rajal = new Rajal;
+        $this->profileUser = $profileUser;
+        $this->view = 'profile.biodata.';
+
     }
-    
-    public function index(Request $request)
+
+    public function index()
     {
+        // dd('ok');
         //
-        $title = 'Triase IGD';
-        $tanggal = date('Y-m-d');
-        if($request->input('tanggal')!=null){
-            $tanggal = $request->input('tanggal');
-        }
-        $pasiens = $this->layananIgd->getTriaseIgd($tanggal);
+        $title = 'Profile User';
         // dd($pasiens);
-        // $biodata = $this->rajal->pasien_bynoreg($noReg);
-        return view($this->view . 'index', compact('title','tanggal','pasiens'));
+        $biodata = $this->profileUser->getBiodataUser(auth()->user()->id);
+        // return redirect('dashboard');
+        // dd($biodata);
+        return view($this->view . 'index', compact('title','biodata'));
     }
 
     /**
@@ -44,15 +39,9 @@ class TriaseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($tanggal)
+    public function create()
     {
-        // dd($tanggal);
         //
-        $title = 'Add Triase IGD';
-
-        $pasiens = $this->layananIgd->pasienTriaseIgd($tanggal);
-        // dd($pasiens);
-        return view($this->view . 'add', compact('title','pasiens'));
     }
 
     /**

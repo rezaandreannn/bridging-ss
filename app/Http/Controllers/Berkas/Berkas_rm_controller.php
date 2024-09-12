@@ -339,6 +339,58 @@ class Berkas_rm_controller extends Controller
         $asesmenPerawat = $this->rajal->assesmenPerawatIGD($noReg);
         $masalahKeperawatan = $this->rekam_medis->masalahKepByNoreg($noReg);
         $rencanaKeperawatan = $this->rekam_medis->rencanaKepByNoreg($noReg);
+        
+        // Cetak PDF
+        // dd($asesmenDokterRj);
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+        $filename = 'RM -' . $date;
+        
+        $title = 'Cetak RM';
+        
+        $pdf = PDF::loadview('pages.rekam_medis.igd.cetakRM', ['tanggal' => $tanggal, 'title' => $title, 'triase' => $triase, 'perawatIGD' => $perawatIGD, 'medis' => $medis, 'resep' => $resep, 'labs' => $labs, 'rads' => $rads, 'biodata' => $biodata, 'assesmenPerawat' => $asesmenPerawat, 'masalahKeperawatan' => $masalahKeperawatan, 'rencanaKeperawatan' => $rencanaKeperawatan]);
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
+    }
+    
+    public function cetakAsesmenMedisIgd($noReg)
+    {
+        $resep = $this->rajaldokter->resep($noReg);
+        $labs = $this->rajaldokter->lab($noReg);
+        $rads = $this->rajaldokter->radiologi($noReg);
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+        // ----- IGD ----- //
+        
+        $asesmenPerawat = $this->rajal->assesmenPerawatIGD($noReg);
+        $medis = $this->igd->getDataMedisByNoReg($noReg);
+        
+        
+        // Cetak PDF
+        // dd($asesmenDokterRj);
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+        $filename = 'RM -' . $date;
+        
+        $title = 'Cetak RM';
+        
+        $pdf = PDF::loadview('pages.rekam_medis.igd.cetakAsesmenMedisIgd', ['tanggal' => $tanggal, 'title' => $title, 'medis' => $medis, 'resep' => $resep, 'labs' => $labs, 'rads' => $rads, 'biodata' => $biodata, 'assesmenPerawat' => $asesmenPerawat]);
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
+    }
+    
+    public function cetakAsesmenPerawatIgd($noReg)
+    {
+        
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+        // ----- IGD ----- //
+        
+        $perawatIGD = $this->igd->getDataPerawatByNoReg($noReg);
+        $asesmenPerawat = $this->rajal->assesmenPerawatIGD($noReg);
+        $medis = $this->igd->getDataMedisByNoReg($noReg);
+        $masalahKeperawatan = $this->rekam_medis->masalahKepByNoreg($noReg);
+        $rencanaKeperawatan = $this->rekam_medis->rencanaKepByNoreg($noReg);
+        
+        
 
         // Cetak PDF
         // dd($asesmenDokterRj);
@@ -348,7 +400,28 @@ class Berkas_rm_controller extends Controller
 
         $title = 'Cetak RM';
 
-        $pdf = PDF::loadview('pages.rekam_medis.igd.cetakRM', ['tanggal' => $tanggal, 'title' => $title, 'triase' => $triase, 'perawatIGD' => $perawatIGD, 'medis' => $medis, 'resep' => $resep, 'labs' => $labs, 'rads' => $rads, 'biodata' => $biodata, 'assesmenPerawat' => $asesmenPerawat, 'masalahKeperawatan' => $masalahKeperawatan, 'rencanaKeperawatan' => $rencanaKeperawatan]);
+        $pdf = PDF::loadview('pages.rekam_medis.igd.cetakAsesmenKeperawatan', ['tanggal' => $tanggal, 'title' => $title, 'medis' => $medis, 'biodata' => $biodata, 'assesmenPerawat' => $asesmenPerawat,'perawatIGD' => $perawatIGD,'masalahKeperawatan' => $masalahKeperawatan, 'rencanaKeperawatan' => $rencanaKeperawatan]);
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
+    }
+
+    public function cetakTriase($noReg)
+    {
+        
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+        // ----- IGD ----- //
+        $triase = $this->igd->getDataTriaseByNoReg($noReg);
+ 
+
+        // Cetak PDF
+        // dd($asesmenDokterRj);
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+        $filename = 'RM -' . $date;
+
+        $title = 'Cetak RM';
+
+        $pdf = PDF::loadview('pages.rekam_medis.igd.cetakTriase', ['tanggal' => $tanggal, 'title' => $title, 'triase' => $triase,'biodata' => $biodata]);
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
     }
