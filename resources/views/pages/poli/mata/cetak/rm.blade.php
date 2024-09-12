@@ -241,7 +241,15 @@
         <tr>
             <td class="text3">Kesadaran</td>
             <td class="text3" colspan="2">:
-                {{$perawat->FS_BB}}
+                @if ($perawat->KESADARAN=='1')
+                {{'Baik'}}
+                @elseif ($perawat->KESADARAN=='2')
+                {{'Sedang'}}
+                @elseif ($perawat->KESADARAN=='3')
+                {{'Buruk'}}
+                @else
+                {{'-'}}
+                @endif
             </td>
         </tr>
         <tr>

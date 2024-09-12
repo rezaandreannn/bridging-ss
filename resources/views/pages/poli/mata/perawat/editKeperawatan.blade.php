@@ -308,8 +308,12 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Kesadaran</label>
-                                    <input type="text" name="KESADARAN" class="form-control @error('kesadaran') is-invalid  
-                                        @enderror" value="{{ $asasmen_perawat->KESADARAN }}">
+                                    <select name="KESADARAN" id="" class="form-control select2">
+                                        <option value="">-- pilih --</option>
+                                        <option value="1" {{ ($asasmen_perawat->KESADARAN=='1') ? 'selected' : ''}}>Baik</option>
+                                        <option value="2" {{ ($asasmen_perawat->KESADARAN=='2') ? 'selected' : ''}}>Sedang</option>
+                                        <option value="3" {{ ($asasmen_perawat->KESADARAN=='3') ? 'selected' : ''}}>Buruk</option>
+                                    </select>
                                 </div>
                                 @error('kesadaran')
                                 <div class="invalid-feedback">
