@@ -109,12 +109,12 @@
                 <td></td>
                 <td style="float: left;">
                     <!-- Menampilkan barcode dengan lebar 200px dan tinggi 200px -->
-                    {!! DNS1D::getBarcodeHTML($resep->KODE_DOKTER, 'C39') !!}
+                    {!! DNS1D::getBarcodeHTML($resep->mdb, 'C39') !!}
                 </td>
             </tr>
             <tr>
                 <td></td>
-                <td style="text-align: left;">{{ $resep->NAMALENGKAP ?? ''}}</td>
+                <td style="text-align: left;">{{ $data->FS_TUJUAN_RUJUKAN ?? ''}}</td>
             </tr>
         </table>
     </center>

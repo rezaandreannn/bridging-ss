@@ -178,6 +178,7 @@ class Berkas_rm_controller extends Controller
     public function cetakRujukan($noReg, $kode_transaksi)
     {
         $resep = $this->rekam_medis->cetakResep($noReg, $kode_transaksi);
+        // dd($resep);
         // Data Rujukan
         $data = DB::connection('pku')
             ->table('TAC_RJ_RUJUKAN as a')
@@ -204,6 +205,7 @@ class Berkas_rm_controller extends Controller
     public function cetakRujukanInternal($noReg, $kode_transaksi)
     {
         $resep = $this->rekam_medis->cetakResep($noReg, $kode_transaksi);
+        // dd($resep);
         // Data Rujukan Internal
         $data = DB::connection('pku')
             ->table('TAC_RJ_RUJUKAN as a')
