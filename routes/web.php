@@ -52,6 +52,7 @@ use App\Http\Controllers\Poli\Mata\MasterData\PenyakitSekarangController;
 use App\Http\Controllers\Berkas\Rekam_medis_by_mr\RekamMedisByMrController;
 use App\Http\Controllers\Berkas\Rekam_medis_harian\RekamMedisHarianController;
 use App\Http\Controllers\IGD\Layanan\AssesmenController as LayananAssesmenController;
+use App\Http\Controllers\profileUser\ProfileUserController;
 use App\Http\Controllers\RawatJalan\Dokter\KondisiPulangController;
 
 /*
@@ -79,6 +80,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // profile user
+    Route::prefix('profile')->group(function () {
+        // ENCOUNTER
+        Route::get('biodata', [ProfileUserController::class, 'index'])->name('biodata.index');
+    });
 
     // MASTER DATA 
     Route::prefix('md')->middleware('auth')->group(function () {
@@ -174,7 +181,7 @@ Route::middleware('auth')->group(function () {
         Route::put('/encounter{id}', [MappingEncounterController::class, 'update'])->name('encounter.update');
     });
 
-    // MAPPING DATA
+    
     Route::prefix('farmasi')->group(function () {
         // ENCOUNTER
         Route::get('orderAlkes', [OrderAlkesController::class, 'index'])->name('orderAlkes.index');
@@ -431,7 +438,7 @@ Route::middleware('auth')->group(function () {
 
         // triase
         Route::get('triase/', [TriaseController::class, 'index'])->name('triase.index');
-        Route::get('triase/add', [TriaseController::class, 'create'])->name('triase.create');
+        Route::get('triase/add/{tanggal}', [TriaseController::class, 'create'])->name('triase.create');
         //Layanan IGD
         // ------------ EWS --------------- //
         Route::get('layananIGD/ewsDewasa', [EwsController::class, 'ewsDewasa'])->name('layanan.ewsDewasa');
@@ -470,8 +477,13 @@ Route::middleware('auth')->group(function () {
 
         // ------------------- Berkas IGD ---------------------- //
         Route::get('riwayatRekamMedis/igd/list', [RekamMedisIgdController::class, 'index'])->name('rm.igd');
+
         // Report Rekam Medis IGD
         Route::get('riwayaRekamMedis/igd/berkasIGD/cetakRM/{noReg}', [Berkas_rm_controller::class, 'cetakRMIgd'])->name('rm.berkasIgd');
+        Route::get('riwayaRekamMedis/igd/berkasIGD/cetakTriase/{noReg}', [Berkas_rm_controller::class, 'cetakTriase'])->name('rm.triase');
+        Route::get('riwayaRekamMedis/igd/berkasIGD/cetakAsesmenMedis/{noReg}', [Berkas_rm_controller::class, 'cetakAsesmenMedisIgd'])->name('rm.asesmenMedisIgd');
+        Route::get('riwayaRekamMedis/igd/berkasIGD/cetakAsesmenPerawat/{noReg}', [Berkas_rm_controller::class, 'cetakAsesmenPerawatIgd'])->name('rm.asesmenPerawatIgd');
+
         // Report Berkas IGD
         Route::get('riwayatRekamMedis/igd/berkasIGD/cetakResep/{nomr}/{noReg}', [RekamMedisIgdController::class, 'cetakResepIGD'])->name('rm.cetakResepIGD');
         Route::get('riwayatRekamMedis/igd/berkasIGD/cetakRad/{nomr}/{noReg}', [RekamMedisIgdController::class, 'cetakRadIGD'])->name('rm.cetakRadIGD');

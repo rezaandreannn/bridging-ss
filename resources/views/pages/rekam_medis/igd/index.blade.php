@@ -18,9 +18,8 @@
         <div class="section-header">
             <h1>{{ $title ?? ''}}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('rj.index') }}">Rawat Jalan</a></div>
-                <div class="breadcrumb-item"><a href="{{ route('rj.index') }}">Nurse Record</a></div>
-                <div class="breadcrumb-item">Pasien</div>
+                <div class="breadcrumb-item"><a href="">Riwayat Rekam Medis</a></div>
+                <div class="breadcrumb-item"><a href="{{ route('rm.igd') }}">Rekam Medis Igd</a></div>
             </div>
         </div>
 
@@ -140,7 +139,8 @@
                                         {{$pasien->Medis}}
                                     </td>
                                     <td>
-                                        <a href="{{ route('rm.berkasIgd', ['noReg' => $pasien->No_Reg]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> RM</a>
+                                        {{-- <a href="{{ route('rm.berkasIgd', ['noReg' => $pasien->No_Reg]) }}" data-toggle="modal" data-target="#modal-edit{{$pasien->No_Reg}}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> download RM</a> --}}
+                                        <a  data-toggle="modal" data-target="#modal-edit{{$pasien->No_Reg}}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> download RM</a>
 
                                         @if($pasien->D_PLANNING == 'Rujuk Internal')
                                         <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujuk Internal</a>
@@ -171,6 +171,70 @@
         </div>
     </section>
 </div>
+
+@foreach ($dataPasien as $pasien)
+<div class="modal fade" id="modal-edit{{$pasien->No_Reg}}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Download Berkas RM IGD</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table-striped table" id="table-1">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Jenis</th>
+                                    <th scope="col">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Triase</td>
+                                    <td> <a href="{{ route('rm.triase', ['noReg' => $pasien->No_Reg]) }}" class="btn btn-sm btn-warning"><i class="fas fa fa-edit"></i> Download</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Asesmen Medis IGD</td>
+                                    <td> <a href="{{route('rm.asesmenMedisIgd',['noReg' => $pasien->No_Reg])}}" class="btn btn-sm btn-warning"><i class="fas fa fa-download"></i> download</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Asesmen Keperawatan</td>
+                                    
+                                    <td> <a href="{{route('rm.asesmenPerawatIgd',['noReg' => $pasien->No_Reg])}}" class="btn btn-sm btn-warning"><i class="fas fa fa-download"></i> download</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Asesmen Kebidanan</td>
+                                    <td> <a href="" class="btn btn-sm btn-warning"><i class="fas fa fa-download"></i> download</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Asesmen Neonatus</td>
+                                    <td> <a href="" class="btn btn-sm btn-warning"><i class="fas fa fa-download"></i> download</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Download Semua</td>
+                                    <td> <a href="{{ route('rm.berkasIgd', ['noReg' => $pasien->No_Reg]) }}" class="btn btn-sm btn-warning"><i class="fas fa fa-download"></i> download</a></td>
+                                </tr>
+               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-footer text-left">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Tutup</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+@endforeach
 @endsection
 
 @push('scripts')

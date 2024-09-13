@@ -116,6 +116,7 @@
         </div>
     </section>
 </div>
+
 @foreach ($listpasien as $pasien)
 <div class="modal fade" id="modal-edit{{$pasien->No_MR}}">
     <div class="modal-dialog">

@@ -44,7 +44,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="card-header">
-                        <a href="{{route('triase.create')}}" class="btn btn-sm btn-primary">
+                        <a href="{{route('triase.create', $tanggal)}}" class="btn btn-sm btn-primary">
                             <i class="fas fa-plus"></i> Triase
                         </a>
                     </div>
@@ -62,17 +62,26 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($pasiens as $pasien)
+                                    
                                 <tr>
-                                    <td>1</td>
-                                    <td>228963</td>
-                                    <td>KANEKO SAPUTRO BIN SUKARNO</td>
-                                    <td>PACITAN RT/RW 016/008 BANARJOYO BATANGHARI</td>
-                                    <td>ayuda</td>
-                                    <td><span class="badge badge-pill badge-success">Selesai Asasmen</span></td>
-                                    <td>
+                                    <td scope="col">{{$loop->iteration}}</td>
+                                    <td scope="col">{{$pasien->No_MR}}</td>
+                                    <td scope="col">{{$pasien->Nama_Pasien}}</td>
+                                    <td scope="col">{{$pasien->Alamat}}</td>
+                                    <td scope="col">{{$pasien->NAMALENGKAP}}</td>
+                                    <td scope="col">
+                                        @if($pasien->No_MR!=null)
+                                        <span class="badge badge-pill badge-success">Selesai Asasmen</span>
+                                        @else
+                                        <span class="badge badge-pill badge-warning">Belum Selesai</span>
+                                        @endif
+                                    </td>
+                                    <td scope="col">
                                         <a href="{{ route('layanan.assesmenPerawatAdd')}}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Edit</a>
                                     </td>
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

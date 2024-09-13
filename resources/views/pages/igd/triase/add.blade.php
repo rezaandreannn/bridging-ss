@@ -55,7 +55,10 @@
                                             <label>Pilih Pasien</label>
                                             <select name="pasien" id="" class="form-control select2">
                                                 <option value="">pilih pasien</option>
-                                                <option value="">tes</option>
+                                                @foreach ($pasiens as $pasien)
+                                                    
+                                                <option value="{{$pasien->No_Reg}}">{{$pasien->Nama_Pasien}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
