@@ -64,7 +64,7 @@ class AssesmenDokterMataController extends Controller
         $masterObat = $this->rajaldokter->getMasterObat();
 
         // dd($asasmen_perawat);
-        return view($this->view . 'dokter.assesmenAwal', compact('title', 'biodata', 'refraksi', 'penyakitSekarang', 'alasanSkdp', 'skdp', 'asasmen_perawat', 'masterLab', 'masterRadiologi', 'masterObat', 'noReg'));
+        return view($this->view . 'dokter.assesmenAwal', compact('title', 'biodata', 'refraksi', 'alasanSkdp', 'skdp', 'asasmen_perawat', 'masterLab', 'masterRadiologi', 'masterObat', 'noReg'));
     }
 
     /**
@@ -86,19 +86,6 @@ class AssesmenDokterMataController extends Controller
         // $userEmr = $this->rajal->getUserEmr(auth()->user()->username);
         try {
             DB::connection('pku')->beginTransaction();
-
-            DB::connection('pku')->table('TAC_RJ_SKDP')->insert([
-                'FS_KD_REG' => $request->input('NO_REG'),
-                'FS_SKDP_1' => $request->input('FS_SKDP_1'),
-                'FS_SKDP_2' => $request->input('FS_SKDP_2'),
-                'FS_SKDP_KET' => $request->input('FS_SKDP_KET') ?? '',
-                'FS_SKDP_KONTROL' => $request->input('FS_SKDP_KONTROL') ?? '',
-                'FS_SKDP_FASKES' => $request->input('FS_SKDP_FASKES'),
-                'FS_PESAN' => $request->input('FS_PESAN'),
-                'FS_RENCANA_KONTROL' => $request->input('FS_RENCANA_KONTROL'),
-                'mdd' => date('Y-m-d'),
-                'mdb' => auth()->user()->username,
-            ]);
 
             DB::connection('pku')->table('TAC_RJ_MEDIS')->insert([
                 'FS_KD_REG' => $request->input('NO_REG'),
@@ -255,6 +242,8 @@ class AssesmenDokterMataController extends Controller
 
             if ($request->input('FS_CARA_PULANG') == '0') {
                 return redirect('pm/polimata/dokter')->with('success', 'Berhasil Ditambahkan!');
+            } elseif ($request->input('FS_CARA_PULANG') == '2') {
+                return redirect()->route('kondisiPulang.SkdpRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil Ditambahkan!');
             } elseif ($request->input('FS_CARA_PULANG') == '4') {
                 return redirect()->route('kondisiPulang.rujukLuarRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil Ditambahkan!');
             } elseif ($request->input('FS_CARA_PULANG') == '6') {
@@ -293,14 +282,7 @@ class AssesmenDokterMataController extends Controller
         $title = $this->prefix . ' ' . 'Mata Assesmen Dokter Edit';
         $biodata = $this->rekam_medis->getBiodata($noReg);
         $asasmen_dokter = $this->poliMata->asasmenDokter($noReg);
-        // dd($asasmen_dokter);
-
-        $penyakitSekarang = $this->poliMata->getPenyakit();
-
-        // SKDP
-        $alasanSkdp = $this->rajal->getAlesanSkdp();
-        $skdp = $this->rajal->getSkdp($noReg);
-        $rencanaSkdp = $this->rajal->get_rencana_skdp_by_noreg();
+        // $penyakitSekarang = $this->poliMata->getPenyakit();
 
         // Data Master
         $masterLab = $this->rajaldokter->getMasterLab();
@@ -318,7 +300,7 @@ class AssesmenDokterMataController extends Controller
 
 
         // dd($asasmen_perawat);
-        return view($this->view . 'dokter.EditassesmenAwal', compact('title', 'biodata', 'penyakitSekarang', 'MataKanan', 'MataKiri', 'alasanSkdp', 'skdp', 'rencanaSkdp', 'asasmen_dokter', 'masterLab', 'getLab', 'masterRadiologi', 'getRad', 'getCekRad', 'masterObat', 'noReg'));
+        return view($this->view . 'dokter.EditassesmenAwal', compact('title', 'biodata', 'MataKanan', 'MataKiri', 'asasmen_dokter', 'masterLab', 'getLab', 'masterRadiologi', 'getRad', 'getCekRad', 'masterObat', 'noReg'));
     }
 
     /**
@@ -333,18 +315,6 @@ class AssesmenDokterMataController extends Controller
         // $userEmr = $this->rajal->getUserEmr(auth()->user()->username);
         try {
             DB::connection('pku')->beginTransaction();
-
-            DB::connection('pku')->table('TAC_RJ_SKDP')->where('FS_KD_REG', $request->input('NO_REG'))->update([
-                'FS_SKDP_1' => $request->input('FS_SKDP_1'),
-                'FS_SKDP_2' => $request->input('FS_SKDP_2'),
-                'FS_SKDP_KET' => $request->input('FS_SKDP_KET') ?? '',
-                'FS_SKDP_KONTROL' => $request->input('FS_SKDP_KONTROL') ?? '',
-                'FS_SKDP_FASKES' => $request->input('FS_SKDP_FASKES'),
-                'FS_PESAN' => $request->input('FS_PESAN'),
-                'FS_RENCANA_KONTROL' => $request->input('FS_RENCANA_KONTROL'),
-                'mdd' => date('Y-m-d'),
-                'mdb' => auth()->user()->username,
-            ]);
 
             DB::connection('pku')->table('TAC_RJ_MEDIS')->where('FS_KD_REG', $request->input('NO_REG'))->update([
                 'FS_KD_REG' => $request->input('NO_REG'),
@@ -499,7 +469,19 @@ class AssesmenDokterMataController extends Controller
             // }
             DB::connection('pku')->commit();
 
-            return redirect('pm/polimata/dokter')->with('success', 'Berhasil Diedit!');
+            if ($request->input('FS_CARA_PULANG') == '0') {
+                return redirect('pm/polimata/dokter')->with('success', 'Berhasil DiEdit!');
+            } elseif ($request->input('FS_CARA_PULANG') == '2') {
+                return redirect()->route('kondisiPulang.SkdpRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
+            } elseif ($request->input('FS_CARA_PULANG') == '4') {
+                return redirect()->route('kondisiPulang.rujukLuarRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
+            } elseif ($request->input('FS_CARA_PULANG') == '6') {
+                return redirect()->route('kondisiPulang.rujukInternalRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
+            } elseif ($request->input('FS_CARA_PULANG') == '7') {
+                return redirect()->route('kondisiPulang.faskesPRB', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
+            } else {
+                return redirect('pm/polimata/dokter')->with('success', 'Berhasil DiEdit!');
+            }
         } catch (\Exception $e) {
             //throw $th;
             DB::connection('pku')->rollBack();

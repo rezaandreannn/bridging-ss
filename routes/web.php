@@ -184,7 +184,7 @@ Route::middleware('auth')->group(function () {
         Route::put('/encounter{id}', [MappingEncounterController::class, 'update'])->name('encounter.update');
     });
 
-    
+
     Route::prefix('farmasi')->group(function () {
         // ENCOUNTER
         Route::get('orderAlkes', [OrderAlkesController::class, 'index'])->name('orderAlkes.index');
@@ -413,6 +413,9 @@ Route::middleware('auth')->group(function () {
         Route::get('rajal/dokter/lab/{noReg}', [RajalDokterController::class, 'labDokter'])->name('rj.dokterLab');
 
 
+        // Kondisi Pulang Rujuk Internal
+        Route::get('rajal/dokter/kondisi_pulang/SKDP/{noReg}', [KondisiPulangController::class, 'SkdpRS'])->name('kondisiPulang.SkdpRS');
+        Route::post('rajal/dokter/kondisi_pulang/SKDP/', [KondisiPulangController::class, 'SkdpAdd'])->name('kondisiPulang.SkdpAdd');
         // Kondisi Pulang Rujuk Internal
         Route::get('rajal/dokter/kondisi_pulang/rujukInternal/{noReg}', [KondisiPulangController::class, 'rujukInternalRS'])->name('kondisiPulang.rujukInternalRS');
         Route::post('rajal/dokter/kondisi_pulang/rujukInternal/', [KondisiPulangController::class, 'rujukInternalAdd'])->name('kondisiPulang.rujukInternalAdd');

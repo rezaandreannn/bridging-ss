@@ -208,8 +208,12 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Kesadaran</label>
-                                        <input type="text" name="kesadaran" class="form-control @error('kesadaran') is-invalid  
-                                            @enderror" value="{{ $asasmen_perawat->KESADARAN }}">
+                                        <select name="kesadaran" id="kesadaran" class="form-control select2 @error('kesadaran')  is-invalid @enderror">
+                                            <option value="">-- Pilih Status Mental --</option>
+                                            <option value="1" {{ ($asasmen_perawat->KESADARAN=='1') ? 'selected' : ''}}>Baik</option>
+                                            <option value="2" {{ ($asasmen_perawat->KESADARAN=='2') ? 'selected' : ''}}>Sedang</option>
+                                            <option value="3" {{ ($asasmen_perawat->KESADARAN=='3') ? 'selected' : ''}}>Buruk</option>
+                                        </select>
                                     </div>
                                     @error('kesadaran')
                                     <div class="invalid-feedback">
@@ -817,75 +821,6 @@
                         </div>
                         <!-- include form -->
                     </div>
-                     {{-- surat menyurat  --}}
-                    <div class="card card-success" id="form2" style="display: none">
-                        <div class="card-header card-khusus-header">
-                            <h6 class="card-khusus-title">Surat Keterangan Dalam Perawatan</h6>
-                        </div>
-                        <!-- include form -->
-                        <div class="card-body card-khusus-body">
-                            <!-- <div class="row"> -->
-                            <div class="col-md-6">
-                                    <label>Belum dapat dikembalikan ke Fasilitas Perujuk dengan alasan</label>
-                                    <div class="input-group mb-3">
-                                        <select name="FS_SKDP_1" id="FS_SKDP_1" class="form-control select2" onchange="click_alasan_skdp(this)">
-                                            <option value="">-- pilih --</option>
-                                            @foreach ($alasanSkdp as $skdpalasan)
-                                                <option value="{{$skdpalasan->FS_KD_TRS}}" {{ ($skdpalasan->FS_KD_TRS ) ? 'selected' : '' }}>{{$skdpalasan->FS_NM_SKDP_ALASAN}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                <label>Rencana tindak lanjut yang akan dilakukan pada kunjungan selanjutnya :</label>
-                                    <div class="input-group mb-3">
-                                        <select name="FS_SKDP_2" id="rencana_skdp" class="form-control select2">
-                                            <option value="1">--Pilih Rencana Tindakan--</option>
-                                        </select>
-                                        <input type="text" name="FS_SKDP_KET" class="form-control" placeholder="keterangan.." />       
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label>Rencana Kontrol Berikutnya : </label>
-                                <div class="input-group mb-3">
-                                    <select name="FS_RENCANA_KONTROL" id="FS_RENCANA_KONTROL" class="form-control select2" onchange="click_rencana_kontrol(this)">
-                                        <option value="">-- pilih --</option>
-                                        <option value="1 Minggu">1 Minggu</option>
-                                        <option value="2 Minggu">2 Minggu</option>
-                                        <option value="Sebulan Kedepan">Sebulan Kedepan</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <!-- <div class="col-md-6">
-                                    <label>contoh </label>
-                                    <div class="input-group mb-3">
-                                        <input type="text" name="kontrol"  class="form-control" id="kontrol_rencana">
-                                    </div>
-                                </div> -->
-                            <div class="col-md-6">
-                                <label>Tanggal Kontrol Berikutnya : </label>
-                                <div class="input-group mb-3">
-                                    <input type="date" name="FS_SKDP_KONTROL" class="form-control" id="tgl_kontrol_berikutnya">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label>Tanggal Expired Rujukan Faskes : </label>
-                                <div class="input-group mb-3">
-                                    <input type="date" name="FS_SKDP_FASKES" id="FS_SKDP_FASKES" class="form-control" >
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label>Keterangan Atau Pesan : </label>
-                                <div class="input-group mb-3">
-                                    <textarea class="form-control" rows="3" name="FS_PESAN"  placeholder="Masukan ..."></textarea>
-                                </div>
-                            </div>
-                            <!-- </div> -->
-                        </div>
-                        <!-- include form -->
-                    </div>
                     <div class="text-left">
                         {{-- <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button> --}}
                         {{-- <a href="{{ route('poliMata.assesmenAwal', ['noReg' => $biodata->NO_REG]) }}" class="btn btn-primary mb-2"><i class="fas fa-save"></i>Simpan</a> --}}
@@ -969,43 +904,6 @@
     }
 </script>
 
-<script>
-    function click_alasan_skdp(selected) {
-
-        var FS_SKDP_1 = $("#FS_SKDP_1").val();
-
-        $.ajax({
-            type: "GET",
-            url: "{{ route('rj.skdp_rencana_kontrol') }}",
-            data: {
-                FS_SKDP_1: FS_SKDP_1
-            },
-            async: false,
-            dataType: 'json',
-
-            success: function(data) {
-                //jika data sukses diambil dari server kita tampilkan
-                //di <select id=kota
-
-
-        
-                var html = '';
-                var i;
-                let array = data.data;
-
-
-                for (i = 0; i < array.length; i++) {
-                    
-                
-                    html += '<option value=' + array[i].FS_KD_TRS + '>' + array[i].FS_NM_SKDP_RENCANA + '</option>';
-                    
-                }
-                $('#rencana_skdp').html(html);
-
-            }
-        });
-    }
-</script>
 
 {{-- Resep --}}
 <script>
