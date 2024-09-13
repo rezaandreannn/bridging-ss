@@ -85,6 +85,9 @@ Route::middleware('auth')->group(function () {
     Route::prefix('profile')->group(function () {
         // ENCOUNTER
         Route::get('biodata', [ProfileUserController::class, 'index'])->name('biodata.index');
+
+        Route::get('password', [ProfileUserController::class, 'showEditPassword'])->name('password.index');
+        Route::post('password/update', [ProfileUserController::class, 'passwordUpdate'])->name('password.updated');
     });
 
     // MASTER DATA 
