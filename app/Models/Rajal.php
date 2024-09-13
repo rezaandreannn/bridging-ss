@@ -394,7 +394,13 @@ class Rajal extends Model
 
     public function getSkdp($NoReg)
     {
-        $data = DB::connection('pku')->table('TAC_RJ_SKDP')->where('FS_KD_REG', $NoReg)->get()->first();
+        $data = DB::connection('pku')->table('TAC_RJ_SKDP')->where('FS_KD_REG', $NoReg)->get();
+        return $data;
+    }
+
+    public function getEditSkdp($NoReg)
+    {
+        $data = DB::connection('pku')->table('TAC_RJ_SKDP')->where('FS_KD_REG', $NoReg)->first();
         return $data;
     }
 
