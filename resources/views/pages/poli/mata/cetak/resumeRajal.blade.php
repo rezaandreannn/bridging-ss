@@ -187,12 +187,22 @@
                 <td class="text3" colspan="2">Makanan: </td>
             </tr>
             <tr>
+                <td class="text3">Riwayat Penyakit Sekarang</td>
+                <td class="text3" colspan="5" height="50px">{{$dokter->RIWAYAT_SEKARANG}}</td>
+            </tr>
+            <tr>
                 <td class="text3">Pemeriksaan Fisik</td>
                 <td class="text3" colspan="5"> Tanda-tanda vital Suhu : {{$dokter->suhu}} C, Tekanan Darah : {{$dokter->tekanan_darah}} mmHg, Respirasi : {{$dokter->respirasi}} x/menit, Nadi : {{$dokter->nadi}} x/menit, Berat Badan : {{$dokter->berat_badan}} Kg, Tinggi Badan : {{$dokter->tinggi_badan}} CM</td>
             </tr>
             <tr>
-                <td class="text3">Pemeriksaan Penunjang</td>
-                <td class="text3" colspan="5" height="50px"> </td>
+                <td class="text3">Visus</td>
+                <td class="text3" colspan="3"> OD : {{$dokter->VISUS_OD}}</td>
+                <td class="text3" colspan="2"> OS : {{$dokter->VISUS_OS}}</td>
+            </tr>
+            <tr>
+                <td class="text3">Tonometri</td>
+                <td class="text3" colspan="3"> TOD : {{$dokter->NCT_TOD}}</td>
+                <td class="text3" colspan="2"> TOS :  {{$dokter->NCT_TOS}}</td>
             </tr>
             <tr>
                 <td class="text3">Kondisi Keluar</td>
