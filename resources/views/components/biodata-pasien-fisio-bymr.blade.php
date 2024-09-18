@@ -61,6 +61,14 @@
                                                 : {{ $biodatas->NAMA_DOKTER}}
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h6 class="mb-0">Tanggal Kunjungan</h6>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                : {{ date('d-m-Y', strtotime($biodatas->Tanggal))}}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

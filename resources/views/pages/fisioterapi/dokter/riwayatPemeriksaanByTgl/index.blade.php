@@ -24,6 +24,25 @@
         </div>
 
         <div class="section-body">
+            <div class="card card-primary">
+                <form id="filterForm" action="" method="get">
+                    <div class="card-body">
+                        <div class="section-title">Pilih Tanggal</div>
+                        <div class="form-group col-md-6">
+                            <div class="input-group mb-3">
+                                <div class="col-md-6">
+                                    <input type="date" class="form-control" name="tanggal" @if (request('tanggal')==null) value="{{date('Y-m-d')}}" @else value="{{request('tanggal')}}" @endif placeholder="" aria-label="">
+                                </div>
+                              <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
+                                <button type="button" class="btn btn-danger" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                </form>
+            </div>
+
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
@@ -69,13 +88,12 @@
                                     </td>
                                     <td width="15%">
                                         @if ($fisioterapi->cek_asesmen_dokter_fisio($pasien->NO_REG)==true)
-                                        <button data-toggle="modal" data-target="#modal-edit{{$pasien->No_MR}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</button>
+                                        <a href="{{ route('edit_riwayat_asesmen.dokter', ['NoMr' => $pasien->No_MR, 'noReg' => $pasien->NO_REG])}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</a>
                                         @else
                                         {{-- tombol lama --}}
                                         {{-- <a href="{{ route('add.dokter', $pasien->No_MR)}}" class="btn btn-sm btn-primary"><i class="fas fa-notes-medical"></i> Entry</a> --}}
                                         {{-- tombol lama --}}
                                         {{-- @if($pasien->FS_STATUS == 1) --}}
-                                        <a href="{{ route('add.dokterNew', ['NoMr' => $pasien->No_MR, 'noReg' => $pasien->NO_REG])}}" class="btn btn-sm btn-primary"><i class="fas fa-notes-medical"></i> Entry</a>
                                         {{-- @endif --}}
                                         @endif
                                     </td>
@@ -90,7 +108,7 @@
     </section>
 </div>
 
-@foreach ($listpasien as $pasien)
+{{-- @foreach ($listpasien as $pasien)
 <div class="modal fade" id="modal-edit{{$pasien->No_MR}}">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -115,19 +133,12 @@
                             <tbody>
                                 <tr>
                                     <td>Asesmen Dokterr</td>
-                                    <td> <a href="{{ route('edit_asesmen.dokter', ['NoMr' => $pasien->No_MR, 'noReg' => $pasien->NO_REG])}}" class="btn btn-sm btn-warning"><i class="fas fa fa-edit"></i> Edit</a></td>
+                                    <td> <a href="{{ route('edit_riwayat_asesmen.dokter', ['NoMr' => $pasien->No_MR, 'noReg' => $pasien->NO_REG])}}" class="btn btn-sm btn-warning"><i class="fas fa fa-edit"></i> Edit</a></td>
                                 </tr>
-                                {{-- <tr>
-                                    <td>Lembar Uji Fungsi</td>
-                                    <td> <a href="{{ route('edit.ujifungsi', $pasien->No_MR)}}" class="btn btn-sm btn-warning"><i class="fas fa fa-edit"></i> Edit</a></td>
-                                </tr>
-                                <tr>
-                                    <td>Lembar SPKFR</td>
-                                    <td> <a href="{{ route('edit.lembarspkfr', $pasien->No_MR)}}" class="btn btn-sm btn-warning"><i class="fas fa fa-edit"></i> Edit</a></td>
-                                </tr> --}}
+                     
                                 <tr>
                                     <td>Cppt</td>
-                                    <td> <a href="{{ route('transaksi_fisio.fisio', ['no_mr' => $pasien->No_MR
+                                    <td> <a href="{{ route('riwayat_transaksi_fisio.fisio', ['no_mr' => $pasien->No_MR
                                             ])}}" class="btn btn-sm btn-warning"><i class="fas fa fa-edit"></i> Edit</a></td>
                                 </tr>
                             </tbody>
@@ -143,7 +154,7 @@
         </div>
     </div>
 </div>
-@endforeach
+@endforeach --}}
 @endsection
 
 @push('scripts')

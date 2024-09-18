@@ -57,6 +57,11 @@
 
         <div class="section-body">
             <div class="card">
+                {{-- @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+                @endif --}}
                 <div class="card-body">
                     <div class="container profile-container">
                         <div class="row">
@@ -72,7 +77,7 @@
                                 <h2>{{$biodata->name}}</h2>
                                 <p><strong>Email: {{$biodata->email}}</strong> </p>
                                 <a href="" class="btn btn-success me-2">Edit Biodata</a>
-                                <a href="" class="btn btn-info">Edit Password</a>
+                                <a href="{{route('password.index')}}" class="btn btn-info">Edit Password</a>
                             </div>
                         </div>
                     </div>
@@ -90,6 +95,7 @@
 <script src="{{ asset('library/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
 <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('library/sweetalert/dist/sweetalert.baru.js') }}"></script>
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
