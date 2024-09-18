@@ -163,6 +163,8 @@ class PoliMata extends Model
                 'pg.DESKRIPSI',
                 'pr.VISUS_OD',
                 'pr.VISUS_OS',
+                'pr.ADD_OD',
+                'pr.ADD_OS',
                 'pr.NCT_TOD',
                 'pr.NCT_TOS',
                 'pr.CREATE_REFRAKSI',

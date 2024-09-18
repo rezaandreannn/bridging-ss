@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('NO_REG');
             $table->string('VISUS_OD')->nullable();
             $table->string('VISUS_OS')->nullable();
+            $table->string('ADD_OD')->nullable();
+            $table->string('ADD_OS')->nullable();
             $table->string('NCT_TOD')->nullable();
             $table->string('NCT_TOS')->nullable();
             $table->string('CREATE_REFRAKSI');

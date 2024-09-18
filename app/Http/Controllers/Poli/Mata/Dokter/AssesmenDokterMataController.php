@@ -95,6 +95,17 @@ class AssesmenDokterMataController extends Controller
                 'mdb' => auth()->user()->username,
             ]);
 
+            DB::connection('pku')->table('poli_mata_refraksi')->where('NO_REG', $request->input('NO_REG'))->update([
+                'VISUS_OD' => $request->input('VISUS_OD'),
+                'VISUS_OS' => $request->input('VISUS_OS'),
+                'ADD_OD' => $request->input('ADD_OD'),
+                'ADD_OS' => $request->input('ADD_OS'),
+                'NCT_TOD' => $request->input('NCT_TOD'),
+                'NCT_TOS' => $request->input('NCT_TOS'),
+                'updated_at' => now(),
+                'UPDATE_REFRAKSI' => auth()->user()->username,
+            ]);
+
             DB::connection('pku')->table('poli_mata_dokter')->insert([
                 'NO_REG' => $request->input('NO_REG'),
                 'anamnesa' => $request->input('anamnesa'),
@@ -322,6 +333,17 @@ class AssesmenDokterMataController extends Controller
                 'FS_CARA_PULANG' => $request->input('FS_CARA_PULANG'),
                 'mdd' => date('Y-m-d'),
                 'mdb' => auth()->user()->username,
+            ]);
+
+            DB::connection('pku')->table('poli_mata_refraksi')->where('NO_REG', $request->input('NO_REG'))->update([
+                'VISUS_OD' => $request->input('VISUS_OD'),
+                'VISUS_OS' => $request->input('VISUS_OS'),
+                'ADD_OD' => $request->input('ADD_OD'),
+                'ADD_OS' => $request->input('ADD_OS'),
+                'NCT_TOD' => $request->input('NCT_TOD'),
+                'NCT_TOS' => $request->input('NCT_TOS'),
+                'updated_at' => now(),
+                'UPDATE_REFRAKSI' => auth()->user()->username,
             ]);
 
             DB::connection('pku')->table('poli_mata_dokter')->where('NO_REG', $request->input('NO_REG'))->update([

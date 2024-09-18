@@ -534,7 +534,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="d-block">Cacat Tubuh</label>
-                                    <input type="text" name="CACAT" class="form-control @error('CACAT') is-invalid @enderror">
+                                    <input type="text" name="CACAT" value="tidak ada" class="form-control @error('CACAT') is-invalid @enderror">
                                     @error('CACAT')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}

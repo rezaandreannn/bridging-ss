@@ -67,6 +67,8 @@ class AssesmenMataController extends Controller
                 'NO_REG' => $request->input('NO_REG'),
                 'VISUS_OD' => $request->input('VISUS_OD'),
                 'VISUS_OS' => $request->input('VISUS_OS'),
+                'ADD_OD' => $request->input('ADD_OD'),
+                'ADD_OS' => $request->input('ADD_OS'),
                 'NCT_TOD' => $request->input('NCT_TOD'),
                 'NCT_TOS' => $request->input('NCT_TOS'),
                 'created_at' => now(),
@@ -95,6 +97,8 @@ class AssesmenMataController extends Controller
             DB::connection('pku')->table('poli_mata_refraksi')->where('NO_REG', $noReg)->update([
                 'VISUS_OD' => $request->input('VISUS_OD'),
                 'VISUS_OS' => $request->input('VISUS_OS'),
+                'ADD_OD' => $request->input('ADD_OD'),
+                'ADD_OS' => $request->input('ADD_OS'),
                 'NCT_TOD' => $request->input('NCT_TOD'),
                 'NCT_TOS' => $request->input('NCT_TOS'),
                 'updated_at' => now(),

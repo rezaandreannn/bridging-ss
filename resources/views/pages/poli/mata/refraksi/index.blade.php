@@ -150,6 +150,27 @@
                         </div>  
                         <div class="col-md-12">
                             <div class="form-group">
+                                <label>Add</label>
+                                <div class="col-md-12">
+                                    <div class="form-group" style="display: flex; flex-direction: row;">
+                                        <div class="input-group" style="margin-right: 10px;">
+                                            <label for="ADD_OD" class="mr-2 mt-2">
+                                                OD
+                                            </label>
+                                            <input type="text" placeholder="Inputan Mata Kanan" class="form-control" name="ADD_OD">                                          
+                                        </div>
+                                        <div class="input-group" style="margin-right: 10px;">
+                                            <label for="ADD_OS" class="mr-2 mt-2">
+                                                OS
+                                            </label>
+                                            <input type="text" placeholder="Inputan Mata Kiri" class="form-control" name="ADD_OS">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="col-md-12">
+                            <div class="form-group">
                                 <label>Tonometri</label>
                                 <div class="col-md-12">
                                     <div class="form-group" style="display: flex; flex-direction: row;">
@@ -213,6 +234,27 @@
                                                 OS
                                             </label>
                                             <input type="text" placeholder="Inputan Mata Kiri"  value="{{$data->VISUS_OS}}" class="form-control" name="VISUS_OS">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Add</label>
+                                <div class="col-md-12">
+                                    <div class="form-group" style="display: flex; flex-direction: row;">
+                                        <div class="input-group" style="margin-right: 10px;">
+                                            <label for="ADD_OS" class="mr-2 mt-2">
+                                                OD
+                                            </label>
+                                            <input type="text" placeholder="Inputan Mata Kanan" value="{{$data->ADD_OD}}" class="form-control" name="ADD_OD">
+                                        </div>
+                                        <div class="input-group" style="margin-right: 10px;">
+                                            <label for="ADD_OS" class="mr-2 mt-2">
+                                                OS
+                                            </label>
+                                            <input type="text" placeholder="Inputan Mata Kiri" value="{{$data->ADD_OS}}" class="form-control" name="ADD_OS">
                                         </div>
                                     </div>
                                 </div>
