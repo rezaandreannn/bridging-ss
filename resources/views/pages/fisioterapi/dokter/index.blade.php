@@ -24,33 +24,6 @@
         </div>
 
         <div class="section-body">
-            <!-- <div class="card card-primary">
-                <form id="filterForm" action="#" method="get">
-                    <div class="card-header">
-                        <h4>Fisioterapi</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <label for="kode_dokter">Nama Pasien</label>
-                                <div class="input-group">
-                                    <select name="no_mr" id="" class="form-control select2">
-                                        <option value="" selected disabled>-- Pilih Pasien --</option>
-                                        @foreach ($listpasien as $pasien)
-                                        <option value="{{ $pasien->No_MR }}">{{ $pasien->Nama_Pasien }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Cari Pasien</button>
-
-                    </div>
-                </form>
-            </div> -->
-
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">

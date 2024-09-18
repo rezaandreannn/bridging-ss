@@ -252,7 +252,7 @@
         <table style="border: 1px solid black; border-top: none;" width="100%">
             <tr>
                 <td style="padding-top: 100px;" class="text5"></td>
-                <td style="padding-top: 100px;" class="text5">Dokter,</td>
+                <td style="padding-top: 100px;" class="text5">Dokter, Metro {{$asesmenDokter->created_at}}</td>
             </tr>
             <tr>
                 <td class="text5"></td>

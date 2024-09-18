@@ -208,6 +208,34 @@ class Fisioterapi extends Model
         return $data;
     }
 
+    public function getPasienRehabMedisByTgl($kode_dokter,$date)
+    {
+        $dbpku = DB::connection('pku')->getDatabaseName();
+        $data = DB::connection('db_rsmm')
+            ->table('ANTRIAN as A')
+            ->join('PENDAFTARAN as P', 'A.No_MR', '=', 'P.No_MR')
+            ->join('REGISTER_PASIEN as RP', 'P.No_MR', '=', 'RP.No_MR')
+            ->leftJoin($dbpku . '.dbo.TAC_RJ_STATUS as st', 'P.NO_REG', '=', 'st.FS_KD_REG')
+            ->select(
+                'A.Nomor',
+                'RP.No_MR',
+                'RP.Nama_Pasien',
+                'RP.Alamat',
+                'P.NO_REG',
+                'st.FS_STATUS'
+
+            )
+            ->Where('A.Tanggal', $date)
+            ->Where('P.Tanggal', $date)
+            ->where('A.Dokter', $kode_dokter)
+            ->where('P.Kode_Dokter', $kode_dokter)
+            ->where('P.Medis', 'RAWAT JALAN')
+            ->orderBy('Nomor', 'ASC')
+            ->get()->toArray();
+        return $data;
+    }
+
+
 
     // Data Table Pasien Fisioterapi
     public function transaksiFisioByMr($no_mr)

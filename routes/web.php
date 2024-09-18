@@ -229,14 +229,23 @@ Route::middleware('auth')->group(function () {
         // Fisioterapi Dokter
         Route::get('dokter/list_pasiens', [AssesmenDokterController::class, 'index'])->name('list_pasiens.dokter');
         Route::get('dokter/assesmen_dokter/{NoMr}', [AssesmenDokterController::class, 'create'])->name('add.dokter');
+
+        // riwayat fisioterapi berdasarkan tanggal
+        Route::get('dokter/riwayat_pasien', [AssesmenDokterController::class, 'riwayat_pemeriksaan'])->name('riwayatFisio.dokter');
+        
         // dokter copy riwayat
         Route::get('dokter/assesmen_dokter2/copy/{noMr}/{noRegBaru}/{noRegLama}', [AssesmenDokterController::class, 'copy_riwayat'])->name('fisio.copyRiwayat');
         // dokter copy riwayat
-        Route::get('dokter/assesmen_dokter2/{NoMr}/{noReg}', [AssesmenDokterController::class, 'create_new'])->name('add.dokterNew');
-        Route::get('dokter/assesmen_dokter/edit/{NoMr}/{noReg}', [AssesmenDokterController::class, 'editAsesmen'])->name('edit_asesmen.dokter');
-        Route::post('dokter/assesmen_dokter/add', [AssesmenDokterController::class, 'store'])->name('asesmenStore.dokter');
-        Route::post('dokter/assesmen_dokter/add2', [AssesmenDokterController::class, 'store_new'])->name('asesmenStore.dokterNew');
-        Route::put('dokter/assesmen_dokter/update', [AssesmenDokterController::class, 'update'])->name('asesmenUpdate.dokter');
+        Route::get('dokter/assesmen_fisio2/{NoMr}/{noReg}', [AssesmenDokterController::class, 'create_new'])->name('add.dokterNew');
+        Route::get('dokter/assesmen_fisio/edit/{NoMr}/{noReg}', [AssesmenDokterController::class, 'editAsesmen'])->name('edit_asesmen.dokter');
+        Route::get('dokter/riwayat_pasien/assesmen_fisio/edit/{NoMr}/{noReg}', [AssesmenDokterController::class, 'editRiwayatAsesmen'])->name('edit_riwayat_asesmen.dokter');
+
+        Route::post('dokter/assesmen_fisio/add', [AssesmenDokterController::class, 'store'])->name('asesmenStore.dokter');
+        
+        Route::post('dokter/assesmen_fisio/add2', [AssesmenDokterController::class, 'store_new'])->name('asesmenStore.dokterNew');
+
+        Route::put('dokter/assesmen_fisio/update', [AssesmenDokterController::class, 'update'])->name('asesmenUpdate.dokter');
+        Route::put('dokter/riwayat_assesmen_fisio/update', [AssesmenDokterController::class, 'riwayatFisioupdate'])->name('asesmenRiwayatUpdate.dokter');
 
         // uji fungsi
         Route::get('dokter/lembar_uji_fungsi/{NoMr}', [AssesmenDokterController::class, 'createUjiFungsi'])->name('add.ujifungsi');
