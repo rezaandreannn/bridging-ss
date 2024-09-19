@@ -88,14 +88,16 @@
                                     </td>
                                     <td width="15%">
                                         @if ($fisioterapi->cek_asesmen_dokter_fisio($pasien->NO_REG)==true)
-                                        <a href="{{ route('edit_riwayat_asesmen.dokter', ['NoMr' => $pasien->No_MR, 'noReg' => $pasien->NO_REG])}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</a>
+                                        <a href="{{ route('edit_riwayat_asesmen.dokter', ['NoMr' => $pasien->No_MR, 'noReg' => $pasien->NO_REG])}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit Asesmen</a>
                                         @else
                                         {{-- tombol lama --}}
                                         {{-- <a href="{{ route('add.dokter', $pasien->No_MR)}}" class="btn btn-sm btn-primary"><i class="fas fa-notes-medical"></i> Entry</a> --}}
                                         {{-- tombol lama --}}
                                         {{-- @if($pasien->FS_STATUS == 1) --}}
                                         {{-- @endif --}}
+                                     
                                         @endif
+                                        <a href="{{ route('berkas.cppt', ['no_mr' => $pasien->No_MR, 'no_reg' => $pasien->NO_REG])}}" class="btn btn-sm btn-info"><i class="fas fa fa-edit"></i> Lihat Cppt</a>
                                     </td>
                                 </tr>
                                 @endforeach

@@ -33,9 +33,7 @@
                     <!-- components biodata pasien by no mr -->
             
                     <div class="card card-primary">
-                        <div class="card-header card-success card-khusus-header">
-                            <a href="{{ route('list_pasiens.dokter')}}" class="btn btn-sm btn-light"><i class="fas fa-arrow-rotate-back"></i> Kembali</a>
-                        </div>
+        
                         <div class="card-body card-khusus-body">
                             <form action="{{ route('asesmenRiwayatUpdate.dokter') }}" method="POST">
                                 @csrf
