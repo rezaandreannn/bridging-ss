@@ -35,7 +35,6 @@
                                 </div>
                               <div class="input-group-append">
                                 <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
-                                <button type="button" class="btn btn-danger" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
                               </div>
                             </div>
                           </div>
