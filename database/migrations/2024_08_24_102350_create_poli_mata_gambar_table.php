@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::connection('pku')->create('poli_mata_gambar', function (Blueprint $table) {
             $table->id();
             $table->string('NO_REG');
-            $table->string('GAMBAR')->nullable();
+            $table->text('GAMBAR')->nullable();
             $table->string('TIPE')->nullable();
-            $table->string('DESKRIPSI')->nullable();
+            $table->text('DESKRIPSI')->nullable();
             $table->string('CREATE_BY');
             $table->string('UPDATE_BY')->nullable();
             $table->timestamps();
