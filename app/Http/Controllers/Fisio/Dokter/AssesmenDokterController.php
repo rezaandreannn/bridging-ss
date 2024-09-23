@@ -859,6 +859,16 @@ class AssesmenDokterController extends Controller
                 'updated_at' => date('Y-m-d H:i:s')
             ]);
 
+            if($asesmen_dokter_update){
+                $cppt_update = DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')->where('no_registrasi', $request->input('no_registrasi'))->update([
+                    'DIAGNOSA' => $request->input('diagnosa_klinis'),
+                    'TEKANAN_DARAH' => $request->input('tekanan_darah'),
+                    'NADI' => $request->input('nadi'),
+                    'SUHU' => $request->input('suhu'),
+                    'ANAMNESA' => $request->input('anamnesa')
+                ]);
+            }
+
             $lembarUjiFungsi = DB::connection('pku')->table('fis_lembar_uji_fungsi')->where('no_registrasi', $request->input('no_registrasi'))->update([
            
                 'kode_transaksi_fisio' => '',
