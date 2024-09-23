@@ -47,11 +47,10 @@ class AssesmenMataController extends Controller
         $dokters = $this->poliMata->getDokterMata();
         $refraksi = $this->poliMata->getDataRefraksi();
         // dd($refraksi);
-        $pasien = $this->antrean->getDataPasienRajal($kode_dokter);
-        $pasiens = $this->antrean->getPasienRajal($kode_dokter);
+        $pasien = $this->antrean->getDataPasienRajalPoliMata($kode_dokter);
         // dd($pasien);
         $poliMata = new PoliMata();
-        return view($this->view . 'refraksi.index', compact('title', 'pasien', 'pasiens', 'dokters', 'poliMata', 'refraksi'));
+        return view($this->view . 'refraksi.index', compact('title', 'pasien', 'dokters', 'poliMata', 'refraksi'));
     }
 
     public function refraksiStore(Request $request)

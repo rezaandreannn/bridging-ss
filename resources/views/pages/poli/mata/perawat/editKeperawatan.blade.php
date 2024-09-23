@@ -44,7 +44,7 @@
                                     <input type="hidden" name="NO_REG" value="{{ $noReg }}" />
                                     <input type="hidden" name="KODE_DOKTER" value="{{ $biodata->Kode_Dokter}}" />
                                     <input type="hidden" name="NO_MR" value="{{ $biodata->NO_MR}}" />
-                                    <label>Keluhan Utama (Anamnesa) <code>*</code></label>
+                                    <label>Keluhan Utama (Anamnesa) <code>*Wajib Diisi</code></label>
                                     <textarea name="FS_ANAMNESA" class="form-control  @error('anamnesa') is-invalid  
                                         @enderror" rows="3" placeholder="Masukan ...">{{ $asasmen_perawat->FS_ANAMNESA }}</textarea>
                                 </div>

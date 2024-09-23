@@ -39,7 +39,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Keluhan Utama (Anamnesa) <code>*</code></label>
+                                    <label>Keluhan Utama (Anamnesa) <code>*Wajib Diisi</code></label>
                                     <input type="hidden" name="NO_REG" value="{{ $noReg }}" />
                                     <input type="hidden" name="KODE_DOKTER" value="{{ $biodata->Kode_Dokter}}" />
                                     <input type="hidden" name="NO_MR" value="{{ $biodata->NO_MR}}" />
@@ -54,7 +54,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Riwayat Penyakit Sekarang</label>
-                                    <input type="text" name="RIWAYAT_SEKARANG" id="riwayat_sekarang" class="form-control" placeholder="Riwayat Penyakit">
+                                    <input type="text" name="RIWAYAT_SEKARANG" id="riwayat_sekarang" value="-" class="form-control" placeholder="Riwayat Penyakit">
                                     {{-- <select multiple name="RIWAYAT_SEKARANG[]" id="riwayat_sekarang" class="form-control select2" multiple="multiple" data-placeholder="Pilih Penyakit Sekarang" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                         <option value="">-- pilih --</option>
                                         @foreach ($penyakitSekarang as $penyakit)
