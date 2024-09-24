@@ -63,7 +63,7 @@ class KondisiPulangController extends Controller
             $AddSKDP = DB::connection('pku')->table('TAC_RJ_SKDP')->insert([
                 'FS_KD_REG' => $request->input('FS_KD_REG'),
                 'FS_SKDP_1' => $request->input('FS_SKDP_1'),
-                'FS_SKDP_2' => $request->input('FS_SKDP_2'),
+                'FS_SKDP_2' => $request->input('FS_SKDP_2') ?? '',
                 'FS_SKDP_KET' => $request->input('FS_SKDP_KET') ?? '',
                 'FS_SKDP_KONTROL' => $request->input('FS_SKDP_KONTROL') ?? '',
                 'FS_SKDP_FASKES' => $request->input('FS_SKDP_FASKES'),
