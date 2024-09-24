@@ -398,7 +398,7 @@
                                 <div class="form-group">
                                     <label>Berat Badan</label><code> (jika kosong beri tanda -)</code>
                                     <div class="input-group">
-                                        <input type="text" name="bb" id="bb" placeholder="masukkan hanya angka" class="form-control @error('bb') is-invalid  
+                                        <input type="text" name="bb" id="bb" value="-" placeholder="masukkan hanya angka" class="form-control @error('bb') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
@@ -417,7 +417,7 @@
                                 <div class="form-group">
                                     <label>Tinggi Badan</label><code> (jika kosong beri tanda -)</code>
                                     <div class="input-group">
-                                        <input type="text" name="tb" id="tb" placeholder="masukkan hanya angka" class="form-control @error('tb') is-invalid  
+                                        <input type="text" name="tb" id="tb" value="-" placeholder="masukkan hanya angka" class="form-control @error('tb') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
@@ -436,7 +436,7 @@
                                 <div class="form-group">
                                     <label>Lingkar Kepala</label><code> (jika kosong beri tanda -)</code>
                                     <div class="input-group">
-                                        <input type="text" name="LINGKAR_KEPALA" id="lingkaran"  placeholder="masukkan hanya angka" class="form-control @error('lingkar_kepala') is-invalid  
+                                        <input type="text" name="LINGKAR_KEPALA" value="-" id="lingkaran"  placeholder="masukkan hanya angka" class="form-control @error('lingkar_kepala') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">

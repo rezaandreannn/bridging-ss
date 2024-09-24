@@ -102,6 +102,7 @@
                                     <label>Belum dapat dikembalikan ke Fasilitas Perujuk dengan alasan</label>
                                     <div class="input-group mb-3">
                                         <input type="hidden" name="FS_KD_REG" value="{{ $biodata->NO_REG }}" />
+                                        <input type="hidden" name="KODE_DOKTER" value="{{ $biodata->Kode_Dokter}}" />
                                         <select name="FS_SKDP_1" id="FS_SKDP_1" class="form-control select2" onchange="click_alasan_skdp(this)">
                                             <option value="">-- pilih --</option>
                                             @foreach ($alasanSkdp as $skdpalasan)
