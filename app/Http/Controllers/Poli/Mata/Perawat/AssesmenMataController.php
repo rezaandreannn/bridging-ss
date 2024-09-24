@@ -264,7 +264,7 @@ class AssesmenMataController extends Controller
         $title = 'Cetak RM';
 
         $pdf = PDF::loadview('pages.poli.mata.cetak.cetakSKDP', ['tanggal' => $tanggal, 'title' => $title, 'resep' => $resep, 'data' => $data, 'biodata' => $biodata]);
-        $pdf->setPaper('A4');
+        $pdf->setPaper('A5');
         return $pdf->stream($filename . '.pdf');
     }
 
