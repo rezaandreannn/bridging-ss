@@ -124,7 +124,6 @@ class AssesmenMataController extends Controller
         $pasien = $this->antrean->getDataPasienRajal($kode_dokter);
         // dd($pasien);
         $poliMata = new PoliMata();
-        // dd($pasien);
         return view($this->view . 'perawat.index', compact('title', 'pasien', 'dokters', 'poliMata'));
     }
 

@@ -232,7 +232,7 @@ Route::middleware('auth')->group(function () {
 
         // riwayat fisioterapi berdasarkan tanggal
         Route::get('dokter/riwayat_pasien', [AssesmenDokterController::class, 'riwayat_pemeriksaan'])->name('riwayatFisio.dokter');
-        
+
         // dokter copy riwayat
         Route::get('dokter/assesmen_dokter2/copy/{noMr}/{noRegBaru}/{noRegLama}', [AssesmenDokterController::class, 'copy_riwayat'])->name('fisio.copyRiwayat');
         // dokter copy riwayat
@@ -241,7 +241,7 @@ Route::middleware('auth')->group(function () {
         Route::get('dokter/riwayat_pasien/assesmen_fisio/edit/{NoMr}/{noReg}', [AssesmenDokterController::class, 'editRiwayatAsesmen'])->name('edit_riwayat_asesmen.dokter');
 
         Route::post('dokter/assesmen_fisio/add', [AssesmenDokterController::class, 'store'])->name('asesmenStore.dokter');
-        
+
         Route::post('dokter/assesmen_fisio/add2', [AssesmenDokterController::class, 'store_new'])->name('asesmenStore.dokterNew');
 
         Route::put('dokter/assesmen_fisio/update', [AssesmenDokterController::class, 'update'])->name('asesmenUpdate.dokter');
@@ -424,6 +424,8 @@ Route::middleware('auth')->group(function () {
 
         // Kondisi Pulang Rujuk Internal
         Route::get('rajal/dokter/kondisi_pulang/SKDP/{noReg}', [KondisiPulangController::class, 'SkdpRS'])->name('kondisiPulang.SkdpRS');
+        Route::get('rajal/dokter/kondisi_pulang/EditSKDP/{noReg}', [KondisiPulangController::class, 'EditSkdpRS'])->name('kondisiPulang.EditSkdpRS');
+        Route::put('rajal/dokter/kondisi_pulang/EditSKDP/{noReg}', [KondisiPulangController::class, 'SkdpEdit'])->name('kondisiPulang.UpdateSkdpRS');
         Route::post('rajal/dokter/kondisi_pulang/SKDP/', [KondisiPulangController::class, 'SkdpAdd'])->name('kondisiPulang.SkdpAdd');
         // Kondisi Pulang Rujuk Internal
         Route::get('rajal/dokter/kondisi_pulang/rujukInternal/{noReg}', [KondisiPulangController::class, 'rujukInternalRS'])->name('kondisiPulang.rujukInternalRS');

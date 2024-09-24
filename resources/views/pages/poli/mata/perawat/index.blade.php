@@ -115,6 +115,8 @@
                                         <!-- pasien kontrol -->
                                         @if($data->FS_CARA_PULANG == 2)
                                         <a href="{{ route('polimata.cetakSKDP', [$data->No_Reg, $data->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> SKDP</a>
+
+                                        <a href="{{ route('kondisiPulang.EditSkdpRS', $data->No_Reg) }}" class="btn btn-sm btn-info"><i class="fas fa-edit"></i>Edit SKDP</a>
                                         <!-- pasien rujuk luar rs -->
                                         @elseif ($data->FS_CARA_PULANG == 4)
                                         <a href="{{ route('rj.rujukanRS', [$data->No_Reg, $data->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujukan RS</a>
