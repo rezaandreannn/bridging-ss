@@ -246,10 +246,12 @@ class AssesmenMataController extends Controller
             ->table('TAC_RJ_SKDP as a')
             ->leftJoin('TAC_COM_PARAMETER_SKDP_ALASAN as b', 'a.FS_SKDP_1', '=', 'b.FS_KD_TRS')
             ->leftJoin('TAC_COM_PARAMETER_SKDP_RENCANA as c', 'a.FS_SKDP_2', '=', 'c.FS_KD_TRS')
+            ->leftJoin('poli_mata_dokter as poli', 'a.FS_KD_REG', '=', 'poli.NO_REG')
             ->select(
                 'a.*',
                 'b.FS_NM_SKDP_ALASAN',
                 'c.FS_NM_SKDP_RENCANA',
+                'poli.DIAGNOSA',
             )
             ->where('a.FS_KD_REG', $noReg)
             ->first();
