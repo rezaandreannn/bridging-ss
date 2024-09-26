@@ -71,6 +71,60 @@
                 </div>
             </div>
         </div>
+        <div class="section-header">
+            <h1>List Pasien Konsul</h1>
+        </div>
+        <div class="card card-primary">
+            <form id="filterForm" action="" method="get">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="kode_dokter">Pilih Tanggal</label>
+                                <input type="date" name="tanggal_konsul" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4 filter-buttons">
+                            <div class="form-group d-flex align-items-end">
+                                <button type="submit" class="btn btn-primary mr-2" style="margin-top: 30px;"><i class="fas fa-search"></i> Search</button>
+                                <button type="button" class="btn btn-danger" style="margin-top: 30px;" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+        <div class="section-body">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table-striped table" id="table-1">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No Antrian</th>
+                                    <th scope="col">No MR</th>
+                                    <th scope="col">Nama Pasien</th>
+                                    <th scope="col">Alamat</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 </div>
 @endsection

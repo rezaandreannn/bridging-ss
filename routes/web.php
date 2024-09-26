@@ -415,6 +415,7 @@ Route::middleware('auth')->group(function () {
         // Rawat Jalan Dokter
         Route::get('rajal/dokter/', [RajalDokterController::class, 'index'])->name('rj.dokter');
         Route::get('rajal/dokter/add_asesmen/{noReg}/{noMR}', [RajalDokterController::class, 'createAsesmen'])->name('rj.dokterHistory');
+        Route::post('rajal/dokter/add_asesmen/add_process', [RajalDokterController::class, 'store'])->name('rj.storeDokter');
         Route::get('rajal/dokter/copy_asesmen/{noReg}/{noMR}', [RajalDokterController::class, 'copyDokter'])->name('rj.dokterCopy');
         Route::get('rajal/dokter/detail/{noReg}/{noMR}', [RajalDokterController::class, 'detailDokter'])->name('rj.dokterDetail');
 
