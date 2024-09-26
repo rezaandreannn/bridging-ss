@@ -39,7 +39,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Keluhan Utama (Anamnesa) <code>*</code></label>
+                                    <label>Keluhan Utama (Anamnesa) <code>*Wajib Diisi</code></label>
                                     <input type="hidden" name="NO_REG" value="{{ $noReg }}" />
                                     <input type="hidden" name="KODE_DOKTER" value="{{ $biodata->Kode_Dokter}}" />
                                     <input type="hidden" name="NO_MR" value="{{ $biodata->NO_MR}}" />
@@ -54,7 +54,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Riwayat Penyakit Sekarang</label>
-                                    <input type="text" name="RIWAYAT_SEKARANG" id="riwayat_sekarang" class="form-control" placeholder="Riwayat Penyakit">
+                                    <input type="text" name="RIWAYAT_SEKARANG" id="riwayat_sekarang" value="-" class="form-control" placeholder="Riwayat Penyakit">
                                     {{-- <select multiple name="RIWAYAT_SEKARANG[]" id="riwayat_sekarang" class="form-control select2" multiple="multiple" data-placeholder="Pilih Penyakit Sekarang" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                         <option value="">-- pilih --</option>
                                         @foreach ($penyakitSekarang as $penyakit)
@@ -398,7 +398,7 @@
                                 <div class="form-group">
                                     <label>Berat Badan</label><code> (jika kosong beri tanda -)</code>
                                     <div class="input-group">
-                                        <input type="text" name="bb" id="bb" placeholder="masukkan hanya angka" class="form-control @error('bb') is-invalid  
+                                        <input type="text" name="bb" id="bb" value="-" placeholder="masukkan hanya angka" class="form-control @error('bb') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
@@ -417,7 +417,7 @@
                                 <div class="form-group">
                                     <label>Tinggi Badan</label><code> (jika kosong beri tanda -)</code>
                                     <div class="input-group">
-                                        <input type="text" name="tb" id="tb" placeholder="masukkan hanya angka" class="form-control @error('tb') is-invalid  
+                                        <input type="text" name="tb" id="tb" value="-" placeholder="masukkan hanya angka" class="form-control @error('tb') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
@@ -436,7 +436,7 @@
                                 <div class="form-group">
                                     <label>Lingkar Kepala</label><code> (jika kosong beri tanda -)</code>
                                     <div class="input-group">
-                                        <input type="text" name="LINGKAR_KEPALA" id="lingkaran"  placeholder="masukkan hanya angka" class="form-control @error('lingkar_kepala') is-invalid  
+                                        <input type="text" name="LINGKAR_KEPALA" value="-" id="lingkaran"  placeholder="masukkan hanya angka" class="form-control @error('lingkar_kepala') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">

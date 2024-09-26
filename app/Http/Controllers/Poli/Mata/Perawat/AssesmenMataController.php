@@ -47,11 +47,10 @@ class AssesmenMataController extends Controller
         $dokters = $this->poliMata->getDokterMata();
         $refraksi = $this->poliMata->getDataRefraksi();
         // dd($refraksi);
-        $pasien = $this->antrean->getDataPasienRajal($kode_dokter);
-        $pasiens = $this->antrean->getPasienRajal($kode_dokter);
+        $pasien = $this->antrean->getDataPasienRajalPoliMata($kode_dokter);
         // dd($pasien);
         $poliMata = new PoliMata();
-        return view($this->view . 'refraksi.index', compact('title', 'pasien', 'pasiens', 'dokters', 'poliMata', 'refraksi'));
+        return view($this->view . 'refraksi.index', compact('title', 'pasien', 'dokters', 'poliMata', 'refraksi'));
     }
 
     public function refraksiStore(Request $request)
@@ -125,7 +124,6 @@ class AssesmenMataController extends Controller
         $pasien = $this->antrean->getDataPasienRajal($kode_dokter);
         // dd($pasien);
         $poliMata = new PoliMata();
-        // dd($pasien);
         return view($this->view . 'perawat.index', compact('title', 'pasien', 'dokters', 'poliMata'));
     }
 
@@ -248,10 +246,12 @@ class AssesmenMataController extends Controller
             ->table('TAC_RJ_SKDP as a')
             ->leftJoin('TAC_COM_PARAMETER_SKDP_ALASAN as b', 'a.FS_SKDP_1', '=', 'b.FS_KD_TRS')
             ->leftJoin('TAC_COM_PARAMETER_SKDP_RENCANA as c', 'a.FS_SKDP_2', '=', 'c.FS_KD_TRS')
+            ->leftJoin('poli_mata_dokter as poli', 'a.FS_KD_REG', '=', 'poli.NO_REG')
             ->select(
                 'a.*',
                 'b.FS_NM_SKDP_ALASAN',
                 'c.FS_NM_SKDP_RENCANA',
+                'poli.DIAGNOSA',
             )
             ->where('a.FS_KD_REG', $noReg)
             ->first();
@@ -266,7 +266,7 @@ class AssesmenMataController extends Controller
         $title = 'Cetak RM';
 
         $pdf = PDF::loadview('pages.poli.mata.cetak.cetakSKDP', ['tanggal' => $tanggal, 'title' => $title, 'resep' => $resep, 'data' => $data, 'biodata' => $biodata]);
-        $pdf->setPaper('A4');
+        $pdf->setPaper('A5');
         return $pdf->stream($filename . '.pdf');
     }
 

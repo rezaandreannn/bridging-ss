@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('poli_mata_refraksi');
+        Schema::connection('pku')->dropIfExists('poli_mata_refraksi');
     }
 };

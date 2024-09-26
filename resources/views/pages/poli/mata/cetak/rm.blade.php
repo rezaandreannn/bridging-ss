@@ -719,7 +719,23 @@
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>
-                <td class="text3">OD : {{$dokter->VISUS_OD}} OS : {{$dokter->VISUS_OS}}</td>
+                <td class="text3">OD : {{$dokter->VISUS_OD}}</td>
+                <td class="text3" colspan="2"></td>
+            </tr>
+            <tr>
+                <td class="text3">OS : {{$dokter->VISUS_OS}}</td>
+                <td class="text3" colspan="2"></td>
+            </tr>
+            <tr>
+                <td class="text3"><b>Add</b></td>
+                <td class="text3" colspan="2"></td>
+            </tr>
+            <tr>
+                <td class="text3">OD : {{$dokter->ADD_OD}}</td>
+                <td class="text3" colspan="2"></td>
+            </tr>
+            <tr>
+                <td class="text3">OS : {{$dokter->ADD_OS}}</td>
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>
@@ -727,7 +743,11 @@
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>
-                <td class="text3">TOD : {{$dokter->NCT_TOD}} TOS :  {{$dokter->NCT_TOS}}</td>
+                <td class="text3">TOD : {{$dokter->NCT_TOD}}</td>
+                <td class="text3" colspan="2"></td>
+            </tr>
+            <tr>
+                <td class="text3">TOS :  {{$dokter->NCT_TOS}}</td>
                 <td class="text3" colspan="2"></td>
             </tr>
             <tr>

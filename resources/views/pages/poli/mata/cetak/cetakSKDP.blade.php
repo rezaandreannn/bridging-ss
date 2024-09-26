@@ -96,14 +96,8 @@ $dayList = array(
             </tr>
             <tr>
                 <td width="100" style="font-size: 10px;">Diagnosa</td>
-                <td width="175" style="font-size: 10px;">: {{ $resep->FS_DIAGNOSA ?? ''}}</td>
+                <td width="175" style="font-size: 10px;">: {{ $data->DIAGNOSA ?? ''}}</td>
             </tr>
-            @if($resep->KODE_DOKTER == '140')
-            <tr>
-                <td width="100" style="font-size: 10px;">Diagnosa Sekunder</td>
-                <td width="175" style="font-size: 10px;">: {{ $resep->FS_DIAGNOSA_SEKUNDER ?? ''}}</td>
-            </tr>
-            @endif
             <tr>
                 <td width="100" style="font-size: 10px;">Terapi</td>
                 <td width="175" style="font-size: 10px;">:</td>

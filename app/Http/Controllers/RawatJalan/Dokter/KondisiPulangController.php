@@ -41,6 +41,19 @@ class KondisiPulangController extends Controller
         return view($this->view . '.kondisiPulang.SKDP', compact('title', 'biodata', 'alasanSkdp'));
     }
 
+    public function EditSkdpRS($noReg)
+    {
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+        // dd($biodata);
+        $title = 'SKDP';
+        $alasanSkdp = $this->rajal->getAlesanSkdp();
+        $skdp = $this->rajal->getSkdp2($noReg);
+        // dd($skdp);
+        $rencanaSkdp = $this->rajal->get_rencana_skdp_by_noreg();
+
+        return view($this->view . '.kondisiPulang.EditSKDP', compact('title', 'biodata', 'skdp', 'alasanSkdp', 'rencanaSkdp'));
+    }
+
     public function SkdpAdd(Request $request)
     {
         try {
@@ -50,7 +63,7 @@ class KondisiPulangController extends Controller
             $AddSKDP = DB::connection('pku')->table('TAC_RJ_SKDP')->insert([
                 'FS_KD_REG' => $request->input('FS_KD_REG'),
                 'FS_SKDP_1' => $request->input('FS_SKDP_1'),
-                'FS_SKDP_2' => $request->input('FS_SKDP_2'),
+                'FS_SKDP_2' => $request->input('FS_SKDP_2') ?? '',
                 'FS_SKDP_KET' => $request->input('FS_SKDP_KET') ?? '',
                 'FS_SKDP_KONTROL' => $request->input('FS_SKDP_KONTROL') ?? '',
                 'FS_SKDP_FASKES' => $request->input('FS_SKDP_FASKES'),
@@ -68,6 +81,39 @@ class KondisiPulangController extends Controller
             DB::connection('pku')->commit();
 
             return redirect('pm/polimata/dokter')->with('success', 'Berhasil Ditambahkan!');
+        } catch (\Exception $e) {
+            //throw $th;
+            DB::connection('pku')->rollBack();
+            return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
+        }
+    }
+    public function SkdpEdit(Request $request, $noReg)
+    {
+        try {
+
+            DB::connection('pku')->beginTransaction();
+
+
+            $AddSKDP = DB::connection('pku')->table('TAC_RJ_SKDP')->where('FS_KD_REG', $noReg)->update([
+                'FS_SKDP_1' => $request->input('FS_SKDP_1'),
+                'FS_SKDP_2' => $request->input('FS_SKDP_2') ?? '',
+                'FS_SKDP_KET' => $request->input('FS_SKDP_KET') ?? '',
+                'FS_SKDP_KONTROL' => $request->input('FS_SKDP_KONTROL') ?? '',
+                'FS_SKDP_FASKES' => $request->input('FS_SKDP_FASKES'),
+                'FS_PESAN' => $request->input('FS_PESAN'),
+                'FS_RENCANA_KONTROL' => $request->input('FS_RENCANA_KONTROL'),
+                'mdd' => date('Y-m-d'),
+                'mdb' => auth()->user()->username,
+            ]);
+
+            if ($AddSKDP) {
+                DB::connection('pku')->table('TAC_RJ_RUJUKAN')->where('FS_KD_REG', $request->input('FS_KD_REG'))->delete();
+                DB::connection('pku')->table('TAC_RJ_PRB')->where('FS_KD_REG', $request->input('FS_KD_REG'))->delete();
+            }
+
+            DB::connection('pku')->commit();
+
+            return redirect('pm/polimata/perawat?kode_dokter=' . $request->input('KODE_DOKTER'))->with('success', 'Berhasil Ditambahkan!');
         } catch (\Exception $e) {
             //throw $th;
             DB::connection('pku')->rollBack();

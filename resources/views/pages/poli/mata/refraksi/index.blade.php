@@ -117,7 +117,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Tambah</h4>
+                <h4 class="modal-title">Tambah Data</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -127,6 +127,13 @@
                 <div class="modal-body">
                     <input type="hidden" name="NO_REG" value="{{ $data->No_Reg }}">
                     <div class="card-body">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <label>Anamnesa Pasien : <b>{{ $data->FS_ANAMNESA }}</b></label>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Visus</label>
