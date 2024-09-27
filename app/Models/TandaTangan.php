@@ -83,7 +83,7 @@ public function ttdPasienMaster()
         ->whereDate('a.Tanggal', $date)
         ->whereDate('p.Tanggal', $date)
         // ->where('p.Status', '1')
-        ->whereNotIn('p.NO_REG', $excludedRegs)
+        // ->whereNotIn('p.NO_REG', $excludedRegs)
         ->orderBy('a.NOMOR', 'ASC')
         ->get()
         ->toArray();
