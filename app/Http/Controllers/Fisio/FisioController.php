@@ -360,7 +360,7 @@ class FisioController extends Controller
     public function editDataCPPT(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'ANAMNESA' => 'required|max:255',
+            'ANAMNESA' => 'required',
             'LAINNYA' => 'max:255',
         ]);
 
@@ -420,7 +420,7 @@ class FisioController extends Controller
     public function editDataRiwayatCPPT(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'ANAMNESA' => 'required|max:255',
+            'ANAMNESA' => 'required',
             'LAINNYA' => 'max:255',
         ]);
 

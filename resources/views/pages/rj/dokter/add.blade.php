@@ -86,14 +86,15 @@
                             <h4 class="card-title">Pemeriksaan Dokter</h4>
                         </div>
                         <div class="card-body">
-                            <form id="myForm" action="" method="POST">
+                            <form id="myForm" action="{{route('rj.storeDokter')}}" method="POST">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Anamnesa (S)</label>
+                                            <input type="hidden" class="form-control" name="kode_reg" value="{{$no_reg}}">
                                             <textarea name="anamnesa" style="height: 70px;" class="form-control  @error('anamnesa') is-invalid  
-                                            @enderror" rows="5" cols="50"  placeholder="Masukan ...">{{$asesmenPerawat->fs_anamnesa}}</textarea>
+                                            @enderror" rows="5" cols="50"  placeholder="Masukan ...">{{$asesmenPerawat->fs_anamnesa ?? ''}}</textarea>
                                         </div>
                                         @error('anamnesa')
                                         <div class="invalid-feedback">
@@ -119,7 +120,7 @@
                                         <div class="form-group">
                                             <label>Pemeriksaan Fisik (O)</label>
                                             <textarea name="pemeriksaan_fisik" style="height: 70px;" class="form-control  @error('pemeriksaan_fisik') is-invalid  
-                                            @enderror"  rows="5" cols="50" placeholder="Masukan ...">Suhu : {{$vitalSign->FS_SUHU}} C, Nadi : {{$vitalSign->FS_NADI}} x/menit, Respirasi : {{$vitalSign->FS_R}} x/menit, TD {{$vitalSign->FS_TD}} : mmHg, BB : Kg, TB : {{$vitalSign->FS_TB}}  cm, Alergi : , Skala Nyeri : {{$skalaNyeri->FS_NYERIS}} ,Skrining Nutrisi : 
+                                            @enderror"  rows="5" cols="50" placeholder="Masukan ...">Suhu : {{$vitalSign->FS_SUHU ?? ''}} C, Nadi : {{$vitalSign->FS_NADI ?? ''}} x/menit, Respirasi : {{$vitalSign->FS_R ?? ''}} x/menit, TD {{$vitalSign->FS_TD ?? ''}} : mmHg, BB : Kg, TB : {{$vitalSign->FS_TB ?? ''}}  cm, Alergi : , Skala Nyeri : {{$skalaNyeri->FS_NYERIS ?? ''}} ,Skrining Nutrisi : 
 
                                         </textarea>
                                         </div>
@@ -231,12 +232,12 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>EKG</label>
-                                            <select name="EKG" id="" class="form-control select2 @error('EKG')  is-invalid @enderror">
-                                                <option value="" selected disabled>--Pilih EKG--</option>
-                                                <option value="Ya" @if(old('EKG')=='Ya' ) selected @endif>Ya</option>
-                                                <option value="Tidak" @if(old('EKG')=='Tidak' ) selected @endif>Tidak</option>
+                                            <select name="ekg" id="" class="form-control select2 @error('ekg')  is-invalid @enderror">
+                                                <option value="" selected disabled>--Pilih ekg--</option>
+                                                <option value="Ya" @if(old('ekg')=='Ya' ) selected @endif>Ya</option>
+                                                <option value="Tidak" @if(old('ekg')=='Tidak' ) selected @endif>Tidak</option>
                                             </select>
-                                            @error('EKG')
+                                            @error('ekg')
                                             <span class="text-danger" style="font-size: 12px;">
                                                 {{ $message }}
                                             </span>
@@ -415,7 +416,7 @@
                                 <div class="col-md-6">
                                     <label>Tanggal Expired Rujukan Faskes : </label>
                                     <div class="input-group mb-3">
-                                        <input type="date" name="FS_SKDP_FASKES" id="FS_SKDP_FASKES" @if ($asesmenPerawat->fs_skdp_faskes !='1900-01-01') value="{{$asesmenPerawat->fs_skdp_faskes}}" @endif class="form-control" >
+                                        <input type="date" name="FS_SKDP_FASKES" id="FS_SKDP_FASKES"  @if (($asesmenPerawat != null)) @if ($asesmenPerawat->fs_skdp_faskes !='1900-01-01') value="{{$asesmenPerawat->fs_skdp_faskes}}" @endif @endif class="form-control" >
                                     </div>
                                 </div>
                                 <div class="col-md-6">

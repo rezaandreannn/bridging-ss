@@ -61,7 +61,8 @@
                                     <input type="hidden" name="FS_KD_REG" value="{{ $noReg }}" />
                                     <input type="hidden" name="KODE_DOKTER" value="{{ $biodata->Kode_Dokter}}" />
                                     <input type="hidden" name="NO_MR" value="{{ $biodata->NO_MR}}" />
-                                    <textarea class="form-control" rows="3" name="anamnesa" value="" placeholder="Masukan ..."></textarea>
+                                    <textarea class="form-control  @error('anamnesa') is-invalid  
+                                            @enderror" rows="3" name="anamnesa" value="" placeholder="Masukan ...">{{ old('anamnesa') }}</textarea>
                                         @error('anamnesa')
                                             <span class="text-danger" style="font-size: 12px;">
                                                 {{ $message }}
@@ -72,7 +73,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Pemeriksaan Fisik</label>
-                                    <textarea class="form-control" rows="3" name="pemeriksaan_fisik" value="" placeholder="Masukan ..."></textarea>
+                                    <textarea class="form-control @error('pemeriksaan_fisik') is-invalid  
+                                            @enderror" rows="3" name="pemeriksaan_fisik" value="" placeholder="Masukan ...">{{ old('pemeriksaan_fisik') }}</textarea>
                                     @error('pemeriksaan_fisik')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}
@@ -94,7 +96,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Suhu</label> <code> (gunakan tanda . contoh : 36.5)</code>
-                                    <input type="text" class="form-control" name="suhu" value="" id="suhu" placeholder="masukkan hanya angka">
+                                    <input type="text" class="form-control @error('suhu') is-invalid  
+                                            @enderror" name="suhu" value="{{ old('suhu') }}" id="suhu" placeholder="masukkan hanya angka">
                                     @error('suhu')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}
@@ -106,7 +109,8 @@
                                 <div class="form-group">
                                     <label>Nadi</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="nadi"  name="nadi" value="" placeholder="masukkan hanya angka">
+                                        <input type="text" class="form-control @error('nadi') is-invalid  
+                                            @enderror" id="nadi"  name="nadi" value="{{ old('nadi') }}" placeholder="masukkan hanya angka">
                                         <div class="input-group-append">
                                             <span class="input-group-text">x/menit</span>
                                         </div>
@@ -122,7 +126,8 @@
                                 <div class="form-group">
                                     <label>Respirasi</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="respirasi" name="respirasi" value="" placeholder="masukkan hanya angka">
+                                        <input type="text" class="form-control @error('respirasi') is-invalid  
+                                            @enderror" id="respirasi" name="respirasi" value="{{ old('respirasi') }}" placeholder="masukkan hanya angka">
                                         <div class="input-group-append">
                                             <span class="input-group-text">x/menit</span>
                                         </div>
@@ -138,7 +143,8 @@
                                 <div class="form-group">
                                     <label>Tekanan Darah</label> <code> (contoh : 110/90)</code>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="td" name="td" value="" placeholder="masukkan hanya angka">
+                                        <input type="text" class="form-control @error('td') is-invalid  
+                                            @enderror" id="td" name="td" value="{{ old('td') }}" placeholder="masukkan hanya angka">
                                         <div class="input-group-append">
                                             <span class="input-group-text">mmHg</span>
                                         </div>
@@ -154,7 +160,8 @@
                                 <div class="form-group">
                                     <label>Tinggi Badan</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="tb"  name="tb" value="-" placeholder="masukkan hanya angka">
+                                        <input type="text" class="form-control @error('tb') is-invalid  
+                                            @enderror" id="tb"  name="tb" value="{{ old('tb') }}" placeholder="masukkan hanya angka">
                                         <div class="input-group-append">
                                             <span class="input-group-text">cm</span>
                                         </div>
@@ -166,7 +173,8 @@
                                 <div class="form-group">
                                     <label>Berat Badan</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="bb"  name="bb" value="-" placeholder="masukkan hanya angka">
+                                        <input type="text" class="form-control @error('bb') is-invalid  
+                                            @enderror" id="bb"  name="bb" value="{{ old('bb') }}" placeholder="masukkan hanya angka">
                                         <div class="input-group-append">
                                             <span class="input-group-text">kg</span>
                                         </div>
@@ -188,13 +196,13 @@
                                 <div class="form-group">
                                     <label>Ada Nyeri?</label>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="FS_NYERI" id="exampleRadios1" value="1">
+                                        <input class="form-check-input" type="radio" name="FS_NYERI" id="exampleRadios1" value="1" {{ old('FS_NYERI') == '1' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="exampleRadios1">
                                             Ya
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="FS_NYERI" id="exampleRadios2" value="0" checked>
+                                        <input class="form-check-input" type="radio" name="FS_NYERI" id="exampleRadios2" value="0" {{ (old('FS_NYERI') !== '1' && old('FS_NYERI') !== '0') || old('FS_NYERI') == '0' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="exampleRadios2">
                                             Tidak
                                         </label>
@@ -206,12 +214,12 @@
                                     <label>Quality</label>
                                     <div class="input-group mb-3">
                                         <select name="FS_NYERIQ" id="" class="form-control select2">
-                                            <option value="0">Tidak Ada</option>
-                                            <option value="1">Seperti Di Tusuk-Tusuk</option>
-                                            <option value="2">Seperti Terbakar</option>
-                                            <option value="3">Seperti Tertimpa Beban</option>
-                                            <option value="4">Ngilu</option>
-                                            <option value="5">Sedang</option>
+                                            <option value="0" {{ old('FS_NYERIQ') == '0' ? 'selected' : '' }}>Tidak Ada</option>
+                                            <option value="1" {{ old('FS_NYERIQ') == '1' ? 'selected' : '' }}>Seperti Di Tusuk-Tusuk</option>
+                                            <option value="2" {{ old('FS_NYERIQ') == '2' ? 'selected' : '' }}>Seperti Terbakar</option>
+                                            <option value="3" {{ old('FS_NYERIQ') == '3' ? 'selected' : '' }}>Seperti Tertimpa Beban</option>
+                                            <option value="4" {{ old('FS_NYERIQ') == '4' ? 'selected' : '' }}>Ngilu</option>
+                                            <option value="5" {{ old('FS_NYERIQ') == '5' ? 'selected' : '' }}>Sedang</option>
                                         </select>
                                     </div>
                                 </div>
@@ -221,10 +229,10 @@
                                     <label>Provokatif</label>
                                     <div class="input-group mb-3">
                                         <select name="FS_NYERIP" id="" class="form-control select2">
-                                            <option value="0">Tidak Ada Nyeri</option>
-                                            <option value="2">Biologik</option>
-                                            <option value="3">Kimiawi</option>
-                                            <option value="4">Mekanik / Rudapaksa</option>
+                                            <option value="0" {{ old('FS_NYERIP') == '0' ? 'selected' : '' }}>Tidak Ada Nyeri</option>
+                                            <option value="2" {{ old('FS_NYERIP') == '2' ? 'selected' : '' }}>Biologik</option>
+                                            <option value="3" {{ old('FS_NYERIP') == '3' ? 'selected' : '' }}>Kimiawi</option>
+                                            <option value="4" {{ old('FS_NYERIP') == '4' ? 'selected' : '' }}>Mekanik / Rudapaksa</option>
                                         </select>
                                     </div>
                                 </div>
@@ -234,17 +242,17 @@
                                     <label>Severity</label>
                                     <div class="input-group mb-3">
                                         <select name="FS_NYERIS" id="" class="form-control select2">
-                                            <option value="0">0</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                            <option value="7">7</option>
-                                            <option value="8">8</option>
-                                            <option value="9">9</option>
-                                            <option value="10">10</option>
+                                            <option value="0" {{ old('FS_NYERIS') == '0' ? 'selected' : '' }}>0</option>
+                                            <option value="1" {{ old('FS_NYERIS') == '1' ? 'selected' : '' }}>1</option>
+                                            <option value="2" {{ old('FS_NYERIS') == '2' ? 'selected' : '' }}>2</option>
+                                            <option value="3" {{ old('FS_NYERIS') == '3' ? 'selected' : '' }}>3</option>
+                                            <option value="4" {{ old('FS_NYERIS') == '4' ? 'selected' : '' }}>4</option>
+                                            <option value="5" {{ old('FS_NYERIS') == '5' ? 'selected' : '' }}>5</option>
+                                            <option value="6" {{ old('FS_NYERIS') == '6' ? 'selected' : '' }}>6</option>
+                                            <option value="7" {{ old('FS_NYERIS') == '7' ? 'selected' : '' }}>7</option>
+                                            <option value="8" {{ old('FS_NYERIS') == '8' ? 'selected' : '' }}>8</option>
+                                            <option value="9" {{ old('FS_NYERIS') == '9' ? 'selected' : '' }}>9</option>
+                                            <option value="10" {{ old('FS_NYERIS') == '10' ? 'selected' : '' }}>10</option>
                                         </select>
                                     </div>
                                 </div>
@@ -253,7 +261,7 @@
                                 <div class="form-group">
                                     <label>Regio</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" name="FS_NYERIR" value="-">
+                                        <input type="text" class="form-control" name="FS_NYERIR" value="{{old('FS_NYERIR')}}">
                                     </div>
                                 </div>
                             </div>
@@ -262,10 +270,10 @@
                                     <label>Time</label>
                                     <div class="input-group mb-3">
                                         <select name="FS_NYERIT" id="" class="form-control select2">
-                                            <option value="0">Tidak Ada</option>
-                                            <option value="1">Kadang-Kadang</option>
-                                            <option value="2">Sering</option>
-                                            <option value="3">Menetap</option>
+                                            <option value="0" {{ old('FS_NYERIT') == '0' ? 'selected' : '' }}>Tidak Ada</option>
+                                            <option value="1" {{ old('FS_NYERIT') == '1' ? 'selected' : '' }}>Kadang-Kadang</option>
+                                            <option value="2" {{ old('FS_NYERIT') == '2' ? 'selected' : '' }}>Sering</option>
+                                            <option value="3" {{ old('FS_NYERIT') == '3' ? 'selected' : '' }}>Menetap</option>
                                         </select>
                                     </div>
                                 </div>
@@ -286,8 +294,8 @@
                                     <label>Pasien berjalan tidak seimbang / sempoyongan</label>
                                     <select name="FS_CARA_BERJALAN1" class="form-control select2" onchange="click1(this)">
                                         <option value="">--Pilih Data--</option>
-                                        <option value="0">TIDAK</option>
-                                        <option value="1">YA</option>
+                                        <option value="0" {{ old('FS_CARA_BERJALAN1') == '0' ? 'selected' : '' }}>TIDAK</option>
+                                        <option value="1" {{ old('FS_CARA_BERJALAN1') == '1' ? 'selected' : '' }}>YA</option>
                                     </select>
                                     @error('FS_CARA_BERJALAN1')
                                     <span class="text-danger" style="font-size: 12px;">
@@ -301,8 +309,8 @@
                                     </label>
                                     <select name="FS_CARA_BERJALAN2" class="form-control select2" onchange="click2(this)">
                                         <option value="">--Pilih Data--</option>
-                                        <option value="0">TIDAK</option>
-                                        <option value="1">YA</option>
+                                        <option value="0" {{ old('FS_CARA_BERJALAN2') == '1' ? 'selected' : '' }}>TIDAK</option>
+                                        <option value="1" {{ old('FS_CARA_BERJALAN2') == '1' ? 'selected' : '' }}>YA</option>
                                     </select>
                                     @error('FS_CARA_BERJALAN2')
                                     <span class="text-danger" style="font-size: 12px;">
@@ -316,8 +324,8 @@
                                     </label>
                                     <select name="FS_CARA_DUDUK" class="form-control select2" onchange="click3(this)">
                                         <option value="">--Pilih Data--</option>
-                                        <option value="0">TIDAK</option>
-                                        <option value="1">YA</option>
+                                        <option value="0" {{ old('FS_CARA_DUDUK') == '0' ? 'selected' : '' }}>TIDAK</option>
+                                        <option value="1" {{ old('FS_CARA_DUDUK') == '1' ? 'selected' : '' }}>YA</option>
                                     </select>
                                     @error('FS_CARA_DUDUK')
                                     <span class="text-danger" style="font-size: 12px;">
@@ -333,7 +341,7 @@
                             <div class="col-md-6">
                                 <div class="form-group clearfix">
                                     <div class="icheck-primary d-inline">
-                                        <input type="checkbox" id="checkboxPrimary4" name="intervensi1" value="Ya">
+                                        <input type="checkbox" id="checkboxPrimary4" name="intervensi1" value="Ya" {{ old('intervensi1') ? 'checked' : '' }}>
                                         <label for="checkboxPrimary4">
                                             Edukasi
                                         </label>
@@ -341,7 +349,7 @@
                                 </div>
                                 <div class="form-group clearfix">
                                     <div class="icheck-primary d-inline">
-                                        <input type="checkbox" id="checkboxPrimary5" name="intervensi2" value="Ya">
+                                        <input type="checkbox" id="checkboxPrimary5" name="intervensi2" value="Ya" {{ old('intervensi2') ? 'checked' : '' }}>
                                         <label for="checkboxPrimary5">
                                             Pasang Stiker Resiko Jatuh (*resiko tinggi)
                                         </label>
@@ -367,25 +375,25 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Riwayat Penyakit Dahulu</label>
-                                    <input type="text" class="form-control" name="FS_RIW_PENYAKIT_DAHULU" value="{{$biodata->FS_RIW_PENYAKIT_DAHULU!='' ? $biodata->FS_RIW_PENYAKIT_DAHULU : '-' }}">
+                                    <input type="text" class="form-control" name="FS_RIW_PENYAKIT_DAHULU" value="{{ old('FS_RIW_PENYAKIT_DAHULU', $biodata->FS_RIW_PENYAKIT_DAHULU != '' ? $biodata->FS_RIW_PENYAKIT_DAHULU : '-') }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Riwayat Penyakit keluarga</label>
-                                    <input type="text" class="form-control" name="FS_RIW_PENYAKIT_DAHULU2" value="{{$biodata->FS_RIW_PENYAKIT_DAHULU2!='' ? $biodata->FS_RIW_PENYAKIT_DAHULU2 : '-' }}">
+                                    <label>Riwayat Penyakit Keluarga</label>
+                                    <input type="text" class="form-control" name="FS_RIW_PENYAKIT_DAHULU2" value="{{ old('FS_RIW_PENYAKIT_DAHULU2', $biodata->FS_RIW_PENYAKIT_DAHULU2 != '' ? $biodata->FS_RIW_PENYAKIT_DAHULU2 : '-') }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Riwayat Alergi<code>*</code></label>
-                                    <input type="text" class="form-control" name="FS_ALERGI" value="{{$biodata->FS_ALERGI!='' ? $biodata->FS_ALERGI : '-' }}">
+                                    <input type="text" class="form-control" name="FS_ALERGI" value="{{ old('FS_ALERGI', $biodata->FS_ALERGI != '' ? $biodata->FS_ALERGI : '-') }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Reaksi Alergi<code>*</code></label>
-                                    <input type="text" class="form-control" name="FS_REAK_ALERGI" value="{{$biodata->FS_REAK_ALERGI!='' ? $biodata->FS_REAK_ALERGI : '-' }}">
+                                    <input type="text" class="form-control" name="FS_REAK_ALERGI" value="{{ old('FS_REAK_ALERGI', $biodata->FS_REAK_ALERGI != '' ? $biodata->FS_REAK_ALERGI : '-') }}">
                                 </div>
                             </div>
                             <!-- include form -->
@@ -402,73 +410,96 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Status Psikologis</label>
-                                    <select name="FS_STATUS_PSIK" id="" class="form-control select2">
+                                    <select name="FS_STATUS_PSIK" class="form-control select2 @error('FS_STATUS_PSIK') is-invalid @enderror" onchange="document.getElementById('civstaton3').disabled = this.value != '6';">
                                         <option value="">-- pilih --</option>
-                                        <option value="1" onclick='document.getElementById("civstaton3").disabled = true' selected>Tenang</option>
-                                        <option value="2" onclick='document.getElementById("civstaton3").disabled = true'>Cemas</option>
-                                        <option value="3" onclick='document.getElementById("civstaton3").disabled = true'>Takut</option>
-                                        <option value="4" onclick='document.getElementById("civstaton3").disabled = true'>Marah</option>
-                                        <option value="5" onclick='document.getElementById("civstaton3").disabled = true'>Sedih</option>
-                                        <option VALUE="6" onclick='document.getElementById("civstaton3").disabled = false'>Lainnya</option>
+                                        <option value="1" {{ old('FS_STATUS_PSIK', '1') == '1' ? 'selected' : '' }}>Tenang</option>
+                                        <option value="2" {{ old('FS_STATUS_PSIK') == '2' ? 'selected' : '' }}>Cemas</option>
+                                        <option value="3" {{ old('FS_STATUS_PSIK') == '3' ? 'selected' : '' }}>Takut</option>
+                                        <option value="4" {{ old('FS_STATUS_PSIK') == '4' ? 'selected' : '' }}>Marah</option>
+                                        <option value="5" {{ old('FS_STATUS_PSIK') == '5' ? 'selected' : '' }}>Sedih</option>
+                                        <option value="6" {{ old('FS_STATUS_PSIK') == '6' ? 'selected' : '' }}>Lainnya</option>
                                     </select>
-                                    <input type="hidden" name="FS_STATUS_PSIK2" value="" id="civstaton3" size="32">
+                                    <input type="hidden" name="FS_STATUS_PSIK2" value="{{ old('FS_STATUS_PSIK2') }}" id="civstaton3" size="32" {{ old('FS_STATUS_PSIK') != '6' ? 'disabled' : '' }}>
+                                    @error('FS_STATUS_PSIK')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
+                        
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Hubungan Dengan Anggota Keluarga</label>
-                                    <select name="FS_HUB_KELUARGA" id="" class="form-control select2">
+                                    <select name="FS_HUB_KELUARGA" class="form-control select2 @error('FS_HUB_KELUARGA') is-invalid @enderror">
                                         <option value="">-- pilih --</option>
-                                        <option value="1" selected>Baik</option>
-                                        <option value="2">Tidak Baik</option>
+                                        <option value="1" {{ old('FS_HUB_KELUARGA', '1') == '1' ? 'selected' : '' }}>Baik</option>
+                                        <option value="2" {{ old('FS_HUB_KELUARGA') == '2' ? 'selected' : '' }}>Tidak Baik</option>
                                     </select>
+                                    @error('FS_HUB_KELUARGA')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
+                        
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Status fungssional</label>
-                                    <select name="FS_ST_FUNGSIONAL" id="" class="form-control select2">
+                                    <label>Status Fungsional</label>
+                                    <select name="FS_ST_FUNGSIONAL" class="form-control select2 @error('FS_ST_FUNGSIONAL') is-invalid @enderror">
                                         <option value="">-- pilih --</option>
-                                        <option value="1" selected>Mandiri</option>
-                                        <option value="2">Perlu Bantuan</option>
+                                        <option value="1" {{ old('FS_ST_FUNGSIONAL', '1') == '1' ? 'selected' : '' }}>Mandiri</option>
+                                        <option value="2" {{ old('FS_ST_FUNGSIONAL') == '2' ? 'selected' : '' }}>Perlu Bantuan</option>
                                     </select>
+                                    @error('FS_ST_FUNGSIONAL')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
+                        
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Penglihatan</label>
-                                    <select name="FS_PENGELIHATAN" id="" class="form-control select2">
+                                    <select name="FS_PENGELIHATAN" class="form-control select2 @error('FS_PENGELIHATAN') is-invalid @enderror">
                                         <option value="">-- pilih --</option>
-                                        <option value="1" selected>Normal</option>
-                                        <option value="2">Kabur</option>
-                                        <option value="3">Kaca Mata</option>
-                                        <option value="4">Lensa Kontak</option>
+                                        <option value="1" {{ old('FS_PENGELIHATAN', '1') == '1' ? 'selected' : '' }}>Normal</option>
+                                        <option value="2" {{ old('FS_PENGELIHATAN') == '2' ? 'selected' : '' }}>Kabur</option>
+                                        <option value="3" {{ old('FS_PENGELIHATAN') == '3' ? 'selected' : '' }}>Kaca Mata</option>
+                                        <option value="4" {{ old('FS_PENGELIHATAN') == '4' ? 'selected' : '' }}>Lensa Kontak</option>
                                     </select>
+                                    @error('FS_PENGELIHATAN')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
+                        
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Penciuman</label>
-                                    <select name="FS_PENCIUMAN" id="" class="form-control select2">
+                                    <select name="FS_PENCIUMAN" class="form-control select2 @error('FS_PENCIUMAN') is-invalid @enderror">
                                         <option value="">-- pilih --</option>
-                                        <option value="1" selected>Normal</option>
-                                        <option value="2">Tidak Normal</option>
+                                        <option value="1" {{ old('FS_PENCIUMAN', '1') == '1' ? 'selected' : '' }}>Normal</option>
+                                        <option value="2" {{ old('FS_PENCIUMAN') == '2' ? 'selected' : '' }}>Tidak Normal</option>
                                     </select>
+                                    @error('FS_PENCIUMAN')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
+                        
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Pendengaran</label>
-                                    <select name="FS_PENDENGARAN" id="" class="form-control select2">
+                                    <select name="FS_PENDENGARAN" class="form-control select2 @error('FS_PENDENGARAN') is-invalid @enderror">
                                         <option value="">-- pilih --</option>
-                                        <option value="1" selected>Normal</option>
-                                        <option value="2">Tidak Normal (Kanan)</option>
-                                        <option value="3">Tidak Normal (Kiri)</option>
-                                        <option value="4">Tidak Normal (Kanan & Kiri)</option>
-                                        <option value="5">Alat Bantu Dengar (Kanan)</option>
-                                        <option value="6">Alat Bantu Dengar (Kiri)</option>
-                                        <option value="7">Alat Bantu Dengar (Kanan & Kiri)</option>
+                                        <option value="1" {{ old('FS_PENDENGARAN', '1') == '1' ? 'selected' : '' }}>Normal</option>
+                                        <option value="2" {{ old('FS_PENDENGARAN') == '2' ? 'selected' : '' }}>Tidak Normal (Kanan)</option>
+                                        <option value="3" {{ old('FS_PENDENGARAN') == '3' ? 'selected' : '' }}>Tidak Normal (Kiri)</option>
+                                        <option value="4" {{ old('FS_PENDENGARAN') == '4' ? 'selected' : '' }}>Tidak Normal (Kanan & Kiri)</option>
+                                        <option value="5" {{ old('FS_PENDENGARAN') == '5' ? 'selected' : '' }}>Alat Bantu Dengar (Kanan)</option>
+                                        <option value="6" {{ old('FS_PENDENGARAN') == '6' ? 'selected' : '' }}>Alat Bantu Dengar (Kiri)</option>
+                                        <option value="7" {{ old('FS_PENDENGARAN') == '7' ? 'selected' : '' }}>Alat Bantu Dengar (Kanan & Kiri)</option>
                                     </select>
+                                    @error('FS_PENDENGARAN')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <!-- include form -->
@@ -485,19 +516,19 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Penurunan berat badan yang tidak diinginkan selama 6 bulan terakhir</label>
-                                    <select name="skrining_nutrisi1" class="form-control select2" onchange="sn1(this)">
+                                    <select name="skrining_nutrisi1" class="form-control select2 @error('skrining_nutrisi1') is-invalid @enderror" onchange="sn1(this)">
                                         <option value="">-- pilih --</option>
-                                        <option value="0">Tidak</option>
-                                        <option value="1">Tidak Yakin</option>
-                                        <option value="2">Ya (1-5 Kg)</option>
-                                        <option value="3">Ya (6-10 Kg)</option>
-                                        <option value="4">Ya (11-15 Kg)</option>
-                                        <option value="5">Ya (>15 Kg)</option>
+                                        <option value="0" {{ old('skrining_nutrisi1') == '0' ? 'selected' : '' }}>Tidak</option>
+                                        <option value="1" {{ old('skrining_nutrisi1') == '1' ? 'selected' : '' }}>Tidak Yakin</option>
+                                        <option value="2" {{ old('skrining_nutrisi1') == '2' ? 'selected' : '' }}>Ya (1-5 Kg)</option>
+                                        <option value="3" {{ old('skrining_nutrisi1') == '3' ? 'selected' : '' }}>Ya (6-10 Kg)</option>
+                                        <option value="4" {{ old('skrining_nutrisi1') == '4' ? 'selected' : '' }}>Ya (11-15 Kg)</option>
+                                        <option value="5" {{ old('skrining_nutrisi1') == '5' ? 'selected' : '' }}>Ya (>15 Kg)</option>
                                     </select>
                                     @error('skrining_nutrisi1')
-                                    <span class="text-danger" style="font-size: 12px;">
+                                    <div class="invalid-feedback" style="font-size: 12px;">
                                         {{ $message }}
-                                    </span>
+                                    </div>
                                     @enderror
                                     <input type="hidden" id="hasil_sn1">
                                 </div>
@@ -505,15 +536,15 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Asupan makanan menurun dikarenakan adanya penurunan nafsu makan</label>
-                                    <select name="skrining_nutrisi2" class="form-control select2" onchange="sn2(this)">
+                                    <select name="skrining_nutrisi2" class="form-control select2 @error('skrining_nutrisi2') is-invalid @enderror" onchange="sn2(this)">
                                         <option value="">-- pilih --</option>
-                                        <option value="0">Tidak</option>
-                                        <option value="1">Ya</option>
+                                        <option value="0" {{ old('skrining_nutrisi2') == '0' ? 'selected' : '' }}>Tidak</option>
+                                        <option value="1" {{ old('skrining_nutrisi2') == '1' ? 'selected' : '' }}>Ya</option>
                                     </select>
                                     @error('skrining_nutrisi2')
-                                    <span class="text-danger" style="font-size: 12px;">
+                                    <div class="invalid-feedback" style="font-size: 12px;">
                                         {{ $message }}
-                                    </span>
+                                    </div>
                                     @enderror
                                     <input type="hidden" id="hasil_sn2">
                                 </div>
@@ -538,12 +569,12 @@
                                     <label>Agama</label>
                                     <select name="FS_AGAMA" id="" class="form-control select2">
                                         <option value="">-- Pilih Agama --</option>
-                                        <option value="1" selected>Islam</option>
-                                        <option value="2">Kristen</option>
-                                        <option value="3">Katholik</option>
-                                        <option value="4">Hindu</option>
-                                        <option value="5">Buda</option>
-                                        <option value="6">Konghucu</option>
+                                        <option value="1" {{ old('FS_AGAMA','1') == '1' ? 'selected' : '' }}>Islam</option>
+                                        <option value="2" {{ old('FS_AGAMA') == '2' ? 'selected' : '' }}>Kristen</option>
+                                        <option value="3" {{ old('FS_AGAMA') == '3' ? 'selected' : '' }}>Katholik</option>
+                                        <option value="4" {{ old('FS_AGAMA') == '4' ? 'selected' : '' }}>Hindu</option>
+                                        <option value="5" {{ old('FS_AGAMA') == '5' ? 'selected' : '' }}>Buda</option>
+                                        <option value="6" {{ old('FS_AGAMA') == '6' ? 'selected' : '' }}>Konghucu</option>
                                     </select>
                                 </div>
                             </div>
@@ -552,13 +583,13 @@
                                     <label>Nilai/Kepercayaan khusus</label>
                                     <!-- <input type="text" class="form-control" name="FS_NILAI_KHUSUS" value=""> -->
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="FS_NILAI_KHUSUS" id="exampleRadios1" value="2" onclick='document.getElementById("civstaton4").disabled = true'>
+                                        <input class="form-check-input" type="radio" name="FS_NILAI_KHUSUS" id="exampleRadios1" value="2"{{ old('FS_NILAI_KHUSUS') == '2' ? 'checked' : '' }} onclick='document.getElementById("civstaton4").disabled = true'>
                                         <label class="form-check-label" for="exampleRadios1">
                                             Ya
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="FS_NILAI_KHUSUS" id="exampleRadios2" value="1" checked onclick='document.getElementById("civstaton4").disabled = true'>
+                                        <input class="form-check-input" type="radio" name="FS_NILAI_KHUSUS" id="exampleRadios2" value="1" {{ (old('FS_NILAI_KHUSUS') !== '2' && old('FS_NILAI_KHUSUS') !== '1') || old('FS_NILAI_KHUSUS') == '1' ? 'checked' : '' }} onclick='document.getElementById("civstaton4").disabled = true'>
                                         <label class="form-check-label" for="exampleRadios2">
                                             Tidak
                                         </label>
@@ -583,20 +614,27 @@
                                     <select name="tujuan[]" id="masalah_perawatan" class="form-control select2" multiple="multiple" data-placeholder="Pilih Masalah Keperawatan" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                         <option value="">-- pilih --</option>
                                         @foreach ($masalah_perawatan as $mk)
-                                        <option value="{{ $mk->FS_KD_DAFTAR_DIAGNOSA }}" >{{ $mk->FS_NM_DIAGNOSA }}</tion>
+                                        <option value="{{ $mk->FS_KD_DAFTAR_DIAGNOSA }}" {{ in_array($mk->FS_KD_DAFTAR_DIAGNOSA, old('tujuan', [])) ? 'selected' : '' }}>{{ $mk->FS_NM_DIAGNOSA }}</option>
                                         @endforeach
                                     </select>
+                                    @error('tujuan')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
+                        
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Rencana Keperawatan</label>
-                                    <select multiple name="tembusan[]" id="rencana_perawatan" class="form-control select2" multiple="multiple" data-placeholder="Pilih Rencana Keperawatan" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                    <select name="tembusan[]" id="rencana_perawatan" class="form-control select2" multiple="multiple" data-placeholder="Pilih Rencana Keperawatan" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                         <option value="">-- pilih --</option>
                                         @foreach ($rencana_perawatan as $rp)
-                                        <option value="{{ $rp->FS_KD_TRS }}" >{{ $rp->FS_NM_REN_KEP }}</option>
+                                        <option value="{{ $rp->FS_KD_TRS }}" {{ in_array($rp->FS_KD_TRS, old('tembusan', [])) ? 'selected' : '' }}>{{ $rp->FS_NM_REN_KEP }}</option>
                                         @endforeach
                                     </select>
+                                    @error('tembusan')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -610,7 +648,10 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Tanggal Expired Rujukan (jika pasien BPJS)</label>
-                                    <input type="date" name="FS_SKDP_FASKES" id="" class="form-control" value="">
+                                    <input type="date" name="FS_SKDP_FASKES" class="form-control" value="{{ old('FS_SKDP_FASKES') }}">
+                                    @error('FS_SKDP_FASKES')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <!-- include form -->

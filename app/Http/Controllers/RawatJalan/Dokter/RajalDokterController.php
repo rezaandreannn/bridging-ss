@@ -6,11 +6,12 @@ use Carbon\Carbon;
 use App\Models\Rajal;
 use App\Models\Pasien;
 use App\Models\RajalDokter;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Barryvdh\DomPDF\Facade\Pdf;
-use App\Http\Controllers\Controller;
 use App\Models\Rekam_medis;
+use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Rules\UniqueInConnection;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class RajalDokterController extends Controller
 {
@@ -40,11 +41,14 @@ class RajalDokterController extends Controller
     public function createAsesmen($noReg, $noMR)
     {
         $dokterModel = new RajalDokter();
+
         $title = $this->prefix . ' ' . 'Pemeriksaan Dokter';
+        $no_reg = $noReg;
         $masterLab = $this->rajaldokter->getMasterLab();
         $masterRadiologi = $this->rajaldokter->getMasterRadiologi();
         $masterObat = $this->rajaldokter->getMasterObat();
         $asesmenPerawat = $this->rajaldokter->getAsesmenPerawat($noReg);
+        // dd($asesmenPerawat);
         $getHasilLab = $this->rajaldokter->getHasilLab($noReg);
         $vitalSign = $this->rajaldokter->getVitalSign($noReg);
         $skalaNyeri = $this->rajaldokter->getSkalaNyeri($noReg);
@@ -53,7 +57,7 @@ class RajalDokterController extends Controller
         $biodatas = $this->pasien->biodataPasienByMr($noMR);
         $history = $this->rajaldokter->getHistoryPasien($noMR);
 
-        return view($this->view . 'add', compact('title', 'biodatas', 'history', 'dokterModel','masterLab','masterRadiologi','masterObat','asesmenPerawat','getHasilLab','vitalSign','skalaNyeri'));
+        return view($this->view . 'add', compact('title', 'biodatas', 'history', 'dokterModel','masterLab','masterRadiologi','masterObat','asesmenPerawat','getHasilLab','vitalSign','skalaNyeri','no_reg'));
     }
 
     public function copyDokter($noReg, $noMR)
@@ -131,6 +135,19 @@ class RajalDokterController extends Controller
     public function store(Request $request)
     {
         //
+        // dd('ok');
+          // Make a POST request to the API endpoint
+          $request->validate([
+            'kode_reg' => [
+                'required',
+                new UniqueInConnection('TAC_RJ_MEDIS', 'FS_KD_REG', 'pku')
+            ],
+            'anamnesa' => 'required',
+            'diagnosa' => 'required',
+            'planning' => 'max:255',
+  
+
+        ]);
     }
 
     /**
