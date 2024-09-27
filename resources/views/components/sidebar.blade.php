@@ -152,6 +152,16 @@
                 @endcan
             </li>
             @endcan
+            @can('berkas poliklinik mata')
+            <li class="nav-item dropdown {{ Request::is('pm/berkasPoliMata/riwayatRekamMedis*') ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-text"></i> <span>Berkas</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('pm/berkasPoliMata/riwayatRekamMedis*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('poliMata.rekamMedis') }}">RM Poli Mata</a>
+                    </li>
+                </ul>
+            </li>
+            @endcan
             @endcan
             @can('nurse record')
             <li class="menu-header">Rawat Jalan</li>

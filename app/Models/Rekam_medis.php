@@ -277,7 +277,6 @@ class Rekam_medis extends Model
     // Penutup Rekam Medis IGD
 
     // rekam medis harian by dokter dan tanggal
-
     function rekamMedisHarian($kode_dokter, $tanggal)
     {
 
@@ -316,7 +315,6 @@ class Rekam_medis extends Model
             ->where('a.Tanggal', $tanggal)
             ->where('p.Kode_Dokter', $kode_dokter)
             ->where('a.Dokter', $kode_dokter)
-
             ->get();
         return $data;
     }

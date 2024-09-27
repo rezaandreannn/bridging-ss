@@ -342,6 +342,8 @@ Route::middleware('auth')->group(function () {
         // Route::get('/polimata/dokter/assesmen_mata/{noReg}', [AssesmenMataController::class, 'assesmenMata'])->name('poliMata.assesmenMata');
 
 
+        // Berkas Riwayat Rekam Medis
+        Route::get('/berkasPoliMata/riwayatRekamMedis', [AssesmenMataController::class, 'berkas'])->name('poliMata.rekamMedis');
         // Master Data
         // diagnosis fungsi
         Route::get('master_data/penyakit_sekarang/list', [PenyakitSekarangController::class, 'index'])->name('penyakitSekarang.index');

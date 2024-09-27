@@ -39,7 +39,26 @@ class AssesmenMataController extends Controller
         $this->antrean = new Antrean();
     }
 
-    // --------- REFRAKSI OPTISI ---------------
+    // --------- Riwayat Rekam Medis ------------ //
+    public function berkas(Request $request)
+    {
+        $title = $this->prefix . ' ' . 'Mata Riwayat Rekam Medis';
+        $kode_dokter = $request->input('kode_dokter');
+        $tanggal = $request->input('tanggal');
+        $dokters = $this->poliMata->getDokterMata();
+        // $pasien = $this->antrean->getDataPasienRajal($kode_dokter);
+        $dataPasien = [];
+        if ($kode_dokter != null and $kode_dokter != null) {
+            $dataPasien = $this->rekam_medis->rekamMedisHarian($kode_dokter, $tanggal);
+        }
+        // dd($pasien);
+        $poliMata = new PoliMata();
+        return view($this->view . 'cetak.berkas', compact('title', 'dataPasien', 'dokters', 'poliMata'));
+    }
+
+    // ----------------------------------------- //
+
+    // --------- REFRAKSI OPTISI --------------- //
     public function refraksi(Request $request)
     {
         $title = $this->prefix . ' ' . 'Mata';
