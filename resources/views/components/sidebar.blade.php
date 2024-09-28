@@ -7,8 +7,10 @@
             <a href="index.html">SB</a>
         </div>
         <ul class="sidebar-menu">
+            @can('dashboard')
             <li class="menu-header">Dashboard</li>
             <li class="{{ Request::is('dashboard') ? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-dashboard"></i> <span>Dashboard</span></a></li>
+            @endcan
             <!-- <li class="menu-header">RSUMM</li> -->
             @can('master data')
             <li class="menu-header">Master Data</li>

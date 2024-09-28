@@ -34,6 +34,8 @@ class RajalDokterController extends Controller
     {
         $title = $this->prefix . ' ' . 'Dokter';
         $pasien = $this->rajaldokter->getPasienByDokter(auth()->user()->username);
+
+        dd($pasien);
         return view($this->view . 'index', compact('title', 'pasien'));
     }
 
