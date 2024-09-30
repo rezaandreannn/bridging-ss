@@ -35,10 +35,11 @@ class KondisiPulangController extends Controller
     {
         $biodata = $this->rekam_medis->getBiodata($noReg);
         // dd($biodata);
+        $tanggalExpried = $this->rajal->getTanggal($noReg);
         $title = 'SKDP';
         $alasanSkdp = $this->rajal->getAlesanSkdp();
 
-        return view($this->view . '.kondisiPulang.SKDP', compact('title', 'biodata', 'alasanSkdp'));
+        return view($this->view . '.kondisiPulang.SKDP', compact('title', 'biodata', 'tanggalExpried', 'alasanSkdp'));
     }
 
     public function EditSkdpRS($noReg)

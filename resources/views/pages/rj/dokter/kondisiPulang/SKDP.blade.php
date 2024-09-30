@@ -146,7 +146,7 @@
                             <div class="col-md-6">
                                 <label>Tanggal Expired Rujukan Faskes : </label>
                                 <div class="input-group mb-3">
-                                    <input type="date" name="FS_SKDP_FASKES" id="FS_SKDP_FASKES" class="form-control" >
+                                    <input type="date" name="FS_SKDP_FASKES" value="{{ $tanggalExpried->FS_SKDP_FASKES ?? ''}}" id="FS_SKDP_FASKES" class="form-control" >
                                 </div>
                             </div>
                             <div class="col-md-6">

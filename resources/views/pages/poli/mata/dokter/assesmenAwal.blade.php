@@ -549,13 +549,13 @@
                                         <div class="col-md-6">
                                             <div class="form-group mt-4">
                                                 <label for="">Deskripsi Kanan :</label>
-                                                <textarea rows="7" cols="50" style="height: 100px;" name="DESKRIPSI_KANAN" class="form-control"></textarea>
+                                                <textarea rows="7" cols="50" style="height: 100px;" name="DESKRIPSI_KANAN" class="form-control">{{ old('DESKRIPSI_KANAN') }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group mt-4">
                                                 <label for="">Deskripsi Kiri :</label>
-                                                <textarea rows="7" cols="50" style="height: 100px;" name="DESKRIPSI_KIRI" class="form-control"></textarea>
+                                                <textarea rows="7" cols="50" style="height: 100px;" name="DESKRIPSI_KIRI" class="form-control">{{ old('DESKRIPSI_KIRI') }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -696,7 +696,7 @@
                                     <div class="form-group">
                                         <label>Diagnosa</label>
                                         <textarea name="DIAGNOSA" class="form-control  @error('diagnosa_keperawatan') is-invalid  
-                                            @enderror" rows="3" placeholder="Masukkan Diagnosa ..."></textarea>
+                                            @enderror" rows="3" placeholder="Masukkan Diagnosa ...">{{ old('DIAGNOSA') }}</textarea>
                                     </div>
                                     @error('diagnosa_keperawatan')
                                     <div class="invalid-feedback">
@@ -755,7 +755,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Edukasi</label>
-                                        <input type="text" name="edukasi" value="" placeholder="Masukkan Edukasi ..." class="form-control @error('edukasi') is-invalid @enderror">
+                                        <input type="text" name="edukasi" value="{{ old('edukasi')}}" placeholder="Masukkan Edukasi ..." class="form-control @error('edukasi') is-invalid @enderror">
                                     </div>
                                     @error('edukasi')
                                     <div class="invalid-feedback">

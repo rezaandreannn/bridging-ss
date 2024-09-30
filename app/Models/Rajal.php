@@ -392,6 +392,12 @@ class Rajal extends Model
         return $data;
     }
 
+    public function getTanggal($noReg)
+    {
+        $data = DB::connection('pku')->table('TAC_ASES_PER2')->where('FS_KD_REG', $noReg)->first();
+        return $data;
+    }
+
     public function getSkdp($NoReg)
     {
         $data = DB::connection('pku')->table('TAC_RJ_SKDP')->where('FS_KD_REG', $NoReg)->get();
