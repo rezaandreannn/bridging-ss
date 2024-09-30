@@ -82,7 +82,8 @@
          @endphp
         <tr>
             <td>{{ $item->TANGGAL_FISIO }} & {{ date('G:i', strtotime($item->JAM_FISIO)) }}</td>
-            <td>S = {{ $item->ANAMNESA }} <br>O = TD = {{ $item->TEKANAN_DARAH }}, N = {{ $item->NADI }}, T = {{ $item->SUHU }}</td>
+            <td>S = {{ $item->ANAMNESA }} <br>O = TD = {{ $item->TEKANAN_DARAH }}, N = {{ $item->NADI }}, T = {{ $item->SUHU }}, <br> Lainnya = {{$item->LAINNYA}}
+            </td>
             <td>{{ $item->DIAGNOSA }}</td>
             <td>{{ $item->JENIS_FISIO }}</td>
             <td>

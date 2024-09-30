@@ -51,8 +51,16 @@ class AuthenticatedSessionController extends Controller
         }
     
         $request->session()->regenerate();
-    
+
+    if ((auth()->user()->roles->pluck('name')[0]) == 'dokter') {
+        return redirect()->intended(RouteServiceProvider::DOKTER);
+    } else if ((auth()->user()->roles->pluck('name')[0]) == 'dokter fisioterapi'){
+        return redirect()->intended(RouteServiceProvider::DOKTER_FISIO);
+    }else if ((auth()->user()->roles->pluck('name')[0]) == 'perawat'){
+        return redirect()->intended(RouteServiceProvider::PERAWAT);
+    } else {
         return redirect()->intended(RouteServiceProvider::HOME);
+    }
     }
 
     /**
