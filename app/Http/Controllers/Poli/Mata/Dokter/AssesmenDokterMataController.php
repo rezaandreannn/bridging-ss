@@ -35,6 +35,7 @@ class AssesmenDokterMataController extends Controller
     {
         $title = $this->prefix . ' ' . 'Mata Dokter';
         $pasien = $this->rajaldokter->getPasienByDokterMata(auth()->user()->username);
+        // dd($pasien);
         $poliMata = new PoliMata();
         // dd($pasien);
         return view($this->view . 'dokter.index', compact('title', 'pasien', 'poliMata'));
