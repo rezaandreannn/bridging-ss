@@ -43,7 +43,7 @@
                                     <input type="hidden" name="NO_REG" value="{{ $noReg }}" />
                                     <input type="hidden" name="KODE_DOKTER" value="{{ $biodata->Kode_Dokter}}" />
                                     <input type="hidden" name="NO_MR" value="{{ $biodata->NO_MR}}" />
-                                    <textarea name="FS_ANAMNESA" class="form-control  @error('FS_ANAMNESA') is-invalid @enderror" rows="3" placeholder="Masukan ..."></textarea>
+                                    <textarea name="FS_ANAMNESA" class="form-control  @error('FS_ANAMNESA') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ old('FS_ANAMNESA') }}</textarea>
                                 </div>
                                 @error('FS_ANAMNESA')
                                 <div class="invalid-feedback">
@@ -53,8 +53,8 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Riwayat Penyakit Sekarang</label>
-                                    <input type="text" name="RIWAYAT_SEKARANG" id="riwayat_sekarang" value="-" class="form-control" placeholder="Riwayat Penyakit">
+                                    <label>Riwayat Penyakit Sekarang <code> (jika kosong beri tanda -)</code></label>
+                                    <input type="text" name="RIWAYAT_SEKARANG" value="{{ old('RIWAYAT_SEKARANG') }}" id="riwayat_sekarang" class="form-control" placeholder="Riwayat Penyakit">
                                     {{-- <select multiple name="RIWAYAT_SEKARANG[]" id="riwayat_sekarang" class="form-control select2" multiple="multiple" data-placeholder="Pilih Penyakit Sekarang" data-dropdown-css-class="select2-purple" style="width: 100%;">
                                         <option value="">-- pilih --</option>
                                         @foreach ($penyakitSekarang as $penyakit)
@@ -322,7 +322,7 @@
                                 <div class="form-group">
                                     <label>R</label>
                                     <div class="input-group">
-                                        <input type="text" name="respirasi" id="respirasi" placeholder="masukkan hanya angka" class="form-control @error('respirasi') is-invalid  
+                                        <input type="text" name="respirasi" value="{{ old('respirasi') }}" id="respirasi" placeholder="masukkan hanya angka" class="form-control @error('respirasi') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
@@ -341,7 +341,7 @@
                                 <div class="form-group">
                                     <label>Nadi</label>
                                     <div class="input-group">
-                                        <input type="text" name="nadi" id="nadi" placeholder="masukkan hanya angka" class="form-control @error('nadi') is-invalid  
+                                        <input type="text" name="nadi" value="{{ old('nadi') }}" id="nadi" placeholder="masukkan hanya angka" class="form-control @error('nadi') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
@@ -360,7 +360,7 @@
                                 <div class="form-group">
                                     <label>Tekanan Darah</label><code> (contoh : 110/90)</code>
                                     <div class="input-group">
-                                        <input type="text" name="td" id="td" placeholder="masukkan hanya angka" class="form-control @error('td') is-invalid  
+                                        <input type="text" name="td" id="td" value="{{ old('td') }}" placeholder="masukkan hanya angka" class="form-control @error('td') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
@@ -379,7 +379,7 @@
                                 <div class="form-group">
                                     <label>Suhu</label><code> (gunakan tanda . contoh : 36.5)</code>
                                     <div class="input-group">
-                                        <input type="text" name="suhu" id="suhu" placeholder="masukkan hanya angka" class="form-control @error('suhu') is-invalid  
+                                        <input type="text" name="suhu" id="suhu" value="{{ old('suhu') }}" placeholder="masukkan hanya angka" class="form-control @error('suhu') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
@@ -398,7 +398,7 @@
                                 <div class="form-group">
                                     <label>Berat Badan</label><code> (jika kosong beri tanda -)</code>
                                     <div class="input-group">
-                                        <input type="text" name="bb" id="bb" value="-" placeholder="masukkan hanya angka" class="form-control @error('bb') is-invalid  
+                                        <input type="text" name="bb" id="bb" value="{{ old('bb') }}" placeholder="masukkan hanya angka" class="form-control @error('bb') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
@@ -417,7 +417,7 @@
                                 <div class="form-group">
                                     <label>Tinggi Badan</label><code> (jika kosong beri tanda -)</code>
                                     <div class="input-group">
-                                        <input type="text" name="tb" id="tb" value="-" placeholder="masukkan hanya angka" class="form-control @error('tb') is-invalid  
+                                        <input type="text" name="tb" id="tb" value="{{ old('tb') }}" placeholder="masukkan hanya angka" class="form-control @error('tb') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
@@ -436,7 +436,7 @@
                                 <div class="form-group">
                                     <label>Lingkar Kepala</label><code> (jika kosong beri tanda -)</code>
                                     <div class="input-group">
-                                        <input type="text" name="LINGKAR_KEPALA" value="-" id="lingkaran"  placeholder="masukkan hanya angka" class="form-control @error('lingkar_kepala') is-invalid  
+                                        <input type="text" name="LINGKAR_KEPALA" value="{{ old('LINGKAR_KEPALA') }}" id="lingkaran"  placeholder="masukkan hanya angka" class="form-control @error('lingkar_kepala') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">

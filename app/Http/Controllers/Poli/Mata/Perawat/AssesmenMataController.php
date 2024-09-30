@@ -291,9 +291,8 @@ class AssesmenMataController extends Controller
 
     public function store(Request $request)
     {
-        // Make a POST request to the API endpoint
         $request->validate([
-            'FS_ANAMNESA' => 'max:255',
+            'FS_ANAMNESA' => 'max:255|required',
             'suhu' => 'required',
             'nadi' => 'required',
             'respirasi' => 'required',

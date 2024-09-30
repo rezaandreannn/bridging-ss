@@ -18,9 +18,8 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('poliMata.index') }}">Poli</a></div>
-                <div class="breadcrumb-item"><a href="{{ route('poliMata.index') }}">Mata</a></div>
-                <div class="breadcrumb-item">Perawat</div>
+                <div class="breadcrumb-item active"><a href="{{ route('poliMata.rekamMedis') }}">Berkas</a></div>
+                <div class="breadcrumb-item">Poli Mata</div>
             </div>
         </div>
 
