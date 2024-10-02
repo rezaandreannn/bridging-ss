@@ -78,6 +78,44 @@
                     </div>
                 </div>
             </div>
+            <div class="card card-primary">
+                <form id="filterForm" action="" method="get">
+                    <div class="card-body">
+                        <h4 style="font-size:15px;color:black;">List Pasien Konsul</h4>
+                        <div class="col-md-6">
+                            <div class="section-title">Pilih Tanggal</div>
+                            <div class="input-group">
+                                <input type="date" class="form-control" name="" id="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
+                        <button type="button" class="btn btn-danger" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
+                    </div>
+                </form>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table-striped table" id="table-1">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No Antrian</th>
+                                    <th scope="col">No MR</th>
+                                    <th scope="col">Nama Pasien</th>
+                                    <th scope="col">Alamat</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 </div>
