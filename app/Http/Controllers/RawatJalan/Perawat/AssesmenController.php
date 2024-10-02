@@ -197,6 +197,7 @@ class AssesmenController extends Controller
             'nadi' => 'required',
             'respirasi' => 'required',
             'td' => 'required',
+            'tb' => 'required',
 
         ]);
 

@@ -161,7 +161,7 @@
                                     <label>Tinggi Badan</label>
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control @error('tb') is-invalid  
-                                            @enderror" id="tb"  name="tb" value="{{ old('tb') }}" placeholder="masukkan hanya angka">
+                                            @enderror" id="tb"  name="tb" value="{{ old('tb','-') }}" placeholder="masukkan hanya angka">
                                         <div class="input-group-append">
                                             <span class="input-group-text">cm</span>
                                         </div>
