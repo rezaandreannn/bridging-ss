@@ -531,34 +531,6 @@
                                         </div>
                                     </div>
                                         <div class="col-md-6">
-                                            <label class="" for="">Mata Kanan:</label>
-                                            <br />
-                                            <div id="signat2"></div>
-                                            <br />
-                                            <button id="clear2">Hapus Gambar</button>
-                                            <textarea id="signature2" name="signed_kanan" style="display: none"></textarea>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="" for="">Mata Kiri:</label>
-                                            <br />
-                                            <div id="signat"></div>
-                                            <br />
-                                            <button id="clear">Hapus Gambar</button>
-                                            <textarea id="signature1" name="signed_kiri" style="display: none"></textarea>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group mt-4">
-                                                <label for="">Deskripsi Kanan :</label>
-                                                <textarea rows="7" cols="50" style="height: 100px;" name="DESKRIPSI_KANAN" class="form-control">{{ old('DESKRIPSI_KANAN') }}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group mt-4">
-                                                <label for="">Deskripsi Kiri :</label>
-                                                <textarea rows="7" cols="50" style="height: 100px;" name="DESKRIPSI_KIRI" class="form-control">{{ old('DESKRIPSI_KIRI') }}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Visus</label>
                                                 <div class="col-md-12">
@@ -621,7 +593,36 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>    
+                                        </div>
+                                        <div class="col-md-6"></div>
+                                        <div class="col-md-6">
+                                            <label class="" for="">Mata Kanan:</label>
+                                            <br />
+                                            <div id="signat2"></div>
+                                            <br />
+                                            <button id="clear2">Hapus Gambar</button>
+                                            <textarea id="signature2" name="signed_kanan" style="display: none"></textarea>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="" for="">Mata Kiri:</label>
+                                            <br />
+                                            <div id="signat"></div>
+                                            <br />
+                                            <button id="clear">Hapus Gambar</button>
+                                            <textarea id="signature1" name="signed_kiri" style="display: none"></textarea>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group mt-4">
+                                                <label for="">Deskripsi Kanan :</label>
+                                                <textarea rows="7" cols="50" style="height: 100px;" name="DESKRIPSI_KANAN" class="form-control">{{ old('DESKRIPSI_KANAN') }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group mt-4">
+                                                <label for="">Deskripsi Kiri :</label>
+                                                <textarea rows="7" cols="50" style="height: 100px;" name="DESKRIPSI_KIRI" class="form-control">{{ old('DESKRIPSI_KIRI') }}</textarea>
+                                            </div>
+                                        </div> 
                                         
                             </div>
                         </div>

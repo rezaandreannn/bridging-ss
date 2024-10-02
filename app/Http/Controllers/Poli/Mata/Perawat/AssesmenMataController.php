@@ -228,7 +228,6 @@ class AssesmenMataController extends Controller
 
     public function cetakResume($noReg)
     {
-        // $resep = $this->poliMata->resep($noReg);
         $resep = $this->rajaldokter->resep($noReg);
 
         $labs = $this->rajaldokter->lab($noReg);
@@ -304,12 +303,12 @@ class AssesmenMataController extends Controller
 
         try {
 
-            // $userEmr = $this->rajal->getUserEmr(auth()->user()->username);
+            $userEmr = $this->rajal->getUserEmr(auth()->user()->username);
             // dd($userEmr);
 
             DB::connection('pku')->beginTransaction();
 
-            $status_rj = DB::connection('pku')->table('TAC_RJ_STATUS')->insert([
+            DB::connection('pku')->table('TAC_RJ_STATUS')->insert([
                 'FS_KD_REG' => $request->input('NO_REG'),
                 'FS_STATUS' => '1',
                 'FS_FORM' => '1',
@@ -318,14 +317,14 @@ class AssesmenMataController extends Controller
                 'mdd' => now(),
             ]);
 
-            $alergi = DB::connection('db_rsmm')->table('REGISTER_PASIEN')->where('NO_MR', $request->input('NO_MR'))->update([
+            DB::connection('db_rsmm')->table('REGISTER_PASIEN')->where('NO_MR', $request->input('NO_MR'))->update([
                 'FS_ALERGI' => $request->input('FS_ALERGI'),
                 'FS_REAK_ALERGI' => $request->input('FS_REAK_ALERGI'),
                 'FS_RIW_PENYAKIT_DAHULU' => $request->input('FS_RIW_PENYAKIT_DAHULU'),
                 'FS_RIW_PENYAKIT_DAHULU2' => $request->input('FS_RIW_PENYAKIT_DAHULU2'),
             ]);
 
-            $riwayat = DB::connection('pku')->table('TAC_ASES_PER2')->insert([
+            DB::connection('pku')->table('TAC_ASES_PER2')->insert([
                 'FS_KD_REG' => $request->input('NO_REG'),
                 'FS_RIW_PENYAKIT_DAHULU' => '',
                 'FS_RIW_PENYAKIT_DAHULU2' => '',
@@ -355,7 +354,7 @@ class AssesmenMataController extends Controller
                 'mdd' => date('Y-m-d'),
             ]);
 
-            $pemeriksaan_fisik = DB::connection('pku')->table('TAC_RJ_VITAL_SIGN')->insert([
+            DB::connection('pku')->table('TAC_RJ_VITAL_SIGN')->insert([
                 'FS_KD_REG' => $request->input('NO_REG'),
                 'FS_SUHU' => $request->input('suhu'),
                 'FS_NADI' => $request->input('nadi'),
@@ -369,7 +368,7 @@ class AssesmenMataController extends Controller
                 'FS_JAM_TRS' => date('H:i:s'),
             ]);
 
-            $asesmen_jauh = DB::connection('pku')->table('TAC_RJ_JATUH')->insert([
+            DB::connection('pku')->table('TAC_RJ_JATUH')->insert([
                 'FS_KD_REG' => $request->input('NO_REG'),
                 'FS_CARA_BERJALAN1' => $request->input('FS_CARA_BERJALAN1'),
                 'FS_CARA_BERJALAN2' => $request->input('FS_CARA_BERJALAN2'),
