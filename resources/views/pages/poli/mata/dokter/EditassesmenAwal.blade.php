@@ -361,52 +361,6 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="">Preview Mata Kiri :</label>
-                                            @if(isset($MataKiri) && $MataKiri->GAMBAR)
-                                                <img src="{{ asset('storage/gambar_mata/'. $MataKiri->GAMBAR) }}" width="100%" height="250" />
-                                            @else
-                                                <p>Gambar Tidak Ada</p>
-                                            @endif
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="">Preview Mata Kanan :</label>
-                                            @if(isset($MataKanan) && $MataKanan->GAMBAR)
-                                                <img src="{{ asset('storage/gambar_mata/'. $MataKanan->GAMBAR) }}" width="100%" height="250" />
-                                            @else
-                                                <p>Gambar Tidak Ada</p>
-                                            @endif
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="" for="">Mata Kiri:</label>
-                                            <br />
-                                            <div id="signat"></div>
-                                            <br />
-                                            <button id="clear">Hapus Gambar</button>
-                                            <input type="hidden" name="id_kiri" value="{{ $MataKiri->id ?? '' }}" />
-                                            <textarea id="signature1" name="signed_kiri" style="display: none"></textarea>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="" for="">Mata Kanan:</label>
-                                            <br />
-                                            <div id="signat2"></div>
-                                            <br />
-                                            <button id="clear2">Hapus Gambar</button>
-                                            <input type="hidden" name="id_kanan" value="{{ $MataKanan->id ?? '' }}" />
-                                            <textarea id="signature2" name="signed_kanan" style="display: none"></textarea>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="">Deskripsi Kiri :</label>
-                                                <textarea rows="7" cols="50" style="height: 100px;" name="DESKRIPSI_KIRI" class="form-control">{{ $MataKiri->DESKRIPSI ?? ''}}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="">Deskripsi Kanan :</label>
-                                                <textarea rows="7" cols="50" style="height: 100px;" name="DESKRIPSI_KANAN" class="form-control">{{ $MataKanan->DESKRIPSI ?? ''}}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Visus</label>
                                                 <div class="col-md-12">
@@ -468,7 +422,54 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>  
+                                        </div>
+                                        <div class="col-md-6"></div>
+                                        <div class="col-md-6">
+                                            <label for="">Preview Mata Kiri :</label>
+                                            @if(isset($MataKiri) && $MataKiri->GAMBAR)
+                                                <img src="{{ asset('storage/gambar_mata/'. $MataKiri->GAMBAR) }}" width="100%" height="250" />
+                                            @else
+                                                <p>Gambar Tidak Ada</p>
+                                            @endif
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="">Preview Mata Kanan :</label>
+                                            @if(isset($MataKanan) && $MataKanan->GAMBAR)
+                                                <img src="{{ asset('storage/gambar_mata/'. $MataKanan->GAMBAR) }}" width="100%" height="250" />
+                                            @else
+                                                <p>Gambar Tidak Ada</p>
+                                            @endif
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="" for="">Mata Kiri:</label>
+                                            <br />
+                                            <div id="signat"></div>
+                                            <br />
+                                            <button id="clear">Hapus Gambar</button>
+                                            <input type="hidden" name="id_kiri" value="{{ $MataKiri->id ?? '' }}" />
+                                            <textarea id="signature1" name="signed_kiri" style="display: none"></textarea>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="" for="">Mata Kanan:</label>
+                                            <br />
+                                            <div id="signat2"></div>
+                                            <br />
+                                            <button id="clear2">Hapus Gambar</button>
+                                            <input type="hidden" name="id_kanan" value="{{ $MataKanan->id ?? '' }}" />
+                                            <textarea id="signature2" name="signed_kanan" style="display: none"></textarea>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="">Deskripsi Kiri :</label>
+                                                <textarea rows="7" cols="50" style="height: 100px;" name="DESKRIPSI_KIRI" class="form-control">{{ $MataKiri->DESKRIPSI ?? ''}}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="">Deskripsi Kanan :</label>
+                                                <textarea rows="7" cols="50" style="height: 100px;" name="DESKRIPSI_KANAN" class="form-control">{{ $MataKanan->DESKRIPSI ?? ''}}</textarea>
+                                            </div>
+                                        </div> 
                                         
                             </div>
                         </div>
