@@ -85,7 +85,7 @@
                         <div class="col-md-6">
                             <div class="section-title">Pilih Tanggal</div>
                             <div class="input-group">
-                                <input type="date" class="form-control" name="" id="">
+                                <input type="date" class="form-control" name="tanggal" @if (request('tanggal')==null) value="{{date('Y-m-d')}}" @else value="{{request('tanggal')}}" @endif>
                             </div>
                         </div>
                     </div>
@@ -101,15 +101,27 @@
                         <table class="table-striped table" id="table-1">
                             <thead>
                                 <tr>
-                                    <th scope="col">No Antrian</th>
                                     <th scope="col">No MR</th>
                                     <th scope="col">Nama Pasien</th>
                                     <th scope="col">Alamat</th>
-                                    <th scope="col">Status</th>
+                                    <th scope="col">Dokter Pengirim</th>
+                                    <th scope="col">Tanggal</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($pasienKonsul as $konsul)
+                                <tr>
+                                    <td>{{$konsul->NO_MR}}</td>
+                                    <td>{{$konsul->NAMA_PASIEN}}</td>
+                                    <td>{{$konsul->ALAMAT}}</td>
+                                    <td>{{$konsul->NAMA_DOKTER}}</td>
+                                    <td>{{$konsul->TANGGAL}}</td>
+                                    <td>
+                                        <a href="#" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
+                                    </td>
+                                </tr>
+                                @endforeach
                                
                             </tbody>
                         </table>

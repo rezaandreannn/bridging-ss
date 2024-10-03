@@ -85,6 +85,35 @@ class RajalDokter extends Model
         return $data;
     }
 
+    public function getPasienByDokterMataRujukInternal($kode_dokter,$tanggal)
+    {
+        $dbpku = DB::connection('pku')->getDatabaseName();
+
+
+        $data = DB::connection('db_rsmm')
+            ->table($dbpku . '.dbo.TAC_RJ_RUJUKAN as m')
+            ->leftJoin('PENDAFTARAN as c', 'm.FS_KD_REG', '=', 'c.NO_REG')
+            ->leftJoin('REGISTER_PASIEN as rp', 'c.No_MR', '=', 'rp.No_MR')
+            ->leftJoin('DOKTER as d', 'm.mdb', '=', 'd.KODE_DOKTER')
+            ->select(
+                'm.FS_KD_REG',
+                'c.NO_REG',
+                'c.TANGGAL',
+                'rp.NAMA_PASIEN',
+                'rp.ALAMAT',
+                'rp.NO_MR',
+                'rp.KOTA',
+                'rp.PROVINSI',
+                'd.NAMA_DOKTER'
+            )
+            ->distinct()
+            ->where('m.FS_TUJUAN_RUJUKAN', $kode_dokter)
+            ->where('c.TANGGAL', $tanggal)
+            ->get();
+
+        return $data;
+    }
+
     public function getHistoryPasien($noMR)
     {
         $dbpku = DB::connection('pku')->getDatabaseName();
