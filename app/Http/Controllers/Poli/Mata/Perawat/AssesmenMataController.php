@@ -146,11 +146,6 @@ class AssesmenMataController extends Controller
         return view($this->view . 'perawat.index', compact('title', 'pasien', 'dokters', 'poliMata'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function Add($noReg)
     {
         $title = $this->prefix . ' ' . 'Mata Assesmen Keperawatan';

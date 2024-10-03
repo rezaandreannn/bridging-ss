@@ -489,48 +489,6 @@
                     <!-- include form -->
                     <div class="card-body card-khusus-body">
                         <div class="row">
-                            {{-- <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Visus</label>
-                                    <div class="col-md-12">
-                                        <div class="form-group" style="display: flex; flex-direction: row;">
-                                            <div class="input-group" style="margin-right: 10px;">
-                                                <label for="VISUS_VOD" class="mr-2 mt-2">
-                                                    VOD
-                                                </label>
-                                                <input type="text" placeholder="Inputan Mata Kanan" class="form-control" name="VISUS_OD" id="VISUS_VOD">
-                                            </div>
-                                            <div class="input-group" style="margin-right: 10px;">
-                                                <label for="VISUS_VOS" class="mr-2 mt-2">
-                                                    VOS
-                                                </label>
-                                                <input type="text" placeholder="Inputan Mata Kiri" class="form-control" name="VISUS_OS" id="VISUS_VOS">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>  
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>NCT</label>
-                                    <div class="col-md-12">
-                                        <div class="form-group" style="display: flex; flex-direction: row;">
-                                            <div class="input-group" style="margin-right: 10px;">
-                                                <label for="NCT_TOD" class="mr-2 mt-2">
-                                                    TOD
-                                                </label>
-                                                <input type="text" placeholder="Inputan Mata Kanan" class="form-control" name="NCT_TOD" id="NCT_TOD">
-                                            </div>
-                                            <div class="input-group" style="margin-right: 10px;">
-                                                <label for="NCT_TOS" class="mr-2 mt-2">
-                                                    TOS
-                                                </label>
-                                                <input type="text" placeholder="Inputan Mata Kiri" class="form-control" name="NCT_TOS" id="NCT_TOS">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="d-block">Cacat Tubuh</label>
@@ -728,18 +686,6 @@
                     <!-- include form -->
                     <div class="card-body card-khusus-body">
                         <div class="row">
-                            {{-- <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Diagnosa Keperawatan</label>
-                                    <textarea name="diagnosa_keperawatan" class="form-control  @error('diagnosa_keperawatan') is-invalid  
-                                        @enderror" rows="3" placeholder="Masukan ..."></textarea>
-                                </div>
-                                @error('diagnosa_keperawatan')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                                @enderror
-                            </div> --}}
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Masalah Keperawatan</label>
