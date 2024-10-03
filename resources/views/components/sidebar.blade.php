@@ -116,13 +116,13 @@
                     </li>
                 </ul>
                 @endcan
-                <!-- @can('medis fisioterapi')
+                @can('medis fisioterapi')
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('fisioterapi/dokter/riwayat_pasien*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('riwayatFisio.dokter') }}">Pemeriksaan Fisio by tgl</a>
                     </li>
                 </ul>
-                @endcan -->
+                @endcan
             </li>
             @endcan
             

@@ -63,16 +63,21 @@ class BerkasFisioController extends Controller
 
     public function cppt_list($no_mr = "", $no_reg)
     {
+        $title = $this->prefix . ' ' . 'Form CPPT';
         $fisioModel = new Fisioterapi();
-
         $biodatas = $this->berkasFisio->biodataPasienByMr($no_mr);
         // dd($biodatas);
         // die;
         $idTransaksiCppt = $this->berkasFisio->getIdTransaksiFisio($no_reg);
+        if ($idTransaksiCppt == null) {
+            $transaksis = $this->berkasFisio->transaksiFisioByMr($no_mr);
+            return view($this->view . 'cppt', compact('title', 'biodatas', 'transaksis', 'fisioModel'))
+                ->with('danger', 'CPPT Terakhir belum di inputkan!');
+        }
+        
+        // dd($idTransaksiCppt);
         $idTransaksi = $idTransaksiCppt->ID_TRANSAKSI_FISIO;
-        // dd($idTransaksi);
-        $transaksis = $this->berkasFisio->transaksiFisioByMr($no_mr,$idTransaksi);
-        $title = $this->prefix . ' ' . 'Form CPPT';
+        $transaksis = $this->berkasFisio->transaksiFisioByMrLast($no_mr,$idTransaksi);
         return view($this->view . 'cppt', compact('title', 'biodatas', 'transaksis', 'fisioModel'));
     }
 

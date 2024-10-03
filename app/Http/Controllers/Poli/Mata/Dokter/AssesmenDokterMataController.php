@@ -31,14 +31,20 @@ class AssesmenDokterMataController extends Controller
         $this->prefix = 'Poli';
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $title = $this->prefix . ' ' . 'Mata Dokter';
+        $tanggal = $request->input('tanggal');
+        if ($tanggal == null) {
+            $tanggal = date('Y-m-d');
+        }
+        $kode_dokter=auth()->user()->username;
         $pasien = $this->rajaldokter->getPasienByDokterMata(auth()->user()->username);
-        // dd($pasien);
+            $pasienKonsul = $this->rajaldokter->getPasienByDokterMataRujukInternal($kode_dokter,$tanggal);
+        // dd($pasienKonsul);
         $poliMata = new PoliMata();
         // dd($pasien);
-        return view($this->view . 'dokter.index', compact('title', 'pasien', 'poliMata'));
+        return view($this->view . 'dokter.index', compact('title', 'pasien', 'poliMata','pasienKonsul'));
     }
 
     /**

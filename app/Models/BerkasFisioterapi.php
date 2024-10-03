@@ -248,17 +248,24 @@ class BerkasFisioterapi extends Model
                         return $data;
                     }
                     
-                    public function transaksiFisioByMr($no_mr,$id_transaksi)
-                    {
-                        // $request = $this->httpClient->get($this->simrsUrlApi . 'fisioterapi/transaksi/' . $no_mr);
-        // $response = $request->getBody()->getContents();
-        // $data = json_decode($response, true);
-        // return $data['data'];
-        
+    public function transaksiFisioByMrLast($no_mr,$id_transaksi)
+    {
+                    
         $data = DB::connection('pku')
         ->table('TRANSAKSI_FISIOTERAPI')
         ->where('NO_MR_PASIEN', $no_mr)
         ->where('ID_TRANSAKSI',$id_transaksi)
+        ->orderBy('ID_TRANSAKSI', 'DESC')
+        ->get();
+        return $data;
+    }
+    
+    public function transaksiFisioByMr($no_mr)
+    {
+                    
+        $data = DB::connection('pku')
+        ->table('TRANSAKSI_FISIOTERAPI')
+        ->where('NO_MR_PASIEN', $no_mr)
         ->orderBy('ID_TRANSAKSI', 'DESC')
         ->get();
         return $data;
