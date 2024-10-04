@@ -106,7 +106,9 @@
                                         <select name="FS_SKDP_1" id="FS_SKDP_1" class="form-control select2" onchange="click_alasan_skdp(this)">
                                             <option value="">-- pilih --</option>
                                             @foreach ($alasanSkdp as $skdpalasan)
-                                                <option value="{{$skdpalasan->FS_KD_TRS}}" {{ ($skdp->FS_SKDP_1 == $skdpalasan->FS_KD_TRS ) ? 'selected' : '' }}>{{$skdpalasan->FS_NM_SKDP_ALASAN}}</option>
+                                                @if($skdpalasan->FS_KD_TRS != 6)
+                                                    <option value="{{$skdpalasan->FS_KD_TRS}}" {{ ($skdp->FS_SKDP_1 == $skdpalasan->FS_KD_TRS ) ? 'selected' : '' }}>{{$skdpalasan->FS_NM_SKDP_ALASAN}}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>
@@ -127,11 +129,10 @@
                             <div class="col-md-6">
                                 <label>Rencana Kontrol Berikutnya : </label>
                                 <div class="input-group mb-3">
-                                    <select name="FS_RENCANA_KONTROL" id="FS_RENCANA_KONTROL" class="form-control select2" onchange="click_rencana_kontrol(this)">
-                                        <option value="">-- pilih --</option>
-                                        <option value="1 Minggu">1 Minggu</option>
-                                        <option value="2 Minggu">2 Minggu</option>
-                                        <option value="Sebulan Kedepan">Sebulan Kedepan</option>
+                                    <select class="form-control select2" name="FS_RENCANA_KONTROL">
+                                        <option value="1 Minggu Kedepan"  {{ ($skdp->FS_RENCANA_KONTROL == '1 Minggu Kedepan' ?? '') ? 'selected' : '' }}>1 Minggu Kedepan</option>
+                                        <option value="2 Minggu Kedepan" {{ ($skdp->FS_RENCANA_KONTROL == '2 Minggu Kedepan' ?? '') ? 'selected' : '' }}>2 Minggu Kedepan</option>
+                                        <option value="Sebulan Kedepan" {{ ($skdp->FS_RENCANA_KONTROL == 'Sebulan Kedepan' ?? '') ? 'selected' : '' }}>Sebulan Kedepan</option>
                                     </select>
                                 </div>
                             </div>

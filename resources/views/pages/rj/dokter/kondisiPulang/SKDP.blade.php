@@ -104,7 +104,11 @@
                                         <select name="FS_SKDP_1" id="FS_SKDP_1" class="form-control select2" onchange="click_alasan_skdp(this)">
                                             <option value="">-- pilih --</option>
                                             @foreach ($alasanSkdp as $skdpalasan)
-                                                <option value="{{$skdpalasan->FS_KD_TRS}}" {{ ($skdpalasan->FS_KD_TRS ) ? 'selected' : '' }}>{{$skdpalasan->FS_NM_SKDP_ALASAN}}</option>
+                                                @if($skdpalasan->FS_KD_TRS != 6)
+                                                    <option value="{{ $skdpalasan->FS_KD_TRS }}" {{ ($skdpalasan->FS_KD_TRS) ? 'selected' : '' }}>
+                                                        {{ $skdpalasan->FS_NM_SKDP_ALASAN }}
+                                                    </option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>

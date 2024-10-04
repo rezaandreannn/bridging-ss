@@ -336,6 +336,7 @@ Route::middleware('auth')->group(function () {
         // Poli Mata Dokter
         Route::get('/polimata/dokter', [AssesmenDokterMataController::class, 'index'])->name('poliMata.indexDokter');
         Route::get('/polimata/dokter/assesmen_awal/{noReg}', [AssesmenDokterMataController::class, 'add'])->name('poliMata.assesmenAwal');
+        Route::get('/polimata/dokter/assesmen_awal/konsul/{noReg}', [AssesmenDokterMataController::class, 'konsul'])->name('poliMata.assesmenKonsul');
         Route::post('/polimata/dokter/assesmen_awal', [AssesmenDokterMataController::class, 'store'])->name('poliMata.assesmenAwalStore');
         Route::get('/polimata/dokter/assesmen_awal/edit/{noReg}', [AssesmenDokterMataController::class, 'edit'])->name('poliMata.assesmenAwalEdit');
         Route::put('/polimata/dokter/assesmen_awal/edit/{noReg}', [AssesmenDokterMataController::class, 'update'])->name('poliMata.assesmenAwalUpdate');

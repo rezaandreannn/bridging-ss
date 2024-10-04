@@ -114,7 +114,7 @@
             </tr>
             <tr>
                 <td></td>
-                <td style="text-align: left;">{{ $data->FS_TUJUAN_RUJUKAN ?? ''}}</td>
+                <td style="text-align: left;">{{ $resep->mdb ?? ''}}</td>
             </tr>
         </table>
     </center>

@@ -91,6 +91,19 @@ class Rajal extends Model
         return $data;
     }
 
+    public function asasmenPerawatKonsul($noReg)
+    {
+        $dbpku = DB::connection('db_rsmm')->getDatabaseName();
+        $data = DB::connection('pku')->table('TAC_ASES_PER2')
+            ->join('TAC_RJ_VITAL_SIGN', 'TAC_ASES_PER2.FS_KD_REG', '=', 'TAC_RJ_VITAL_SIGN.FS_KD_REG')
+            ->join('TAC_RJ_JATUH', 'TAC_ASES_PER2.FS_KD_REG', '=', 'TAC_RJ_JATUH.FS_KD_REG')
+            ->leftJoin($dbpku . '.dbo.REGISTER_PASIEN', 'TAC_ASES_PER2.FS_KD_REG', '=', 'REGISTER_PASIEN.No_MR')
+            ->where('TAC_ASES_PER2.FS_KD_REG', $noReg)
+            ->first();
+
+        return $data;
+    }
+
     public function assesmenPerawatIGD($noReg)
     {
         $data = DB::connection('pku')->table('TAC_ASES_PER2')

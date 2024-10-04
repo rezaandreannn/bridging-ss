@@ -69,6 +69,9 @@
                                                 <a href="{{ route('poliMata.assesmenAwal',$data->NO_REG) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
                                                 @endif
                                             @endif
+                                            @if($poliMata->cekDokter($data->NO_REG) == true)
+                                            <a href="{{ route('polimata.cetakRM', [$data->NO_REG]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> RM</a>
+                                            @endif
                                         @endif
                                     </td>
                                 </tr>
@@ -118,7 +121,7 @@
                                     <td>{{$konsul->NAMA_DOKTER}}</td>
                                     <td>{{$konsul->TANGGAL}}</td>
                                     <td>
-                                        <a href="#" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
+                                        <a href="{{ route('poliMata.assesmenKonsul',$konsul->NO_REG) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
                                     </td>
                                 </tr>
                                 @endforeach

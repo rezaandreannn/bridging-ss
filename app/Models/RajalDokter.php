@@ -85,11 +85,9 @@ class RajalDokter extends Model
         return $data;
     }
 
-    public function getPasienByDokterMataRujukInternal($kode_dokter,$tanggal)
+    public function getPasienByDokterMataRujukInternal($kode_dokter, $tanggal)
     {
         $dbpku = DB::connection('pku')->getDatabaseName();
-
-
         $data = DB::connection('db_rsmm')
             ->table($dbpku . '.dbo.TAC_RJ_RUJUKAN as m')
             ->leftJoin('PENDAFTARAN as c', 'm.FS_KD_REG', '=', 'c.NO_REG')

@@ -114,7 +114,13 @@ class KondisiPulangController extends Controller
 
             DB::connection('pku')->commit();
 
-            return redirect('pm/polimata/perawat?kode_dokter=' . $request->input('KODE_DOKTER'))->with('success', 'Berhasil Ditambahkan!');
+            $kode_dokter = auth()->user()->username;
+
+            if ($kode_dokter) {
+                return redirect('pm/polimata/dokter')->with('success', 'Berhasil Ditambahkan!');
+            } else {
+                return redirect('pm/polimata/perawat?kode_dokter=' . $request->input('KODE_DOKTER'))->with('success', 'Berhasil Ditambahkan!');
+            }
         } catch (\Exception $e) {
             //throw $th;
             DB::connection('pku')->rollBack();
