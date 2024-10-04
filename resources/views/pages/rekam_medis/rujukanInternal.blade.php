@@ -114,7 +114,7 @@
             </tr>
             <tr>
                 <td></td>
-                <td style="text-align: left;">{{ $resep->mdb ?? ''}}</td>
+                <td style="text-align: left;">{{ $biodata->NAMA_DOKTER ?? ''}}</td>
             </tr>
         </table>
     </center>
