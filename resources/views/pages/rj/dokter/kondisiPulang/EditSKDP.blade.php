@@ -126,6 +126,24 @@
                                     </div>
                                 </div>
                             </div>
+                            {{-- <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Rencana tindakan operasi :</label>
+                                        <div class="input-group mb-3">
+                                            <select name="FS_SKDP_2" id="rencana_skdp" class="form-control select2">
+                                                <option value="" selected>-</option>
+                                                <option value="">Phaco + iol OD</option>
+                                                <option value="">Phaco + iol OS</option>
+                                                <option value="">EKS Pt/ Konj GMFT OS</option>
+                                                <option value="">EKS Pt/ Konj GMFT OD</option>
+                                                <option value="">R/ Trabekulektomi</option>
+                                                <option value="">R/ Amniun grafx</option>
+                                                <option value="">R/ Insisi Kalaziun</option>
+                                                <option value="">R/ Insisi Hordeolum</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                            </div> --}}
                             <div class="col-md-6">
                                 <label>Rencana Kontrol Berikutnya : </label>
                                 <div class="input-group mb-3">

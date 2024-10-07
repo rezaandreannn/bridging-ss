@@ -234,10 +234,7 @@ class AssesmenMataController extends Controller
 
         $asasmen_perawat = $this->poliMata->asasmenPerawatGet($noReg);
         $asasmen_dokter = $this->poliMata->asasmenDokter($noReg);
-        // dd($asasmen_dokter);
-
-        $masalahKeperawatan = $this->rekam_medis->masalahKepByNoreg($noReg);
-        $rencanaKeperawatan = $this->rekam_medis->rencanaKepByNoreg($noReg);
+        dd($asasmen_dokter);
 
         // Cetak PDF
         $date = date('dMY');
@@ -246,7 +243,7 @@ class AssesmenMataController extends Controller
 
         $title = 'Cetak RM';
 
-        $pdf = PDF::loadview('pages.poli.mata.cetak.resumeRajal', ['tanggal' => $tanggal, 'title' => $title, 'mataKiri' => $gambarMataKiri, 'mataKanan' => $gambarMataKanan, 'resep' => $resep, 'labs' => $labs, 'rads' => $rads, 'biodata' => $biodata, 'perawat' => $asasmen_perawat, 'masalahKeperawatan' => $masalahKeperawatan, 'rencanaKeperawatan' => $rencanaKeperawatan, 'dokter' => $asasmen_dokter]);
+        $pdf = PDF::loadview('pages.poli.mata.cetak.resumeRajal', ['tanggal' => $tanggal, 'title' => $title, 'mataKiri' => $gambarMataKiri, 'mataKanan' => $gambarMataKanan, 'resep' => $resep, 'labs' => $labs, 'rads' => $rads, 'biodata' => $biodata, 'perawat' => $asasmen_perawat, 'dokter' => $asasmen_dokter]);
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
     }

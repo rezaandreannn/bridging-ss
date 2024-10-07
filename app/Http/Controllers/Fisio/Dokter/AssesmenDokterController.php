@@ -62,12 +62,12 @@ class AssesmenDokterController extends Controller
     {
         //
         $tanggal = date('Y-m-d');
-        if($request->input('tanggal')!=null){
+        if ($request->input('tanggal') != null) {
             $tanggal = $request->input('tanggal');
         }
         $kode_dokter = auth()->user()->username;
 
-        $listpasien = $this->fisio->getPasienRehabMedisByTgl($kode_dokter,$tanggal);
+        $listpasien = $this->fisio->getPasienRehabMedisByTgl($kode_dokter, $tanggal);
         // dd($listpasien);
         $fisioterapi = new Fisioterapi();
         $title = $this->prefix . ' ' . 'List riwayat pasien by tanggal';
@@ -128,7 +128,7 @@ class AssesmenDokterController extends Controller
 
 
 
-    public function create_new($NoMr,$noReg)
+    public function create_new($NoMr, $noReg)
     {
         //
 
@@ -177,16 +177,17 @@ class AssesmenDokterController extends Controller
         // dd($biodatas);
         // die;
         $title = $this->prefix . ' ' . 'Assesmen Dokter';
-        return view($this->view . 'dokter.asesmenDokter.createAsesmenNew', compact('title', 'biodatas', 'jenisterapifisio','ttv', 'asesmen_perawat', 'history','diagnosisMedis','cekAsesmenFisio'));
+        return view($this->view . 'dokter.asesmenDokter.createAsesmenNew', compact('title', 'biodatas', 'jenisterapifisio', 'ttv', 'asesmen_perawat', 'history', 'diagnosisMedis', 'cekAsesmenFisio'));
     }
 
-    public function copy_riwayat($noMr,$noRegBaru,$noRegLama){
+    public function copy_riwayat($noMr, $noRegBaru, $noRegLama)
+    {
 
         $jenisterapifisio = DB::connection('pku')->table('TAC_COM_FISIOTERAPI_MASTER')->get();
 
         // $biodatas = $this->pasien->biodataPasienByMr($NoMr);
         $biodatas = $this->rajal->pasien_bynoreg($noRegBaru);
-        
+
         $biodataLama = $this->rajal->pasien_bynoreg($noRegLama);
         // dd($biodatas);
         $ttv = DB::connection('pku')->table('TAC_RJ_VITAL_SIGN')->where('FS_KD_REG', $biodatas->NO_REG)->first();
@@ -194,14 +195,12 @@ class AssesmenDokterController extends Controller
         $asesmenDokterGet = DB::connection('pku')->table('fis_asesmen_dokter')->where('no_registrasi', $noRegLama)->first();
         $lembarUjiFungsiGet = DB::connection('pku')->table('fis_lembar_uji_fungsi')->where('no_registrasi', $noRegLama)->first();
         $lembarSpkfr = DB::connection('pku')->table('fis_lembar_spkfr')->where('no_registrasi', $noRegLama)->first();
-    // dd($asesmenDokterGet);
+        // dd($asesmenDokterGet);
         $title = $this->prefix . ' ' . 'Assesmen Dokter';
-        return view($this->view . 'dokter.asesmenDokter.copyRiwayatAsesmen', compact('title', 'biodatas', 'jenisterapifisio','ttv', 'asesmen_perawat','asesmenDokterGet','lembarUjiFungsiGet','lembarSpkfr','biodataLama'));
-    
-;
+        return view($this->view . 'dokter.asesmenDokter.copyRiwayatAsesmen', compact('title', 'biodatas', 'jenisterapifisio', 'ttv', 'asesmen_perawat', 'asesmenDokterGet', 'lembarUjiFungsiGet', 'lembarSpkfr', 'biodataLama'));;
     }
 
-    public function editAsesmen($NoMr,$noReg)
+    public function editAsesmen($NoMr, $noReg)
     {
 
 
@@ -219,15 +218,12 @@ class AssesmenDokterController extends Controller
 
 
         $title = $this->prefix . ' ' . 'Edit Assesmen Dokter';
-        return view($this->view . 'dokter.asesmenDokter.editAsesmen', compact('title', 'biodatas', 'jenisterapifisio', 'asesmenDokterGet', 'terapiFisioGet','diagnosisMedis','lembarUjiFungsiGet','lembarSpkfr'));
+        return view($this->view . 'dokter.asesmenDokter.editAsesmen', compact('title', 'biodatas', 'jenisterapifisio', 'asesmenDokterGet', 'terapiFisioGet', 'diagnosisMedis', 'lembarUjiFungsiGet', 'lembarSpkfr'));
     }
 
-    public function editRiwayatAsesmen($NoMr,$noReg)
+    public function editRiwayatAsesmen($NoMr, $noReg)
     {
-
-
         $jenisterapifisio = DB::connection('pku')->table('TAC_COM_FISIOTERAPI_MASTER')->get();
-
         $biodatas = $this->rajal->pasien_bynoreg($noReg);
         $ttv = DB::connection('pku')->table('TAC_RJ_VITAL_SIGN')->where('FS_KD_REG', $biodatas->NO_REG)->first();
         $asesmenDokterGet = DB::connection('pku')->table('fis_asesmen_dokter')->where('no_registrasi', $biodatas->NO_REG)->first();
@@ -240,7 +236,7 @@ class AssesmenDokterController extends Controller
 
 
         $title = $this->prefix . ' ' . 'Edit Riwayat Assesmen Dokter';
-        return view($this->view . 'dokter.riwayatPemeriksaanByTgl.editRiwayatAsesmen', compact('title', 'biodatas', 'jenisterapifisio', 'asesmenDokterGet', 'terapiFisioGet','diagnosisMedis','lembarUjiFungsiGet','lembarSpkfr'));
+        return view($this->view . 'dokter.riwayatPemeriksaanByTgl.editRiwayatAsesmen', compact('title', 'biodatas', 'jenisterapifisio', 'asesmenDokterGet', 'terapiFisioGet', 'diagnosisMedis', 'lembarUjiFungsiGet', 'lembarSpkfr'));
     }
 
     // uji fungsi,spkfr  dan add_proses asesmen dokter old
@@ -346,8 +342,8 @@ class AssesmenDokterController extends Controller
     //     $diagnosisMedis = $this->fisio->getDiagnosisMedis();
     //     $diagnosisMedisGet = $this->fisio->getAsesmenDokter($biodatas->No_Reg)->first();
 
-       
-        
+
+
 
 
     //     $title = $this->prefix . ' ' . 'Lembar SPKFR';
@@ -540,7 +536,7 @@ class AssesmenDokterController extends Controller
             'suhu' => 'required',
             'berat_badan' => 'required',
             'jenis_terapi_fisio' => 'required',
-         
+
         ]);
 
         try {
@@ -561,7 +557,7 @@ class AssesmenDokterController extends Controller
             //     }
             // }
 
-            if($request->input('orthosis')!=null){
+            if ($request->input('orthosis') != null) {
                 // dd($request->input('orthosis'));
                 $order_alkes = DB::connection('pku')->table('fis_order_alkes')->insert([
                     'no_registrasi' => $request->input('no_registrasi'),
@@ -578,7 +574,7 @@ class AssesmenDokterController extends Controller
                 // dd('ok');
             }
 
-        
+
             $time = date('H:i:s');
             $asesmen_dokter = DB::connection('pku')->table('fis_asesmen_dokter')->insert([
                 'no_registrasi' => $request->input('no_registrasi'),
@@ -659,7 +655,7 @@ class AssesmenDokterController extends Controller
             'respirasi' => 'required',
             'suhu' => 'required',
             'berat_badan' => 'required',
-         
+
         ]);
 
         try {
@@ -681,10 +677,10 @@ class AssesmenDokterController extends Controller
             //     }
             // }
 
-            if($request->input('orthosis')!=null){
+            if ($request->input('orthosis') != null) {
                 // dd($request->input('orthosis'));
                 $cek_alat = $this->rajal->cek_order_alkes($request->input('no_registrasi'));
-                if($cek_alat == true ){
+                if ($cek_alat == true) {
                     $order_alkes = DB::connection('pku')->table('fis_order_alkes')->where('no_registrasi', $request->input('no_registrasi'))->update([
                         'no_registrasi' => $request->input('no_registrasi'),
                         'jenis_alat' => $request->input('orthosis'),
@@ -696,9 +692,7 @@ class AssesmenDokterController extends Controller
                         'created_at' => date('Y-m-d H:i:s'),
                         'updated_at' => date('Y-m-d H:i:s')
                     ]);
-                }
-            
-                else {
+                } else {
                     $order_alkes = DB::connection('pku')->table('fis_order_alkes')->insert([
                         'no_registrasi' => $request->input('no_registrasi'),
                         'jenis_alat' => $request->input('orthosis'),
@@ -713,7 +707,7 @@ class AssesmenDokterController extends Controller
 
 
                 // dd('ok');
-            }else {
+            } else {
                 $data = DB::connection('pku')->table('fis_order_alkes')->where('no_registrasi', $request->input('no_registrasi'))->delete();
             }
 
@@ -743,7 +737,7 @@ class AssesmenDokterController extends Controller
             ]);
 
             $lembarUjiFungsi = DB::connection('pku')->table('fis_lembar_uji_fungsi')->where('no_registrasi', $request->input('no_registrasi'))->update([
-           
+
                 'kode_transaksi_fisio' => '',
                 'diagnosis_fungsional' => $request->input('diagnosa_klinis'),
                 'prosedur_kfr' => $request->input('prosedur_kfr'),
@@ -751,12 +745,12 @@ class AssesmenDokterController extends Controller
                 'rekomendasi' => $request->input('rekomendasi'),
                 'edukasi' => $request->input('edukasi'),
                 'create_by' => auth()->user()->username,
-              
+
                 'updated_at' => date('Y-m-d H:i:s')
             ]);
 
             $spkfr = DB::connection('pku')->table('fis_lembar_spkfr')->where('no_registrasi', $request->input('no_registrasi'))->update([
-            
+
                 'kode_transaksi_fisio' => '',
                 'pemeriksaan_fisik' => $request->input('prosedur_kfr'),
                 'diagnosis_medis' => $request->input('diagnosa_klinis'),
@@ -765,7 +759,7 @@ class AssesmenDokterController extends Controller
                 'penyakit_akibat_kerja' => $request->input('penyakit_akibat_kerja'),
                 'deskripsi_akibat_kerja' => $request->input('deskripsi_akibat_kerja'),
                 'create_by' => auth()->user()->username,
-          
+
                 'updated_at' => date('Y-m-d H:i:s')
             ]);
 
@@ -793,17 +787,17 @@ class AssesmenDokterController extends Controller
             'respirasi' => 'required',
             'suhu' => 'required',
             'berat_badan' => 'required',
-         
+
         ]);
 
         try {
             DB::connection('pku')->beginTransaction();
 
 
-            if($request->input('orthosis')!=null){
+            if ($request->input('orthosis') != null) {
                 // dd($request->input('orthosis'));
                 $cek_alat = $this->rajal->cek_order_alkes($request->input('no_registrasi'));
-                if($cek_alat == true ){
+                if ($cek_alat == true) {
                     $order_alkes = DB::connection('pku')->table('fis_order_alkes')->where('no_registrasi', $request->input('no_registrasi'))->update([
                         'no_registrasi' => $request->input('no_registrasi'),
                         'jenis_alat' => $request->input('orthosis'),
@@ -815,9 +809,7 @@ class AssesmenDokterController extends Controller
                         'created_at' => date('Y-m-d H:i:s'),
                         'updated_at' => date('Y-m-d H:i:s')
                     ]);
-                }
-            
-                else {
+                } else {
                     $order_alkes = DB::connection('pku')->table('fis_order_alkes')->insert([
                         'no_registrasi' => $request->input('no_registrasi'),
                         'jenis_alat' => $request->input('orthosis'),
@@ -832,7 +824,7 @@ class AssesmenDokterController extends Controller
 
 
                 // dd('ok');
-            }else {
+            } else {
                 $data = DB::connection('pku')->table('fis_order_alkes')->where('no_registrasi', $request->input('no_registrasi'))->delete();
             }
 
@@ -859,7 +851,7 @@ class AssesmenDokterController extends Controller
                 'updated_at' => date('Y-m-d H:i:s')
             ]);
 
-            if($asesmen_dokter_update){
+            if ($asesmen_dokter_update) {
                 $cppt_update = DB::connection('pku')->table('TR_CPPT_FISIOTERAPI')->where('no_registrasi', $request->input('no_registrasi'))->update([
                     'DIAGNOSA' => $request->input('diagnosa_klinis'),
                     'TEKANAN_DARAH' => $request->input('tekanan_darah'),
@@ -870,7 +862,7 @@ class AssesmenDokterController extends Controller
             }
 
             $lembarUjiFungsi = DB::connection('pku')->table('fis_lembar_uji_fungsi')->where('no_registrasi', $request->input('no_registrasi'))->update([
-           
+
                 'kode_transaksi_fisio' => '',
                 'diagnosis_fungsional' => $request->input('diagnosa_klinis'),
                 'prosedur_kfr' => $request->input('prosedur_kfr'),
@@ -878,12 +870,12 @@ class AssesmenDokterController extends Controller
                 'rekomendasi' => $request->input('rekomendasi'),
                 'edukasi' => $request->input('edukasi'),
                 'create_by' => auth()->user()->username,
-              
+
                 'updated_at' => date('Y-m-d H:i:s')
             ]);
 
             $spkfr = DB::connection('pku')->table('fis_lembar_spkfr')->where('no_registrasi', $request->input('no_registrasi'))->update([
-            
+
                 'kode_transaksi_fisio' => '',
                 'pemeriksaan_fisik' => $request->input('prosedur_kfr'),
                 'diagnosis_medis' => $request->input('diagnosa_klinis'),
@@ -892,7 +884,7 @@ class AssesmenDokterController extends Controller
                 'penyakit_akibat_kerja' => $request->input('penyakit_akibat_kerja'),
                 'deskripsi_akibat_kerja' => $request->input('deskripsi_akibat_kerja'),
                 'create_by' => auth()->user()->username,
-          
+
                 'updated_at' => date('Y-m-d H:i:s')
             ]);
 

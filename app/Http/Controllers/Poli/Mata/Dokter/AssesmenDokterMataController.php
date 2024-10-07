@@ -52,7 +52,7 @@ class AssesmenDokterMataController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function add($noReg)
+    public function add($noReg, $NoMr)
     {
         $title = $this->prefix . ' ' . 'Mata Assesmen Dokter';
         $biodata = $this->rekam_medis->getBiodata($noReg);
@@ -63,7 +63,8 @@ class AssesmenDokterMataController extends Controller
         $asasmen_perawat = $this->poliMata->asasmenPerawatGet($noReg);
         // dd($asasmen_perawat);
         $refraksi = $this->poliMata->getRefraksi($noReg);
-        // dd($refraksi);
+
+        $history = $this->rajaldokter->getHistoryPasienPoliMata($NoMr);
 
         // Data Master
         $masterLab = $this->rajaldokter->getMasterLab();
@@ -71,7 +72,7 @@ class AssesmenDokterMataController extends Controller
         $masterObat = $this->rajaldokter->getMasterObat();
 
         // dd($asasmen_perawat);
-        return view($this->view . 'dokter.assesmenAwal', compact('title', 'biodata', 'refraksi', 'alasanSkdp', 'skdp', 'asasmen_perawat', 'masterLab', 'masterRadiologi', 'masterObat', 'noReg'));
+        return view($this->view . 'dokter.assesmenAwal', compact('title', 'biodata', 'history', 'refraksi', 'alasanSkdp', 'skdp', 'asasmen_perawat', 'masterLab', 'masterRadiologi', 'masterObat', 'noReg'));
     }
 
     public function konsul($noReg)
@@ -489,7 +490,8 @@ class AssesmenDokterMataController extends Controller
             if ($request->input('FS_CARA_PULANG') == '0') {
                 return redirect('pm/polimata/dokter')->with('success', 'Berhasil DiEdit!');
             } elseif ($request->input('FS_CARA_PULANG') == '2') {
-                return redirect()->route('kondisiPulang.SkdpRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
+                // return redirect()->route('kondisiPulang.SkdpRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
+                return redirect()->route('kondisiPulang.EditSkdpRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
             } elseif ($request->input('FS_CARA_PULANG') == '4') {
                 return redirect()->route('kondisiPulang.rujukLuarRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
             } elseif ($request->input('FS_CARA_PULANG') == '6') {

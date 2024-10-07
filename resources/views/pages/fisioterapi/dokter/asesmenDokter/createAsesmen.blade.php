@@ -329,7 +329,6 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Konsul</label>
-
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <div class="form-check">
