@@ -63,6 +63,7 @@ class BerkasFisioController extends Controller
 
     public function cppt_list($no_mr = "", $no_reg)
     {
+        // dd('ok');
         $title = $this->prefix . ' ' . 'Form CPPT';
         $fisioModel = new Fisioterapi();
         $biodatas = $this->berkasFisio->biodataPasienByMr($no_mr);
@@ -70,9 +71,10 @@ class BerkasFisioController extends Controller
         // die;
         $idTransaksiCppt = $this->berkasFisio->getIdTransaksiFisio($no_reg);
         if ($idTransaksiCppt == null) {
+            // dd('ok');
             $transaksis = $this->berkasFisio->transaksiFisioByMr($no_mr);
             return view($this->view . 'cppt', compact('title', 'biodatas', 'transaksis', 'fisioModel'))
-                ->with('danger', 'CPPT Terakhir belum di inputkan!');
+            ->with('warning', 'Data rekam medis belum di inputkan di EMR!');
         }
         
         // dd($idTransaksiCppt);
@@ -108,6 +110,9 @@ class BerkasFisioController extends Controller
     {
         set_time_limit(300);
         $asesmenDokter = $this->berkasFisio->getAsesmenDokter($no_reg);
+        if($asesmenDokter == null){
+            return redirect()->back()->with('warning', 'data rekam medis belum di inputkan di EMR!');
+        }
         $namaDokter = DB::connection('db_rsmm')->table('DOKTER')->select('Nama_Dokter')->where('Kode_Dokter', $asesmenDokter->create_by)->first();
         $terapis = $this->berkasFisio->getTerapiDokter($no_reg);
 

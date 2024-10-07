@@ -584,7 +584,7 @@
                                                 @if($data->KODE_RUANG == '')
 
                                                 @if($data->SPESIALIS == 'SPESIALIS REHABILITASI MEDIK')
-                                                <a href="{{ route('rj.rmDokter', ['noReg' => $data->NO_REG, 'noMR'=> $data->NO_MR]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> RM SPKFR</a>
+                                                <a href="{{ route('berkas.cetakRmFisio', ['no_reg' => $data->NO_REG]) }}" class="btn btn-sm btn-success" target="_blank"><i class="fas fa-download"></i> RM SPKFR</a>
                                                 @else
                                                 <a href="{{ route('rj.rmDokter', ['noReg' => $data->NO_REG, 'noMR'=> $data->NO_MR]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> RM</a>
 

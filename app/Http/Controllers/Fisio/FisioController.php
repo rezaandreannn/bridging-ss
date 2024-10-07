@@ -563,7 +563,7 @@ class FisioController extends Controller
                return redirect()->back()->with('success', 'Lingkar Pinggang Berhasil Diperbarui!');
             }
             else {
-               return redirect()->back()->with('danger', 'Lingkar Pinggang gagal Diperbarui!');
+               return redirect()->back()->with('warning', 'Lingkar Pinggang gagal Diperbarui!');
 
            }
     
@@ -614,7 +614,7 @@ class FisioController extends Controller
              }
              else {
                 DB::connection('pku')->rollback();
-                return redirect()->back()->with('danger', 'Alat Kesehatan gagal di verifikasi!');
+                return redirect()->back()->with('warning', 'Alat Kesehatan gagal di verifikasi!');
  
             }
             // return redirect()->route('add.ujifungsi', ['NoMr' => $request->input('NO_MR')])->with('success', 'Asesmen Berhasil Ditambahkan!');
@@ -669,7 +669,7 @@ class FisioController extends Controller
              }
              else {
                 DB::connection('pku')->rollback();
-                return redirect()->back()->with('danger', 'Alat Kesehatan gagal di verifikasi!');
+                return redirect()->back()->with('warning', 'Alat Kesehatan gagal di verifikasi!');
  
             }
             // return redirect()->route('add.ujifungsi', ['NoMr' => $request->input('NO_MR')])->with('success', 'Asesmen Berhasil Ditambahkan!');
