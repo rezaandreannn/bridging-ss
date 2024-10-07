@@ -182,8 +182,10 @@ class Berkas_rm_controller extends Controller
         // Data Rujukan
         $data = DB::connection('pku')
             ->table('TAC_RJ_RUJUKAN as a')
+            ->leftJoin('poli_mata_dokter as poli', 'a.FS_KD_REG', '=', 'poli.NO_REG')
             ->select(
                 'a.*',
+                'poli.diagnosa'
             )
             ->where('a.FS_KD_REG', $noReg)
             ->first();
