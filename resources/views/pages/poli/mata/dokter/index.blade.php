@@ -63,14 +63,14 @@
                                     <td width="20%">
                                         @if($data->FS_STATUS == 1)
                                             @if($poliMata->cekDokter($data->NO_REG) == true)
-                                            <a href="{{ route('poliMata.assesmenAwalEdit', ['noReg' => $data->NO_REG]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Edit</a>
+                                            <a href="{{ route('poliMata.assesmenAwalEdit', ['noReg'=> $data->NO_REG]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Edit</a>
                                             @else
                                                 @if($poliMata->cekRefraksi($data->NO_REG) == true)
-                                                <a href="{{ route('poliMata.assesmenAwal', ['noReg'=> $data->NO_REG,'NoMr' => $data->NO_MR]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
+                                                <a href="{{ route('poliMata.assesmenAwal', ['noReg'=> $data->NO_REG, 'NoMr' => $data->NO_MR]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
                                                 @endif
                                             @endif
                                             @if($poliMata->cekDokter($data->NO_REG) == true)
-                                            <a href="{{ route('polimata.cetakRM', ['noReg'=>$data->NO_REG,'NoMr'=>$data->NO_MR]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> RM</a>
+                                            <a href="{{ route('polimata.cetakRM', ['noReg'=>$data->NO_REG]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> RM</a>
                                             @endif
                                         @endif
                                     </td>

@@ -490,8 +490,8 @@ class AssesmenDokterMataController extends Controller
             if ($request->input('FS_CARA_PULANG') == '0') {
                 return redirect('pm/polimata/dokter')->with('success', 'Berhasil DiEdit!');
             } elseif ($request->input('FS_CARA_PULANG') == '2') {
-                // return redirect()->route('kondisiPulang.SkdpRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
-                return redirect()->route('kondisiPulang.EditSkdpRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
+                return redirect()->route('kondisiPulang.SkdpRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
+                // return redirect()->route('kondisiPulang.EditSkdpRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
             } elseif ($request->input('FS_CARA_PULANG') == '4') {
                 return redirect()->route('kondisiPulang.rujukLuarRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
             } elseif ($request->input('FS_CARA_PULANG') == '6') {
