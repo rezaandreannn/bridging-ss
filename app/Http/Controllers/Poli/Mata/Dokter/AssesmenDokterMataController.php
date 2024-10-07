@@ -54,6 +54,7 @@ class AssesmenDokterMataController extends Controller
      */
     public function add($noReg, $NoMr)
     {
+        
         $title = $this->prefix . ' ' . 'Mata Assesmen Dokter';
         $biodata = $this->rekam_medis->getBiodata($noReg);
         $alasanSkdp = $this->rajal->getAlesanSkdp();
@@ -74,12 +75,12 @@ class AssesmenDokterMataController extends Controller
         // dd($asasmen_perawat);
         return view($this->view . 'dokter.assesmenAwal', compact('title', 'biodata', 'history', 'refraksi', 'alasanSkdp', 'skdp', 'asasmen_perawat', 'masterLab', 'masterRadiologi', 'masterObat', 'noReg'));
     }
-
+    
     public function konsul($noReg)
     {
         $title = $this->prefix . ' ' . 'Mata Assesmen Dokter';
         $biodata = $this->rekam_medis->getBiodata($noReg);
-
+        
         $asasmen_perawat = $this->rajal->asasmenPerawatKonsul($noReg);
         // Data Master
         $masterLab = $this->rajaldokter->getMasterLab();
@@ -88,7 +89,7 @@ class AssesmenDokterMataController extends Controller
         // dd($asasmen_perawat);
         return view($this->view . 'dokter.assesmenKonsul', compact('title', 'biodata', 'asasmen_perawat', 'masterLab', 'masterRadiologi', 'masterObat',  'noReg'));
     }
-
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -103,12 +104,12 @@ class AssesmenDokterMataController extends Controller
             'DESKRIPSI_KIRI' => 'nullable|string',
             'DESKRIPSI_KANAN' => 'nullable|string',
         ]);
-
+        
         // dd($request->mata_kiri);
         // $userEmr = $this->rajal->getUserEmr(auth()->user()->username);
         try {
             DB::connection('pku')->beginTransaction();
-
+            
             DB::connection('pku')->table('TAC_RJ_MEDIS')->insert([
                 'FS_KD_REG' => $request->input('NO_REG'),
                 'FS_TERAPI' => $request->input('FS_TERAPI') ?? '',
@@ -116,7 +117,7 @@ class AssesmenDokterMataController extends Controller
                 'mdd' => date('Y-m-d'),
                 'mdb' => auth()->user()->username,
             ]);
-
+            
             DB::connection('pku')->table('poli_mata_refraksi')->where('NO_REG', $request->input('NO_REG'))->update([
                 'VISUS_OD' => $request->input('VISUS_OD'),
                 'VISUS_OS' => $request->input('VISUS_OS'),
@@ -127,7 +128,7 @@ class AssesmenDokterMataController extends Controller
                 'updated_at' => now(),
                 'UPDATE_REFRAKSI' => auth()->user()->username,
             ]);
-
+            
             DB::connection('pku')->table('poli_mata_dokter')->insert([
                 'NO_REG' => $request->input('NO_REG'),
                 'anamnesa' => $request->input('anamnesa'),
@@ -152,20 +153,20 @@ class AssesmenDokterMataController extends Controller
                 'created_at' => now(),
                 'CREATE_BY' => auth()->user()->username,
             ]);
-
+            
             // ------------------- Gambar Mata Kiri ----------------- //
             if ($request->signed_kiri != '') {
                 $image_parts = explode(";base64,", $request->signed_kiri);
                 $image_type_aux = explode("image/", $image_parts[0]);
                 $image_type = $image_type_aux[1];
                 $image_base64 = base64_decode($image_parts[1]);
-
+                
                 // Use uniqid to generate a unique file name
                 $file_name = uniqid($request->input('NO_REG') . '-' . 'Mata-Kiri' . '-' . date('Y-m-d') . '-') . '.' . $image_type;
-
+                
                 // Save the image to storage
                 Storage::put('public/gambar_mata/' . $file_name, $image_base64);
-
+                
                 // Insert data into the database
                 DB::connection('pku')->table('poli_mata_gambar')->insert([
                     'NO_REG' => $request->input('NO_REG'),
@@ -193,13 +194,13 @@ class AssesmenDokterMataController extends Controller
                 $image_type_aux = explode("image/", $image_parts[0]);
                 $image_type = $image_type_aux[1];
                 $image_base64 = base64_decode($image_parts[1]);
-
+                
                 // Use uniqid to generate a unique file name
                 $file_name = uniqid($request->input('NO_REG') . '-' . 'Mata-Kanan' . '-' . date('Y-m-d') . '-') . '.' . $image_type;
-
+                
                 // Save the image to storage
                 Storage::put('public/gambar_mata/' . $file_name, $image_base64);
-
+                
                 // Insert data into the database
                 DB::connection('pku')->table('poli_mata_gambar')->insert([
                     'NO_REG' => $request->input('NO_REG'),
@@ -219,7 +220,7 @@ class AssesmenDokterMataController extends Controller
                     'created_at' => now(),
                 ]);
             }
-
+            
             $periksa_lab = $request->input('periksa_lab');
             if (!empty($periksa_lab)) {
                 foreach ($periksa_lab as $key => $value) {
@@ -230,7 +231,7 @@ class AssesmenDokterMataController extends Controller
                     ]);
                 }
             }
-
+            
             $periksa_rad = $request->input('periksa_rad');
             $fs_bagian = $request->input('FS_BAGIAN');
             if (!empty($periksa_rad)) {
@@ -245,8 +246,8 @@ class AssesmenDokterMataController extends Controller
             }
 
             DB::connection('pku')->commit();
-
-
+            
+            
             if ($request->input('FS_CARA_PULANG') == '0') {
                 return redirect('pm/polimata/dokter')->with('success', 'Berhasil Ditambahkan!');
             } elseif ($request->input('FS_CARA_PULANG') == '2') {
@@ -266,7 +267,7 @@ class AssesmenDokterMataController extends Controller
             return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
         }
     }
-
+    
     /**
      * Display the specified resource.
      *
@@ -277,15 +278,16 @@ class AssesmenDokterMataController extends Controller
     {
         //
     }
-
+    
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, $noReg)
+    public function edit($noReg)
     {
+        
         $title = $this->prefix . ' ' . 'Mata Assesmen Dokter Edit';
         $biodata = $this->rekam_medis->getBiodata($noReg);
         $asasmen_dokter = $this->poliMata->asasmenDokter($noReg);
