@@ -530,7 +530,7 @@
                                             <p class="no-margin">Kedudukan / Gerak Bola Mata</p>
                                         </div>
                                     </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Visus</label>
                                                 <div class="col-md-12">
@@ -594,7 +594,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6"></div>
                                         <div class="col-md-6">
                                             <label class="" for="">Mata Kanan:</label>
                                             <br />

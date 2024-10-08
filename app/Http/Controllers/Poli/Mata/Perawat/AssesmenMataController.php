@@ -280,6 +280,75 @@ class AssesmenMataController extends Controller
         return $pdf->stream($filename . '.pdf');
     }
 
+    public function cetakRujukRS($noReg, $kode_transaksi)
+    {
+        $resep = $this->rekam_medis->cetakResep($noReg, $kode_transaksi);
+        // dd($resep);
+        // Data Rujukan
+        $data = DB::connection('pku')
+            ->table('TAC_RJ_RUJUKAN as a')
+            ->leftJoin('poli_mata_dokter as poli', 'a.FS_KD_REG', '=', 'poli.NO_REG')
+            ->select(
+                'a.*',
+                'poli.diagnosa'
+            )
+            ->where('a.FS_KD_REG', $noReg)
+            ->first();
+
+        // $data = $this->rekam_medis->cetakRujukan($noReg);
+
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+
+        $filename = 'Rujukan-' . $date . '-' . $noReg;
+
+        $pdf = PDF::loadview('pages.poli.mata.cetak.rujukanRS', ['data' => $data, 'biodata' => $biodata, 'resep' => $resep, 'tanggal' => $tanggal]);
+        // Set paper size to A5
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
+    }
+
+    public function cetakRujukanInternal($noReg, $kode_transaksi)
+    {
+        $resep = $this->rekam_medis->cetakResep($noReg, $kode_transaksi);
+        // dd($resep);
+        // Data Rujukan Internal
+        $data = DB::connection('pku')
+            ->table('TAC_RJ_RUJUKAN as a')
+            ->leftJoin('poli_mata_dokter as poli', 'a.FS_KD_REG', '=', 'poli.NO_REG')
+            ->select(
+                'a.*',
+                'poli.diagnosa'
+            )
+            ->where('a.FS_KD_REG', $noReg)
+            ->first();
+
+        // $data = $this->rekam_medis->cetakRujukan($noReg);
+
+        // Data PRB
+        $noPRB = DB::connection('pku')
+            ->table('TAC_RJ_MEDIS as a')
+            ->select(
+                'a.FS_KD_TRS',
+            )
+            ->where('a.FS_KD_REG', $noReg)
+            ->first();
+
+        // $noPRB = $this->rekam_medis->getNoPRB($noReg);
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+        // dd($biodata);
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+
+        $filename = 'Rujukan-' . $date . '-' . $noReg;
+
+        $pdf = PDF::loadview('pages.poli.mata.cetak.rujukanInternal', ['data' => $data, 'biodata' => $biodata, 'resep' => $resep, 'tanggal' => $tanggal, 'noPRB' => $noPRB]);
+        // Set paper size to A5
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
+    }
+
     public function store(Request $request)
     {
         $request->validate([

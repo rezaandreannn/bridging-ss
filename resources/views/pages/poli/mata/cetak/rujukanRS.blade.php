@@ -86,7 +86,7 @@
             </tr>
             <tr>
                 <td width="80" style="font-size: 11px;">Diagnosa</td>
-                <td width="300" style="font-size: 11px;">: {{ $resep->FS_DIAGNOSA ?? ''}}</td>
+                <td width="300" style="font-size: 11px;">: {{ $data->diagnosa ?? ''}}</td>
             </tr>
             <tr>
                 <td width="80" style="font-size: 11px;">Terapi</td>
