@@ -554,27 +554,6 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Tonometri</label>
-                                                <div class="col-md-12">
-                                                    <div class="form-group" style="display: flex; flex-direction: row;">
-                                                        <div class="input-group" style="margin-right: 10px;">
-                                                            <label for="NCT_TOD" class="mr-2 mt-2">
-                                                                TOD
-                                                            </label>
-                                                            <input type="text" placeholder="Inputan Mata Kanan" value="{{ $refraksi->NCT_TOD }}" class="form-control" name="NCT_TOD" id="NCT_TOD">
-                                                        </div>
-                                                        <div class="input-group" style="margin-right: 10px;">
-                                                            <label for="NCT_TOS" class="mr-2 mt-2">
-                                                                TOS
-                                                            </label>
-                                                            <input type="text" placeholder="Inputan Mata Kiri" value="{{ $refraksi->NCT_TOS }}" class="form-control" name="NCT_TOS" id="NCT_TOS">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
                                                 <label>Add</label>
                                                 <div class="col-md-12">
                                                     <div class="form-group" style="display: flex; flex-direction: row;">
@@ -589,6 +568,27 @@
                                                                 OS
                                                             </label>
                                                             <input type="text" placeholder="Inputan Mata Kiri" value="{{ $refraksi->ADD_OS }}" class="form-control" name="ADD_OS" id="ADD_OS">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Tonometri</label>
+                                                <div class="col-md-12">
+                                                    <div class="form-group" style="display: flex; flex-direction: row;">
+                                                        <div class="input-group" style="margin-right: 10px;">
+                                                            <label for="NCT_TOD" class="mr-2 mt-2">
+                                                                TOD
+                                                            </label>
+                                                            <input type="text" placeholder="Inputan Mata Kanan" value="{{ $refraksi->NCT_TOD }}" class="form-control" name="NCT_TOD" id="NCT_TOD">
+                                                        </div>
+                                                        <div class="input-group" style="margin-right: 10px;">
+                                                            <label for="NCT_TOS" class="mr-2 mt-2">
+                                                                TOS
+                                                            </label>
+                                                            <input type="text" placeholder="Inputan Mata Kiri" value="{{ $refraksi->NCT_TOS }}" class="form-control" name="NCT_TOS" id="NCT_TOS">
                                                         </div>
                                                     </div>
                                                 </div>
