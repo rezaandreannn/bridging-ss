@@ -345,7 +345,7 @@ Route::middleware('auth')->group(function () {
         // Route::get('/polimata/dokter/assesmen_mata/{noReg}', [AssesmenMataController::class, 'assesmenMata'])->name('poliMata.assesmenMata');
 
         // Copy Riwayat Poli Mata
-        // Route::get('polimata/dokter/assesmen_dokter/copy/{noMr}/{noRegBaru}/{noRegLama}', [AssesmenDokterController::class, 'copy_riwayat'])->name('fisio.copyRiwayat');
+        Route::get('polimata/dokter/assesmen_dokter/copy/{noMr}/{noRegBaru}/{noRegLama}', [AssesmenDokterController::class, 'copy_riwayat'])->name('poliMata.copyRiwayat');
 
 
         // Berkas Riwayat Rekam Medis

@@ -103,7 +103,7 @@
 
                 <tr>
                     <td class="text1">Diagnosa</td>
-                    <td class="text1">: </td>
+                    <td class="text1">: {{ $data->DIAGNOSA ?? ''}}</td>
                     <td class="text1">Alergi</td>
                     <td class="text1">: </td>
                 </tr>
