@@ -33,7 +33,6 @@ return new class extends Migration
             $table->string('LUMPUH')->nullable();
             $table->string('PUSING')->nullable();
             $table->string('CREATE_BY');
-            $table->string('UPDATE_BY')->nullable();
             $table->timestamps();
         });
     }

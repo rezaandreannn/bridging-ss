@@ -902,6 +902,11 @@
                                             </td>
                                             <td width="20%">
                                                 {{-- <a href="{{ route('rj.dokterCopy', ['noReg' => $data->NO_REG, 'noMR'=> $data->NO_MR]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Copy</a> --}}
+                                                @if($data->SPESIALIS == 'SPESIALIS MATA')
+                                                    @if ($cekAsesmenMata->cekAsesmenDokter($data->NO_REG)==true)
+                                                        <a href="{{ route('fisio.copyRiwayat', ['noRegBaru'=>$biodatas->NO_REG,'noRegLama' => $data->NO_REG, 'noMr'=> $data->NO_MR]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Copy Riwayat</a>
+                                                    @endif
+                                                @endif
                                             </td>
                                         </tr>
                                         @endforeach

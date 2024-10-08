@@ -623,9 +623,10 @@ class AssesmenMataController extends Controller
 
 
         DB::connection('pku')->table('poli_mata_asesmen')->where('NO_REG', $noReg)->update([
-            'RIWAYAT_SEKARANG' => is_array($request->input('RIWAYAT_SEKARANG'))
-                ? implode(',', $request->input('RIWAYAT_SEKARANG'))
-                : $request->input('RIWAYAT_SEKARANG'),
+            // 'RIWAYAT_SEKARANG' => is_array($request->input('RIWAYAT_SEKARANG'))
+            //     ? implode(',', $request->input('RIWAYAT_SEKARANG'))
+            //     : $request->input('RIWAYAT_SEKARANG'),
+            'RIWAYAT_SEKARANG' => $request->input('RIWAYAT_SEKARANG'),
             'KEADAAN_UMUM' => $request->input('KEADAAN_UMUM'),
             'KESADARAN' => $request->input('KESADARAN'),
             'STATUS_MENTAL' => $request->input('STATUS_MENTAL'),

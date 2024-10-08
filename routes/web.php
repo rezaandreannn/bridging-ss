@@ -235,7 +235,7 @@ Route::middleware('auth')->group(function () {
 
         // dokter copy riwayat
         Route::get('dokter/assesmen_dokter2/copy/{noMr}/{noRegBaru}/{noRegLama}', [AssesmenDokterController::class, 'copy_riwayat'])->name('fisio.copyRiwayat');
-        // dokter copy riwayat
+        // dokter add
         Route::get('dokter/assesmen_fisio2/{NoMr}/{noReg}', [AssesmenDokterController::class, 'create_new'])->name('add.dokterNew');
         Route::get('dokter/assesmen_fisio/edit/{NoMr}/{noReg}', [AssesmenDokterController::class, 'editAsesmen'])->name('edit_asesmen.dokter');
         Route::get('dokter/riwayat_pasien/assesmen_fisio/edit/{NoMr}/{noReg}', [AssesmenDokterController::class, 'editRiwayatAsesmen'])->name('edit_riwayat_asesmen.dokter');
@@ -343,6 +343,9 @@ Route::middleware('auth')->group(function () {
         Route::get('polimata/dokter/assesmen_awal/edit{noReg}', [AssesmenDokterMataController::class, 'edit'])->name('poliMata.assesmenAwalEdit');
         Route::put('/polimata/dokter/assesmen_awal/edit_process/{noReg}', [AssesmenDokterMataController::class, 'update'])->name('poliMata.assesmenAwalUpdate');
         // Route::get('/polimata/dokter/assesmen_mata/{noReg}', [AssesmenMataController::class, 'assesmenMata'])->name('poliMata.assesmenMata');
+
+        // Copy Riwayat Poli Mata
+        Route::get('polimata/dokter/assesmen_dokter/copy/{noMr}/{noRegBaru}/{noRegLama}', [AssesmenDokterController::class, 'copy_riwayat'])->name('fisio.copyRiwayat');
 
 
         // Berkas Riwayat Rekam Medis
