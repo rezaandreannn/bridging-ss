@@ -176,7 +176,7 @@ class AssesmenMataController extends Controller
     public function cetakResep($noReg, $kode_transaksi)
     {
         $data = $this->poliMata->cetakResep($noReg, $kode_transaksi);
-        // dd($data);
+        dd($data);
         $biodata = $this->rekam_medis->getBiodata($noReg);
         $antrian = $this->rekam_medis->getAntrianObat($kode_transaksi);
         // dd($antrian);
@@ -324,7 +324,6 @@ class AssesmenMataController extends Controller
             )
             ->where('a.FS_KD_REG', $noReg)
             ->first();
-
         // $data = $this->rekam_medis->cetakRujukan($noReg);
 
         // Data PRB
