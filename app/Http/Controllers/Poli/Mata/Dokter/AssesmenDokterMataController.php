@@ -322,6 +322,12 @@ class AssesmenDokterMataController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    public function cekSKDP($noReg)
+    {
+        return DB::connection('pku')->table('TAC_RJ_SKDP')->where('FS_KD_REG', $noReg)->exists();
+    }
+
     public function update(Request $request)
     {
         // $userEmr = $this->rajal->getUserEmr(auth()->user()->username);
@@ -465,38 +471,19 @@ class AssesmenDokterMataController extends Controller
                 }
             }
 
-            // $masalah_kep = $request->input('tujuan');
-            // DB::connection('pku')->table('TAC_RJ_MASALAH_KEP')->where('FS_KD_REG', $request->input('NO_REG'))->delete();
-            // if (!empty($masalah_kep)) {
-            //     foreach ($masalah_kep as $value) {
-            //         $insert_masalah_kep = DB::connection('pku')->table('TAC_RJ_MASALAH_KEP')->insert([
-
-            //             'FS_KD_REG' => $request->input('NO_REG'),
-            //             'FS_KD_MASALAH_KEP' => $value,
-
-            //         ]);
-            //     }
-            // }
-
-            // $rencana_kep = $request->input('tembusan');
-            // DB::connection('pku')->table('TAC_RJ_REN_KEP')->where('FS_KD_REG', $request->input('NO_REG'))->delete();
-            // if (!empty($rencana_kep)) {
-            //     foreach ($rencana_kep as $value) {
-            //         $insert_rencana_kep = DB::connection('pku')->table('TAC_RJ_REN_KEP')->insert([
-
-            //             'FS_KD_REG' => $request->input('NO_REG'),
-            //             'FS_KD_REN_KEP' => $value,
-
-            //         ]);
-            //     }
-            // }
             DB::connection('pku')->commit();
 
+            $noReg = $request->input('NO_REG');
             if ($request->input('FS_CARA_PULANG') == '0') {
                 return redirect('pm/polimata/dokter')->with('success', 'Berhasil DiEdit!');
             } elseif ($request->input('FS_CARA_PULANG') == '2') {
-                return redirect()->route('kondisiPulang.SkdpRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
+                // return redirect()->route('kondisiPulang.SkdpRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
                 // return redirect()->route('kondisiPulang.EditSkdpRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
+                if (!empty($noReg) && $this->cekSKDP($noReg)) {
+                    return redirect()->route('kondisiPulang.EditSkdpRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
+                } else {
+                    return redirect()->route('kondisiPulang.SkdpRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
+                }
             } elseif ($request->input('FS_CARA_PULANG') == '4') {
                 return redirect()->route('kondisiPulang.rujukLuarRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
             } elseif ($request->input('FS_CARA_PULANG') == '6') {
