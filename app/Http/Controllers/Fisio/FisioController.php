@@ -461,14 +461,45 @@ class FisioController extends Controller
 
 
     // Cetak CPPT Perawat
-    public function cetak_cppt(Request $request, $id)
+    public function cetak_cppt(Request $request, $kode_transaksi_fisio)
     {
+
         $title = $this->prefix . ' ' . 'Cetak CPPT';
 
         $data = DB::connection('pku')
             ->table('TR_CPPT_FISIOTERAPI')
             ->join('TRANSAKSI_FISIOTERAPI', 'TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
-            ->where('TRANSAKSI_FISIOTERAPI.KODE_TRANSAKSI_FISIO', '=', $id)
+            ->where('TRANSAKSI_FISIOTERAPI.KODE_TRANSAKSI_FISIO', '=', $kode_transaksi_fisio)
+            ->orderBy('TR_CPPT_FISIOTERAPI.ID_CPPT_FISIO', 'ASC')
+            ->get();
+
+
+
+
+        $biodatas = $this->pasien->biodataPasienByMr($request->no_mr);
+        $date = date('dMY');
+        $filename = $request->no_mr . '-CPPT-' . $date;
+
+        $pdf = PDF::loadview($this->view . 'cetak/cppt', ['title' => $title, 'data' => $data, 'biodatas' => $biodatas]);
+        return $pdf->stream($filename . '.pdf');
+    }
+
+    // Cetak CPPT Perawat
+    public function cetak_cppt_riwayat(Request $request, $no_reg)
+    {
+        $title = $this->prefix . ' ' . 'Cetak CPPT';
+
+        $kode_transaksi_fisio = $this->fisio->cek_kode_transaksi_fisio($no_reg);
+        if($kode_transaksi_fisio == null){
+            return redirect()->back()->with('warning', 'data rekam medis belum di inputkan di EMR!');
+        }
+        // dd($kode_transaksi_fisio);
+        $kode_transaksi = $kode_transaksi_fisio->KODE_TRANSAKSI_FISIO;
+
+        $data = DB::connection('pku')
+            ->table('TR_CPPT_FISIOTERAPI')
+            ->join('TRANSAKSI_FISIOTERAPI', 'TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
+            ->where('TRANSAKSI_FISIOTERAPI.KODE_TRANSAKSI_FISIO', '=', $kode_transaksi)
             ->orderBy('TR_CPPT_FISIOTERAPI.ID_CPPT_FISIO', 'ASC')
             ->get();
 

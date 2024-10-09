@@ -151,8 +151,6 @@ class BerkasFisioterapi extends Model
                 ->table('fis_asesmen_dokter as ad')
                 ->select(
                     'ad.*',
-                    
-                    
                     )
                     
                     ->where('no_registrasi', $no_reg)

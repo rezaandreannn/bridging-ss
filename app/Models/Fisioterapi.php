@@ -509,6 +509,19 @@ class Fisioterapi extends Model
             ->first();
         return $data;
     }
+
+    public function cek_kode_transaksi_fisio($no_reg)
+    {
+            $data = DB::connection('pku')
+            ->table('TR_CPPT_FISIOTERAPI')
+            ->select('KODE_TRANSAKSI_FISIO')
+            ->join('TRANSAKSI_FISIOTERAPI', 'TR_CPPT_FISIOTERAPI.ID_TRANSAKSI_FISIO', '=', 'TRANSAKSI_FISIOTERAPI.ID_TRANSAKSI')
+            ->where('TR_CPPT_FISIOTERAPI.no_registrasi', '=', $no_reg)
+            ->first();
+        return $data;
+    }
+
+
     public function getAsesmenDokterByNoreg($No_Reg)
     {
         $data = DB::connection('pku')
