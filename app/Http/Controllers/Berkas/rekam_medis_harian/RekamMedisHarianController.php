@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Berkas\Rekam_medis_harian;
 use Carbon\Carbon;
 use App\Models\Rajal;
 use App\Models\Pasien;
-use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\Fisioterapi;
+use App\Models\RajalDokter;
 use App\Models\RanapDokter;
 use App\Models\Rekam_medis;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 
 class RekamMedisHarianController extends Controller
@@ -19,6 +21,7 @@ class RekamMedisHarianController extends Controller
     protected $prefix;
     protected $pasien;
     protected $rajal;
+    protected $rajaldokter;
     protected $ranap;
     protected $rekam_medis;
 
@@ -29,6 +32,7 @@ class RekamMedisHarianController extends Controller
         $this->prefix = 'Riwayat Rekam Medis';
         $this->pasien = new Pasien;
         $this->rajal = new Rajal;
+        $this->rajaldokter = new RajalDokter;
         $this->ranap = new RanapDokter;
     }
     /**
@@ -50,6 +54,8 @@ class RekamMedisHarianController extends Controller
             $dataPasien = $this->rekam_medis->rekamMedisHarian($kode_dokter, $tanggal);
         }
 
+        // dd($dataPasien);
+
         $tglSekarang = strtotime(date('Y-m-d'));
         $tglKemarin = date('Y-m-d', strtotime("-1 day", $tglSekarang));
         $userLogin = auth()->user()->username;
@@ -57,6 +63,24 @@ class RekamMedisHarianController extends Controller
 
 
         return view($this->view . 'index', compact('title', 'dataPasien', 'dokters', 'tglKemarin', 'userLogin', 'rekamMedisModel'));
+    }
+
+    public function riwayat_pemeriksaan_pasien(Request $request)
+    {
+        //
+        $title = $this->prefix . ' ' . 'List riwayat pemeriksaan pasien';
+        $tanggal = $request->input('tanggal') ?? "";
+        $no_mr = $request->input('no_mr') ?? "";
+        $kode_dokter = $request->input('kode_dokter') ?? "";
+        $cekAsesmenFisio = new Fisioterapi();
+        $dokters = $this->rajal->byKodeDokter();
+        $kode_dokter = auth()->user()->username;
+        $history = $this->rajaldokter->getHistoryPemeriksaanPasien($no_mr,$tanggal,$kode_dokter);
+
+        // $listpasien = $this->fisio->getPasienRehabMedisByTgl($kode_dokter, $tanggal);
+        // dd($listpasien);
+        $fisioterapi = new Fisioterapi();
+        return view('pages.rj.dokter.riwayatPemeriksaanPasien', compact('title', 'fisioterapi','dokters','history','cekAsesmenFisio'));
     }
 
     /**

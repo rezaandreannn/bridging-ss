@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <title>CPPT</title>
     <style>
         table {
             font-family: 'Times New Roman', Times, serif;

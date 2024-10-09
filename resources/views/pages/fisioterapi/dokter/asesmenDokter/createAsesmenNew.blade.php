@@ -585,8 +585,13 @@
 
                                                 @if($data->SPESIALIS == 'SPESIALIS REHABILITASI MEDIK')
                                                 <a href="{{ route('berkas.cetakRmFisio', ['no_reg' => $data->NO_REG]) }}" class="btn btn-sm btn-success" target="_blank"><i class="fas fa-download"></i> RM SPKFR</a>
+                                                @elseif ($data->SPESIALIS == 'FISIOTERAPI')
+                                                <a href="{{ route('cppt.cetakCpptRiwayat', [
+                                            'no_reg' => $data->NO_REG,
+                                            'no_mr' => $data->NO_MR]) }}" class="btn btn-sm btn-warning" target="_blank"><i class="fas fa-download"></i>Lihat CPPT</a>
+
                                                 @else
-                                                <a href="{{ route('rj.rmDokter', ['noReg' => $data->NO_REG, 'noMR'=> $data->NO_MR]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> RM</a>
+                                                <a href="{{ route('rj.rmDokter', ['noReg' => $data->NO_REG, 'noMR'=> $data->NO_MR]) }}" class="btn btn-sm btn-success" target="_blank"><i class="fas fa-download"></i> RM</a>
 
                                                 @endif
 

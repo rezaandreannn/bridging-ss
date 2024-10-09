@@ -224,6 +224,8 @@ Route::middleware('auth')->group(function () {
         Route::put('perawat/cppt_riwayat/{id}', [FisioController::class, 'editDataRiwayatCPPT'])->name('cppt.updateRiwayatCppt');
 
         Route::get('cetak_cppt/{kode_transaksi}/{no_mr}', [FisioController::class, 'cetak_cppt'])->name('cppt.cetakCPPT');
+        Route::get('cetak_cppt_riwayat/{no_reg}/{no_mr}', [FisioController::class, 'cetak_cppt_riwayat'])->name('cppt.cetakCpptRiwayat');
+
         Route::get('bukti_layanan/{kode_transaksi}/{no_mr}', [FisioController::class, 'bukti_layanan'])->name('cppt.buktiLayanan');
 
         // Fisioterapi Dokter
@@ -231,12 +233,14 @@ Route::middleware('auth')->group(function () {
         Route::get('dokter/assesmen_dokter/{NoMr}', [AssesmenDokterController::class, 'create'])->name('add.dokter');
 
         // riwayat fisioterapi berdasarkan tanggal
-        Route::get('dokter/riwayat_pasien', [AssesmenDokterController::class, 'riwayat_pemeriksaan'])->name('riwayatFisio.dokter');
+        Route::get('dokter/riwayat_pasien', [AssesmenDokterController::class, 'riwayat_pemeriksaan_fisio'])->name('riwayatFisio.dokter');
+        // riwayat fisioterapi berdasarkan tanggal
+        Route::get('dokter/riwayat_pemeriksaan_pasien', [RekamMedisHarianController::class, 'riwayat_pemeriksaan_pasien'])->name('riwayatPemeriksaanPasien.dokter');
 
         // dokter copy riwayat
-        Route::get('dokter/assesmen_dokter2/copy/{noMr}/{noRegBaru}/{noRegLama}', [AssesmenDokterController::class, 'copy_riwayat'])->name('fisio.copyRiwayat');
+        Route::get('dokter/list_pasiens/assesmen_dokter2/copy/{noMr}/{noRegBaru}/{noRegLama}', [AssesmenDokterController::class, 'copy_riwayat'])->name('fisio.copyRiwayat');
         // dokter add
-        Route::get('dokter/assesmen_fisio2/{NoMr}/{noReg}', [AssesmenDokterController::class, 'create_new'])->name('add.dokterNew');
+        Route::get('dokter/list_pasiens/assesmen_fisio2/{NoMr}/{noReg}', [AssesmenDokterController::class, 'create_new'])->name('add.dokterNew');
         Route::get('dokter/assesmen_fisio/edit/{NoMr}/{noReg}', [AssesmenDokterController::class, 'editAsesmen'])->name('edit_asesmen.dokter');
         Route::get('dokter/riwayat_pasien/assesmen_fisio/edit/{NoMr}/{noReg}', [AssesmenDokterController::class, 'editRiwayatAsesmen'])->name('edit_riwayat_asesmen.dokter');
 

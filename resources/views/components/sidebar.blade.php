@@ -111,7 +111,7 @@
                 @endcan
                 @can('medis fisioterapi')
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('fisioterapi/dokter/list_pasiens') ? 'active' : '' }}">
+                    <li class="{{ Request::is('fisioterapi/dokter/list_pasiens*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('list_pasiens.dokter') }}">Pemeriksaan Fisioterapi</a>
                     </li>
                 </ul>
@@ -120,6 +120,13 @@
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('fisioterapi/dokter/riwayat_pasien*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('riwayatFisio.dokter') }}">Pemeriksaan Fisio by tgl</a>
+                    </li>
+                </ul>
+                @endcan
+                @can('history pemeriksaan')
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('fisioterapi/dokter/riwayat_pemeriksaan_pasien*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('riwayatPemeriksaanPasien.dokter') }}">History pemeriksaan</a>
                     </li>
                 </ul>
                 @endcan

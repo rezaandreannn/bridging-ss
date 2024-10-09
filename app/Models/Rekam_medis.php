@@ -303,6 +303,7 @@ class Rekam_medis extends Model
                 'p.Kode_Dokter',
                 'p.Status',
                 'd.Nama_Dokter',
+                'd.SPESIALIS',
                 'mr.Nama_Ruang',
                 'trm.FS_KD_TRS',
                 'trm.FS_CARA_PULANG',

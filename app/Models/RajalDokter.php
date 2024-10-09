@@ -184,6 +184,43 @@ class RajalDokter extends Model
         return $data;
     }
 
+    public function getHistoryPemeriksaanPasien($noMR="",$tanggal,$kode_dokter)
+    {
+        $dbpku = DB::connection('pku')->getDatabaseName();
+        $data = DB::connection('db_rsmm')
+            ->table('PENDAFTARAN as a')
+            ->leftJoin('REGISTER_PASIEN as rp', 'a.NO_MR', '=', 'rp.NO_MR')
+            ->leftJoin('DOKTER as d', 'a.KODE_DOKTER', '=', 'd.KODE_DOKTER')
+            ->leftJoin('M_SPESIALIS as c', 'd.SPESIALIS', '=', 'c.SPESIALIS')
+            ->leftJoin($dbpku . '.dbo.TAC_RJ_MEDIS as m', 'a.NO_REG', '=', 'm.FS_KD_REG')
+            ->select(
+                'a.TANGGAL',
+                'a.KODE_RUANG',
+                'a.STATUS',
+                'a.NO_REG',
+                'a.NO_MR',
+                'a.Kode_Dokter',
+                'rp.NAMA_PASIEN',
+                'rp.ALAMAT',
+                'rp.TGL_LAHIR',
+                'rp.KOTA',
+                'rp.PROVINSI',
+                'rp.JENIS_KELAMIN',
+                'd.NAMA_DOKTER',
+                'c.SPESIALIS',
+                'm.FS_KD_MEDIS',
+                'm.FS_KD_TRS',
+                'm.HASIL_ECHO',
+            )
+            ->orWhere('a.NO_MR', $noMR)
+            // ->orWhere('a.KODE_DOKTER', $kode_dokter)
+            // ->orWhere('a.TANGGAL', $tanggal)
+            ->orderBy('a.TANGGAL', 'DESC')
+            ->get();
+
+        return $data;
+    }
+
     public function getHistoryPasienPoliMata($noMR)
     {
         $dbpku = DB::connection('pku')->getDatabaseName();

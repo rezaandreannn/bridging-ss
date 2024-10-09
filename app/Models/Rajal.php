@@ -26,16 +26,32 @@ class Rajal extends Model
 
     public function byKodeDokter()
     {
-        $data = DB::connection('db_rsmm')
-            ->table('DOKTER')
-            ->select(
-                'KODE_DOKTER as kode_dokter',
-                'NAMA_DOKTER as nama_dokter'
-            )
-            ->Where('JENIS_PROFESI', 'DOKTER SPESIALIS')
-            ->orWhere('Kode_Dokter', '100')
-            ->whereNotIn('KODE_DOKTER', ['140s', 'TM140'])
-            ->get()->toArray();
+        // First query for fisioterapi
+        $fisioQuery = DB::connection('db_rsmm')
+        ->table('DOKTER')
+        ->select(
+            'KODE_DOKTER as kode_dokter',
+            'NAMA_DOKTER as nama_dokter'
+        )
+        ->where('Spesialis', 'FISIOTERAPI');
+
+    // Second query for dokter spesialis
+    $dokterQuery = DB::connection('db_rsmm')
+        ->table('DOKTER')
+        ->select(
+            'KODE_DOKTER as kode_dokter',
+            'NAMA_DOKTER as nama_dokter'
+        )
+        ->whereNotIn('KODE_DOKTER', ['140s', 'TM140','01JKN'])
+        ->where('JENIS_PROFESI', 'DOKTER SPESIALIS')
+        ->orWhere('Kode_Dokter', '100');
+
+    // Combine both queries using union
+    $combinedQuery = $fisioQuery->union($dokterQuery);
+
+    // Get the results as an array
+    $data = $combinedQuery->get()->toArray();
+
         return $data;
     }
 
