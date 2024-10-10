@@ -235,7 +235,7 @@ class AssesmenMataController extends Controller
 
         $asasmen_perawat = $this->poliMata->asasmenPerawatGet($noReg);
         $asasmen_dokter = $this->poliMata->asasmenDokter($noReg);
-        dd($asasmen_dokter);
+        // dd($asasmen_dokter);
 
         // Cetak PDF
         $date = date('dMY');
