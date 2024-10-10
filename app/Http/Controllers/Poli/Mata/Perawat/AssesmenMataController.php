@@ -51,7 +51,6 @@ class AssesmenMataController extends Controller
         if ($kode_dokter != null and $kode_dokter != null) {
             $dataPasien = $this->rekam_medis->rekamMedisHarian($kode_dokter, $tanggal);
         }
-        // dd($pasien);
         $poliMata = new PoliMata();
         return view($this->view . 'cetak.berkas', compact('title', 'dataPasien', 'dokters', 'poliMata'));
     }
@@ -176,7 +175,7 @@ class AssesmenMataController extends Controller
     public function cetakResep($noReg, $kode_transaksi)
     {
         $data = $this->poliMata->cetakResep($noReg, $kode_transaksi);
-        dd($data);
+        // dd($data);
         $biodata = $this->rekam_medis->getBiodata($noReg);
         $antrian = $this->rekam_medis->getAntrianObat($kode_transaksi);
         // dd($antrian);
@@ -235,7 +234,7 @@ class AssesmenMataController extends Controller
 
         $asasmen_perawat = $this->poliMata->asasmenPerawatGet($noReg);
         $asasmen_dokter = $this->poliMata->asasmenDokter($noReg);
-        dd($asasmen_dokter);
+        // dd($asasmen_dokter);
 
         // Cetak PDF
         $date = date('dMY');
@@ -325,7 +324,6 @@ class AssesmenMataController extends Controller
             ->where('a.FS_KD_REG', $noReg)
             ->first();
         // $data = $this->rekam_medis->cetakRujukan($noReg);
-
         // Data PRB
         $noPRB = DB::connection('pku')
             ->table('TAC_RJ_MEDIS as a')

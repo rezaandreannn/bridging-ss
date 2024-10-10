@@ -200,6 +200,11 @@
                 <td class="text3" colspan="2"> OS : {{$dokter->VISUS_OS}}</td>
             </tr>
             <tr>
+                <td class="text3">Add</td>
+                <td class="text3" colspan="3"> OD : {{$dokter->ADD_OD}}</td>
+                <td class="text3" colspan="2"> OS : {{$dokter->ADD_OS}}</td>
+            </tr>
+            <tr>
                 <td class="text3">Tonometri</td>
                 <td class="text3" colspan="3"> TOD : {{$dokter->NCT_TOD}}</td>
                 <td class="text3" colspan="2"> TOS :  {{$dokter->NCT_TOS}}</td>
@@ -224,8 +229,7 @@
             </tr>
             <tr>
                 <td class="text3">Instruksi dan edukasi lanjutan</td>
-                <td class="text3" colspan="3">Tanggal Kontrol: {{date('d M Y', strtotime($dokter->created_at))}}</td>
-                <td class="text3" colspan="2">Di: </td>
+                <td class="text3" colspan="5">Tanggal Kontrol: {{date('d-m-Y', strtotime($dokter->created_at))}}</td>
             </tr>
             <tr>
                 <td class="text3" colspan="6" height="50px"><b>Terapi yang diberikan dokter</b></td>
