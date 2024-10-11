@@ -58,7 +58,7 @@ class AssesmenDokterController extends Controller
         return view($this->view . 'dokter.index', compact('title', 'listpasien', 'fisioterapi'));
     }
 
-    public function riwayat_pemeriksaan(Request $request)
+    public function riwayat_pemeriksaan_fisio(Request $request)
     {
         //
         $tanggal = date('Y-m-d');
