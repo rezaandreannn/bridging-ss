@@ -821,8 +821,8 @@
                                         <label class="d-block">Paket Obat</label>
                                         <select name="namapaketdrarfan" id="namapaketdrarfan" class="form-control namapaketdrarfan @error('cara_pulang')  is-invalid @enderror" onchange="click_kondisi_pulang(this)">
                                             <option value="">--Pilih Paket Obat--</option>
-                                            <option value="Op Phaco">Op Phaco</option>
-                                            <option value="Post Phaco">Post Phaco</option>
+                                            <option value="Post Phaco 1 Hari">Post Phaco 1 Hari</option>
+                                            <option value="Post Phaco 1 Minggu">Post Phaco 1 Minggu</option>
                                             <option value="Resep Kacamata">Resep Kacamata</option>
                                         </select>
                                         @error('cara_pulang')
@@ -839,12 +839,13 @@
                                         <label class="d-block">Paket Obat</label>
                                         <select name="namapaketdrsuner" id="namapaketdrsuner" class="form-control namapaketdrsuner @error('cara_pulang')  is-invalid @enderror" onchange="click_kondisi_pulang(this)">
                                             <option value="">--Pilih Paket Obat--</option>
-                                            <option value="Op Phaco">Op Phaco</option>
-                                            <option value="Post Phaco">Post Phaco</option>
+                                            <option value="Pre op Phaco">Pre op Phaco</option>
+                                            <option value="Post Phaco 1 Hari">Post Phaco 1 Hari</option>
+                                            <option value="Post Phaco 1 Minggu">Post Phaco 1 Minggu</option>
                                             <option value="Resep Kacamata">Resep Kacamata</option>
                                             <option value="Post Insisi Chalazion">Post Insisi Chalazion</option>
-                                            <option value="Op Pteregium">Op Pteregium</option>
-                                            <option value="Post op Pteregium">Post op Pteregium</option>
+                                            <option value="Post op pteregium 1 hari">Post op pteregium 1 hari</option>
+                                            <option value="Post op pteregium 1 minggu">Post op pteregium 1 minggu</option>
                                         </select>
                                         @error('cara_pulang')
                                         <span class="text-danger" style="font-size: 12px;">
@@ -915,7 +916,7 @@
                                     </thead>
                                     <tbody>
                                         @php
-                                            $dokterModel = new App\Models\RajalDokter();
+                                            $dokterModel = new App\Models\poliMata();
                                         @endphp
                                         @foreach ($history as $data)
                                             @php
@@ -926,11 +927,20 @@
                                             <td>{{$data->NAMA_DOKTER}}</td>
                                             <td>{{$data->SPESIALIS}}</td>
                                             <td>
-                                                @if ($dokterModel->getDataResep($data->NO_REG) == true)
-                                                    <a href="{{ route('rj.dokterResep', [$data->NO_REG])  }}">Resep</a>
-                                                @endif
-                                                @if ($dokterModel->getDataLab($data->NO_REG) == true)
-                                                    <a href="{{ route('rj.dokterLab', [$data->NO_REG])  }}">Hasil Lab</a>
+                                                @if ($data->SPESIALIS == 'SPESIALIS MATA')
+                                                    @if ($dokterModel->getDataResep($data->NO_REG) == true)
+                                                        <a href="{{ route('polimata.resep', [$data->NO_REG, $data->FS_KD_TRS]) }}"
+                                                        onclick="window.open(this.href, '_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info">
+                                                        Resep Mata
+                                                        </a>
+                                                    @endif
+                                                    <a href="{{ route('polimata.cetakRM', [$data->NO_REG])  }}" class="btn btn-sm btn-success">RM</a>
+                                                @else
+                                                    <a href="{{ route('rj.dokterResep', [$data->NO_REG]) }}"
+                                                        onclick="window.open(this.href, '_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info">
+                                                        Resep
+                                                    </a>
+                                                    <a href="{{ route('rj.rmDokter', [$data->NO_REG,$data->NO_MR])  }}" class="btn btn-sm btn-success">RM</a>
                                                 @endif
                                             </td>
                                            <td>
@@ -1012,44 +1022,50 @@
 <script>
     $("#namapaketdrarfan").change(function () {
     var resep = $(".resep").val();
-    if ($("#namapaketdrarfan").val() == "Op Phaco") {
+    if ($("#namapaketdrarfan").val() == "Post Phaco 1 Hari") {
       $(".resep").val(
         resep +
-          "\n /R   Ciprofloxacin 500mg No X \n  S 2dd1   \n ---------------------------------------- \n \n /R   Asam Mefenamat 500mg No XV \n  S 3dd1 (p.r.n)  \n ---------------------------------------- \n \n /R   Methilprednisolon 8mg No XV \n  S 3 dd 8mg  \n ---------------------------------------- \n \n /R   LFX ed No 1 \n  S 6 ddgtt 1   \n ---------------------------------------- \n \n /R   P.pred ed No 1 \n  S 6ddgtt 1   \n ---------------------------------------- \n"
+          "\n /R  Ciprofloxacin 500mg No X \n  S 2dd1   \n ---------------------------------------- \n \n /R   Asam Mefenamat 500mg No XV \n  S 3dd 1 tablet  \n ---------------------------------------- \n \n /R   Methilprednisolon 8mg No XV \n  S 3 dd 8mg  \n ---------------------------------------- \n \n /R   LFX ed No 1 \n  S 6 ddgtt 1   \n ---------------------------------------- \n \n /R   P.pred ed No V \n  S 6ddgtt 1   \n ---------------------------------------- \n"
       );
       $("#namapaketdrarfan").select2("data", null);
-    } else if ($("#namapaketdrarfan").val() == "Post Phaco") {
+    } else if ($("#namapaketdrarfan").val() == "Post Phaco 1 Minggu") {
       $(".resep").val(
         resep +
-          "\n /R   Bralyflex Plus No 1 \n  S 4 ddgtt 1  \n ---------------------------------------- \n \n /R  Cenfresh ed No 5 \n  S 4 ddgtt 1 ODS   \n ---------------------------------------- \n"
+          "\n /R  Bralyflex Plus No 1 \n  S 4 ddgtt 1  \n ---------------------------------------- \n \n /R  Cenfresh ed No 5 \n  S 4 ddgtt 1 ODS   \n ---------------------------------------- \n"
       );
       $("#namapaketdrarfan").select2("data", null);
     } else if ($("#namapaketdrarfan").val() == "Resep Kacamata") {
       $(".resep").val(
         resep +
-          "\n /R   Sanbe Tears No 1 \n  S 4ddgtt 1 ODS  \n ---------------------------------------- \n \n /R  Berry Vision No V  \n  S 1 dd 1  \n ---------------------------------------- \n"
+          "\n /R  Sanbe Tears No 1 \n  S 4ddgtt 1 ODS  \n ---------------------------------------- \n \n /R  Berry Vision No V  \n  S 1 dd 1  \n ---------------------------------------- \n"
       );
       $("#namapaketdrarfan").select2("data", null);
     }
   });
   $("#namapaketdrsuner").change(function () {
     var resep = $(".resep").val();
-    if ($("#namapaketdrsuner").val() == "Op Phaco") {
+    if ($("#namapaketdrsuner").val() == "Pre op Phaco") {
       $(".resep").val(
         resep +
-          "\n /R  Ciprofloxacin 500mg No VI \n  S 2dd1   \n ---------------------------------------- \n \n /R  Natrium Diclofenak 500mg No VI \n  S 2dd1 (p.r.n)  \n ---------------------------------------- \n \n /R  LFX ed No 1 \n  S 6 ddgtt 1   \n ---------------------------------------- \n \n /R  P.pred ed No V \n  S 6ddgtt 1   \n ---------------------------------------- \n"
+          "\n /R  cenfresh No 5 \n  S 4x1 tetrs   \n ---------------------------------------- \n \n /R  Floxa No 2 \n  S 6x1 tetes (3 hari sebelum operasi)  \n ---------------------------------------- \n"
       );
       $("#namapaketdrsuner").select2("data", null);
-    } else if ($("#namapaketdrsuner").val() == "Post Phaco") {
+    } else if ($("#namapaketdrsuner").val() == "Post Phaco 1 Hari") {
       $(".resep").val(
         resep +
-          "\n /R  Bralyflex Plus No 1 \n  S 4 ddgtt 1  \n ---------------------------------------- \n \n /R  Cenfresh ed No 5 \n  S 4 ddgtt 1 ODS   \n ---------------------------------------- \n"
+          "\n /R  Ciprofloxacin 500mg No VI \n  S 2dd1 tablet  \n ---------------------------------------- \n \n /R  Natrium Diclofenak 500mg No VI \n  S 2dd1 tablet  \n ---------------------------------------- \n \n /R  LFX ed No 1 \n  S 6 ddgtt 1 \n ---------------------------------------- \n \n /R  P.pred ed No V \n  S 6 ddgtt 1 \n ---------------------------------------- \n"
+      );
+      $("#namapaketdrsuner").select2("data", null);
+    } else if ($("#namapaketdrsuner").val() == "Post Phaco 1 Minggu") {
+      $(".resep").val(
+        resep +
+          "\n /R  Bralyflex Plus No 1 \n  S 4x1 tetes  \n ---------------------------------------- \n \n /R  Cenfresh ed No 5 \n  S 4x1 tetes ODS   \n ---------------------------------------- \n"
       );
       $("#namapaketdrsuner").select2("data", null);
     } else if ($("#namapaketdrsuner").val() == "Resep Kacamata") {
       $(".resep").val(
         resep +
-          "\n /R  Cenfresh No V \n  S 4ddgtt 1 ODS  \n ---------------------------------------- \n \n /R  Berry Vision No VI  \n  S 1 dd 1 tablet \n ---------------------------------------- \n"
+          "\n /R  Cenfresh No V \n  S 4x1 tetes ODS  \n ---------------------------------------- \n \n /R  Berry Vision No VI  \n  S 1 dd 1 tablet \n ---------------------------------------- \n"
       );
       $("#namapaketdrsuner").select2("data", null);
     } else if ($("#namapaketdrsuner").val() == "Post Insisi Chalazion") {
@@ -1058,16 +1074,16 @@
           "\n /R  Ciprofloxacin 500mg No X \n  S 2 dd 1 tablet  \n ---------------------------------------- \n \n /R  Na.Diclofenak 250mg No X  \n  S 2 dd 1 tablet \n ---------------------------------------- \n \n /R  C-Mycos No 1  \n  S 3 dd 1 salep \n ---------------------------------------- \n"
       );
       $("#namapaketdrsuner").select2("data", null);
-    } else if ($("#namapaketdrsuner").val() == "Op Pteregium") {
+    } else if ($("#namapaketdrsuner").val() == "Post op pteregium 1 hari") {
       $(".resep").val(
         resep +
-          "\n /R  LFX ed No V \n  S 6 ddgtt 1  \n ---------------------------------------- \n \n /R  C-mycos eo No 1  \n  S 3 dd 1 \n ---------------------------------------- \n \n /R  Ciprofloxacin 500mg VI  \n  S 2 dd 1 tablet \n ---------------------------------------- \n \n /R  Na Diclofenak 250mg No X  \n  S 2 dd 1 tablet \n ---------------------------------------- \n"
+          "\n /R  LFX ed No V \n  S 6x1 tetes  \n ---------------------------------------- \n \n /R  C-mycos eo No 1  \n  S 3 dd 1 \n ---------------------------------------- \n \n /R  Ciprofloxacin 500mg VI  \n  S 2 dd 1 tablet \n ---------------------------------------- \n \n /R  Na Diclofenak 250mg No X  \n  S 2 dd 1 tablet \n ---------------------------------------- \n"
       );
       $("#namapaketdrsuner").select2("data", null);
-    } else if ($("#namapaketdrsuner").val() == "Post op Pteregium") {
+    } else if ($("#namapaketdrsuner").val() == "Post op pteregium 1 minggu") {
       $(".resep").val(
         resep +
-          "\n /R  Alletrol No 1 \n  S 4 ddgtt 1  \n ---------------------------------------- \n \n /R  Cenfresh No 1  \n  S 4 ddgtt 1 \n ---------------------------------------- \n"
+          "\n /R  Alletrol No 1 \n  S 4x1 tetes  \n ---------------------------------------- \n \n /R  Cenfresh No 1  \n  S 4x1 tetes \n ---------------------------------------- \n"
       );
       $("#namapaketdrsuner").select2("data", null);
     }

@@ -88,6 +88,7 @@ class AssesmenDokterMataController extends Controller
         $refraksi = $this->poliMata->getRefraksi($noReg);
 
         $history = $this->rajaldokter->getHistoryPasienPoliMata($NoMr);
+        // dd($history);
 
         $cekAsesmenMata = new PoliMata();
 

@@ -184,7 +184,7 @@ class RajalDokter extends Model
         return $data;
     }
 
-    public function getHistoryPemeriksaanPasien($noMR="",$tanggal,$kode_dokter)
+    public function getHistoryPemeriksaanPasien($noMR = "", $tanggal, $kode_dokter)
     {
         $dbpku = DB::connection('pku')->getDatabaseName();
         $data = DB::connection('db_rsmm')

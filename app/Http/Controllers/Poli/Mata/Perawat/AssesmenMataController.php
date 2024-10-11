@@ -201,6 +201,9 @@ class AssesmenMataController extends Controller
 
         $asasmen_perawat = $this->poliMata->asasmenPerawatGet($noReg);
         $asasmen_dokter = $this->poliMata->asasmenDokter($noReg);
+        if ($asasmen_perawat == null && $asasmen_dokter == null) {
+            return redirect()->back()->with('warning', 'data rekam medis belum di inputkan di EMR!');
+        }
 
         $gambarMataKiri = $this->poliMata->getGambarMataKiri($noReg);
         $gambarMataKanan = $this->poliMata->getGambarMataKanan($noReg);

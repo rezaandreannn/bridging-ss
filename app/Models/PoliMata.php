@@ -254,6 +254,23 @@ class PoliMata extends Model
         return $data;
     }
 
+    public function getDataResep($noReg)
+    {
+        $data = DB::connection('pku')
+            ->table('TAC_RJ_MEDIS as a')
+            ->select(
+                'a.FS_KD_REG',
+            )
+            ->where('a.FS_KD_REG', $noReg)
+            ->first();
+
+        if ($data != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // Master Data Penyakit Sekarang Poli Mata
     public function getPenyakitSekarang()
     {

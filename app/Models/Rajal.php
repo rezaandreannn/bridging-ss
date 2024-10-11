@@ -28,29 +28,29 @@ class Rajal extends Model
     {
         // First query for fisioterapi
         $fisioQuery = DB::connection('db_rsmm')
-        ->table('DOKTER')
-        ->select(
-            'KODE_DOKTER as kode_dokter',
-            'NAMA_DOKTER as nama_dokter'
-        )
-        ->where('Spesialis', 'FISIOTERAPI');
+            ->table('DOKTER')
+            ->select(
+                'KODE_DOKTER as kode_dokter',
+                'NAMA_DOKTER as nama_dokter'
+            )
+            ->where('Spesialis', 'FISIOTERAPI');
 
-    // Second query for dokter spesialis
-    $dokterQuery = DB::connection('db_rsmm')
-        ->table('DOKTER')
-        ->select(
-            'KODE_DOKTER as kode_dokter',
-            'NAMA_DOKTER as nama_dokter'
-        )
-        ->whereNotIn('KODE_DOKTER', ['140s', 'TM140','01JKN'])
-        ->where('JENIS_PROFESI', 'DOKTER SPESIALIS')
-        ->orWhere('Kode_Dokter', '100');
+        // Second query for dokter spesialis
+        $dokterQuery = DB::connection('db_rsmm')
+            ->table('DOKTER')
+            ->select(
+                'KODE_DOKTER as kode_dokter',
+                'NAMA_DOKTER as nama_dokter'
+            )
+            ->whereNotIn('KODE_DOKTER', ['140s', 'TM140', '01JKN'])
+            ->where('JENIS_PROFESI', 'DOKTER SPESIALIS')
+            ->orWhere('Kode_Dokter', '100');
 
-    // Combine both queries using union
-    $combinedQuery = $fisioQuery->union($dokterQuery);
+        // Combine both queries using union
+        $combinedQuery = $fisioQuery->union($dokterQuery);
 
-    // Get the results as an array
-    $data = $combinedQuery->get()->toArray();
+        // Get the results as an array
+        $data = $combinedQuery->get()->toArray();
 
         return $data;
     }
@@ -307,7 +307,7 @@ class Rajal extends Model
     }
 
     // Get Data Pasien Rawat Jalan
-    public function pasien_bynoreg($noReg)
+    public function pasien_bynoreg($noReg, $kode_transaksi)
     {
 
         $pku = DB::connection('pku')->getDatabaseName();
@@ -343,6 +343,7 @@ class Rajal extends Model
                 'a.FS_ALERGI',
             )
             ->where('b.NO_REG', $noReg)
+            ->where('d.FS_KD_TRS', $kode_transaksi)
             ->first();
         return $data;
     }
