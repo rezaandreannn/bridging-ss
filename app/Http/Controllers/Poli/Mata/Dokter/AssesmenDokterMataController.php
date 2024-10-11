@@ -78,7 +78,6 @@ class AssesmenDokterMataController extends Controller
      */
     public function add($noReg, $NoMr)
     {
-
         $title = $this->prefix . ' ' . 'Mata Assesmen Dokter';
         $biodata = $this->rekam_medis->getBiodata($noReg);
         $alasanSkdp = $this->rajal->getAlesanSkdp();
@@ -86,11 +85,9 @@ class AssesmenDokterMataController extends Controller
         $penyakitSekarang = $this->poliMata->getPenyakit();
 
         $asasmen_perawat = $this->poliMata->asasmenPerawatGet($noReg);
-        // dd($asasmen_perawat);
         $refraksi = $this->poliMata->getRefraksi($noReg);
 
         $history = $this->rajaldokter->getHistoryPasienPoliMata($NoMr);
-        // dd($history);
 
         $cekAsesmenMata = new PoliMata();
 
