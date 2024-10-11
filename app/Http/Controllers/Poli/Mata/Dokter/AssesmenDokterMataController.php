@@ -28,8 +28,32 @@ class AssesmenDokterMataController extends Controller
         $this->rajal = new Rajal;
         $this->poliMata = $poliMata;
         $this->view = 'pages.poli.mata.';
-        $this->prefix = 'Poli';
+        $this->prefix = 'Poli Mata';
     }
+
+    // Copy Riwayat Pasien
+    public function copy_riwayat($noMr, $noRegBaru, $noRegLama)
+    {
+        $biodata = $this->rajal->pasien_bynoreg($noRegBaru);
+
+        $biodataLama = $this->rajal->pasien_bynoreg($noRegLama);
+        // dd($biodata);
+        $ttv = DB::connection('pku')->table('TAC_RJ_VITAL_SIGN')->where('FS_KD_REG', $biodata->NO_REG)->first();
+        $medis = DB::connection('pku')->table('TAC_RJ_MEDIS')->where('FS_KD_REG', $noRegLama)->first();
+        // dd($medis);
+        $asesmen_perawat = DB::connection('pku')->table('TAC_ASES_PER2')->where('FS_KD_REG', $biodata->NO_REG)->first();
+        $perawat_mata = DB::connection('pku')->table('poli_mata_asesmen')->where('NO_REG', $biodata->NO_REG)->first();
+        $gambar = DB::connection('pku')->table('poli_mata_gambar')->where('NO_REG', $biodata->NO_REG)->first();
+        $refraksi = DB::connection('pku')->table('poli_mata_refraksi')->where('NO_REG', $biodata->NO_REG)->first();
+        $asesmenDokterGet = DB::connection('pku')->table('poli_mata_dokter')->where('NO_REG', $noRegLama)->first();
+
+        $masterObat = $this->rajaldokter->getMasterObat();
+        // dd($perawat_mata);
+        $title = $this->prefix . ' ' . 'Copy Assesmen Dokter';
+        return view($this->view . 'dokter.copyRiwayatAsesmen', compact('title', 'biodata', 'ttv', 'medis', 'gambar', 'masterObat', 'perawat_mata', 'asesmen_perawat', 'refraksi', 'asesmenDokterGet', 'biodataLama', 'noRegBaru'));;
+    }
+
+    // -----------------------------------------------------------------------------
 
     public function index(Request $request)
     {
@@ -54,7 +78,6 @@ class AssesmenDokterMataController extends Controller
      */
     public function add($noReg, $NoMr)
     {
-
         $title = $this->prefix . ' ' . 'Mata Assesmen Dokter';
         $biodata = $this->rekam_medis->getBiodata($noReg);
         $alasanSkdp = $this->rajal->getAlesanSkdp();
@@ -62,11 +85,9 @@ class AssesmenDokterMataController extends Controller
         $penyakitSekarang = $this->poliMata->getPenyakit();
 
         $asasmen_perawat = $this->poliMata->asasmenPerawatGet($noReg);
-        // dd($asasmen_perawat);
         $refraksi = $this->poliMata->getRefraksi($noReg);
 
         $history = $this->rajaldokter->getHistoryPasienPoliMata($NoMr);
-        // dd($history);
 
         $cekAsesmenMata = new PoliMata();
 
