@@ -578,7 +578,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="terapi">Terapi</label>
-                                        <textarea rows="7" cols="50" style="height: 180px;" name="FS_TERAPI" class="form-control resep" id="terapi"></textarea>
+                                        <textarea rows="7" cols="50" style="height: 180px;" name="FS_TERAPI" class="form-control resep" id="terapi">{{ $medis->FS_TERAPI }}</textarea>
                                     </div>
                                 </div>
                             </div>
