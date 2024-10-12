@@ -306,8 +306,8 @@ class Rajal extends Model
         return $data;
     }
 
-    // Get Data Pasien Rawat Jalan
-    public function pasien_bynoreg($noReg, $kode_transaksi)
+    // Get Data Pasien Rawat Jalan (Jangan Dirubah)
+    public function pasien_bynoreg($noReg)
     {
 
         $pku = DB::connection('pku')->getDatabaseName();
@@ -343,7 +343,6 @@ class Rajal extends Model
                 'a.FS_ALERGI',
             )
             ->where('b.NO_REG', $noReg)
-            ->where('d.FS_KD_TRS', $kode_transaksi)
             ->first();
         return $data;
     }
