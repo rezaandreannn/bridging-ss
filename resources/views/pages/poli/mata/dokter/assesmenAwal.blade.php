@@ -1050,6 +1050,12 @@
           "\n /R  cenfresh No 5 \n  S 4x1 tetrs   \n ---------------------------------------- \n \n /R  Floxa No 2 \n  S 6x1 tetes (3 hari sebelum operasi)  \n ---------------------------------------- \n"
       );
       $("#namapaketdrsuner").select2("data", null);
+    } else if ($("#namapaketdrsuner").val() == "Glaucoma") {
+      $(".resep").val(
+        resep +
+          "\n /R  Optimol 0,5 ed No 1 \n  S 2 ddgtt 1 ODS  \n ---------------------------------------- \n \n /R  Lanosan Ed No 1  \n  S 1 ddgtt 1 ODS (Malam Hari) \n ---------------------------------------- \n \n /R  Cenfresh EDMD No 5  \n  S 4 ddgtt 1 ODS \n ---------------------------------------- \n"
+      );
+      $("#namapaketdrsuner").select2("data", null);
     } else if ($("#namapaketdrsuner").val() == "Post Phaco 1 Hari") {
       $(".resep").val(
         resep +
