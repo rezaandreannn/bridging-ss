@@ -840,6 +840,7 @@
                                         <select name="namapaketdrsuner" id="namapaketdrsuner" class="form-control namapaketdrsuner @error('cara_pulang')  is-invalid @enderror" onchange="click_kondisi_pulang(this)">
                                             <option value="">--Pilih Paket Obat--</option>
                                             <option value="Pre op Phaco">Pre op Phaco</option>
+                                            <option value="Glaucoma">Glaucoma</option>
                                             <option value="Post Phaco 1 Hari">Post Phaco 1 Hari</option>
                                             <option value="Post Phaco 1 Minggu">Post Phaco 1 Minggu</option>
                                             <option value="Resep Kacamata">Resep Kacamata</option>
