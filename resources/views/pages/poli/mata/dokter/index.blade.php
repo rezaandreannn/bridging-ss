@@ -121,7 +121,7 @@
                                     <td>{{$konsul->NAMA_DOKTER}}</td>
                                     <td>{{$konsul->TANGGAL}}</td>
                                     <td>
-                                        <a href="{{ route('poliMata.assesmenKonsul',$konsul->NO_REG) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
+                                        <a href="{{ route('poliMata.Konsul',$konsul->NO_REG) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
                                     </td>
                                 </tr>
                                 @endforeach
