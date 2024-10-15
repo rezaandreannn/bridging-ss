@@ -103,8 +103,10 @@ class PoliMata extends Model
         $data = DB::connection('pku')->table('TAC_ASES_PER2')
             ->join('TAC_RJ_VITAL_SIGN', 'TAC_ASES_PER2.FS_KD_REG', '=', 'TAC_RJ_VITAL_SIGN.FS_KD_REG')
             ->join('TAC_RJ_JATUH', 'TAC_ASES_PER2.FS_KD_REG', '=', 'TAC_RJ_JATUH.FS_KD_REG')
+            ->leftJoin('TAC_COM_USER', 'TAC_RJ_VITAL_SIGN.mdb', '=', 'TAC_COM_USER.user_id')
             ->join('poli_mata_asesmen', 'TAC_ASES_PER2.FS_KD_REG', '=', 'poli_mata_asesmen.NO_REG')
             ->leftJoin($dbpku . '.dbo.REGISTER_PASIEN', 'TAC_ASES_PER2.FS_KD_REG', '=', 'REGISTER_PASIEN.No_MR')
+            ->leftJoin($dbpku . '.dbo.TUSER', 'TAC_COM_USER.user_name', '=', 'TUSER.NAMAUSER')
             ->where('TAC_ASES_PER2.FS_KD_REG', $noReg)
             ->first();
         return $data;

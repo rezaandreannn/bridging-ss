@@ -312,9 +312,10 @@ class Berkas_rm_controller extends Controller
         $biodata = $this->rekam_medis->getBiodata($noReg);
         // dd($biodata);
         $asesmenPerawat = $this->rekam_medis->cetakRmRajal($noReg);
+        // dd($asesmenPerawat);
 
         $asesmenDokterRj = $this->rekam_medis->asesmenDokterRjBynoReg($noReg);
-        if($asesmenPerawat == null && $asesmenDokterRj== null){
+        if ($asesmenPerawat == null && $asesmenDokterRj == null) {
             return redirect()->back()->with('warning', 'data rekam medis belum di inputkan di EMR!');
         }
         $masalahKeperawatan = $this->rekam_medis->masalahKepByNoreg($noReg);

@@ -553,11 +553,11 @@
         </tr>
         <tr>
             <td width="70%" class="text5"></td>
-            <td class="text5" style="padding-left: 30px;">{!! DNS2D::getBarcodeHTML($perawat->mdd, 'QRCODE', 3, 3) !!}</td>
+            <td class="text5" style="padding-left: 30px;">{!! DNS2D::getBarcodeHTML($perawat->NamaLengkap, 'QRCODE', 3, 3) !!}</td>
         </tr>
         <tr>
             <td width="60%" class="text5"></td>
-            <td class="text5" style="padding-right: 50px;">{{($perawat->mdd)}}</td>
+            <td class="text5" style="padding-right: 50px;">{{($perawat->NamaLengkap)}}</td>
         </tr>
     </table>
 </body>

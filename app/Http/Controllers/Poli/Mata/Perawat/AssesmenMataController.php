@@ -200,7 +200,9 @@ class AssesmenMataController extends Controller
         $biodata = $this->rekam_medis->getBiodata($noReg);
 
         $asasmen_perawat = $this->poliMata->asasmenPerawatGet($noReg);
+        // dd($asasmen_perawat);
         $asasmen_dokter = $this->poliMata->asasmenDokter($noReg);
+
         if ($asasmen_perawat == null && $asasmen_dokter == null) {
             return redirect()->back()->with('warning', 'data rekam medis belum di inputkan di EMR!');
         }
@@ -375,7 +377,7 @@ class AssesmenMataController extends Controller
                 'FS_STATUS' => '1',
                 'FS_FORM' => '1',
                 'FS_JNS_ASESMEN' => 'A',
-                'mdb' => auth()->user()->username,
+                'mdb' => $userEmr->user_id,
                 'mdd' => now(),
             ]);
 
@@ -412,7 +414,7 @@ class AssesmenMataController extends Controller
                 'FS_RIW_TUMBUH_KET' => $request->input('FS_RIW_TUMBUH_KET')  ? $request->input('FS_RIW_TUMBUH_KET') : '0',
                 'FS_HIGH_RISK' => '',
                 'FS_SKDP_FASKES' => $request->input('FS_SKDP_FASKES'),
-                'mdb' => auth()->user()->username,
+                'mdb' => $userEmr->user_id,
                 'mdd' => date('Y-m-d'),
             ]);
 
@@ -425,7 +427,7 @@ class AssesmenMataController extends Controller
                 'FS_TB' => $request->input('tb'),
                 'FS_BB' => $request->input('bb'),
                 'FS_KD_MEDIS' => $request->input('KODE_DOKTER'),
-                'mdb' => auth()->user()->username,
+                'mdb' => $userEmr->user_id,
                 'mdd' => date('Y-m-d'),
                 'FS_JAM_TRS' => date('H:i:s'),
             ]);
@@ -436,7 +438,7 @@ class AssesmenMataController extends Controller
                 'FS_CARA_BERJALAN2' => $request->input('FS_CARA_BERJALAN2'),
                 'FS_CARA_DUDUK' => $request->input('FS_CARA_DUDUK'),
                 'mdb' => date('Y-m-d'),
-                'mdd' => auth()->user()->username,
+                'mdd' => $userEmr->user_id,
             ]);
 
             DB::connection('pku')->table('poli_mata_asesmen')->insert([
@@ -457,7 +459,7 @@ class AssesmenMataController extends Controller
                 'LUMPUH' => $request->input('LUMPUH'),
                 'PUSING' => $request->input('PUSING'),
                 'created_at' => now(),
-                'CREATE_BY' => auth()->user()->username,
+                'CREATE_BY' => $userEmr->user_id,
             ]);
 
             $masalah_kep = $request->input('tujuan');
@@ -563,7 +565,7 @@ class AssesmenMataController extends Controller
      */
     public function update(Request $request, $noReg)
     {
-        // $userEmr = $this->rajal->getUserEmr(auth()->user()->username);
+        $userEmr = $this->rajal->getUserEmr(auth()->user()->username);
 
         $alergi = DB::connection('db_rsmm')->table('REGISTER_PASIEN')->where('NO_MR', $request->input('NO_MR'))->update([
             'FS_ALERGI' => $request->input('FS_ALERGI'),
@@ -597,7 +599,7 @@ class AssesmenMataController extends Controller
             'FS_RIW_TUMBUH_KET' => $request->input('FS_RIW_TUMBUH_KET')  ? $request->input('FS_RIW_TUMBUH_KET') : '0',
             'FS_HIGH_RISK' => '',
             'FS_SKDP_FASKES' => $request->input('FS_SKDP_FASKES'),
-            'mdb' => auth()->user()->username,
+            'mdb' => $userEmr->user_id,
             'mdd' => date('Y-m-d'),
         ]);
 
@@ -609,7 +611,7 @@ class AssesmenMataController extends Controller
             'FS_TB' => $request->input('tb'),
             'FS_BB' => $request->input('bb'),
             'FS_KD_MEDIS' => $request->input('KODE_DOKTER'),
-            'mdb' => auth()->user()->username,
+            'mdb' => $userEmr->user_id,
             'mdd' => date('Y-m-d'),
             'FS_JAM_TRS' => date('H:i:s'),
         ]);
@@ -619,7 +621,7 @@ class AssesmenMataController extends Controller
             'FS_CARA_BERJALAN2' => $request->input('FS_CARA_BERJALAN2'),
             'FS_CARA_DUDUK' => $request->input('FS_CARA_DUDUK'),
             'mdb' => date('Y-m-d'),
-            'mdd' => auth()->user()->username,
+            'mdd' => $userEmr->user_id,
         ]);
 
 
@@ -640,7 +642,7 @@ class AssesmenMataController extends Controller
             'LUMPUH' => $request->input('LUMPUH'),
             'PUSING' => $request->input('PUSING'),
             'updated_at' => now(),
-            'UPDATE_BY' => auth()->user()->username,
+            'UPDATE_BY' => $userEmr->user_id,
         ]);
 
         $masalah_kep = $request->input('tujuan');
