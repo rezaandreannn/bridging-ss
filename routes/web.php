@@ -32,6 +32,7 @@ use App\Http\Controllers\MasterData\JenisFisioController;
 use App\Http\Controllers\Farmasi\MasterDataAlkesController;
 use App\Http\Controllers\MasterData\OrganizationController;
 use App\Http\Controllers\Berkas\igd\RekamMedisIgdController;
+use App\Http\Controllers\Berkas\klaim\ResumeController;
 use App\Http\Controllers\Fisio\Berkas\BerkasFisioController;
 use App\Http\Controllers\Manage\RoleHasPermissionController;
 use App\Http\Controllers\Mapping\MappingEncounterController;
@@ -518,6 +519,12 @@ Route::middleware('auth')->group(function () {
         Route::get('riwayatRekamMedis/igd/berkasIGD/cetakResep/{nomr}/{noReg}', [RekamMedisIgdController::class, 'cetakResepIGD'])->name('rm.cetakResepIGD');
         Route::get('riwayatRekamMedis/igd/berkasIGD/cetakRad/{nomr}/{noReg}', [RekamMedisIgdController::class, 'cetakRadIGD'])->name('rm.cetakRadIGD');
         Route::get('riwayatRekamMedis/igd/berkasIGD/cetakLab/{nomr}/{noReg}', [RekamMedisIgdController::class, 'cetakLabIGD'])->name('rm.cetakLabIGD');
+    });
+
+    Route::prefix('claim')->group(function () {
+        // ------------------- Berkas Resume ---------------------- //
+        Route::get('riwayatClaim/resume/rajal', [ResumeController::class, 'resumeRajal'])->name('rm.resumeRajal');
+        Route::get('riwayatClaim/resume/ranap', [ResumeController::class, 'resumeRanap'])->name('rm.resumeRanap');
     });
 
     // Riwayat Rekam Medis

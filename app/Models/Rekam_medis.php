@@ -226,6 +226,37 @@ class Rekam_medis extends Model
         return $data;
     }
 
+    function rekamMediByMrRanap($No_MR)
+    {
+
+        $pku = DB::connection('pku')->getDatabaseName();
+        $data = DB::connection('db_rsmm')
+            ->table('PENDAFTARAN as p')
+            ->leftJoin('DOKTER as d', 'p.Kode_Dokter', '=', 'd.Kode_Dokter')
+            ->leftJoin('M_RUANG as mr', 'p.Kode_Ruang', '=', 'mr.Kode_Ruang')
+            ->leftJoin($pku . '.dbo.TAC_RJ_MEDIS as trm', 'p.No_Reg', '=', 'trm.FS_KD_REG')
+
+            ->select(
+                'P.No_MR',
+                'p.Tanggal',
+                'p.No_Reg',
+                'p.Medis',
+                'p.KodeRekanan',
+                'p.Kode_Ruang',
+                'p.Status',
+                'd.Nama_Dokter',
+                'mr.Nama_Ruang',
+                'trm.FS_KD_TRS',
+                'trm.FS_CARA_PULANG',
+
+            )
+            ->where('p.No_MR', $No_MR)
+            ->where('p.Medis', 'RAWAT INAP')
+            ->orderBy('p.Tanggal', 'desc')
+            ->get();
+        return $data;
+    }
+
     // Rekam Medis IGD
 
     function rekamMedisIgd($No_MR)
@@ -383,21 +414,16 @@ class Rekam_medis extends Model
         $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
         $data = DB::connection('pku')
             ->table('TAC_ASES_PER2 as tap')
-
             ->leftJoin('TAC_RJ_VITAL_SIGN as vs', 'tap.FS_KD_REG', '=', 'vs.FS_KD_REG')
             ->leftJoin('TAC_RJ_NYERI as trn', 'tap.FS_KD_REG', '=', 'trn.FS_KD_REG')
             ->leftJoin('TAC_RJ_JATUH as trj', 'tap.FS_KD_REG', '=', 'trj.FS_KD_REG')
             ->leftJoin('TAC_COM_USER as tcm', 'vs.mdb', '=', 'tcm.user_id')
+            ->leftJoin($db_rsmm . '.dbo.REGISTER_PASIEN as rp', 'tap.FS_KD_REG', '=', 'rp.No_MR')
             ->leftJoin($db_rsmm . '.dbo.TUSER as u', 'tcm.user_name', '=', 'u.NAMAUSER')
-
-            // ->leftJoin('ANTRIAN as a', 'p.No_MR', '=', 'a.No_MR')
-            // ->leftJoin('M_RUANG as mr', 'p.Kode_Ruang', '=', 'mr.Kode_Ruang')
-            // ->leftJoin($pku . '.dbo.TAC_RJ_MEDIS as trm', 'p.No_Reg', '=', 'trm.FS_KD_REG')
-            // ->leftJoin($pku . '.dbo.TAC_RJ_STATUS as trs', 'p.No_Reg', '=', 'trs.FS_KD_REG')
-
             ->select(
                 'tap.*',
                 // vital sign
+                'rp.FS_ALERGI',
                 'vs.FS_SUHU',
                 'vs.FS_NADI',
                 'vs.FS_R',

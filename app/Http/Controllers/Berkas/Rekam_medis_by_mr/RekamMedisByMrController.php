@@ -43,7 +43,6 @@ class RekamMedisByMrController extends Controller
      */
     public function index(Request $request)
     {
-        //
         $title = $this->prefix . ' ' . 'By No MR';
         $nomr = $request->input('nomr');
         $biodatas = $this->pasien->biodataPasienByMr($nomr);
@@ -57,8 +56,6 @@ class RekamMedisByMrController extends Controller
         if ($biodatas != null) {
             $cek_mr = 'true';
         }
-
-
         return view($this->view . 'index', compact('title', 'biodatas', 'cek_mr', 'dataPasien'));
     }
 
@@ -74,7 +71,7 @@ class RekamMedisByMrController extends Controller
         $biodata = $this->rajal->pasien_bynoreg($noReg);
         $cppt = $this->rekam_medis->detailCpptByNoreg($noReg);
 
-        dd($cppt);
+        // dd($cppt);
 
 
         return view($this->view . 'detailBerkas', compact('title', 'biodata', 'medis', 'perawat', 'bidan', 'rencana', 'resume'));
@@ -83,14 +80,18 @@ class RekamMedisByMrController extends Controller
     public function resumeRanap($noReg)
     {
         $biodata = $this->rawatinap->biodataPasienRanap($noReg);
-        // dd($biodata);
+
         $resumePasienRanap = $this->rawatinap->resumePasienRanapByNoreg($noReg);
-        $resumeDiagnosaSekunder = $this->rawatinap->resumeDiagnosaSekunder($noReg);
         // dd($resumePasienRanap);
+        $resumeDiagnosa = $this->rawatinap->resumeDiagnosaSekunder($noReg);
         $resumeIdikasi = $this->rawatinap->resumeIdikasi($noReg);
         $resumeDiet = $this->rawatinap->resumeDiet($noReg);
         $resumeTindakan = $this->rawatinap->resumeTindakan($noReg);
         $resumeTerapiPulang = $this->rawatinap->resumeTerapiPulang($noReg);
+
+        if ($resumePasienRanap == null) {
+            return redirect()->back()->with('warning', 'Data Resume belum di inputkan di EMR!');
+        }
         // Cetak PDF
         $date = date('dMY');
         $tanggal = Carbon::now();
@@ -98,7 +99,7 @@ class RekamMedisByMrController extends Controller
 
         $title = 'Cetak RM';
 
-        $pdf = PDF::loadview('pages.rekam_medis.bymr.resumeRanap', ['tanggal' => $tanggal, 'title' => $title, 'biodata' => $biodata, 'resumePasienRanap' => $resumePasienRanap, 'resumeDiet' => $resumeDiet, 'resumeIdikasi' => $resumeIdikasi, 'resumeDiagnosaSekunder' => $resumeDiagnosaSekunder, 'resumeTindakan' => $resumeTindakan, 'resumeTerapiPulang' => $resumeTerapiPulang]);
+        $pdf = PDF::loadview('pages.rekam_medis.bymr.resumeRanap', ['tanggal' => $tanggal, 'title' => $title, 'biodata' => $biodata, 'resumePasienRanap' => $resumePasienRanap, 'resumeDiagnosa' => $resumeDiagnosa, 'resumeDiet' => $resumeDiet, 'resumeIdikasi' => $resumeIdikasi,  'resumeTindakan' => $resumeTindakan, 'resumeTerapiPulang' => $resumeTerapiPulang]);
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
     }
@@ -108,9 +109,9 @@ class RekamMedisByMrController extends Controller
         $resep = $this->rajaldokter->resep($noReg);
         $labs = $this->rajaldokter->lab($noReg);
         $biodata = $this->rekam_medis->getBiodata($noReg);
-        // dd($biodata);
         $asesmenPerawat = $this->rekam_medis->cetakRmRajal($noReg);
         $asesmenDokterRj = $this->rekam_medis->asesmenDokterRjBynoReg($noReg);
+        // dd($asesmenDokterRj);
         // Cetak PDF
         $date = date('dMY');
         $tanggal = Carbon::now();

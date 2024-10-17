@@ -77,7 +77,6 @@ class RawatInap extends Model
 
     public function resumePasienRanapByNoreg($noReg)
     {
-
         $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
         $data = DB::connection('pku')
             ->table('TAB_PX_PULANG_RESUME as resume')
@@ -97,11 +96,7 @@ class RawatInap extends Model
                 'p.tanggal',
                 'p.tgl_keluar',
                 'mr.nama_ruang',
-                // pendaftaran table
                 'd.nama_dokter',
-
-
-
             )
             ->where('resume.FS_KD_REG', $noReg)
             ->first();
@@ -111,16 +106,11 @@ class RawatInap extends Model
 
     public function resumeDiagnosaSekunder($noReg)
     {
-
         $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
         $data = DB::connection('pku')
             ->table('TAB_PX_PULANG_RESUME_DIAG_SEK as a')
-            // ->table('PENDAFTARAN as p')
-
             ->select(
-                // transaksi_kamar
-                'a.*',
-
+                'a.*'
             )
             ->where('a.FS_KD_REG', $noReg)
             ->orderBy('a.FS_KD_DIAG_SEK', 'asc')
@@ -130,16 +120,12 @@ class RawatInap extends Model
 
     public function resumeIdikasi($noReg)
     {
-        // $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
         $data = DB::connection('pku')
             ->table('TAB_PX_PULANG_RESUME_INDIKASI_RAWAT as a')
             ->leftJoin('COM_PARAM_RM_40_INDIKASI_DIRAWAT as b', 'a.FS_KD_PARAM_INDIKASI_DIRAWAT', '=', 'b.FS_KD_PARAM_INDIKASI_DIRAWAT')
-
             ->select(
-                // transaksi_kamar
                 'a.*',
-                'b.*',
-
+                'b.*'
             )
             ->where('a.FS_KD_REG', $noReg)
             ->get();
@@ -148,17 +134,13 @@ class RawatInap extends Model
 
     public function resumeDiet($noReg)
     {
-        // $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
         $data = DB::connection('pku')
             ->table('TAB_PX_PULANG_RESUME_DIET as a')
             ->leftJoin('TAB_PX_PULANG_DIET as b', 'a.FS_KD_DIET', '=', 'b.FS_KD_DIET')
-
             ->select(
-                // transaksi_kamar
                 'a.FS_KD_PX_PULANG_DIET',
                 'a.FS_KD_DIET',
-                'b.FS_NM_DIET',
-
+                'b.FS_NM_DIET'
             )
             ->where('a.FS_KD_REG', $noReg)
             ->get();
@@ -167,37 +149,23 @@ class RawatInap extends Model
 
     public function resumeTindakan($noReg)
     {
-
-
-        $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
         $data = DB::connection('pku')
             ->table('TAB_PX_PULANG_RESUME_TIND as a')
-            // ->table('PENDAFTARAN as p')
-
             ->select(
-                // transaksi_kamar
                 'a.*',
-
             )
             ->where('a.FS_KD_REG', $noReg)
             ->orderBy('a.FS_KD_TIND', 'asc')
             ->first();
         return $data;
     }
-    // $sql = "SELECT * FROM PKU.dbo.TAB_PX_PULANG_TERAPI WHERE FS_KD_REG = ? ORDER BY FS_KD_TERAPI ASC";
+
     public function resumeTerapiPulang($noReg)
     {
-
-
-        $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
         $data = DB::connection('pku')
             ->table('TAB_PX_PULANG_TERAPI as a')
-            // ->table('PENDAFTARAN as p')
-
             ->select(
-                // transaksi_kamar
                 'a.*',
-
             )
             ->where('a.FS_KD_REG', $noReg)
             ->orderBy('a.FS_KD_TERAPI', 'asc')

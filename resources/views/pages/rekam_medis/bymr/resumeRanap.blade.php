@@ -213,25 +213,31 @@
             </tr>
             <tr>
                 <td class="text3">Pengobatan dilanjutkan</td>
-                <td class="text3" colspan="5"> {{ $resumePasienRanap->ket_masuk}} {{ $resumePasienRanap->FS_KET_KONTROL}}, Tanggal Kontrol :{{date('d M Y', strtotime($resumePasienRanap->FD_TGL_KONTROL))}}, Jam :{{ $resumePasienRanap->FS_JAM_KONTROL}}  </td>
+                <td class="text3" colspan="5"> 
+                @if (empty($resumePasienRanap->FS_KET_KONTROL))
+                    {{-- No output if FD_TGL_KONTROL is empty --}}
+                @else
+                    {{ $resumePasienRanap->ket_masuk }} {{ $resumePasienRanap->FS_KET_KONTROL }}, Tanggal Kontrol: {{ date('d-M-Y', strtotime($resumePasienRanap->FD_TGL_KONTROL)) }}, Jam: {{ $resumePasienRanap->FS_JAM_KONTROL }}
+                    <br>
+                    @if (empty($resumePasienRanap->FS_KD_LAYANAN2) || $resumePasienRanap->FS_KD_LAYANAN2 == ' ' || $resumePasienRanap->FS_KD_LAYANAN2 == 'NULL')
+                        {{-- No output if FS_KD_LAYANAN2 is empty, a space, or 'NULL' --}}
+                    @else
+                        POLIKLINIK 2 {{ $resumePasienRanap->FS_NM_LAYANAN2 }} {{ $resumePasienRanap->FS_KET_KONTROL }}, Tanggal Kontrol: {{ date('d-M-Y', strtotime($resumePasienRanap->FD_TGL_KONTROL2)) }}, Jam: {{ $resumePasienRanap->FS_JAM_KONTROL2 }}
+                    @endif
+                @endif
+                    
+                    {{-- {{ $resumePasienRanap->ket_masuk}} {{ $resumePasienRanap->FS_KET_KONTROL}}, Tanggal Kontrol :{{date('d M Y', strtotime($resumePasienRanap->FD_TGL_KONTROL))}}, Jam :{{ $resumePasienRanap->FS_JAM_KONTROL}}  </td> --}}
             </tr>
             <tr>
                 <td class="text3">Diagnosa Utama</td>
                 <td class="text3" colspan="3">{{ $resumePasienRanap->FS_DIAG_UTAMA}}</td>
                 <td class="text3" colspan="2">ICD 10 : {{ $resumePasienRanap->FS_ICD_DIAG_UTAMA}}</td>
             </tr>
-                @if(is_null($resumeDiagnosaSekunder))
-                <tr>
-                    <td class="text3">Diagnosa Sekunder</td>
-                    <td class="text3" colspan="5"></td>
-                </tr>
-                @else
-                    <tr>
-                        <td class="text3">Diagnosa Sekunder</td>
-                        <td class="text3" colspan="3">{{ $resumeDiagnosaSekunder->FS_NM_DIAG_SEK}}</td>
-                        <td class="text3" colspan="2">ICD 10 : {{ $resumeDiagnosaSekunder->ICD10}}</td>
-                    </tr>
-                @endif
+            <tr>
+                <td class="text3">Diagnosa Sekunder</td>
+                <td class="text3" colspan="3">{{ $resumeDiagnosa->FS_NM_DIAG_SEK ?? ''}}</td>
+                <td class="text3" colspan="2">ICD 10 : {{ $resumeDiagnosa->ICD10 ?? ''}}</td>
+            </tr>
             <tr>
                 <td class="text3">Tindakan / Prosedur</td>
                 <td class="text3" colspan="3">{{ $resumeTindakan->FS_NM_TIND ?? ""}} </td>

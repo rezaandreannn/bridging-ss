@@ -183,21 +183,16 @@
                 </td>
             </tr>
             <tr>
-                <td class="text3">Keterangan</td>
-                <td class="text3" colspan="5" height="50px"></td>
+                <td class="text3">Riwayat Penyakit</td>
+                <td class="text3" colspan="5">{{ $asesmenDokterRj->FS_RIW_PENYAKIT_DAHULU}}</td>
             </tr>
             <tr>
                 <td class="text3">Alergi</td>
-                <td class="text3" colspan="3">Obat: </td>
-                <td class="text3" colspan="2">Makanan: </td>
+                <td class="text3" colspan="5">{{ $asesmenDokterRj->FS_ALERGI}}</td>
             </tr>
             <tr>
                 <td class="text3">Pemeriksaan Fisik</td>
                 <td class="text3" colspan="5"> Tanda-tanda vital {{ $asesmenDokterRj->FS_CATATAN_FISIK}}</td>
-            </tr>
-            <tr>
-                <td class="text3">Pemeriksaan Penunjang</td>
-                <td class="text3" colspan="5" height="50px"> </td>
             </tr>
             <tr>
                 <td class="text3">Kondisi Keluar</td>

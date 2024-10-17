@@ -1,21 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Berkas\Rekam_medis_harian;
+namespace App\Http\Controllers\Berkas\klaim;
 
-use Carbon\Carbon;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\Rajal;
 use App\Models\Pasien;
 use App\Models\Fisioterapi;
 use App\Models\RajalDokter;
 use App\Models\RanapDokter;
 use App\Models\Rekam_medis;
-use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf;
-use App\Http\Controllers\Controller;
 
-class RekamMedisHarianController extends Controller
+class ResumeController extends Controller
 {
-
     protected $view;
     protected $routeIndex;
     protected $prefix;
@@ -28,22 +25,18 @@ class RekamMedisHarianController extends Controller
     public function __construct(Rekam_medis $rekam_medis)
     {
         $this->rekam_medis = $rekam_medis;
-        $this->view = 'pages.rekam_medis.harian.';
-        $this->prefix = 'Riwayat Rekam Medis';
+        $this->view = 'pages.rekam_medis.resume.';
+        $this->prefix = 'Riwayat Resume';
         $this->pasien = new Pasien;
         $this->rajal = new Rajal;
         $this->rajaldokter = new RajalDokter;
         $this->ranap = new RanapDokter;
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
+
+    public function resumeRajal(Request $request)
     {
         $rekamMedisModel = new Rekam_medis;
-        $title = $this->prefix . ' ' . 'Harian';
+        $title = $this->prefix . ' ' . 'Rawat Jalan';
         $kode_dokter = $request->input('kode_dokter');
         $tanggal = $request->input('tanggal');
         $dokters = $this->rajal->byKodeDokter();
@@ -53,33 +46,25 @@ class RekamMedisHarianController extends Controller
             $dataPasien = $this->rekam_medis->rekamMedisHarian($kode_dokter, $tanggal);
         }
 
-        // dd($dataPasien);
-
-        $tglSekarang = strtotime(date('Y-m-d'));
-        $tglKemarin = date('Y-m-d', strtotime("-1 day", $tglSekarang));
-        $userLogin = auth()->user()->username;
-        // dd($dataPasien);
-
-
-        return view($this->view . 'index', compact('title', 'dataPasien', 'dokters', 'tglKemarin', 'userLogin', 'rekamMedisModel'));
+        return view($this->view . 'rajal', compact('title', 'dataPasien', 'dokters', 'rekamMedisModel'));
     }
 
-    public function riwayat_pemeriksaan_pasien(Request $request)
+    public function resumeRanap(Request $request)
     {
-        //
-        $title = $this->prefix . ' ' . 'List riwayat pemeriksaan pasien';
-        $tanggal = $request->input('tanggal') ?? "";
-        $no_mr = $request->input('no_mr') ?? "";
-        $kode_dokter = $request->input('kode_dokter') ?? "";
-        $cekAsesmenFisio = new Fisioterapi();
-        $dokters = $this->rajal->byKodeDokter();
-        $kode_dokter = auth()->user()->username;
-        $history = $this->rajaldokter->getHistoryPemeriksaanPasien($no_mr, $tanggal, $kode_dokter);
+        $title = $this->prefix . ' ' . 'Rawat Inap';
+        $nomr = $request->input('nomr');
+        $biodatas = $this->pasien->biodataPasienByMr($nomr);
+        $dataPasien = [];
+        if ($nomr != null) {
+            $dataPasien = $this->rekam_medis->rekamMediByMrRanap($nomr);
+        }
+        // dd($dataPasien);
 
-        // $listpasien = $this->fisio->getPasienRehabMedisByTgl($kode_dokter, $tanggal);
-        // dd($listpasien);
-        $fisioterapi = new Fisioterapi();
-        return view('pages.rj.dokter.riwayatPemeriksaanPasien', compact('title', 'fisioterapi', 'dokters', 'history', 'cekAsesmenFisio'));
+        $cek_mr = 'false';
+        if ($biodatas != null) {
+            $cek_mr = 'true';
+        }
+        return view($this->view . 'ranap', compact('title', 'biodatas', 'cek_mr', 'dataPasien'));
     }
 
     /**
@@ -87,7 +72,6 @@ class RekamMedisHarianController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
     public function create()
     {
         //

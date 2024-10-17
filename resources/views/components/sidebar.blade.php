@@ -333,16 +333,16 @@
 
             @can('claim bpjs')
             <li class="menu-header">Klaim</li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown {{ Request::is('claim/*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Berkas Klaim</span></a>
                 <ul class="dropdown-menu">
-                    <li class="">
-                        <a class="nav-link" href="#">Resume Rajal</a>
+                    <li class="{{ Request::is('claim/riwayatClaim/resume/rajal') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('rm.resumeRajal')}}">Resume Rajal</a>
                     </li>
                 </ul>
                 <ul class="dropdown-menu">
-                    <li class="">
-                        <a class="nav-link" href="#">Resume Ranap</a>
+                    <li class="{{ Request::is('claim/riwayatClaim/resume/ranap') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('rm.resumeRanap')}}">Resume Ranap</a>
                     </li>
                 </ul>
                 <ul class="dropdown-menu">
