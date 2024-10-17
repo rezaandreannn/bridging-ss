@@ -564,54 +564,6 @@
                                     </div>
                                     @enderror
                                 </div>
-                                {{-- <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Masalah Kesehatan</label>
-                                        <select name="tujuan[]" id="masalah_perawatan" class="form-control select2" multiple="multiple" data-placeholder="Pilih Masalah Keperawatan" style="width: 100%;">
-    
-                                            <option value="">-- pilih --</option>
-                                            @forelse ($masalah_perGet as $mp)
-                                            @foreach ($masalah_perawatan as $mk)
-                                            <option value="{{ $mk->FS_KD_DAFTAR_DIAGNOSA }}" {{ $mk->FS_KD_DAFTAR_DIAGNOSA == $mp->FS_KD_MASALAH_KEP ? "selected" : "" }}>{{ $mk->FS_NM_DIAGNOSA }}</option>
-                                            @endforeach
-                                            @empty
-                                            @foreach ($masalah_perawatan as $mk)
-                                            <option value="{{ $mk->FS_KD_DAFTAR_DIAGNOSA }}">{{ $mk->FS_NM_DIAGNOSA }}</option>
-                                            @endforeach
-                                            @endforelse
-    
-                                        </select>
-                                    </div>
-                                    @error('masalah_keperawatan')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Rencana Tindakan</label>
-                                        <select multiple name="tembusan[]" id="rencana_perawatan" class="form-control select2" multiple="multiple" data-placeholder="Pilih Rencana Keperawatan" style="width: 100%;">
-                                            <option value="">-- pilih --</option>
-    
-                                            @forelse ($rencana_perGet as $rpp)
-                                            @foreach ($rencana_perawatan as $rp)
-                                            <option value="{{ $rp->FS_KD_TRS }}" {{ $rp->FS_KD_TRS == $rpp->FS_KD_REN_KEP ? 'selected' : ''}}>{{ $rp->FS_NM_REN_KEP }}</option>
-                                            @endforeach
-                                            @empty
-                                            @foreach ($rencana_perawatan as $rp)
-                                            <option value="{{ $rp->FS_KD_TRS }}">{{ $rp->FS_NM_REN_KEP }}</option>
-                                            @endforeach
-                                            @endforelse
-    
-                                        </select>
-                                    </div>
-                                    @error('rencana_perawatan')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div> --}}
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Edukasi</label>
@@ -623,58 +575,6 @@
                                         {{ $message }}
                                     </div>
                                     @enderror
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Konsul</label>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="konsul" value="0" id="konsul1" {{ ($asasmen_dokter->konsul=='0') ? 'checked' : '' }}>
-                                                        <label class="form-check-label" for="konsul1">
-                                                            Tidak
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="konsul" value="1" id="konsul2" {{ ($asasmen_dokter->konsul=='1') ? 'checked' : '' }}>
-                                                        <label class="form-check-label" for="konsul2">
-                                                            Iya, Kebagian
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <input type="text" name="keterangan_konsul" value="{{ $asasmen_dokter->keterangan_konsul }}" class="form-control @error('keterangan_konsul') is-invalid  
-                                            @enderror" value="{{old('keterangan_konsul')}}" placeholder="Kebagian konsul ...">
-                                            </div>
-                                            @error('keterangan_konsul')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="d-block">Kondisi Pulang</label>
-                                        <select name="FS_CARA_PULANG" id="kondisi" class="form-control select2 @error('cara_pulang')  is-invalid @enderror" onchange="click_kondisi_pulang(this)">
-                                            <option value="" selected disabled>--Pilih Cara Pulang--</option>
-                                            <option value="0" {{ ($asasmen_dokter->FS_CARA_PULANG=='0') ? 'selected' : ''}}>Tidak Kontrol</option>
-                                            <option value="2" {{ ($asasmen_dokter->FS_CARA_PULANG=='2') ? 'selected' : ''}}>Kontrol</option>
-                                            <option value="3" {{ ($asasmen_dokter->FS_CARA_PULANG=='3') ? 'selected' : ''}}>Rawat Inap</option>
-                                            <option value="4" {{ ($asasmen_dokter->FS_CARA_PULANG=='4') ? 'selected' : ''}}>Rawat Luar RS</option>
-                                            <option value="6" {{ ($asasmen_dokter->FS_CARA_PULANG=='6') ? 'selected' : ''}}>Rawat Internal</option>
-                                            <option value="7" {{ ($asasmen_dokter->FS_CARA_PULANG=='7') ? 'selected' : ''}}>Kembali Ke Faskes Primer</option>
-                                            <option value="8" {{ ($asasmen_dokter->FS_CARA_PULANG=='8') ? 'selected' : ''}}>PRB</option>
-                                        </select>
-                                        @error('cara_pulang')
-                                        <span class="text-danger" style="font-size: 12px;">
-                                            {{ $message }}
-                                        </span>
-                                        @enderror
-                                    </div>
                                 </div>
                                 @if(Auth::user()->username == '156')
                                 <div class="col-md-6">
@@ -717,7 +617,26 @@
                                     </div>
                                 </div>
                                 @endif
-                                <div class="col-md-6"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="d-block">Kondisi Pulang</label>
+                                        <select name="FS_CARA_PULANG" id="kondisi" class="form-control select2 @error('cara_pulang')  is-invalid @enderror" onchange="click_kondisi_pulang(this)">
+                                            <option value="" selected disabled>--Pilih Cara Pulang--</option>
+                                            <option value="0" {{ ($asasmen_dokter->FS_CARA_PULANG=='0') ? 'selected' : ''}}>Tidak Kontrol</option>
+                                            <option value="2" {{ ($asasmen_dokter->FS_CARA_PULANG=='2') ? 'selected' : ''}}>Kontrol</option>
+                                            <option value="3" {{ ($asasmen_dokter->FS_CARA_PULANG=='3') ? 'selected' : ''}}>Rawat Inap</option>
+                                            <option value="4" {{ ($asasmen_dokter->FS_CARA_PULANG=='4') ? 'selected' : ''}}>Rawat Luar RS</option>
+                                            <option value="6" {{ ($asasmen_dokter->FS_CARA_PULANG=='6') ? 'selected' : ''}}>Rawat Internal</option>
+                                            <option value="7" {{ ($asasmen_dokter->FS_CARA_PULANG=='7') ? 'selected' : ''}}>Kembali Ke Faskes Primer</option>
+                                            <option value="8" {{ ($asasmen_dokter->FS_CARA_PULANG=='8') ? 'selected' : ''}}>PRB</option>
+                                        </select>
+                                        @error('cara_pulang')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="namaobat">Nama Obat</label>

@@ -763,58 +763,6 @@
                                     </div>
                                     @enderror
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Konsul</label>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="konsul" value="0" id="konsul1" checked>
-                                                        <label class="form-check-label" for="konsul1">
-                                                            Tidak
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="konsul" value="1" id="konsul2">
-                                                        <label class="form-check-label" for="konsul2">
-                                                            Iya, Kebagian
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <input type="text" name="keterangan_konsul" class="form-control @error('keterangan_konsul') is-invalid  
-                                            @enderror" value="{{old('keterangan_konsul')}}" placeholder="Kebagian konsul ...">
-                                            </div>
-                                            @error('keterangan_konsul')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="d-block">Kondisi Pulang</label>
-                                        <select name="FS_CARA_PULANG" id="kondisi" class="form-control select2 @error('cara_pulang')  is-invalid @enderror" onchange="click_kondisi_pulang(this)">
-                                            <option value="" disabled>--Pilih Cara Pulang--</option>
-                                            <option value="0" @if(old('cara_pulang')=='0' ) selected @endif>Tidak Kontrol</option>
-                                            <option value="2" @if(old('cara_pulang')=='2' ) selected @endif>Kontrol</option>
-                                            <option value="3" @if(old('cara_pulang')=='3' ) selected @endif>Rawat Inap</option>
-                                            <option value="4" @if(old('cara_pulang')=='4' ) selected @endif>Rujuk Luar RS</option>
-                                            <option value="6" @if(old('cara_pulang')=='6' ) selected @endif>Rujuk Internal</option>
-                                            <option value="7" @if(old('cara_pulang')=='7' ) selected @endif>Kembali Ke Faskes Primer</option>
-                                            <option value="8" @if(old('cara_pulang')=='8' ) selected @endif>PRB</option>
-                                        </select>
-                                        @error('cara_pulang')
-                                        <span class="text-danger" style="font-size: 12px;">
-                                            {{ $message }}
-                                        </span>
-                                        @enderror
-                                    </div>
-                                </div>
                                 @if(Auth::user()->username == '156')
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -856,7 +804,26 @@
                                     </div>
                                 </div>
                                 @endif
-                                <div class="col-md-6"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="d-block">Kondisi Pulang</label>
+                                        <select name="FS_CARA_PULANG" id="kondisi" class="form-control select2 @error('cara_pulang')  is-invalid @enderror" onchange="click_kondisi_pulang(this)">
+                                            <option value="" disabled>--Pilih Cara Pulang--</option>
+                                            <option value="0" @if(old('cara_pulang')=='0' ) selected @endif>Tidak Kontrol</option>
+                                            <option value="2" @if(old('cara_pulang')=='2' ) selected @endif>Kontrol</option>
+                                            <option value="3" @if(old('cara_pulang')=='3' ) selected @endif>Rawat Inap</option>
+                                            <option value="4" @if(old('cara_pulang')=='4' ) selected @endif>Rujuk Luar RS</option>
+                                            <option value="6" @if(old('cara_pulang')=='6' ) selected @endif>Rujuk Internal</option>
+                                            <option value="7" @if(old('cara_pulang')=='7' ) selected @endif>Kembali Ke Faskes Primer</option>
+                                            <option value="8" @if(old('cara_pulang')=='8' ) selected @endif>PRB</option>
+                                        </select>
+                                        @error('cara_pulang')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="namaobat">Nama Obat</label>
@@ -1048,7 +1015,7 @@
     if ($("#namapaketdrsuner").val() == "Pre op Phaco") {
       $(".resep").val(
         resep +
-          "\n /R  cenfresh No 5 \n  S 4 ddgtt 1 tetes + ODS   \n ---------------------------------------- \n \n /R  Floxa No 2 \n  S 6 ddgtt 1 tetes + ODS (3 hari sebelum operasi)  \n ---------------------------------------- \n"
+          "\n /R  cenfresh No 5 \n  S 4 ddgtt 1 tetes ODS   \n ---------------------------------------- \n \n /R  Floxa No 2 \n  S 6 ddgtt 1 tetes ODS (3 hari sebelum operasi)  \n ---------------------------------------- \n"
       );
       $("#namapaketdrsuner").select2("data", null);
     } else if ($("#namapaketdrsuner").val() == "Glaucoma") {

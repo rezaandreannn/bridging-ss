@@ -519,26 +519,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="d-block">Kondisi Pulang</label>
-                                        <select name="FS_CARA_PULANG" id="kondisi" class="form-control select2 @error('cara_pulang')  is-invalid @enderror" onchange="click_kondisi_pulang(this)">
-                                            <option value="" disabled>--Pilih Cara Pulang--</option>
-                                            <option value="0" {{ ($medis->FS_CARA_PULANG=='0') ? 'selected' : ''}}>Tidak Kontrol</option>
-                                            <option value="2" {{ ($medis->FS_CARA_PULANG=='2') ? 'selected' : ''}}>Kontrol</option>
-                                            <option value="3" {{ ($medis->FS_CARA_PULANG=='3') ? 'selected' : ''}}>Rawat Inap</option>
-                                            <option value="4" {{ ($medis->FS_CARA_PULANG=='4') ? 'selected' : ''}}>Rawat Luar RS</option>
-                                            <option value="6" {{ ($medis->FS_CARA_PULANG=='6') ? 'selected' : ''}}>Rawat Internal</option>
-                                            <option value="7" {{ ($medis->FS_CARA_PULANG=='7') ? 'selected' : ''}}>Kembali Ke Faskes Primer</option>
-                                            <option value="8" {{ ($medis->FS_CARA_PULANG=='8') ? 'selected' : ''}}>PRB</option>
-                                        </select>
-                                        @error('cara_pulang')
-                                        <span class="text-danger" style="font-size: 12px;">
-                                            {{ $message }}
-                                        </span>
-                                        @enderror
-                                    </div>
-                                </div>
                                 @if(Auth::user()->username == '156')
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -580,7 +560,26 @@
                                     </div>
                                 </div>
                                 @endif
-                                <div class="col-md-6"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="d-block">Kondisi Pulang</label>
+                                        <select name="FS_CARA_PULANG" id="kondisi" class="form-control select2 @error('cara_pulang')  is-invalid @enderror" onchange="click_kondisi_pulang(this)">
+                                            <option value="" disabled>--Pilih Cara Pulang--</option>
+                                            <option value="0" {{ ($medis->FS_CARA_PULANG=='0') ? 'selected' : ''}}>Tidak Kontrol</option>
+                                            <option value="2" {{ ($medis->FS_CARA_PULANG=='2') ? 'selected' : ''}}>Kontrol</option>
+                                            <option value="3" {{ ($medis->FS_CARA_PULANG=='3') ? 'selected' : ''}}>Rawat Inap</option>
+                                            <option value="4" {{ ($medis->FS_CARA_PULANG=='4') ? 'selected' : ''}}>Rawat Luar RS</option>
+                                            <option value="6" {{ ($medis->FS_CARA_PULANG=='6') ? 'selected' : ''}}>Rawat Internal</option>
+                                            <option value="7" {{ ($medis->FS_CARA_PULANG=='7') ? 'selected' : ''}}>Kembali Ke Faskes Primer</option>
+                                            <option value="8" {{ ($medis->FS_CARA_PULANG=='8') ? 'selected' : ''}}>PRB</option>
+                                        </select>
+                                        @error('cara_pulang')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="namaobat">Nama Obat</label>

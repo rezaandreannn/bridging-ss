@@ -473,54 +473,6 @@
                                     </div>
                                     @enderror
                                 </div>
-                                {{-- <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Masalah Kesehatan</label>
-                                        <select name="tujuan[]" id="masalah_perawatan" class="form-control select2" multiple="multiple" data-placeholder="Pilih Masalah Keperawatan" style="width: 100%;">
-    
-                                            <option value="">-- pilih --</option>
-                                            @forelse ($masalah_perGet as $mp)
-                                            @foreach ($masalah_perawatan as $mk)
-                                            <option value="{{ $mk->FS_KD_DAFTAR_DIAGNOSA }}" {{ $mk->FS_KD_DAFTAR_DIAGNOSA == $mp->FS_KD_MASALAH_KEP ? "selected" : "" }}>{{ $mk->FS_NM_DIAGNOSA }}</option>
-                                            @endforeach
-                                            @empty
-                                            @foreach ($masalah_perawatan as $mk)
-                                            <option value="{{ $mk->FS_KD_DAFTAR_DIAGNOSA }}">{{ $mk->FS_NM_DIAGNOSA }}</option>
-                                            @endforeach
-                                            @endforelse
-    
-                                        </select>
-                                    </div>
-                                    @error('masalah_keperawatan')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Rencana Tindakan</label>
-                                        <select multiple name="tembusan[]" id="rencana_perawatan" class="form-control select2" multiple="multiple" data-placeholder="Pilih Rencana Keperawatan" style="width: 100%;">
-                                            <option value="">-- pilih --</option>
-    
-                                            @forelse ($rencana_perGet as $rpp)
-                                            @foreach ($rencana_perawatan as $rp)
-                                            <option value="{{ $rp->FS_KD_TRS }}" {{ $rp->FS_KD_TRS == $rpp->FS_KD_REN_KEP ? 'selected' : ''}}>{{ $rp->FS_NM_REN_KEP }}</option>
-                                            @endforeach
-                                            @empty
-                                            @foreach ($rencana_perawatan as $rp)
-                                            <option value="{{ $rp->FS_KD_TRS }}">{{ $rp->FS_NM_REN_KEP }}</option>
-                                            @endforeach
-                                            @endforelse
-    
-                                        </select>
-                                    </div>
-                                    @error('rencana_perawatan')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div> --}}
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Edukasi</label>
@@ -532,38 +484,47 @@
                                     </div>
                                     @enderror
                                 </div>
+                                @if(Auth::user()->username == '156')
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Konsul</label>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="konsul" value="0" id="konsul1" checked>
-                                                        <label class="form-check-label" for="konsul1">
-                                                            Tidak
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="konsul" value="1" id="konsul2">
-                                                        <label class="form-check-label" for="konsul2">
-                                                            Iya, Kebagian
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <input type="text" name="keterangan_konsul" class="form-control @error('keterangan_konsul') is-invalid  
-                                            @enderror" value="{{old('keterangan_konsul')}}" placeholder="Kebagian konsul ...">
-                                            </div>
-                                            @error('keterangan_konsul')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                            @enderror
-                                        </div>
+                                        <label class="d-block">Paket Obat</label>
+                                        <select name="namapaketdrarfan" id="namapaketdrarfan" class="form-control namapaketdrarfan @error('cara_pulang')  is-invalid @enderror" onchange="click_kondisi_pulang(this)">
+                                            <option value="">--Pilih Paket Obat--</option>
+                                            <option value="Post Phaco 1 Hari">Post Phaco 1 Hari</option>
+                                            <option value="Post Phaco 1 Minggu">Post Phaco 1 Minggu</option>
+                                            <option value="Resep Kacamata">Resep Kacamata</option>
+                                        </select>
+                                        @error('cara_pulang')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
                                     </div>
                                 </div>
+                                @endif
+                                @if(Auth::user()->username == '148')
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="d-block">Paket Obat</label>
+                                        <select name="namapaketdrsuner" id="namapaketdrsuner" class="form-control namapaketdrsuner @error('cara_pulang')  is-invalid @enderror" onchange="click_kondisi_pulang(this)">
+                                            <option value="">--Pilih Paket Obat--</option>
+                                            <option value="Pre op Phaco">Pre op Phaco</option>
+                                            <option value="Glaucoma">Glaucoma</option>
+                                            <option value="Post Phaco 1 Hari">Post Phaco 1 Hari</option>
+                                            <option value="Post Phaco 1 Minggu">Post Phaco 1 Minggu</option>
+                                            <option value="Resep Kacamata">Resep Kacamata</option>
+                                            <option value="Post Insisi Chalazion">Post Insisi Chalazion</option>
+                                            <option value="Post op pteregium 1 hari">Post op pteregium 1 hari</option>
+                                            <option value="Post op pteregium 1 minggu">Post op pteregium 1 minggu</option>
+                                        </select>
+                                        @error('cara_pulang')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                @endif
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="d-block">Kondisi Pulang</label>
@@ -648,6 +609,83 @@
             }
         });
     });
+</script>
+
+<script>
+    $("#namapaketdrarfan").change(function () {
+    var resep = $(".resep").val();
+    if ($("#namapaketdrarfan").val() == "Post Phaco 1 Hari") {
+      $(".resep").val(
+        resep +
+          "\n /R  Ciprofloxacin 500mg No X \n  S 2dd1   \n ---------------------------------------- \n \n /R   Asam Mefenamat 500mg No XV \n  S 3dd 1 tablet  \n ---------------------------------------- \n \n /R   Methilprednisolon 8mg No XV \n  S 3 dd 8mg  \n ---------------------------------------- \n \n /R   LFX ed No 1 \n  S 6 ddgtt 1   \n ---------------------------------------- \n \n /R   P.pred ed No V \n  S 6ddgtt 1   \n ---------------------------------------- \n"
+      );
+      $("#namapaketdrarfan").select2("data", null);
+    } else if ($("#namapaketdrarfan").val() == "Post Phaco 1 Minggu") {
+      $(".resep").val(
+        resep +
+          "\n /R  Bralyflex Plus No 1 \n  S 4 ddgtt 1  \n ---------------------------------------- \n \n /R  Cenfresh ed No 5 \n  S 4 ddgtt 1 ODS   \n ---------------------------------------- \n"
+      );
+      $("#namapaketdrarfan").select2("data", null);
+    } else if ($("#namapaketdrarfan").val() == "Resep Kacamata") {
+      $(".resep").val(
+        resep +
+          "\n /R  Sanbe Tears No 1 \n  S 4ddgtt 1 ODS  \n ---------------------------------------- \n \n /R  Berry Vision No V  \n  S 1 dd 1  \n ---------------------------------------- \n"
+      );
+      $("#namapaketdrarfan").select2("data", null);
+    }
+  });
+  $("#namapaketdrsuner").change(function () {
+    var resep = $(".resep").val();
+    if ($("#namapaketdrsuner").val() == "Pre op Phaco") {
+      $(".resep").val(
+        resep +
+          "\n /R  cenfresh No 5 \n  S 4 ddgtt 1 tetes + ODS   \n ---------------------------------------- \n \n /R  Floxa No 2 \n  S 6 ddgtt 1 tetes + ODS (3 hari sebelum operasi)  \n ---------------------------------------- \n"
+      );
+      $("#namapaketdrsuner").select2("data", null);
+    } else if ($("#namapaketdrsuner").val() == "Glaucoma") {
+      $(".resep").val(
+        resep +
+          "\n /R  Optimol 0,5 ed No 1 \n  S 2 ddgtt 1 ODS  \n ---------------------------------------- \n \n /R  Lanosan Ed No 1  \n  S 1 ddgtt 1 ODS (Malam Hari) \n ---------------------------------------- \n \n /R  Cenfresh EDMD No 5  \n  S 4 ddgtt 1 ODS \n ---------------------------------------- \n"
+      );
+      $("#namapaketdrsuner").select2("data", null);
+    } else if ($("#namapaketdrsuner").val() == "Post Phaco 1 Hari") {
+      $(".resep").val(
+        resep +
+          "\n /R  Ciprofloxacin 500mg No VI \n  S 2dd1 tablet  \n ---------------------------------------- \n \n /R  Natrium Diclofenak 500mg No VI \n  S 2dd1 tablet  \n ---------------------------------------- \n \n /R  Levofloxacin ed No 1 \n  S 6 ddgtt 1 \n ---------------------------------------- \n \n /R  P.pred ed No V \n  S 6 ddgtt 1 \n ---------------------------------------- \n"
+      );
+      $("#namapaketdrsuner").select2("data", null);
+    } else if ($("#namapaketdrsuner").val() == "Post Phaco 1 Minggu") {
+      $(".resep").val(
+        resep +
+          "\n /R  Bralyflex Plus No 1 \n  S 4 ddgtt 1 tetes  \n ---------------------------------------- \n \n /R  Cenfresh ed No 5 \n  S 4 ddgtt 1 tetes ODS   \n ---------------------------------------- \n"
+      );
+      $("#namapaketdrsuner").select2("data", null);
+    } else if ($("#namapaketdrsuner").val() == "Resep Kacamata") {
+      $(".resep").val(
+        resep +
+          "\n /R  Cenfresh No V \n  S 4 ddgtt 1 tetes ODS  \n ---------------------------------------- \n \n /R  Berry Vision No VI  \n  S 1 dd 1 tablet \n ---------------------------------------- \n"
+      );
+      $("#namapaketdrsuner").select2("data", null);
+    } else if ($("#namapaketdrsuner").val() == "Post Insisi Chalazion") {
+      $(".resep").val(
+        resep +
+          "\n /R  Ciprofloxacin 500mg No X \n  S 2 dd 1 tablet  \n ---------------------------------------- \n \n /R  Na.Diclofenak 250mg No X  \n  S 2 dd 1 tablet \n ---------------------------------------- \n \n /R  C-Mycos No 1  \n  S 3 dd 1 salep \n ---------------------------------------- \n"
+      );
+      $("#namapaketdrsuner").select2("data", null);
+    } else if ($("#namapaketdrsuner").val() == "Post op pteregium 1 hari") {
+      $(".resep").val(
+        resep +
+          "\n /R  LFX ed No V \n  S 6 ddgtt 1 tetes  \n ---------------------------------------- \n \n /R  C-mycos eo No 1  \n  S 3 dd 1 \n ---------------------------------------- \n \n /R  Ciprofloxacin 500mg VI  \n  S 2 dd 1 tablet \n ---------------------------------------- \n \n /R  Na Diclofenak 250mg No X  \n  S 2 dd 1 tablet \n ---------------------------------------- \n"
+      );
+      $("#namapaketdrsuner").select2("data", null);
+    } else if ($("#namapaketdrsuner").val() == "Post op pteregium 1 minggu") {
+      $(".resep").val(
+        resep +
+          "\n /R  Alletrol No 1 \n  S 4 ddgtt 1 tetes  \n ---------------------------------------- \n \n /R  Cenfresh No 1  \n  S 4 ddgtt 1 tetes \n ---------------------------------------- \n"
+      );
+      $("#namapaketdrsuner").select2("data", null);
+    }
+  });
 </script>
 
 <script type="text/javascript">
