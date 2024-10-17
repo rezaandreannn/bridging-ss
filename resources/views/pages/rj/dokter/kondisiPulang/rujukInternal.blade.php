@@ -104,7 +104,7 @@
                                         <select name="FS_TUJUAN_RUJUKAN" id="FS_TUJUAN_RUJUKAN" class="form-control select2">
                                             <option value="" selected disabled>-- silahkan pillih --</option>
                                             @foreach ($dokters as $dokter)
-                                            <option value="{{ $dokter->nama_dokter }}" {{ request('nama_dokter') == $dokter->nama_dokter ? 'selected' : '' }}>{{ $dokter->nama_dokter }}</option>
+                                            <option value="{{ $dokter->kode_dokter }}" {{ request('kode_dokter') == $dokter->kode_dokter ? 'selected' : '' }}>{{ $dokter->nama_dokter }}</option>
                                             @endforeach
                                         </select>
                                         <input type="hidden" name="FS_TUJUAN_RUJUKAN2" size="55" value="RSU Muhammadiyah Metro" />

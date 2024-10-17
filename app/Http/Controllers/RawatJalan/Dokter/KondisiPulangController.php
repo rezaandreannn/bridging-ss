@@ -133,6 +133,7 @@ class KondisiPulangController extends Controller
         $biodata = $this->rekam_medis->getBiodata($noReg);
         $title = 'Rujuk Internal RS';
         $dokters = $this->rajal->byKodeDokter();
+        // dd($dokters);
 
         return view($this->view . '.kondisiPulang.rujukInternal', compact('title', 'biodata', 'dokters'));
     }
@@ -140,7 +141,6 @@ class KondisiPulangController extends Controller
     public function rujukInternalAdd(Request $request)
     {
         try {
-
             DB::connection('pku')->beginTransaction();
 
             $AddrujukanInternal = DB::connection('pku')->table('TAC_RJ_RUJUKAN')->insert([
