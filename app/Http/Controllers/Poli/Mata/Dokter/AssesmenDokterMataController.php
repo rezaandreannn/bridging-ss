@@ -107,12 +107,14 @@ class AssesmenDokterMataController extends Controller
         $biodata = $this->rekam_medis->getBiodata($noReg);
 
         $asasmen_perawat = $this->rajal->asasmenPerawatKonsul($noReg);
+        $refraksi = $this->poliMata->getRefraksi($noReg);
+        // dd($refraksi);
         // Data Master
         $masterLab = $this->rajaldokter->getMasterLab();
         $masterRadiologi = $this->rajaldokter->getMasterRadiologi();
         $masterObat = $this->rajaldokter->getMasterObat();
         // dd($asasmen_perawat);
-        return view($this->view . 'dokter.assesmenKonsul', compact('title', 'biodata', 'asasmen_perawat', 'masterLab', 'masterRadiologi', 'masterObat',  'noReg'));
+        return view($this->view . 'dokter.assesmenKonsul', compact('title', 'biodata', 'refraksi', 'asasmen_perawat', 'masterLab', 'masterRadiologi', 'masterObat',  'noReg'));
     }
 
     /**
