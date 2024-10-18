@@ -107,6 +107,48 @@
                     </div>
                 </div>
             </div>
+            <div class="card">
+                <div class="card-body">
+                    <h4 style="font-size:15px;color:black;">List Pasien Konsul</h4>
+                    <div class="table-responsive">
+                        <table class="table-striped table" id="table-1">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No MR</th>
+                                    <th scope="col">Nama Pasien</th>
+                                    <th scope="col">Alamat</th>
+                                    <th scope="col">Dokter Pengirim</th>
+                                    <th scope="col">Tanggal</th>
+                                    <th scope="col">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($pasienKonsul as $konsul)
+                                <tr>
+                                    <td>{{$konsul->NO_MR}}</td>
+                                    <td>{{$konsul->NAMA_PASIEN}}</td>
+                                    <td>{{$konsul->ALAMAT}}</td>
+                                    <td>{{$konsul->NAMA_DOKTER}}</td>
+                                    <td>{{$konsul->TANGGAL}}</td>
+                                    <td>
+                                        @if($poliMata->cekRefraksi($data->No_Reg) == true)
+                                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-edit{{$data->No_Reg}}">
+                                                <i class="fas fa-plus"></i> Edit
+                                            </button>
+                                            @else
+                                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add-refraksi{{$data->No_Reg}}">
+                                                <i class="fas fa-plus"></i> Entry
+                                            </button>
+                                        @endif
+                                    </td>
+                                </tr>
+                                @endforeach
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 </div>

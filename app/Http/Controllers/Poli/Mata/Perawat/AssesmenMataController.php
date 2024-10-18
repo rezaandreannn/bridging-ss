@@ -61,14 +61,19 @@ class AssesmenMataController extends Controller
     public function refraksi(Request $request)
     {
         $title = $this->prefix . ' ' . 'Mata';
+        $tanggal = $request->input('tanggal');
+        if ($tanggal == null) {
+            $tanggal = date('Y-m-d');
+        }
         $kode_dokter = $request->input('kode_dokter');
         $dokters = $this->poliMata->getDokterMata();
         $refraksi = $this->poliMata->getDataRefraksi();
         // dd($refraksi);
         $pasien = $this->antrean->getDataPasienRajalPoliMata($kode_dokter);
-        // dd($pasien);
+        $pasienKonsul = $this->rajaldokter->getPasienByDokterMataRujukInternal($kode_dokter, $tanggal);
+        // dd($pasienKonsul);
         $poliMata = new PoliMata();
-        return view($this->view . 'refraksi.index', compact('title', 'pasien', 'dokters', 'poliMata', 'refraksi'));
+        return view($this->view . 'refraksi.index', compact('title', 'pasien', 'dokters', 'poliMata', 'refraksi', 'pasienKonsul'));
     }
 
     public function refraksiStore(Request $request)
