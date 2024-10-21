@@ -43,7 +43,7 @@ class AssesmenDokterMataController extends Controller
         // dd($medis);
         $asesmen_perawat = DB::connection('pku')->table('TAC_ASES_PER2')->where('FS_KD_REG', $biodata->NO_REG)->first();
         $perawat_mata = DB::connection('pku')->table('poli_mata_asesmen')->where('NO_REG', $biodata->NO_REG)->first();
-        $gambar = DB::connection('pku')->table('poli_mata_gambar')->where('NO_REG', $biodata->NO_REG)->first();
+        $gambar = DB::connection('pku')->table('poli_mata_gambar')->where('NO_REG', $noRegLama)->first();
         $refraksi = DB::connection('pku')->table('poli_mata_refraksi')->where('NO_REG', $biodata->NO_REG)->first();
         $asesmenDokterGet = DB::connection('pku')->table('poli_mata_dokter')->where('NO_REG', $noRegLama)->first();
 
