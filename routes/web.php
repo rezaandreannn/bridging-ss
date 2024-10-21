@@ -52,6 +52,7 @@ use App\Http\Controllers\Poli\Mata\Dokter\AssesmenDokterMataController;
 use App\Http\Controllers\Poli\Mata\MasterData\PenyakitSekarangController;
 use App\Http\Controllers\Berkas\Rekam_medis_by_mr\RekamMedisByMrController;
 use App\Http\Controllers\Berkas\Rekam_medis_harian\RekamMedisHarianController;
+use App\Http\Controllers\Berkas\Surat\SuratController;
 use App\Http\Controllers\IGD\Layanan\AssesmenController as LayananAssesmenController;
 use App\Http\Controllers\profileUser\ProfileUserController;
 use App\Http\Controllers\RawatJalan\Dokter\KondisiPulangController;
@@ -197,6 +198,11 @@ Route::middleware('auth')->group(function () {
         Route::get('orderAlkes/cetakKwitansiAlkes/{noReg}', [Berkas_rm_controller::class, 'cetakKwitansiAlkes'])->name('orderAlkes.Kwitansi');
     });
 
+    Route::prefix('surat')->group(function () {
+        // ENCOUNTER
+        Route::get('medis', [SuratController::class, 'index'])->name('surat.index');
+    });
+
     Route::prefix('fisioterapi')->group(function () {
         // Fisioterapi
         Route::get('asesmen_pasien', [AssesmenController::class, 'index'])->name('asesmen_pasien.index');
@@ -328,6 +334,7 @@ Route::middleware('auth')->group(function () {
         // Cetak Berkas
         Route::get('/polimata/perawat/resep/{kode_transaksi}/{noReg}', [AssesmenMataController::class, 'cetakResep'])->name('polimata.resep');
         Route::get('/polimata/perawat/cetak_rm/{noReg}', [AssesmenMataController::class, 'cetakRM'])->name('polimata.cetakRM');
+        Route::get('/polimata/perawat/konsul/cetak_rm/{noReg}', [AssesmenMataController::class, 'cetakRMKonsul'])->name('polimata.cetakRMKonsul');
         Route::get('/polimata/perawat/cetak_resume/{noReg}', [AssesmenMataController::class, 'cetakResume'])->name('polimata.cetakResume');
         Route::get('/polimata/perawat/cetak_skdp/{kode_transaksi}/{noReg}', [AssesmenMataController::class, 'cetakSKDP'])->name('polimata.cetakSKDP');
         Route::get('/polimata/perawat/rujukanRS/{kode_transaksi}/{noReg}', [AssesmenMataController::class, 'cetakRujukRS'])->name('polimata.cetakRujukanRS');

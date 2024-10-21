@@ -197,7 +197,6 @@ class AssesmenMataController extends Controller
 
     public function cetakRM($noReg)
     {
-        // $resep = $this->poliMata->resep($noReg);
         $resep = $this->rajaldokter->resep($noReg);
 
         $labs = $this->rajaldokter->lab($noReg);
@@ -214,7 +213,6 @@ class AssesmenMataController extends Controller
 
         $gambarMataKiri = $this->poliMata->getGambarMataKiri($noReg);
         $gambarMataKanan = $this->poliMata->getGambarMataKanan($noReg);
-        // $getHasilLab = $this->rajaldokter->getHasilLab($noReg);
 
         $masalahKeperawatan = $this->rekam_medis->masalahKepByNoreg($noReg);
         $rencanaKeperawatan = $this->rekam_medis->rencanaKepByNoreg($noReg);
@@ -227,6 +225,40 @@ class AssesmenMataController extends Controller
         $title = 'Cetak RM';
 
         $pdf = PDF::loadview('pages.poli.mata.cetak.rm', ['tanggal' => $tanggal, 'mataKiri' => $gambarMataKiri, 'mataKanan' => $gambarMataKanan, 'title' => $title, 'resep' => $resep, 'labs' => $labs, 'rads' => $rads, 'biodata' => $biodata, 'perawat' => $asasmen_perawat, 'masalahKeperawatan' => $masalahKeperawatan, 'rencanaKeperawatan' => $rencanaKeperawatan, 'dokter' => $asasmen_dokter]);
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
+    }
+
+    public function cetakRMKonsul($noReg)
+    {
+        $resep = $this->rajaldokter->resep($noReg);
+
+        $labs = $this->rajaldokter->lab($noReg);
+        $rads = $this->rajaldokter->radiologi($noReg);
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+
+        $asasmen_perawat = $this->rekam_medis->cetakRmRajal($noReg);
+        $asasmen_dokter = $this->poliMata->asasmenDokter($noReg);
+        // dd($asasmen_dokter);
+
+        if ($asasmen_dokter == null) {
+            return redirect()->back()->with('warning', 'data rekam medis belum di inputkan di EMR!');
+        }
+
+        $gambarMataKiri = $this->poliMata->getGambarMataKiri($noReg);
+        $gambarMataKanan = $this->poliMata->getGambarMataKanan($noReg);
+
+        $masalahKeperawatan = $this->rekam_medis->masalahKepByNoreg($noReg);
+        $rencanaKeperawatan = $this->rekam_medis->rencanaKepByNoreg($noReg);
+
+        // Cetak PDF
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+        $filename = 'RM -' . $date;
+
+        $title = 'Cetak RM';
+
+        $pdf = PDF::loadview('pages.poli.mata.cetak.rmKonsul', ['tanggal' => $tanggal, 'mataKiri' => $gambarMataKiri, 'mataKanan' => $gambarMataKanan, 'title' => $title, 'resep' => $resep, 'labs' => $labs, 'rads' => $rads, 'biodata' => $biodata, 'perawat' => $asasmen_perawat, 'masalahKeperawatan' => $masalahKeperawatan, 'rencanaKeperawatan' => $rencanaKeperawatan, 'dokter' => $asasmen_dokter]);
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
     }

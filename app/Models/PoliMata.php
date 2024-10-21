@@ -136,9 +136,9 @@ class PoliMata extends Model
     {
         $dbpku = DB::connection('db_rsmm')->getDatabaseName();
         $data = DB::connection('pku')->table('poli_mata_dokter as pd')
-            ->join('poli_mata_refraksi as pr', 'pd.NO_REG', '=', 'pr.NO_REG')
-            ->join('TAC_RJ_MEDIS as tm', 'pd.NO_REG', '=', 'tm.FS_KD_REG')
-            ->join('poli_mata_gambar as pg', 'pd.NO_REG', '=', 'pg.NO_REG')
+            ->leftjoin('poli_mata_refraksi as pr', 'pd.NO_REG', '=', 'pr.NO_REG')
+            ->leftjoin('TAC_RJ_MEDIS as tm', 'pd.NO_REG', '=', 'tm.FS_KD_REG')
+            ->leftjoin('poli_mata_gambar as pg', 'pd.NO_REG', '=', 'pg.NO_REG')
             ->leftJoin($dbpku . '.dbo.DOKTER as c', 'pd.CREATE_BY', '=', 'c.KODE_DOKTER')
             ->select(
                 'pd.*',

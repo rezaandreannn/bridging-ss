@@ -330,6 +330,10 @@
             <li class="{{ Request::is('farmasi/orderAlkes') ? 'active' : '' }}"><a class="nav-link" href="{{ route('orderAlkes.index') }}"><i class="fas fa-dashboard"></i> <span>Order Alat Kesehatan</span></a></li>
             @endcan
 
+            
+            <li class="{{ Request::is('surat') ? 'active' : '' }}"><a class="nav-link" href="{{ route('surat.index') }}"><i class="fas fa-notes-medical"></i> <span>Surat Sakit/SKD</span></a></li>
+            
+
 
             @can('claim bpjs')
             <li class="menu-header">Klaim</li>

@@ -131,15 +131,21 @@
                                     <td>{{$konsul->NAMA_DOKTER}}</td>
                                     <td>{{$konsul->TANGGAL}}</td>
                                     <td>
-                                        @if($poliMata->cekRefraksi($data->No_Reg) == true)
-                                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-edit{{$data->No_Reg}}">
+                                            {{-- <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-edit{{$konsul->NO_REG}}">
+                                                <i class="fas fa-plus"></i> Edit
+                                            </button> --}}
+                                            {{-- <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add-refraksi{{$data->No_Reg}}">
+                                                <i class="fas fa-plus"></i> Entry
+                                            </button> --}}
+                                            @if($poliMata->cekRefraksi($data->No_Reg) == true)
+                                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-edit{{$konsul->NO_REG}}">
                                                 <i class="fas fa-plus"></i> Edit
                                             </button>
                                             @else
-                                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add-refraksi{{$data->No_Reg}}">
+                                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add-refraksi2{{$konsul->NO_REG}}">
                                                 <i class="fas fa-plus"></i> Entry
                                             </button>
-                                        @endif
+                                            @endif
                                     </td>
                                 </tr>
                                 @endforeach
@@ -173,6 +179,104 @@
                             <div class="form-group">
                                 <div class="input-group">
                                     <label>Anamnesa Pasien : <b>{{ $data->FS_ANAMNESA }}</b></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Visus</label>
+                                <div class="col-md-12">
+                                    <div class="form-group" style="display: flex; flex-direction: row;">
+                                        <div class="input-group" style="margin-right: 10px;">
+                                            <label for="VISUS_VOD" class="mr-2 mt-2">
+                                                OD
+                                            </label>
+                                            <input type="text" placeholder="Inputan Mata Kanan" class="form-control" name="VISUS_OD">                                          
+                                        </div>
+                                        <div class="input-group" style="margin-right: 10px;">
+                                            <label for="VISUS_VOS" class="mr-2 mt-2">
+                                                OS
+                                            </label>
+                                            <input type="text" placeholder="Inputan Mata Kiri" class="form-control" name="VISUS_OS">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Add</label>
+                                <div class="col-md-12">
+                                    <div class="form-group" style="display: flex; flex-direction: row;">
+                                        <div class="input-group" style="margin-right: 10px;">
+                                            <label for="ADD_OD" class="mr-2 mt-2">
+                                                OD
+                                            </label>
+                                            <input type="text" placeholder="Inputan Mata Kanan" class="form-control" name="ADD_OD">                                          
+                                        </div>
+                                        <div class="input-group" style="margin-right: 10px;">
+                                            <label for="ADD_OS" class="mr-2 mt-2">
+                                                OS
+                                            </label>
+                                            <input type="text" placeholder="Inputan Mata Kiri" class="form-control" name="ADD_OS">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Tonometri</label>
+                                <div class="col-md-12">
+                                    <div class="form-group" style="display: flex; flex-direction: row;">
+                                        <div class="input-group" style="margin-right: 10px;">
+                                            <label for="NCT_TOD" class="mr-2 mt-2">
+                                                TOD
+                                            </label>
+                                            <input type="text" placeholder="Inputan Mata Kanan" class="form-control" name="NCT_TOD">
+                                        </div>
+                                        <div class="input-group" style="margin-right: 10px;">
+                                            <label for="NCT_TOS" class="mr-2 mt-2">
+                                                TOS
+                                            </label>
+                                            <input type="text" placeholder="Inputan Mata Kiri" class="form-control" name="NCT_TOS">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-left">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-print"></i> Simpan</button>
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Tutup</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endforeach
+
+{{-- Tambah Data Konsul --}}
+@foreach ($pasienKonsul as $konsul)
+<div class="modal fade" id="modal-add-refraksi2{{$konsul->NO_REG}}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Tambah Data</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{ route('poliMata.refraksiStore') }}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <input type="hidden" name="NO_REG" value="{{ $konsul->NO_REG }}">
+                    <div class="card-body">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <label>Anamnesa Pasien : <b>{{ $konsul->FS_ANAMNESA ?? '' }}</b></label>
                                 </div>
                             </div>
                         </div>
@@ -341,6 +445,7 @@
     </div>
 </div>
 @endforeach
+
 @endsection
 
 @push('scripts')

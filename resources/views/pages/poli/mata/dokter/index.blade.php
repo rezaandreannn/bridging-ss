@@ -121,7 +121,16 @@
                                     <td>{{$konsul->NAMA_DOKTER}}</td>
                                     <td>{{$konsul->TANGGAL}}</td>
                                     <td>
-                                        <a href="{{ route('poliMata.Konsul',$konsul->NO_REG) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
+                                        @if($konsul->FS_STATUS == 2)
+                                            @if($poliMata->cekDokter($konsul->NO_REG) == true)
+                                               
+                                            @else
+                                                <a href="{{ route('poliMata.Konsul',['noReg'=> $konsul->NO_REG]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
+                                            @endif
+                                            @if($poliMata->cekDokter($konsul->NO_REG) == true)
+                                                <a href="{{ route('polimata.cetakRMKonsul', ['noReg'=>$konsul->NO_REG]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> RM</a>
+                                            @endif
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach

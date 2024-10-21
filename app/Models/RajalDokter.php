@@ -90,11 +90,14 @@ class RajalDokter extends Model
         $dbpku = DB::connection('pku')->getDatabaseName();
         $data = DB::connection('db_rsmm')
             ->table($dbpku . '.dbo.TAC_RJ_RUJUKAN as m')
+            ->leftJoin($dbpku . '.dbo.TAC_RJ_STATUS as s', 'm.FS_KD_REG', '=', 's.FS_KD_REG')
             ->leftJoin('PENDAFTARAN as c', 'm.FS_KD_REG', '=', 'c.NO_REG')
             ->leftJoin('REGISTER_PASIEN as rp', 'c.No_MR', '=', 'rp.No_MR')
+            ->leftJoin($dbpku . '.dbo.TAC_ASES_PER2 as tap', 'c.NO_REG', '=', 'tap.FS_KD_REG')
             ->leftJoin('DOKTER as d', 'm.mdb', '=', 'd.KODE_DOKTER')
             ->select(
                 'm.FS_KD_REG',
+                DB::raw('CAST(tap.FS_ANAMNESA AS VARCHAR(MAX)) as FS_ANAMNESA'),
                 'c.NO_REG',
                 'c.TANGGAL',
                 'rp.NAMA_PASIEN',
@@ -102,7 +105,8 @@ class RajalDokter extends Model
                 'rp.NO_MR',
                 'rp.KOTA',
                 'rp.PROVINSI',
-                'd.NAMA_DOKTER'
+                'd.NAMA_DOKTER',
+                's.FS_STATUS'
             )
             ->distinct()
             ->where('m.FS_TUJUAN_RUJUKAN', $kode_dokter)

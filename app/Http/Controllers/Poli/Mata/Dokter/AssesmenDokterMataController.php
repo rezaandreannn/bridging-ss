@@ -108,7 +108,6 @@ class AssesmenDokterMataController extends Controller
 
         $asasmen_perawat = $this->rajal->asasmenPerawatKonsul($noReg);
         $refraksi = $this->poliMata->getRefraksi($noReg);
-        // dd($refraksi);
         // Data Master
         $masterLab = $this->rajaldokter->getMasterLab();
         $masterRadiologi = $this->rajaldokter->getMasterRadiologi();
