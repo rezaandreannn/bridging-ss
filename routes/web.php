@@ -199,8 +199,19 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('surat')->group(function () {
-        // ENCOUNTER
         Route::get('medis', [SuratController::class, 'index'])->name('surat.index');
+        // Surat Sakit
+        Route::get('medis/suratSakit/{noReg}', [SuratController::class, 'addSuratSakit'])->name('add.suratSakit');
+        Route::post('medis/suratSakit/', [SuratController::class, 'suratSakitStore'])->name('store.suratSakit');
+        Route::get('medis/suratSakit/edit/{noReg}', [SuratController::class, 'editSuratSakit'])->name('edit.suratSakit');
+        Route::put('medis/suratSakit/edit/{noReg}', [SuratController::class, 'updateSuratSakit'])->name('update.suratSakit');
+        Route::get('medis/cetakSuratSakit/{noReg}', [SuratController::class, 'cetakSuratSakit'])->name('cetak.suratSakit');
+        // Surat Keterangan Dokter
+        Route::get('medis/SKD/{noReg}', [SuratController::class, 'addSkd'])->name('add.SKD');
+        Route::post('medis/SKD/', [SuratController::class, 'SkdStore'])->name('store.SKD');
+        Route::get('medis/SKD/edit/{noReg}', [SuratController::class, 'editSkd'])->name('edit.SKD');
+        Route::put('medis/SKD/edit/{noReg}', [SuratController::class, 'updateSkd'])->name('update.SKD');
+        Route::get('medis/cetakSKD/{noReg}', [SuratController::class, 'cetakSkd'])->name('cetak.SKD');
     });
 
     Route::prefix('fisioterapi')->group(function () {

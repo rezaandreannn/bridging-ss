@@ -85,6 +85,82 @@ class RajalDokter extends Model
         return $data;
     }
 
+    public function getPasienBySuratPoli($kode_dokter)
+    {
+        $dbpku = DB::connection('pku')->getDatabaseName();
+        $date = date('Y-m-d');
+
+        $data = DB::connection('db_rsmm')
+            ->table('ANTRIAN as a')
+            ->leftJoin('REGISTER_PASIEN as rp', 'a.No_MR', '=', 'rp.No_MR')
+            ->leftJoin('PENDAFTARAN as c', 'a.No_MR', '=', 'c.No_MR')
+            ->leftJoin($dbpku . '.dbo.TAC_RJ_STATUS as s', 'c.NO_REG', '=', 's.FS_KD_REG')
+            ->leftJoin($dbpku . '.dbo.TAC_RJ_MEDIS as m', 'c.NO_REG', '=', 'm.FS_KD_REG')
+            ->leftJoin('DOKTER as d', 'm.mdb', '=', 'd.KODE_DOKTER')
+            ->select(
+                'a.NOMOR',
+                'a.NO_MR',
+                'rp.NAMA_PASIEN',
+                'rp.ALAMAT',
+                'rp.NO_MR',
+                'rp.KOTA',
+                'rp.PROVINSI',
+                'c.NO_REG',
+                's.FS_STATUS',
+                'm.mdb',
+                'm.FS_TERAPI',
+                'm.FS_KD_TRS',
+                'd.KODE_DOKTER',
+                'd.NAMA_DOKTER',
+                'c.KODE_MASUK'
+            )
+            ->where('a.TANGGAL', $date)
+            ->where('c.TANGGAL', $date)
+            ->where(function ($query) use ($kode_dokter) {
+                $query->orWhere('c.Kode_Dokter', $kode_dokter)
+                    ->orWhere('c.Kode_Dokter', '100');
+            })
+            ->orderBy('a.NOMOR', 'ASC')
+            ->get()
+            ->toArray();
+
+        return $data;
+    }
+
+    public function getPasienBySurat($kode_dokter)
+    {
+        $dbpku = DB::connection('pku')->getDatabaseName();
+        $date = now();
+
+        $data = DB::connection('db_rsmm')
+            ->table('PENDAFTARAN as p')
+            ->leftJoin('REGISTER_PASIEN as rp', 'p.No_MR', '=', 'rp.No_MR')
+            ->leftJoin($dbpku . '.dbo.TAC_RJ_STATUS as s', 'p.NO_REG', '=', 's.FS_KD_REG')
+            ->leftJoin($dbpku . '.dbo.TAC_RJ_MEDIS as m', 'p.NO_REG', '=', 'm.FS_KD_REG')
+            ->leftJoin('DOKTER as d', 'm.mdb', '=', 'd.KODE_DOKTER')
+            ->select(
+                'rp.NAMA_PASIEN',
+                'rp.ALAMAT',
+                'rp.NO_MR',
+                'rp.KOTA',
+                'rp.PROVINSI',
+                'p.NO_REG',
+                's.FS_STATUS',
+                'm.mdb',
+                'm.FS_TERAPI',
+                'm.FS_KD_TRS',
+                'd.KODE_DOKTER',
+                'd.NAMA_DOKTER',
+            )
+            ->whereDate('p.TANGGAL', $date)
+            ->where('p.Kode_Dokter', '100')
+            ->where('p.KODE_MASUK', 1)
+            ->get()
+            ->toArray();
+
+        return $data;
+    }
+
     public function getPasienByDokterMataRujukInternal($kode_dokter, $tanggal)
     {
         $dbpku = DB::connection('pku')->getDatabaseName();
