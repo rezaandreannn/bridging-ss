@@ -131,20 +131,14 @@
                                     <td>{{$konsul->NAMA_DOKTER}}</td>
                                     <td>{{$konsul->TANGGAL}}</td>
                                     <td>
-                                            {{-- <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-edit{{$konsul->NO_REG}}">
-                                                <i class="fas fa-plus"></i> Edit
-                                            </button> --}}
-                                            {{-- <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add-refraksi{{$data->No_Reg}}">
-                                                <i class="fas fa-plus"></i> Entry
-                                            </button> --}}
-                                            @if($poliMata->cekRefraksi($data->No_Reg) == true)
-                                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-edit{{$konsul->NO_REG}}">
-                                                <i class="fas fa-plus"></i> Edit
-                                            </button>
+                                            @if($poliMata->cekRefraksi($konsul->NO_REG) == true)
+                                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-edit{{$konsul->NO_REG}}">
+                                                    <i class="fas fa-plus"></i> Edit
+                                                </button>
                                             @else
-                                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add-refraksi2{{$konsul->NO_REG}}">
-                                                <i class="fas fa-plus"></i> Entry
-                                            </button>
+                                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add-refraksi2{{$konsul->NO_REG}}">
+                                                    <i class="fas fa-plus"></i> Entry
+                                                </button>
                                             @endif
                                     </td>
                                 </tr>

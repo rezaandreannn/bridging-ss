@@ -83,9 +83,17 @@
                                         @if($pasien->Medis == 'RAWAT INAP')
                                             <a href="{{ route('rm.ranap', $pasien->No_Reg) }}" class="btn btn-sm btn-success"><i class="fas fa-info-circle"></i> Resume Ranap</a>
                                         @endif
-                                        @if($pasien->Medis == 'RAWAT JALAN')
-                                            <a href="{{ route('rm.rajal', $pasien->No_Reg) }}" class="btn btn-sm btn-success"><i class="fas fa-info-circle"></i> Resume Rajal</a>
+                                        @if($pasien->Kode_Dokter == '148' || $pasien->Kode_Dokter == '156')
+                                            @if($poliMata->cekDokter($pasien->No_Reg) == true)
+                                                <a href="{{ route('polimata.cetakResume', [$pasien->No_Reg]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Resume</a>
+                                            @endif
+                                        @else
+                                            @if($pasien->Medis == 'RAWAT JALAN')
+                                                <a href="{{ route('rm.rajal', $pasien->No_Reg) }}" class="btn btn-sm btn-success"><i class="fas fa-info-circle"></i> Resume Rajal</a>
+                                            @endif
                                         @endif
+                                        
+                                        
                                     </td>
 
                                 </tr>

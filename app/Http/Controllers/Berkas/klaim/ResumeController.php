@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Rajal;
 use App\Models\Pasien;
 use App\Models\Fisioterapi;
+use App\Models\PoliMata;
 use App\Models\RajalDokter;
 use App\Models\RanapDokter;
 use App\Models\Rekam_medis;
@@ -36,6 +37,7 @@ class ResumeController extends Controller
     public function resumeRajal(Request $request)
     {
         $rekamMedisModel = new Rekam_medis;
+        $poliMata = new PoliMata();
         $title = $this->prefix . ' ' . 'Rawat Jalan';
         $kode_dokter = $request->input('kode_dokter');
         $tanggal = $request->input('tanggal');
@@ -46,7 +48,8 @@ class ResumeController extends Controller
             $dataPasien = $this->rekam_medis->rekamMedisHarian($kode_dokter, $tanggal);
         }
 
-        return view($this->view . 'rajal', compact('title', 'dataPasien', 'dokters', 'rekamMedisModel'));
+
+        return view($this->view . 'rajal', compact('title', 'dataPasien', 'dokters', 'rekamMedisModel', 'poliMata'));
     }
 
     public function resumeRanap(Request $request)
