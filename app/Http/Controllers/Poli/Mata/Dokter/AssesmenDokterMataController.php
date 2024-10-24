@@ -43,14 +43,27 @@ class AssesmenDokterMataController extends Controller
         // dd($medis);
         $asesmen_perawat = DB::connection('pku')->table('TAC_ASES_PER2')->where('FS_KD_REG', $biodata->NO_REG)->first();
         $perawat_mata = DB::connection('pku')->table('poli_mata_asesmen')->where('NO_REG', $biodata->NO_REG)->first();
-        $gambar = DB::connection('pku')->table('poli_mata_gambar')->where('NO_REG', $noRegLama)->first();
+        $MataKiri = DB::connection('pku')->table('poli_mata_gambar')
+            ->select(
+                'DESKRIPSI',
+            )
+            ->where('NO_REG', $noRegLama)
+            ->where('TIPE', 'Mata Kiri')
+            ->first();
+        $MataKanan = DB::connection('pku')->table('poli_mata_gambar')
+            ->select(
+                'DESKRIPSI',
+            )
+            ->where('NO_REG', $noRegLama)
+            ->where('TIPE', 'Mata Kanan')
+            ->first();
         $refraksi = DB::connection('pku')->table('poli_mata_refraksi')->where('NO_REG', $biodata->NO_REG)->first();
         $asesmenDokterGet = DB::connection('pku')->table('poli_mata_dokter')->where('NO_REG', $noRegLama)->first();
 
         $masterObat = $this->rajaldokter->getMasterObat();
         // dd($perawat_mata);
         $title = $this->prefix . ' ' . 'Copy Assesmen Dokter';
-        return view($this->view . 'dokter.copyRiwayatAsesmen', compact('title', 'biodata', 'ttv', 'medis', 'gambar', 'masterObat', 'perawat_mata', 'asesmen_perawat', 'refraksi', 'asesmenDokterGet', 'biodataLama', 'noRegBaru'));;
+        return view($this->view . 'dokter.copyRiwayatAsesmen', compact('title', 'biodata', 'ttv', 'MataKiri', 'MataKanan', 'medis', 'gambar', 'masterObat', 'perawat_mata', 'asesmen_perawat', 'refraksi', 'asesmenDokterGet', 'biodataLama', 'noRegBaru'));;
     }
 
     // -----------------------------------------------------------------------------
