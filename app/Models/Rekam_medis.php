@@ -31,6 +31,7 @@ class Rekam_medis extends Model
         $data = DB::connection('pku')
             ->table('TAC_RJ_MEDIS as a')
             ->leftJoin('TAC_COM_USER as b', 'a.mdb', '=', 'b.user_id')
+            ->leftJoin('poli_mata_dokter as poli', 'a.FS_KD_REG', '=', 'poli.NO_REG')
             // Menggunakan nama basis data secara eksplisit dalam join
             ->leftJoin($dbRsmm . '.dbo.DOKTER as c', 'b.user_name', '=', 'c.KODE_DOKTER')
             ->leftJoin($dbRsmm . '.dbo.TUSER as d', 'b.user_name', '=', 'd.NAMAUSER')
@@ -39,7 +40,8 @@ class Rekam_medis extends Model
                 'b.user_name',
                 'c.NAMA_DOKTER',
                 'c.KODE_DOKTER',
-                'd.NAMALENGKAP'
+                'd.NAMALENGKAP',
+                'poli.diagnosa as FS_DIAGNOSA'
             )
             ->where('a.FS_KD_REG', $noReg)
             ->where('a.FS_KD_TRS', $kode_transaksi)

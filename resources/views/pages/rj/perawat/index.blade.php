@@ -103,7 +103,7 @@
                                         <a href="{{ route('rj.editSKDP', $item->No_Reg) }}" class="btn btn-sm btn-info"><i class="fas fa-edit"></i>Edit SKDP</a>
                                         <!-- pasien rujuk luar rs -->
                                         @elseif ($item->FS_CARA_PULANG == 4)
-                                        <a href="{{ route('rj.rujukanRS', ['noReg' => $item->No_Reg,'kode_transaksi' => $item->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujukan RS</a>
+                                        <a href="{{ route('rj.rujukanRS', ['noReg' => $item->No_Reg,'kode_transaksi' => $item->FS_KD_TRS,'id_surat'=> $item->ID_SURAT_RUJUKAN]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujukan RS</a>
                                         <!-- pasien dengan rujuk internal -->
                                         @elseif ($item->FS_CARA_PULANG == 6)
                                         <a href="{{ route('rj.rujukanInternal', [ 'noReg' => $item->No_Reg,'kode_transaksi' => $item->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujukan Internal</a>

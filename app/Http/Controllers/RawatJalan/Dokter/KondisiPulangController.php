@@ -127,6 +127,7 @@ class KondisiPulangController extends Controller
             return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
         }
     }
+
     // Rujuk Internal
     public function rujukInternalRS($noReg)
     {
@@ -135,7 +136,18 @@ class KondisiPulangController extends Controller
         $dokters = $this->rajal->byKodeDokter();
         // dd($dokters);
 
-        return view($this->view . '.kondisiPulang.rujukInternal', compact('title', 'biodata', 'dokters'));
+        return view($this->view . '.kondisiPulang.rujukInternal.Add', compact('title', 'biodata', 'dokters'));
+    }
+
+    public function rujukInternalEdit($noReg)
+    {
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+        $title = 'Rujuk Internal RS';
+        $dokters = $this->rajal->byKodeDokter();
+        $rujuk = $this->rajal->editRujukInternal($noReg);
+        // dd($rujuk);
+
+        return view($this->view . '.kondisiPulang.rujukInternal.Edit', compact('title', 'biodata', 'dokters', 'rujuk'));
     }
 
     public function rujukInternalAdd(Request $request)
@@ -160,7 +172,31 @@ class KondisiPulangController extends Controller
 
             DB::connection('pku')->commit();
 
-            return redirect('pm/polimata/dokter')->with('success', 'Berhasil Ditambahkan!');
+            return redirect('pm/polimata/dokter')->with('success', 'Rujukan Berhasil Ditambahkan!');
+        } catch (\Exception $e) {
+            //throw $th;
+            DB::connection('pku')->rollBack();
+            return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function rujukInternalUpdate(Request $request)
+    {
+        try {
+            DB::connection('pku')->beginTransaction();
+
+            DB::connection('pku')->table('TAC_RJ_RUJUKAN')->where('FS_KD_REG', $request->input('FS_KD_REG'))->update([
+                'FS_TUJUAN_RUJUKAN' => $request->input('FS_TUJUAN_RUJUKAN'),
+                'FS_TUJUAN_RUJUKAN2' => $request->input('FS_TUJUAN_RUJUKAN2'),
+                'FS_ALASAN_RUJUK' => $request->input('FS_ALASAN_RUJUK'),
+                'mdd_date' => date('Y-m-d'),
+                'mdd_time' => date('H:i:s'),
+                'mdb' => auth()->user()->username,
+            ]);
+
+            DB::connection('pku')->commit();
+
+            return redirect('pm/polimata/dokter')->with('success', 'Rujukan Berhasil DiEdit!');
         } catch (\Exception $e) {
             //throw $th;
             DB::connection('pku')->rollBack();
@@ -174,7 +210,16 @@ class KondisiPulangController extends Controller
         $biodata = $this->rekam_medis->getBiodata($noReg);
         $title = 'Rujuk Luar RS';
 
-        return view($this->view . '.kondisiPulang.rujukLuar', compact('title', 'biodata'));
+        return view($this->view . '.kondisiPulang.rujukLuar.Add', compact('title', 'biodata'));
+    }
+
+    public function rujukLuarEdit($noReg)
+    {
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+        $title = 'Rujuk Luar RS';
+        $rujuk = $this->rajal->editRujukInternal($noReg);
+
+        return view($this->view . '.kondisiPulang.rujukLuar.Edit', compact('title', 'biodata', 'rujuk'));
     }
 
     public function rujukLuarAdd(Request $request)
@@ -182,8 +227,37 @@ class KondisiPulangController extends Controller
         try {
             DB::connection('pku')->beginTransaction();
 
-            DB::connection('pku')->table('TAC_RJ_RUJUKAN')->insert([
+            $AddrujukLuar = DB::connection('pku')->table('TAC_RJ_RUJUKAN')->insert([
                 'FS_KD_REG' => $request->input('FS_KD_REG'),
+                'FS_TUJUAN_RUJUKAN' => $request->input('FS_TUJUAN_RUJUKAN'),
+                'FS_TUJUAN_RUJUKAN2' => $request->input('FS_TUJUAN_RUJUKAN2'),
+                'FS_ALASAN_RUJUK' => $request->input('FS_ALASAN_RUJUK'),
+                'mdd_date' => date('Y-m-d'),
+                'mdd_time' => date('H:i:s'),
+                'mdb' => auth()->user()->username,
+            ]);
+
+            if ($AddrujukLuar) {
+                DB::connection('pku')->table('TAC_RJ_SKDP')->where('FS_KD_REG', $request->input('FS_KD_REG'))->delete();
+                DB::connection('pku')->table('TAC_RJ_PRB')->where('FS_KD_REG', $request->input('FS_KD_REG'))->delete();
+            }
+
+            DB::connection('pku')->commit();
+
+            return redirect('pm/polimata/dokter')->with('success', 'Berhasil Ditambahkan!');
+        } catch (\Exception $e) {
+            //throw $th;
+            DB::connection('pku')->rollBack();
+            return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function rujukLuarUpdate(Request $request)
+    {
+        try {
+            DB::connection('pku')->beginTransaction();
+
+            DB::connection('pku')->table('TAC_RJ_RUJUKAN')->where('FS_KD_REG', $request->input('FS_KD_REG'))->update([
                 'FS_TUJUAN_RUJUKAN' => $request->input('FS_TUJUAN_RUJUKAN'),
                 'FS_TUJUAN_RUJUKAN2' => $request->input('FS_TUJUAN_RUJUKAN2'),
                 'FS_ALASAN_RUJUK' => $request->input('FS_ALASAN_RUJUK'),
@@ -209,7 +283,18 @@ class KondisiPulangController extends Controller
         $kdTrs = $this->rajal->pasien_bynoreg($noReg);
         $title = 'Kembali Ke Faskes Primer';
 
-        return view($this->view . '.kondisiPulang.faskesPRB', compact('title', 'biodata', 'kdTrs'));
+        return view($this->view . '.kondisiPulang.faskesPRB.Add', compact('title', 'biodata', 'kdTrs'));
+    }
+
+    public function faskesPRBEdit($noReg)
+    {
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+        $kdTrs = $this->rajal->pasien_bynoreg($noReg);
+        $title = 'Kembali Ke Faskes Primer';
+        $prb = $this->rajal->editPRB($noReg);
+        // dd($prb);
+
+        return view($this->view . '.kondisiPulang.faskesPRB.Edit', compact('title', 'biodata', 'kdTrs', 'prb'));
     }
 
     public function faskesPRBAdd(Request $request)
@@ -217,7 +302,7 @@ class KondisiPulangController extends Controller
         try {
             DB::connection('pku')->beginTransaction();
 
-            DB::connection('pku')->table('TAC_RJ_PRB')->insert([
+            $AddPRB = DB::connection('pku')->table('TAC_RJ_PRB')->insert([
                 'FS_KD_REG' => $request->input('FS_KD_REG'),
                 'FS_KD_TRS' => $request->input('FS_KD_TRS'),
                 'FS_TGL_PRB' => $request->input('FS_TGL_PRB'),
@@ -226,6 +311,11 @@ class KondisiPulangController extends Controller
                 'mdd_time' => date('H:i:s'),
                 'mdb' => auth()->user()->username,
             ]);
+
+            if ($AddPRB) {
+                DB::connection('pku')->table('TAC_RJ_SKDP')->where('FS_KD_REG', $request->input('FS_KD_REG'))->delete();
+                DB::connection('pku')->table('TAC_RJ_RUJUKAN')->where('FS_KD_REG', $request->input('FS_KD_REG'))->delete();
+            }
 
             DB::connection('pku')->commit();
 

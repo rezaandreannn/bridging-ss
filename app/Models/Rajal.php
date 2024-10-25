@@ -169,30 +169,6 @@ class Rajal extends Model
         return $data;
     }
 
-    // // Button Cek Laboratori
-    // public function cek_lab($noReg)
-    // {
-    //     $request = Http::get($this->simrsUrlApi . '/berkas/cekLaboratorium/' . $noReg);
-    //     $code = $request->status();
-    //     if ($code == 200) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
-
-    // // Button Cek Radiologi
-    // public function cek_rad($noReg)
-    // {
-    //     $request = Http::get($this->simrsUrlApi . '/berkas/cekRadiologi/' . $noReg);
-    //     $code = $request->status();
-    //     if ($code == 200) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
-
     // Button Cek Laboratori
     public function cek_lab($noReg)
     {
@@ -452,6 +428,29 @@ class Rajal extends Model
     public function get_rencana_skdp($id)
     {
         $data = DB::connection('pku')->table('TAC_COM_PARAMETER_SKDP_RENCANA')->where('FS_KD_TRS_SKDP_ALASAN', $id)->get();
+        return $data;
+    }
+
+    public function editRujukInternal($noReg)
+    {
+        $data = DB::connection('pku')->table('TAC_RJ_RUJUKAN')
+            ->select(
+                'TAC_RJ_RUJUKAN.*',
+            )
+            ->where('FS_KD_REG', $noReg)
+            ->first();
+
+        return $data;
+    }
+    public function editPRB($noReg)
+    {
+        $data = DB::connection('pku')->table('TAC_RJ_PRB')
+            ->select(
+                'TAC_RJ_PRB.*',
+            )
+            ->where('FS_KD_REG', $noReg)
+            ->first();
+
         return $data;
     }
 }

@@ -32,6 +32,7 @@ class Antrean extends Model
             ->Join('PENDAFTARAN as p', 'a.No_MR', '=', 'p.No_MR')
             ->leftJoin($dbpku . '.dbo.TAC_RJ_STATUS as st', 'p.NO_REG', '=', 'st.FS_KD_REG')
             ->leftJoin($dbpku . '.dbo.TAC_RJ_MEDIS as m', 'p.NO_REG', '=', 'm.FS_KD_REG')
+            ->leftJoin($dbpku . '.dbo.TAC_RJ_RUJUKAN as sr', 'p.NO_REG', '=', 'sr.FS_KD_REG')
             ->select(
                 'a.No_Ponsel as no_hp',
                 'a.Nomor as nomor_antrean',
@@ -48,6 +49,7 @@ class Antrean extends Model
                 'm.FS_CARA_PULANG',
                 'm.FS_TERAPI',
                 'm.FS_KD_TRS',
+                'sr.FS_KD_TRS as ID_SURAT_RUJUKAN',
                 'm.HASIL_ECHO',
             )
             ->where('a.Dokter', $kode_dokter)

@@ -431,7 +431,7 @@ Route::middleware('auth')->group(function () {
         Route::get('rawat_jalan/skdp/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakSKDP'])->name('rj.skdp');
         Route::get('rawat_jalan/radiologi/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakRAD'])->name('rj.radiologi');
         Route::get('rawat_jalan/lab/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakLAB'])->name('rj.lab');
-        Route::get('rawat_jalan/rujukanRS/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakRujukan'])->name('rj.rujukanRS');
+        Route::get('rawat_jalan/rujukanRS/{noReg}/{kode_transaksi}/{id_surat}', [Berkas_rm_controller::class, 'cetakRujukan'])->name('rj.rujukanRS');
         Route::get('rawat_jalan/rujukanInternal/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakRujukanInternal'])->name('rj.rujukanInternal');
         Route::get('rawat_jalan/prb/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakPRB'])->name('rj.prb');
         Route::get('rawat_jalan/faskes/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakFaskes'])->name('rj.faskes');
@@ -462,12 +462,18 @@ Route::middleware('auth')->group(function () {
         // Kondisi Pulang Rujuk Internal
         Route::get('rajal/dokter/kondisi_pulang/rujukInternal/{noReg}', [KondisiPulangController::class, 'rujukInternalRS'])->name('kondisiPulang.rujukInternalRS');
         Route::post('rajal/dokter/kondisi_pulang/rujukInternal/', [KondisiPulangController::class, 'rujukInternalAdd'])->name('kondisiPulang.rujukInternalAdd');
+        Route::get('rajal/dokter/kondisi_pulang/EditrujukInternal/{noReg}', [KondisiPulangController::class, 'rujukInternalEdit'])->name('kondisiPulang.rujukInternalEdit');
+        Route::put('rajal/dokter/kondisi_pulang/EditrujukInternal/{noReg}', [KondisiPulangController::class, 'rujukInternalUpdate'])->name('kondisiPulang.rujukInternalUpdate');
         // Kondisi Pulang Rujuk Luar
         Route::get('rajal/dokter/kondisi_pulang/rujukLuar/{noReg}', [KondisiPulangController::class, 'rujukLuarRS'])->name('kondisiPulang.rujukLuarRS');
         Route::post('rajal/dokter/kondisi_pulang/rujukLuar/', [KondisiPulangController::class, 'rujukLuarAdd'])->name('kondisiPulang.rujukLuarAdd');
+        Route::get('rajal/dokter/kondisi_pulang/EditrujukLuar/{noReg}', [KondisiPulangController::class, 'rujukLuarEdit'])->name('kondisiPulang.rujukLuarEdit');
+        Route::put('rajal/dokter/kondisi_pulang/EditrujukLuar/{noReg}', [KondisiPulangController::class, 'rujukLuarUpdate'])->name('kondisiPulang.rujukLuarUpdate');
         // Kondisi Pulang Faskes PRB
         Route::get('rajal/dokter/kondisi_pulang/faskesPRB/{noReg}', [KondisiPulangController::class, 'faskesPRB'])->name('kondisiPulang.faskesPRB');
         Route::post('rajal/dokter/kondisi_pulang/faskesPRB/', [KondisiPulangController::class, 'faskesPRBAdd'])->name('kondisiPulang.faskesPRBAdd');
+        Route::get('rajal/dokter/kondisi_pulang/EditfaskesPRB/{noReg}', [KondisiPulangController::class, 'faskesPRBEdit'])->name('kondisiPulang.faskesPRBEdit');
+        Route::put('rajal/dokter/kondisi_pulang/EditfaskesPRB/{noReg}', [KondisiPulangController::class, 'faskesPRBUpdate'])->name('kondisiPulang.faskesPRBUpdate');
     });
 
     // Rawat Inap berkas
