@@ -327,6 +327,30 @@ class KondisiPulangController extends Controller
         }
     }
 
+    public function faskesPRBUpdate(Request $request)
+    {
+        try {
+            DB::connection('pku')->beginTransaction();
+
+            DB::connection('pku')->table('TAC_RJ_PRB')->where('FS_KD_REG', $request->input('FS_KD_REG'))->update([
+                'FS_KD_TRS' => $request->input('FS_KD_TRS'),
+                'FS_TGL_PRB' => $request->input('FS_TGL_PRB'),
+                'FS_TUJUAN' => $request->input('FS_TUJUAN'),
+                'mdd_date' => date('Y-m-d'),
+                'mdd_time' => date('H:i:s'),
+                'mdb' => auth()->user()->username,
+            ]);
+
+            DB::connection('pku')->commit();
+
+            return redirect('pm/polimata/dokter')->with('success', 'Berhasil Ditambahkan!');
+        } catch (\Exception $e) {
+            //throw $th;
+            DB::connection('pku')->rollBack();
+            return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
+        }
+    }
+
     public function index()
     {
         //

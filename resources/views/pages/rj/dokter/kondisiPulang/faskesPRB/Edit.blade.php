@@ -87,8 +87,9 @@
                 <div class="col-12">
                     <!-- components biodata pasien by no reg -->
                     @include('components.biodata-pasien-bynoreg')
-                    <form id="myForm" action="{{ route('kondisiPulang.faskesPRBAdd') }}" method="POST">
-                    @csrf
+                    <form id="myForm" action="{{ route('kondisiPulang.faskesPRBUpdate', $prb->FS_KD_REG) }}" method="POST">
+                        @csrf
+                        @method('put')
                     <div class="card card-secondary">
                         <div class="card-header card-success">
                             <h4 class="card-title">EDIT SURAT DIKEMBALIKAN KE FASKER PRIMER</h4>
@@ -100,9 +101,9 @@
                                 <div class="form-group">
                                     <label for="FS_TGL_PRB">Kontrol setelah dari FKTP ke RS tanggal : <code>* Wajib Diisi</code></label>
                                     <div class="input-group mb-3">
-                                        <input type="hidden" name="FS_KD_REG" value="{{ $biodata->NO_REG }}" />
+                                        <input type="hidden" name="FS_KD_REG" value="{{ $prb->FS_KD_REG }}" />
                                         <input type="hidden" name="FS_KD_TRS" value="{{$kdTrs->FS_KD_TRS}}">
-                                        <input type="date" name="FS_TGL_PRB" class="form-control" id="FS_TGL_PRB">
+                                        <input type="date" name="FS_TGL_PRB" class="form-control" value="{{$prb->FS_TGL_PRB}}" id="FS_TGL_PRB">
                                         <input type="hidden" name="FS_TUJUAN" value="-" />
                                     </div>
                                 </div>

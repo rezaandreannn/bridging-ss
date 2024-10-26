@@ -95,12 +95,16 @@
 
                                         <!-- pasien kontrol -->
                                         @if($item->FS_CARA_PULANG == 2)
-                                        <a href="{{ route('rj.skdp', [
+                                        @if($item->SPESIALIS == 'SPESIALIS MATA')
+                                            <a href="{{ route('polimata.cetakSKDP', [$item->No_Reg, $item->FS_KD_TRS]) }}" class="btn btn-sm btn-info"><i class="fas fa-download"></i> SKDP</a>
+                                            <a href="{{ route('kondisiPulang.EditSkdpRS', $item->No_Reg) }}" class="btn btn-sm btn-info"><i class="fas fa-edit"></i>Edit SKDP</a>
+                                        @else
+                                            <a href="{{ route('rj.skdp', [
                                             'noReg' => $item->No_Reg,
                                             'kode_transaksi' => $item->FS_KD_TRS
                                             ]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> SKDP</a>
-
                                         <a href="{{ route('rj.editSKDP', $item->No_Reg) }}" class="btn btn-sm btn-info"><i class="fas fa-edit"></i>Edit SKDP</a>
+                                        @endif
                                         <!-- pasien rujuk luar rs -->
                                         @elseif ($item->FS_CARA_PULANG == 4)
                                         <a href="{{ route('rj.rujukanRS', ['noReg' => $item->No_Reg,'kode_transaksi' => $item->FS_KD_TRS,'id_surat'=> $item->ID_SURAT_RUJUKAN]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujukan RS</a>
@@ -140,7 +144,11 @@
                                         @endif
                                         <!-- Resep -->
                                         @if($item->FS_TERAPI != '')
-                                        <a href="{{ route('rj.resep', [$item->No_Reg, $item->FS_KD_TRS])  }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Resep</a>
+                                            @if($item->SPESIALIS == 'SPESIALIS MATA')
+                                            <a href="{{ route('polimata.resep', [$item->No_Reg, $item->FS_KD_TRS])  }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Resep</a>
+                                            @else
+                                            <a href="{{ route('rj.resep', [$item->No_Reg, $item->FS_KD_TRS])  }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Resep</a>
+                                            @endif
                                         @endif
 
 

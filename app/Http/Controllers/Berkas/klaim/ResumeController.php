@@ -47,6 +47,7 @@ class ResumeController extends Controller
         if ($kode_dokter != null and $kode_dokter != null) {
             $dataPasien = $this->rekam_medis->rekamMedisHarian($kode_dokter, $tanggal);
         }
+        // dd($dataPasien);
 
 
         return view($this->view . 'rajal', compact('title', 'dataPasien', 'dokters', 'rekamMedisModel', 'poliMata'));

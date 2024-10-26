@@ -83,7 +83,7 @@
                                         @if($pasien->Medis == 'RAWAT INAP')
                                             <a href="{{ route('rm.ranap', $pasien->No_Reg) }}" class="btn btn-sm btn-success"><i class="fas fa-info-circle"></i> Resume Ranap</a>
                                         @endif
-                                        @if($pasien->Kode_Dokter == '148' || $pasien->Kode_Dokter == '156')
+                                        @if($pasien->SPESIALIS == 'SPESIALIS MATA')
                                             @if($poliMata->cekDokter($pasien->No_Reg) == true)
                                                 <a href="{{ route('polimata.cetakResume', [$pasien->No_Reg]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Resume</a>
                                             @endif
