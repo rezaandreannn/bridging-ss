@@ -733,7 +733,7 @@
     if ($("#namapaketdrsuner").val() == "Pre op Phaco") {
       $(".resep").val(
         resep +
-          "\n /R  cenfresh No 5 \n  S 4 ddgtt 1 tetes + ODS   \n ---------------------------------------- \n \n /R  Floxa No 2 \n  S 6 ddgtt 1 tetes + ODS (3 hari sebelum operasi)  \n ---------------------------------------- \n"
+          "\n /R  cenfresh No 5 \n  S 4 ddgtt 1 tetes ODS   \n ---------------------------------------- \n \n /R  Floxa No 2 \n  S 6 ddgtt 1 tetes O (3 hari sebelum operasi)  \n ---------------------------------------- \n"
       );
       $("#namapaketdrsuner").select2("data", null);
     } else if ($("#namapaketdrsuner").val() == "Glaucoma") {
