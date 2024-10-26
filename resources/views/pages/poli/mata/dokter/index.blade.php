@@ -121,7 +121,7 @@
                                     <td>{{$konsul->NAMA_DOKTER}}</td>
                                     <td>{{$konsul->TANGGAL}}</td>
                                     <td>
-                                        @if($konsul->FS_STATUS == 2)
+                                
                                             @if($poliMata->cekDokter($konsul->NO_REG) == true)
                                                
                                             @else
@@ -130,7 +130,6 @@
                                             @if($poliMata->cekDokter($konsul->NO_REG) == true)
                                                 <a href="{{ route('polimata.cetakRMKonsul', ['noReg'=>$konsul->NO_REG]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> RM</a>
                                             @endif
-                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
