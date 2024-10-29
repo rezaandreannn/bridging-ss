@@ -322,6 +322,7 @@ class Rekam_medis extends Model
             ->leftJoin('M_RUANG as mr', 'p.Kode_Ruang', '=', 'mr.Kode_Ruang')
             ->leftJoin($pku . '.dbo.TAC_RJ_MEDIS as trm', 'p.No_Reg', '=', 'trm.FS_KD_REG')
             ->leftJoin($pku . '.dbo.TAC_RJ_STATUS as trs', 'p.No_Reg', '=', 'trs.FS_KD_REG')
+            ->leftJoin($pku . '.dbo.TAC_RJ_RUJUKAN as sr', 'p.NO_REG', '=', 'sr.FS_KD_REG')
 
             ->select(
                 'a.Nomor',
@@ -343,6 +344,7 @@ class Rekam_medis extends Model
                 'trm.FS_TERAPI',
                 'trm.HASIL_ECHO',
                 'trs.FS_STATUS',
+                'sr.FS_KD_TRS as ID_SURAT_RUJUKAN',
 
             )
             ->where('p.Tanggal', $tanggal)

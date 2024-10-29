@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Rajal;
+use App\Models\RajalDokter;
 
 class KondisiPulangController extends Controller
 {
@@ -18,6 +19,7 @@ class KondisiPulangController extends Controller
     protected $rekam_medis;
     protected $PoliMata;
     protected $rajal;
+    protected $rajaldokter;
 
 
     public function __construct()
@@ -28,6 +30,7 @@ class KondisiPulangController extends Controller
         $this->PoliMata = new PoliMata();
         $this->rekam_medis = new Rekam_medis();
         $this->rajal = new Rajal();
+        $this->rajaldokter = new RajalDokter();
     }
 
     // SKDP
@@ -126,6 +129,31 @@ class KondisiPulangController extends Controller
             DB::connection('pku')->rollBack();
             return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
         }
+    }
+
+    // Rawat Inap
+    public function rawatInap($noReg)
+    {
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+        $title = 'Rawat Inap';
+        $asasmen_dokter = $this->PoliMata->asasmenDokter($noReg);
+        dd($asasmen_dokter);
+
+        // Data Master
+        $masterLab = $this->rajaldokter->getMasterLab();
+        $getLab = $this->rajaldokter->getLabByKodeReg($noReg);
+        $masterRadiologi = $this->rajaldokter->getMasterRadiologi();
+        $getRad = $this->rajaldokter->getRadByKodeReg($noReg);
+        $getCekRad = $this->rajaldokter->getCekRad($noReg);
+        // dd($getCekRad);
+
+        $masterObat = $this->rajaldokter->getMasterObat();
+        // Gambar Mata
+        $MataKiri = $this->PoliMata->getMataKiri($noReg);
+        // dd($MataKiri);
+        $MataKanan = $this->PoliMata->getMataKanan($noReg);
+
+        return view($this->view . '.kondisiPulang.rawatInap.Add', compact('biodata', 'title', 'asasmen_dokter', 'masterLab', 'getLab', 'masterRadiologi', 'getRad', 'getCekRad', 'masterObat', 'MataKiri', 'MataKanan'));
     }
 
     // Rujuk Internal

@@ -124,13 +124,13 @@
                                         <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rawat Inap</a>
                                         @endif
                                         @if($pasien->FS_CARA_PULANG == '4')
-                                        <a href="{{ route('rj.rujukanRS', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujukan RS</a>
+                                        <a href="{{ route('rj.rujukanRS', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS,'id_surat'=> $pasien->ID_SURAT_RUJUKAN]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujukan RS</a>
                                         @endif
                                         @if($pasien->FS_CARA_PULANG == '5')
                                         <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> PRB/Prolanis</a>
                                         @endif
                                         @if($pasien->FS_CARA_PULANG == '6')
-                                        <a href="{{ route('rj.rujukanInternal', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujukan Internal</a>
+                                        <a href="{{ route('rj.rujukanInternal', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS,'id_surat'=> $pasien->ID_SURAT_RUJUKAN]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujukan Internal</a>
                                         @endif
                                         @if($pasien->FS_CARA_PULANG == '7')
                                         <a href="{{ route('rj.faskes', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Faskes</a>

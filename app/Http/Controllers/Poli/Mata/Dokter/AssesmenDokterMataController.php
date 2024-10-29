@@ -98,6 +98,7 @@ class AssesmenDokterMataController extends Controller
         $penyakitSekarang = $this->poliMata->getPenyakit();
 
         $asasmen_perawat = $this->poliMata->asasmenPerawatGet($noReg);
+        // dd($asasmen_perawat);
         $refraksi = $this->poliMata->getRefraksi($noReg);
 
         $history = $this->rajaldokter->getHistoryPasienPoliMata($NoMr);
@@ -120,6 +121,7 @@ class AssesmenDokterMataController extends Controller
         $biodata = $this->rekam_medis->getBiodata($noReg);
 
         $asasmen_perawat = $this->rajal->asasmenPerawatKonsul($noReg);
+        // dd($asasmen_perawat);
         $refraksi = $this->poliMata->getRefraksi($noReg);
         // Data Master
         $masterLab = $this->rajaldokter->getMasterLab();
@@ -291,6 +293,8 @@ class AssesmenDokterMataController extends Controller
                 return redirect('pm/polimata/dokter')->with('success', 'Berhasil Ditambahkan!');
             } elseif ($request->input('FS_CARA_PULANG') == '2') {
                 return redirect()->route('kondisiPulang.SkdpRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil Ditambahkan!');
+            } elseif ($request->input('FS_CARA_PULANG') == '3') {
+                return redirect()->route('kondisiPulang.rawatInap', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil Ditambahkan!');
             } elseif ($request->input('FS_CARA_PULANG') == '4') {
                 return redirect()->route('kondisiPulang.rujukLuarRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil Ditambahkan!');
             } elseif ($request->input('FS_CARA_PULANG') == '6') {

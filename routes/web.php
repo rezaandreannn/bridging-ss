@@ -456,9 +456,14 @@ Route::middleware('auth')->group(function () {
 
         // Kondisi Pulang Rujuk Internal
         Route::get('rajal/dokter/kondisi_pulang/SKDP/{noReg}', [KondisiPulangController::class, 'SkdpRS'])->name('kondisiPulang.SkdpRS');
+        Route::post('rajal/dokter/kondisi_pulang/SKDP/', [KondisiPulangController::class, 'SkdpAdd'])->name('kondisiPulang.SkdpAdd');
         Route::get('rajal/dokter/kondisi_pulang/EditSKDP/{noReg}', [KondisiPulangController::class, 'EditSkdpRS'])->name('kondisiPulang.EditSkdpRS');
         Route::put('rajal/dokter/kondisi_pulang/EditSKDP/{noReg}', [KondisiPulangController::class, 'SkdpEdit'])->name('kondisiPulang.UpdateSkdpRS');
-        Route::post('rajal/dokter/kondisi_pulang/SKDP/', [KondisiPulangController::class, 'SkdpAdd'])->name('kondisiPulang.SkdpAdd');
+        // Kondisi Pulang Rawat Inap
+        Route::get('rajal/dokter/kondisi_pulang/rawatInap/{noReg}', [KondisiPulangController::class, 'rawatInap'])->name('kondisiPulang.rawatInap');
+        Route::post('rajal/dokter/kondisi_pulang/rawatInap/', [KondisiPulangController::class, 'rawatInapAdd'])->name('kondisiPulang.rawatInapAdd');
+        Route::get('rajal/dokter/kondisi_pulang/EditrawatInap/{noReg}', [KondisiPulangController::class, 'rawatInapEdit'])->name('kondisiPulang.rawatInapEdit');
+        Route::put('rajal/dokter/kondisi_pulang/EditrawatInap/{noReg}', [KondisiPulangController::class, 'rawatInapUpdate'])->name('kondisiPulang.rawatInapUpdate');
         // Kondisi Pulang Rujuk Internal
         Route::get('rajal/dokter/kondisi_pulang/rujukInternal/{noReg}', [KondisiPulangController::class, 'rujukInternalRS'])->name('kondisiPulang.rujukInternalRS');
         Route::post('rajal/dokter/kondisi_pulang/rujukInternal/', [KondisiPulangController::class, 'rujukInternalAdd'])->name('kondisiPulang.rujukInternalAdd');
