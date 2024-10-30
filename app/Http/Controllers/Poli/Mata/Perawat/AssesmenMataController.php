@@ -160,6 +160,7 @@ class AssesmenMataController extends Controller
 
         $masalah_perawatan = $this->rajal->masalah_perawatan();
         $rencana_perawatan = $this->rajal->rencana_perawatan();
+        // dd($rencana_perawatan);
         return view($this->view . 'perawat.addKeperawatan', compact('title', 'biodata', 'masalah_perawatan', 'rencana_perawatan', 'noReg'));
     }
 
@@ -326,13 +327,16 @@ class AssesmenMataController extends Controller
     {
         $resep = $this->rekam_medis->cetakResep($noReg, $kode_transaksi);
         // dd($resep);
-        // Data Rujukan
+        // Data Rujukan RS
+        $dbpku = DB::connection('db_rsmm')->getDatabaseName();
         $data = DB::connection('pku')
             ->table('TAC_RJ_RUJUKAN as a')
             ->leftJoin('poli_mata_dokter as poli', 'a.FS_KD_REG', '=', 'poli.NO_REG')
+            ->leftJoin($dbpku . '.dbo.DOKTER as c', 'a.FS_TUJUAN_RUJUKAN', '=', 'c.KODE_DOKTER')
             ->select(
                 'a.*',
-                'poli.diagnosa'
+                'poli.diagnosa',
+                'c.NAMA_DOKTER'
             )
             ->where('a.FS_KD_REG', $noReg)
             ->first();

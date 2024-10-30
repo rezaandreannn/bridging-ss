@@ -137,7 +137,7 @@ class KondisiPulangController extends Controller
         $biodata = $this->rekam_medis->getBiodata($noReg);
         $title = 'Rawat Inap';
         $asasmen_dokter = $this->PoliMata->asasmenDokter($noReg);
-        dd($asasmen_dokter);
+        // dd($asasmen_dokter);
 
         // Data Master
         $masterLab = $this->rajaldokter->getMasterLab();
@@ -145,15 +145,118 @@ class KondisiPulangController extends Controller
         $masterRadiologi = $this->rajaldokter->getMasterRadiologi();
         $getRad = $this->rajaldokter->getRadByKodeReg($noReg);
         $getCekRad = $this->rajaldokter->getCekRad($noReg);
-        // dd($getCekRad);
 
         $masterObat = $this->rajaldokter->getMasterObat();
-        // Gambar Mata
-        $MataKiri = $this->PoliMata->getMataKiri($noReg);
-        // dd($MataKiri);
-        $MataKanan = $this->PoliMata->getMataKanan($noReg);
 
-        return view($this->view . '.kondisiPulang.rawatInap.Add', compact('biodata', 'title', 'asasmen_dokter', 'masterLab', 'getLab', 'masterRadiologi', 'getRad', 'getCekRad', 'masterObat', 'MataKiri', 'MataKanan'));
+        return view($this->view . '.kondisiPulang.rawatInap.Add', compact('biodata', 'title', 'asasmen_dokter', 'masterLab', 'noReg', 'getLab', 'masterRadiologi', 'getRad', 'getCekRad', 'masterObat'));
+    }
+
+    public function rawatInapStore(Request $request, $noReg)
+    {
+        try {
+
+            $userEmr = $this->rajal->getUserEmr(auth()->user()->username);
+            // dd($userEmr);
+
+            DB::connection('pku')->beginTransaction();
+
+            DB::connection('pku')->table('TAC_RI_MEDIS')->insert([
+                'FS_KD_REG' => $request->input('FS_KD_REG'),
+                'FS_KD_KP' => '',
+                'FS_RIW_PENYAKIT_DAHULU' => '',
+                'FS_RIW_PENYAKIT_DAHULU2' => '',
+                'FS_STATUS_PSIK' => $request->input('FS_STATUS_PSIK'),
+                'FS_STATUS_PSIK2' => $request->input('FS_STATUS_PSIK2') ? $request->input('FS_STATUS_PSIK2') : '',
+                'FS_HUB_KELUARGA' => $request->input('FS_HUB_KELUARGA'),
+                'FS_ANAMNESA' => $request->input('FS_ANAMNESA'),
+                'FS_DIAGNOSA' => $request->input('FS_DIAGNOSA'),
+                'FS_TINDAKAN' => $request->input('FS_TINDAKAN'),
+                'FS_TERAPI' => $request->input('FS_TERAPI'),
+                'FS_CATATAN_FISIK' => $request->input('FS_CATATAN_FISIK'),
+                'FS_KD_MEDIS' => $request->input('FS_KD_MEDIS'),
+                'FS_CARA_PULANG' => $request->input('FS_CARA_PULANG'),
+                'FS_DAFTAR_MASALAH' => $request->input('FS_DAFTAR_MASALAH'),
+                'FS_PLANNING_LAB' => $request->input('periksa_lab'),
+                'FS_PLANNING_RAD' => $request->input('periksa_rad'),
+                'FS_HASIL_PEMERIKSAAN_PENUNJANG' => $request->input('FS_HASIL_PEMERIKSAAN_PENUNJANG'),
+                'FS_STATUS' => $request->input('FS_STATUS'),
+                'FS_MR' => $request->input('FS_MR'),
+                'FS_PESAN' => $request->input('FS_PESAN'),
+                'FS_ALERGI' => $request->input('FS_ALERGI'),
+                'FS_REAK_ALERGI' => $request->input('FS_REAK_ALERGI'),
+                'KONJUNGTIVA' => $request->input('KONJUNGTIVA'),
+                'DEVIASI' => $request->input('DEVIASI'),
+                'SKELERA' => $request->input('SKELERA'),
+                'JVP' => $request->input('JVP'),
+                'BIBIR' => $request->input('BIBIR'),
+                'MUKOSA' => $request->input('MUKOSA'),
+                'THORAX' => $request->input('THORAX'),
+                'JANTUNG' => $request->input('JANTUNG'),
+                'ABDOMEN' => $request->input('ABDOMEN'),
+                'PINGGANG' => $request->input('PINGGANG'),
+                'EKS_ATAS' => $request->input('EKS_ATAS'),
+                'EKS_BAWAH' => $request->input('EKS_BAWAH'),
+                'FS_JAM_TRS' => $request->input('FS_JAM_TRS'),
+                'mdb' => $userEmr->user_id,
+                'mdd' => date('Y-m-d'),
+            ]);
+
+            $masalah_kep = $request->input('tujuan');
+            if (!empty($masalah_kep)) {
+                foreach ($masalah_kep as $value) {
+                    $insert_masalah_kep = DB::connection('pku')->table('TAC_RJ_MASALAH_KEP')->insert([
+
+                        'FS_KD_REG' => $request->input('NO_REG'),
+                        'FS_KD_MASALAH_KEP' => $value,
+
+                    ]);
+                }
+            }
+
+            $rencana_kep = $request->input('tembusan');
+            if (!empty($rencana_kep)) {
+                foreach ($rencana_kep as $value) {
+                    $insert_rencana_kep = DB::connection('pku')->table('TAC_RJ_REN_KEP')->insert([
+
+                        'FS_KD_REG' => $request->input('NO_REG'),
+                        'FS_KD_REN_KEP' => $value,
+
+                    ]);
+                }
+            }
+
+            // Penunjang LAB & RADIOLOGI
+            $periksa_lab = $request->input('periksa_lab');
+            if (!empty($periksa_lab)) {
+                foreach ($periksa_lab as $key => $value) {
+                    DB::connection('pku')->table('ta_trs_kartu_periksa4')->insert([
+                        'fn_no_urut' => $key,
+                        'fs_kd_tarif' => $value,
+                        'fs_kd_reg2' => $request->input('NO_REG'),
+                    ]);
+                }
+            }
+
+            $periksa_rad = $request->input('periksa_rad');
+            $fs_bagian = $request->input('FS_BAGIAN');
+            if (!empty($periksa_rad)) {
+                foreach ($periksa_lab as $key => $value) {
+                    DB::connection('pku')->table('ta_trs_kartu_periksa5')->insert([
+                        'fn_no_urut' => $key,
+                        'fs_kd_tarif' => $value,
+                        'fs_kd_reg2' => $request->input('NO_REG'),
+                        'fs_bagian' => $fs_bagian,
+                    ]);
+                }
+            }
+            DB::connection('pku')->commit();
+
+            return redirect('pm/polimata/perawat?kode_dokter=' . $request->input('KODE_DOKTER'))->with('success', 'Data Berhasil Ditambahkan!');
+        } catch (\Exception $e) {
+            //throw $th;
+            DB::connection('pku')->rollBack();
+            return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
+        }
     }
 
     // Rujuk Internal

@@ -101,11 +101,11 @@
                                         <input type="hidden" name="NO_REG" value="{{ $noReg }}" />
                                         <input type="hidden" name="KODE_DOKTER" value="{{ $biodata->Kode_Dokter}}" />
                                         <input type="hidden" name="NO_MR" value="{{ $biodata->NO_MR}}" />
-                                        <label>Keluhan Utama (Anamnesa) <code>*</code></label>
-                                        <textarea name="anamnesa" class="form-control  @error('anamnesa') is-invalid  
+                                        <label>Keluhan Utama (Anamnesa) <code>* Wajib Diisi</code></label>
+                                        <textarea name="FS_ANAMNESA" class="form-control  @error('FS_ANAMNESA') is-invalid  
                                             @enderror" style="height: 70px;" rows="7" placeholder="Masukan ...">{{ $asasmen_dokter->anamnesa }}</textarea>
                                     </div>
-                                    @error('anamnesa')
+                                    @error('FS_ANAMNESA')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -113,14 +113,15 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Riwayat Penyakit Sekarang</label>
-                                        <input type="text" name="RIWAYAT_SEKARANG" class="form-control" id="riwayat_sekarang" style="height: 50px;" rows="3" value="{{ $asasmen_dokter->RIWAYAT_SEKARANG }}">
-                                        @error('riwayat_penyakit')
-                                        <span class="text-danger" style="font-size: 12px;">
-                                            {{ $message }}
-                                        </span>
-                                        @enderror
+                                        <label>Pemeriksaan Fisik <code>*</code></label>       
+                                        <textarea name="FS_CATATAN_FISIK" class="form-control  @error('FS_CATATAN_FISIK') is-invalid  
+                                            @enderror" style="height: 70px;" rows="7" placeholder="Masukan ...">{{ old('FS_CATATAN_FISIK', "Suhu :  $asasmen_dokter->suhu C, Nadi :  $asasmen_dokter->nadi x/menit,  Respirasi : $asasmen_dokter->respirasi x/menit, TD : $asasmen_dokter->tekanan_darah mmHg, \nBB : $asasmen_dokter->berat_badan Kg, TB : $asasmen_dokter->tinggi_badan cm, Alergi : , Skala Nyeri :, Skrining Nutrisi : Normal") }}</textarea>
                                     </div>
+                                    @error('FS_CATATAN_FISIK')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -173,164 +174,132 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Status Mental</label>
-                                        <select name="status_mental" id="status_mental" class="form-control select2 @error('status_mental')  is-invalid @enderror">
-                                            <option value="">-- Pilih Status Mental --</option>
-                                            <option value="1" {{ ($asasmen_dokter->status_mental=='1') ? 'selected' : ''}}>Kooperatif</option>
-                                            <option value="2" {{ ($asasmen_dokter->status_mental=='2') ? 'selected' : ''}}>Tidak Kooperatif</option>
-                                            <option value="3" {{ ($asasmen_dokter->status_mental=='3') ? 'selected' : ''}}>Gelisah/Delirium/Berontak</option>
-                                            <option value="4" {{ ($asasmen_dokter->status_mental=='4') ? 'selected' : ''}}>Ketidak Mampuan Dalam Mengikuti Perintah</option>
+                                        <label>Hubungan dengan anggota keluarga</label>
+                                        <select name="FS_HUB_KELUARGA" id="FS_HUB_KELUARGA" class="form-control select2 @error('FS_HUB_KELUARGA')  is-invalid @enderror">
+                                            <option value="">-- Pilih Data --</option>
+                                            <option value="1" selected>Baik</option>
+                                            <option value="2">Tidak Baik</option>
                                         </select> 
-                                        @error('status_mental')
+                                        @error('FS_HUB_KELUARGA')
                                         <span class="text-danger" style="font-size: 12px;">
                                             {{ $message }}
                                         </span>
                                         @enderror
                                     </div>
-                                </div>
-                                <div class="col-md-6">
+                                </div> 
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Keadaan Umum</label>
-                                        <select name="keadaan_umum" id="keadaan_umum" class="form-control select2 @error('keadaan_umum')  is-invalid @enderror">
-                                            <option value="">-- Pilih Status Mental --</option>
-                                            <option value="1" {{ ($asasmen_dokter->keadaan_umum=='1') ? 'selected' : ''}}>Baik</option>
-                                            <option value="2" {{ ($asasmen_dokter->keadaan_umum=='2') ? 'selected' : ''}}>Sedang</option>
-                                            <option value="3" {{ ($asasmen_dokter->keadaan_umum=='3') ? 'selected' : ''}}>Buruk</option>
-                                        </select>
-                                    </div>
-                                    @error('keadaan_umum')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Kesadaran</label>
-                                        <select name="kesadaran" id="kesadaran" class="form-control select2 @error('kesadaran')  is-invalid @enderror">
-                                            <option value="">-- Pilih Status Mental --</option>
-                                            <option value="1" {{ ($asasmen_dokter->kesadaran=='1') ? 'selected' : ''}}>Baik</option>
-                                            <option value="2" {{ ($asasmen_dokter->kesadaran=='2') ? 'selected' : ''}}>Sedang</option>
-                                            <option value="3" {{ ($asasmen_dokter->kesadaran=='3') ? 'selected' : ''}}>Buruk</option>
-                                        </select>
-                                    </div>
-                                    @error('kesadaran')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>R</label>
-                                        <div class="input-group">
-                                            <input type="text" value="{{ $asasmen_dokter->respirasi }}" name="respirasi" id="respirasi" placeholder="masukkan hanya angka" class="form-control @error('respirasi') is-invalid  
-                                            @enderror">
-                                            <div class="input-group-append">
-                                                <div class="input-group-text">
-                                                    <b>x/menit</b>
-                                                </div>
+                                        <label>Konjungtiva</label>
+                                        <div class="d-flex gap-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="KONJUNGTIVA" id="KONJUNGTIVA1" value="Pucat" {{ old('KONJUNGTIVA') == 'Pucat' ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="KONJUNGTIVA1">Pucat</label>
                                             </div>
-                                            @error('respirasi')
-                                            <span class="text-danger" style="font-size: 12px;">
-                                                {{ $message }}
-                                            </span>
-                                            @enderror
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="KONJUNGTIVA" id="KONJUNGTIVA2" value="Pink" {{ old('KONJUNGTIVA','Pink') == 'Pink' ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="KONJUNGTIVA2">Pink</label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Nadi</label>
-                                        <div class="input-group">
-                                            <input type="text" value="{{ $asasmen_dokter->nadi }}" name="nadi" id="nadi" placeholder="masukkan hanya angka" class="form-control @error('nadi') is-invalid  
-                                            @enderror">
-                                            <div class="input-group-append">
-                                                <div class="input-group-text">
-                                                    <b>x/menit</b>
-                                                </div>
+                                        <label>Deviasi Trakea</label>
+                                        <div class="d-flex gap-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="DEVIASI" id="DEVIASI1" value="Kanan" {{ old('DEVIASI') == 'Kanan' ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="DEVIASI1">
+                                                    Kanan
+                                                </label>
                                             </div>
-                                            @error('nadi')
-                                            <span class="text-danger" style="font-size: 12px;">
-                                                {{ $message }}
-                                            </span>
-                                            @enderror
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="DEVIASI" id="DEVIASI2" value="Kiri" {{ old('DEVIASI') == 'Kiri' ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="DEVIASI2">
+                                                    Kiri
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="DEVIASI" id="DEVIASI3" value="" {{ old('DEVIASI') == '' ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="DEVIASI3">
+                                                    Tidak Ada
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>TD</label><code> (contoh : 110/90)</code>
-                                        <div class="input-group">
-                                            <input type="text" name="tekanan_darah" id="td" value="{{ $asasmen_dokter->tekanan_darah }}" placeholder="masukkan hanya angka" class="form-control @error('td') is-invalid  
-                                            @enderror">
-                                            <div class="input-group-append">
-                                                <div class="input-group-text">
-                                                    <b>mmHg</b>
-                                                </div>
+                                        <label>Skelera</label>
+                                        <div class="d-flex gap-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="SKELERA" id="SKELERA1" value="Ikterik" {{ old('SKELERA') == 'Ikterik' ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="SKELERA1">
+                                                    Ikterik
+                                                </label>
                                             </div>
-                                            @error('td')
-                                            <span class="text-danger" style="font-size: 12px;">
-                                                {{ $message }}
-                                            </span>
-                                            @enderror
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="SKELERA" id="SKELERA2" value="Tidak" {{ old('SKELERA','Tidak') == 'Tidak' ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="SKELERA2">
+                                                    Tidak Ikterik
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Suhu</label><code> (gunakan tanda . contoh : 36.5)</code>
-                                        <div class="input-group">
-                                            <input type="text" name="suhu" id="suhu" value="{{ $asasmen_dokter->suhu }}" placeholder="masukkan hanya angka" class="form-control @error('suhu') is-invalid  
-                                            @enderror">
-                                            <div class="input-group-append">
-                                                <div class="input-group-text">
-                                                    <b>C</b>
-                                                </div>
+                                        <label>JVP</label>
+                                        <div class="d-flex gap-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="JVP" id="JVP1" value="Meningkat" {{ old('JVP') == 'Meningkat' ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="JVP1">
+                                                    Meningkat
+                                                </label>
                                             </div>
-                                            @error('suhu')
-                                            <span class="text-danger" style="font-size: 12px;">
-                                                {{ $message }}
-                                            </span>
-                                            @enderror
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="JVP" id="JVP2" value="Tidak" {{ old('JVP','Tidak') == 'Tidak' ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="JVP2">
+                                                    Tidak
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Berat Badan</label>
-                                        <div class="input-group">
-                                            <input type="text" name="berat_badan" id="bb" value="{{ $asasmen_dokter->berat_badan }}" placeholder="masukkan hanya angka" class="form-control @error('bb') is-invalid  
-                                            @enderror">
-                                            <div class="input-group-append">
-                                                <div class="input-group-text">
-                                                    <b>Kg</b>
-                                                </div>
+                                        <label>Bibir/Lidah</label>
+                                        <div class="d-flex gap-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="BIBIR" id="BIBIR1" value="Sianosis" {{ old('BIBIR') == 'Sianosis' ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="BIBIR1">
+                                                    Sianosis
+                                                </label>
                                             </div>
-                                            @error('bb')
-                                            <span class="text-danger" style="font-size: 12px;">
-                                                {{ $message }}
-                                            </span>
-                                            @enderror
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="BIBIR" id="BIBIR2" value="Tidak" {{ old('BIBIR','Tidak') == 'Tidak' ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="BIBIR2">
+                                                    Tidak
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Tinggi Badan</label>
-                                        <div class="input-group">
-                                            <input type="text" name="tinggi_badan" id="tb" value="{{ $asasmen_dokter->tinggi_badan }}" placeholder="masukkan hanya angka" class="form-control @error('tb') is-invalid  
-                                            @enderror">
-                                            <div class="input-group-append">
-                                                <div class="input-group-text">
-                                                    <b>M/Cm</b>
-                                                </div>
+                                        <label>Mukosa</label>
+                                        <div class="d-flex gap-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="MUKOSA" id="MUKOSA1" value="Kering" {{ old('MUKOSA') == 'Kering' ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="MUKOSA1">
+                                                    Kering
+                                                </label>
                                             </div>
-                                            @error('tb')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="MUKOSA" id="MUKOSA2" value="Tidak" {{ old('MUKOSA','Tidak') == 'Tidak' ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="MUKOSA2">
+                                                    Basah
+                                                </label>
                                             </div>
-                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -338,141 +307,91 @@
                         </div>
                         <!-- include form -->
                     </div>
-                    <div class="card">
-                        <div class="card-header card-success card-khusus-header">
-                            <h6 class="card-khusus-title">Pemeriksaan Fisik Mata</h6>
+                    <div class="card mb-3">
+                        <div class="card-header card-khusus-header">
+                            <h6 class="card-khusus-title">Thorax</h6>
                         </div>
+                        <!-- include form -->
                         <div class="card-body card-khusus-body">
                             <div class="row">
-                                {{-- <div class="row">
-                                    <h4 class="custom-judul my-1">Pemeriksaan Fisik Mata</h4>
-                                </div> --}}
-                                        <div class="row align-items-center">
-                                            <div class="col-md-4 col-4 text-right text-right-mobile no-padding">
-                                                <p class="no-margin">O.D</p>
-                                                <p class="no-margin">Status Presen</p>
-                                            </div>
-                                            <div class="col-md-4 col-4 text-center no-padding my-mobile">
-                                                <img src="{{ asset('img/mata.png') }}" alt="Right Eye" class="eye-image">
-                                            </div>
-                                            <div class="col-md-4 col-4 text-left text-left-mobile no-padding">
-                                                <p class="no-margin">OS</p>
-                                                <p class="no-margin">Kedudukan / Gerak Bola Mata</p>
-                                            </div>
-                                        </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Paru</label>
+                                        <textarea name="THORAX" class="form-control   @error('THORAX') is-invalid  
+                                            @enderror" rows="3"></textarea>
+                                    </div>
+                                    @error('THORAX')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Jantung</label>
+                                        <textarea name="JANTUNG" class="form-control  @error('JANTUNG') is-invalid  
+                                        @enderror" rows="3"></textarea>
+                                    </div>
+                                    @error('JANTUNG')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Abdomen</label>
+                                        <textarea name="ABDOMEN" class="form-control  @error('ABDOMEN') is-invalid  
+                                        @enderror" rows="3"></textarea>
+                                    </div>
+                                    @error('ABDOMEN')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Pinggang</label>
+                                        <textarea name="PINGGANG" class="form-control  @error('PINGGANG') is-invalid  
+                                        @enderror" rows="3"></textarea>
+                                    </div>
+                                    @error('PINGGANG')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-12">
+                                    <label>EKSTREMITAS</label>
+                                    <div class="row"> <!-- Tambahkan row untuk membuat grid -->
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Visus</label>
-                                                <div class="col-md-12">
-                                                    <div class="form-group" style="display: flex; flex-direction: row;">
-                                                        <div class="input-group" style="margin-right: 10px;">
-                                                            <label for="VISUS_OD" class="mr-2 mt-2">
-                                                                OD
-                                                            </label>
-                                                            <input type="text" placeholder="Inputan Mata Kanan" value="{{ $asasmen_dokter->VISUS_OD }}" class="form-control" name="VISUS_OD">
-                                                        </div>
-                                                        <div class="input-group" style="margin-right: 10px;">
-                                                            <label for="VISUS_OS" class="mr-2 mt-2">
-                                                                OS
-                                                            </label>
-                                                            <input type="text" placeholder="Inputan Mata Kiri" value="{{ $asasmen_dokter->VISUS_OS }}" class="form-control" name="VISUS_OS">
-                                                        </div>
-                                                    </div>
+                                                <label>Atas</label>
+                                                <textarea name="EKS_ATAS" class="form-control @error('EKS_ATAS') is-invalid @enderror" rows="3"></textarea>
+                                                @error('EKS_ATAS')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
                                                 </div>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Tonometri</label>
-                                                <div class="col-md-12">
-                                                    <div class="form-group" style="display: flex; flex-direction: row;">
-                                                        <div class="input-group" style="margin-right: 10px;">
-                                                            <label for="NCT_TOD" class="mr-2 mt-2">
-                                                                TOD
-                                                            </label>
-                                                            <input type="text" placeholder="Inputan Mata Kanan" value="{{ $asasmen_dokter->NCT_TOD }}" class="form-control" name="NCT_TOD" id="NCT_TOD">
-                                                        </div>
-                                                        <div class="input-group" style="margin-right: 10px;">
-                                                            <label for="NCT_TOS" class="mr-2 mt-2">
-                                                                TOS
-                                                            </label>
-                                                            <input type="text" placeholder="Inputan Mata Kiri" value="{{ $asasmen_dokter->NCT_TOS }}" class="form-control" name="NCT_TOS" id="NCT_TOS">
-                                                        </div>
-                                                    </div>
+                                                <label>Bawah</label>
+                                                <textarea name="EKS_BAWAH" class="form-control @error('EKS_BAWAH') is-invalid @enderror" rows="3"></textarea>
+                                                @error('EKS_BAWAH')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
                                                 </div>
+                                                @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Add</label>
-                                                <div class="col-md-12">
-                                                    <div class="form-group" style="display: flex; flex-direction: row;">
-                                                        <div class="input-group" style="margin-right: 10px;">
-                                                            <label for="ADD_OD" class="mr-2 mt-2">
-                                                                OD
-                                                            </label>
-                                                            <input type="text" placeholder="Inputan Mata Kanan" value="{{ $asasmen_dokter->ADD_OD }}" class="form-control" name="ADD_OD">
-                                                        </div>
-                                                        <div class="input-group" style="margin-right: 10px;">
-                                                            <label for="ADD_OS" class="mr-2 mt-2">
-                                                                OS
-                                                            </label>
-                                                            <input type="text" placeholder="Inputan Mata Kiri" value="{{ $asasmen_dokter->ADD_OS }}" class="form-control" name="ADD_OS">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6"></div>
-                                        <div class="col-md-6">
-                                            <label for="">Preview Mata Kiri :</label>
-                                            @if(isset($MataKiri) && $MataKiri->GAMBAR)
-                                                <img src="{{ asset('storage/gambar_mata/'. $MataKiri->GAMBAR) }}" width="100%" height="250" />
-                                            @else
-                                                <p>Gambar Tidak Ada</p>
-                                            @endif
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="">Preview Mata Kanan :</label>
-                                            @if(isset($MataKanan) && $MataKanan->GAMBAR)
-                                                <img src="{{ asset('storage/gambar_mata/'. $MataKanan->GAMBAR) }}" width="100%" height="250" />
-                                            @else
-                                                <p>Gambar Tidak Ada</p>
-                                            @endif
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="" for="">Mata Kiri:</label>
-                                            <br />
-                                            <div id="signat"></div>
-                                            <br />
-                                            <button id="clear">Hapus Gambar</button>
-                                            <input type="hidden" name="id_kiri" value="{{ $MataKiri->id ?? '' }}" />
-                                            <textarea id="signature1" name="signed_kiri" style="display: none"></textarea>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="" for="">Mata Kanan:</label>
-                                            <br />
-                                            <div id="signat2"></div>
-                                            <br />
-                                            <button id="clear2">Hapus Gambar</button>
-                                            <input type="hidden" name="id_kanan" value="{{ $MataKanan->id ?? '' }}" />
-                                            <textarea id="signature2" name="signed_kanan" style="display: none"></textarea>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="">Deskripsi Kiri :</label>
-                                                <textarea rows="7" cols="50" style="height: 100px;" name="DESKRIPSI_KIRI" class="form-control">{{ $MataKiri->DESKRIPSI ?? ''}}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="">Deskripsi Kanan :</label>
-                                                <textarea rows="7" cols="50" style="height: 100px;" name="DESKRIPSI_KANAN" class="form-control">{{ $MataKanan->DESKRIPSI ?? ''}}</textarea>
-                                            </div>
-                                        </div> 
-                                        
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <!-- include form -->
                     </div>
                     <div class="card mb-3">
                         <div class="card-header card-khusus-header">
@@ -552,90 +471,53 @@
                         <!-- include form -->
                         <div class="card-body card-khusus-body">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Hasil Pemeriksaan Penunjang</label>
+                                        <textarea name="FS_HASIL_PEMERIKSAAN_PENUNJANG" class="form-control  @error('FS_HASIL_PEMERIKSAAN_PENUNJANG') is-invalid  
+                                            @enderror" rows="3" placeholder="Masukan Hasil Pemeriksaan Penunjang ...">{{ $asasmen_dokter->DIAGNOSA }}</textarea>
+                                    </div>
+                                    @error('FS_HASIL_PEMERIKSAAN_PENUNJANG')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Diagnosa</label>
-                                        <textarea name="DIAGNOSA" class="form-control  @error('DIAGNOSA') is-invalid  
+                                        <textarea name="FS_DIAGNOSA" class="form-control  @error('FS_DIAGNOSA') is-invalid  
                                             @enderror" rows="3" placeholder="Masukan Diagnosa ...">{{ $asasmen_dokter->DIAGNOSA }}</textarea>
                                     </div>
-                                    @error('DIAGNOSA')
+                                    @error('FS_DIAGNOSA')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                     @enderror
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Edukasi</label>
-                                        <textarea name="edukasi" class="form-control  @error('edukasi') is-invalid  
-                                        @enderror" rows="3" placeholder="Masukan Edukasi ...">{{ $asasmen_dokter->edukasi }}</textarea>
+                                        <label>Daftar Masalah</label>
+                                        <textarea name="FS_DAFTAR_MASALAH" class="form-control  @error('FS_DAFTAR_MASALAH') is-invalid  
+                                        @enderror" rows="3" placeholder="Masukan Daftar Masalah ...">{{ $asasmen_dokter->edukasi }}</textarea>
                                     </div>
-                                    @error('edukasi')
+                                    @error('FS_DAFTAR_MASALAH')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                     @enderror
                                 </div>
-                                @if(Auth::user()->username == '156')
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="d-block">Paket Obat</label>
-                                        <select name="namapaketdrarfan" id="namapaketdrarfan" class="form-control namapaketdrarfan @error('cara_pulang')  is-invalid @enderror" onchange="click_kondisi_pulang(this)">
-                                            <option value="">--Pilih Paket Obat--</option>
-                                            <option value="Post Phaco 1 Hari">Post Phaco 1 Hari</option>
-                                            <option value="Post Phaco 1 Minggu">Post Phaco 1 Minggu</option>
-                                            <option value="Resep Kacamata">Resep Kacamata</option>
-                                        </select>
-                                        @error('cara_pulang')
-                                        <span class="text-danger" style="font-size: 12px;">
-                                            {{ $message }}
-                                        </span>
-                                        @enderror
+                                        <label>Rencana Tindakan</label>
+                                        <textarea name="FS_TINDAKAN" class="form-control  @error('FS_TINDAKAN') is-invalid  
+                                        @enderror" rows="3" placeholder="Masukan Rencana Tindakan ...">{{ $asasmen_dokter->edukasi }}</textarea>
                                     </div>
-                                </div>
-                                @endif
-                                @if(Auth::user()->username == '148')
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="d-block">Paket Obat</label>
-                                        <select name="namapaketdrsuner" id="namapaketdrsuner" class="form-control namapaketdrsuner @error('cara_pulang')  is-invalid @enderror" onchange="click_kondisi_pulang(this)">
-                                            <option value="">--Pilih Paket Obat--</option>
-                                            <option value="Pre op Phaco">Pre op Phaco</option>
-                                            <option value="Glaucoma">Glaucoma</option>
-                                            <option value="Post Phaco 1 Hari">Post Phaco 1 Hari</option>
-                                            <option value="Post Phaco 1 Minggu">Post Phaco 1 Minggu</option>
-                                            <option value="Resep Kacamata">Resep Kacamata</option>
-                                            <option value="Post Insisi Chalazion">Post Insisi Chalazion</option>
-                                            <option value="Post op pteregium 1 hari">Post op pteregium 1 hari</option>
-                                            <option value="Post op pteregium 1 minggu">Post op pteregium 1 minggu</option>
-                                        </select>
-                                        @error('cara_pulang')
-                                        <span class="text-danger" style="font-size: 12px;">
-                                            {{ $message }}
-                                        </span>
-                                        @enderror
+                                    @error('FS_TINDAKAN')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
                                     </div>
-                                </div>
-                                @endif
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="d-block">Kondisi Pulang</label>
-                                        <select name="FS_CARA_PULANG" id="kondisi" class="form-control select2 @error('cara_pulang')  is-invalid @enderror" onchange="click_kondisi_pulang(this)">
-                                            <option value="" selected disabled>--Pilih Cara Pulang--</option>
-                                            <option value="0" {{ ($asasmen_dokter->FS_CARA_PULANG=='0') ? 'selected' : ''}}>Tidak Kontrol</option>
-                                            <option value="2" {{ ($asasmen_dokter->FS_CARA_PULANG=='2') ? 'selected' : ''}}>Kontrol</option>
-                                            <option value="3" {{ ($asasmen_dokter->FS_CARA_PULANG=='3') ? 'selected' : ''}}>Rawat Inap</option>
-                                            <option value="4" {{ ($asasmen_dokter->FS_CARA_PULANG=='4') ? 'selected' : ''}}>Rawat Luar RS</option>
-                                            <option value="6" {{ ($asasmen_dokter->FS_CARA_PULANG=='6') ? 'selected' : ''}}>Rawat Internal</option>
-                                            <option value="7" {{ ($asasmen_dokter->FS_CARA_PULANG=='7') ? 'selected' : ''}}>Kembali Ke Faskes Primer</option>
-                                            <option value="8" {{ ($asasmen_dokter->FS_CARA_PULANG=='8') ? 'selected' : ''}}>PRB</option>
-                                        </select>
-                                        @error('cara_pulang')
-                                        <span class="text-danger" style="font-size: 12px;">
-                                            {{ $message }}
-                                        </span>
-                                        @enderror
-                                    </div>
+                                    @enderror
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -661,6 +543,18 @@
                                         <label for="terapi">Terapi</label>
                                         <textarea rows="7" cols="50" style="height: 180px;" name="FS_TERAPI" class="form-control resep" id="terapi">{{ $asasmen_dokter->FS_TERAPI }}</textarea>
                                     </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Pesan</label>
+                                       <input type="text" name="FS_PESAN" class="form-control @error('FS_PESAN') is-invalid  
+                                        @enderror" id="FS_PESAN">
+                                    </div>
+                                    @error('FS_PESAN')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>

@@ -251,6 +251,8 @@ textarea.form-control {
     line-height: 1.6rem;
 }
 
+
+
 .custom-file,
 .custom-file-label,
 .custom-select,
@@ -464,6 +466,9 @@ select.form-control:not([size]):not([multiple]) {
 }
 .custom-switches-stacked .custom-switch {
     margin-bottom: 0.5rem;
+}
+.d-flex {
+    gap: 1rem; /* Atur jarak sesuai kebutuhan */
 }
 
 .custom-switch-indicator {

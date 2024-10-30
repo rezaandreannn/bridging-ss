@@ -49,6 +49,28 @@ class Rekam_medis extends Model
         return $data;
     }
 
+    public function cetakResep2($noReg, $kode_transaksi)
+    {
+        $dbRsmm = DB::connection('db_rsmm')->getDatabaseName();
+        $data = DB::connection('pku')
+            ->table('TAC_RJ_MEDIS as a')
+            ->leftJoin('TAC_COM_USER as b', 'a.mdb', '=', 'b.user_id')
+            // Menggunakan nama basis data secara eksplisit dalam join
+            ->leftJoin($dbRsmm . '.dbo.DOKTER as c', 'b.user_name', '=', 'c.KODE_DOKTER')
+            ->leftJoin($dbRsmm . '.dbo.TUSER as d', 'b.user_name', '=', 'd.NAMAUSER')
+            ->select(
+                'a.*',
+                'b.user_name',
+                'c.NAMA_DOKTER',
+                'c.KODE_DOKTER',
+                'd.NAMALENGKAP',
+            )
+            ->where('a.FS_KD_REG', $noReg)
+            ->where('a.FS_KD_TRS', $kode_transaksi)
+            ->first();
+        return $data;
+    }
+
     public function cetakAlkes($noReg)
     {
         $dbRsmm = DB::connection('db_rsmm')->getDatabaseName();
