@@ -69,7 +69,7 @@
                                     </td>
                                     <td width="15%">
                                         @if ($fisioterapi->cek_asesmen_dokter_fisio($pasien->NO_REG)==true)
-                                        <button data-toggle="modal" data-target="#modal-edit{{$pasien->No_MR}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</button>
+                                        <button data-toggle="modal" data-target="#modal-edit{{$pasien->NO_REG}}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</button>
                                         @else
                                         {{-- tombol lama --}}
                                         {{-- <a href="{{ route('add.dokter', $pasien->No_MR)}}" class="btn btn-sm btn-primary"><i class="fas fa-notes-medical"></i> Entry</a> --}}
@@ -91,7 +91,7 @@
 </div>
 
 @foreach ($listpasien as $pasien)
-<div class="modal fade" id="modal-edit{{$pasien->No_MR}}">
+<div class="modal fade" id="modal-edit{{$pasien->NO_REG}}">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
