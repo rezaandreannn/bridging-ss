@@ -67,7 +67,12 @@ class AssesmenMataController extends Controller
         }
         $kode_dokter = $request->input('kode_dokter');
         $dokters = $this->poliMata->getDokterMata();
-        $refraksi = $this->poliMata->getDataRefraksi();
+        $today = \Carbon\Carbon::today()->toDateString(); // Format to YYYY-MM-DD
+
+        $refraksi = DB::connection('pku')
+            ->table('poli_mata_refraksi')
+            ->whereDate('created_at', $today) // Adjust the date field as necessary
+            ->get();
         // dd($refraksi);
         $pasien = $this->antrean->getDataPasienRajalPoliMata($kode_dokter);
         $pasienKonsul = $this->rajaldokter->getPasienByDokterMataRujukInternal($kode_dokter, $tanggal);
