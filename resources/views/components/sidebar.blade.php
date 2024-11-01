@@ -240,6 +240,20 @@
             </li>
             @endcan
 
+            @can('catatan rawat inap')
+            <li class="menu-header">Rawat Inap</li>
+            <li class="nav-item dropdown  {{ Request::is('ri/cppt/*') ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span> Catatan Rawat Inap</span></a>
+                @can('cppt')
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('ri/cppt/*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('cppt.index')}}">CPPT</a>
+                    </li>
+                </ul>
+                @endcan         
+            </li>
+            @endcan
+
             @can('igd')
             <li class="menu-header">IGD</li>
             <li class="nav-item dropdown {{ Request::is('igd*') ? 'active' : '' }}">

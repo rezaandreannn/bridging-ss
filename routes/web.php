@@ -23,16 +23,18 @@ use App\Http\Controllers\MasterData\DokterController;
 use App\Http\Controllers\MasterData\PasienController;
 use App\Http\Controllers\Encounter\RecourceController;
 use App\Http\Controllers\Farmasi\OrderAlkesController;
+use App\Http\Controllers\Berkas\klaim\ResumeController;
 use App\Http\Controllers\Berkas\Ranap\BerkasController;
 use App\Http\Controllers\MasterData\LocationController;
+use App\Http\Controllers\RawatInap\Cppt\CpptController;
 use App\Http\Controllers\IGD\Layanan\SkriningController;
 use App\Http\Controllers\Fisio\InformedConcentController;
 use App\Http\Controllers\Kunjungan\PendaftaranController;
 use App\Http\Controllers\MasterData\JenisFisioController;
 use App\Http\Controllers\Farmasi\MasterDataAlkesController;
 use App\Http\Controllers\MasterData\OrganizationController;
+use App\Http\Controllers\profileUser\ProfileUserController;
 use App\Http\Controllers\Berkas\igd\RekamMedisIgdController;
-use App\Http\Controllers\Berkas\klaim\ResumeController;
 use App\Http\Controllers\Fisio\Berkas\BerkasFisioController;
 use App\Http\Controllers\Manage\RoleHasPermissionController;
 use App\Http\Controllers\Mapping\MappingEncounterController;
@@ -47,14 +49,13 @@ use App\Http\Controllers\Case\Encounter\EncounterCreateController;
 use App\Http\Controllers\Poli\Mata\Perawat\AssesmenMataController;
 use App\Http\Controllers\Fisio\MasterData\DiagnosisMedisController;
 use App\Http\Controllers\PetugasKoding\Rajal\KodingRajalController;
+use App\Http\Controllers\RawatJalan\Dokter\KondisiPulangController;
 use App\Http\Controllers\Fisio\MasterData\DiagnosisFungsiController;
 use App\Http\Controllers\Poli\Mata\Dokter\AssesmenDokterMataController;
 use App\Http\Controllers\Poli\Mata\MasterData\PenyakitSekarangController;
 use App\Http\Controllers\Berkas\Rekam_medis_by_mr\RekamMedisByMrController;
 use App\Http\Controllers\Berkas\Rekam_medis_harian\RekamMedisHarianController;
 use App\Http\Controllers\IGD\Layanan\AssesmenController as LayananAssesmenController;
-use App\Http\Controllers\profileUser\ProfileUserController;
-use App\Http\Controllers\RawatJalan\Dokter\KondisiPulangController;
 
 /*
 |--------------------------------------------------------------------------
@@ -454,6 +455,11 @@ Route::middleware('auth')->group(function () {
 
     // Rawat Inap berkas
     Route::prefix('ri')->group(function () {
+        // cppt
+        Route::get('cppt/', [CpptController::class, 'index'])->name('cppt.index');
+        Route::get('cppt/cariProses', [CpptController::class, 'cari_process'])->name('cppt.cariProcess');
+        Route::get('cppt/addCppt/{noReg}', [CpptController::class, 'create'])->name('cppt.addCppt');
+
         // Rawat Inap Berkas
         Route::get('detail/Berkas/{noReg}', [BerkasRanapController::class, 'index'])->name('rm.detail');
         Route::get('detail/cetakKeperawatanRanap/{noReg}', [BerkasRanapController::class, 'AssesmenAwalKeperawatanRanap'])->name('ri.cetakKeperawatanRanap');

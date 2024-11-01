@@ -39,6 +39,19 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-4">
+                            <h6 class="mb-0">Umur</h6>
+                        </div>
+                        <div class="col-sm-8">
+                            @php
+                            use Carbon\Carbon; // Pastikan Carbon diimpor
+                            $dateOfBirth = Carbon::parse($biodata->TGL_LAHIR);
+                            $age = $dateOfBirth->age; // Menghitung umur
+                             @endphp
+                        : {{$age}} tahun
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
                             <h6 class="mb-0">Alamat</h6>
                         </div>
                         <div class="col-sm-8">
