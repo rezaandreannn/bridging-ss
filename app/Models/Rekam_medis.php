@@ -31,6 +31,7 @@ class Rekam_medis extends Model
         $data = DB::connection('pku')
             ->table('TAC_RJ_MEDIS as a')
             ->leftJoin('TAC_COM_USER as b', 'a.mdb', '=', 'b.user_id')
+            ->leftJoin('poli_mata_dokter as poli', 'a.FS_KD_REG', '=', 'poli.NO_REG')
             // Menggunakan nama basis data secara eksplisit dalam join
             ->leftJoin($dbRsmm . '.dbo.DOKTER as c', 'b.user_name', '=', 'c.KODE_DOKTER')
             ->leftJoin($dbRsmm . '.dbo.TUSER as d', 'b.user_name', '=', 'd.NAMAUSER')
@@ -39,7 +40,30 @@ class Rekam_medis extends Model
                 'b.user_name',
                 'c.NAMA_DOKTER',
                 'c.KODE_DOKTER',
-                'd.NAMALENGKAP'
+                'd.NAMALENGKAP',
+                'poli.diagnosa as FS_DIAGNOSA'
+            )
+            ->where('a.FS_KD_REG', $noReg)
+            ->where('a.FS_KD_TRS', $kode_transaksi)
+            ->first();
+        return $data;
+    }
+
+    public function cetakResep2($noReg, $kode_transaksi)
+    {
+        $dbRsmm = DB::connection('db_rsmm')->getDatabaseName();
+        $data = DB::connection('pku')
+            ->table('TAC_RJ_MEDIS as a')
+            ->leftJoin('TAC_COM_USER as b', 'a.mdb', '=', 'b.user_id')
+            // Menggunakan nama basis data secara eksplisit dalam join
+            ->leftJoin($dbRsmm . '.dbo.DOKTER as c', 'b.user_name', '=', 'c.KODE_DOKTER')
+            ->leftJoin($dbRsmm . '.dbo.TUSER as d', 'b.user_name', '=', 'd.NAMAUSER')
+            ->select(
+                'a.*',
+                'b.user_name',
+                'c.NAMA_DOKTER',
+                'c.KODE_DOKTER',
+                'd.NAMALENGKAP',
             )
             ->where('a.FS_KD_REG', $noReg)
             ->where('a.FS_KD_TRS', $kode_transaksi)
@@ -320,6 +344,7 @@ class Rekam_medis extends Model
             ->leftJoin('M_RUANG as mr', 'p.Kode_Ruang', '=', 'mr.Kode_Ruang')
             ->leftJoin($pku . '.dbo.TAC_RJ_MEDIS as trm', 'p.No_Reg', '=', 'trm.FS_KD_REG')
             ->leftJoin($pku . '.dbo.TAC_RJ_STATUS as trs', 'p.No_Reg', '=', 'trs.FS_KD_REG')
+            ->leftJoin($pku . '.dbo.TAC_RJ_RUJUKAN as sr', 'p.NO_REG', '=', 'sr.FS_KD_REG')
 
             ->select(
                 'a.Nomor',
@@ -341,6 +366,7 @@ class Rekam_medis extends Model
                 'trm.FS_TERAPI',
                 'trm.HASIL_ECHO',
                 'trs.FS_STATUS',
+                'sr.FS_KD_TRS as ID_SURAT_RUJUKAN',
 
             )
             ->where('p.Tanggal', $tanggal)

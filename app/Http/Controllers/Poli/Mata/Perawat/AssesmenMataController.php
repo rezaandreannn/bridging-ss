@@ -61,14 +61,19 @@ class AssesmenMataController extends Controller
     public function refraksi(Request $request)
     {
         $title = $this->prefix . ' ' . 'Mata';
+        $tanggal = $request->input('tanggal');
+        if ($tanggal == null) {
+            $tanggal = date('Y-m-d');
+        }
         $kode_dokter = $request->input('kode_dokter');
         $dokters = $this->poliMata->getDokterMata();
         $refraksi = $this->poliMata->getDataRefraksi();
         // dd($refraksi);
         $pasien = $this->antrean->getDataPasienRajalPoliMata($kode_dokter);
-        // dd($pasien);
+        $pasienKonsul = $this->rajaldokter->getPasienByDokterMataRujukInternal($kode_dokter, $tanggal);
+        // dd($pasienKonsul);
         $poliMata = new PoliMata();
-        return view($this->view . 'refraksi.index', compact('title', 'pasien', 'dokters', 'poliMata', 'refraksi'));
+        return view($this->view . 'refraksi.index', compact('title', 'pasien', 'dokters', 'poliMata', 'refraksi', 'pasienKonsul'));
     }
 
     public function refraksiStore(Request $request)
@@ -155,6 +160,7 @@ class AssesmenMataController extends Controller
 
         $masalah_perawatan = $this->rajal->masalah_perawatan();
         $rencana_perawatan = $this->rajal->rencana_perawatan();
+        // dd($rencana_perawatan);
         return view($this->view . 'perawat.addKeperawatan', compact('title', 'biodata', 'masalah_perawatan', 'rencana_perawatan', 'noReg'));
     }
 
@@ -192,7 +198,6 @@ class AssesmenMataController extends Controller
 
     public function cetakRM($noReg)
     {
-        // $resep = $this->poliMata->resep($noReg);
         $resep = $this->rajaldokter->resep($noReg);
 
         $labs = $this->rajaldokter->lab($noReg);
@@ -209,7 +214,6 @@ class AssesmenMataController extends Controller
 
         $gambarMataKiri = $this->poliMata->getGambarMataKiri($noReg);
         $gambarMataKanan = $this->poliMata->getGambarMataKanan($noReg);
-        // $getHasilLab = $this->rajaldokter->getHasilLab($noReg);
 
         $masalahKeperawatan = $this->rekam_medis->masalahKepByNoreg($noReg);
         $rencanaKeperawatan = $this->rekam_medis->rencanaKepByNoreg($noReg);
@@ -222,6 +226,40 @@ class AssesmenMataController extends Controller
         $title = 'Cetak RM';
 
         $pdf = PDF::loadview('pages.poli.mata.cetak.rm', ['tanggal' => $tanggal, 'mataKiri' => $gambarMataKiri, 'mataKanan' => $gambarMataKanan, 'title' => $title, 'resep' => $resep, 'labs' => $labs, 'rads' => $rads, 'biodata' => $biodata, 'perawat' => $asasmen_perawat, 'masalahKeperawatan' => $masalahKeperawatan, 'rencanaKeperawatan' => $rencanaKeperawatan, 'dokter' => $asasmen_dokter]);
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
+    }
+
+    public function cetakRMKonsul($noReg)
+    {
+        $resep = $this->rajaldokter->resep($noReg);
+
+        $labs = $this->rajaldokter->lab($noReg);
+        $rads = $this->rajaldokter->radiologi($noReg);
+        $biodata = $this->rekam_medis->getBiodata($noReg);
+
+        $asasmen_perawat = $this->rekam_medis->cetakRmRajal($noReg);
+        $asasmen_dokter = $this->poliMata->asasmenDokter($noReg);
+        // dd($asasmen_dokter);
+
+        if ($asasmen_dokter == null) {
+            return redirect()->back()->with('warning', 'data rekam medis belum di inputkan di EMR!');
+        }
+
+        $gambarMataKiri = $this->poliMata->getGambarMataKiri($noReg);
+        $gambarMataKanan = $this->poliMata->getGambarMataKanan($noReg);
+
+        $masalahKeperawatan = $this->rekam_medis->masalahKepByNoreg($noReg);
+        $rencanaKeperawatan = $this->rekam_medis->rencanaKepByNoreg($noReg);
+
+        // Cetak PDF
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+        $filename = 'RM -' . $date;
+
+        $title = 'Cetak RM';
+
+        $pdf = PDF::loadview('pages.poli.mata.cetak.rmKonsul', ['tanggal' => $tanggal, 'mataKiri' => $gambarMataKiri, 'mataKanan' => $gambarMataKanan, 'title' => $title, 'resep' => $resep, 'labs' => $labs, 'rads' => $rads, 'biodata' => $biodata, 'perawat' => $asasmen_perawat, 'masalahKeperawatan' => $masalahKeperawatan, 'rencanaKeperawatan' => $rencanaKeperawatan, 'dokter' => $asasmen_dokter]);
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
     }
@@ -289,13 +327,16 @@ class AssesmenMataController extends Controller
     {
         $resep = $this->rekam_medis->cetakResep($noReg, $kode_transaksi);
         // dd($resep);
-        // Data Rujukan
+        // Data Rujukan RS
+        $dbpku = DB::connection('db_rsmm')->getDatabaseName();
         $data = DB::connection('pku')
             ->table('TAC_RJ_RUJUKAN as a')
             ->leftJoin('poli_mata_dokter as poli', 'a.FS_KD_REG', '=', 'poli.NO_REG')
+            ->leftJoin($dbpku . '.dbo.DOKTER as c', 'a.FS_TUJUAN_RUJUKAN', '=', 'c.KODE_DOKTER')
             ->select(
                 'a.*',
-                'poli.diagnosa'
+                'poli.diagnosa',
+                'c.NAMA_DOKTER'
             )
             ->where('a.FS_KD_REG', $noReg)
             ->first();

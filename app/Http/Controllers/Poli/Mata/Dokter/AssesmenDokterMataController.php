@@ -43,14 +43,27 @@ class AssesmenDokterMataController extends Controller
         // dd($medis);
         $asesmen_perawat = DB::connection('pku')->table('TAC_ASES_PER2')->where('FS_KD_REG', $biodata->NO_REG)->first();
         $perawat_mata = DB::connection('pku')->table('poli_mata_asesmen')->where('NO_REG', $biodata->NO_REG)->first();
-        $gambar = DB::connection('pku')->table('poli_mata_gambar')->where('NO_REG', $biodata->NO_REG)->first();
+        $MataKiri = DB::connection('pku')->table('poli_mata_gambar')
+            ->select(
+                'DESKRIPSI',
+            )
+            ->where('NO_REG', $noRegLama)
+            ->where('TIPE', 'Mata Kiri')
+            ->first();
+        $MataKanan = DB::connection('pku')->table('poli_mata_gambar')
+            ->select(
+                'DESKRIPSI',
+            )
+            ->where('NO_REG', $noRegLama)
+            ->where('TIPE', 'Mata Kanan')
+            ->first();
         $refraksi = DB::connection('pku')->table('poli_mata_refraksi')->where('NO_REG', $biodata->NO_REG)->first();
         $asesmenDokterGet = DB::connection('pku')->table('poli_mata_dokter')->where('NO_REG', $noRegLama)->first();
 
         $masterObat = $this->rajaldokter->getMasterObat();
         // dd($perawat_mata);
         $title = $this->prefix . ' ' . 'Copy Assesmen Dokter';
-        return view($this->view . 'dokter.copyRiwayatAsesmen', compact('title', 'biodata', 'ttv', 'medis', 'gambar', 'masterObat', 'perawat_mata', 'asesmen_perawat', 'refraksi', 'asesmenDokterGet', 'biodataLama', 'noRegBaru'));;
+        return view($this->view . 'dokter.copyRiwayatAsesmen', compact('title', 'biodata', 'ttv', 'MataKiri', 'MataKanan', 'medis', 'masterObat', 'perawat_mata', 'asesmen_perawat', 'refraksi', 'asesmenDokterGet', 'biodataLama', 'noRegBaru'));;
     }
 
     // -----------------------------------------------------------------------------
@@ -85,6 +98,7 @@ class AssesmenDokterMataController extends Controller
         $penyakitSekarang = $this->poliMata->getPenyakit();
 
         $asasmen_perawat = $this->poliMata->asasmenPerawatGet($noReg);
+        // dd($asasmen_perawat);
         $refraksi = $this->poliMata->getRefraksi($noReg);
 
         $history = $this->rajaldokter->getHistoryPasienPoliMata($NoMr);
@@ -107,12 +121,14 @@ class AssesmenDokterMataController extends Controller
         $biodata = $this->rekam_medis->getBiodata($noReg);
 
         $asasmen_perawat = $this->rajal->asasmenPerawatKonsul($noReg);
+        // dd($asasmen_perawat);
+        $refraksi = $this->poliMata->getRefraksi($noReg);
         // Data Master
         $masterLab = $this->rajaldokter->getMasterLab();
         $masterRadiologi = $this->rajaldokter->getMasterRadiologi();
         $masterObat = $this->rajaldokter->getMasterObat();
         // dd($asasmen_perawat);
-        return view($this->view . 'dokter.assesmenKonsul', compact('title', 'biodata', 'asasmen_perawat', 'masterLab', 'masterRadiologi', 'masterObat',  'noReg'));
+        return view($this->view . 'dokter.assesmenKonsul', compact('title', 'biodata', 'refraksi', 'asasmen_perawat', 'masterLab', 'masterRadiologi', 'masterObat',  'noReg'));
     }
 
     /**
@@ -277,6 +293,8 @@ class AssesmenDokterMataController extends Controller
                 return redirect('pm/polimata/dokter')->with('success', 'Berhasil Ditambahkan!');
             } elseif ($request->input('FS_CARA_PULANG') == '2') {
                 return redirect()->route('kondisiPulang.SkdpRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil Ditambahkan!');
+            } elseif ($request->input('FS_CARA_PULANG') == '3') {
+                return redirect()->route('kondisiPulang.rawatInap', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil Ditambahkan!');
             } elseif ($request->input('FS_CARA_PULANG') == '4') {
                 return redirect()->route('kondisiPulang.rujukLuarRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil Ditambahkan!');
             } elseif ($request->input('FS_CARA_PULANG') == '6') {
@@ -349,6 +367,17 @@ class AssesmenDokterMataController extends Controller
     {
         return DB::connection('pku')->table('TAC_RJ_SKDP')->where('FS_KD_REG', $noReg)->exists();
     }
+
+    public function cekRujukan($noReg)
+    {
+        return DB::connection('pku')->table('TAC_RJ_RUJUKAN')->where('FS_KD_REG', $noReg)->exists();
+    }
+    public function cekPRB($noReg)
+    {
+        return DB::connection('pku')->table('TAC_RJ_PRB')->where('FS_KD_REG', $noReg)->exists();
+    }
+
+
 
     public function update(Request $request)
     {
@@ -499,19 +528,29 @@ class AssesmenDokterMataController extends Controller
             if ($request->input('FS_CARA_PULANG') == '0') {
                 return redirect('pm/polimata/dokter')->with('success', 'Berhasil DiEdit!');
             } elseif ($request->input('FS_CARA_PULANG') == '2') {
-                // return redirect()->route('kondisiPulang.SkdpRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
-                // return redirect()->route('kondisiPulang.EditSkdpRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
                 if (!empty($noReg) && $this->cekSKDP($noReg)) {
                     return redirect()->route('kondisiPulang.EditSkdpRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
                 } else {
                     return redirect()->route('kondisiPulang.SkdpRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
                 }
             } elseif ($request->input('FS_CARA_PULANG') == '4') {
-                return redirect()->route('kondisiPulang.rujukLuarRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
+                if (!empty($noReg) && $this->cekRujukan($noReg)) {
+                    return redirect()->route('kondisiPulang.rujukLuarEdit', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
+                } else {
+                    return redirect()->route('kondisiPulang.rujukLuarRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
+                }
             } elseif ($request->input('FS_CARA_PULANG') == '6') {
-                return redirect()->route('kondisiPulang.rujukInternalRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
+                if (!empty($noReg) && $this->cekRujukan($noReg)) {
+                    return redirect()->route('kondisiPulang.rujukInternalEdit', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
+                } else {
+                    return redirect()->route('kondisiPulang.rujukInternalRS', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil Ditambahkan!');
+                }
             } elseif ($request->input('FS_CARA_PULANG') == '7') {
-                return redirect()->route('kondisiPulang.faskesPRB', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
+                if (!empty($noReg) && $this->cekPRB($noReg)) {
+                    return redirect()->route('kondisiPulang.faskesPRBEdit', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
+                } else {
+                    return redirect()->route('kondisiPulang.faskesPRB', ['noReg' => $request->input('NO_REG')])->with('success', 'Berhasil DiEdit!');
+                }
             } else {
                 return redirect('pm/polimata/dokter')->with('success', 'Berhasil DiEdit!');
             }

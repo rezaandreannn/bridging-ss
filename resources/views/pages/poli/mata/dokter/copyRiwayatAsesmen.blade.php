@@ -444,13 +444,13 @@
                                         <div class="col-md-6">
                                             <div class="form-group mt-4">
                                                 <label for="">Deskripsi Kanan :</label>
-                                                <textarea rows="7" cols="50" style="height: 100px;" name="DESKRIPSI_KANAN" class="form-control">{{ $gambar->DESKRIPSI_KANAN ?? ''}}</textarea>
+                                                <textarea rows="7" cols="50" style="height: 100px;" name="DESKRIPSI_KANAN" class="form-control">{{ $MataKanan->DESKRIPSI ?? ''}}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group mt-4">
                                                 <label for="">Deskripsi Kiri :</label>
-                                                <textarea rows="7" cols="50" style="height: 100px;" name="DESKRIPSI_KIRI" class="form-control">{{ $gambar->DESKRIPSI_KIRI ?? ''}}</textarea>
+                                                <textarea rows="7" cols="50" style="height: 100px;" name="DESKRIPSI_KIRI" class="form-control">{{ $MataKiri->DESKRIPSI ?? ''}}</textarea>
                                             </div>
                                         </div> 
                                         
@@ -697,7 +697,7 @@
     if ($("#namapaketdrsuner").val() == "Pre op Phaco") {
       $(".resep").val(
         resep +
-          "\n /R  cenfresh No 5 \n  S 4 ddgtt 1 tetes + ODS   \n ---------------------------------------- \n \n /R  Floxa No 2 \n  S 6 ddgtt 1 tetes + ODS (3 hari sebelum operasi)  \n ---------------------------------------- \n"
+          "\n /R  cenfresh No 5 \n  S 4 ddgtt 1 tetes ODS   \n ---------------------------------------- \n \n /R  Floxa No 2 \n  S 6 ddgtt 1 tetes O (3 hari sebelum operasi)  \n ---------------------------------------- \n"
       );
       $("#namapaketdrsuner").select2("data", null);
     } else if ($("#namapaketdrsuner").val() == "Glaucoma") {

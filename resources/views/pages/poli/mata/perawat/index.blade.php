@@ -111,6 +111,7 @@
                                         @if($poliMata->cekDokter($data->No_Reg) == true)
                                             <a href="{{ route('polimata.cetakResume', [$data->No_Reg]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Resume</a>
                                         @endif
+                                        {{-- --------------- --}}
 
                                         <!-- pasien kontrol -->
                                         @if($data->FS_CARA_PULANG == 2)

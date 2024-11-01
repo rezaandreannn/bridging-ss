@@ -18,9 +18,8 @@
         <div class="section-header">
             <h1>{{ $title ?? ''}}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('rj.index') }}">Rawat Jalan</a></div>
-                <div class="breadcrumb-item"><a href="{{ route('rj.index') }}">Nurse Record</a></div>
-                <div class="breadcrumb-item">Pasien</div>
+                <div class="breadcrumb-item active"><a href="#">Riwayat Rekam Medis</a></div>
+                <div class="breadcrumb-item"><a href="{{ route('rm.harian') }}">Berkas Rekam Medis Harian</a></div>
             </div>
         </div>
 
@@ -89,79 +88,97 @@
                                         @if($pasien->SPESIALIS == 'SPESIALIS REHABILITASI MEDIK')
                                         <a href="{{ route('berkas.cetakRmFisio', ['no_reg' => $pasien->No_Reg]) }}" class="btn btn-sm btn-success" target="_blank"><i class="fas fa-download"></i> RM SPKFR</a>
                                         @elseif ($pasien->SPESIALIS == 'FISIOTERAPI')
-                                        <a href="{{ route('cppt.cetakCpptRiwayat', [
-                                    'no_reg' => $pasien->No_Reg,
-                                    'no_mr' => $pasien->No_MR]) }}" class="btn btn-sm btn-info" target="_blank"><i class="fas fa-download"></i>Lihat CPPT</a>
-
+                                        <a href="{{ route('cppt.cetakCpptRiwayat', ['no_reg' => $pasien->No_Reg,'no_mr' => $pasien->No_MR]) }}" class="btn btn-sm btn-info" target="_blank"><i class="fas fa-download"></i>Lihat CPPT</a>
+                                        
                                         @else
-                                        {{-- button rm --}}
+                                        {{-- RM Poli Mata --}}
+                                        @if ($pasien->SPESIALIS == 'SPESIALIS MATA')
+                                        <a href="{{ route('polimata.cetakRM', [$pasien->No_Reg]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> RM</a>
+                                        @else
                                         <a href="{{ route('rj.rmDokter', ['noReg' => $pasien->No_Reg, 'noMR'=> $pasien->No_MR]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> RM</a>
-                                        {{-- button rm --}}
+                                        @endif
+                                        
 
                                         
-                                        {{-- button untuk  edit riwayat 1x24 jam --}}
-                                        @if($pasien->Tanggal>=$tglKemarin)
-                                            @if($pasien->FS_STATUS != '')
-                                            <a href="{{ route('rj.edit', ['noReg' =>$pasien->No_Reg]) }}" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Edit Perawat</a>
-                                            @else
-                                            <a href="{{ route('rj.add', ['noReg' =>$pasien->No_Reg]) }}" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Edit Perawat</a>
+                                            {{-- button untuk  edit riwayat 1x24 jam --}}
+                                            @if($pasien->Tanggal>=$tglKemarin)
+                                                @if($pasien->FS_STATUS != '')
+                                                <a href="{{ route('rj.edit', ['noReg' =>$pasien->No_Reg]) }}" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Edit Perawat</a>
+                                                @else
+                                                <a href="{{ route('rj.add', ['noReg' =>$pasien->No_Reg]) }}" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Edit Perawat</a>
+                                                @endif
+                                                @if($pasien->Kode_Dokter == $userLogin)
+                                                <a href="#" class="btn btn-sm btn-danger"><i class="fas fa-download"></i> Edit Dokter</a>
+                                                @endif
                                             @endif
-                                            @if($pasien->Kode_Dokter == $userLogin)
-                                            <a href="#" class="btn btn-sm btn-danger"><i class="fas fa-download"></i> Edit Dokter</a>
+                                            {{-- button untuk  edit riwayat 1x24 jam --}}
+
+
+                                            {{-- cara pulang untuk berkas surat --}}
+                                            @if($pasien->FS_CARA_PULANG == '1')
+                                            <a href="{{ route('rj.prb', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> RB</a>
                                             @endif
-                                        @endif
-                                        {{-- button untuk  edit riwayat 1x24 jam --}}
 
+                                            @if($pasien->FS_CARA_PULANG == '2')
+                                                @if($pasien->SPESIALIS == 'SPESIALIS MATA')
+                                                <a href="{{ route('polimata.cetakSKDP', [$pasien->No_Reg, $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> SKDP</a>
+                                                @else
+                                                <a href="{{ route('rj.skdp', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> SKDP</a>
+                                                @endif
+                                            @endif
+                                            @if($pasien->FS_CARA_PULANG == '3')
+                                            <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rawat Inap</a>
+                                            @endif
+                                            @if($pasien->FS_CARA_PULANG == '4')
+                                                @if($pasien->SPESIALIS == 'SPESIALIS MATA')
+                                                    <a href="{{ route('polimata.cetakRujukanRS', [$pasien->No_Reg, $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujukan RS</a>
+                                                @else
+                                                    <a href="{{ route('rj.rujukanRS', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS,'id_surat'=> $pasien->ID_SURAT_RUJUKAN]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujukan RS</a>
+                                                @endif
+                                            @endif
+                                            @if($pasien->FS_CARA_PULANG == '5')
+                                            <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> PRB/Prolanis</a>
+                                            @endif
+                                            @if($pasien->FS_CARA_PULANG == '6')
+                                                @if($pasien->SPESIALIS == 'SPESIALIS MATA')
+                                                    <a href="{{ route('polimata.cetakRujukanInternal', [$pasien->No_Reg, $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujukan Internal</a>
+                                                @else
+                                                    <a href="{{ route('rj.rujukanInternal', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS,'id_surat'=> $pasien->ID_SURAT_RUJUKAN]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujukan Internal</a>
+                                                @endif
+                                            @endif
+                                            @if($pasien->FS_CARA_PULANG == '7')
+                                            <a href="{{ route('rj.faskes', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Faskes</a>
+                                            @endif
+                                            @if($pasien->FS_CARA_PULANG == '8')
+                                            <a href="{{ route('rj.prb', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> PRB</a>
+                                            @endif
 
-                                        {{-- cara pulang untuk berkas surat --}}
-                                        @if($pasien->FS_CARA_PULANG == '1')
-                                        <a href="{{ route('rj.prb', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> RB</a>
-                                        @endif
+                                            {{-- Resep --}}
+                                            @if($pasien->FS_TERAPI != '')
+                                                @if($pasien->SPESIALIS == 'SPESIALIS MATA')
+                                                <a href="{{ route('polimata.resep', [$pasien->No_Reg, $pasien->FS_KD_TRS])  }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Resep</a>
+                                                @else
+                                                <a href="{{ route('rj.resep', [$pasien->No_Reg, $pasien->FS_KD_TRS])  }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Resep</a>
+                                                @endif
+                                            @endif
 
-                                        @if($pasien->FS_CARA_PULANG == '2')
-                                        <a href="{{ route('rj.skdp', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> SKDP</a>
-                                        @endif
-                                        @if($pasien->FS_CARA_PULANG == '3')
-                                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rawat Inap</a>
-                                        @endif
-                                        @if($pasien->FS_CARA_PULANG == '4')
-                                        <a href="{{ route('rj.rujukanRS', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujukan RS</a>
-                                        @endif
-                                        @if($pasien->FS_CARA_PULANG == '5')
-                                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-download"></i> PRB/Prolanis</a>
-                                        @endif
-                                        @if($pasien->FS_CARA_PULANG == '6')
-                                        <a href="{{ route('rj.rujukanInternal', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Rujukan Internal</a>
-                                        @endif
-                                        @if($pasien->FS_CARA_PULANG == '7')
-                                        <a href="{{ route('rj.faskes', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Faskes</a>
-                                        @endif
-                                        @if($pasien->FS_CARA_PULANG == '8')
-                                        <a href="{{ route('rj.prb', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> PRB</a>
-                                        @endif
-
-                                        {{-- Resep --}}
-                                        @if($pasien->FS_TERAPI != '')
-                                        <a href="{{ route('rj.resep', [$pasien->No_Reg, $pasien->FS_KD_TRS])  }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Resep</a>
-                                        @endif
-
-                                        {{-- hasil echo --}}
-                                        @if($pasien->HASIL_ECHO != '')
-                                        <a href="{{ route('rj.hasilEcho', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Hasil Echo</a>
-                                        @endif
+                                            {{-- hasil echo --}}
+                                            @if($pasien->HASIL_ECHO != '')
+                                            <a href="{{ route('rj.hasilEcho', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Hasil Echo</a>
+                                            @endif
 
                                         {{-- cek lab dan radiologi --}}
-                                        @if($rekamMedisModel->cekLab($pasien->No_Reg) == true)
-                                        <a href="{{ route('rj.lab', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Lab</a>
-                                        @endif
+                                            @if($rekamMedisModel->cekLab($pasien->No_Reg) == true)
+                                            <a href="{{ route('rj.lab', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Lab</a>
+                                            @endif
 
-                                        {{-- hasil radiologi --}}
-                                        @if($rekamMedisModel->cekRadiologi($pasien->No_Reg) == true)
-                                        <a href="{{ route('rj.radiologi', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Radiologi</a>
-                                        @endif
+                                            {{-- hasil radiologi --}}
+                                            @if($rekamMedisModel->cekRadiologi($pasien->No_Reg) == true)
+                                            <a href="{{ route('rj.radiologi', ['noReg' => $pasien->No_Reg,'kode_transaksi' => $pasien->FS_KD_TRS]) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-sm btn-info"><i class="fas fa-download"></i> Radiologi</a>
+                                            @endif
 
-                                        {{-- batas if spesialis rehab medik --}}
-                                        @endif  
+                                            {{-- batas if spesialis rehab medik --}}
+                                        @endif
 
                                     </td>
 

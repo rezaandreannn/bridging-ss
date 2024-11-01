@@ -147,7 +147,7 @@
                 @endcan
                 @can('poliklinik mata refraksi optisi')
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('pm/polimata/perawat*') ? 'active' : '' }}">
+                    <li class="{{ Request::is('pm/polimata/refraksi*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('poliMata.refraksi') }}">Refraksi Optisi</a>
                     </li>
                 </ul>
@@ -264,7 +264,7 @@
                     </li>
                 </ul>
                 <ul class="dropdown-menu">
-                    <li class="">
+                    <li class="{{ Request::is('igd/layananIGD/assesmenPerawat*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('layanan.assesmenPerawat')}}">Asesmen Keperawatan</a>
                     </li>
                 </ul>
@@ -279,17 +279,17 @@
                     </li>
                 </ul>
                 <ul class="dropdown-menu">
-                    <li class="">
+                    <li class="{{ Request::is('igd/layananIGD/ewsDewasa*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('layanan.ewsDewasa')}}">EWS Dewasa</a>
                     </li>
                 </ul>
                 <ul class="dropdown-menu">
-                    <li class="">
+                    <li class="{{ Request::is('igd/layananIGD/ewsHamil*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('layanan.ewsHamil')}}">EWS Ibu Hamil</a>
                     </li>
                 </ul>
                 <ul class="dropdown-menu">
-                    <li class="">
+                    <li class="{{ Request::is('igd/layananIGD/ewsAnak*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('layanan.ewsAnak')}}">EWS Anak</a>
                     </li>
                 </ul>
@@ -304,7 +304,7 @@
                     </li>
                 </ul>
                 <ul class="dropdown-menu">
-                    <li class="">
+                    <li class="{{ Request::is('igd/layananIGD/SkriningTB*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('layanan.skriningIndex')}}">Skrining TB</a>
                     </li>
                 </ul>
@@ -317,7 +317,7 @@
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Riwayat Rekam Medis</span></a>
                 @can('rekam medis by mr')
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('rm/riwayaRekamMedis/bymr/*') ? 'active' : '' }}">
+                    <li class="{{ Request::is('rm/riwayatRekamMedis/bymr/*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('rm.bymr')}}">Berkas RM by MR</a>
                     </li>
                 </ul>
@@ -331,7 +331,7 @@
                 @endcan
                 @can('rekam medis igd')
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('rm/riwayaRekamMedis/igd/*') ? 'active' : '' }}">
+                    <li class="{{ Request::is('rm/riwayatRekamMedis/igd/*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('rm.igd')}}">Berkas RM IGD</a>
                     </li>
                 </ul>
@@ -342,6 +342,10 @@
             @can('farmasi')
             <li class="menu-header">Farmasi</li>
             <li class="{{ Request::is('farmasi/orderAlkes') ? 'active' : '' }}"><a class="nav-link" href="{{ route('orderAlkes.index') }}"><i class="fas fa-dashboard"></i> <span>Order Alat Kesehatan</span></a></li>
+            @endcan
+
+            @can('surat sakit')
+            <li class="{{ Request::is('surat') ? 'active' : '' }}"><a class="nav-link" href="{{ route('surat.index') }}"><i class="fas fa-notes-medical"></i> <span>Surat Sakit/SKD</span></a></li>
             @endcan
 
 

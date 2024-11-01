@@ -18,8 +18,8 @@
         <div class="section-header">
             <h1>{{ $title ?? ''}}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item"><a href="">Riwayat Rekam Medis</a></div>
-                <div class="breadcrumb-item"><a href="{{ route('rm.igd') }}">Rekam Medis Igd</a></div>
+                <div class="breadcrumb-item"><a href="#">Riwayat Rekam Medis</a></div>
+                <div class="breadcrumb-item"><a href="{{ route('rm.igd') }}">Rekam Medis IGD</a></div>
             </div>
         </div>
 

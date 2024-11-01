@@ -18,9 +18,8 @@
         <div class="section-header">
             <h1>{{ $title ?? ''}}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('rj.index') }}">Rawat Jalan</a></div>
-                <div class="breadcrumb-item"><a href="{{ route('rj.index') }}">Nurse Record</a></div>
-                <div class="breadcrumb-item">Pasien</div>
+                <div class="breadcrumb-item active"><a href="{{ route('rm.resumeRajal') }}">Berkas Klaim</a></div>
+                <div class="breadcrumb-item"><a href="{{ route('rm.resumeRajal') }}">Resume Rawat Jalan</a></div>
             </div>
         </div>
 
@@ -29,10 +28,9 @@
                 <form id="filterForm" action="" method="get">
                     <div class="card-body">
                         <div class="section-title">Pilih Dokter dan Tanggal</div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-12">
                             <div class="input-group mb-3">
                                 <div class="col-md-6">
-
                                     <select class="form-control select2" id="kode_dokter" name="kode_dokter">
                                         <option value="" selected disabled>-- silahkan pillih --</option>
                                         @foreach ($dokters as $dokter)
@@ -40,11 +38,13 @@
                                         @endforeach
                                     </select>
                                 </div>
-                              <input type="date" class="form-control" name="tanggal" @if (request('tanggal')==null) value="{{date('Y-m-d')}}" @else value="{{request('tanggal')}}" @endif placeholder="" aria-label="">
-                              <div class="input-group-append">
-                                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
-                                <button type="button" class="btn btn-danger" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
-                              </div>
+                                <div class="col-md-3">
+                                    <input type="date" class="form-control" name="tanggal" @if (request('tanggal')==null) value="{{date('Y-m-d')}}" @else value="{{request('tanggal')}}" @endif placeholder="" aria-label="">
+                                </div>
+                                    <div class="input-group-append">
+                                      <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
+                                      <button type="button" class="btn btn-danger" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
+                                    </div>
                             </div>
                           </div>
                     </div>
@@ -83,9 +83,17 @@
                                         @if($pasien->Medis == 'RAWAT INAP')
                                             <a href="{{ route('rm.ranap', $pasien->No_Reg) }}" class="btn btn-sm btn-success"><i class="fas fa-info-circle"></i> Resume Ranap</a>
                                         @endif
-                                        @if($pasien->Medis == 'RAWAT JALAN')
-                                            <a href="{{ route('rm.rajal', $pasien->No_Reg) }}" class="btn btn-sm btn-success"><i class="fas fa-info-circle"></i> Resume Rajal</a>
+                                        @if($pasien->SPESIALIS == 'SPESIALIS MATA')
+                                            @if($poliMata->cekDokter($pasien->No_Reg) == true)
+                                                <a href="{{ route('polimata.cetakResume', [$pasien->No_Reg]) }}" class="btn btn-sm btn-success"><i class="fas fa-download"></i> Resume</a>
+                                            @endif
+                                        @else
+                                            @if($pasien->Medis == 'RAWAT JALAN')
+                                                <a href="{{ route('rm.rajal', $pasien->No_Reg) }}" class="btn btn-sm btn-success"><i class="fas fa-info-circle"></i> Resume Rajal</a>
+                                            @endif
                                         @endif
+                                        
+                                        
                                     </td>
 
                                 </tr>

@@ -38,6 +38,7 @@ class Berkas_rm_controller extends Controller
     public function cetakResep($noReg, $kode_transaksi)
     {
         $data = $this->rekam_medis->cetakResep($noReg, $kode_transaksi);
+        // dd($data);
         $biodata = $this->rekam_medis->getBiodata($noReg);
         $antrian = $this->rekam_medis->getAntrianObat($kode_transaksi);
         // dd($antrian);
@@ -94,7 +95,7 @@ class Berkas_rm_controller extends Controller
 
     public function cetakSKDP($noReg, $kode_transaksi)
     {
-        $resep = $this->rekam_medis->cetakResep($noReg, $kode_transaksi);
+        $resep = $this->rekam_medis->cetakResep2($noReg, $kode_transaksi);
         // Data SKDP
         $data = DB::connection('pku')
             ->table('TAC_RJ_SKDP as a')
@@ -123,7 +124,7 @@ class Berkas_rm_controller extends Controller
 
     public function cetakRAD($noReg, $kode_transaksi)
     {
-        $resep = $this->rekam_medis->cetakResep($noReg, $kode_transaksi);
+        $resep = $this->rekam_medis->cetakResep2($noReg, $kode_transaksi);
         // Data Radiologi
         $dbRsmm = DB::connection('db_rsmm')->getDatabaseName();
         $data = DB::connection('pku')
@@ -151,7 +152,7 @@ class Berkas_rm_controller extends Controller
 
     public function cetakLAB($noReg, $kode_transaksi)
     {
-        $resep = $this->rekam_medis->cetakResep($noReg, $kode_transaksi);
+        $resep = $this->rekam_medis->cetakResep2($noReg, $kode_transaksi);
         // Data Laboratorium
         $dbRsmm = DB::connection('db_rsmm')->getDatabaseName();
         $data = DB::connection('pku')
@@ -175,18 +176,23 @@ class Berkas_rm_controller extends Controller
         return $pdf->stream($filename . '.pdf');
     }
 
-    public function cetakRujukan($noReg, $kode_transaksi)
+    public function cetakRujukan($noReg, $kode_transaksi, $id_surat)
     {
-        $resep = $this->rekam_medis->cetakResep($noReg, $kode_transaksi);
+        $resep = $this->rekam_medis->cetakResep2($noReg, $kode_transaksi);
         // dd($resep);
+
         // Data Rujukan
         $data = DB::connection('pku')
             ->table('TAC_RJ_RUJUKAN as a')
             ->select(
                 'a.*',
+
             )
             ->where('a.FS_KD_REG', $noReg)
+            ->where('a.FS_KD_TRS', $id_surat)
             ->first();
+
+        // dd($data);
 
         // $data = $this->rekam_medis->cetakRujukan($noReg);
 
@@ -204,16 +210,21 @@ class Berkas_rm_controller extends Controller
 
     public function cetakRujukanInternal($noReg, $kode_transaksi)
     {
-        $resep = $this->rekam_medis->cetakResep($noReg, $kode_transaksi);
+        $resep = $this->rekam_medis->cetakResep2($noReg, $kode_transaksi);
         // dd($resep);
         // Data Rujukan Internal
+        $dbpku = DB::connection('db_rsmm')->getDatabaseName();
         $data = DB::connection('pku')
             ->table('TAC_RJ_RUJUKAN as a')
+            ->leftJoin($dbpku . '.dbo.DOKTER as c', 'a.FS_TUJUAN_RUJUKAN', '=', 'c.KODE_DOKTER')
             ->select(
                 'a.*',
+                'c.NAMA_DOKTER'
             )
             ->where('a.FS_KD_REG', $noReg)
             ->first();
+
+        // dd($data);
 
         // $data = $this->rekam_medis->cetakRujukan($noReg);
 
@@ -242,7 +253,7 @@ class Berkas_rm_controller extends Controller
 
     public function cetakPRB($noReg, $kode_transaksi)
     {
-        $resep = $this->rekam_medis->cetakResep($noReg, $kode_transaksi);
+        $resep = $this->rekam_medis->cetakResep2($noReg, $kode_transaksi);
         // Data PRB
         $data = DB::connection('pku')
             ->table('TAC_RJ_MEDIS as a')
@@ -267,7 +278,7 @@ class Berkas_rm_controller extends Controller
 
     public function cetakFaskes($noReg, $kode_transaksi)
     {
-        $resep = $this->rekam_medis->cetakResep($noReg, $kode_transaksi);
+        $resep = $this->rekam_medis->cetakResep2($noReg, $kode_transaksi);
         // Data Faskes
         $data = DB::connection('pku')
             ->table('TAC_RJ_PRB as a')
@@ -292,7 +303,7 @@ class Berkas_rm_controller extends Controller
 
     public function cetakHasilEcho($noReg, $kode_transaksi)
     {
-        $resep = $this->rekam_medis->cetakResep($noReg, $kode_transaksi);
+        $resep = $this->rekam_medis->cetakResep2($noReg, $kode_transaksi);
         $biodata = $this->rekam_medis->getBiodata($noReg);
         $date = date('dMY');
         $tanggal = Carbon::now();

@@ -178,14 +178,13 @@
                 <td class="text3" colspan="2">ICD 10:</td>
             </tr>
             <tr>
-                <td class="text3">Keterangan</td>
-                <td class="text3" colspan="5" height="50px"></td>
+                <td class="text3">Deskripsi Penyakit Mata</td>
+                <td class="text3" colspan="5" height="50px">{{ $dokter->DESKRIPSI}}</td>
             </tr>
-            <tr>
+            {{-- <tr>
                 <td class="text3">Alergi</td>
-                <td class="text3" colspan="3">Obat: </td>
-                <td class="text3" colspan="2">Makanan: </td>
-            </tr>
+                <td class="text3" colspan="5">{{ $dokter->FS_ALERGI}}</td>
+            </tr> --}}
             <tr>
                 <td class="text3">Riwayat Penyakit Sekarang</td>
                 <td class="text3" colspan="5" height="50px">{{$dokter->RIWAYAT_SEKARANG}}</td>

@@ -55,6 +55,7 @@ use App\Http\Controllers\Poli\Mata\Dokter\AssesmenDokterMataController;
 use App\Http\Controllers\Poli\Mata\MasterData\PenyakitSekarangController;
 use App\Http\Controllers\Berkas\Rekam_medis_by_mr\RekamMedisByMrController;
 use App\Http\Controllers\Berkas\Rekam_medis_harian\RekamMedisHarianController;
+use App\Http\Controllers\Berkas\Surat\SuratController;
 use App\Http\Controllers\IGD\Layanan\AssesmenController as LayananAssesmenController;
 
 /*
@@ -198,6 +199,22 @@ Route::middleware('auth')->group(function () {
         Route::get('orderAlkes/cetakKwitansiAlkes/{noReg}', [Berkas_rm_controller::class, 'cetakKwitansiAlkes'])->name('orderAlkes.Kwitansi');
     });
 
+    Route::prefix('surat')->group(function () {
+        Route::get('medis', [SuratController::class, 'index'])->name('surat.index');
+        // Surat Sakit
+        Route::get('medis/suratSakit/{noReg}', [SuratController::class, 'addSuratSakit'])->name('add.suratSakit');
+        Route::post('medis/suratSakit/', [SuratController::class, 'suratSakitStore'])->name('store.suratSakit');
+        Route::get('medis/suratSakit/edit/{noReg}', [SuratController::class, 'editSuratSakit'])->name('edit.suratSakit');
+        Route::put('medis/suratSakit/edit/{noReg}', [SuratController::class, 'updateSuratSakit'])->name('update.suratSakit');
+        Route::get('medis/cetakSuratSakit/{noReg}', [SuratController::class, 'cetakSuratSakit'])->name('cetak.suratSakit');
+        // Surat Keterangan Dokter
+        Route::get('medis/SKD/{noReg}', [SuratController::class, 'addSkd'])->name('add.SKD');
+        Route::post('medis/SKD/', [SuratController::class, 'SkdStore'])->name('store.SKD');
+        Route::get('medis/SKD/edit/{noReg}', [SuratController::class, 'editSkd'])->name('edit.SKD');
+        Route::put('medis/SKD/edit/{noReg}', [SuratController::class, 'updateSkd'])->name('update.SKD');
+        Route::get('medis/cetakSKD/{noReg}', [SuratController::class, 'cetakSkd'])->name('cetak.SKD');
+    });
+
     Route::prefix('fisioterapi')->group(function () {
         // Fisioterapi
         Route::get('asesmen_pasien', [AssesmenController::class, 'index'])->name('asesmen_pasien.index');
@@ -329,6 +346,7 @@ Route::middleware('auth')->group(function () {
         // Cetak Berkas
         Route::get('/polimata/perawat/resep/{kode_transaksi}/{noReg}', [AssesmenMataController::class, 'cetakResep'])->name('polimata.resep');
         Route::get('/polimata/perawat/cetak_rm/{noReg}', [AssesmenMataController::class, 'cetakRM'])->name('polimata.cetakRM');
+        Route::get('/polimata/perawat/konsul/cetak_rm/{noReg}', [AssesmenMataController::class, 'cetakRMKonsul'])->name('polimata.cetakRMKonsul');
         Route::get('/polimata/perawat/cetak_resume/{noReg}', [AssesmenMataController::class, 'cetakResume'])->name('polimata.cetakResume');
         Route::get('/polimata/perawat/cetak_skdp/{kode_transaksi}/{noReg}', [AssesmenMataController::class, 'cetakSKDP'])->name('polimata.cetakSKDP');
         Route::get('/polimata/perawat/rujukanRS/{kode_transaksi}/{noReg}', [AssesmenMataController::class, 'cetakRujukRS'])->name('polimata.cetakRujukanRS');
@@ -414,8 +432,8 @@ Route::middleware('auth')->group(function () {
         Route::get('rawat_jalan/skdp/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakSKDP'])->name('rj.skdp');
         Route::get('rawat_jalan/radiologi/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakRAD'])->name('rj.radiologi');
         Route::get('rawat_jalan/lab/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakLAB'])->name('rj.lab');
-        Route::get('rawat_jalan/rujukanRS/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakRujukan'])->name('rj.rujukanRS');
-        Route::get('rawat_jalan/rujukanInternal/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakRujukanInternal'])->name('rj.rujukanInternal');
+        Route::get('rawat_jalan/rujukanRS/{noReg}/{kode_transaksi}/{id_surat}', [Berkas_rm_controller::class, 'cetakRujukan'])->name('rj.rujukanRS');
+        Route::get('rawat_jalan/rujukanInternal/{noReg}/{kode_transaksi}/{id_surat}', [Berkas_rm_controller::class, 'cetakRujukanInternal'])->name('rj.rujukanInternal');
         Route::get('rawat_jalan/prb/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakPRB'])->name('rj.prb');
         Route::get('rawat_jalan/faskes/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakFaskes'])->name('rj.faskes');
         Route::get('rawat_jalan/hasil_echo/{noReg}/{kode_transaksi}', [Berkas_rm_controller::class, 'cetakHasilEcho'])->name('rj.hasilEcho');
@@ -439,18 +457,29 @@ Route::middleware('auth')->group(function () {
 
         // Kondisi Pulang Rujuk Internal
         Route::get('rajal/dokter/kondisi_pulang/SKDP/{noReg}', [KondisiPulangController::class, 'SkdpRS'])->name('kondisiPulang.SkdpRS');
+        Route::post('rajal/dokter/kondisi_pulang/SKDP/', [KondisiPulangController::class, 'SkdpAdd'])->name('kondisiPulang.SkdpAdd');
         Route::get('rajal/dokter/kondisi_pulang/EditSKDP/{noReg}', [KondisiPulangController::class, 'EditSkdpRS'])->name('kondisiPulang.EditSkdpRS');
         Route::put('rajal/dokter/kondisi_pulang/EditSKDP/{noReg}', [KondisiPulangController::class, 'SkdpEdit'])->name('kondisiPulang.UpdateSkdpRS');
-        Route::post('rajal/dokter/kondisi_pulang/SKDP/', [KondisiPulangController::class, 'SkdpAdd'])->name('kondisiPulang.SkdpAdd');
+        // Kondisi Pulang Rawat Inap
+        Route::get('rajal/dokter/kondisi_pulang/rawatInap/{noReg}', [KondisiPulangController::class, 'rawatInap'])->name('kondisiPulang.rawatInap');
+        Route::post('rajal/dokter/kondisi_pulang/rawatInap/', [KondisiPulangController::class, 'rawatInapAdd'])->name('kondisiPulang.rawatInapAdd');
+        Route::get('rajal/dokter/kondisi_pulang/EditrawatInap/{noReg}', [KondisiPulangController::class, 'rawatInapEdit'])->name('kondisiPulang.rawatInapEdit');
+        Route::put('rajal/dokter/kondisi_pulang/EditrawatInap/{noReg}', [KondisiPulangController::class, 'rawatInapUpdate'])->name('kondisiPulang.rawatInapUpdate');
         // Kondisi Pulang Rujuk Internal
         Route::get('rajal/dokter/kondisi_pulang/rujukInternal/{noReg}', [KondisiPulangController::class, 'rujukInternalRS'])->name('kondisiPulang.rujukInternalRS');
         Route::post('rajal/dokter/kondisi_pulang/rujukInternal/', [KondisiPulangController::class, 'rujukInternalAdd'])->name('kondisiPulang.rujukInternalAdd');
+        Route::get('rajal/dokter/kondisi_pulang/EditrujukInternal/{noReg}', [KondisiPulangController::class, 'rujukInternalEdit'])->name('kondisiPulang.rujukInternalEdit');
+        Route::put('rajal/dokter/kondisi_pulang/EditrujukInternal/{noReg}', [KondisiPulangController::class, 'rujukInternalUpdate'])->name('kondisiPulang.rujukInternalUpdate');
         // Kondisi Pulang Rujuk Luar
         Route::get('rajal/dokter/kondisi_pulang/rujukLuar/{noReg}', [KondisiPulangController::class, 'rujukLuarRS'])->name('kondisiPulang.rujukLuarRS');
         Route::post('rajal/dokter/kondisi_pulang/rujukLuar/', [KondisiPulangController::class, 'rujukLuarAdd'])->name('kondisiPulang.rujukLuarAdd');
+        Route::get('rajal/dokter/kondisi_pulang/EditrujukLuar/{noReg}', [KondisiPulangController::class, 'rujukLuarEdit'])->name('kondisiPulang.rujukLuarEdit');
+        Route::put('rajal/dokter/kondisi_pulang/EditrujukLuar/{noReg}', [KondisiPulangController::class, 'rujukLuarUpdate'])->name('kondisiPulang.rujukLuarUpdate');
         // Kondisi Pulang Faskes PRB
         Route::get('rajal/dokter/kondisi_pulang/faskesPRB/{noReg}', [KondisiPulangController::class, 'faskesPRB'])->name('kondisiPulang.faskesPRB');
         Route::post('rajal/dokter/kondisi_pulang/faskesPRB/', [KondisiPulangController::class, 'faskesPRBAdd'])->name('kondisiPulang.faskesPRBAdd');
+        Route::get('rajal/dokter/kondisi_pulang/EditfaskesPRB/{noReg}', [KondisiPulangController::class, 'faskesPRBEdit'])->name('kondisiPulang.faskesPRBEdit');
+        Route::put('rajal/dokter/kondisi_pulang/EditfaskesPRB/{noReg}', [KondisiPulangController::class, 'faskesPRBUpdate'])->name('kondisiPulang.faskesPRBUpdate');
     });
 
     // Rawat Inap berkas

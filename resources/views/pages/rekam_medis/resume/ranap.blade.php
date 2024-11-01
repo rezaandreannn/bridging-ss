@@ -18,9 +18,8 @@
         <div class="section-header">
             <h1>{{ $title ?? ''}}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('rj.index') }}">Rawat Jalan</a></div>
-                <div class="breadcrumb-item"><a href="{{ route('rj.index') }}">Nurse Record</a></div>
-                <div class="breadcrumb-item">Pasien</div>
+                <div class="breadcrumb-item active"><a href="{{ route('rm.resumeRanap') }}">Berkas Klaim</a></div>
+                <div class="breadcrumb-item"><a href="{{ route('rm.resumeRanap') }}">Resume Rawat Inap</a></div>
             </div>
         </div>
 

@@ -55,7 +55,7 @@
             </tr>
         </table>
         <p style="font-size: 12px; text-align:left;"> <b>Yth,</b></p>
-        <p style="font-size: 12px; text-align:left;"> <b>{{ $data->FS_TUJUAN_RUJUKAN ?? ''}}</b></p>
+        <p style="font-size: 12px; text-align:left;"> <b>{{ $data->NAMA_DOKTER ?? ''}}</b></p>
         <p style="font-size: 12px; text-align:left;"> <b>{{ $data->FS_TUJUAN_RUJUKAN2 ?? ''}}</b></p>
         <p style="font-size: 12px; text-align:left;"> Assalamu'alaikum Wr Wb</p>
         <p style="font-size: 12px; text-align:left;"> Dengan hormat, bersama ini kami kirimkan pasien :</p>

@@ -51,17 +51,7 @@
             </table>
             <table width="100%">
                 <tr>
-                    <td class="text">
-                        <b>No Antrian Obat : {{ $antrian->FS_KD_ANTRIAN}}</b>
-                    </td>
-                </tr>
-            </table>
-            <table width="100%">
-                <tr>
                     <td class="text5">{{ $data->NAMALENGKAP}}</td>
-                </tr>
-                <tr>
-                    <td class="text5">SIP : </td>
                 </tr>
                 <tr>
                     <td class="text5" style="text-align: right;">{{ date('d-m-Y', strtotime($data->mdd)) }}</td>
