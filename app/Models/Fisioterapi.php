@@ -53,9 +53,9 @@ class Fisioterapi extends Model
         $dbpku = DB::connection('pku')->getDatabaseName();
         $date = date('Y-m-d');
         $data = DB::connection('db_rsmm')
-            ->table('ANTRIAN as a')
+            ->table('PENDAFTARAN as p')
+            ->Join('ANTRIAN as a', 'p.No_MR', '=', 'a.No_MR')
             ->Join('REGISTER_PASIEN as rp', 'a.No_MR', '=', 'rp.No_MR')
-            ->Join('PENDAFTARAN as p', 'a.No_MR', '=', 'p.No_MR')
             ->Join('DOKTER as d', 'p.KODE_DOKTER', '=', 'd.KODE_DOKTER')
             ->leftJoin($dbpku . '.dbo.TR_CPPT_FISIOTERAPI as cppt', 'p.No_Reg', '=', 'cppt.no_registrasi')
             ->select(
