@@ -470,6 +470,11 @@ select.form-control:not([size]):not([multiple]) {
 .d-flex {
     gap: 1rem; /* Atur jarak sesuai kebutuhan */
 }
+canvas {
+    width: 100%; /* Sesuaikan dengan lebar elemen induk */
+    height: auto; /* Otomatis menyesuaikan tinggi */
+    border: 1px solid #ccc; /* Opsional: tambahkan border untuk visual */
+}
 
 .custom-switch-indicator {
     display: inline-block;
