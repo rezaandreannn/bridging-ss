@@ -976,7 +976,7 @@
         img.src = imgSrc; // Ganti dengan path gambar mata yang sesuai
         img.onload = function() {
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        };
+        }; //Letak Gambar Mata
 
         // Variabel untuk menggambar
         let drawing = false;
@@ -996,7 +996,7 @@
 
         canvas.addEventListener('mousemove', (event) => {
             if (drawing) {
-                ctx.lineWidth = 2;
+                ctx.lineWidth = 1;
                 ctx.lineCap = 'round';
                 ctx.strokeStyle = 'red'; // Warna coretan
                 ctx.lineTo(event.offsetX, event.offsetY);
