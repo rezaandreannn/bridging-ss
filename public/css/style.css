@@ -470,6 +470,12 @@ select.form-control:not([size]):not([multiple]) {
 .d-flex {
     gap: 1rem; /* Atur jarak sesuai kebutuhan */
 }
+@media (max-width: 600px) {
+    canvas {
+        width: 100%; /* Tetap full width pada perangkat kecil */
+        height: 300px; /* Tetapkan tinggi yang proporsional */
+    }
+}
 
 .custom-switch-indicator {
     display: inline-block;
