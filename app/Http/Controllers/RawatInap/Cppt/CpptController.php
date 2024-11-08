@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\RawatInap\Cppt;
 
+use App\Models\Cppt;
 use App\Models\Rajal;
 use Illuminate\Http\Request;
 use App\Models\Ranap\CpptModel;
@@ -14,6 +15,7 @@ class CpptController extends Controller
     protected $routeIndex;
     protected $prefix;
     protected $rajal;
+    protected $cppt;
 
     protected $cpptmodel;
 
@@ -23,6 +25,7 @@ class CpptController extends Controller
         $this->view = 'pages.ranap.cppt.';
         $this->prefix = 'Rawat Inap';
         $this->rajal = new Rajal();
+        $this->cppt = new Cppt();
       
     }
     /**
@@ -58,9 +61,11 @@ class CpptController extends Controller
         // dd('ok');
      
         $biodata = $this->rajal->pasien_bynoreg($noReg);
+        $cpptByNoReg = $this->cppt->getCpptByNoReg($noReg);
+        // dd($cpptByNoReg);
         $title = $this->prefix . ' ' . 'Cppt tambah data';
 
-        return view($this->view . 'createCppt', compact('title','biodata'));
+        return view($this->view . 'createCppt', compact('title','biodata','cpptByNoReg'));
 
     }
 

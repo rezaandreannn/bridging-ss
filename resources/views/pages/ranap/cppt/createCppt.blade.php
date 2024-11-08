@@ -42,48 +42,39 @@
                                     <tbody>
                                         <tr>
                                             <th scope="row">Anamnesa</th>
-                                            <td>: {{ $biodata->NAMAREKANAN ?? '' }}</td>
+                                            <td>: {{$cpptByNoReg->FS_ANAMNESA ?? ''}}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Diagnosa</th>
-                                            <td>: {{ date('d-m-Y', strtotime($biodata->TGL_LAHIR)) }}</td>
+                                            <td>: {{$cpptByNoReg->FS_DIAGNOSA ?? ''}}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Hasil Pemeriksaan Penunjang</th>
                                             <td>: 
-                                                @if ($biodata->JENIS_KELAMIN == 'L')
-                                                    Laki-Laki
-                                                @else
-                                                    Perempuan
-                                                @endif
+                                                {{$cpptByNoReg->FS_HASIL_PEMERIKSAAN_PENUNJANG ?? ''}}
                                             </td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Pemeriksaan Fisik</th>
                                             <td>: 
-                                                @php
-                                                    use Carbon\Carbon; // Pastikan Carbon diimpor
-                                                    $dateOfBirth = Carbon::parse($biodata->TGL_LAHIR);
-                                                    $age = $dateOfBirth->age; // Menghitung umur
-                                                @endphp
-                                                {{$age}} tahun
+                                                {{$cpptByNoReg->FS_CATATAN_FISIK ?? ''}}
                                             </td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Daftar Masalah</th>
-                                            <td>: {{ $biodata->ALAMAT ?? '' }}</td>
+                                            <td>: {{$cpptByNoReg->FS_DAFTAR_MASALAH ?? ''}}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Rencana Tindakan</th>
-                                            <td>: {{ $biodata->NAMA_DOKTER ?? '' }}</td>
+                                            <td>: {{$cpptByNoReg->FS_TINDAKAN ?? ''}}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Rencana Pemeriksaan Penunjang</th>
-                                            <td>: {{ $biodata->NAMA_DOKTER ?? '' }}</td>
+                                            <td>: {{$cpptByNoReg->FS_PLANNING ?? ''}}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Waktu Asesmen</th>
-                                            <td>: {{ $biodata->NAMA_DOKTER ?? '' }}</td>
+                                            <td>: {{$cpptByNoReg->mdd.' / '.$cpptByNoReg->FS_JAM_TRS. ' wib'}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -296,6 +287,49 @@
                 </form>
             </div>
             
+            <div class="card card-primary">
+                <div class="card-header card-success card-khusus-header">
+                    <h6 class="card-khusus-title">Shortcut Navigation</h6>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+            
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card card-primary">
+                <div class="card-header card-success card-khusus-header">
+                    <h6 class="card-khusus-title">List CPPT</h6>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table-striped table" id="table-1">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Tanggal</th>
+                                        <th scope="col">SOAP/ADIME/SBAR</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">PPA</th>
+                                        <th scope="col">Verifikasi DPJP</th>
+                             
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>tes</td>
+                                        <td>1</td>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 </div>

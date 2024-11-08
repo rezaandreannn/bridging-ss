@@ -58,6 +58,7 @@ class Antrean extends Model
             ->where('p.Kode_Dokter', $kode_dokter)
             ->where('a.Tanggal', $date)
             ->where('p.Tanggal', $date)
+            ->where('p.Status', '1')
             ->orderBy('a.Nomor', 'ASC')
             ->get()->toArray();
         return $data;

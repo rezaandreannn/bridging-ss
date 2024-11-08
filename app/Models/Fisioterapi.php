@@ -43,18 +43,12 @@ class Fisioterapi extends Model
     // List Pasien Fisioterapi
     public function pasienCpptdanFisioterapi($kode_dokter)
     {
-        // $query= DB::connection('db_rsmm')
-        // ->table('DOKTER as d')
-        // ->select('d.Kode_Dokter')
-        // ->whereIn('d.Spesialis', array('SPESIALIS REHABILITASI MEDIK','FISIOTERAPI'))
-        // ->get();
-
-        // dd($query);
+     
         $dbpku = DB::connection('pku')->getDatabaseName();
         $date = date('Y-m-d');
         $data = DB::connection('db_rsmm')
             ->table('PENDAFTARAN as p')
-            ->Join('ANTRIAN as a', 'p.No_MR', '=', 'a.No_MR')
+            ->leftJoin('ANTRIAN as a', 'p.No_MR', '=', 'a.No_MR')
             ->Join('REGISTER_PASIEN as rp', 'a.No_MR', '=', 'rp.No_MR')
             ->Join('DOKTER as d', 'p.KODE_DOKTER', '=', 'd.KODE_DOKTER')
             ->leftJoin($dbpku . '.dbo.TR_CPPT_FISIOTERAPI as cppt', 'p.No_Reg', '=', 'cppt.no_registrasi')
@@ -73,16 +67,7 @@ class Fisioterapi extends Model
                 'cppt.jenis_fisio'
 
             )
-            // ->whereIn('p.Kode_Dokter', function ($query) {
-            //     $query->select('d.Kode_Dokter')
-            //           ->from('DOKTER as d')
-            //           ->whereIn('d.Spesialis', array('SPESIALIS REHABILITASI MEDIK','FISIOTERAPI'));
-            // })
-            // ->whereIn('a.Dokter', function ($query) {
-            //     $query->select('d.Kode_Dokter')
-            //           ->from('DOKTER as d')
-            //           ->whereIn('d.Spesialis', array('SPESIALIS REHABILITASI MEDIK','FISIOTERAPI'));
-            // })
+   
 
             ->where('p.Kode_Dokter', $kode_dokter)
             ->where('a.Dokter', $kode_dokter)
@@ -185,8 +170,8 @@ class Fisioterapi extends Model
         $dbpku = DB::connection('pku')->getDatabaseName();
         $date = date('Y-m-d');
         $data = DB::connection('db_rsmm')
-            ->table('ANTRIAN as A')
-            ->join('PENDAFTARAN as P', 'A.No_MR', '=', 'P.No_MR')
+        ->table('PENDAFTARAN as P')
+        ->leftJoin('ANTRIAN as A', 'P.No_MR', '=', 'A.No_MR')
             ->join('REGISTER_PASIEN as RP', 'P.No_MR', '=', 'RP.No_MR')
             ->leftJoin($dbpku . '.dbo.TAC_RJ_STATUS as st', 'P.NO_REG', '=', 'st.FS_KD_REG')
             ->select(
@@ -203,6 +188,7 @@ class Fisioterapi extends Model
             ->where('A.Dokter', $kode_dokter)
             ->where('P.Kode_Dokter', $kode_dokter)
             ->where('P.Medis', 'RAWAT JALAN')
+            ->where('P.Status', '1')
             ->orderBy('Nomor', 'ASC')
             ->get()->toArray();
         return $data;
