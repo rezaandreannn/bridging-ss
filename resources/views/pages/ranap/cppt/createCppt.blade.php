@@ -42,39 +42,39 @@
                                     <tbody>
                                         <tr>
                                             <th scope="row">Anamnesa</th>
-                                            <td>: {{$cpptByNoReg->FS_ANAMNESA ?? ''}}</td>
+                                            <td>: {{$asesmenMedisRanapByNoreg->FS_ANAMNESA ?? ''}}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Diagnosa</th>
-                                            <td>: {{$cpptByNoReg->FS_DIAGNOSA ?? ''}}</td>
+                                            <td>: {{$asesmenMedisRanapByNoreg->FS_DIAGNOSA ?? ''}}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Hasil Pemeriksaan Penunjang</th>
                                             <td>: 
-                                                {{$cpptByNoReg->FS_HASIL_PEMERIKSAAN_PENUNJANG ?? ''}}
+                                                {{$asesmenMedisRanapByNoreg->FS_HASIL_PEMERIKSAAN_PENUNJANG ?? ''}}
                                             </td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Pemeriksaan Fisik</th>
                                             <td>: 
-                                                {{$cpptByNoReg->FS_CATATAN_FISIK ?? ''}}
+                                                {{$asesmenMedisRanapByNoreg->FS_CATATAN_FISIK ?? ''}}
                                             </td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Daftar Masalah</th>
-                                            <td>: {{$cpptByNoReg->FS_DAFTAR_MASALAH ?? ''}}</td>
+                                            <td>: {{$asesmenMedisRanapByNoreg->FS_DAFTAR_MASALAH ?? ''}}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Rencana Tindakan</th>
-                                            <td>: {{$cpptByNoReg->FS_TINDAKAN ?? ''}}</td>
+                                            <td>: {{$asesmenMedisRanapByNoreg->FS_TINDAKAN ?? ''}}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Rencana Pemeriksaan Penunjang</th>
-                                            <td>: {{$cpptByNoReg->FS_PLANNING ?? ''}}</td>
+                                            <td>: {{$asesmenMedisRanapByNoreg->FS_PLANNING ?? ''}}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Waktu Asesmen</th>
-                                            <td>: {{$cpptByNoReg->mdd.' / '.$cpptByNoReg->FS_JAM_TRS. ' wib'}}</td>
+                                            <td>: {{$asesmenMedisRanapByNoreg->mdd.' / '.$asesmenMedisRanapByNoreg->FS_JAM_TRS. ' wib'}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -305,7 +305,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table-striped table" id="table-1">
+                            <table class="table-striped table">
                                 <thead>
                                     <tr>
                                         <th scope="col">Tanggal</th>
@@ -317,13 +317,70 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>tes</td>
-                                        <td>1</td>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
+                                    @foreach ($getCpptByNoreg as $cppt)
+                                    <tr >
+                                        <td>{{$cppt->mdd_date.'-'.$cppt->mdd_time}}</td>
+                                        <td>
+                                            
+                                            @if($cppt->jenis_cppt == 'soap' or $cppt->jenis_cppt == 'sbar') 
+                                            S
+                                            @elseif($cppt->jenis_cppt == 'adime')
+                                            A 
+                                            @else
+                                            S / A / S
+                                            @endif
+                                            : {{$cppt->FS_CPPT_S}} <br>
+
+                                            @if($cppt->jenis_cppt == 'soap')
+                                            O
+                                             @elseif($cppt->jenis_cppt == 'sbar') 
+                                            B
+                                            @elseif($cppt->jenis_cppt == 'adime')
+                                            D 
+                                            @else
+                                            O / D / B
+                                            @endif
+                                            : {{$cppt->FS_CPPT_O}} <br>
+
+                                            @if($cppt->jenis_cppt == 'soap')
+                                            A
+                                             @elseif($cppt->jenis_cppt == 'sbar') 
+                                            A
+                                            @elseif($cppt->jenis_cppt == 'adime')
+                                            I 
+                                            @else
+                                            A / I / A
+                                            @endif
+                                            : {{$cppt->FS_CPPT_A}} <br>
+
+                                            @if($cppt->jenis_cppt == 'soap')
+                                            P
+                                             @elseif($cppt->jenis_cppt == 'sbar') 
+                                            R
+                                            @elseif($cppt->jenis_cppt == 'adime')
+                                            ME 
+                                            @else
+                                            P / ME / R
+                                            @endif
+                                            : {{$cppt->FS_CPPT_P}} <br>
+
+                                            Resep : <br>
+                                            {{$cppt->FS_CPPT_TERAPI}}
+
+                                            {{-- lab dan radiologi jika ada --}}
+
+
+                                            <hr>
+
+
+                                        </td>
+                                        <td>{{$cppt->status_cppt}}</td>
+                                        <td>{{$cppt->NAMALENGKAP}}</td>
+                                        <td>
+                                            <a href="" class="btn btn-info btn-sm">Verifikasi</a>
+                                        </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

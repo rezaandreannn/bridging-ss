@@ -61,11 +61,12 @@ class CpptController extends Controller
         // dd('ok');
      
         $biodata = $this->rajal->pasien_bynoreg($noReg);
-        $cpptByNoReg = $this->cppt->getCpptByNoReg($noReg);
-        // dd($cpptByNoReg);
+        $asesmenMedisRanapByNoreg = $this->cppt->getAsesmenMedisRanapByNoreg($noReg);
+        $getCpptByNoreg = $this->cppt->getCpptByNoreg($noReg);
+        // dd($getCpptByNoreg);
         $title = $this->prefix . ' ' . 'Cppt tambah data';
 
-        return view($this->view . 'createCppt', compact('title','biodata','cpptByNoReg'));
+        return view($this->view . 'createCppt', compact('title','biodata','asesmenMedisRanapByNoreg','getCpptByNoreg'));
 
     }
 
