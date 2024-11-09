@@ -254,6 +254,27 @@
             </li>
             @endcan
 
+            @can('ok')
+            <li class="menu-header">OK</li>
+            <li class="nav-item dropdown  {{ Request::is('ok/*') ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span> OK</span></a>
+                @can('penandaan operasi')
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('ok/penandaanOperasi*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('pendandaanOperasi.index')}}">Penandaan Operasi</a>
+                    </li>
+                </ul>
+                @endcan         
+                @can('ruang operasi')
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('ok/ruangOperasi*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('ruangOperasi.index')}}">Ruang Operasi</a>
+                    </li>
+                </ul>
+                @endcan         
+            </li>
+            @endcan
+
             @can('igd')
             <li class="menu-header">IGD</li>
             <li class="nav-item dropdown {{ Request::is('igd*') ? 'active' : '' }}">

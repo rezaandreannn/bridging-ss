@@ -363,20 +363,20 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <label class="" for="">Mata Kanan:</label>
+                                            <label for="">Mata Kanan:</label>
                                             <br />
-                                            <div id="signat2"></div>
+                                            <canvas id="canvasMataKanan" width="400" height="300" style="border:1px solid #000;"></canvas>
                                             <br />
-                                            <button id="clear2">Hapus Gambar</button>
+                                            <button id="clear2" type="button">Hapus Gambar</button> <!-- type="button" ditambahkan di sini -->
                                             <textarea id="signature2" name="signed_kanan" style="display: none"></textarea>
                                         </div>
                                         <div class="col-md-6">
-                                            <label class="" for="">Mata Kiri:</label>
+                                            <label for="">Mata Kiri:</label>
                                             <br />
-                                            <div id="signat"></div>
+                                            <canvas id="canvasMataKiri" width="400" height="300" style="border:1px solid #000;"></canvas>
                                             <br />
-                                            <button id="clear">Hapus Gambar</button>
-                                            <textarea id="signature1" name="signed_kiri" style="display: none"></textarea>
+                                            <button id="clearCanvas" type="button">Hapus Gambar</button> <!-- type="button" ditambahkan di sini -->
+                                            <textarea id="signatureData" name="signed_kiri" style="display: none"></textarea>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group mt-4">
@@ -608,6 +608,69 @@
             }
         });
     });
+</script>
+
+<script>
+    // Fungsi untuk menginisialisasi canvas
+    function setupCanvas(canvasId, signatureId, imgSrc) {
+       const canvas = document.getElementById(canvasId); // ID Gambar Retina
+       const ctx = canvas.getContext('2d'); // CTX = (Context) digunakan untuk menggambar 2 dimensi
+       const signatureData = document.getElementById(signatureId); // ID Gambar coretan
+
+       
+       // Tambahkan gambar ke canvas
+       const img = new Image();
+       img.src = imgSrc; // Ganti dengan path gambar mata yang sesuai
+       img.onload = function() {
+           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+       }; //Letak Gambar Mata
+
+       // Variabel untuk menggambar
+       let drawing = false;
+
+       // Event listeners untuk menggambar
+       canvas.addEventListener('mousedown', () => {
+           drawing = true;
+           ctx.beginPath();
+       });
+
+       canvas.addEventListener('mouseup', () => {
+           drawing = false;
+           ctx.closePath();
+           // Simpan data coretan ke textarea hanya saat mouse dilepaskan
+           signatureData.value = canvas.toDataURL();
+       });
+
+       canvas.addEventListener('mousemove', (event) => {
+           if (drawing) {
+               ctx.lineWidth = 1;
+               ctx.lineCap = 'round';
+               ctx.strokeStyle = 'red'; // Warna coretan
+               ctx.lineTo(event.offsetX, event.offsetY);
+               ctx.stroke();
+           }
+       });
+
+       return { ctx, img, signatureData };
+   }
+
+   // Setup canvas untuk Mata Kiri dan Mata Kanan
+   const mataKiri = setupCanvas('canvasMataKiri', 'signatureData', '{{ asset('img/retinaa.png') }}');
+   const mataKanan = setupCanvas('canvasMataKanan', 'signature2', '{{ asset('img/retinaa.png') }}');
+
+   // Event listener untuk tombol clear untuk Mata Kiri
+   document.getElementById('clearCanvas').addEventListener('click', () => {
+       mataKiri.ctx.clearRect(0, 0, mataKiri.ctx.canvas.width, mataKiri.ctx.canvas.height);
+       mataKiri.ctx.drawImage(mataKiri.img, 0, 0, mataKiri.ctx.canvas.width, mataKiri.ctx.canvas.height); // Gambar ulang mata
+       mataKiri.signatureData.value = ''; // Kosongkan data coretan tanpa menyimpan
+   });
+
+   // Event listener untuk tombol clear untuk Mata Kanan
+   document.getElementById('clear2').addEventListener('click', () => {
+       mataKanan.ctx.clearRect(0, 0, mataKanan.ctx.canvas.width, mataKanan.ctx.canvas.height);
+       mataKanan.ctx.drawImage(mataKanan.img, 0, 0, mataKanan.ctx.canvas.width, mataKanan.ctx.canvas.height); // Gambar ulang mata
+       mataKanan.signatureData.value = ''; // Kosongkan data coretan tanpa menyimpan
+   });
 </script>
 
 <script>

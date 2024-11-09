@@ -21,11 +21,13 @@ use App\Http\Controllers\Kunjungan\AntreanController;
 use App\Http\Controllers\Manage\PermissionController;
 use App\Http\Controllers\MasterData\DokterController;
 use App\Http\Controllers\MasterData\PasienController;
+use App\Http\Controllers\Berkas\Surat\SuratController;
 use App\Http\Controllers\Encounter\RecourceController;
 use App\Http\Controllers\Farmasi\OrderAlkesController;
 use App\Http\Controllers\Berkas\klaim\ResumeController;
 use App\Http\Controllers\Berkas\Ranap\BerkasController;
 use App\Http\Controllers\MasterData\LocationController;
+use App\Http\Controllers\OK\PenandaanOperasiController;
 use App\Http\Controllers\RawatInap\Cppt\CpptController;
 use App\Http\Controllers\IGD\Layanan\SkriningController;
 use App\Http\Controllers\Fisio\InformedConcentController;
@@ -55,8 +57,8 @@ use App\Http\Controllers\Poli\Mata\Dokter\AssesmenDokterMataController;
 use App\Http\Controllers\Poli\Mata\MasterData\PenyakitSekarangController;
 use App\Http\Controllers\Berkas\Rekam_medis_by_mr\RekamMedisByMrController;
 use App\Http\Controllers\Berkas\Rekam_medis_harian\RekamMedisHarianController;
-use App\Http\Controllers\Berkas\Surat\SuratController;
 use App\Http\Controllers\IGD\Layanan\AssesmenController as LayananAssesmenController;
+use App\Http\Controllers\Ok\RuangOperasiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -497,6 +499,15 @@ Route::middleware('auth')->group(function () {
         Route::get('detail/berkasRencana/{noReg}', [DetailRanapController::class, 'rencanaKeperawatan'])->name('ri.detailRencana');
         Route::get('detail/berkasTindakan/{noReg}', [DetailRanapController::class, 'tindakanKeperawatan'])->name('ri.detailTindakan');
         Route::get('detail/berkasObat/{noReg}', [DetailRanapController::class, 'pemberianObat'])->name('ri.detailObat');
+    });
+
+    // Ruang Operasi Kamar
+    Route::prefix('ok')->group(function () {
+        // Penandaan Lokasi Operasi
+        Route::get('/penandaanOperasi', [PenandaanOperasiController::class, 'index'])->name('pendandaanOperasi.index');
+        // OK Ruangan
+        Route::get('/ruangOperasi', [RuangOperasiController::class, 'index'])->name('ruangOperasi.index');
+        Route::post('/ruangOperasi', [RuangOperasiController::class, 'store'])->name('ruangOperasi.store');
     });
 
     //IGD
