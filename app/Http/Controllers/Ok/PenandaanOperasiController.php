@@ -28,9 +28,9 @@ class PenandaanOperasiController extends Controller
     public function index(Request $request)
     {
         $title = $this->prefix . ' ' . 'Operasi';
-        // $biodata = $this->rekam_medis->getBiodata($noReg);
+        $tandaOperasi = $this->operasiKamar->getPenandaanOperasi();
         $operasiKamar = new OperasiKamar();
-        return view($this->view . 'penandaanOperasi.index', compact('title', 'operasiKamar'));
+        return view($this->view . 'penandaanOperasi.index', compact('title', 'operasiKamar', 'tandaOperasi'));
     }
 
     /**
@@ -40,7 +40,10 @@ class PenandaanOperasiController extends Controller
      */
     public function create()
     {
-        //
+        $title = $this->prefix . ' ' . 'Operasi';
+        // $biodata = $this->rekam_medis->getBiodata($noReg);
+        $operasiKamar = new OperasiKamar();
+        return view($this->view . 'penandaanOperasi.create', compact('title', 'operasiKamar'));
     }
 
     /**

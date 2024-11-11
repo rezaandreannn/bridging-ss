@@ -128,16 +128,8 @@ class RuangOperasiController extends Controller
      */
     public function destroy($id)
     {
-        // Get the current user ID
-        $userId = auth()->id();
-
-        // Update the deleted_by field before deleting the record
-        DB::connection('pku')->table('ok_ruang_operasi')
-            ->where('id', $id)
-            ->update(['deleted_by' => $userId]);
-
         // Delete the record
-        DB::connection('pku')->table('ok_ruang_operasi')->where('id', $id)->delete();
+        DB::connection('pku')->table('ok_ruangan')->where('id', $id)->delete();
 
         return redirect()->back()->with('success', 'Data Berhasil Dihapus!');
     }

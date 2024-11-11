@@ -10,7 +10,6 @@
 <!-- Select -->
 <link rel="stylesheet" href="{{ asset('library/selectric/public/selectric.css') }}">
 <link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
-<link rel="stylesheet" href="{{ asset('ttd/css/jquery.signature.css') }}">
 
 <!-- <link rel="stylesheet" href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}"> -->
 @endpush
@@ -54,6 +53,11 @@
                                         <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-edit-ruang{{ $ruang->id }}">
                                             <i class="fas fa-plus"></i> Edit
                                         </button>
+                                        <form id="delete-form-{{$ruang->id}}" action="{{ route('ruangOperasi.destroy', $ruang->id) }}" method="POST" style="display: none;">
+                                            @method('delete')
+                                            @csrf
+                                        </form>
+                                        <a class="btn btn-danger btn-sm" confirm-delete="true" data-menuId="{{$ruang->id}}" href="#"><i class="fas fa-trash"></i> Delete</a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -151,7 +155,7 @@
 <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('library/selectric/public/jquery.selectric.min.js') }}"></script>
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
-<script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script>
+<script src="{{ asset('library/sweetalert/dist/sweetalert.baru.js') }}"></script>
 <script src="{{ asset('ttd/js/jquery.signature.min.js') }}"></script>
 
 <!-- Page Specific JS File -->
@@ -159,10 +163,31 @@
 
 <script>
     $(document).ready(function() {
-        $('#myForm input').on('keypress', function(event) {
-            if (event.which === 13) {
-                event.preventDefault(); // Mencegah pengiriman form
-            }
+        // Inisialisasi DataTable
+        var table = $('#table-1').DataTable();
+    
+        // Event delegation untuk tombol delete
+        $('#table-1').on('click', '[confirm-delete="true"]', function(event) {
+            event.preventDefault();
+            var menuId = $(this).data('menuid');
+            Swal.fire({
+                title: 'Apakah Kamu Yakin?',
+                text: "Anda tidak akan dapat mengembalikan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#6777EF',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Hapus saja!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var form = $('#delete-form-' + menuId);
+                    if (form.length) {
+                        form.submit();
+                    } else {
+                        console.error('Data will not be deleted!:', menuId);
+                    }
+                }
+            });
         });
     });
 </script>

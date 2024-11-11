@@ -19,4 +19,13 @@ class OperasiKamar extends Model
 
         return $data;
     }
+
+    public function getPenandaanOperasi()
+    {
+        $data = DB::connection('pku')
+            ->table('ok_tanda_operasi')
+            ->get();
+
+        return $data;
+    }
 }
