@@ -21,8 +21,8 @@ return new class extends Migration
                 $table->bigInteger('ruangan_id');
                 $table->string('kode_dokter');
                 $table->date('tanggal');
-                $table->time('jam_mulai');
-                $table->time('jam_selesai');
+                $table->time('jam_mulai')->nullable();
+                $table->time('jam_selesai')->nullable();
                 $table->string('created_by')->nullable();
                 $table->string('updated_by')->nullable();
                 $table->timestamp('deleted_at')->nullable();
