@@ -68,7 +68,7 @@ class RuangOperasiController extends Controller
             'created_by' => $userEmr->user_id,
             'created_at' => now()
         ]);
-        return redirect()->route('ruangOperasi.index')->with('success', 'Nama Ruang Berhasil Ditambahkan!');
+        return redirect()->route('operasi.ruang.index')->with('success', 'Nama Ruang Berhasil Ditambahkan!');
     }
 
     /**
@@ -117,7 +117,7 @@ class RuangOperasiController extends Controller
 
         ]);
 
-        return redirect()->route('ruangOperasi.index')->with('success', 'Nama Ruang Berhasil Diedit!');
+        return redirect()->route('operasi.ruang.index')->with('success', 'Nama Ruang Berhasil Diedit!');
     }
 
     /**

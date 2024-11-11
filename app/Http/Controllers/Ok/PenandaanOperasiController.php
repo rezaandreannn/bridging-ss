@@ -28,10 +28,20 @@ class PenandaanOperasiController extends Controller
         $this->view = 'pages.ok.';
         $this->prefix = 'Penandaan Lokasi';
     }
+
     public function jadwal(Request $request)
     {
         $title = 'Jadwal Operasi';
-        // $jadwal = $this->booking->getJadwalOperasi();
+        // $jadwal = $this->booking->getJadwalOperasi(); 
+        $jadwal = BookingOperasi::with('ruangan')->get();
+        dd($jadwal);
+        return view($this->view . 'jadwalOperasi.index', compact('title', 'jadwal'));
+    }
+
+    public function index(Request $request)
+    {
+        $title = 'Jadwal Operasi';
+        // $jadwal = $this->booking->getJadwalOperasi(); 
         $jadwal = BookingOperasi::with('ruangan')->get();
         // dd($jadwal);
         return view($this->view . 'penandaanOperasi.index', compact('title', 'jadwal'));

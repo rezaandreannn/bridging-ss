@@ -20,7 +20,7 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('ruangOperasi.index') }}">Operasi Kamar</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('operasi.ruang.index') }}">Operasi Kamar</a></div>
                 <div class="breadcrumb-item">Ruang Operasi</div>
             </div>
         </div>
@@ -53,7 +53,7 @@
                                         <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-edit-ruang{{ $ruang->id }}">
                                             <i class="fas fa-plus"></i> Edit
                                         </button>
-                                        <form id="delete-form-{{$ruang->id}}" action="{{ route('ruangOperasi.destroy', $ruang->id) }}" method="POST" style="display: none;">
+                                        <form id="delete-form-{{$ruang->id}}" action="{{ route('operasi.ruang.destroy', $ruang->id) }}" method="POST" style="display: none;">
                                             @method('delete')
                                             @csrf
                                         </form>
@@ -79,7 +79,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('ruangOperasi.store') }}" method="POST">
+            <form action="{{ route('operasi.ruang.store') }}" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="card-body">
@@ -127,7 +127,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('ruangOperasi.update', $ruang->id) }}" method="POST">
+                <form action="{{ route('operasi.ruang.update', $ruang->id) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="form-group">

@@ -6,6 +6,7 @@ use App\Models\RajalDokter;
 use Illuminate\Http\Request;
 use App\Models\Operasi\BookingOperasi;
 use App\Http\Controllers\Controller;
+use App\Services\Operasi\BookingOperasiService;
 
 class BookingOperasiController extends Controller
 {
@@ -15,23 +16,25 @@ class BookingOperasiController extends Controller
     protected $bookingkamar;
     protected $rajaldokter;
 
+    protected $bookingOperasiService;
+
     public function __construct(BookingOperasi $bookingkamar)
     {
         $this->rajaldokter = new RajalDokter;
         $this->bookingkamar = $bookingkamar;
         $this->view = 'pages.ok.';
         $this->prefix = 'Booking Operasi';
+        $this->bookingOperasiService = new BookingOperasiService();
     }
 
     public function index()
     {
-
         // variable declare
         $title = $this->prefix . ' ' . 'List';
 
         // example test get data by model
-        $bookings = BookingOperasi::with('ruangan')->get();
-        dd($bookings);
+        $bookings = $this->bookingOperasiService->byDate('2024-11-11');
+        // dd($bookings);
         return view($this->view . 'bookingOperasi.index', compact('bookings'))->with([
             'title' => $title
         ]);

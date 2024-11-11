@@ -502,20 +502,20 @@ Route::middleware('auth')->group(function () {
         Route::get('detail/berkasObat/{noReg}', [DetailRanapController::class, 'pemberianObat'])->name('ri.detailObat');
     });
 
-    // Ruang Operasi Kamar
-    Route::prefix('ok')->group(function () {
-        // Penandaan Lokasi Operasi
-        Route::get('/jadwalOperasi', [PenandaanOperasiController::class, 'jadwal'])->name('penandaanOperasi.jadwal');
-        Route::get('/penandaanOperasi/create', [PenandaanOperasiController::class, 'create'])->name('penandaanOperasi.create');
-        // OK Ruangan
-        Route::get('/ruangOperasi', [RuangOperasiController::class, 'index'])->name('ruangOperasi.index');
-        Route::post('/ruangOperasi', [RuangOperasiController::class, 'store'])->name('ruangOperasi.store');
-        Route::put('/ruangOperasi/update/{id}', [RuangOperasiController::class, 'update'])->name('ruangOperasi.update');
-        Route::delete('/ruangOperasi/delete/{id}', [RuangOperasiController::class, 'destroy'])->name('ruangOperasi.destroy');
+    // // Ruang Operasi Kamar
+    // Route::prefix('ok')->group(function () {
+    //     // Penandaan Lokasi Operasi
+    //     Route::get('/jadwalOperasi', [PenandaanOperasiController::class, 'index'])->name('penandaanOperasi.jadwal');
+    //     Route::get('/penandaanOperasi/create', [PenandaanOperasiController::class, 'create'])->name('penandaanOperasi.create');
+    //     // OK Ruangan
+    //     Route::get('/ruangOperasi', [RuangOperasiController::class, 'index'])->name('ruangOperasi.index');
+    //     Route::post('/ruangOperasi', [RuangOperasiController::class, 'store'])->name('ruangOperasi.store');
+    //     Route::put('/ruangOperasi/update/{id}', [RuangOperasiController::class, 'update'])->name('ruangOperasi.update');
+    //     Route::delete('/ruangOperasi/delete/{id}', [RuangOperasiController::class, 'destroy'])->name('ruangOperasi.destroy');
 
-        // booking operasi
-        Route::get('/bookingOperasi', [BookingOperasiController::class, 'index'])->name('bookingOperasi.index');
-    });
+    //     // booking operasi
+    //     Route::get('/bookingOperasi', [BookingOperasiController::class, 'index'])->name('bookingOperasi.index');
+    // });
 
     //IGD
     Route::prefix('igd')->group(function () {

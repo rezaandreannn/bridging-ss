@@ -21,7 +21,7 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('ruangOperasi.index') }}">Operasi Kamar</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('operasi.ruangOperasi.index') }}">Operasi Kamar</a></div>
                 <div class="breadcrumb-item">Ruang Operasi</div>
             </div>
         </div>
@@ -81,7 +81,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('ruangOperasi.store') }}" method="POST">
+            <form action="{{ route('operasi.ruangOperasi.store') }}" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="card-body">
