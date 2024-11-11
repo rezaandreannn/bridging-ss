@@ -54,13 +54,8 @@
                                     <td>{{ $data->kode_register }}</td>
                                     <td>{{ $data->hasil_gambar }}</td>
                                     <td>{{ $data->jenis_operasi }}</td>
-                                    <td> 
-                                        <a href="{{ route('pendandaanOperasi.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
-                                        <form id="delete-form-{{$data->id}}" action="{{ route('ruangOperasi.destroy', $data->id) }}" method="POST" style="display: none;">
-                                            @method('delete')
-                                            @csrf
-                                        </form>
-                                        <a class="btn btn-danger btn-sm" confirm-delete="true" data-menuId="{{$data->id}}" href="#"><i class="fas fa-trash"></i> Delete</a>
+                                    <td>
+                                        <a href="{{ route('penandaanOperasi.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
                                     </td>
                                 </tr>
                                 @endforeach

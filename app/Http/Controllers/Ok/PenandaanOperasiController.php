@@ -30,7 +30,7 @@ class PenandaanOperasiController extends Controller
         $title = $this->prefix . ' ' . 'Operasi';
         $tandaOperasi = $this->operasiKamar->getPenandaanOperasi();
         $operasiKamar = new OperasiKamar();
-        return view($this->view . 'penandaanOperasi.index', compact('title', 'operasiKamar', 'tandaOperasi'));
+        return view($this->view . 'penandaanOperasi.create', compact('title', 'operasiKamar', 'tandaOperasi'));
     }
 
     /**
