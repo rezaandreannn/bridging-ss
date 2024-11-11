@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Operasi\BookingOperasi;
 use App\Models\Operasi\RuanganOperasi;
 use App\Services\Operasi\BookingOperasiService;
+use App\Services\SimRs\DokterService;
 
 class BookingOperasiController extends Controller
 {
@@ -19,6 +20,7 @@ class BookingOperasiController extends Controller
     protected $rajaldokter;
 
     protected $bookingOperasiService;
+    protected $dokterService;
 
     public function __construct(BookingOperasi $bookingkamar)
     {
@@ -27,26 +29,21 @@ class BookingOperasiController extends Controller
         $this->view = 'pages.ok.';
         $this->prefix = 'Booking Operasi';
         $this->bookingOperasiService = new BookingOperasiService();
+        $this->dokterService = new DokterService();
     }
 
     public function index()
     {
-
         // variable declare
         $title = $this->prefix . ' ' . 'List';
 
         // example test get data by model
-        $ruanganOperasi = RuanganOperasi::all();
-        $dokters = Dokter::whereIn('Spesialis',[
-            'SPESIALIS BEDAH','SPESIALIS KANDUNGAN','SPESIALIS ORTHOPEDI','SPESIALIS BEDAH MULUT','SPESIALIS THT-KL','SPESIALIS UROLOGI','SPESIALIS BEDAH SARAF']
-        )->get();
-
-        $bookings =$this->bookingOperasiService->get();
-        // dd($bookings);
+        $bookings = $this->bookingOperasiService->get();
+        dd($bookings);
         return view($this->view . 'bookingOperasi.index', compact('bookings'))->with([
             'title' => $title,
-            'ruanganOperasi' => $ruanganOperasi,
-            'dokters' => $dokters,
+            'ruanganOperasi' => RuanganOperasi::all(),
+            'dokters' => $this->dokterService->byBedahOperasi(),
         ]);
     }
 

@@ -56,4 +56,5 @@ class BookingOperasiService
     }
 
     public function insert() {}
+    public function update() {}
 }
