@@ -13,7 +13,7 @@ Route::prefix('operasi')->name('operasi.')->group(function () {
     Route::get('/jadwal-operasi', [PenandaanOperasiController::class, 'jadwal'])->name('jadwal.index');
 
     // Penandaan Lokasi Operasi
-    Route::get('/penandaanOperasi', [PenandaanOperasiController::class, 'index'])->name('pendandaanOperasi.index');
+    Route::get('/penandaanOperasi', [PenandaanOperasiController::class, 'create'])->name('penandaan.create');
     // OK Ruangan
     Route::get('/ruangOperasi', [RuangOperasiController::class, 'index'])->name('ruang.index');
     Route::post('/ruangOperasi', [RuangOperasiController::class, 'store'])->name('ruang.store');

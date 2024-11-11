@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\OK;
 
 use App\Models\RajalDokter;
+use App\Models\Simrs\Dokter;
 use Illuminate\Http\Request;
-use App\Models\Operasi\BookingOperasi;
 use App\Http\Controllers\Controller;
+use App\Models\Operasi\BookingOperasi;
+use App\Models\Operasi\RuanganOperasi;
 use App\Services\Operasi\BookingOperasiService;
 
 class BookingOperasiController extends Controller
@@ -29,31 +31,38 @@ class BookingOperasiController extends Controller
 
     public function index()
     {
+
         // variable declare
         $title = $this->prefix . ' ' . 'List';
 
         // example test get data by model
         $bookings = $this->bookingOperasiService->byDate('2024-11-11');
+        $ruanganOperasi = RuanganOperasi::all();
+        $dokters = Dokter::whereIn(
+            'Spesialis',
+            [
+                'SPESIALIS BEDAH',
+                'SPESIALIS KANDUNGAN',
+                'SPESIALIS ORTHOPEDI',
+                'SPESIALIS BEDAH MULUT',
+                'SPESIALIS THT-KL',
+                'SPESIALIS UROLOGI',
+                'SPESIALIS BEDAH SARAF'
+            ]
+        )->get();
+
+        $bookings = $this->bookingOperasiService->get();
         // dd($bookings);
         return view($this->view . 'bookingOperasi.index', compact('bookings'))->with([
-            'title' => $title
+            'title' => $title,
+            'ruanganOperasi' => $ruanganOperasi,
+            'dokters' => $dokters,
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)

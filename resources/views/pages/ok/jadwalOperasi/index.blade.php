@@ -23,8 +23,8 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('list-pasien.index') }}">Operasi Kamar</a></div>
-                <div class="breadcrumb-item">Penandaan Operasi</div>
+                <div class="breadcrumb-item active"><a href="{{ route('operasi.jadwal.index') }}">Operasi Kamar</a></div>
+                <div class="breadcrumb-item">Jadwal Operasi</div>
             </div>
         </div>
 
@@ -36,6 +36,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
+                                    <th scope="col">No MR</th>
                                     <th scope="col">Nama Pasien</th>
                                     <th scope="col">Ruangan</th>
                                     <th scope="col">Dokter</th>
@@ -48,13 +49,14 @@
                                 @foreach ($jadwal as $data)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $data->kode_register }}</td>
+                                    <td><span class="badge badge-pill badge-success">{{ $data->pendaftaran->registerPasien->No_MR }}</span></td>
+                                    <td>{{$data->pendaftaran->registerPasien->Nama_Pasien}}</td>
                                     <td>{{ $data->ruangan->nama_ruang}}</td>
-                                    <td>{{ $data->dokter }}</td>
+                                    <td>{{ $data->kode_dokter }}</td>
                                     <td>{{ $data->tanggal }}</td>
                                     <td>Jam : {{ \Carbon\Carbon::parse($data->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($data->selesai)->format('H:i') }}</td>
                                     <td>
-                                        <a href="{{ route('penandaanOperasi.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
+                                        <a href="{{ route('operasi.penandaan.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
                                     </td>
                                 </tr>
                                 @endforeach

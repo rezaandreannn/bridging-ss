@@ -21,7 +21,7 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('operasi.ruangOperasi.index') }}">Operasi Kamar</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('operasi.ruang.index') }}">Operasi Kamar</a></div>
                 <div class="breadcrumb-item">Ruang Operasi</div>
             </div>
         </div>
@@ -48,21 +48,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($data as $ruang) --}}
+                                @foreach ($bookings as $booking)
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{{$loop->iteration}}</td>
+                                    <td>{{$booking->kode_register}}</td>
+                                    <td>{{$booking->tanggal}}</td>
+                                    <td>{{$booking->pendaftaran->registerPasien->Nama_Pasien}}</td>
+                                    <td>{{$booking->kode_dokter}}</td>
+                                    <td>{{$booking->ruangan->nama_ruang}}</td>
                                     <td> 
-                                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-edit-ruang">
+                                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-edit-ruang{{ $booking->id }}">
                                             <i class="fas fa-plus"></i> Edit
                                         </button>
                                     </td>
                                 </tr>
-                                {{-- @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -71,6 +71,7 @@
         </div>
     </section>
 </div>
+
 
 <div class="modal fade" id="modal-add-booking-operasi">
     <div class="modal-dialog">
@@ -81,7 +82,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('operasi.ruangOperasi.store') }}" method="POST">
+            <form action="{{ route('operasi.ruang.store') }}" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="card-body">
@@ -99,7 +100,12 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Nama Ruang Operasi</label>
-                                <input type="text" name="ruangan_id" value="{{ old('ruangan_id')}}" class="form-control @error('ruangan_id') is-invalid @enderror">
+                                <select name="ruangan_id" class="form-control @error('ruangan_id') is-invalid @enderror" id="">
+                                    <option value="">--Pilih Ruangan Operasi--</option>
+                                    @foreach ($ruanganOperasi as $ruangan)
+                                    <option value="{{$ruangan->id}}" @if(old('ruangan_id') == $ruangan->id) selected @endif>{{$ruangan->nama_ruang}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             @error('ruangan_id')
                             <div class="invalid-feedback">
@@ -107,17 +113,24 @@
                             </div>
                             @enderror
                         </div> 
+
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Nama Dokter</label>
-                                <input type="text" name="kode_dokter" value="{{ old('kode_dokter')}}" class="form-control @error('kode_dokter') is-invalid @enderror">
+                                <select name="kode_dokter" class="form-control select2 @error('kode_dokter') is-invalid @enderror" id="">
+                                    <option value="">--Pilih Dokter--</option>
+                                    @foreach ($dokters as $dokter)
+                                    <option value="{{$dokter->Kode_Dokter}}" @if(old('kode_dokter') == $dokter->Kode_Dokter) selected @endif>{{$dokter->Nama_Dokter}}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            @error('kode_dokter')
+                            @error('kode_dokter')   
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
                             @enderror
                         </div> 
+
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Tanggal</label>
@@ -140,8 +153,9 @@
     </div>
 </div>
 
- {{-- @foreach ($data as $ruang) --}}
-<div class="modal fade" id="modal-edit-ruang" tabindex="-1" role="dialog" aria-labelledby="modalEditRuangLabel" aria-hidden="true">
+
+ @foreach ($bookings as $booking)
+<div class="modal fade" id="modal-edit-ruang{{ $booking->id }}" tabindex="-1" role="dialog" aria-labelledby="modalEditRuangLabel{{ $booking->id }}" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -159,7 +173,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Nama Pasien</label>
-                                    <input type="text" name="kode_register" value="{{ old('kode_register')}}" class="form-control @error('kode_register') is-invalid @enderror">
+                                    <input type="text" name="kode_register" value="{{$booking->kode_register}}" class="form-control @error('kode_register') is-invalid @enderror">
                                 </div>
                                 @error('kode_register')
                                 <div class="invalid-feedback">
@@ -170,7 +184,12 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Nama Ruang Operasi</label>
-                                    <input type="text" name="ruangan_id" value="{{ old('ruangan_id')}}" class="form-control @error('ruangan_id') is-invalid @enderror">
+                                    <select name="ruangan_id" class="form-control @error('ruangan_id') is-invalid @enderror" id="">
+                                        <option value="">--Pilih Ruangan Operasi--</option>
+                                        @foreach ($ruanganOperasi as $ruangan)
+                                        <option value="{{$ruangan->id}}" @if($booking->ruangan_id== $ruangan->id) selected @endif>{{$ruangan->nama_ruang}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 @error('ruangan_id')
                                 <div class="invalid-feedback">
@@ -181,7 +200,12 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Nama Dokter</label>
-                                    <input type="text" name="kode_dokter" value="{{ old('kode_dokter')}}" class="form-control @error('kode_dokter') is-invalid @enderror">
+                                    <select name="kode_dokter" class="form-control select2 @error('kode_dokter') is-invalid @enderror" id="">
+                                        <option value="">--Pilih Dokter--</option>
+                                        @foreach ($dokters as $dokter)
+                                        <option value="{{$dokter->Kode_Dokter}}" @if($booking->kode_dokter == $dokter->Kode_Dokter) selected @endif>{{$dokter->Nama_Dokter}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 @error('kode_dokter')
                                 <div class="invalid-feedback">
@@ -192,7 +216,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Tanggal</label>
-                                    <input type="date" name="tanggal" value="{{ old('tanggal')}}" class="form-control @error('tanggal') is-invalid @enderror">
+                                    <input type="date" name="tanggal" value="{{ $booking->tanggal}}" class="form-control @error('tanggal') is-invalid @enderror">
                                 </div>
                                 @error('tanggal')
                                 <div class="invalid-feedback">
@@ -210,7 +234,7 @@
         </div>
     </div>
 </div>
-{{-- @endforeach --}}
+@endforeach
 
 @endsection
 

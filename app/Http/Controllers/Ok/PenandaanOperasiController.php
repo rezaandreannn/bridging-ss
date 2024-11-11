@@ -8,33 +8,29 @@ use App\Models\OperasiKamar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Operasi\BookingOperasi;
+use App\Services\Operasi\BookingOperasiService;
 
 class PenandaanOperasiController extends Controller
 {
     protected $view;
     protected $routeIndex;
     protected $prefix;
-    protected $operasiKamar;
-    protected $rajaldokter;
-    protected $rekam_medis;
-    protected $booking;
+    protected $bookingOperasi;
+    protected $bookingOperasiService;
 
-    public function __construct(OperasiKamar $operasiKamar)
+    public function __construct(BookingOperasi $bookingOperasi)
     {
-        $this->rajaldokter = new RajalDokter;
-        $this->rekam_medis = new Rekam_medis;
-        $this->booking = new BookingOperasi;
-        $this->operasiKamar = $operasiKamar;
+        $this->bookingOperasi = $bookingOperasi;
         $this->view = 'pages.ok.';
         $this->prefix = 'Penandaan Lokasi';
+        $this->bookingOperasiService = new BookingOperasiService();
     }
 
     public function jadwal(Request $request)
     {
         $title = 'Jadwal Operasi';
-        // $jadwal = $this->booking->getJadwalOperasi(); 
-        $jadwal = BookingOperasi::with('ruangan')->get();
-        dd($jadwal);
+        $jadwal = $this->bookingOperasiService->get();
+        // dd($jadwal);
         return view($this->view . 'jadwalOperasi.index', compact('title', 'jadwal'));
     }
 
