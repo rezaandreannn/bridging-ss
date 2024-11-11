@@ -26,7 +26,7 @@ class Cppt extends Model
         //     }
         // }
 
-        public function getCpptByNoReg($noReg)
+        public function getAsesmenMedisRanapByNoreg($noReg)
         {
             $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
             $data = DB::connection('pku')
@@ -40,6 +40,31 @@ class Cppt extends Model
                 ->orderBy('tri.FS_KD_TRS', 'desc')
                 ->limit('1')
                 ->first();
+            return $data;
+        }
+
+        public function getCpptByNoreg($noReg)
+        {
+            $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
+            $data = DB::connection('pku')
+                ->table('TAC_RI_CPPT as trc')
+                ->leftJoin($db_rsmm . '.dbo.TUSER as u', 'trc.mdb', '=', 'u.NAMAUSER')
+                ->leftJoin('TAC_COM_USER as tcu', 'trc.mdb', '=', 'tcu.user_name')
+                ->leftJoin('TAC_COM_ROLE_USER as role', 'tcu.user_id', '=', 'role.user_id')
+                // ->leftJoin($db_rsmm . '.dbo.TUSER as tu', 'trc.FS_KD_MEDIS_VERIF', '=', 'tu.NAMAUSER')
+                ->select(
+                    'trc.*',
+                    'u.NAMALENGKAP',
+                    'trc.FS_KD_MEDIS_VERIF',
+                    'role.role_id',
+                    DB::raw('RIGHT(trc.mdd_date, 2) as tgl')
+                )
+                ->where('trc.FS_KD_REG', $noReg)
+                ->where('trc.FD_TGL_VOID', '3000-01-01')
+                ->orderBy('trc.mdd_date', 'DESC')
+                ->orderBy('trc.mdd_time', 'DESC')
+                ->get();
+        
             return $data;
         }
 }
