@@ -4,7 +4,7 @@ namespace App\Http\Controllers\OK;
 
 use App\Models\RajalDokter;
 use Illuminate\Http\Request;
-use App\Models\Operasi\BookingOperasi;
+use Apuse App\Models\Operasi\BookingOperasi;
 use App\Http\Controllers\Controller;
 
 class BookingOperasiController extends Controller
@@ -40,17 +40,6 @@ class BookingOperasiController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
