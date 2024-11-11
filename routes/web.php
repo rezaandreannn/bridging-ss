@@ -15,12 +15,14 @@ use App\Http\Controllers\TandaTanganController;
 use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\Rj\RawatJalanController;
 use App\Http\Controllers\IGD\Layanan\EwsController;
+use App\Http\Controllers\Ok\RuangOperasiController;
 use App\Http\Controllers\MasterData\Icd10Controller;
 use App\Http\Controllers\Berkas\Berkas_rm_controller;
 use App\Http\Controllers\Kunjungan\AntreanController;
 use App\Http\Controllers\Manage\PermissionController;
 use App\Http\Controllers\MasterData\DokterController;
 use App\Http\Controllers\MasterData\PasienController;
+use App\Http\Controllers\OK\BookingOperasiController;
 use App\Http\Controllers\Berkas\Surat\SuratController;
 use App\Http\Controllers\Encounter\RecourceController;
 use App\Http\Controllers\Farmasi\OrderAlkesController;
@@ -58,7 +60,6 @@ use App\Http\Controllers\Poli\Mata\MasterData\PenyakitSekarangController;
 use App\Http\Controllers\Berkas\Rekam_medis_by_mr\RekamMedisByMrController;
 use App\Http\Controllers\Berkas\Rekam_medis_harian\RekamMedisHarianController;
 use App\Http\Controllers\IGD\Layanan\AssesmenController as LayananAssesmenController;
-use App\Http\Controllers\Ok\RuangOperasiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -511,6 +512,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/ruangOperasi', [RuangOperasiController::class, 'store'])->name('ruangOperasi.store');
         Route::put('/ruangOperasi/update/{id}', [RuangOperasiController::class, 'update'])->name('ruangOperasi.update');
         Route::delete('/ruangOperasi/delete/{id}', [RuangOperasiController::class, 'destroy'])->name('ruangOperasi.destroy');
+
+        // booking operasi
+        Route::get('/bookingOperasi', [BookingOperasiController::class, 'index'])->name('bookingOperasi.index');
     });
 
     //IGD

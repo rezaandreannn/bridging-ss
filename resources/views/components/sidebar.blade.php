@@ -272,6 +272,13 @@
                     </li>
                 </ul>
                 @endcan         
+                @can('booking operasi')
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('ok/bookingOperasi*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('bookingOperasi.index')}}">Booking Operasi</a>
+                    </li>
+                </ul>
+                @endcan         
             </li>
             @endcan
 
