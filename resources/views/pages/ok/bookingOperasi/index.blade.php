@@ -53,7 +53,7 @@
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$booking->kode_register}}</td>
                                     <td>{{$booking->tanggal}}</td>
-                                    <td>{{$booking->kode_register}}</td>
+                                    <td>{{$booking->pendaftaran->registerPasien->Nama_Pasien}}</td>
                                     <td>{{$booking->kode_dokter}}</td>
                                     <td>{{$booking->ruangan->nama_ruang}}</td>
                                     <td> 
