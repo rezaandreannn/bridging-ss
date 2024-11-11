@@ -5,7 +5,7 @@ use App\Http\Controllers\Ok\RuangOperasiController;
 use App\Http\Controllers\OK\BookingOperasiController;
 use App\Http\Controllers\OK\PenandaanOperasiController;
 
-Route::prefix('operasi')->name('operasi.')->group(function () {
+Route::prefix('operasi')->name('operasi.')->middleware('auth')->group(function () {
     // booking operasi
     Route::get('/booking-operasi', [BookingOperasiController::class, 'index'])->name('booking.index');
 

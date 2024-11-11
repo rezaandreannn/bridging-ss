@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Services\SimRs;
+
+use App\Models\Simrs\Dokter;
+
+class DokterService
+{
+    public function byBedahOperasi()
+    {
+        $params =  [
+            'SPESIALIS BEDAH',
+            'SPESIALIS KANDUNGAN',
+            'SPESIALIS ORTHOPEDI',
+            'SPESIALIS BEDAH MULUT',
+            'SPESIALIS THT-KL',
+            'SPESIALIS UROLOGI',
+            'SPESIALIS BEDAH SARAF'
+        ];
+        return Dokter::whereIn('Spesialis', $params)->get();
+    }
+}

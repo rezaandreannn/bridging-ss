@@ -2,11 +2,10 @@
 
 namespace App\Models\Operasi;
 
-use Illuminate\Support\Facades\DB;
+use App\Models\Simrs\Dokter;
 use App\Models\Simrs\Pendaftaran;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class BookingOperasi extends Model
 {
@@ -15,7 +14,7 @@ class BookingOperasi extends Model
     protected $connection = 'pku';
     protected $table = 'ok_booking_operasi';
 
-    protected $with = ['pendaftaran', 'ruangan'];
+    protected $with = ['pendaftaran', 'ruangan', 'dokter'];
 
     public function ruangan()
     {
@@ -23,6 +22,11 @@ class BookingOperasi extends Model
     }
     // Batas Relasi
 
+
+    public function dokter()
+    {
+        return $this->belongsTo(Dokter::class, 'kode_dokter', 'Kode_Dokter');
+    }
 
     public function pendaftaran()
     {
