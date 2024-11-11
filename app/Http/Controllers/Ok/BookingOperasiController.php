@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\OK;
 
+use Exception;
 use App\Models\RajalDokter;
 use App\Models\Simrs\Dokter;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\SimRs\DokterService;
 use App\Models\Operasi\BookingOperasi;
 use App\Models\Operasi\RuanganOperasi;
 use App\Services\Operasi\BookingOperasiService;
-use App\Services\SimRs\DokterService;
+use App\Http\Requests\Operasi\StoreBookingRequest;
 
 class BookingOperasiController extends Controller
 {
@@ -19,6 +21,7 @@ class BookingOperasiController extends Controller
     protected $bookingkamar;
     protected $rajaldokter;
 
+    // menggunakan service
     protected $bookingOperasiService;
     protected $dokterService;
 
@@ -37,31 +40,26 @@ class BookingOperasiController extends Controller
         // variable declare
         $title = $this->prefix . ' ' . 'List';
 
-        // example test get data by model
-
-        $bookings = $this->bookingOperasiService->byDate('2024-11-11');
-        $ruanganOperasi = RuanganOperasi::all();
-        $dokters = Dokter::whereIn(
-            'Spesialis',
-            [
-                'SPESIALIS BEDAH',
-                'SPESIALIS KANDUNGAN',
-                'SPESIALIS ORTHOPEDI',
-                'SPESIALIS BEDAH MULUT',
-                'SPESIALIS THT-KL',
-                'SPESIALIS UROLOGI',
-                'SPESIALIS BEDAH SARAF'
-            ]
-        )->get();
-
+        // get data from service
         $bookings = $this->bookingOperasiService->get();
-        // dd($bookings);
+        dd($bookings);
 
-        return view($this->view . 'bookingOperasi.index', compact('bookings'))->with([
+        return view($this->view . 'booking-operasi.index', compact('bookings'))->with([
             'title' => $title,
             'ruanganOperasi' => RuanganOperasi::all(),
             'dokters' => $this->dokterService->byBedahOperasi(),
         ]);
+    }
+
+    public function create()
+    {
+
+        return view($this->view . 'booking-operasi.create')
+            ->with([
+                'title' => 'Booking Operasi',
+                'dokters' => $this->dokterService->byBedahOperasi(), //dokter bedah kebutuhan select items dokter
+                'ruangans' => RuanganOperasi::pluck('nama', 'id') //ruangan operasi kebuthunan select items ruangan
+            ]);
     }
 
     /**
@@ -69,9 +67,16 @@ class BookingOperasiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreBookingRequest $request)
     {
-        //
+        try {
+            $this->bookingOperasiService->insert($request->validated());
+
+            return redirect()->back()->with('success', 'Booking berhasil ditambahkan.');
+        } catch (Exception $e) {
+            // Redirect dengan pesan error jika terjadi kegagalan
+            return redirect()->back()->with('error', 'Gagal menambahkan booking: ' . $e->getMessage());
+        }
     }
 
     /**

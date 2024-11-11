@@ -14,30 +14,30 @@ return new class extends Migration
      */
     public function up()
     {
-            // Membuat tabel 'ok_booking_operasi' di koneksi 'pku'
-            Schema::connection('pku')->create('ok_booking_operasi', function (Blueprint $table) {
-                $table->id();
-                $table->string('kode_register');
-                $table->bigInteger('ruangan_id');
-                $table->string('kode_dokter');
-                $table->date('tanggal');
-                $table->time('jam_mulai')->nullable();
-                $table->time('jam_selesai')->nullable();
-                $table->string('created_by')->nullable();
-                $table->string('updated_by')->nullable();
-                $table->timestamp('deleted_at')->nullable();
-                $table->timestamps();
-    
-                // Kolom foreign key yang merujuk ke 'kode_register' pada tabel 'pendaftaran' di database lain
-                // $table->foreign('kode_register')->references('No_Reg')->on('db_rsmm.pendaftaran'); 
-                // Untuk foreign key antar-database, kita akan menggunakan query raw, bukan schema builder
+        // Membuat tabel 'ok_booking_operasi' di koneksi 'pku'
+        Schema::connection('pku')->create('ok_booking_operasi', function (Blueprint $table) {
+            $table->id();
+            $table->string('kode_register');
+            $table->bigInteger('ruangan_id');
+            $table->string('kode_dokter');
+            $table->date('tanggal');
+            $table->time('jam_mulai')->nullable();
+            $table->time('jam_selesai')->nullable();
+            $table->string('created_by')->nullable();
+            $table->string('updated_by')->nullable();
+            $table->timestamp('deleted_at')->nullable();
+            $table->timestamps();
 
-                     // Foreign key reference menggunakan query raw
+            // Kolom foreign key yang merujuk ke 'kode_register' pada tabel 'pendaftaran' di database lain
+            // $table->foreign('kode_register')->references('No_Reg')->on('db_rsmm.pendaftaran'); 
+            // Untuk foreign key antar-database, kita akan menggunakan query raw, bukan schema builder
+
+            // Foreign key reference menggunakan query raw
             $table->foreign('ruangan_id')
-            ->references('id')
-            ->on('ok_ruangan'); // Nama tabel di db1
+                ->references('id')
+                ->on('ok_ruangan'); // Nama tabel di db1
 
-            });
+        });
     }
 
     /**

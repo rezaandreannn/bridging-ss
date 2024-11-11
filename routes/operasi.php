@@ -8,6 +8,8 @@ use App\Http\Controllers\OK\PenandaanOperasiController;
 Route::prefix('operasi')->name('operasi.')->middleware('auth')->group(function () {
     // booking operasi
     Route::get('/booking-operasi', [BookingOperasiController::class, 'index'])->name('booking.index');
+    Route::get('/create/booking-operasi', [BookingOperasiController::class, 'create'])->name('booking.create');
+    Route::post('/booking-operasi', [BookingOperasiController::class, 'store'])->name('booking.store');
 
     // jadwal operasi
     Route::get('/jadwal-operasi', [PenandaanOperasiController::class, 'jadwal'])->name('jadwal.index');
