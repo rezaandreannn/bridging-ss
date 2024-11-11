@@ -87,10 +87,10 @@
                     <div class="card-body">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Kode Ruang</label>
-                                <input type="text" name="kode_ruang" value="{{ old('kode_ruang')}}" class="form-control @error('kode_ruang') is-invalid @enderror">
+                                <label>Nama Pasien</label>
+                                <input type="text" name="kode_register" value="{{ old('kode_register')}}" class="form-control @error('kode_register') is-invalid @enderror">
                             </div>
-                            @error('kode_ruang')
+                            @error('kode_register')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
@@ -98,10 +98,32 @@
                         </div>  
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Nama Ruang</label>
-                                <input type="text" name="nama_ruang" value="{{ old('nama_ruang')}}" class="form-control @error('nama_ruang') is-invalid @enderror">
+                                <label>Nama Ruang Operasi</label>
+                                <input type="text" name="ruangan_id" value="{{ old('ruangan_id')}}" class="form-control @error('ruangan_id') is-invalid @enderror">
                             </div>
-                            @error('nama_ruang')
+                            @error('ruangan_id')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div> 
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Nama Dokter</label>
+                                <input type="text" name="kode_dokter" value="{{ old('kode_dokter')}}" class="form-control @error('kode_dokter') is-invalid @enderror">
+                            </div>
+                            @error('kode_dokter')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div> 
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Tanggal</label>
+                                <input type="date" name="tanggal" value="{{ old('tanggal')}}" class="form-control @error('tanggal') is-invalid @enderror">
+                            </div>
+                            @error('tanggal')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
@@ -118,35 +140,77 @@
     </div>
 </div>
 
-{{--  @foreach ($data as $ruang)
-<div class="modal fade" id="modal-edit-ruang{{ $ruang->id }}" tabindex="-1" role="dialog" aria-labelledby="modalEditRuangLabel{{ $ruang->id }}" aria-hidden="true">
+ {{-- @foreach ($data as $ruang) --}}
+<div class="modal fade" id="modal-edit-ruang" tabindex="-1" role="dialog" aria-labelledby="modalEditRuangLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalEditRuangLabel{{ $ruang->id }}">Edit Ruang</h5>
+                <h5 class="modal-title" id="modalEditRuangLabel">Edit Ruang</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form action="{{ route('ruangOperasi.update', $ruang->id) }}" method="POST">
+  
+                <form action="#" method="POST">
                     @csrf
                     @method('PUT')
-                    <div class="form-group">
-                        <label for="editKodeRuang{{ $ruang->id }}">Kode Ruang</label>
-                        <input type="text" class="form-control" id="editKodeRuang{{ $ruang->id }}" name="kode_ruang" value="{{ $ruang->kode_ruang }}" required>
+                    <div class="modal-body">
+                        <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Nama Pasien</label>
+                                    <input type="text" name="kode_register" value="{{ old('kode_register')}}" class="form-control @error('kode_register') is-invalid @enderror">
+                                </div>
+                                @error('kode_register')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>  
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Nama Ruang Operasi</label>
+                                    <input type="text" name="ruangan_id" value="{{ old('ruangan_id')}}" class="form-control @error('ruangan_id') is-invalid @enderror">
+                                </div>
+                                @error('ruangan_id')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div> 
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Nama Dokter</label>
+                                    <input type="text" name="kode_dokter" value="{{ old('kode_dokter')}}" class="form-control @error('kode_dokter') is-invalid @enderror">
+                                </div>
+                                @error('kode_dokter')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div> 
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Tanggal</label>
+                                    <input type="date" name="tanggal" value="{{ old('tanggal')}}" class="form-control @error('tanggal') is-invalid @enderror">
+                                </div>
+                                @error('tanggal')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div> 
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="editNamaRuang{{ $ruang->id }}">Nama Ruang</label>
-                        <input type="text" class="form-control" id="editNamaRuang{{ $ruang->id }}" name="nama_ruang" value="{{ $ruang->nama_ruang }}" required>
+                    <div class="card-footer text-left">
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-print"></i> Simpan</button>
+                        <button type="button" class="btn btn-info" data-dismiss="modal">Tutup</button>
                     </div>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
                 </form>
-            </div>
         </div>
     </div>
 </div>
-@endforeach --}}
+{{-- @endforeach --}}
 
 @endsection
 
