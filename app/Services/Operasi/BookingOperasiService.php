@@ -54,4 +54,6 @@ class BookingOperasiService
             ->where('kode_register', $kodeRegister)
             ->get();
     }
+
+    public function insert() {}
 }
