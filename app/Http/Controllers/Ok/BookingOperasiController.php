@@ -4,7 +4,7 @@ namespace App\Http\Controllers\OK;
 
 use App\Models\RajalDokter;
 use Illuminate\Http\Request;
-use App\Models\BookingOperasi;
+use App\Models\Operasi\BookingOperasi;
 use App\Http\Controllers\Controller;
 
 class BookingOperasiController extends Controller
@@ -26,12 +26,15 @@ class BookingOperasiController extends Controller
     public function index()
     {
 
-        // dd('ok');
-        //
+        // variable declare
         $title = $this->prefix . ' ' . 'List';
-        // $biodata = $this->rekam_medis->getBiodata($noReg);
-        // $listBooking = $this->bookingkamar->getData();
-        return view($this->view . 'bookingOperasi.index', compact('title'));
+
+        // example test get data by model
+        $bookings = BookingOperasi::with('ruangan')->get();
+        dd($bookings);
+        return view($this->view . 'bookingOperasi.index', compact('bookings'))->with([
+            'title' => $title
+        ]);
     }
 
     /**
