@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Ok;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Rekam_medis;
 use App\Models\OperasiKamar;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Models\Rajal;
+use App\Rules\UniqueInConnection;
+use App\Rules\UniqueUpdateInConnection;
 
 class RuangOperasiController extends Controller
 {
@@ -14,10 +18,12 @@ class RuangOperasiController extends Controller
     protected $prefix;
     protected $operasiKamar;
     protected $rekam_medis;
+    protected $rajal;
 
     public function __construct(OperasiKamar $operasiKamar)
     {
         $this->rekam_medis = new Rekam_medis;
+        $this->rajal = new Rajal;
         $this->operasiKamar = $operasiKamar;
         $this->view = 'pages.ok.';
         $this->prefix = 'Ruang';
@@ -26,7 +32,9 @@ class RuangOperasiController extends Controller
     public function index()
     {
         $title = $this->prefix . ' ' . 'Operasi';
-        return view($this->view . 'ruang.index', compact('title'));
+        $data = $this->operasiKamar->getRuang();
+        // dd($data);
+        return view($this->view . 'ruangan.index', compact('title', 'data'));
     }
 
     /**
@@ -48,6 +56,19 @@ class RuangOperasiController extends Controller
     public function store(Request $request)
     {
         //
+        $validatedData = $request->validate([
+            'kode_ruang' => ['required', new UniqueInConnection('ok_ruangan', 'kode_ruang', 'pku')],
+        ]);
+
+        $userEmr = $this->rajal->getUserEmr(auth()->user()->username);
+
+        DB::connection('pku')->table('ok_ruangan')->insert([
+            'kode_ruang' => $request->input('kode_ruang'),
+            'nama_ruang' => $request->input('nama_ruang'),
+            'created_by' => $userEmr->user_id,
+            'created_at' => now()
+        ]);
+        return redirect()->route('ruangOperasi.index')->with('success', 'Nama Ruang Berhasil Ditambahkan!');
     }
 
     /**
@@ -81,7 +102,22 @@ class RuangOperasiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'kode_ruang' => ['required', new UniqueUpdateInConnection('ok_ruangan', 'kode_ruang', 'pku', $id)],
+        ]);
+
+
+        $userEmr = $this->rajal->getUserEmr(auth()->user()->username);
+
+        DB::connection('pku')->table('ok_ruangan')->where('id', $id)->update([
+            'kode_ruang' => $request->input('kode_ruang'),
+            'nama_ruang' => $request->input('nama_ruang'),
+            'updated_by' => $userEmr->user_id,
+            'updated_at' => now(),
+
+        ]);
+
+        return redirect()->route('ruangOperasi.index')->with('success', 'Nama Ruang Berhasil Diedit!');
     }
 
     /**
@@ -92,6 +128,17 @@ class RuangOperasiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Get the current user ID
+        $userId = auth()->id();
+
+        // Update the deleted_by field before deleting the record
+        DB::connection('pku')->table('ok_ruang_operasi')
+            ->where('id', $id)
+            ->update(['deleted_by' => $userId]);
+
+        // Delete the record
+        DB::connection('pku')->table('ok_ruang_operasi')->where('id', $id)->delete();
+
+        return redirect()->back()->with('success', 'Data Berhasil Dihapus!');
     }
 }

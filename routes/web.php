@@ -508,6 +508,8 @@ Route::middleware('auth')->group(function () {
         // OK Ruangan
         Route::get('/ruangOperasi', [RuangOperasiController::class, 'index'])->name('ruangOperasi.index');
         Route::post('/ruangOperasi', [RuangOperasiController::class, 'store'])->name('ruangOperasi.store');
+        Route::put('/ruangOperasi/update/{id}', [RuangOperasiController::class, 'update'])->name('ruangOperasi.update');
+        Route::delete('/ruangOperasi/delete/{id}', [RuangOperasiController::class, 'destroy'])->name('ruangOperasi.destroy');
     });
 
     //IGD

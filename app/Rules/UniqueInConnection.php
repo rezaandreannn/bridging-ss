@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
@@ -20,13 +21,13 @@ class UniqueInConnection implements Rule
     public function passes($attribute, $value)
     {
         return !DB::connection($this->connection)
-                  ->table($this->table)
-                  ->where($this->column, $value)
-                  ->exists();
+            ->table($this->table)
+            ->where($this->column, $value)
+            ->exists();
     }
 
     public function message()
     {
-        return 'The : nama tersebut sudah ada di sistem.';
+        return 'Data tersebut sudah ada di sistem.';
     }
 }
