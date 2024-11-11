@@ -52,7 +52,7 @@
                                     <td><span class="badge badge-pill badge-success">{{ $data->pendaftaran->registerPasien->No_MR }}</span></td>
                                     <td>{{$data->pendaftaran->registerPasien->Nama_Pasien}}</td>
                                     <td>{{ $data->ruangan->nama_ruang}}</td>
-                                    <td>{{ $data->kode_dokter }}</td>
+                                    <td>{{ $data->dokter->Nama_Dokter }}</td>
                                     <td>{{ $data->tanggal }}</td>
                                     <td>Jam : {{ \Carbon\Carbon::parse($data->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($data->selesai)->format('H:i') }}</td>
                                     <td>
