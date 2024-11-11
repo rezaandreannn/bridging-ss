@@ -41,19 +41,22 @@
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
-                                    <th scope="col">Kode Register</th>
-                                    <th scope="col">Hasil Gambar</th>
-                                    <th scope="col">Jenis Operasi</th>
+                                    <th scope="col">Nama Pasien</th>
+                                    <th scope="col">Ruangan</th>
+                                    <th scope="col">Dokter</th>
+                                    <th scope="col">Tanggal</th>
+                                    <th scope="col">Jam</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($tandaOperasi as $data)
+                                @foreach ($jadwal as $data)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $data->kode_register }}</td>
-                                    <td>{{ $data->hasil_gambar }}</td>
-                                    <td>{{ $data->jenis_operasi }}</td>
+                                    <td>{{ $data->ruangan }}</td>
+                                    <td>{{ $data->dokter }}</td>
+                                    <td>{{ $data->tanggal }}</td>
                                     <td>
                                         <a href="{{ route('penandaanOperasi.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
                                     </td>

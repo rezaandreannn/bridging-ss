@@ -20,10 +20,10 @@ class OperasiKamar extends Model
         return $data;
     }
 
-    public function getPenandaanOperasi()
+    public function getJadwalOperasi()
     {
         $data = DB::connection('pku')
-            ->table('ok_tanda_operasi')
+            ->table('ok_booking_operasi')
             ->get();
 
         return $data;

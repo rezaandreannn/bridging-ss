@@ -27,10 +27,10 @@ class PenandaanOperasiController extends Controller
     }
     public function index(Request $request)
     {
-        $title = $this->prefix . ' ' . 'Operasi';
-        $tandaOperasi = $this->operasiKamar->getPenandaanOperasi();
+        $title = 'Jadwal Operasi';
+        $jadwal = $this->operasiKamar->getJadwalOperasi();
         $operasiKamar = new OperasiKamar();
-        return view($this->view . 'penandaanOperasi.create', compact('title', 'operasiKamar', 'tandaOperasi'));
+        return view($this->view . 'penandaanOperasi.index', compact('title', 'operasiKamar', 'jadwal'));
     }
 
     /**
