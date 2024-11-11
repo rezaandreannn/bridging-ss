@@ -30,11 +30,6 @@
 
         <div class="section-body">
             <div class="card">
-                <div class="card-header">
-                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add-ruang">
-                        <i class="fas fa-plus"></i> Tambah
-                    </button>
-                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table-striped table" id="table-1">
@@ -45,7 +40,7 @@
                                     <th scope="col">Ruangan</th>
                                     <th scope="col">Dokter</th>
                                     <th scope="col">Tanggal</th>
-                                    <th scope="col">Jam</th>
+                                    <th scope="col">Jam Operasi</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
@@ -54,9 +49,10 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $data->kode_register }}</td>
-                                    <td>{{ $data->ruangan }}</td>
+                                    <td>{{ $data->ruangan->nama_ruang}}</td>
                                     <td>{{ $data->dokter }}</td>
                                     <td>{{ $data->tanggal }}</td>
+                                    <td>Jam : {{ \Carbon\Carbon::parse($data->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($data->selesai)->format('H:i') }}</td>
                                     <td>
                                         <a href="{{ route('penandaanOperasi.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
                                     </td>

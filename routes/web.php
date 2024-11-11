@@ -505,7 +505,7 @@ Route::middleware('auth')->group(function () {
     // Ruang Operasi Kamar
     Route::prefix('ok')->group(function () {
         // Penandaan Lokasi Operasi
-        Route::get('/penandaanOperasi', [PenandaanOperasiController::class, 'index'])->name('penandaanOperasi.index');
+        Route::get('/jadwalOperasi', [PenandaanOperasiController::class, 'jadwal'])->name('penandaanOperasi.jadwal');
         Route::get('/penandaanOperasi/create', [PenandaanOperasiController::class, 'create'])->name('penandaanOperasi.create');
         // OK Ruangan
         Route::get('/ruangOperasi', [RuangOperasiController::class, 'index'])->name('ruangOperasi.index');
