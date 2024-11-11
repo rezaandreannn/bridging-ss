@@ -642,3 +642,4 @@ Route::get('/server2', function () {
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/vclaim.php';
+require __DIR__ . '/operasi.php';
