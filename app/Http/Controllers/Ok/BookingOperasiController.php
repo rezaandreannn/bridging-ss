@@ -32,7 +32,7 @@ class BookingOperasiController extends Controller
         // variable declare
         $title = $this->prefix . ' ' . 'List';
 
-        // example test get data by model
+        // get data by date in operasi
         $bookings = $this->bookingOperasiService->byDate('2024-11-11');
         dd($bookings);
         return view($this->view . 'bookingOperasi.index', compact('bookings'))->with([
