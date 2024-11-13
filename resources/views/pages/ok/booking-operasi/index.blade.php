@@ -22,7 +22,7 @@
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{ route('operasi.ruang.index') }}">Operasi Kamar</a></div>
-                <div class="breadcrumb-item">Ruang Operasi</div>
+                <div class="breadcrumb-item">Booking Operasi</div>
             </div>
         </div>
 
@@ -163,7 +163,7 @@
                                                     <a class="dropdown-item has-icon" href=""><i class="fas fa-pencil-alt"></i>Ubah Data</a>
                                                     <a class="dropdown-item has-icon" href=""><i class="fas fa-calendar-check"></i>Ganti Tanggal</a>
                                                     <a class="dropdown-item has-icon" href=""><i class="fas fa-person-booth"></i>Ganti Ruangan</a>
-                                                    <a class="dropdown-item has-icon" href="{{ route('operasi.penandaan.create') }}"><i class="fas fa-marker"></i> Penandaan Operasi</a>
+                                                    <a class="dropdown-item has-icon" href="{{ route('operasi.penandaan.create', ['noReg' => $booking->kode_register]) }}"><i class="fas fa-marker"></i> Penandaan Operasi</a>
                                                     <a class="dropdown-item has-icon" href=""><i class="fas fa-trash"></i>Hapus / Batal</a>
                                                 </div>
                                         </td>

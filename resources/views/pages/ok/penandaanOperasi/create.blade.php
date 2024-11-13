@@ -98,7 +98,7 @@
             <div class="row">
                 <div class="col-12">
                     <!-- components biodata pasien by no reg -->
-                    {{-- @include('components.biodata-pasien-bynoreg') --}}
+                    @include('components.biodata-pasien-bynoreg')
                     <form id="myForm" action="{{ route('operasi.penandaan.store') }}" method="POST">
                         @csrf
                         <div class="card mb-3">
@@ -108,29 +108,7 @@
                             <!-- include form -->
                             <div class="card-body card-khusus-body">
                                 <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Kode Register</label>
-                                            <input type="text" name="nama_pasien" value="{{ old('nama_pasien')}}" class="form-control @error('nama_pasien') is-invalid @enderror" disabled>
-                                        </div>
-                                        @error('nama_pasien')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Nama Pasien</label>
-                                            <input type="text" name="nama_pasien" value="{{ old('nama_pasien')}}" class="form-control @error('nama_pasien') is-invalid @enderror">
-                                        </div>
-                                        @error('nama_pasien')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tanggal</label>
                                             <input type="date" name="tanggal" value="{{ old('tanggal')}}" class="form-control @error('tanggal') is-invalid @enderror">
@@ -141,19 +119,7 @@
                                         </div>
                                         @enderror
                                     </div>
-                                    <div class="col-md-8">
-                                        <div class="form-group">
-                                            <label>Jenis Operasi</label>
-                                            <textarea name="jenis_operasi" class="form-control  @error('jenis_operasi') is-invalid  
-                                            @enderror" rows="3" placeholder="Masukkan Jenis Operasi ...">{{ old('jenis_operasi') }}</textarea>
-                                        </div>
-                                        @error('jenis_operasi')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="d-block">Jenis Kelamin</label>
                                             <select name="jenis_kelamin" id="kondisi" class="form-control select2 @error('jenis_kelamin')  is-invalid @enderror" onchange="click_jenis_kelamin(this)">
@@ -167,6 +133,18 @@
                                             </span>
                                             @enderror
                                         </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Jenis Operasi</label>
+                                            <textarea name="jenis_operasi" class="form-control  @error('jenis_operasi') is-invalid  
+                                            @enderror" rows="3" placeholder="Masukkan Jenis Operasi ...">{{ old('jenis_operasi') }}</textarea>
+                                        </div>
+                                        @error('jenis_operasi')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>

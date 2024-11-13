@@ -56,7 +56,7 @@
                                     <td>{{ $data->tanggal }}</td>
                                     <td>Jam : {{ \Carbon\Carbon::parse($data->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($data->jam_selesai)->format('H:i') }}</td>
                                     <td>
-                                        <a href="{{ route('operasi.penandaan.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
+                                        <a href="{{ route('operasi.penandaan.create', ['noReg' => $data->no_mr]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
                                     </td>
                                 </tr>
                                 @endforeach
