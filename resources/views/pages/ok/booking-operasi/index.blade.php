@@ -30,7 +30,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <form action="{{ route('operasi.booking.store') }}" method="POST">
+                        <form action="{{ route('booking.store') }}" method="POST">
                             @csrf
                             <div class="col-12 col-lg-4 col-md-6">
                                 <div class="form-group">
@@ -125,8 +125,6 @@
                                 @enderror
                             </div>
                             <div class="text-left">
-                                {{-- <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button> --}}
-                                {{-- <a href="{{ route('poliMata.assesmenAwal', ['noReg' => $biodata->NO_REG]) }}" class="btn btn-primary mb-2"><i class="fas fa-save"></i>Simpan</a> --}}
                                 <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button>
                             </div>
                         </form>
