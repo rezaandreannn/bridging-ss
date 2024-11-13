@@ -42,7 +42,6 @@ class BookingOperasiController extends Controller
 
         // get data from service
         $bookings = $this->bookingOperasiService->get();
-        dd($bookings);
 
         return view($this->view . 'booking-operasi.index', compact('bookings'))->with([
             'title' => $title,

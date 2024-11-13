@@ -53,9 +53,9 @@
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$booking->kode_register}}</td>
                                     <td>{{$booking->tanggal}}</td>
-                                    <td>{{$booking->pendaftaran->registerPasien->Nama_Pasien}}</td>
-                                    <td>{{$booking->kode_dokter}}</td>
-                                    <td>{{$booking->ruangan->nama_ruang}}</td>
+                                    <td>{{$booking->nama_pasien}}</td>
+                                    <td>{{$booking->nama_dokter}}</td>
+                                    <td>{{$booking->ruang_operasi}}</td>
                                     <td> 
                                         <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-edit-ruang{{ $booking->id }}">
                                             <i class="fas fa-plus"></i> Edit

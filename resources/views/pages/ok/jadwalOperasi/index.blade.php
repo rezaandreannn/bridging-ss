@@ -49,12 +49,12 @@
                                 @foreach ($jadwal as $data)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td><span class="badge badge-pill badge-success">{{ $data->pendaftaran->registerPasien->No_MR }}</span></td>
-                                    <td>{{$data->pendaftaran->registerPasien->Nama_Pasien}}</td>
-                                    <td>{{ $data->ruangan->nama_ruang}}</td>
-                                    <td>{{ $data->dokter->Nama_Dokter }}</td>
+                                    <td><span class="badge badge-pill badge-success">{{ $data->no_mr }}</span></td>
+                                    <td>{{$data->nama_pasien}}</td>
+                                    <td>{{ $data->ruang_operasi}}</td>
+                                    <td>{{ $data->nama_dokter }}</td>
                                     <td>{{ $data->tanggal }}</td>
-                                    <td>Jam : {{ \Carbon\Carbon::parse($data->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($data->selesai)->format('H:i') }}</td>
+                                    <td>Jam : {{ \Carbon\Carbon::parse($data->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($data->jam_selesai)->format('H:i') }}</td>
                                     <td>
                                         <a href="{{ route('operasi.penandaan.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
                                     </td>

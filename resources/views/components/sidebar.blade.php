@@ -260,21 +260,21 @@
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span> OK</span></a>
                 @can('penandaan operasi')
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('operasi/booking-operasi*') ? 'active' : '' }}">
+                    <li class="{{ Request::is('operasi/booking-operasi/*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('operasi.jadwal.index')}}">Jadwal Operasi</a>
                     </li>
                 </ul>
                 @endcan         
                 @can('ruang operasi')
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('operasi/ruangOperasi*') ? 'active' : '' }}">
+                    <li class="{{ Request::is('operasi/ruangOperasi/*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('operasi.ruang.index')}}">Ruang Operasi</a>
                     </li>
                 </ul>
                 @endcan         
                 @can('booking operasi')
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('ok/bookingOperasi*') ? 'active' : '' }}">
+                    <li class="{{ Request::is('operasi/bookingOperasi*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('operasi.booking.index')}}">Booking Operasi</a>
                     </li>
                 </ul>

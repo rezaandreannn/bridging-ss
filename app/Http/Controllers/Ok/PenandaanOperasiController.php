@@ -39,7 +39,6 @@ class PenandaanOperasiController extends Controller
         $title = 'Jadwal Operasi';
         // $jadwal = $this->booking->getJadwalOperasi(); 
         $jadwal = BookingOperasi::with('ruangan')->get();
-        // dd($jadwal);
         return view($this->view . 'penandaanOperasi.index', compact('title', 'jadwal'));
     }
 
