@@ -266,7 +266,7 @@
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span> OK</span></a>
                 @can('penandaan operasi')
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('operasi/booking-operasi*') ? 'active' : '' }}">
+                    <li class="{{ Request::is('operasi/jadwal-operasi*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('operasi.jadwal.index')}}">Jadwal Operasi</a>
                     </li>
                 </ul>
