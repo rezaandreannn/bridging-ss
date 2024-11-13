@@ -27,7 +27,7 @@ class StoreBookingRequest extends FormRequest
     {
         return [
             'kode_register' => 'required|string',
-            'tanggal' => 'required|date',
+            'tanggal' => 'required',
             'ruangan_id' => 'required',
             'kode_dokter' => 'required',
             'jam_mulai' => 'nullable|date_format:H:i',
