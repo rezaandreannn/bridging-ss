@@ -21,8 +21,7 @@ return new class extends Migration
             $table->string('updated_by')->nullable();
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
-        }); 
-        
+        });
     }
 
     /**
