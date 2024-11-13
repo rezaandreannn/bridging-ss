@@ -99,7 +99,7 @@
                 <div class="col-12">
                     <!-- components biodata pasien by no reg -->
                     {{-- @include('components.biodata-pasien-bynoreg') --}}
-                    <form id="myForm" action="{{ route('poliMata.assesmenAwalStore') }}" method="POST">
+                    <form id="myForm" action="{{ route('operasi.penandaan.store') }}" method="POST">
                         @csrf
                         <div class="card mb-3">
                             <div class="card-header card-khusus-header">
@@ -110,10 +110,21 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Ruangan</label>
-                                            <input type="text" name="ruangan" value="{{ old('ruangan')}}" class="form-control @error('ruangan') is-invalid @enderror">
+                                            <label>Kode Register</label>
+                                            <input type="text" name="nama_pasien" value="{{ old('nama_pasien')}}" class="form-control @error('nama_pasien') is-invalid @enderror" disabled>
                                         </div>
-                                        @error('ruangan')
+                                        @error('nama_pasien')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Nama Pasien</label>
+                                            <input type="text" name="nama_pasien" value="{{ old('nama_pasien')}}" class="form-control @error('nama_pasien') is-invalid @enderror">
+                                        </div>
+                                        @error('nama_pasien')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -125,6 +136,18 @@
                                             <input type="date" name="tanggal" value="{{ old('tanggal')}}" class="form-control @error('tanggal') is-invalid @enderror">
                                         </div>
                                         @error('tanggal')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label>Jenis Operasi</label>
+                                            <textarea name="jenis_operasi" class="form-control  @error('jenis_operasi') is-invalid  
+                                            @enderror" rows="3" placeholder="Masukkan Jenis Operasi ...">{{ old('jenis_operasi') }}</textarea>
+                                        </div>
+                                        @error('jenis_operasi')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -145,18 +168,6 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Jenis Operasi</label>
-                                            <textarea name="jenis_operasi" class="form-control  @error('jenis_operasi') is-invalid  
-                                            @enderror" rows="3" placeholder="Masukkan Jenis Operasi ...">{{ old('jenis_operasi') }}</textarea>
-                                        </div>
-                                        @error('jenis_operasi')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                    </div>
                                 </div>
                             </div>
                             {{-- Pria --}}
@@ -168,7 +179,7 @@
                                 <div class="card-body card-khusus-body">
                                     <!-- <div class="row"> -->
                                     <div class="col-md-12">
-                                        <canvas id="canvasPria" width="1000" height="1200" style="border:1px solid #000;"></canvas>
+                                        <canvas id="canvasPria" width="1000" height="1200" style="width: 100%; height: auto; border:1px solid #000;"></canvas>
                                         <br />
                                         <button id="clear2" type="button">Hapus Gambar</button> <!-- type="button" ditambahkan di sini -->
                                         <textarea id="signature2" name="signed_kanan" style="display: none"></textarea>
@@ -186,7 +197,7 @@
                                 <div class="card-body card-khusus-body">
                                     <!-- <div class="row"> -->
                                     <div class="col-md-12">
-                                        <canvas id="canvasWanita" width="1000" height="1200" style="border:1px solid #000;"></canvas>
+                                        <canvas id="canvasWanita" width="1000" height="1200" style="width: 100%; height: auto; border:1px solid #000;"></canvas>
                                         <br />
                                         <button id="clearCanvas" type="button">Hapus Gambar</button> <!-- type="button" ditambahkan di sini -->
                                         <textarea id="signatureData" name="signed_kiri" style="display: none"></textarea>

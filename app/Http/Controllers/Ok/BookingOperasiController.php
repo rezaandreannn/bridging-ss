@@ -42,6 +42,7 @@ class BookingOperasiController extends Controller
 
         // get data from service
         $bookings = $this->bookingOperasiService->get();
+        // dd($bookings);
 
         return view($this->view . 'booking-operasi.index', compact('bookings'))->with([
             'title' => $title,
@@ -57,7 +58,7 @@ class BookingOperasiController extends Controller
             ->with([
                 'title' => 'Booking Operasi',
                 'dokters' => $this->dokterService->byBedahOperasi(), //dokter bedah kebutuhan select items dokter
-                'ruangans' => RuanganOperasi::pluck('nama', 'id') //ruangan operasi kebuthunan select items ruangan
+                'ruangans' => RuanganOperasi::pluck('nama_ruang', 'id') //ruangan operasi kebuthunan select items ruangan
             ]);
     }
 
