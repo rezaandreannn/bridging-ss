@@ -12,8 +12,8 @@
 <link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
 
 <style>
-    
- </style>
+
+</style>
 <!-- <link rel="stylesheet" href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}"> -->
 @endpush
 
@@ -36,18 +36,28 @@
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
+                                    <th scope="col">Kode Register</th>
                                     <th scope="col">No MR</th>
                                     <th scope="col">Nama Pasien</th>
-                                    <th scope="col">Ruangan</th>
-                                    <th scope="col">Dokter</th>
                                     <th scope="col">Tanggal</th>
-                                    <th scope="col">Jam Operasi</th>
-                                    <th scope="col">Aksi</th>
+                                    <th scope="col">Nama Dokter</th>
+                                    <th scope="col">Ruangan</th>
+                                    <th scope="col">Waktu Operasi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($jadwal as $data)
+                                @foreach ($jadwals as $data)
                                 <tr>
+<<<<<<< HEAD:resources/views/pages/ok/jadwal-operasi/index.blade.php
+                                    <td>{{$loop->iteration}}</td>
+                                    <td>{{$data->kode_register}}</td>
+                                    <td>{{$data->no_mr}}</td>
+                                    <td>{{$data->nama_pasien}}</td>
+                                    <td>{{$data->tanggal}}</td>
+                                    <td>{{$data->nama_dokter}}</td>
+                                    <td>{{$data->ruang_operasi}}</td>
+                                    <td>{{ \Carbon\Carbon::parse($data->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($data->jam_selesai)->format('H:i') }} WIB</td>
+=======
                                     <td>{{ $loop->iteration }}</td>
                                     <td><span class="badge badge-pill badge-success">{{ $data->no_mr }}</span></td>
                                     <td>{{$data->nama_pasien}}</td>
@@ -58,6 +68,7 @@
                                     <td>
                                         <a href="{{ route('operasi.penandaan.create', ['noReg' => $data->no_mr]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
                                     </td>
+>>>>>>> 854724aa636579999dab713cc13890ebe056e34d:resources/views/pages/ok/jadwalOperasi/index.blade.php
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -85,19 +96,19 @@
     $(document).ready(function() {
         // Inisialisasi DataTable
         var table = $('#table-1').DataTable();
-    
+
         // Event delegation untuk tombol delete
         $('#table-1').on('click', '[confirm-delete="true"]', function(event) {
             event.preventDefault();
             var menuId = $(this).data('menuid');
             Swal.fire({
-                title: 'Apakah Kamu Yakin?',
-                text: "Anda tidak akan dapat mengembalikan ini!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#6777EF',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, Hapus saja!'
+                title: 'Apakah Kamu Yakin?'
+                , text: "Anda tidak akan dapat mengembalikan ini!"
+                , icon: 'warning'
+                , showCancelButton: true
+                , confirmButtonColor: '#6777EF'
+                , cancelButtonColor: '#d33'
+                , confirmButtonText: 'Ya, Hapus saja!'
             }).then((result) => {
                 if (result.isConfirmed) {
                     var form = $('#delete-form-' + menuId);
@@ -110,6 +121,7 @@
             });
         });
     });
+
 </script>
 
 @endpush

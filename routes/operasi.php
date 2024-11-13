@@ -3,12 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Ok\RuangOperasiController;
 use App\Http\Controllers\OK\BookingOperasiController;
+use App\Http\Controllers\OK\JadwalOperasiController;
 use App\Http\Controllers\OK\PenandaanOperasiController;
 
 Route::prefix('operasi')->name('operasi.')->middleware('auth')->group(function () {
-
     // jadwal operasi
-    Route::get('/jadwal-operasi', [PenandaanOperasiController::class, 'jadwal'])->name('jadwal.index');
+    Route::get('jadwal-operasi', JadwalOperasiController::class)->name('jadwal.index');
+
+    // Route::get('/jadwal-operasi', [PenandaanOperasiController::class, 'jadwal'])->name('jadwal.index');
 
     // Penandaan Lokasi Operasi
     Route::get('/penandaanOperasi/{noReg}', [PenandaanOperasiController::class, 'create'])->name('penandaan.create');

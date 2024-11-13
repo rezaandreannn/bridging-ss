@@ -55,7 +55,6 @@ class RuangOperasiController extends Controller
      */
     public function store(Request $request)
     {
-        //
         $validatedData = $request->validate([
             'kode_ruang' => ['required', new UniqueInConnection('ok_ruangan', 'kode_ruang', 'pku')],
         ]);
@@ -65,7 +64,7 @@ class RuangOperasiController extends Controller
         DB::connection('pku')->table('ok_ruangan')->insert([
             'kode_ruang' => $request->input('kode_ruang'),
             'nama_ruang' => $request->input('nama_ruang'),
-            'created_by' => $userEmr->user_id,
+            'created_by' => $userEmr->user_id ?? '',
             'created_at' => now()
         ]);
         return redirect()->route('operasi.ruang.index')->with('success', 'Nama Ruang Berhasil Ditambahkan!');
