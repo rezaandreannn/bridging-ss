@@ -23,6 +23,6 @@ Route::prefix('operasi')->name('operasi.')->middleware('auth')->group(function (
 });
 
 // booking operasi
-Route::get('/booking-operasi', [BookingOperasiController::class, 'index'])->name('operasi.booking.index');
-Route::get('/create/booking-operasi', [BookingOperasiController::class, 'create'])->name('operasi.booking.create');
-Route::post('/booking-operasi', [BookingOperasiController::class, 'store'])->name('operasi.booking.store');
+Route::get('/booking-operasi', [BookingOperasiController::class, 'index'])->name('booking.index');
+Route::get('/create/booking-operasi', [BookingOperasiController::class, 'create'])->name('booking.create');
+Route::post('/booking-operasi', [BookingOperasiController::class, 'store'])->name('booking.store');

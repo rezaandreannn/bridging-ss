@@ -101,11 +101,6 @@ class RuangOperasiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validatedData = $request->validate([
-            'kode_ruang' => ['required', new UniqueUpdateInConnection('ok_ruangan', 'kode_ruang', 'pku', $id)],
-        ]);
-
-
         $userEmr = $this->rajal->getUserEmr(auth()->user()->username);
 
         DB::connection('pku')->table('ok_ruangan')->where('id', $id)->update([

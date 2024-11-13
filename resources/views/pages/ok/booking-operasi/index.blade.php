@@ -30,98 +30,106 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-12 col-lg-4 col-md-6">
-                            <div class="form-group">
-                                <label>Pilih Pasien</label>
-                                <select name="ruangan_id" class="form-control select2 @error('ruangan_id') is-invalid @enderror" id="">
-                                    <option value="" selected disabled>--Pilih Ruangan Operasi--</option>
-                                    @foreach ($pasien as $data)
-                                    <option value="{{ $data->no_mr}}" @if(old('ruangan_id')==$data->no_mr ) selected @endif>{{$data->no_mr}} - {{$data->nama_pasien}}</option>
-                                    @endforeach
-                                </select>
+                        <form action="{{ route('operasi.booking.store') }}" method="POST">
+                            @csrf
+                            <div class="col-12 col-lg-4 col-md-6">
+                                <div class="form-group">
+                                    <label>Pilih Pasien</label>
+                                    <select name="kode_register" class="form-control select2 @error('kode_register') is-invalid @enderror" id="">
+                                        <option value="" selected disabled>--Pilih Pasien--</option>
+                                        @foreach ($pasien as $data)
+                                        <option value="{{ $data->kode_register}}" @if(old('ruangan_id')==$data->kode_register ) selected @endif>{{$data->no_mr}} - {{$data->nama_pasien}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                @error('kode_register')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
-                            @error('ruangan_id')
-                            <div class="invalid-feedback">
-                                {{ $message }}
+                            <div class="col-12 col-lg-4 col-md-6">
+                                <div class="form-group">
+                                    <label>Pilih Ruangan Operasi</label>
+                                    <select name="ruangan_id" class="form-control select2 @error('ruangan_id') is-invalid @enderror" id="">
+                                        <option value="" selected disabled>--Pilih Ruangan Operasi--</option>
+                                        @foreach ($ruanganOperasi as $ruangan)
+                                        <option value="{{ $ruangan->id}}" @if(old('ruangan_id')==$ruangan->id ) selected @endif>{{$ruangan->nama_ruang}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                @error('ruangan_id')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
-                            @enderror
-                        </div>
-                        <div class="col-12 col-lg-4 col-md-6">
-                            <div class="form-group">
-                                <label>Pilih Ruangan Operasi</label>
-                                <select name="ruangan_id" class="form-control select2 @error('ruangan_id') is-invalid @enderror" id="">
-                                    <option value="" selected disabled>--Pilih Ruangan Operasi--</option>
-                                    @foreach ($ruanganOperasi as $ruangan)
-                                    <option value="{{ $ruangan->id}}" @if(old('ruangan_id')==$ruangan->id ) selected @endif>{{$ruangan->nama_ruang}}</option>
-                                    @endforeach
-                                </select>
+                            <div class="col-12 col-lg-4 col-md-6">
+                                <div class="form-group">
+                                    <label>Pilih Dokter</label>
+                                    <select name="kode_dokter" class="form-control select2 @error('kode_dokter') is-invalid @enderror" id="">
+                                        <option value="" selected disabled>--Pilih Dokter--</option>
+                                        @foreach ($dokters as $dokter)
+                                        <option value="{{$dokter->Kode_Dokter}}" @if(old('kode_dokter')==$dokter->Kode_Dokter) selected @endif>{{$dokter->Nama_Dokter}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                @error('kode_dokter')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
-                            @error('ruangan_id')
-                            <div class="invalid-feedback">
-                                {{ $message }}
+                            <div class="col-12 col-lg-4 col-md-6">
+                                <div class="form-group">
+                                    <label>Jenis Tindakan</label>
+                                    <input type="text" name="jenis_tindakan" value="{{ old('jenis_tindakan')}}" class="form-control @error('jenis_tindakan') is-invalid @enderror">
+                                </div>
+                                @error('jenis_tindakan')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
-                            @enderror
-                        </div>
-                        <div class="col-12 col-lg-4 col-md-6">
-                            <div class="form-group">
-                                <label>Pilih Dokter</label>
-                                <select name="ruangan_id" class="form-control select2 @error('ruangan_id') is-invalid @enderror" id="">
-                                    <option value="" selected disabled>--Pilih Dokter--</option>
-                                    @foreach ($dokters as $dokter)
-                                    <option value="{{$dokter->Kode_Dokter}}" @if(old('kode_dokter')==$dokter->Kode_Dokter) selected @endif>{{$dokter->Nama_Dokter}}</option>
-                                    @endforeach
-                                </select>
+                            <div class="col-12 col-lg-4 col-md-6">
+                                <div class="form-group">
+                                    <label>Tanggal</label>
+                                    <input type="date" name="tanggal" value="{{ old('tanggal')}}" class="form-control @error('tanggal') is-invalid @enderror">
+                                </div>
+                                @error('tanggal')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
-                            @error('ruangan_id')
-                            <div class="invalid-feedback">
-                                {{ $message }}
+                            <div class="col-12 col-lg-4 col-md-6">
+                                <div class="form-group">
+                                    <label>Jam Mulai(optional)</label>
+                                    <input type="time" name="tanggal" value="{{ old('tanggal')}}" class="form-control @error('tanggal') is-invalid @enderror">
+                                </div>
+                                @error('tanggal')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
-                            @enderror
-                        </div>
-                        <div class="col-12 col-lg-4 col-md-6">
-                            <div class="form-group">
-                                <label>Jenis Tindakan</label>
-                                <input type="text" name="jenis_tindakan" value="{{ old('jenis_tindakan')}}" class="form-control @error('jenis_tindakan') is-invalid @enderror">
+                            <div class="col-12 col-lg-4 col-md-6">
+                                <div class="form-group">
+                                    <label>Jam Selesai(optional)</label>
+                                    <input type="time" name="tanggal" value="{{ old('tanggal')}}" class="form-control @error('tanggal') is-invalid @enderror">
+                                </div>
+                                @error('tanggal')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
-                            @error('jenis_tindakan')
-                            <div class="invalid-feedback">
-                                {{ $message }}
+                            <div class="text-left">
+                                {{-- <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button> --}}
+                                {{-- <a href="{{ route('poliMata.assesmenAwal', ['noReg' => $biodata->NO_REG]) }}" class="btn btn-primary mb-2"><i class="fas fa-save"></i>Simpan</a> --}}
+                                <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button>
                             </div>
-                            @enderror
-                        </div>
-                        <div class="col-12 col-lg-4 col-md-6">
-                            <div class="form-group">
-                                <label>Tanggal</label>
-                                <input type="date" name="tanggal" value="{{ old('tanggal')}}" class="form-control @error('tanggal') is-invalid @enderror">
-                            </div>
-                            @error('tanggal')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
-                        </div>
-                        <div class="col-12 col-lg-4 col-md-6">
-                            <div class="form-group">
-                                <label>Jam Mulai(optional)</label>
-                                <input type="time" name="tanggal" value="{{ old('tanggal')}}" class="form-control @error('tanggal') is-invalid @enderror">
-                            </div>
-                            @error('tanggal')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
-                        </div>
-                        <div class="col-12 col-lg-4 col-md-6">
-                            <div class="form-group">
-                                <label>Jam Selesai(optional)</label>
-                                <input type="time" name="tanggal" value="{{ old('tanggal')}}" class="form-control @error('tanggal') is-invalid @enderror">
-                            </div>
-                            @error('tanggal')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
