@@ -187,7 +187,7 @@
                                     <select name="ruangan_id" class="form-control @error('ruangan_id') is-invalid @enderror" id="">
                                         <option value="">--Pilih Ruangan Operasi--</option>
                                         @foreach ($ruanganOperasi as $ruangan)
-                                        <option value="{{$ruangan->id}}" @if($booking->ruangan_id== $ruangan->id) selected @endif>{{$ruangan->nama_ruang}}</option>
+                                        <option value="{{$ruangan->id}}" @if($booking->ruang_operasi== $ruangan->id) selected @endif>{{$ruangan->nama_ruang}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -203,7 +203,7 @@
                                     <select name="kode_dokter" class="form-control select2 @error('kode_dokter') is-invalid @enderror" id="">
                                         <option value="">--Pilih Dokter--</option>
                                         @foreach ($dokters as $dokter)
-                                        <option value="{{$dokter->Kode_Dokter}}" @if($booking->kode_dokter == $dokter->Kode_Dokter) selected @endif>{{$dokter->Nama_Dokter}}</option>
+                                        <option value="{{$dokter->Kode_Dokter}}" @if($booking->nama_dokter == $dokter->Kode_Dokter) selected @endif>{{$dokter->Nama_Dokter}}</option>
                                         @endforeach
                                     </select>
                                 </div>

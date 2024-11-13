@@ -103,7 +103,7 @@
                         @csrf
                         <div class="card mb-3">
                             <div class="card-header card-khusus-header">
-                                <h6 class="card-khusus-title">Penandaan Operasi</h6>
+                                <h6 class="card-khusus-title">Booking Operasi</h6>
                             </div>
                             <!-- include form -->
                             <div class="card-body card-khusus-body">
