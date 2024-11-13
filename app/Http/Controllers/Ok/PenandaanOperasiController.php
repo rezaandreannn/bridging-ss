@@ -40,8 +40,7 @@ class PenandaanOperasiController extends Controller
     public function index(Request $request)
     {
         $title = 'Jadwal Operasi';
-        // $jadwal = $this->booking->getJadwalOperasi(); 
-        $biodata = $this->rajal->pasien_bynoreg($noReg);
+        // $jadwal = $this->booking->getJadwalOperasi();
         $jadwal = BookingOperasi::with('ruangan')->get();
         return view($this->view . 'penandaanOperasi.index', compact('title', 'jadwal', 'biodata'));
     }

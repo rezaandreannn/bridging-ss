@@ -12,6 +12,7 @@ use App\Models\Operasi\BookingOperasi;
 use App\Models\Operasi\RuanganOperasi;
 use App\Services\Operasi\BookingOperasiService;
 use App\Http\Requests\Operasi\StoreBookingRequest;
+use App\Services\SimRs\PendaftaranService;
 
 class BookingOperasiController extends Controller
 {
@@ -24,6 +25,7 @@ class BookingOperasiController extends Controller
     // menggunakan service
     protected $bookingOperasiService;
     protected $dokterService;
+    protected $pasienService;
 
     public function __construct(BookingOperasi $bookingkamar)
     {
@@ -33,6 +35,7 @@ class BookingOperasiController extends Controller
         $this->prefix = 'Booking Operasi';
         $this->bookingOperasiService = new BookingOperasiService();
         $this->dokterService = new DokterService();
+        $this->pasienService = new PendaftaranService();
     }
 
     public function index()
@@ -48,6 +51,7 @@ class BookingOperasiController extends Controller
             'title' => $title,
             'ruanganOperasi' => RuanganOperasi::all(),
             'dokters' => $this->dokterService->byBedahOperasi(),
+            'pasien' => $this->pasienService->byStatusActive(),
         ]);
     }
 

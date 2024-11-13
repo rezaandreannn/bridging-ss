@@ -35,23 +35,12 @@
                                 <label>Pilih Pasien</label>
                                 <select name="ruangan_id" class="form-control select2 @error('ruangan_id') is-invalid @enderror" id="">
                                     <option value="" selected disabled>--Pilih Ruangan Operasi--</option>
-                                    @foreach ($ruanganOperasi as $ruangan)
-                                    <option value="{{ $ruangan->id}}" @if(old('ruangan_id')==$ruangan->id ) selected @endif>{{$ruangan->nama_ruang}}</option>
+                                    @foreach ($pasien as $data)
+                                    <option value="{{ $data->no_mr}}" @if(old('ruangan_id')==$data->no_mr ) selected @endif>{{$data->no_mr}} - {{$data->nama_pasien}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             @error('ruangan_id')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
-                        </div>
-                        <div class="col-12 col-lg-4 col-md-6">
-                            <div class="form-group">
-                                <label>Kode Register</label>
-                                <input type="text" name="kode_register" value="{{ old('kode_register')}}" class="form-control @error('kode_register') is-invalid @enderror" readonly>
-                            </div>
-                            @error('kode_register')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
@@ -84,6 +73,17 @@
                                 </select>
                             </div>
                             @error('ruangan_id')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="col-12 col-lg-4 col-md-6">
+                            <div class="form-group">
+                                <label>Jenis Tindakan</label>
+                                <input type="text" name="jenis_tindakan" value="{{ old('jenis_tindakan')}}" class="form-control @error('jenis_tindakan') is-invalid @enderror">
+                            </div>
+                            @error('jenis_tindakan')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
@@ -162,7 +162,7 @@
                                                     <a class="dropdown-item has-icon" href=""><i class="fas fa-info"></i> Detail</a>
                                                     <a class="dropdown-item has-icon" href=""><i class="fas fa-pencil-alt"></i>Ubah Data</a>
                                                     <a class="dropdown-item has-icon" href=""><i class="fas fa-calendar-check"></i>Ganti Tanggal</a>
-                                                    <a class="dropdown-item has-icon" href="#" data-toggle="modal" data-target="#modal-edit-ruang">
+                                                    <a class="dropdown-item has-icon" href="#" data-toggle="modal" data-target="#modal-edit-ruang{{ $booking->id }}">
                                                         <i class="fas fa-person-booth"></i> Ganti Ruangan
                                                     </a>
                                                     <a class="dropdown-item has-icon" href="{{ route('operasi.penandaan.create', ['noReg' => $booking->kode_register]) }}"><i class="fas fa-marker"></i> Penandaan Operasi</a>
@@ -181,6 +181,38 @@
 </div>
 
 <!-- Modals for Edit Room, adjusted to iterate through bookings -->
+@foreach ($bookings as $booking)
+<div class="modal fade" id="modal-edit-ruang{{ $booking->id }}" tabindex="-1" role="dialog" aria-labelledby="modalEditRuangLabel{{ $booking->id }}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEditRuangLabel{{ $booking->id }}">Edit Ruang</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{ route('operasi.ruang.update', $booking->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="editNamaRuang{{ $booking->id }}">Nama Ruang</label>
+                        <select name="ruang_operasi" class="form-control select2 @error('ruang_operasi') is-invalid @enderror" id="editNamaRuang{{ $booking->id }}">
+                            @foreach ($ruanganOperasi as $ruangan)
+                                <option value="{{ $ruangan->id }}" 
+                                    @if($booking->ruang_operasi == $ruangan->id) selected @endif>
+                                    {{ $ruangan->nama_ruang }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endforeach
 
 
 
