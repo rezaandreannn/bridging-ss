@@ -98,8 +98,8 @@
             <div class="row">
                 <div class="col-12">
                     <!-- components biodata pasien by no reg -->
-                    {{-- @include('components.biodata-pasien-bynoreg') --}}
-                    <form id="myForm" action="{{ route('poliMata.assesmenAwalStore') }}" method="POST">
+                    @include('components.biodata-pasien-bynoreg')
+                    <form id="myForm" action="{{ route('operasi.penandaan.store') }}" method="POST">
                         @csrf
                         <div class="card mb-3">
                             <div class="card-header card-khusus-header">
@@ -108,18 +108,7 @@
                             <!-- include form -->
                             <div class="card-body card-khusus-body">
                                 <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Ruangan</label>
-                                            <input type="text" name="ruangan" value="{{ old('ruangan')}}" class="form-control @error('ruangan') is-invalid @enderror">
-                                        </div>
-                                        @error('ruangan')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tanggal</label>
                                             <input type="date" name="tanggal" value="{{ old('tanggal')}}" class="form-control @error('tanggal') is-invalid @enderror">
@@ -130,7 +119,7 @@
                                         </div>
                                         @enderror
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="d-block">Jenis Kelamin</label>
                                             <select name="jenis_kelamin" id="kondisi" class="form-control select2 @error('jenis_kelamin')  is-invalid @enderror" onchange="click_jenis_kelamin(this)">
@@ -168,7 +157,7 @@
                                 <div class="card-body card-khusus-body">
                                     <!-- <div class="row"> -->
                                     <div class="col-md-12">
-                                        <canvas id="canvasPria" width="1000" height="1200" style="border:1px solid #000;"></canvas>
+                                        <canvas id="canvasPria" width="1000" height="1200" style="width: 100%; height: auto; border:1px solid #000;"></canvas>
                                         <br />
                                         <button id="clear2" type="button">Hapus Gambar</button> <!-- type="button" ditambahkan di sini -->
                                         <textarea id="signature2" name="signed_kanan" style="display: none"></textarea>
@@ -186,7 +175,7 @@
                                 <div class="card-body card-khusus-body">
                                     <!-- <div class="row"> -->
                                     <div class="col-md-12">
-                                        <canvas id="canvasWanita" width="1000" height="1200" style="border:1px solid #000;"></canvas>
+                                        <canvas id="canvasWanita" width="1000" height="1200" style="width: 100%; height: auto; border:1px solid #000;"></canvas>
                                         <br />
                                         <button id="clearCanvas" type="button">Hapus Gambar</button> <!-- type="button" ditambahkan di sini -->
                                         <textarea id="signatureData" name="signed_kiri" style="display: none"></textarea>

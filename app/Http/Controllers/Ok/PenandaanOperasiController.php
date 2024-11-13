@@ -8,6 +8,7 @@ use App\Models\OperasiKamar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Operasi\BookingOperasi;
+use App\Models\Rajal;
 use App\Services\Operasi\BookingOperasiService;
 
 class PenandaanOperasiController extends Controller
@@ -17,6 +18,7 @@ class PenandaanOperasiController extends Controller
     protected $prefix;
     protected $bookingOperasi;
     protected $bookingOperasiService;
+    protected $rajal;
 
     public function __construct(BookingOperasi $bookingOperasi)
     {
@@ -24,6 +26,7 @@ class PenandaanOperasiController extends Controller
         $this->view = 'pages.ok.';
         $this->prefix = 'Penandaan Lokasi';
         $this->bookingOperasiService = new BookingOperasiService();
+        $this->rajal = new Rajal();
     }
 
     public function jadwal(Request $request)
@@ -38,9 +41,9 @@ class PenandaanOperasiController extends Controller
     {
         $title = 'Jadwal Operasi';
         // $jadwal = $this->booking->getJadwalOperasi(); 
+        $biodata = $this->rajal->pasien_bynoreg($noReg);
         $jadwal = BookingOperasi::with('ruangan')->get();
-        // dd($jadwal);
-        return view($this->view . 'penandaanOperasi.index', compact('title', 'jadwal'));
+        return view($this->view . 'penandaanOperasi.index', compact('title', 'jadwal', 'biodata'));
     }
 
     /**
@@ -48,12 +51,13 @@ class PenandaanOperasiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($noReg)
     {
         $title = $this->prefix . ' ' . 'Operasi';
         // $biodata = $this->rekam_medis->getBiodata($noReg);
-        $operasiKamar = new OperasiKamar();
-        return view($this->view . 'penandaanOperasi.create', compact('title', 'operasiKamar'));
+        $biodata = $this->rajal->pasien_bynoreg($noReg);
+        // dd($biodata);
+        return view($this->view . 'penandaanOperasi.create', compact('title', 'biodata'));
     }
 
     /**
