@@ -169,19 +169,30 @@
                                         <td>{{$booking->ruang_operasi}}</td>
                                         <td>
                                             <div class="dropdown d-inline">
-                                                <a href="#" class="text-primary" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <a href="#" class="text-primary" id="dropdownMenuLink{{$booking->id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <i class="fas fa-ellipsis-v"></i>
                                                 </a>
                                                 <div class="dropdown-menu">
                                                     <a class="dropdown-item has-icon" href=""><i class="fas fa-info"></i> Detail</a>
-                                                    <a class="dropdown-item has-icon" href="{{ route('operasi.booking.edit', $booking->id )}}"><i class="fas fa-pencil-alt"></i>Ubah Data</a>
-                                                    <a class="dropdown-item has-icon" href=""><i class="fas fa-calendar-check"></i>Ganti Tanggal</a>
+                                                    <a class="dropdown-item has-icon" href="{{ route('operasi.booking.edit', $booking->id )}}"><i class="fas fa-pencil-alt"></i> Ubah Data</a>
+                                                    <a class="dropdown-item has-icon" href=""><i class="fas fa-calendar-check"></i> Ganti Tanggal</a>
                                                     <a class="dropdown-item has-icon" href="#" data-toggle="modal" data-target="#modal-edit-ruang{{ $booking->id }}">
                                                         <i class="fas fa-person-booth"></i> Ganti Ruangan
                                                     </a>
-                                                    <a class="dropdown-item has-icon" href="{{ route('operasi.penandaan.create', ['noReg' => $booking->kode_register]) }}"><i class="fas fa-marker"></i> Penandaan Operasi</a>
-                                                    <a class="dropdown-item has-icon" href=""><i class="fas fa-trash"></i>Hapus / Batal</a>
+                                                    <a class="dropdown-item has-icon" href="{{ route('operasi.penandaan.create', ['noReg' => $booking->kode_register]) }}">
+                                                        <i class="fas fa-marker"></i> Penandaan Operasi
+                                                    </a>
+                                                     <!-- Hidden form for deletion -->
+                                                    <form id="delete-form-{{$booking->id}}" action="{{ route('operasi.booking.destroy', $booking->id) }}" method="POST" style="display: none;">
+                                                        @method('delete')
+                                                        @csrf
+                                                    </form>
+                                                    <!-- Delete link -->
+                                                    <a class="dropdown-item has-icon" href="#" confirm-delete="true" data-menuId="{{$booking->id}}">
+                                                        <i class="fas fa-trash"></i> Hapus / Batal
+                                                    </a>
                                                 </div>
+                                            </div>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -238,7 +249,7 @@
 <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('library/selectric/public/jquery.selectric.min.js') }}"></script>
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
-<script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script>
+<script src="{{ asset('library/sweetalert/dist/sweetalert.baru.js') }}"></script>
 <script src="{{ asset('ttd/js/jquery.signature.min.js') }}"></script>
 
 <!-- Page Specific JS File -->
@@ -253,6 +264,37 @@
         });
     });
 
+</script>
+
+<script>
+    $(document).ready(function() {
+        // Inisialisasi DataTable
+        var table = $('#table-1').DataTable();
+    
+        // Event delegation untuk tombol delete
+        $('#table-1').on('click', '[confirm-delete="true"]', function(event) {
+            event.preventDefault();
+            var menuId = $(this).data('menuid');
+            Swal.fire({
+                title: 'Apakah Kamu Yakin?',
+                text: "Anda tidak akan dapat mengembalikan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#6777EF',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Hapus saja!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var form = $('#delete-form-' + menuId);
+                    if (form.length) {
+                        form.submit();
+                    } else {
+                        console.error('Data will not be deleted!:', menuId);
+                    }
+                }
+            });
+        });
+    });
 </script>
 
 @endpush

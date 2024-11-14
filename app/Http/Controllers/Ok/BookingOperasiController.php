@@ -5,13 +5,14 @@ namespace App\Http\Controllers\OK;
 use Exception;
 use App\Models\RajalDokter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Services\SimRs\DokterService;
 use App\Models\Operasi\BookingOperasi;
 use App\Models\Operasi\RuanganOperasi;
+use App\Services\SimRs\PendaftaranService;
 use App\Services\Operasi\BookingOperasiService;
 use App\Http\Requests\Operasi\StoreBookingRequest;
-use App\Services\SimRs\PendaftaranService;
 
 class BookingOperasiController extends Controller
 {
@@ -133,6 +134,8 @@ class BookingOperasiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::connection('pku')->table('ok_booking_operasi')->where('id', $id)->delete();
+
+        return redirect()->back()->with('success', 'Data Berhasil Dihapus!');
     }
 }
