@@ -35,18 +35,20 @@
                         <div class="col-12 col-lg-4 col-md-6">
                             <div class="form-group">
                                 <label>Pilih Pasien</label>
-                                <select name="kode_register" class="form-control select2 @error('kode_register') is-invalid @enderror" id="">
+                                <select name="kode_register" class="form-control select2 @error('kode_register') is-invalid @enderror">
                                     <option value="" selected disabled>--Pilih Pasien--</option>
                                     @foreach ($pasien as $data)
-                                    <option value="{{ $data->kode_register}}" @if(old('ruangan_id')==$data->kode_register ) selected @endif>{{$data->no_mr}} - {{$data->nama_pasien}}</option>
+                                        <option value="{{ $data->kode_register }}" @if(old('kode_register') == $data->kode_register) selected @endif>
+                                            {{ $data->no_mr }} - {{ $data->nama_pasien }}
+                                        </option>
                                     @endforeach
                                 </select>
+                                @error('kode_register')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
-                            @error('kode_register')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
                         </div>
                         <div class="col-12 col-lg-4 col-md-6">
                             <div class="form-group">
@@ -57,12 +59,12 @@
                                     <option value="{{ $ruangan->id}}" @if(old('ruangan_id')==$ruangan->id ) selected @endif>{{$ruangan->nama_ruang}}</option>
                                     @endforeach
                                 </select>
+                                @error('ruangan_id')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
-                            @error('ruangan_id')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
                         </div>
                         <div class="col-12 col-lg-4 col-md-6">
                             <div class="form-group">
@@ -73,61 +75,61 @@
                                     <option value="{{$dokter->Kode_Dokter}}" @if(old('kode_dokter')==$dokter->Kode_Dokter) selected @endif>{{$dokter->Nama_Dokter}}</option>
                                     @endforeach
                                 </select>
+                                @error('kode_dokter')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
-                            @error('kode_dokter')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
                         </div>
                         <div class="col-12 col-lg-4 col-md-6">
                             <div class="form-group">
                                 <label>Jenis Tindakan</label>
                                 <input type="text" name="jenis_tindakan" value="{{ old('jenis_tindakan')}}" class="form-control @error('jenis_tindakan') is-invalid @enderror">
+                                @error('jenis_tindakan')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
-                            @error('jenis_tindakan')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
                         </div>
                         <div class="col-12 col-lg-4 col-md-6">
                             <div class="form-group">
                                 <label>Tanggal</label>
                                 <input type="date" name="tanggal" value="{{ old('tanggal')}}" class="form-control @error('tanggal') is-invalid @enderror">
+                                @error('tanggal')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
-                            @error('tanggal')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
                         </div>
                         <div class="col-12 col-lg-4 col-md-6">
                             <div class="form-group">
                                 <label>Jam Mulai(optional)</label>
-                                <input type="time" name="tanggal" value="{{ old('tanggal')}}" class="form-control @error('tanggal') is-invalid @enderror">
+                                <input type="time" name="jam_mulai" value="{{ old('jam_mulai')}}" class="form-control @error('jam_mulai') is-invalid @enderror">
+                                @error('jam_mulai')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
-                            @error('tanggal')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
                         </div>
                         <div class="col-12 col-lg-4 col-md-6">
                             <div class="form-group">
                                 <label>Jam Selesai(optional)</label>
-                                <input type="time" name="tanggal" value="{{ old('tanggal')}}" class="form-control @error('tanggal') is-invalid @enderror">
+                                <input type="time" name="jam_selesai" value="{{ old('jam_selesai')}}" class="form-control @error('jam_selesai') is-invalid @enderror">
+                                @error('jam_selesai')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
-                            @error('tanggal')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
                         </div>
                     </div>
                 </div>
                 <div class="card-footer text-left">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-print"></i> Simpan</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
                 </div>
             </form>
             </div>
