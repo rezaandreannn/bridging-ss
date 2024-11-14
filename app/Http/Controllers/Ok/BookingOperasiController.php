@@ -13,6 +13,7 @@ use App\Models\Operasi\RuanganOperasi;
 use App\Services\SimRs\PendaftaranService;
 use App\Services\Operasi\BookingOperasiService;
 use App\Http\Requests\Operasi\StoreBookingRequest;
+use App\Http\Requests\Operasi\UpdateBookingRequest;
 
 class BookingOperasiController extends Controller
 {
@@ -121,9 +122,16 @@ class BookingOperasiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateBookingRequest $request, $id)
     {
-        dd('update in here');
+        try {
+            $this->bookingOperasiService->update($id, $request->validated());
+
+            return redirect()->back()->with('success', 'Booking berhasil di ubah.');
+        } catch (Exception $e) {
+            // Redirect dengan pesan error jika terjadi kegagalan
+            return redirect()->back()->with('error', 'Gagal menambahkan booking: ' . $e->getMessage());
+        }
     }
 
     /**

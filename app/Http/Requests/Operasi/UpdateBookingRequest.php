@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests\Operasi;
 
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreBookingRequest extends FormRequest
+class UpdateBookingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -34,21 +32,5 @@ class StoreBookingRequest extends FormRequest
             'jam_selesai' => 'nullable'
             // 'cara_masuk' => 'nullable|string'
         ];
-    }
-
-    public function withValidator($validator)
-    {
-        $validator->after(function ($validator) {
-            $kodeRegister = $this->input('kode_register');
-
-            $exists = DB::connection('pku')
-                ->table('ok_booking_operasi')
-                ->where('kode_register', $kodeRegister)
-                ->exists();
-
-            if ($exists) {
-                $validator->errors()->add('kode_register', 'Kode register sudah ada.');
-            }
-        });
     }
 }
