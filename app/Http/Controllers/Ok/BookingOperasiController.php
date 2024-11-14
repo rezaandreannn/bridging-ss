@@ -51,6 +51,7 @@ class BookingOperasiController extends Controller
         if (session('booking_id')) {
             $booking = $this->bookingOperasiService->findById(session('booking_id'));
         }
+        // dd($booking);
 
 
         return view($this->view . 'booking-operasi.index', compact('bookings', 'booking'))->with([

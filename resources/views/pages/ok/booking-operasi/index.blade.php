@@ -111,7 +111,7 @@
                             <div class="col-12 col-lg-4 col-md-6">
                                 <div class="form-group">
                                     <label>Jam Mulai(optional)</label>
-                                    <input type="time" name="jam_mulai" value="{{ old('jam_mulai', $booking->jam_mulai ?? '')}}" class="form-control @error('jam_mulai') is-invalid @enderror">
+                                    <input type="time" name="jam_mulai" value="{{ isset($booking) && $booking->jam_mulai ? date('H:i', strtotime($booking->jam_mulai)) : '' }}" class="form-control @error('jam_mulai') is-invalid @enderror">
                                     @error('jam_mulai')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -122,7 +122,7 @@
                             <div class="col-12 col-lg-4 col-md-6">
                                 <div class="form-group">
                                     <label>Jam Selesai(optional)</label>
-                                    <input type="time" name="jam_selesai" value="{{ old('jam_selesai', $booking->jam_selesai ?? 's')}}" class="form-control @error('jam_selesai') is-invalid @enderror">
+                                    <input type="time" name="jam_selesai" value="{{ isset($booking) && $booking->jam_selesai ? date('H:i', strtotime($booking->jam_selesai)) : '' }}" class="form-control @error('jam_selesai') is-invalid @enderror">
                                     @error('jam_selesai')
                                     <div class="invalid-feedback">
                                         {{ $message }}

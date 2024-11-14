@@ -23,6 +23,8 @@ return new class extends Migration
             $table->date('tanggal');
             $table->time('jam_mulai')->nullable();
             $table->time('jam_selesai')->nullable();
+            $table->string('nama_tindakan')->nullable();
+            $table->boolean('terlaksana')->nullable();
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->timestamp('deleted_at')->nullable();
