@@ -98,7 +98,7 @@
             <div class="row">
                 <div class="col-12">
                     <!-- components biodata pasien by no reg -->
-                    @include('components.biodata-pasien-bynoreg')
+                    @include('components.biodata-pasien-ok-bynoreg')
                     <form id="myForm" action="{{ route('operasi.penandaan.store') }}" method="POST">
                         @csrf
                         <div class="card mb-3">
@@ -111,7 +111,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tanggal</label>
-                                            <input type="date" name="tanggal" value="{{ old('tanggal')}}" class="form-control @error('tanggal') is-invalid @enderror">
+                                            <input type="date" name="tanggal" value="{{ old('tanggal', $biodata->tanggal ?? '')}}" class="form-control @error('tanggal') is-invalid @enderror">
                                         </div>
                                         @error('tanggal')
                                         <div class="invalid-feedback">
@@ -119,7 +119,7 @@
                                         </div>
                                         @enderror
                                     </div>
-                                    <div class="col-md-6">
+                                    {{-- <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="d-block">Jenis Kelamin</label>
                                             <select name="jenis_kelamin" id="kondisi" class="form-control select2 @error('jenis_kelamin')  is-invalid @enderror" onchange="click_jenis_kelamin(this)">
@@ -133,12 +133,11 @@
                                             </span>
                                             @enderror
                                         </div>
-                                    </div>
-                                    <div class="col-md-12">
+                                    </div> --}}
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Jenis Operasi</label>
-                                            <textarea name="jenis_operasi" class="form-control  @error('jenis_operasi') is-invalid  
-                                            @enderror" rows="3" placeholder="Masukkan Jenis Operasi ...">{{ old('jenis_operasi') }}</textarea>
+                                            <label>Jenis Tindakan</label>
+                                            <input type="text" name="nama_tindakan" value="{{ old('nama_tindakan', $biodata->nama_tindakan ?? '')}}" class="form-control @error('nama_tindakan') is-invalid @enderror">
                                         </div>
                                         @error('jenis_operasi')
                                         <div class="invalid-feedback">
@@ -148,8 +147,10 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- Pria --}}
-                            <div class="card" id="form2" style="display: none">
+                            <!-- Pria (Male) Section -->
+                           @if($biodata->pendaftaran->registerPasien->JENIS_KELAMIN == 'L')
+                           <!-- Pria (Male) Form -->
+                            <div class="card" id="formPria">
                                 <div class="card-header card-khusus-body">
                                     <h4 class="card-title">Pria</h4>
                                 </div>
@@ -166,29 +167,24 @@
                                 </div>
                                 <!-- include form -->
                             </div>
-                            {{-- Wanita  --}}
-                            <div class="card" id="form3" style="display: none">
-                                <div class="card-header card-khusus-body">
-                                    <h4 class="card-title">Wanita</h4>
-                                </div>
-                                <!-- include form -->
-                                <div class="card-body card-khusus-body">
-                                    <!-- <div class="row"> -->
-                                    <div class="col-md-12">
-                                        <canvas id="canvasWanita" width="1000" height="1200" style="width: 100%; height: auto; border:1px solid #000;"></canvas>
-                                        <br />
-                                        <button id="clearCanvas" type="button">Hapus Gambar</button> <!-- type="button" ditambahkan di sini -->
-                                        <textarea id="signatureData" name="signed_kiri" style="display: none"></textarea>
+                            @elseif($biodata->pendaftaran->registerPasien->JENIS_KELAMIN == 'P')
+                                <!-- Wanita (Female) Form -->
+                                <div class="card" id="formWanita">
+                                    <div class="card-header card-khusus-body">
+                                        <h4 class="card-title">Wanita</h4>
                                     </div>
-                                    <!-- </div> -->
+                                    <div class="card-body card-khusus-body">
+                                        <div class="col-md-12">
+                                            <canvas id="canvasWanita" width="1000" height="1200" style="width: 100%; height: auto; border:1px solid #000;"></canvas>
+                                            <br />
+                                            <button id="clearCanvas" type="button">Hapus Gambar</button> <!-- type="button" ditambahkan di sini -->
+                                            <textarea id="signatureData" name="signed_kiri" style="display: none"></textarea>
+                                        </div>
+                                    </div>
                                 </div>
-                                <!-- include form -->
-                            </div>
-                            <!-- include form -->
+                            @endif
                         </div>
                         <div class="text-left">
-                            {{-- <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button> --}}
-                            {{-- <a href="{{ route('poliMata.assesmenAwal', ['noReg' => $biodata->NO_REG]) }}" class="btn btn-primary mb-2"><i class="fas fa-save"></i>Simpan</a> --}}
                             <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button>
                         </div>
                     </form>

@@ -3,6 +3,7 @@
 namespace App\Services\Operasi;
 
 use Exception;
+use Illuminate\Support\Facades\DB;
 use App\Models\Operasi\BookingOperasi;
 
 class BookingOperasiService
@@ -23,6 +24,26 @@ class BookingOperasiService
                 $query->select('Kode_Dokter', 'Nama_Dokter');
             }
         ]);
+    }
+
+    public function biodata($noReg)
+    {
+        return BookingOperasi::with([
+            'pendaftaran' => function ($query) {
+                $query->select('No_Reg', 'No_MR')
+                    ->with(['registerPasien' => function ($query) {
+                        $query->select('No_MR', 'Nama_Pasien', 'ALAMAT', 'JENIS_KELAMIN', 'TGL_LAHIR');
+                    }]);
+            },
+            'ruangan' => function ($query) {
+                $query->select('id', 'kode_ruang', 'nama_ruang');
+            },
+            'dokter' => function ($query) {
+                $query->select('Kode_Dokter', 'Nama_Dokter');
+            }
+        ])
+            ->where('kode_register', $noReg)
+            ->first();
     }
 
     public function get()

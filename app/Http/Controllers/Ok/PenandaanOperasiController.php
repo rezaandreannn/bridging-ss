@@ -53,8 +53,7 @@ class PenandaanOperasiController extends Controller
     public function create($noReg)
     {
         $title = $this->prefix . ' ' . 'Operasi';
-        // $biodata = $this->rekam_medis->getBiodata($noReg);
-        $biodata = $this->rajal->pasien_bynoreg($noReg);
+        $biodata = $this->bookingOperasiService->biodata($noReg);
         // dd($biodata);
         return view($this->view . 'penandaanOperasi.create', compact('title', 'biodata'));
     }
