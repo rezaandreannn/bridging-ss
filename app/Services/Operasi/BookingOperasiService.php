@@ -59,6 +59,7 @@ class BookingOperasiService
                 'kode_register' => $data['kode_register'],
                 'tanggal' => $data['tanggal'],
                 'ruangan_id' => $data['ruangan_id'],
+                'jenis_tindakan' => $data['jenis_tindakan'] ?? '',
                 'kode_dokter' => $data['kode_dokter'],
                 'jam_mulai' => $data['jam_mulai'] ?? '',
                 'jam_selesai' => $data['jam_selesai'] ?? ''
@@ -70,7 +71,30 @@ class BookingOperasiService
             throw new Exception("Gagal menambahkan booking: " . $th->getMessage());
         }
     }
-    public function update() {}
+
+    public function update($id, array $data)
+    {
+        try {
+            // Mencari booking berdasarkan ID
+            $booking = BookingOperasi::findOrFail($id);
+
+            // Melakukan update data
+            $booking->update([
+                'kode_register' => $data['kode_register'],
+                'tanggal' => $data['tanggal'],
+                'ruangan_id' => $data['ruangan_id'],
+                'jenis_tindakan' => $data['jenis_tindakan'] ?? '',
+                'kode_dokter' => $data['kode_dokter'],
+                'jam_mulai' => $data['jam_mulai'] ?? '',
+                'jam_selesai' => $data['jam_selesai'] ?? ''
+                // 'cara_masuk' => $data['cara_masuk'] ?? ''
+            ]);
+
+            return $booking;
+        } catch (\Throwable $th) {
+            throw new Exception("Gagal memperbarui booking: " . $th->getMessage());
+        }
+    }
 
     private function mapData($databookings)
     {
