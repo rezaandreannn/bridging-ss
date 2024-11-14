@@ -28,6 +28,7 @@ class UpdateBookingRequest extends FormRequest
             'tanggal' => 'required',
             'ruangan_id' => 'required',
             'kode_dokter' => 'required',
+            'nama_tindakan' => 'required',
             'jam_mulai' => 'nullable',
             'jam_selesai' => 'nullable'
             // 'cara_masuk' => 'nullable|string'
