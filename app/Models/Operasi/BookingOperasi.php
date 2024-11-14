@@ -14,11 +14,13 @@ class BookingOperasi extends Model
     protected $connection = 'pku';
     protected $table = 'ok_booking_operasi';
 
-    // mass Assignment
+    // Mass Assignment
     protected $fillable = [
         'kode_register',
         'ruangan_id',
         'kode_dokter',
+        'nama_tindakan',
+        'terlaksana',
         'tanggal',
         'jam_mulai',
         'jam_selesai'

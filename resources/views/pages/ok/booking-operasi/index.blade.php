@@ -36,7 +36,7 @@
                     @endif
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-12 col-lg-4 col-md-6">
+                            <div class="col-12 col-lg-6 col-md-6">
                                 <div class="form-group">
                                     <label>Pilih Pasien</label>
                                     <select name="kode_register" class="form-control select2 @error('kode_register') is-invalid @enderror">
@@ -54,23 +54,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-12 col-lg-4 col-md-6">
-                                <div class="form-group">
-                                    <label>Pilih Ruangan Operasi</label>
-                                    <select name="ruangan_id" class="form-control select2 @error('ruangan_id') is-invalid @enderror" id="">
-                                        <option value="" selected disabled>--Pilih Ruangan Operasi--</option>
-                                        @foreach ($ruanganOperasi as $ruangan)
-                                        <option value="{{ $ruangan->id}}" @if(old('ruangan_id', $booking->ruangan_id ?? '')==$ruangan->id ) selected @endif>{{$ruangan->nama_ruang}}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('ruangan_id')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-12 col-lg-4 col-md-6">
+                            <div class="col-12 col-lg-6 col-md-6">
                                 <div class="form-group">
                                     <label>Pilih Dokter</label>
                                     <select name="kode_dokter" class="form-control select2 @error('kode_dokter') is-invalid @enderror" id="">
@@ -80,17 +64,6 @@
                                         @endforeach
                                     </select>
                                     @error('kode_dokter')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-12 col-lg-4 col-md-6">
-                                <div class="form-group">
-                                    <label>Jenis Tindakan</label>
-                                    <input type="text" name="jenis_tindakan" value="{{ old('jenis_tindakan', $booking->jenis_tindakan ?? '')}}" class="form-control @error('jenis_tindakan') is-invalid @enderror">
-                                    @error('jenis_tindakan')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -124,6 +97,33 @@
                                     <label>Jam Selesai(optional)</label>
                                     <input type="time" name="jam_selesai" value="{{ isset($booking) && $booking->jam_selesai ? date('H:i', strtotime($booking->jam_selesai)) : '' }}" class="form-control @error('jam_selesai') is-invalid @enderror">
                                     @error('jam_selesai')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6">
+                                <div class="form-group">
+                                    <label>Pilih Ruangan Operasi</label>
+                                    <select name="ruangan_id" class="form-control select2 @error('ruangan_id') is-invalid @enderror" id="">
+                                        <option value="" selected disabled>--Pilih Ruangan Operasi--</option>
+                                        @foreach ($ruanganOperasi as $ruangan)
+                                        <option value="{{ $ruangan->id}}" @if(old('ruangan_id', $booking->ruangan_id ?? '')==$ruangan->id ) selected @endif>{{$ruangan->nama_ruang}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('ruangan_id')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6">
+                                <div class="form-group">
+                                    <label>Jenis Tindakan</label>
+                                    <input type="text" name="nama_tindakan" value="{{ old('nama_tindakan', $booking->nama_tindakan ?? '')}}" class="form-control @error('nama_tindakan') is-invalid @enderror">
+                                    @error('nama_tindakan')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>

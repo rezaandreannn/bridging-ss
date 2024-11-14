@@ -59,7 +59,7 @@ class BookingOperasiService
                 'kode_register' => $data['kode_register'],
                 'tanggal' => $data['tanggal'],
                 'ruangan_id' => $data['ruangan_id'],
-                'jenis_tindakan' => $data['jenis_tindakan'] ?? '',
+                'nama_tindakan' => $data['nama_tindakan'],
                 'kode_dokter' => $data['kode_dokter'],
                 'jam_mulai' => $data['jam_mulai'] ?? '',
                 'jam_selesai' => $data['jam_selesai'] ?? ''
@@ -83,7 +83,7 @@ class BookingOperasiService
                 'kode_register' => $data['kode_register'],
                 'tanggal' => $data['tanggal'],
                 'ruangan_id' => $data['ruangan_id'],
-                'jenis_tindakan' => $data['jenis_tindakan'] ?? '',
+                'nama_tindakan' => $data['nama_tindakan'],
                 'kode_dokter' => $data['kode_dokter'],
                 'jam_mulai' => $data['jam_mulai'] ?? '',
                 'jam_selesai' => $data['jam_selesai'] ?? ''
@@ -107,6 +107,8 @@ class BookingOperasiService
                 'nama_pasien' => optional($item->pendaftaran->registerPasien)->Nama_Pasien,
                 'ruang_operasi' => optional($item->ruangan)->nama_ruang,
                 'nama_dokter' => optional($item->dokter)->Nama_Dokter,
+                'nama_tindakan' => $item->nama_tindakan,
+                'terlaksana' => $item->terlaksana,
                 'jam_mulai' => $item->jam_mulai,
                 'jam_selesai' => $item->jam_selesai,
                 'cara_masuk' => $item->cara_masuk
