@@ -47,6 +47,11 @@ class BookingOperasiService
         return $this->mapData($databookings);
     }
 
+    public function findById($id)
+    {
+        return BookingOperasi::find($id);
+    }
+
     public function insert(array $data)
     {
         try {

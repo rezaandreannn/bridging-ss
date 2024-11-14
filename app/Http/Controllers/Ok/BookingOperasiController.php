@@ -4,7 +4,6 @@ namespace App\Http\Controllers\OK;
 
 use Exception;
 use App\Models\RajalDokter;
-use App\Models\Simrs\Dokter;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\SimRs\DokterService;
@@ -38,16 +37,21 @@ class BookingOperasiController extends Controller
         $this->pasienService = new PendaftaranService();
     }
 
-    public function index()
+    public function index(Request $request)
     {
         // variable declare
         $title = $this->prefix . ' ' . 'List';
 
         // get data from service
         $bookings = $this->bookingOperasiService->get();
-        // dd($bookings);
 
-        return view($this->view . 'booking-operasi.index', compact('bookings'))->with([
+        $booking = null;
+        if (session('booking_id')) {
+            $booking = $this->bookingOperasiService->findById(session('booking_id'));
+        }
+
+
+        return view($this->view . 'booking-operasi.index', compact('bookings', 'booking'))->with([
             'title' => $title,
             'ruanganOperasi' => RuanganOperasi::all(),
             'dokters' => $this->dokterService->byBedahOperasi(),
@@ -102,7 +106,11 @@ class BookingOperasiController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        return redirect()->route('operasi.booking.index')
+            ->with([
+                'booking_id' => $id
+            ]);
     }
 
     /**
@@ -114,7 +122,7 @@ class BookingOperasiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd('update in here');
     }
 
     /**
