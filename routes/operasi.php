@@ -16,8 +16,8 @@ Route::prefix('operasi')->name('operasi.')->middleware('auth')->group(function (
     Route::get('/penandaanOperasi/{noReg}', [PenandaanOperasiController::class, 'create'])->name('penandaan.create');
     Route::post('/penandaanOperasi/add', [PenandaanOperasiController::class, 'store'])->name('penandaan.store');
     // OK Ruangan
-    Route::get('/ruangOperasi', [RuangOperasiController::class, 'index'])->name('ruang.index');
-    Route::post('/ruangOperasi', [RuangOperasiController::class, 'store'])->name('ruang.store');
+    Route::get('/ruang-operasi', [RuangOperasiController::class, 'index'])->name('ruang.index');
+    Route::post('/ruang-operasi', [RuangOperasiController::class, 'store'])->name('ruang.store');
     Route::put('/ruangOperasi/update/{id}', [RuangOperasiController::class, 'update'])->name('ruang.update');
     Route::delete('/ruangOperasi/delete/{id}', [RuangOperasiController::class, 'destroy'])->name('ruang.destroy');
 });
