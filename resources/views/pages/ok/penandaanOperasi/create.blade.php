@@ -101,6 +101,7 @@
                     @include('components.biodata-pasien-ok-bynoreg')
                     <form id="myForm" action="{{ route('operasi.penandaan.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        <input type="hidden" name="kode_register" value="{{ $biodata->pendaftaran->No_Reg }}">
                         <div class="card mb-3">
                             <div class="card-header card-khusus-header">
                                 <h6 class="card-khusus-title">Penandaan Operasi @if ($biodata->pendaftaran->registerPasien->JENIS_KELAMIN == 'L')
@@ -126,7 +127,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Jenis Tindakan</label>
-                                            <input type="text" name="nama_tindakan" value="{{ old('nama_tindakan', $biodata->nama_tindakan ?? '')}}" class="form-control @error('nama_tindakan') is-invalid @enderror" readonly>
+                                            <input type="text" name="jenis_operasi" value="{{ old('jenis_operasi', $biodata->nama_tindakan ?? '')}}" class="form-control @error('jenis_operasi') is-invalid @enderror" readonly>
                                         </div>
                                         @error('jenis_operasi')
                                         <div class="invalid-feedback">
@@ -191,7 +192,7 @@
 </script>
 
 <script>
-   
+
 </script>
 
 <script type="text/javascript">

@@ -38,10 +38,14 @@ class PenandaanOperasiController extends Controller
 
     public function index(Request $request)
     {
-        $title = 'Jadwal Operasi';
-        // $jadwal = $this->booking->getJadwalOperasi();
-        $jadwal = BookingOperasi::with('ruangan')->get();
-        return view($this->view . 'penandaanOperasi.index', compact('title', 'jadwal', 'biodata'));
+        $title = 'Penandaan Operasi';
+
+        $penandaans = $this->penandaanOperasiService->get();
+
+        return view($this->view . 'penandaanOperasi.index', compact('penandaans'))
+            ->with([
+                'title' => $title
+            ]);
     }
 
     /**
@@ -67,15 +71,17 @@ class PenandaanOperasiController extends Controller
     {
         try {
             $data = [
-                'kode_register' => '',
-                'gambar' => $request->signatureData
+                'kode_register' => $request->kode_register,
+                'hasil_gambar' => $request->signatureData,
+                'jenis_operasi' => $request->jenis_operasi
             ];
-            $d =   $this->penandaanOperasiService->insert($data);
-            dd($d);
-            return redirect()->back()->with('success', 'Booking berhasil ditambahkan.');
+
+            $this->penandaanOperasiService->insert($data);
+
+            return redirect()->back()->with('success', 'Penandaan Operasi berhasil ditambahkan.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
-            return redirect()->back()->with('error', 'Gagal menambahkan booking: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menambahkan Penandaan Operasi: ' . $e->getMessage());
         }
     }
 

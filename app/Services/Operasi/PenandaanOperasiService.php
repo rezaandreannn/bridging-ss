@@ -14,12 +14,25 @@ class PenandaanOperasiService
         return PenandaanOperasi::all();
     }
 
-    public function byRegister($kodeRegister) {}
+    public function findById($id)
+    {
+        return PenandaanOperasi::find($id);
+    }
+
+
+    public function byRegister($kodeRegister)
+    {
+        $penandaan = PenandaanOperasi::where('kode_register', $kodeRegister)
+            ->get();
+
+        return $penandaan;
+    }
+
     public function byRegisterWithTtd($kodeRegister) {}
 
     public function insert(array $data)
     {
-        $image_parts = explode(";base64,", $data['gambar']);
+        $image_parts = explode(";base64,", $data['hasil_gambar']);
         $image_type_aux = explode("image/", $image_parts[0]);
         $image_type = $image_type_aux[1];
         $image_base64 = base64_decode($image_parts[1]);
@@ -30,7 +43,13 @@ class PenandaanOperasiService
         // Save the image to storage
         Storage::put('public/ttd/penandaan-operasi-pasien/' . $file_name, $image_base64);
 
-        dd($file_name);
+        $penandaan = PenandaanOperasi::create([
+            'kode_register' => $data['kode_register'],
+            'hasil_gambar' => $file_name,
+            'jenis_operasi' => $data['jenis_operasi']
+        ]);
+
+        return $penandaan;
     }
     public function update($id, array $data) {}
     public function delete($id) {}

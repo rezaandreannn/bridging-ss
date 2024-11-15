@@ -285,6 +285,13 @@
                     </li>
                 </ul>
                 @endcan
+                @can('penandaan operasi')
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('operasi/penandaan-operasi*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('operasi.penandaan.index')}}">Penandaan Operasi</a>
+                    </li>
+                </ul>
+                @endcan
             </li>
             @endcan
 
