@@ -131,6 +131,22 @@ class BookingOperasiController extends Controller
         }
     }
 
+    public function updateTanggal(Request $request, $id)
+    {
+        try {
+            $booking = $this->bookingOperasiService->findById($id);
+
+            $booking->update([
+                'tanggal' => $request->input('tanggal'),
+            ]);
+
+            return redirect()->back()->with('success', 'Tanggal berhasil di ubah.');
+        } catch (Exception $e) {
+            // Redirect dengan pesan error jika terjadi kegagalan
+            return redirect()->back()->with('error', 'Gagal menambahkan booking: ' . $e->getMessage());
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      *

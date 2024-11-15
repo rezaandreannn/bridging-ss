@@ -28,4 +28,5 @@ Route::get('/create/booking-operasi', [BookingOperasiController::class, 'create'
 Route::get('booking-operasi/{id}/edit', [BookingOperasiController::class, 'edit'])->name('operasi.booking.edit');
 Route::post('/booking-operasi', [BookingOperasiController::class, 'store'])->name('operasi.booking.store');
 Route::put('/booking-operasi/{id}', [BookingOperasiController::class, 'update'])->name('operasi.booking.update');
+Route::put('/booking-operasi/tanggal/{id}', [BookingOperasiController::class, 'updateTanggal'])->name('operasi.tanggal.update');
 Route::delete('/booking-operasi/{id}', [BookingOperasiController::class, 'destroy'])->name('operasi.booking.destroy');

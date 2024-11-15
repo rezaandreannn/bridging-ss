@@ -143,9 +143,9 @@
                                         <div>
                                             <canvas id="drawingCanvas" width="1000" height="600" style="border:1px solid #000; width:100%; height:auto;"></canvas>
                                             <br />
-                                            <button id="undoButton" type="button" class="btn btn-sm btn-primary">Undo Coretan Terakhir</button>
-                                            <button id="clearCanvasButton" type="button" class="btn btn-sm btn-primary">Hapus Semua Coretan</button>
-                                            <button id="drawButton" type="button" class="btn btn-sm btn-primary">Gambar</button>
+                                            <button id="undoButton" type="button" class="btn btn-sm btn-primary"><i class="fas fa-undo"></i> Undo</button>
+                                            <button id="clearCanvasButton" type="button" class="btn btn-sm btn-primary"><i class="fas fa-trash"></i> Hapus</button>
+                                            {{-- <button id="drawButton" type="button" class="btn btn-sm btn-primary">Gambar</button> --}}
                                         </div>
                                         <textarea id="signatureData" name="signatureData" style="display:none;"></textarea>
                                     </div>
