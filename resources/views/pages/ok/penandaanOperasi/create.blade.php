@@ -151,6 +151,7 @@
                                     </div>
                                 </div>
                             </div>
+                            {{-- Gambar Operasi --}}
                             <div class="card" id="{{ $biodata->pendaftaran->registerPasien->JENIS_KELAMIN == 'L' ? 'formPria' : 'formWanita' }}" 
                                 data-gender="{{ $biodata->pendaftaran->registerPasien->JENIS_KELAMIN }}">
                                <div class="card-body card-khusus-body">
