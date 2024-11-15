@@ -10,10 +10,12 @@ use App\Http\Controllers\Controller;
 use App\Services\SimRs\DokterService;
 use App\Models\Operasi\BookingOperasi;
 use App\Models\Operasi\RuanganOperasi;
+use App\Models\Operasi\PenandaanOperasi;
 use App\Services\SimRs\PendaftaranService;
 use App\Services\Operasi\BookingOperasiService;
 use App\Http\Requests\Operasi\StoreBookingRequest;
 use App\Http\Requests\Operasi\UpdateBookingRequest;
+use App\Services\Operasi\PenandaanOperasiService;
 
 class BookingOperasiController extends Controller
 {
@@ -25,11 +27,13 @@ class BookingOperasiController extends Controller
     protected $bookingOperasiService;
     protected $dokterService;
     protected $pasienService;
+    protected $penandaanOperasiService;
 
     public function __construct()
     {
         $this->view = 'pages.ok.';
         $this->prefix = 'Booking Operasi';
+        $this->penandaanOperasiService = new PenandaanOperasiService();
         $this->bookingOperasiService = new BookingOperasiService();
         $this->dokterService = new DokterService();
         $this->pasienService = new PendaftaranService();
