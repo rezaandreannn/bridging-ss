@@ -9,30 +9,30 @@ use App\Models\Operasi\BookingOperasi;
 use App\Models\Operasi\PenandaanOperasi;
 use App\Models\Rajal;
 use App\Services\Operasi\BookingOperasiService;
+use App\Services\Operasi\PenandaanOperasiService;
 
 class PenandaanOperasiController extends Controller
 {
     protected $view;
     protected $routeIndex;
     protected $prefix;
-    protected $bookingOperasi;
     protected $bookingOperasiService;
-    protected $rajal;
+    protected $penandaanOperasiService;
 
-    public function __construct(BookingOperasi $bookingOperasi)
+    public function __construct()
     {
-        $this->bookingOperasi = $bookingOperasi;
+
         $this->view = 'pages.ok.';
         $this->prefix = 'Penandaan Lokasi';
         $this->bookingOperasiService = new BookingOperasiService();
-        $this->rajal = new Rajal();
+        $this->penandaanOperasiService = new PenandaanOperasiService();
     }
 
     public function jadwal(Request $request)
     {
         $title = 'Jadwal Operasi';
         $jadwal = $this->bookingOperasiService->get();
-        // dd($jadwal);
+
         return view($this->view . 'jadwalOperasi.index', compact('title', 'jadwal'));
     }
 
@@ -63,11 +63,15 @@ class PenandaanOperasiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PenandaanOperasi $request)
+    public function store(Request $request)
     {
         try {
-            $this->bookingOperasiService->insert($request->validated());
-
+            $data = [
+                'kode_register' => '',
+                'gambar' => $request->signatureData
+            ];
+            $d =   $this->penandaanOperasiService->insert($data);
+            dd($d);
             return redirect()->back()->with('success', 'Booking berhasil ditambahkan.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan

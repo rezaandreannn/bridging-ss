@@ -99,7 +99,7 @@
                 <div class="col-12">
                     <!-- components biodata pasien by no reg -->
                     @include('components.biodata-pasien-ok-bynoreg')
-                    <form id="myForm" action="{{ route('operasi.penandaan.store') }}" method="POST">
+                    <form id="myForm" action="{{ route('operasi.penandaan.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="card mb-3">
                             <div class="card-header card-khusus-header">
@@ -123,21 +123,6 @@
                                         </div>
                                         @enderror
                                     </div>
-                                    {{-- <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="d-block">Jenis Kelamin</label>
-                                            <select name="jenis_kelamin" id="kondisi" class="form-control select2 @error('jenis_kelamin')  is-invalid @enderror" onchange="click_jenis_kelamin(this)">
-                                                <option value="">--Pilih Jenis Kelamin--</option>
-                                                <option value="Pria" @if(old('jenis_kelamin')=='Pria' ) selected @endif>Pria</option>
-                                                <option value="Wanita" @if(old('jenis_kelamin')=='Wanita' ) selected @endif>Wanita</option>
-                                            </select>
-                                            @error('jenis_kelamin')
-                                            <span class="text-danger" style="font-size: 12px;">
-                                                {{ $message }}
-                                            </span>
-                                            @enderror
-                                        </div>
-                                    </div> --}}
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Jenis Tindakan</label>
@@ -151,21 +136,20 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card" id="{{ $biodata->pendaftaran->registerPasien->JENIS_KELAMIN == 'L' ? 'formPria' : 'formWanita' }}" 
-                                data-gender="{{ $biodata->pendaftaran->registerPasien->JENIS_KELAMIN }}">
-                               <div class="card-body card-khusus-body">
-                                   <div class="col-md-12">
-                                       <div>
-                                           <canvas id="drawingCanvas" width="1000" height="600" style="border:1px solid #000; width:100%; height:auto;"></canvas>
-                                           <br />
-                                           <button id="undoButton" type="button" class="btn btn-sm btn-primary">Undo Coretan Terakhir</button>
-                                           <button id="clearCanvasButton" type="button" class="btn btn-sm btn-primary">Hapus Semua Coretan</button>
-                                           <button id="drawButton" type="button" class="btn btn-sm btn-primary">Gambar</button>
-                                       </div>
-                                       <textarea id="signatureData" name="signatureData" style="display:none;"></textarea>
-                                   </div>
-                               </div>
-                           </div>
+                            <div class="card" id="{{ $biodata->pendaftaran->registerPasien->JENIS_KELAMIN == 'L' ? 'formPria' : 'formWanita' }}" data-gender="{{ $biodata->pendaftaran->registerPasien->JENIS_KELAMIN }}">
+                                <div class="card-body card-khusus-body">
+                                    <div class="col-md-12">
+                                        <div>
+                                            <canvas id="drawingCanvas" width="1000" height="600" style="border:1px solid #000; width:100%; height:auto;"></canvas>
+                                            <br />
+                                            <button id="undoButton" type="button" class="btn btn-sm btn-primary">Undo Coretan Terakhir</button>
+                                            <button id="clearCanvasButton" type="button" class="btn btn-sm btn-primary">Hapus Semua Coretan</button>
+                                            <button id="drawButton" type="button" class="btn btn-sm btn-primary">Gambar</button>
+                                        </div>
+                                        <textarea id="signatureData" name="signatureData" style="display:none;"></textarea>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="text-left">
                             <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button>
@@ -216,7 +200,9 @@
 
     // Set background image based on gender
     const gender = document.getElementById('formPria') ? 'L' : 'P'; // Or read from data-gender
-    img.src = gender === 'L' ? '{{ asset('img/lakii.jpg') }}' : '{{ asset('img/wanita.jpg') }}'; // Set appropriate image path
+    img.src = gender === 'L' ? '{{ asset('
+    img / lakii.jpg ') }}': '{{ asset('
+    img / wanita.jpg ') }}'; // Set appropriate image path
 
     // Load background image
     img.onload = () => {
@@ -230,8 +216,8 @@
         const scaleY = canvas.height / rect.height; // Scale factor for Y
 
         return {
-            x: (event.clientX - rect.left) * scaleX,
-            y: (event.clientY - rect.top) * scaleY
+            x: (event.clientX - rect.left) * scaleX
+            , y: (event.clientY - rect.top) * scaleY
         };
     }
 
@@ -259,16 +245,25 @@
         currentPath = []; // Initialize a new path
         paths.push(currentPath); // Save path in paths array
 
-        const { x, y } = getMousePos(event);
+        const {
+            x
+            , y
+        } = getMousePos(event);
         ctx.beginPath();
         ctx.moveTo(x, y);
-        currentPath.push({ x, y });
+        currentPath.push({
+            x
+            , y
+        });
     });
 
     // Draw or erase on mouse move
     canvas.addEventListener('mousemove', (event) => {
         if (drawing) {
-            const { x, y } = getMousePos(event);
+            const {
+                x
+                , y
+            } = getMousePos(event);
 
             if (erasing) {
                 ctx.globalCompositeOperation = 'destination-out'; // Erase mode
@@ -283,7 +278,10 @@
             ctx.stroke();
 
             // Save point in the current path
-            currentPath.push({ x, y });
+            currentPath.push({
+                x
+                , y
+            });
         }
     });
 
@@ -321,10 +319,9 @@
 </script>
 
 <script type="text/javascript">
-
     var sig = $("#signat").signature({
-        syncField: "#signature1",
-        syncFormat: "PNG"
+        syncField: "#signature1"
+        , syncFormat: "PNG"
     });
     $('#clear').click(function(e) {
         e.preventDefault();
@@ -333,14 +330,15 @@
     });
 
     var sig2 = $("#signat2").signature({
-        syncField: "#signature2",
-        syncFormat: "PNG"
+        syncField: "#signature2"
+        , syncFormat: "PNG"
     });
     $('#clear2').click(function(e) {
         e.preventDefault();
         sig2.signature('clear');
         $("#signature2").val('');
     });
+
 </script>
 
 @endpush
