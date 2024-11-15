@@ -103,7 +103,11 @@
                         @csrf
                         <div class="card mb-3">
                             <div class="card-header card-khusus-header">
-                                <h6 class="card-khusus-title">Penandaan Operasi</h6>
+                                <h6 class="card-khusus-title">Penandaan Operasi @if ($biodata->pendaftaran->registerPasien->JENIS_KELAMIN == 'L')
+                                    Laki-Laki
+                                    @else
+                                    Perempuan
+                                    @endif</h6>
                             </div>
                             <!-- include form -->
                             <div class="card-body card-khusus-body">
@@ -111,7 +115,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tanggal</label>
-                                            <input type="date" name="tanggal" value="{{ old('tanggal', $biodata->tanggal ?? '')}}" class="form-control @error('tanggal') is-invalid @enderror">
+                                            <input type="date" name="tanggal" value="{{ old('tanggal', $biodata->tanggal ?? '')}}" class="form-control @error('tanggal') is-invalid @enderror" disabled>
                                         </div>
                                         @error('tanggal')
                                         <div class="invalid-feedback">
@@ -137,7 +141,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Jenis Tindakan</label>
-                                            <input type="text" name="nama_tindakan" value="{{ old('nama_tindakan', $biodata->nama_tindakan ?? '')}}" class="form-control @error('nama_tindakan') is-invalid @enderror">
+                                            <input type="text" name="nama_tindakan" value="{{ old('nama_tindakan', $biodata->nama_tindakan ?? '')}}" class="form-control @error('nama_tindakan') is-invalid @enderror" readonly>
                                         </div>
                                         @error('jenis_operasi')
                                         <div class="invalid-feedback">
@@ -147,38 +151,35 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Pria (Male) Section -->
-                           @if($biodata->pendaftaran->registerPasien->JENIS_KELAMIN == 'L')
-                           <!-- Pria (Male) Form -->
+                            @if($biodata->pendaftaran->registerPasien->JENIS_KELAMIN == 'L')
+                            <!-- Pria (Male) Form -->
                             <div class="card" id="formPria">
-                                <div class="card-header card-khusus-body">
-                                    <h4 class="card-title">Pria</h4>
-                                </div>
-                                <!-- include form -->
                                 <div class="card-body card-khusus-body">
-                                    <!-- <div class="row"> -->
                                     <div class="col-md-12">
-                                        <canvas id="canvasPria" width="1000" height="1200" style="width: 100%; height: auto; border:1px solid #000;"></canvas>
-                                        <br />
-                                        <button id="clear2" type="button">Hapus Gambar</button> <!-- type="button" ditambahkan di sini -->
-                                        <textarea id="signature2" name="signed_kanan" style="display: none"></textarea>
+                                        <div>
+                                            <canvas id="drawingCanvas" width="1000" height="600" style="border:1px solid #000; width:100%; height:auto;"></canvas>
+                                            <br />
+                                            <button id="undoButton" type="button">Undo Coretan Terakhir</button>
+                                            <button id="clearCanvasButton" type="button">Hapus Semua Coretan</button>
+                                            <button id="drawButton" type="button">Gambar</button>
+                                        </div>
+                                        <textarea id="signatureData" name="signatureData" style="display:none;"></textarea>
                                     </div>
-                                    <!-- </div> -->
                                 </div>
-                                <!-- include form -->
                             </div>
                             @elseif($biodata->pendaftaran->registerPasien->JENIS_KELAMIN == 'P')
                                 <!-- Wanita (Female) Form -->
                                 <div class="card" id="formWanita">
-                                    <div class="card-header card-khusus-body">
-                                        <h4 class="card-title">Wanita</h4>
-                                    </div>
                                     <div class="card-body card-khusus-body">
                                         <div class="col-md-12">
-                                            <canvas id="canvasWanita" width="1000" height="1200" style="width: 100%; height: auto; border:1px solid #000;"></canvas>
-                                            <br />
-                                            <button id="clearCanvas" type="button">Hapus Gambar</button> <!-- type="button" ditambahkan di sini -->
-                                            <textarea id="signatureData" name="signed_kiri" style="display: none"></textarea>
+                                            <div>
+                                                <canvas id="drawingCanvas" width="1000" height="600" style="border:1px solid #000; width:100%; height:auto;"></canvas>
+                                                <br />
+                                                <button id="undoButton" type="button">Undo Coretan Terakhir</button>
+                                                <button id="clearCanvasButton" type="button">Hapus Semua Coretan</button>
+                                                <button id="drawButton" type="button">Gambar</button>
+                                            </div>
+                                            <textarea id="signatureData" name="signatureData" style="display:none;"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -205,6 +206,7 @@
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script>
 <script src="{{ asset('ttd/js/jquery.signature.min.js') }}"></script>
+{{-- <script src="{{ asset('ttd/js/signature_pad.min.js') }}"></script> --}}
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
@@ -220,83 +222,105 @@
 
 </script>
 <script>
-    function click_jenis_kelamin(selected) {
-        // Hide both gender-specific forms initially
-        $("#form2, #form3").hide();
+   // Variabel untuk canvas, context, dan histori coretan
+    const canvas = document.getElementById('drawingCanvas');
+    const ctx = canvas.getContext('2d');
+    const signatureData = document.getElementById('signatureData');
+    let paths = [];           // Array untuk menyimpan histori coretan
+    let currentPath = [];     // Array untuk coretan yang sedang dibuat
+    let drawing = false;      // Status menggambar
+    const img = new Image();  // Objek gambar latar (jika diperlukan)
 
-        if (selected.value === "Pria") {
-            $("#form2").show();
-        } else if (selected.value === "Wanita") {
-            $("#form3").show();
-        }
-    }
-    // Function to initialize canvas with a background image and enable drawing
-    function setupCanvas(canvasId, signatureId, imgSrc) {
-        const canvas = document.getElementById(canvasId);
-        const ctx = canvas.getContext('2d');
-        const signatureData = document.getElementById(signatureId);
-        const img = new Image();
+    // Mengatur gambar latar (jika ada)
+    img.src = '{{ asset('img/lakii.jpg') }}';  // Ganti dengan URL gambar latar Anda
+    img.onload = () => {
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    };
 
-        img.src = imgSrc; // Path to background image
-        img.onload = () => ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    // Fungsi untuk menggambar ulang semua coretan dari histori
+    function drawPaths() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);  // Bersihkan canvas
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);  // Gambar ulang gambar latar
 
-        let drawing = false;
-
-        // Start drawing on mousedown
-        canvas.addEventListener('mousedown', () => {
-            drawing = true;
+        paths.forEach(path => {
             ctx.beginPath();
+            path.forEach((point, index) => {
+                if (index === 0) {
+                    ctx.moveTo(point.x, point.y);
+                } else {
+                    ctx.lineTo(point.x, point.y);
+                }
+            });
+            ctx.stroke();
         });
-
-        // Draw lines while mouse is moving and button is pressed
-        canvas.addEventListener('mousemove', (event) => {
-            if (drawing) {
-                ctx.lineWidth = 1;
-                ctx.lineCap = 'round';
-                ctx.strokeStyle = 'red';
-                ctx.lineTo(event.offsetX, event.offsetY);
-                ctx.stroke();
-            }
-        });
-
-        // Stop drawing on mouseup, save to textarea
-        canvas.addEventListener('mouseup', () => {
-            drawing = false;
-            ctx.closePath();
-            signatureData.value = canvas.toDataURL();
-        });
-
-        return {
-            ctx
-            , img
-            , signatureData
-        };
     }
 
-    // Initialize both canvases
-    const penandaanPria = setupCanvas('canvasPria', 'signature2', '{{ asset("img/lakii.jpg") }}');
-    const penandaanWanita = setupCanvas('canvasWanita', 'signatureData', '{{ asset("img/wanita.jpg") }}');
+    // Event saat mulai menggambar atau menghapus
+    canvas.addEventListener('mousedown', (event) => {
+        drawing = true;
+        currentPath = [];      // Inisialisasi path baru
+        paths.push(currentPath); // Simpan path di array paths
 
-    // Clear button for Pria canvas
-    document.getElementById('clear2').addEventListener('click', () => {
-        penandaanPria.ctx.clearRect(0, 0, penandaanPria.ctx.canvas.width, penandaanPria.ctx.canvas.height);
-        penandaanPria.ctx.drawImage(penandaanPria.img, 0, 0, penandaanPria.ctx.canvas.width, penandaanPria.ctx.canvas.height);
-        penandaanPria.signatureData.value = '';
+        ctx.beginPath();
+        ctx.moveTo(event.offsetX, event.offsetY);
+        currentPath.push({ x: event.offsetX, y: event.offsetY });
     });
 
-    // Clear button for Wanita canvas
-    document.getElementById('clearCanvas').addEventListener('click', () => {
-        penandaanWanita.ctx.clearRect(0, 0, penandaanWanita.ctx.canvas.width, penandaanWanita.ctx.canvas.height);
-        penandaanWanita.ctx.drawImage(penandaanWanita.img, 0, 0, penandaanWanita.ctx.canvas.width, penandaanWanita.ctx.canvas.height);
-        penandaanWanita.signatureData.value = '';
+    // Event saat menggambar atau menghapus
+    canvas.addEventListener('mousemove', (event) => {
+        if (drawing) {
+            if (erasing) {
+                ctx.globalCompositeOperation = 'destination-out'; // Mode penghapus
+                ctx.lineWidth = 10;  // Lebar penghapus
+            } else {
+                ctx.globalCompositeOperation = 'source-over'; // Mode menggambar biasa
+                ctx.lineWidth = 2;   // Lebar garis
+                ctx.strokeStyle = 'red'; // Warna coretan
+            }
+
+            ctx.lineTo(event.offsetX, event.offsetY);
+            ctx.stroke();
+            
+            // Simpan titik di path saat ini
+            currentPath.push({ x: event.offsetX, y: event.offsetY });
+        }
     });
 
+    // Event saat selesai menggambar atau menghapus
+    canvas.addEventListener('mouseup', () => {
+        drawing = false;
+        ctx.closePath();
+
+        // Simpan canvas dalam bentuk data URL
+        signatureData.value = canvas.toDataURL();
+    });
+
+    // Tombol untuk menghapus coretan terakhir (undo)
+    document.getElementById('undoButton').addEventListener('click', () => {
+        paths.pop(); // Hapus path terakhir dari array paths
+        drawPaths(); // Gambar ulang semua paths yang tersisa
+        signatureData.value = canvas.toDataURL(); // Simpan hasil baru ke textarea
+    });
+
+    // Tombol untuk menghapus semua coretan
+    document.getElementById('clearCanvasButton').addEventListener('click', () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);  // Bersihkan canvas
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);  // Gambar ulang gambar latar
+        paths = [];  // Kosongkan array paths
+        signatureData.value = '';  // Reset data URL pada textarea
+    });
+
+    // Tombol untuk mengaktifkan mode menggambar
+    document.getElementById('drawButton').addEventListener('click', () => {
+        erasing = false; // Aktifkan mode menggambar biasa
+    });
 </script>
 
 <script type="text/javascript">
+
     var sig = $("#signat").signature({
-        syncField: "#signature1"
-        , syncFormat: "PNG"
+        syncField: "#signature1",
+        syncFormat: "PNG"
     });
     $('#clear').click(function(e) {
         e.preventDefault();
@@ -305,15 +329,14 @@
     });
 
     var sig2 = $("#signat2").signature({
-        syncField: "#signature2"
-        , syncFormat: "PNG"
+        syncField: "#signature2",
+        syncFormat: "PNG"
     });
     $('#clear2').click(function(e) {
         e.preventDefault();
         sig2.signature('clear');
         $("#signature2").val('');
     });
-
 </script>
 
 @endpush
