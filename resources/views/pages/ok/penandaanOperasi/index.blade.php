@@ -42,11 +42,26 @@
                                     <th scope="col">Tindakan</th>
                                     <th scope="col">Nama Dokter</th>
                                     <th scope="col">Ruangan</th>
+                                    <th scope="col">Gambar</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                               
+                                @foreach ($penandaans as $data)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td><span class="badge badge-pill badge-success">{{ $data->no_mr }}</span></td>
+                                    <td>{{$data->nama_pasien}}</td>
+                                    <td>{{ $data->tanggal }}</td>
+                                    <td>{{ $data->nama_tindakan }}</td>
+                                    <td>{{ $data->nama_dokter }}</td>
+                                    <td>{{ $data->ruang_operasi}}</td>
+                                    <td><a href="#" data-toggle="modal" data-target="#gambarModal{{ $data->id }}">Lihat Gambar</a></td>
+                                    <td>
+                                        <a href="{{ route('operasi.penandaan.create', ['noReg' => $data->no_mr]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
+                                    </td>
+                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -55,6 +70,28 @@
         </div>
     </section>
 </div>
+
+@foreach ($penandaans as $data)
+<div class="modal fade" id="gambarModal{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">{{ $data->nama_pasien }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <p>Tindakan: {{ $data->nama_tindakan }}</p>
+                <img src="{{ asset('storage/gambar/' . $data->gambar) }}" class="img-fluid" alt="Gambar Pengguna">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
 
 @endsection
 
