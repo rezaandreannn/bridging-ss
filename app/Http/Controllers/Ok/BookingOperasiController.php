@@ -20,18 +20,14 @@ class BookingOperasiController extends Controller
     protected $view;
     protected $routeIndex;
     protected $prefix;
-    protected $bookingkamar;
-    protected $rajaldokter;
 
     // menggunakan service
     protected $bookingOperasiService;
     protected $dokterService;
     protected $pasienService;
 
-    public function __construct(BookingOperasi $bookingkamar)
+    public function __construct()
     {
-        $this->rajaldokter = new RajalDokter;
-        $this->bookingkamar = $bookingkamar;
         $this->view = 'pages.ok.';
         $this->prefix = 'Booking Operasi';
         $this->bookingOperasiService = new BookingOperasiService();
