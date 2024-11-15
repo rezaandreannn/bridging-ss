@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::connection('pku')->create('ok_tanda_pasien', function (Blueprint $table) {
+        Schema::connection('pku')->create('ok_tanda_tangan_pasien', function (Blueprint $table) {
             $table->id();
             $table->string('kode_register');
             $table->string('ttd_pasien');
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::connection('pku')->dropIfExists('ok_tanda_pasien');
+        Schema::connection('pku')->dropIfExists('ok_tanda_tangan_pasien');
     }
 };
