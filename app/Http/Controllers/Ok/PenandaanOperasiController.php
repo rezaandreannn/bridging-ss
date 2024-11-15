@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\OK;
 
-use App\Models\RajalDokter;
-use App\Models\Rekam_medis;
-use App\Models\OperasiKamar;
+use Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Operasi\BookingOperasi;
+use App\Models\Operasi\PenandaanOperasi;
 use App\Models\Rajal;
 use App\Services\Operasi\BookingOperasiService;
 
@@ -64,7 +63,7 @@ class PenandaanOperasiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PenandaanOperasi $request)
     {
         try {
             $this->bookingOperasiService->insert($request->validated());

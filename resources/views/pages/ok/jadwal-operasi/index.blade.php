@@ -48,16 +48,6 @@
                             <tbody>
                                 @foreach ($jadwals as $data)
                                 <tr>
-<<<<<<< HEAD:resources/views/pages/ok/jadwal-operasi/index.blade.php
-                                    <td>{{$loop->iteration}}</td>
-                                    <td>{{$data->kode_register}}</td>
-                                    <td>{{$data->no_mr}}</td>
-                                    <td>{{$data->nama_pasien}}</td>
-                                    <td>{{$data->tanggal}}</td>
-                                    <td>{{$data->nama_dokter}}</td>
-                                    <td>{{$data->ruang_operasi}}</td>
-                                    <td>{{ \Carbon\Carbon::parse($data->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($data->jam_selesai)->format('H:i') }} WIB</td>
-=======
                                     <td>{{ $loop->iteration }}</td>
                                     <td><span class="badge badge-pill badge-success">{{ $data->no_mr }}</span></td>
                                     <td>{{$data->nama_pasien}}</td>
@@ -68,7 +58,6 @@
                                     <td>
                                         <a href="{{ route('operasi.penandaan.create', ['noReg' => $data->no_mr]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
                                     </td>
->>>>>>> 854724aa636579999dab713cc13890ebe056e34d:resources/views/pages/ok/jadwalOperasi/index.blade.php
                                 </tr>
                                 @endforeach
                             </tbody>
