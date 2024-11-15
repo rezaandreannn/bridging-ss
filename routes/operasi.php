@@ -33,16 +33,14 @@ Route::get('/create/booking-operasi', [BookingOperasiController::class, 'create'
 Route::get('booking-operasi/{id}/edit', [BookingOperasiController::class, 'edit'])->name('operasi.booking.edit');
 Route::post('/booking-operasi', [BookingOperasiController::class, 'store'])->name('operasi.booking.store');
 Route::put('/booking-operasi/{id}', [BookingOperasiController::class, 'update'])->name('operasi.booking.update');
-<<<<<<< HEAD
+
 Route::delete('/booking-operasi/delete/{id}', [BookingOperasiController::class, 'destroy'])->name('operasi.booking.destroy');
 
 Route::prefix('ttd-ok')->name('ttd-ok.')->middleware('auth')->group(function () {
 
     Route::get('tanda-operasi', [TtdTandaOperasiController::class, 'index'])->name('penandaan.index');
     Route::get('create/tanda-operasi', [TtdTandaOperasiController::class, 'create'])->name('penandaan.create');
-
 });
-=======
+
 Route::put('/booking-operasi/tanggal/{id}', [BookingOperasiController::class, 'updateTanggal'])->name('operasi.tanggal.update');
-Route::delete('/booking-operasi/{id}', [BookingOperasiController::class, 'destroy'])->name('operasi.booking.destroy');
->>>>>>> 97223b5844bf186fb4d4c6622e46c4ef64a73006
+Route::delete('/booking-operasi/delete/{id}', [BookingOperasiController::class, 'destroy'])->name('operasi.booking.destroy');

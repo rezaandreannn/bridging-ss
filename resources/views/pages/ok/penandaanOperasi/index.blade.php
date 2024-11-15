@@ -83,7 +83,7 @@
             </div>
             <div class="modal-body text-center">
                 <p>Tindakan: {{ $data->nama_tindakan }}</p>
-                <img src="{{ asset('storage/gambar/' . $data->gambar) }}" class="img-fluid" alt="Gambar Pengguna">
+                <img src="{{ asset('storage/ttd/penandaan-operasi-pasien/' . $data->gambar) }}" class="img-fluid" alt="Gambar Pengguna">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
