@@ -20,18 +20,14 @@ class BookingOperasiController extends Controller
     protected $view;
     protected $routeIndex;
     protected $prefix;
-    protected $bookingkamar;
-    protected $rajaldokter;
 
     // menggunakan service
     protected $bookingOperasiService;
     protected $dokterService;
     protected $pasienService;
 
-    public function __construct(BookingOperasi $bookingkamar)
+    public function __construct()
     {
-        $this->rajaldokter = new RajalDokter;
-        $this->bookingkamar = $bookingkamar;
         $this->view = 'pages.ok.';
         $this->prefix = 'Booking Operasi';
         $this->bookingOperasiService = new BookingOperasiService();
@@ -129,6 +125,22 @@ class BookingOperasiController extends Controller
             $this->bookingOperasiService->update($id, $request->validated());
 
             return redirect()->back()->with('success', 'Booking berhasil di ubah.');
+        } catch (Exception $e) {
+            // Redirect dengan pesan error jika terjadi kegagalan
+            return redirect()->back()->with('error', 'Gagal menambahkan booking: ' . $e->getMessage());
+        }
+    }
+
+    public function updateTanggal(Request $request, $id)
+    {
+        try {
+            $booking = $this->bookingOperasiService->findById($id);
+
+            $booking->update([
+                'tanggal' => $request->input('tanggal'),
+            ]);
+
+            return redirect()->back()->with('success', 'Tanggal berhasil di ubah.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
             return redirect()->back()->with('error', 'Gagal menambahkan booking: ' . $e->getMessage());

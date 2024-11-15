@@ -2,47 +2,50 @@
 
 namespace App\Http\Controllers\OK;
 
-use App\Models\RajalDokter;
-use App\Models\Rekam_medis;
-use App\Models\OperasiKamar;
+use Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Operasi\BookingOperasi;
+use App\Models\Operasi\PenandaanOperasi;
 use App\Models\Rajal;
 use App\Services\Operasi\BookingOperasiService;
+use App\Services\Operasi\PenandaanOperasiService;
 
 class PenandaanOperasiController extends Controller
 {
     protected $view;
     protected $routeIndex;
     protected $prefix;
-    protected $bookingOperasi;
     protected $bookingOperasiService;
-    protected $rajal;
+    protected $penandaanOperasiService;
 
-    public function __construct(BookingOperasi $bookingOperasi)
+    public function __construct()
     {
-        $this->bookingOperasi = $bookingOperasi;
+
         $this->view = 'pages.ok.';
         $this->prefix = 'Penandaan Lokasi';
         $this->bookingOperasiService = new BookingOperasiService();
-        $this->rajal = new Rajal();
+        $this->penandaanOperasiService = new PenandaanOperasiService();
     }
 
     public function jadwal(Request $request)
     {
         $title = 'Jadwal Operasi';
         $jadwal = $this->bookingOperasiService->get();
-        // dd($jadwal);
+
         return view($this->view . 'jadwalOperasi.index', compact('title', 'jadwal'));
     }
 
     public function index(Request $request)
     {
-        $title = 'Jadwal Operasi';
-        // $jadwal = $this->booking->getJadwalOperasi();
-        $jadwal = BookingOperasi::with('ruangan')->get();
-        return view($this->view . 'penandaanOperasi.index', compact('title', 'jadwal', 'biodata'));
+        $title = 'Penandaan Operasi';
+
+        $penandaans = $this->penandaanOperasiService->get();
+
+        return view($this->view . 'penandaanOperasi.index', compact('penandaans'))
+            ->with([
+                'title' => $title
+            ]);
     }
 
     /**
@@ -66,7 +69,20 @@ class PenandaanOperasiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $data = [
+                'kode_register' => $request->kode_register,
+                'hasil_gambar' => $request->signatureData,
+                'jenis_operasi' => $request->jenis_operasi
+            ];
+
+            $this->penandaanOperasiService->insert($data);
+
+            return redirect()->back()->with('success', 'Penandaan Operasi berhasil ditambahkan.');
+        } catch (Exception $e) {
+            // Redirect dengan pesan error jika terjadi kegagalan
+            return redirect()->back()->with('error', 'Gagal menambahkan Penandaan Operasi: ' . $e->getMessage());
+        }
     }
 
     /**

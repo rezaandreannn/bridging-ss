@@ -99,8 +99,9 @@
                 <div class="col-12">
                     <!-- components biodata pasien by no reg -->
                     @include('components.biodata-pasien-ok-bynoreg')
-                    <form id="myForm" action="{{ route('operasi.penandaan.store') }}" method="POST">
+                    <form id="myForm" action="{{ route('operasi.penandaan.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        <input type="hidden" name="kode_register" value="{{ $biodata->pendaftaran->No_Reg }}">
                         <div class="card mb-3">
                             <div class="card-header card-khusus-header">
                                 <h6 class="card-khusus-title">Penandaan Operasi @if ($biodata->pendaftaran->registerPasien->JENIS_KELAMIN == 'L')
@@ -123,25 +124,10 @@
                                         </div>
                                         @enderror
                                     </div>
-                                    {{-- <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="d-block">Jenis Kelamin</label>
-                                            <select name="jenis_kelamin" id="kondisi" class="form-control select2 @error('jenis_kelamin')  is-invalid @enderror" onchange="click_jenis_kelamin(this)">
-                                                <option value="">--Pilih Jenis Kelamin--</option>
-                                                <option value="Pria" @if(old('jenis_kelamin')=='Pria' ) selected @endif>Pria</option>
-                                                <option value="Wanita" @if(old('jenis_kelamin')=='Wanita' ) selected @endif>Wanita</option>
-                                            </select>
-                                            @error('jenis_kelamin')
-                                            <span class="text-danger" style="font-size: 12px;">
-                                                {{ $message }}
-                                            </span>
-                                            @enderror
-                                        </div>
-                                    </div> --}}
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Jenis Tindakan</label>
-                                            <input type="text" name="nama_tindakan" value="{{ old('nama_tindakan', $biodata->nama_tindakan ?? '')}}" class="form-control @error('nama_tindakan') is-invalid @enderror" readonly>
+                                            <input type="text" name="jenis_operasi" value="{{ old('jenis_operasi', $biodata->nama_tindakan ?? '')}}" class="form-control @error('jenis_operasi') is-invalid @enderror" readonly>
                                         </div>
                                         @error('jenis_operasi')
                                         <div class="invalid-feedback">
@@ -151,21 +137,21 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card" id="{{ $biodata->pendaftaran->registerPasien->JENIS_KELAMIN == 'L' ? 'formPria' : 'formWanita' }}" 
-                                data-gender="{{ $biodata->pendaftaran->registerPasien->JENIS_KELAMIN }}">
-                               <div class="card-body card-khusus-body">
-                                   <div class="col-md-12">
-                                       <div>
-                                           <canvas id="drawingCanvas" width="1000" height="600" style="border:1px solid #000; width:100%; height:auto;"></canvas>
-                                           <br />
-                                           <button id="undoButton" type="button">Undo Coretan Terakhir</button>
-                                           <button id="clearCanvasButton" type="button">Hapus Semua Coretan</button>
-                                           <button id="drawButton" type="button">Gambar</button>
-                                       </div>
-                                       <textarea id="signatureData" name="signatureData" style="display:none;"></textarea>
-                                   </div>
-                               </div>
-                           </div>
+                            {{-- Gambar Operasi --}}
+                            <div class="card" id="{{ $biodata->pendaftaran->registerPasien->JENIS_KELAMIN == 'L' ? 'formPria' : 'formWanita' }}" data-gender="{{ $biodata->pendaftaran->registerPasien->JENIS_KELAMIN }}">
+                                <div class="card-body card-khusus-body">
+                                    <div class="col-md-12">
+                                        <div>
+                                            <canvas id="drawingCanvas" width="1000" height="600" style="border:1px solid #000; width:100%; height:auto;"></canvas>
+                                            <br />
+                                            <button id="undoButton" type="button" class="btn btn-sm btn-primary"><i class="fas fa-undo"></i> Undo</button>
+                                            <button id="clearCanvasButton" type="button" class="btn btn-sm btn-primary"><i class="fas fa-trash"></i> Hapus</button>
+                                            {{-- <button id="drawButton" type="button" class="btn btn-sm btn-primary">Gambar</button> --}}
+                                        </div>
+                                        <textarea id="signatureData" name="signatureData" style="display:none;"></textarea>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="text-left">
                             <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button>
@@ -188,6 +174,7 @@
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script>
 <script src="{{ asset('ttd/js/jquery.signature.min.js') }}"></script>
+<script src="{{ asset('js/page/tanda-operasi-image.js') }}"></script>
 {{-- <script src="{{ asset('ttd/js/signature_pad.min.js') }}"></script> --}}
 
 <!-- Page Specific JS File -->
@@ -205,126 +192,13 @@
 </script>
 
 <script>
-    const canvas = document.getElementById('drawingCanvas');
-const ctx = canvas.getContext('2d');
-const signatureData = document.getElementById('signatureData');
-let paths = []; // Array to store path history
-let currentPath = []; // Array for the current path being drawn
-let drawing = false; // Drawing status
-let erasing = false; // Erase mode status
-const img = new Image(); // Background image object
-
-// Set background image based on gender
-const gender = document.getElementById('formPria') ? 'L' : 'P'; // Or read from data-gender
-img.src = gender === 'L' ? '{{ asset('img/lakii.jpg') }}' : '{{ asset('img/wanita.jpg') }}'; // Set appropriate image path
-
-// Load background image
-img.onload = () => {
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-};
-
-// Function to get scaled mouse coordinates
-function getMousePos(event) {
-    const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width / rect.width; // Scale factor for X
-    const scaleY = canvas.height / rect.height; // Scale factor for Y
-
-    return {
-        x: (event.clientX - rect.left) * scaleX,
-        y: (event.clientY - rect.top) * scaleY
-    };
-}
-
-// Function to redraw all paths
-function drawPaths() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // Redraw background
-
-    paths.forEach(path => {
-        ctx.beginPath();
-        path.forEach((point, index) => {
-            if (index === 0) {
-                ctx.moveTo(point.x, point.y);
-            } else {
-                ctx.lineTo(point.x, point.y);
-            }
-        });
-        ctx.stroke();
-    });
-}
-
-// Start drawing or erasing
-canvas.addEventListener('mousedown', (event) => {
-    drawing = true;
-    currentPath = []; // Initialize a new path
-    paths.push(currentPath); // Save path in paths array
-
-    const { x, y } = getMousePos(event);
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-    currentPath.push({ x, y });
-});
-
-// Draw or erase on mouse move
-canvas.addEventListener('mousemove', (event) => {
-    if (drawing) {
-        const { x, y } = getMousePos(event);
-
-        if (erasing) {
-            ctx.globalCompositeOperation = 'destination-out'; // Erase mode
-            ctx.lineWidth = 10; // Eraser width
-        } else {
-            ctx.globalCompositeOperation = 'source-over'; // Draw mode
-            ctx.lineWidth = 2; // Line width
-            ctx.strokeStyle = 'red'; // Line color
-        }
-
-        ctx.lineTo(x, y);
-        ctx.stroke();
-
-        // Save point in the current path
-        currentPath.push({ x, y });
-    }
-});
-
-// End drawing
-const endDrawing = () => {
-    drawing = false;
-    ctx.closePath();
-    signatureData.value = canvas.toDataURL(); // Save canvas as data URL
-};
-
-canvas.addEventListener('mouseup', endDrawing);
-canvas.addEventListener('mouseout', endDrawing); // Stop drawing if cursor leaves canvas
-
-// Undo last drawing
-document.getElementById('undoButton').addEventListener('click', () => {
-    paths.pop(); // Remove last path
-    drawPaths(); // Redraw remaining paths
-    signatureData.value = canvas.toDataURL(); // Save updated canvas state
-});
-
-// Clear canvas
-document.getElementById('clearCanvasButton').addEventListener('click', () => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // Redraw background
-    paths = []; // Clear paths array
-    signatureData.value = ''; // Reset data URL
-});
-
-// Enable draw mode
-document.getElementById('drawButton').addEventListener('click', () => {
-    erasing = false; // Switch to draw mode
-    canvas.style.cursor = 'default'; // Default cursor for drawing
-});
 
 </script>
 
 <script type="text/javascript">
-
     var sig = $("#signat").signature({
-        syncField: "#signature1",
-        syncFormat: "PNG"
+        syncField: "#signature1"
+        , syncFormat: "PNG"
     });
     $('#clear').click(function(e) {
         e.preventDefault();
@@ -333,14 +207,15 @@ document.getElementById('drawButton').addEventListener('click', () => {
     });
 
     var sig2 = $("#signat2").signature({
-        syncField: "#signature2",
-        syncFormat: "PNG"
+        syncField: "#signature2"
+        , syncFormat: "PNG"
     });
     $('#clear2').click(function(e) {
         e.preventDefault();
         sig2.signature('clear');
         $("#signature2").val('');
     });
+
 </script>
 
 @endpush

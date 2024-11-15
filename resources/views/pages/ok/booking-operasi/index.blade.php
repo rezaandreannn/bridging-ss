@@ -175,7 +175,9 @@
                                                 <div class="dropdown-menu">
                                                     <a class="dropdown-item has-icon" href=""><i class="fas fa-info"></i> Detail</a>
                                                     <a class="dropdown-item has-icon" href="{{ route('operasi.booking.edit', $booking->id )}}"><i class="fas fa-pencil-alt"></i> Ubah Data</a>
-                                                    <a class="dropdown-item has-icon" href=""><i class="fas fa-calendar-check"></i> Ganti Tanggal</a>
+                                                    <a class="dropdown-item has-icon" href="#" data-toggle="modal" data-target="#modal-edit-tanggal{{ $booking->id }}">
+                                                        <i class="fas fa-calendar-check"></i> Ganti Tanggal
+                                                    </a>
                                                     <a class="dropdown-item has-icon" href="#" data-toggle="modal" data-target="#modal-edit-ruang{{ $booking->id }}">
                                                         <i class="fas fa-person-booth"></i> Ganti Ruangan
                                                     </a>
@@ -204,6 +206,33 @@
             </div>
     </section>
 </div>
+
+
+@foreach ($bookings as $booking)
+<div class="modal fade" id="modal-edit-tanggal{{ $booking->id }}" tabindex="-1" role="dialog" aria-labelledby="modalEditTanggalLabel{{ $booking->id }}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEditTanggalLabel{{ $booking->id }}">Edit Tanggal</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{ route('operasi.tanggal.update', $booking->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="editTanggal{{ $booking->id }}">Tanggal</label>
+                        <input type="date" name="tanggal" value="{{ old('tanggal', $booking->tanggal ?? '')}}" class="form-control @error('tanggal') is-invalid @enderror">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endforeach
 
 <!-- Modals for Edit Room, adjusted to iterate through bookings -->
 @foreach ($bookings as $booking)
