@@ -2,8 +2,9 @@
 
 namespace App\Models\Operasi;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Simrs\Pendaftaran;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PenandaanOperasi extends Model
 {
@@ -20,4 +21,9 @@ class PenandaanOperasi extends Model
         'created_by',
         'updated_by'
     ];
+
+    public function booking()
+    {
+        return $this->hasOne(BookingOperasi::class, 'kode_register', 'kode_register');
+    }
 }
