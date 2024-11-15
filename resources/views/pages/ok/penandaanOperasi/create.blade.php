@@ -151,39 +151,21 @@
                                     </div>
                                 </div>
                             </div>
-                            @if($biodata->pendaftaran->registerPasien->JENIS_KELAMIN == 'L')
-                            <!-- Pria (Male) Form -->
-                            <div class="card" id="formPria">
-                                <div class="card-body card-khusus-body">
-                                    <div class="col-md-12">
-                                        <div>
-                                            <canvas id="drawingCanvas" width="1000" height="600" style="border:1px solid #000; width:100%; height:auto;"></canvas>
-                                            <br />
-                                            <button id="undoButton" type="button">Undo Coretan Terakhir</button>
-                                            <button id="clearCanvasButton" type="button">Hapus Semua Coretan</button>
-                                            <button id="drawButton" type="button">Gambar</button>
-                                        </div>
-                                        <textarea id="signatureData" name="signatureData" style="display:none;"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            @elseif($biodata->pendaftaran->registerPasien->JENIS_KELAMIN == 'P')
-                                <!-- Wanita (Female) Form -->
-                                <div class="card" id="formWanita">
-                                    <div class="card-body card-khusus-body">
-                                        <div class="col-md-12">
-                                            <div>
-                                                <canvas id="drawingCanvas" width="1000" height="600" style="border:1px solid #000; width:100%; height:auto;"></canvas>
-                                                <br />
-                                                <button id="undoButton" type="button">Undo Coretan Terakhir</button>
-                                                <button id="clearCanvasButton" type="button">Hapus Semua Coretan</button>
-                                                <button id="drawButton" type="button">Gambar</button>
-                                            </div>
-                                            <textarea id="signatureData" name="signatureData" style="display:none;"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
+                            <div class="card" id="{{ $biodata->pendaftaran->registerPasien->JENIS_KELAMIN == 'L' ? 'formPria' : 'formWanita' }}" 
+                                data-gender="{{ $biodata->pendaftaran->registerPasien->JENIS_KELAMIN }}">
+                               <div class="card-body card-khusus-body">
+                                   <div class="col-md-12">
+                                       <div>
+                                           <canvas id="drawingCanvas" width="1000" height="600" style="border:1px solid #000; width:100%; height:auto;"></canvas>
+                                           <br />
+                                           <button id="undoButton" type="button">Undo Coretan Terakhir</button>
+                                           <button id="clearCanvasButton" type="button">Hapus Semua Coretan</button>
+                                           <button id="drawButton" type="button">Gambar</button>
+                                       </div>
+                                       <textarea id="signatureData" name="signatureData" style="display:none;"></textarea>
+                                   </div>
+                               </div>
+                           </div>
                         </div>
                         <div class="text-left">
                             <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button>
@@ -221,99 +203,121 @@
     });
 
 </script>
+
 <script>
-   // Variabel untuk canvas, context, dan histori coretan
     const canvas = document.getElementById('drawingCanvas');
-    const ctx = canvas.getContext('2d');
-    const signatureData = document.getElementById('signatureData');
-    let paths = [];           // Array untuk menyimpan histori coretan
-    let currentPath = [];     // Array untuk coretan yang sedang dibuat
-    let drawing = false;      // Status menggambar
-    const img = new Image();  // Objek gambar latar (jika diperlukan)
+const ctx = canvas.getContext('2d');
+const signatureData = document.getElementById('signatureData');
+let paths = []; // Array to store path history
+let currentPath = []; // Array for the current path being drawn
+let drawing = false; // Drawing status
+let erasing = false; // Erase mode status
+const img = new Image(); // Background image object
 
-    // Mengatur gambar latar (jika ada)
-    img.src = '{{ asset('img/lakii.jpg') }}';  // Ganti dengan URL gambar latar Anda
-    img.onload = () => {
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+// Set background image based on gender
+const gender = document.getElementById('formPria') ? 'L' : 'P'; // Or read from data-gender
+img.src = gender === 'L' ? '{{ asset('img/lakii.jpg') }}' : '{{ asset('img/wanita.jpg') }}'; // Set appropriate image path
+
+// Load background image
+img.onload = () => {
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+};
+
+// Function to get scaled mouse coordinates
+function getMousePos(event) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width; // Scale factor for X
+    const scaleY = canvas.height / rect.height; // Scale factor for Y
+
+    return {
+        x: (event.clientX - rect.left) * scaleX,
+        y: (event.clientY - rect.top) * scaleY
     };
+}
 
-    // Fungsi untuk menggambar ulang semua coretan dari histori
-    function drawPaths() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);  // Bersihkan canvas
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);  // Gambar ulang gambar latar
+// Function to redraw all paths
+function drawPaths() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // Redraw background
 
-        paths.forEach(path => {
-            ctx.beginPath();
-            path.forEach((point, index) => {
-                if (index === 0) {
-                    ctx.moveTo(point.x, point.y);
-                } else {
-                    ctx.lineTo(point.x, point.y);
-                }
-            });
-            ctx.stroke();
-        });
-    }
-
-    // Event saat mulai menggambar atau menghapus
-    canvas.addEventListener('mousedown', (event) => {
-        drawing = true;
-        currentPath = [];      // Inisialisasi path baru
-        paths.push(currentPath); // Simpan path di array paths
-
+    paths.forEach(path => {
         ctx.beginPath();
-        ctx.moveTo(event.offsetX, event.offsetY);
-        currentPath.push({ x: event.offsetX, y: event.offsetY });
-    });
-
-    // Event saat menggambar atau menghapus
-    canvas.addEventListener('mousemove', (event) => {
-        if (drawing) {
-            if (erasing) {
-                ctx.globalCompositeOperation = 'destination-out'; // Mode penghapus
-                ctx.lineWidth = 10;  // Lebar penghapus
+        path.forEach((point, index) => {
+            if (index === 0) {
+                ctx.moveTo(point.x, point.y);
             } else {
-                ctx.globalCompositeOperation = 'source-over'; // Mode menggambar biasa
-                ctx.lineWidth = 2;   // Lebar garis
-                ctx.strokeStyle = 'red'; // Warna coretan
+                ctx.lineTo(point.x, point.y);
             }
+        });
+        ctx.stroke();
+    });
+}
 
-            ctx.lineTo(event.offsetX, event.offsetY);
-            ctx.stroke();
-            
-            // Simpan titik di path saat ini
-            currentPath.push({ x: event.offsetX, y: event.offsetY });
+// Start drawing or erasing
+canvas.addEventListener('mousedown', (event) => {
+    drawing = true;
+    currentPath = []; // Initialize a new path
+    paths.push(currentPath); // Save path in paths array
+
+    const { x, y } = getMousePos(event);
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    currentPath.push({ x, y });
+});
+
+// Draw or erase on mouse move
+canvas.addEventListener('mousemove', (event) => {
+    if (drawing) {
+        const { x, y } = getMousePos(event);
+
+        if (erasing) {
+            ctx.globalCompositeOperation = 'destination-out'; // Erase mode
+            ctx.lineWidth = 10; // Eraser width
+        } else {
+            ctx.globalCompositeOperation = 'source-over'; // Draw mode
+            ctx.lineWidth = 2; // Line width
+            ctx.strokeStyle = 'red'; // Line color
         }
-    });
 
-    // Event saat selesai menggambar atau menghapus
-    canvas.addEventListener('mouseup', () => {
-        drawing = false;
-        ctx.closePath();
+        ctx.lineTo(x, y);
+        ctx.stroke();
 
-        // Simpan canvas dalam bentuk data URL
-        signatureData.value = canvas.toDataURL();
-    });
+        // Save point in the current path
+        currentPath.push({ x, y });
+    }
+});
 
-    // Tombol untuk menghapus coretan terakhir (undo)
-    document.getElementById('undoButton').addEventListener('click', () => {
-        paths.pop(); // Hapus path terakhir dari array paths
-        drawPaths(); // Gambar ulang semua paths yang tersisa
-        signatureData.value = canvas.toDataURL(); // Simpan hasil baru ke textarea
-    });
+// End drawing
+const endDrawing = () => {
+    drawing = false;
+    ctx.closePath();
+    signatureData.value = canvas.toDataURL(); // Save canvas as data URL
+};
 
-    // Tombol untuk menghapus semua coretan
-    document.getElementById('clearCanvasButton').addEventListener('click', () => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);  // Bersihkan canvas
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);  // Gambar ulang gambar latar
-        paths = [];  // Kosongkan array paths
-        signatureData.value = '';  // Reset data URL pada textarea
-    });
+canvas.addEventListener('mouseup', endDrawing);
+canvas.addEventListener('mouseout', endDrawing); // Stop drawing if cursor leaves canvas
 
-    // Tombol untuk mengaktifkan mode menggambar
-    document.getElementById('drawButton').addEventListener('click', () => {
-        erasing = false; // Aktifkan mode menggambar biasa
-    });
+// Undo last drawing
+document.getElementById('undoButton').addEventListener('click', () => {
+    paths.pop(); // Remove last path
+    drawPaths(); // Redraw remaining paths
+    signatureData.value = canvas.toDataURL(); // Save updated canvas state
+});
+
+// Clear canvas
+document.getElementById('clearCanvasButton').addEventListener('click', () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // Redraw background
+    paths = []; // Clear paths array
+    signatureData.value = ''; // Reset data URL
+});
+
+// Enable draw mode
+document.getElementById('drawButton').addEventListener('click', () => {
+    erasing = false; // Switch to draw mode
+    canvas.style.cursor = 'default'; // Default cursor for drawing
+});
+
 </script>
 
 <script type="text/javascript">
