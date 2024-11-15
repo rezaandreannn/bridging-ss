@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::connection('pku')->create('ok_tanda_operasi', function (Blueprint $table) {
+        Schema::connection('pku')->create('ok_tanda_pasien', function (Blueprint $table) {
             $table->id();
             $table->string('kode_register');
-            $table->string('hasil_gambar');
-            $table->string('jenis_operasi');
-            $table->string('created_by')->nullable();
-            $table->string('updated_by')->nullable();
-            $table->timestamp('deleted_at')->nullable();
+            $table->string('ttd_pasien');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::connection('pku')->dropIfExists('ok_tanda_operasi');
+        Schema::connection('pku')->dropIfExists('ok_tanda_pasien');
     }
 };
