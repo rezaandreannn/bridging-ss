@@ -66,7 +66,14 @@ class PenandaanOperasiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $this->bookingOperasiService->insert($request->validated());
+
+            return redirect()->back()->with('success', 'Booking berhasil ditambahkan.');
+        } catch (Exception $e) {
+            // Redirect dengan pesan error jika terjadi kegagalan
+            return redirect()->back()->with('error', 'Gagal menambahkan booking: ' . $e->getMessage());
+        }
     }
 
     /**
