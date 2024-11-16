@@ -131,7 +131,6 @@
                                     <td>{{$konsul->TANGGAL}}</td>
                                     <td>
                                 
-                                    @if($data->FS_STATUS == 1)
                                         @if($poliMata->cekRefraksi($konsul->NO_REG) == true)
                                         <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-edit{{$konsul->NO_REG}}">
                                             <i class="fas fa-plus"></i> Edit
@@ -141,7 +140,6 @@
                                             <i class="fas fa-plus"></i> Entry
                                         </button>
                                         @endif
-                                    @endif
                                     </td>
                                 </tr>
                                 @endforeach
