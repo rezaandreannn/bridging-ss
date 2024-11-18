@@ -189,8 +189,8 @@
                                                     <a class="dropdown-item has-icon" href="#" data-toggle="modal" data-target="#modal-edit-ruang{{ $booking->id }}">
                                                         <i class="fas fa-person-booth"></i> Ganti Ruangan
                                                     </a>
-                                                    <a class="dropdown-item has-icon" href="{{ route('operasi.penandaan.create', ['noReg' => $booking->kode_register]) }}">
-                                                        <i class="fas fa-marker"></i> Penandaan Operasi
+                                                    <a class="dropdown-item has-icon" href="{{ isset($statusPenandaan[$booking->id]) && $statusPenandaan[$booking->id] == 'update' ? route('operasi.penandaan.create', ['noReg' => $booking->kode_register]) : route('operasi.penandaan.edit', ['id' => $booking->id]) }}">
+                                                        <i class="fas fa-marker"></i>  {{ isset($statusPenandaan[$booking->id]) && $statusPenandaan[$booking->id] == 'update' ? 'Penandaan Operasi' : 'Update Penandaan' }}
                                                     </a>
                                                     <!-- Hidden form for deletion -->
                                                     <form id="delete-form-{{$booking->id}}" action="{{ route('operasi.booking.destroy', $booking->id) }}" method="POST" style="display: none;">
@@ -253,7 +253,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('operasi.ruang.update', $booking->id) }}" method="POST">
+            <form action="{{ route('operasi.ruangan.update', $booking->id) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">

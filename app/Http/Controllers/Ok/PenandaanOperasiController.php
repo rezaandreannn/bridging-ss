@@ -105,7 +105,12 @@ class PenandaanOperasiController extends Controller
      */
     public function edit($id)
     {
-        //
+        $title = $this->prefix . ' ' . 'Operasi';
+        // Ambil data berdasarkan ID
+        $penandaans = PenandaanOperasi::findOrFail($id);
+        $biodata = $this->bookingOperasiService->biodata($noReg);
+        // dd($biodata);
+        return view($this->view . 'penandaan-operasi.edit', compact('title', 'biodata'));
     }
 
     /**
