@@ -138,7 +138,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Preview</label>
-                                            <img src="{{ asset('storage/operasi/penandan-lokasi-pasien/'. $penandaan->hasil_gambar) }}" width="100%" height="250" />
+                                            {{-- {{ dd(asset('storage/operasi/' . $penandaan['hasil_gambar'])) }} --}}
+                                            <img src="{{ asset('storage/operasi/'. $penandaan->hasil_gambar) }}" width="100%" height="250" />
                                         </div>
                                         @error('jenis_operasi')
                                         <div class="invalid-feedback">
