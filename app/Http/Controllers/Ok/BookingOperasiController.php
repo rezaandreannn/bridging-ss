@@ -3,18 +3,19 @@
 namespace App\Http\Controllers\OK;
 
 use Exception;
-use App\Models\RajalDokter;
 use Illuminate\Http\Request;
+use App\Helpers\BookingHelper;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Services\SimRs\DokterService;
-use App\Models\Operasi\BookingOperasi;
 use App\Models\Operasi\RuanganOperasi;
+use App\Models\Operasi\PenandaanOperasi;
 use App\Services\SimRs\PendaftaranService;
 use App\Services\Operasi\BookingOperasiService;
+use App\Services\Operasi\PenandaanOperasiService;
 use App\Http\Requests\Operasi\StoreBookingRequest;
 use App\Http\Requests\Operasi\UpdateBookingRequest;
-use App\Models\Operasi\PenandaanOperasi;
+
 
 class BookingOperasiController extends Controller
 {
@@ -26,12 +27,14 @@ class BookingOperasiController extends Controller
     protected $bookingOperasiService;
     protected $dokterService;
     protected $pasienService;
+    protected $penandaanOperasiService;
 
 
     public function __construct()
     {
         $this->view = 'pages.ok.';
         $this->prefix = 'Booking Operasi';
+        $this->penandaanOperasiService = new PenandaanOperasiService();
         $this->bookingOperasiService = new BookingOperasiService();
         $this->dokterService = new DokterService();
         $this->pasienService = new PendaftaranService();
@@ -50,17 +53,8 @@ class BookingOperasiController extends Controller
             $booking = $this->bookingOperasiService->findById(session('booking_id'));
         }
 
-        $statusPenandaan = [];
-
-        foreach ($bookings as $booking) {
-            $exists = PenandaanOperasi::where('kode_register', $booking->kode_register)->exists();
-            if ($exists) {
-                $statusPenandaan[$booking->id] = 'create';
-            } else {
-                $statusPenandaan[$booking->id] = 'update';
-            }
-        }
-
+        // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
+        $statusPenandaan = BookingHelper::getStatusPenandaan($bookings);
 
         return view($this->view . 'booking-operasi.index', compact('bookings', 'booking'))->with([
             'title' => $title,
@@ -78,7 +72,7 @@ class BookingOperasiController extends Controller
             ->with([
                 'title' => 'Booking Operasi',
                 'dokters' => $this->dokterService->byBedahOperasi(), //dokter bedah kebutuhan select items dokter
-                'ruangans' => RuanganOperasi::pluck('nama_ruang', 'id') //ruangan operasi kebuthunan select items ruangan
+                'ruangans' => RuanganOperasi::pluck('nama_ruang', 'id') //ruangan operasi kebutuhan select items ruangan
             ]);
     }
 

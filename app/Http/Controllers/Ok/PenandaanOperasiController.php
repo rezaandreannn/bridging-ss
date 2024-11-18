@@ -42,6 +42,7 @@ class PenandaanOperasiController extends Controller
 
         $penandaans = $this->penandaanOperasiService->get();
 
+
         return view($this->view . 'penandaan-operasi.index', compact('penandaans'))
             ->with([
                 'title' => $title
