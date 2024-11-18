@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\OK;
 
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Operasi\TtdTandaOperasi;
+use Illuminate\Support\Facades\Storage;
 use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\TtdTandaOperasiService;
 
@@ -31,11 +34,11 @@ class TtdTandaOperasiController extends Controller
     {
         //
         $title = 'Penandaan Operasi';
-        // $ttdpendaanpasien = $this->ttdTandaOperasiService->byDate(date('Y-m-d'));
-        $ttdpendaanpasien = $this->ttdTandaOperasiService->get();
+        // $ttdpenandaanpasien = $this->ttdTandaOperasiService->byDate(date('Y-m-d'));
+        $ttdpenandaanpasien = $this->ttdTandaOperasiService->get();
         $bookings = $this->bookingOperasiService->get();
-        // dd($ttdpendaanpasien);
-        return view($this->view . 'tanda-tangan.index',compact('ttdpendaanpasien','bookings'))->with([
+        // dd($ttdpenandaanpasien);
+        return view($this->view . 'tanda-tangan.index',compact('ttdpenandaanpasien','bookings'))->with([
             'title'=>$title
         ]);
     }
@@ -47,17 +50,12 @@ class TtdTandaOperasiController extends Controller
      */
     public function create(Request $request)
     {
-        //
-        // dd($request->input('kode_register'));
-
         
         $title = 'Add Ttd Penandaan Operasi';
-        // dd('ok');
-        $bookings = $this->bookingOperasiService->get();
-        // dd($bookings);
-        return view($this->view . 'tanda-tangan.create',compact('bookings'))->with([
+        $biodata = $this->bookingOperasiService->biodata($request->input('kode_register'));
+        
+        return view($this->view . 'tanda-tangan.create',compact('biodata'))->with([
             'title'=>$title,
-            'biodata'=> $this->bookingOperasiService->biodata($request->input('kode_register'))
         ]);
     }
 
@@ -69,9 +67,28 @@ class TtdTandaOperasiController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
 
+        // dd('ok');
+        //
+        try {
+
+            $data = [
+                'kode_register' => $request->kode_register,
+                'ttd_pasien' => $request->signed,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            
+            ];
+
+            $this->ttdTandaOperasiService->insert($data);
+
+            return redirect()->route('ttd-ok.penandaan.index')->with('success', 'Tanda tangan berhasil diperbarui.');
+        } catch (Exception $e) {
+            // Redirect dengan pesan error jika terjadi kegagalan
+            return redirect()->back()->with('error', 'Gagal menambahkan tanda tangan: ' . $e->getMessage());
+        }
+    }
+    
     /**
      * Display the specified resource.
      *
@@ -81,8 +98,9 @@ class TtdTandaOperasiController extends Controller
     public function show($id)
     {
         //
+        
     }
-
+    
     /**
      * Show the form for editing the specified resource.
      *
@@ -92,8 +110,18 @@ class TtdTandaOperasiController extends Controller
     public function edit($id)
     {
         //
+        $title = 'Add Ttd Penandaan Operasi';
+        $ttdpenandaanpasien = $this->ttdTandaOperasiService->findById($id);
+        
+        // dd($ttdpenandaanpasien);
+        
+        return view($this->view . 'tanda-tangan.edit',compact('ttdpenandaanpasien'))->with([
+            'title'=>$title,
+            'biodata'=> $this->bookingOperasiService->biodata($ttdpenandaanpasien->kode_register)
+        ]);
     }
-
+    
+    
     /**
      * Update the specified resource in storage.
      *
@@ -103,7 +131,23 @@ class TtdTandaOperasiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        try {
+
+            $data = [
+                'kode_register' => $request->kode_register,
+                'ttd_pasien' => $request->signed,
+                'updated_at' => date('Y-m-d H:i:s')
+                
+            ];
+            
+            $this->ttdTandaOperasiService->update($id,$data);
+            
+            return redirect()->route('ttd-ok.penandaan.index')->with('success', 'Tanda tangan berhasil diperbarui.');
+        } catch (Exception $e) {
+            // Redirect dengan pesan error jika terjadi kegagalan
+            return redirect()->back()->with('error', 'Gagal menambahkan tanda tangan: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -114,6 +158,15 @@ class TtdTandaOperasiController extends Controller
      */
     public function destroy($id)
     {
+        // dd('ok');
         //
+        $ttdtandapasien = TtdTandaOperasi::findOrFail($id);
+        // jika gambar sudah ada lakukan hapus
+        if($ttdtandapasien->ttd_pasien){
+            Storage::delete('public/ttd/penandaan-operasi-pasien/' . $ttdtandapasien->ttd_pasien);
+        }
+        DB::connection('pku')->table('ok_tanda_tangan_pasien')->where('id', $id)->delete();
+
+        return redirect()->back()->with('success', 'Data Berhasil Dihapus!');
     }
 }

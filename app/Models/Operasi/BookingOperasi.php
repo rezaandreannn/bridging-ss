@@ -44,4 +44,9 @@ class BookingOperasi extends Model
     {
         return $this->hasOne(Pendaftaran::class, 'No_Reg', 'kode_register');
     }
+
+    public function ttdtandapasien()
+    {
+        return $this->hasOne(Pendaftaran::class, 'No_Reg', 'kode_register');
+    }
 }

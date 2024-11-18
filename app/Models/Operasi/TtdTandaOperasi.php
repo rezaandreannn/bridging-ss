@@ -16,6 +16,13 @@ class TtdTandaOperasi extends Model
 
     protected $with = ['booking'];
 
+    protected $fillable = [
+        'kode_register',
+        'ttd_pasien',
+        'created_at',
+        'updated_at'
+    ];
+
     public function booking()
     {
         return $this->belongsTo(BookingOperasi::class, 'kode_register', 'kode_register');
