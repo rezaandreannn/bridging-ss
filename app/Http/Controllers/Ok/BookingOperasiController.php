@@ -3,19 +3,19 @@
 namespace App\Http\Controllers\OK;
 
 use Exception;
-use App\Models\RajalDokter;
 use Illuminate\Http\Request;
+use App\Helpers\BookingHelper;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Services\SimRs\DokterService;
-use App\Models\Operasi\BookingOperasi;
 use App\Models\Operasi\RuanganOperasi;
 use App\Models\Operasi\PenandaanOperasi;
 use App\Services\SimRs\PendaftaranService;
 use App\Services\Operasi\BookingOperasiService;
+use App\Services\Operasi\PenandaanOperasiService;
 use App\Http\Requests\Operasi\StoreBookingRequest;
 use App\Http\Requests\Operasi\UpdateBookingRequest;
-use App\Services\Operasi\PenandaanOperasiService;
+
 
 class BookingOperasiController extends Controller
 {
@@ -28,6 +28,7 @@ class BookingOperasiController extends Controller
     protected $dokterService;
     protected $pasienService;
     protected $penandaanOperasiService;
+
 
     public function __construct()
     {
@@ -51,14 +52,16 @@ class BookingOperasiController extends Controller
         if (session('booking_id')) {
             $booking = $this->bookingOperasiService->findById(session('booking_id'));
         }
-        // dd($booking);
 
+        // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
+        $statusPenandaan = BookingHelper::getStatusPenandaan($bookings);
 
         return view($this->view . 'booking-operasi.index', compact('bookings', 'booking'))->with([
             'title' => $title,
             'ruanganOperasi' => RuanganOperasi::all(),
             'dokters' => $this->dokterService->byBedahOperasi(),
             'pasien' => $this->pasienService->byStatusActive(),
+            'statusPenandaan' => $statusPenandaan
         ]);
     }
 
@@ -69,7 +72,7 @@ class BookingOperasiController extends Controller
             ->with([
                 'title' => 'Booking Operasi',
                 'dokters' => $this->dokterService->byBedahOperasi(), //dokter bedah kebutuhan select items dokter
-                'ruangans' => RuanganOperasi::pluck('nama_ruang', 'id') //ruangan operasi kebuthunan select items ruangan
+                'ruangans' => RuanganOperasi::pluck('nama_ruang', 'id') //ruangan operasi kebutuhan select items ruangan
             ]);
     }
 
@@ -147,7 +150,24 @@ class BookingOperasiController extends Controller
             return redirect()->back()->with('success', 'Tanggal berhasil di ubah.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
-            return redirect()->back()->with('error', 'Gagal menambahkan booking: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal mengganti tanggal: ' . $e->getMessage());
+        }
+    }
+
+    public function updateRuangan(Request $request, $id)
+    {
+        try {
+            $booking = $this->bookingOperasiService->findById($id);
+
+            // dd($booking);
+            $booking->update([
+                'ruangan_id' => $request->input('ruang_operasi'),
+            ]);
+
+            return redirect()->back()->with('success', 'Ruangan berhasil di ubah.');
+        } catch (Exception $e) {
+            // Redirect dengan pesan error jika terjadi kegagalan
+            return redirect()->back()->with('error', 'Gagal mengganti ruangan: ' . $e->getMessage());
         }
     }
 

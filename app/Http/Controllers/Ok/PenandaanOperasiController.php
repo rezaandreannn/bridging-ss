@@ -41,9 +41,9 @@ class PenandaanOperasiController extends Controller
         $title = 'Penandaan Operasi';
 
         $penandaans = $this->penandaanOperasiService->get();
-        // dd($penandaans);
 
-        return view($this->view . 'penandaanOperasi.index', compact('penandaans'))
+
+        return view($this->view . 'penandaan-operasi.index', compact('penandaans'))
             ->with([
                 'title' => $title
             ]);
@@ -59,7 +59,7 @@ class PenandaanOperasiController extends Controller
         $title = $this->prefix . ' ' . 'Operasi';
         $biodata = $this->bookingOperasiService->biodata($noReg);
         // dd($biodata);
-        return view($this->view . 'penandaanOperasi.create', compact('title', 'biodata'));
+        return view($this->view . 'penandaan-operasi.create', compact('title', 'biodata'));
     }
 
     /**
@@ -105,7 +105,12 @@ class PenandaanOperasiController extends Controller
      */
     public function edit($id)
     {
-        //
+        $title = $this->prefix . ' ' . 'Operasi';
+        // Ambil data berdasarkan ID
+        $penandaans = PenandaanOperasi::findOrFail($id);
+        $biodata = $this->bookingOperasiService->biodata($noReg);
+        // dd($biodata);
+        return view($this->view . 'penandaan-operasi.edit', compact('title', 'biodata'));
     }
 
     /**

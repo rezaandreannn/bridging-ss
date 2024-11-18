@@ -23,7 +23,7 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('operasi.jadwal.index') }}">Operasi Kamar</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('operasi.penandaan.index') }}">Operasi Kamar</a></div>
                 <div class="breadcrumb-item">Penandaan Operasi</div>
             </div>
         </div>
