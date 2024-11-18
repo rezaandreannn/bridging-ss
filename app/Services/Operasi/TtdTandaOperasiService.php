@@ -14,12 +14,12 @@ class TtdTandaOperasiService
     private function baseQuery()
     {
         return TtdTandaOperasi::with([
-            'booking' => function ($query){
-                $query->select('kode_register','tanggal')->with([
-                    'pendaftaran' => function ($query){
-                        $query->select('No_Reg','No_MR')-> with ([
-                            'registerPasien' => function($query){
-                                $query->select('No_MR','Nama_Pasien');
+            'booking' => function ($query) {
+                $query->select('kode_register', 'tanggal')->with([
+                    'pendaftaran' => function ($query) {
+                        $query->select('No_Reg', 'No_MR')->with([
+                            'registerPasien' => function ($query) {
+                                $query->select('No_MR', 'Nama_Pasien');
                             }
                         ]);
                     }
@@ -57,26 +57,25 @@ class TtdTandaOperasiService
         // Use uniqid to generate a unique file name
         $file_name = uniqid($data['kode_register'] . '-' . 'ttd-pasien' . '-' . date('Y-m-d') . '-') . '.' . $image_type;
 
+
         try {
-        // Save the image to storage
-        $ttdtandapasien = TtdTandaOperasi::create([
-            'kode_register' => $data['kode_register'],
-            'ttd_pasien' => $file_name,
-            'created_at' => $data['created_at'],
-            'updated_at' => $data['updated_at']
-        ]);
+            // Save the image to storage
+            $ttdtandapasien = TtdTandaOperasi::create([
+                'kode_register' => $data['kode_register'],
+                'ttd_pasien' => $file_name,
+                'created_at' => $data['created_at'],
+                'updated_at' => $data['updated_at']
+            ]);
 
-        Storage::put('public/ttd/penandaan-operasi-pasien/' . $file_name, $image_base64);
-        
+            Storage::put('public/ttd/penandaan-operasi-pasien/' . $file_name, $image_base64);
+
             return $ttdtandapasien;
-
         } catch (\Throwable $th) {
             throw new Exception("Gagal menambahkan booking: " . $th->getMessage());
         }
-    
     }
 
-    
+
     public function update($id, array $data)
     {
         $image_parts = explode(";base64,", $data['ttd_pasien']);
@@ -86,12 +85,12 @@ class TtdTandaOperasiService
 
         // Use uniqid to generate a unique file name
         $file_name = uniqid($data['kode_register'] . '-' . 'ttd-pasien' . '-' . date('Y-m-d') . '-') . '.' . $image_type;
-        
+
         try {
             // Mencari booking berdasarkan ID
             $ttdtandapasien = TtdTandaOperasi::findOrFail($id);
             // jika gambar sudah ada lakukan hapus
-            if($ttdtandapasien->ttd_pasien){
+            if ($ttdtandapasien->ttd_pasien) {
                 Storage::delete('public/ttd/penandaan-operasi-pasien/' . $ttdtandapasien->ttd_pasien);
             }
             // Melakukan update data

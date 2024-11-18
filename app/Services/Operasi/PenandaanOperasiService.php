@@ -62,10 +62,10 @@ class PenandaanOperasiService
         $image_base64 = base64_decode($image_parts[1]);
 
         // Use uniqid to generate a unique file name
-        $file_name = uniqid($data['kode_register'] . '-' . 'ttd-pasien' . '-' . date('Y-m-d') . '-') . '.' . $image_type;
+        $file_name = uniqid($data['kode_register'] . '-' . 'tanda-operasi' . '-' . date('Y-m-d') . '-') . '.' . $image_type;
 
         // Save the image to storage
-        Storage::put('public/ttd/penandaan-operasi-pasien/' . $file_name, $image_base64);
+        Storage::put('public/penandaan-operasi-pasien/' . $file_name, $image_base64);
 
         $penandaan = PenandaanOperasi::create([
             'kode_register' => $data['kode_register'],
