@@ -147,7 +147,24 @@ class BookingOperasiController extends Controller
             return redirect()->back()->with('success', 'Tanggal berhasil di ubah.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
-            return redirect()->back()->with('error', 'Gagal menambahkan booking: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal mengganti tanggal: ' . $e->getMessage());
+        }
+    }
+
+    public function updateRuangan(Request $request, $id)
+    {
+        try {
+            $booking = $this->bookingOperasiService->findById($id);
+
+            // dd($booking);
+            $booking->update([
+                'ruangan_id' => $request->input('ruang_operasi'),
+            ]);
+
+            return redirect()->back()->with('success', 'Ruangan berhasil di ubah.');
+        } catch (Exception $e) {
+            // Redirect dengan pesan error jika terjadi kegagalan
+            return redirect()->back()->with('error', 'Gagal mengganti ruangan: ' . $e->getMessage());
         }
     }
 

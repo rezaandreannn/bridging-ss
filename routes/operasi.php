@@ -43,4 +43,5 @@ Route::prefix('ttd-ok')->name('ttd-ok.')->middleware('auth')->group(function () 
 });
 
 Route::put('/booking-operasi/tanggal/{id}', [BookingOperasiController::class, 'updateTanggal'])->name('operasi.tanggal.update');
+Route::put('/booking-operasi/ruangan/{id}', [BookingOperasiController::class, 'updateRuangan'])->name('operasi.ruangan.update');
 Route::delete('/booking-operasi/delete/{id}', [BookingOperasiController::class, 'destroy'])->name('operasi.booking.destroy');

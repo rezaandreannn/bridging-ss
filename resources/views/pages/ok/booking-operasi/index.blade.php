@@ -245,7 +245,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('operasi.ruang.update', $booking->id) }}" method="POST">
+            <form action="{{ route('operasi.ruangan.update', $booking->id) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">
