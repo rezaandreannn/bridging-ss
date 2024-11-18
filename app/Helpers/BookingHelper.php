@@ -11,8 +11,8 @@ class BookingHelper
         $statusPenandaan = [];
 
         foreach ($bookings as $booking) {
-            $exists = PenandaanOperasi::where('kode_register', $booking->kode_register)->exists();
-            $statusPenandaan[$booking->id] = $exists ? 'create' : $exists->id;
+            $exists = PenandaanOperasi::where('kode_register', $booking->kode_register)->first();
+            $statusPenandaan[$booking->id] = $exists ? $exists->id : 'create';
         }
 
         return $statusPenandaan;

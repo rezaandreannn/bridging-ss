@@ -168,7 +168,7 @@
                                         <td>{{$booking->no_mr}}</td>
                                         <td>{{$booking->nama_dokter}}</td>
                                         <td>
-                                            @if (isset($statusPenandaan[$booking->id]) && $statusPenandaan[$booking->id] == 'update')
+                                            @if (isset($statusPenandaan[$booking->id]) && $statusPenandaan[$booking->id] == 'create')
                                             <span class="badge badge-success">Create</span>
                                             @else
                                             <span class="badge badge-warning">Update</span>
@@ -189,8 +189,8 @@
                                                     <a class="dropdown-item has-icon" href="#" data-toggle="modal" data-target="#modal-edit-ruang{{ $booking->id }}">
                                                         <i class="fas fa-person-booth"></i> Ganti Ruangan
                                                     </a>
-                                                    <a class="dropdown-item has-icon" href="{{ isset($statusPenandaan[$booking->id]) && $statusPenandaan[$booking->id] == 'update' ? route('operasi.penandaan.create', ['noReg' => $booking->kode_register]) : route('operasi.penandaan.edit', ['id' => $booking->id]) }}">
-                                                        <i class="fas fa-marker"></i>  {{ isset($statusPenandaan[$booking->id]) && $statusPenandaan[$booking->id] == 'update' ? 'Penandaan Operasi' : 'Update Penandaan' }}
+                                                    <a class="dropdown-item has-icon" href="{{ isset($statusPenandaan[$booking->id]) && $statusPenandaan[$booking->id] == 'create' ? route('operasi.penandaan.create', ['noReg' => $booking->kode_register]) : route('operasi.penandaan.edit', ['id' => $statusPenandaan[$booking->id]]) }}">
+                                                        <i class="fas fa-marker"></i> {{ isset($statusPenandaan[$booking->id]) && $statusPenandaan[$booking->id] == 'create' ? 'Penandaan Operasi' : 'Update Penandaan' }}
                                                     </a>
                                                     <!-- Hidden form for deletion -->
                                                     <form id="delete-form-{{$booking->id}}" action="{{ route('operasi.booking.destroy', $booking->id) }}" method="POST" style="display: none;">

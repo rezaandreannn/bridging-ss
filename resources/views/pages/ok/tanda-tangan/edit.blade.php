@@ -41,8 +41,9 @@
         <div class="section-body">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('ttd-ok.penandaan.store') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('ttd-ok.penandaan.update',$ttdpenandaanpasien->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
+                        @method('put')
                         <div class="card-body">
                             <input type="hidden" name="kode_register" value="{{$biodata->pendaftaran->No_Reg}}">
                             <div class="col-md-12">

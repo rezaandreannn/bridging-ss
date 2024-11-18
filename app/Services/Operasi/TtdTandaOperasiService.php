@@ -2,9 +2,11 @@
 
 namespace App\Services\Operasi;
 
-use App\Models\Operasi\TtdTandaOperasi;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use App\Models\Operasi\BookingOperasi;
+use App\Models\Operasi\TtdTandaOperasi;
+use Illuminate\Support\Facades\Storage;
 
 
 class TtdTandaOperasiService
@@ -12,12 +14,12 @@ class TtdTandaOperasiService
     private function baseQuery()
     {
         return TtdTandaOperasi::with([
-            'booking' => function ($query){
-                $query->select('kode_register','tanggal')->with([
-                    'pendaftaran' => function ($query){
-                        $query->select('No_Reg','No_MR')-> with ([
-                            'registerPasien' => function($query){
-                                $query->select('No_MR','Nama_Pasien');
+            'booking' => function ($query) {
+                $query->select('kode_register', 'tanggal')->with([
+                    'pendaftaran' => function ($query) {
+                        $query->select('No_Reg', 'No_MR')->with([
+                            'registerPasien' => function ($query) {
+                                $query->select('No_MR', 'Nama_Pasien');
                             }
                         ]);
                     }
@@ -26,18 +28,84 @@ class TtdTandaOperasiService
         ]);
     }
 
+
     public function get()
     {
         $ttdpasiens = $this->baseQuery()->get();
         return $this->mapData($ttdpasiens);
     }
 
+    public function findById($id)
+    {
+        return TtdTandaOperasi::find($id);
+    }
+
     public function byDate($date)
     {
-        $ttdpasiens = $this->baseQuery()
-            ->whereDate('tanggal', $date)
+        $ttdpasiens = $this->baseQuery($date)
             ->get();
-        return $this->mapData($ttdpasiens);
+        return $ttdpasiens;
+    }
+
+    public function insert(array $data)
+    {
+        $image_parts = explode(";base64,", $data['ttd_pasien']);
+        $image_type_aux = explode("image/", $image_parts[0]);
+        $image_type = $image_type_aux[1];
+        $image_base64 = base64_decode($image_parts[1]);
+
+        // Use uniqid to generate a unique file name
+        $file_name = uniqid($data['kode_register'] . '-' . 'ttd-pasien' . '-' . date('Y-m-d') . '-') . '.' . $image_type;
+
+
+        try {
+            // Save the image to storage
+            $ttdtandapasien = TtdTandaOperasi::create([
+                'kode_register' => $data['kode_register'],
+                'ttd_pasien' => $file_name,
+                'created_at' => $data['created_at'],
+                'updated_at' => $data['updated_at']
+            ]);
+
+            Storage::put('public/operasi/ttd/penandaan-operasi-pasien/' . $file_name, $image_base64);
+
+            return $ttdtandapasien;
+        } catch (\Throwable $th) {
+            throw new Exception("Gagal menambahkan booking: " . $th->getMessage());
+        }
+    }
+
+
+    public function update($id, array $data)
+    {
+        $image_parts = explode(";base64,", $data['ttd_pasien']);
+        $image_type_aux = explode("image/", $image_parts[0]);
+        $image_type = $image_type_aux[1];
+        $image_base64 = base64_decode($image_parts[1]);
+
+        // Use uniqid to generate a unique file name
+        $file_name = uniqid($data['kode_register'] . '-' . 'ttd-pasien' . '-' . date('Y-m-d') . '-') . '.' . $image_type;
+
+        try {
+            // Mencari booking berdasarkan ID
+            $ttdtandapasien = TtdTandaOperasi::findOrFail($id);
+            // jika gambar sudah ada lakukan hapus
+            if ($ttdtandapasien->ttd_pasien) {
+                Storage::delete('public/ttd/penandaan-operasi-pasien/' . $ttdtandapasien->ttd_pasien);
+            }
+            // Melakukan update data
+            $ttdtandapasien->update([
+                'kode_register' => $data['kode_register'],
+                'ttd_pasien' => $file_name,
+                'updated_at' => $data['updated_at']
+            ]);
+
+            Storage::put('public/ttd/penandaan-operasi-pasien/' . $file_name, $image_base64);
+
+            return $ttdtandapasien;
+        } catch (\Throwable $th) {
+            throw new Exception("Gagal memperbarui booking: " . $th->getMessage());
+        }
     }
 
     private function mapData($ttdpasiens)
@@ -49,7 +117,8 @@ class TtdTandaOperasiService
                 'ttd_pasien' => $item->ttd_pasien,
                 'created_at' => $item->created_at->format('Y-m-d H:i:s'),
                 'no_mr' => optional($item->booking->pendaftaran)->No_MR,
-                'nama_pasien' => optional($item->booking->pendaftaran->registerPasien)->Nama_Pasien
+                'nama_pasien' => optional($item->booking->pendaftaran->registerPasien)->Nama_Pasien,
+                'tanggal_operasi' => optional($item->booking)->tanggal
             ];
         }));
     }
