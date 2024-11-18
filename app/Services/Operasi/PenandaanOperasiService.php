@@ -39,8 +39,7 @@ class PenandaanOperasiService
 
     public function findById($id)
     {
-        $penandaan = PenandaanOperasi::find($id);
-        return $this->mapData($penandaan);
+        return PenandaanOperasi::find($id);
     }
 
 

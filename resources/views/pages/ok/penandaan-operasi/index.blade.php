@@ -58,7 +58,7 @@
                                     <td>{{ $data->ruang_operasi}}</td>
                                     <td><a href="#" data-toggle="modal" data-target="#gambarModal{{ $data->id }}">Lihat Gambar</a></td>
                                     <td>
-                                        <a href="{{ route('operasi.penandaan.create', ['noReg' => $data->no_mr]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
+                                        <a href="{{ route('operasi.penandaan.edit', ['id' => $data->id]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Edit</a>
                                     </td>
                                 </tr>
                                 @endforeach
