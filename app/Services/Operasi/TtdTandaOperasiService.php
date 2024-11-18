@@ -67,7 +67,7 @@ class TtdTandaOperasiService
                 'updated_at' => $data['updated_at']
             ]);
 
-            Storage::put('public/ttd/penandaan-operasi-pasien/' . $file_name, $image_base64);
+            Storage::put('public/operasi/ttd/penandaan-operasi-pasien/' . $file_name, $image_base64);
 
             return $ttdtandapasien;
         } catch (\Throwable $th) {

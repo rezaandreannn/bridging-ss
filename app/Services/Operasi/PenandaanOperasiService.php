@@ -65,7 +65,7 @@ class PenandaanOperasiService
         $file_name = uniqid($data['kode_register'] . '-' . 'tanda-operasi' . '-' . date('Y-m-d') . '-') . '.' . $image_type;
 
         // Save the image to storage
-        Storage::put('public/penandaan-operasi-pasien/' . $file_name, $image_base64);
+        Storage::put('public/operasi/penandan-lokasi-pasien' . $file_name, $image_base64);
 
         $penandaan = PenandaanOperasi::create([
             'kode_register' => $data['kode_register'],
