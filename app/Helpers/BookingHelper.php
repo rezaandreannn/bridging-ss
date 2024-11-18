@@ -12,7 +12,7 @@ class BookingHelper
 
         foreach ($bookings as $booking) {
             $exists = PenandaanOperasi::where('kode_register', $booking->kode_register)->exists();
-            $statusPenandaan[$booking->id] = $exists ? 'create' : 'update';
+            $statusPenandaan[$booking->id] = $exists ? 'create' : $exists->id;
         }
 
         return $statusPenandaan;
