@@ -23,8 +23,8 @@ Route::prefix('operasi')->name('operasi.')->middleware('auth')->group(function (
     // OK Ruangan
     Route::get('/ruang-operasi', [RuangOperasiController::class, 'index'])->name('ruang.index');
     Route::post('/ruang-operasi', [RuangOperasiController::class, 'store'])->name('ruang.store');
-    Route::put('/ruangOperasi/update/{id}', [RuangOperasiController::class, 'update'])->name('ruang.update');
-    Route::delete('/ruangOperasi/delete/{id}', [RuangOperasiController::class, 'destroy'])->name('ruang.destroy');
+    Route::put('/ruang-operasi/update/{id}', [RuangOperasiController::class, 'update'])->name('ruang.update');
+    Route::delete('/ruang-operasi/delete/{id}', [RuangOperasiController::class, 'destroy'])->name('ruang.destroy');
 });
 
 // booking operasi

@@ -69,7 +69,7 @@ class BookingOperasiController extends Controller
             ->with([
                 'title' => 'Booking Operasi',
                 'dokters' => $this->dokterService->byBedahOperasi(), //dokter bedah kebutuhan select items dokter
-                'ruangans' => RuanganOperasi::pluck('nama_ruang', 'id') //ruangan operasi kebuthunan select items ruangan
+                'ruangans' => RuanganOperasi::pluck('nama_ruang', 'id') //ruangan operasi kebutuhan select items ruangan
             ]);
     }
 
