@@ -14,6 +14,7 @@ use App\Services\SimRs\PendaftaranService;
 use App\Services\Operasi\BookingOperasiService;
 use App\Http\Requests\Operasi\StoreBookingRequest;
 use App\Http\Requests\Operasi\UpdateBookingRequest;
+use App\Models\Operasi\PenandaanOperasi;
 
 class BookingOperasiController extends Controller
 {
@@ -25,6 +26,7 @@ class BookingOperasiController extends Controller
     protected $bookingOperasiService;
     protected $dokterService;
     protected $pasienService;
+
 
     public function __construct()
     {
@@ -47,7 +49,17 @@ class BookingOperasiController extends Controller
         if (session('booking_id')) {
             $booking = $this->bookingOperasiService->findById(session('booking_id'));
         }
-        // dd($booking);
+
+        $statusPenandaan = [];
+
+        foreach ($bookings as $booking) {
+            $exists = PenandaanOperasi::where('kode_register', $booking->kode_register)->exists();
+            if ($exists) {
+                $statusPenandaan[$booking->id] = 'create';
+            } else {
+                $statusPenandaan[$booking->id] = 'update';
+            }
+        }
 
 
         return view($this->view . 'booking-operasi.index', compact('bookings', 'booking'))->with([
@@ -55,6 +67,7 @@ class BookingOperasiController extends Controller
             'ruanganOperasi' => RuanganOperasi::all(),
             'dokters' => $this->dokterService->byBedahOperasi(),
             'pasien' => $this->pasienService->byStatusActive(),
+            'statusPenandaan' => $statusPenandaan
         ]);
     }
 

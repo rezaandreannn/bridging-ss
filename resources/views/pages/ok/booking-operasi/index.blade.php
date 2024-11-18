@@ -153,6 +153,7 @@
                                         <th scope="col">Nama Pasien</th>
                                         <th scope="col">No MR</th>
                                         <th scope="col">Nama Dokter</th>
+                                        <th scope="col">Status Penandaan</th>
                                         <th scope="col">Nama Ruang Operasi</th>
                                         <th scope="col">Aksi</th>
                                     </tr>
@@ -166,6 +167,13 @@
                                         <td>{{$booking->nama_pasien}}</td>
                                         <td>{{$booking->no_mr}}</td>
                                         <td>{{$booking->nama_dokter}}</td>
+                                        <td>
+                                            @if (isset($statusPenandaan[$booking->id]) && $statusPenandaan[$booking->id] == 'update')
+                                            <span class="badge badge-success">Create</span>
+                                            @else
+                                            <span class="badge badge-warning">Update</span>
+                                            @endif
+                                        </td>
                                         <td>{{$booking->ruang_operasi}}</td>
                                         <td>
                                             <div class="dropdown d-inline">
@@ -184,7 +192,7 @@
                                                     <a class="dropdown-item has-icon" href="{{ route('operasi.penandaan.create', ['noReg' => $booking->kode_register]) }}">
                                                         <i class="fas fa-marker"></i> Penandaan Operasi
                                                     </a>
-                                                     <!-- Hidden form for deletion -->
+                                                    <!-- Hidden form for deletion -->
                                                     <form id="delete-form-{{$booking->id}}" action="{{ route('operasi.booking.destroy', $booking->id) }}" method="POST" style="display: none;">
                                                         @method('delete')
                                                         @csrf
@@ -299,19 +307,19 @@
     $(document).ready(function() {
         // Inisialisasi DataTable
         var table = $('#table-1').DataTable();
-    
+
         // Event delegation untuk tombol delete
         $('#table-1').on('click', '[confirm-delete="true"]', function(event) {
             event.preventDefault();
             var menuId = $(this).data('menuid');
             Swal.fire({
-                title: 'Apakah Kamu Yakin?',
-                text: "Anda tidak akan dapat mengembalikan ini!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#6777EF',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, Hapus saja!'
+                title: 'Apakah Kamu Yakin?'
+                , text: "Anda tidak akan dapat mengembalikan ini!"
+                , icon: 'warning'
+                , showCancelButton: true
+                , confirmButtonColor: '#6777EF'
+                , cancelButtonColor: '#d33'
+                , confirmButtonText: 'Ya, Hapus saja!'
             }).then((result) => {
                 if (result.isConfirmed) {
                     var form = $('#delete-form-' + menuId);
@@ -324,6 +332,7 @@
             });
         });
     });
+
 </script>
 
 @endpush
