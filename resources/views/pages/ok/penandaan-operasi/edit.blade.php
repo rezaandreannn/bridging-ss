@@ -135,14 +135,25 @@
                                         </div>
                                         @enderror
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Preview</label>
+                                            <img src="{{ asset('storage/operasi/penandan-lokasi-pasien/'. $penandaan->hasil_gambar) }}" width="100%" height="250" />
+                                        </div>
+                                        @error('jenis_operasi')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
-                            {{-- Edit Gambar Operasi --}}
+                            {{-- Gambar Operasi --}}
                             <div class="card" id="{{ $biodata->pendaftaran->registerPasien->JENIS_KELAMIN == 'L' ? 'formPria' : 'formWanita' }}" data-gender="{{ $biodata->pendaftaran->registerPasien->JENIS_KELAMIN }}">
                                 <div class="card-body card-khusus-body">
                                     <div class="col-md-12">
                                         <div>
-                                            <canvas id="EditdrawingCanvas" width="1000" height="600" style="border:1px solid #000; width:100%; height:auto;"></canvas>
+                                            <canvas id="drawingCanvas" width="1000" height="600" style="border:1px solid #000; width:100%; height:auto;"></canvas>
                                             <br />
                                             <button id="undoButton" type="button" class="btn btn-sm btn-primary"><i class="fas fa-undo"></i> Undo</button>
                                             <button id="clearCanvasButton" type="button" class="btn btn-sm btn-primary"><i class="fas fa-trash"></i> Hapus</button>
@@ -174,7 +185,7 @@
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script>
 <script src="{{ asset('ttd/js/jquery.signature.min.js') }}"></script>
-{{-- <script src="{{ asset('js/page/tanda-operasi-image-edit.js') }}"></script> --}}
+<script src="{{ asset('js/page/tanda-operasi-image.js') }}"></script>
 {{-- <script src="{{ asset('ttd/js/signature_pad.min.js') }}"></script> --}}
 
 <!-- Page Specific JS File -->
@@ -192,115 +203,7 @@
 </script>
 
 <script>
-    // Laravel image URL passed from Blade
-    const imageUrl = "{{ Storage::url('images/my-image.jpg') }}"; // Replace with the actual image path
 
-    // Get canvas and context
-    const canvas = document.getElementById('EditdrawingCanvas');
-    const ctx = canvas.getContext('2d');
-    const signatureData = document.getElementById('signatureData');
-    let paths = []; // Array to store path history
-    let currentPath = []; // Array for the current path being drawn
-    let drawing = false; // Drawing status
-    let erasing = false; // Erase mode status
-
-    // Image setup (URL from Laravel Storage)
-    const img = new Image();
-    img.src = imageUrl; // Set the image source from the URL
-
-    // Load the background image on canvas once it has loaded
-    img.onload = () => {
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // Draw the image on canvas
-    };
-
-    // Function to get mouse position on the canvas
-    function getMousePos(event) {
-        const rect = canvas.getBoundingClientRect();
-        const scaleX = canvas.width / rect.width; // Scale factor for X
-        const scaleY = canvas.height / rect.height; // Scale factor for Y
-
-        return {
-            x: (event.clientX - rect.left) * scaleX,
-            y: (event.clientY - rect.top) * scaleY
-        };
-    }
-
-    // Function to redraw all paths
-    function drawPaths() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // Redraw the background image
-
-        paths.forEach(path => {
-            ctx.beginPath();
-            path.forEach((point, index) => {
-                if (index === 0) {
-                    ctx.moveTo(point.x, point.y);
-                } else {
-                    ctx.lineTo(point.x, point.y);
-                }
-            });
-            ctx.stroke();
-        });
-    }
-
-    // Start drawing or erasing
-    canvas.addEventListener('mousedown', (event) => {
-        drawing = true;
-        currentPath = []; // Initialize a new path
-        paths.push(currentPath); // Save path in paths array
-
-        const { x, y } = getMousePos(event);
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-        currentPath.push({ x, y });
-    });
-
-    // Draw or erase on mouse move
-    canvas.addEventListener('mousemove', (event) => {
-        if (drawing) {
-            const { x, y } = getMousePos(event);
-
-            if (erasing) {
-                ctx.globalCompositeOperation = 'destination-out'; // Erase mode
-                ctx.lineWidth = 10; // Eraser width
-            } else {
-                ctx.globalCompositeOperation = 'source-over'; // Draw mode
-                ctx.lineWidth = 2; // Line width
-                ctx.strokeStyle = 'red'; // Line color
-            }
-
-            ctx.lineTo(x, y);
-            ctx.stroke();
-
-            // Save point in the current path
-            currentPath.push({ x, y });
-        }
-    });
-
-    // End drawing
-    const endDrawing = () => {
-        drawing = false;
-        ctx.closePath();
-        signatureData.value = canvas.toDataURL(); // Save canvas as data URL
-    };
-
-    canvas.addEventListener('mouseup', endDrawing);
-    canvas.addEventListener('mouseout', endDrawing); // Stop drawing if cursor leaves canvas
-
-    // Undo last drawing
-    document.getElementById('undoButton').addEventListener('click', () => {
-        paths.pop(); // Remove last path
-        drawPaths(); // Redraw remaining paths
-        signatureData.value = canvas.toDataURL(); // Save updated canvas state
-    });
-
-    // Clear canvas
-    document.getElementById('clearCanvasButton').addEventListener('click', () => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // Redraw background image
-        paths = []; // Clear paths array
-        signatureData.value = ''; // Reset data URL
-    });
 </script>
 
 <script type="text/javascript">
