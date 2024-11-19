@@ -204,7 +204,7 @@
             <td><img src="storage/operasi/{{$penandaan->gambar}}" width="100%" height="650" /></td>
         </tr>
     </table>
-    <p class="text7"><b>Saya menyatakan bahwa lokasi operasi gambar pada diagram adalah benar</b></p>
+    <p class="text7" style="border: 1px solid black; border-top:none" width="100%" ><b>Saya menyatakan bahwa lokasi operasi gambar pada diagram adalah benar</b></p>
     <table style="border: 1px solid black; border-top:none" width="100%">
         <tr>
             <td width="50%" class="text5"> Nama Pasien</td>
