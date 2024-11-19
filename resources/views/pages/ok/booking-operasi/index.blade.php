@@ -314,7 +314,7 @@
             var menuId = $(this).data('menuid');
             Swal.fire({
                 title: 'Apakah Kamu Yakin?'
-                , text: "Anda tidak akan dapat mengembalikan ini!"
+                , text: "Semua data yang berkaitan dengan booking akan ikut terhapus!"
                 , icon: 'warning'
                 , showCancelButton: true
                 , confirmButtonColor: '#6777EF'

@@ -5,6 +5,8 @@ namespace App\Services\Operasi;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use App\Models\Operasi\BookingOperasi;
+use App\Models\Operasi\PenandaanOperasi;
+use Illuminate\Support\Facades\Storage;
 
 class BookingOperasiService
 {
@@ -114,6 +116,33 @@ class BookingOperasiService
             return $booking;
         } catch (\Throwable $th) {
             throw new Exception("Gagal memperbarui booking: " . $th->getMessage());
+        }
+    }
+
+    public function delete($id)
+    {
+        $data = BookingOperasi::find($id);
+        return $data->delete();
+    }
+
+    public function deleteWithRelations($id)
+    {
+        $booking = BookingOperasi::find($id);
+        if ($booking) {
+            $bookingKodeRegister = $booking->kode_register;
+
+            // where by kode register in model penandaan
+            $penandaan = PenandaanOperasi::where('kode_register', $bookingKodeRegister)->first();
+
+            // hapus booking
+            $booking->delete();
+
+            // hapus penandaan
+            if ($penandaan) {
+                $path = 'public/operasi/' .  $penandaan->hasil_gambar;
+                Storage::delete($path);
+                $penandaan->delete();
+            }
         }
     }
 
