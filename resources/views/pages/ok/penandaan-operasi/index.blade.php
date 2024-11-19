@@ -50,15 +50,31 @@
                                 @foreach ($penandaans as $data)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td><span class="badge badge-pill badge-success">{{ $data->no_mr }}</span></td>
+                                    <td><span class="font-weight-bold">{{ $data->no_mr }}</span></td>
                                     <td>{{$data->nama_pasien}}</td>
                                     <td>{{ $data->tanggal }}</td>
                                     <td>{{ $data->nama_tindakan }}</td>
                                     <td>{{ $data->nama_dokter }}</td>
                                     <td>{{ $data->ruang_operasi}}</td>
-                                    <td><a href="#" data-toggle="modal" data-target="#gambarModal{{ $data->id }}">Lihat Gambar</a></td>
                                     <td>
-                                        <a href="{{ route('operasi.penandaan.create', ['noReg' => $data->no_mr]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
+                                        <a href="#" data-toggle="modal" data-target="#gambarModal{{ $data->id }}" class="badge badge-success">Detail</a>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown d-inline">
+                                            <a href="#" class="text-primary" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item has-icon" href="{{ route('operasi.penandaan.create', ['noReg' => $data->no_mr] )}}"><i class="fas fa-pencil-alt"></i> Tandai Lokasi </a>
+                                                {{-- jika sudah diinput bisa diunduh --}}
+                                                <a class="dropdown-item has-icon" href=""><i class="fas fa-file-download"></i> Unduh</a>
+                                                {{-- jika sudah diinput bisa diunduh --}}
+                                                <a class="dropdown-item has-icon" href="#" confirm-delete="true" data-menuId="{{$data->id}}">
+                                                    <i class="fas fa-trash"></i> Hapus
+                                                </a>
+                                            </div>
+                                        </div>
+
                                     </td>
                                 </tr>
                                 @endforeach
