@@ -195,21 +195,21 @@
     </table>
     <table style="border: 1px solid black; border-bottom:none " width="100%">
         <tr>
-           <td><img src="storage/operasi/{{$penandaan->hasil_gambar}}" width="100%" height="700" /></td>
+           <td><img src="storage/operasi/{{$penandaan->hasil_gambar}}" width="100%" height="600" /></td>
         </tr>
     </table>
     <table style="border: 1px solid black;" width="100%">
         <tr>
-            <td style="padding-top: 50px;" width="60%" class="text5"> Nama Pasien</td>
-            <td style="padding-top: 50px;" class="text5">Dokter</td>
+            <td width="50%" class="text5"> Nama Pasien</td>
+            <td width="50%" class="text5">Dokter</td>
         </tr>
         <tr>
-            <td width="70%" class="text5"></td>
-            <td class="text5"></td>
+            <td width="50%" class="text5" style="padding-left: 150px;">{!! DNS2D::getBarcodeHTML($biodata->pendaftaran->registerPasien->Nama_Pasien, 'QRCODE', 3, 3) !!}</td>
+            <td width="50%" class="text5" style="padding-left: 150px;">{!! DNS2D::getBarcodeHTML($biodata->pendaftaran->registerPasien->Nama_Pasien, 'QRCODE', 3, 3) !!}</td>
         </tr>
         <tr>
-            <td width="60%" class="text5">(Pasien)</td>
-            <td class="text5" style="padding-right: 50px;">(Dokter)</td>
+            <td width="50%" class="text5">({{ $biodata->pendaftaran->registerPasien->Nama_Pasien}})</td>
+            <td width="50%" class="text5">({{ $biodata->pendaftaran->registerPasien->Nama_Pasien}})</td>
         </tr>
     </table>
 </body>
