@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\OK;
 
 use Exception;
+use App\Models\Rajal;
 use Illuminate\Http\Request;
+use App\Helpers\BookingHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Operasi\BookingOperasi;
 use App\Models\Operasi\PenandaanOperasi;
-use App\Models\Rajal;
 use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\PenandaanOperasiService;
 
@@ -41,11 +42,14 @@ class PenandaanOperasiController extends Controller
         $title = 'Penandaan Operasi';
 
         $penandaans = $this->penandaanOperasiService->get();
+        // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
+        $statusPenandaan = BookingHelper::getStatusPenandaan($penandaans);
 
 
         return view($this->view . 'penandaan-operasi.index', compact('penandaans'))
             ->with([
-                'title' => $title
+                'title' => $title,
+                'statusPenandaan' => $statusPenandaan
             ]);
     }
 
@@ -79,7 +83,8 @@ class PenandaanOperasiController extends Controller
 
             $this->penandaanOperasiService->insert($data);
 
-            return redirect()->back()->with('success', 'Penandaan Operasi berhasil ditambahkan.');
+            // return redirect()->back()->with('success', 'Penandaan Operasi berhasil ditambahkan.');
+            return redirect('operasi/penandaan-operasi')->with('success', 'Penandaan Operasi berhasil di ubah.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
             return redirect()->back()->with('error', 'Gagal menambahkan Penandaan Operasi: ' . $e->getMessage());
@@ -128,9 +133,8 @@ class PenandaanOperasiController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'kode_register' => 'required|string|max:255',
-            'signatureData' => 'required|string',
-            'jenis_operasi' => 'required|string|max:255',
+            'kode_register' => 'required',
+            'jenis_operasi' => 'required',
         ]);
 
         try {
@@ -141,7 +145,7 @@ class PenandaanOperasiController extends Controller
             ];
 
             $this->penandaanOperasiService->update($id, $data);
-            return redirect()->back()->with('success', 'Penandaan Operasi berhasil di ubah.');
+            return redirect('operasi/penandaan-operasi')->with('success', 'Penandaan Operasi berhasil di ubah.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
             return redirect()->back()->with('error', 'Gagal menambahkan penandaan operasi: ' . $e->getMessage());

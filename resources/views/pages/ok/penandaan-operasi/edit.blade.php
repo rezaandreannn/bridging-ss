@@ -99,8 +99,9 @@
                 <div class="col-12">
                     <!-- components biodata pasien by no reg -->
                     @include('components.biodata-pasien-ok-bynoreg')
-                    <form id="myForm" action="{{ route('operasi.penandaan.store') }}" method="POST" enctype="multipart/form-data">
+                    <form id="myForm" action="{{ route('operasi.penandaan.update', $penandaan->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        @method('put')
                         <input type="hidden" name="kode_register" value="{{ $biodata->pendaftaran->No_Reg }}">
                         <div class="card mb-3">
                             <div class="card-header card-khusus-header">
