@@ -82,6 +82,7 @@ class PenandaanOperasiController extends Controller
      */
     public function create($noReg)
     {
+
         $title = $this->prefix . ' ' . 'Operasi';
         $biodata = $this->bookingOperasiService->biodata($noReg);
         // dd($biodata);

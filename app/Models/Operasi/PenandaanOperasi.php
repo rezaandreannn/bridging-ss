@@ -26,4 +26,9 @@ class PenandaanOperasi extends Model
     {
         return $this->hasOne(BookingOperasi::class, 'kode_register', 'kode_register');
     }
+
+    public function ttdTandaPasien()
+    {
+        return $this->hasOne(TtdTandaOperasi::class, 'kode_register', 'kode_register');
+    }
 }
