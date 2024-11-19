@@ -42,7 +42,6 @@ class PenandaanOperasiController extends Controller
         // Ambil data berdasarkan ID
 
         $penandaan = $this->penandaanOperasiService->unduhByRegister($kodeRegister);
-        dd($penandaan);
         $date = date('dMY');
         $tanggal = Carbon::now();
 
