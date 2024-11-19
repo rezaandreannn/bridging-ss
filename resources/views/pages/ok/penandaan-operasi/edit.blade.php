@@ -138,9 +138,9 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Preview</label>
+                                            <a href="#" data-toggle="modal" data-target="#gambarModal{{ $penandaan->id }}" class="badge badge-success">Preview Gambar Sebelumnya</a>
                                             {{-- {{ dd(asset('storage/operasi/' . $penandaan['hasil_gambar'])) }} --}}
-                                            <img src="{{ asset('storage/operasi/'. $penandaan->hasil_gambar) }}" width="100%" height="250" />
+                                            {{-- <img src="{{ asset('storage/operasi/'. $penandaan->hasil_gambar) }}" width="100%" height="250" /> --}}
                                         </div>
                                         @error('jenis_operasi')
                                         <div class="invalid-feedback">
@@ -174,6 +174,26 @@
             </div>
         </div>
     </section>
+</div>
+
+<div class="modal fade" id="gambarModal{{ $penandaan->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">{{ $penandaan->nama_pasien }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <p>Hasil Gambar</p>
+                <img id="gambarZoom{{ $penandaan->id }}" src="{{ asset('storage/operasi/' . $penandaan->hasil_gambar) }}" class="img-fluid" alt="Gambar Pengguna"  style="transition: transform 0.3s ease; cursor: zoom-in;">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 @endsection
