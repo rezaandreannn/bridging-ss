@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\OK;
 
 use Exception;
+use App\Models\Rajal;
 use Illuminate\Http\Request;
+use App\Helpers\BookingHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Operasi\BookingOperasi;
 use App\Models\Operasi\PenandaanOperasi;
-use App\Models\Rajal;
 use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\PenandaanOperasiService;
 
@@ -41,11 +42,14 @@ class PenandaanOperasiController extends Controller
         $title = 'Penandaan Operasi';
 
         $penandaans = $this->penandaanOperasiService->get();
+        // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
+        $statusPenandaan = BookingHelper::getStatusPenandaan($penandaans);
 
 
         return view($this->view . 'penandaan-operasi.index', compact('penandaans'))
             ->with([
-                'title' => $title
+                'title' => $title,
+                'statusPenandaan' => $statusPenandaan
             ]);
     }
 
@@ -79,7 +83,8 @@ class PenandaanOperasiController extends Controller
 
             $this->penandaanOperasiService->insert($data);
 
-            return redirect()->back()->with('success', 'Penandaan Operasi berhasil ditambahkan.');
+            // return redirect()->back()->with('success', 'Penandaan Operasi berhasil ditambahkan.');
+            return redirect('operasi/penandaan-operasi')->with('success', 'Penandaan Operasi berhasil di ubah.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
             return redirect()->back()->with('error', 'Gagal menambahkan Penandaan Operasi: ' . $e->getMessage());
@@ -107,10 +112,15 @@ class PenandaanOperasiController extends Controller
     {
         $title = $this->prefix . ' ' . 'Operasi';
         // Ambil data berdasarkan ID
-        $penandaans = PenandaanOperasi::findOrFail($id);
+        $penandaan = $this->penandaanOperasiService->findById($id);
+
+        // dd($penandaan);
+        $noReg = $penandaan->kode_register;
+
+        // Ambil biodata berdasarkan nomor registrasi
         $biodata = $this->bookingOperasiService->biodata($noReg);
         // dd($biodata);
-        return view($this->view . 'penandaan-operasi.edit', compact('title', 'biodata'));
+        return view($this->view . 'penandaan-operasi.edit', compact('title', 'biodata', 'penandaan'));
     }
 
     /**
@@ -122,7 +132,24 @@ class PenandaanOperasiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'kode_register' => 'required',
+            'jenis_operasi' => 'required',
+        ]);
+
+        try {
+            $data = [
+                'kode_register' => $validatedData['kode_register'],
+                'hasil_gambar' => $validatedData['signatureData'],
+                'jenis_operasi' => $validatedData['jenis_operasi'],
+            ];
+
+            $this->penandaanOperasiService->update($id, $data);
+            return redirect('operasi/penandaan-operasi')->with('success', 'Penandaan Operasi berhasil di ubah.');
+        } catch (Exception $e) {
+            // Redirect dengan pesan error jika terjadi kegagalan
+            return redirect()->back()->with('error', 'Gagal menambahkan penandaan operasi: ' . $e->getMessage());
+        }
     }
 
     /**

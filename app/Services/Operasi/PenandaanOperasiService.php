@@ -2,7 +2,8 @@
 
 namespace App\Services\Operasi;
 
-
+use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Operasi\PenandaanOperasi;
 
@@ -39,8 +40,7 @@ class PenandaanOperasiService
 
     public function findById($id)
     {
-        $penandaan = PenandaanOperasi::find($id);
-        return $this->mapData($penandaan);
+        return PenandaanOperasi::find($id);
     }
 
 
@@ -65,7 +65,7 @@ class PenandaanOperasiService
         $file_name = uniqid($data['kode_register'] . '-' . 'tanda-operasi' . '-' . date('Y-m-d') . '-') . '.' . $image_type;
 
         // Save the image to storage
-        Storage::put('public/operasi/penandan-lokasi-pasien' . $file_name, $image_base64);
+        Storage::put('public/operasi/' . $file_name, $image_base64);
 
         $penandaan = PenandaanOperasi::create([
             'kode_register' => $data['kode_register'],
@@ -75,7 +75,37 @@ class PenandaanOperasiService
 
         return $penandaan;
     }
-    public function update($id, array $data) {}
+
+    public function update($id, array $data)
+    {
+        try {
+            // Mencari booking berdasarkan ID
+            $penandaan = PenandaanOperasi::findOrFail($id);
+
+            $image_parts = explode(";base64,", $data['hasil_gambar']);
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+            $image_base64 = base64_decode($image_parts[1]);
+
+            // Use uniqid to generate a unique file name
+            $file_name = uniqid($data['kode_register'] . '-' . 'tanda-operasi' . '-' . date('Y-m-d') . '-') . '.' . $image_type;
+
+            DB::transaction(function () use ($penandaan, $data, $file_name, $image_base64) {
+                Storage::delete('public/operasi/' . $penandaan->hasil_gambar);
+                Storage::put('public/operasi/' . $file_name, $image_base64);
+                $penandaan->update([
+                    'kode_register' => $data['kode_register'],
+                    'hasil_gambar' => $file_name,
+                    'jenis_operasi' => $data['jenis_operasi']
+                ]);
+            });
+
+            return $penandaan;
+        } catch (\Throwable $th) {
+            throw new Exception("Gagal memperbarui penandaan operasi: " . $th->getMessage());
+        }
+    }
+
     public function delete($id) {}
 
     private function mapData($penandaans)

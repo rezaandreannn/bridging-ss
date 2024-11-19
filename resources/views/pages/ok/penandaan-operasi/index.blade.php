@@ -65,7 +65,10 @@
                                                 <i class="fas fa-ellipsis-v"></i>
                                             </a>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item has-icon" href="{{ route('operasi.penandaan.create', ['noReg' => $data->no_mr] )}}"><i class="fas fa-pencil-alt"></i> Tandai Lokasi </a>
+                                                <a class="dropdown-item has-icon" href="{{ isset($statusPenandaan[$data->id]) && $statusPenandaan[$data->id] == 'create' ? route('operasi.penandaan.create', ['noReg' => $data->kode_register]) : route('operasi.penandaan.edit', ['id' => $statusPenandaan[$data->id]]) }}">
+                                                    <i class="fas fa-marker"></i> {{ isset($statusPenandaan[$data->id]) && $statusPenandaan[$data->id] == 'create' ? 'Tanda Lokasi' : 'Edit Tanda Lokasi' }}
+                                                </a>
+                                                {{-- <a class="dropdown-item has-icon" href="{{ route('operasi.penandaan.edit', ['id' => $data->id] )}}"><i class="fas fa-pencil-alt"></i>Edit Tandai Lokasi </a> --}}
                                                 {{-- jika sudah diinput bisa diunduh --}}
                                                 <a class="dropdown-item has-icon" href=""><i class="fas fa-file-download"></i> Unduh</a>
                                                 {{-- jika sudah diinput bisa diunduh --}}
@@ -74,7 +77,6 @@
                                                 </a>
                                             </div>
                                         </div>
-
                                     </td>
                                 </tr>
                                 @endforeach
@@ -89,7 +91,7 @@
 
 @foreach ($penandaans as $data)
 <div class="modal fade" id="gambarModal{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalCenterTitle">{{ $data->nama_pasien }}</h5>
@@ -99,9 +101,11 @@
             </div>
             <div class="modal-body text-center">
                 <p>Tindakan: {{ $data->nama_tindakan }}</p>
-                <img src="{{ asset('storage/ttd/penandaan-operasi-pasien/' . $data->gambar) }}" class="img-fluid" alt="Gambar Pengguna">
+                <img id="gambarZoom{{ $data->id }}" src="{{ asset('storage/operasi/' . $data->gambar) }}" class="img-fluid" alt="Gambar Pengguna"  style="transition: transform 0.3s ease; cursor: zoom-in;">
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="zoomOut({{ $data->id }})">Zoom Out</button>
+                <button type="button" class="btn btn-primary" onclick="zoomIn({{ $data->id }})">Zoom In</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
             </div>
         </div>
@@ -120,6 +124,32 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const images = document.querySelectorAll('img[id^="gambarZoom"]'); // Ambil semua gambar yang relevan
+
+        images.forEach((img) => {
+            let zoomLevel = 1; // Tingkat zoom awal
+            const maxZoom = 3; // Zoom maksimal
+            const minZoom = 0.5; // Zoom minimal
+
+            img.addEventListener('wheel', (event) => {
+                event.preventDefault(); // Cegah scroll halaman
+
+                // Periksa arah scroll (deltaY > 0 = zoom out, deltaY < 0 = zoom in)
+                if (event.deltaY < 0 && zoomLevel < maxZoom) {
+                    zoomLevel += 0.1; // Zoom in
+                } else if (event.deltaY > 0 && zoomLevel > minZoom) {
+                    zoomLevel -= 0.1; // Zoom out
+                }
+
+                // Terapkan transformasi skala ke gambar
+                img.style.transform = `scale(${zoomLevel})`;
+            });
+        });
+    });
+</script>
 
 <script>
     $(document).ready(function() {

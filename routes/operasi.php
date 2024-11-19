@@ -18,7 +18,8 @@ Route::prefix('operasi')->name('operasi.')->middleware('auth')->group(function (
     Route::get('penandaan-operasi', [PenandaanOperasiController::class, 'index'])->name('penandaan.index');
     Route::get('/penandaan-operasi/{noReg}', [PenandaanOperasiController::class, 'create'])->name('penandaan.create');
     Route::post('penandaan-operasi', [PenandaanOperasiController::class, 'store'])->name('penandaan.store');
-    Route::get('/penandaan-operasi/edit/{id}', [PenandaanOperasiController::class, 'edit'])->name('penandaan.edit');
+    Route::get('/penandaan-operasi/{id}/edit', [PenandaanOperasiController::class, 'edit'])->name('penandaan.edit');
+    Route::put('/penandaan-operasi/{id}/update', [PenandaanOperasiController::class, 'update'])->name('penandaan.update');
 
 
     // OK Ruangan
@@ -38,7 +39,7 @@ Route::put('/booking-operasi/{id}', [BookingOperasiController::class, 'update'])
 Route::delete('/booking-operasi/delete/{id}', [BookingOperasiController::class, 'destroy'])->name('operasi.booking.destroy');
 
 Route::prefix('ttd-ok')->name('ttd-ok.')->middleware('auth')->group(function () {
-    
+
     Route::get('tanda-operasi', [TtdTandaOperasiController::class, 'index'])->name('penandaan.index');
     Route::get('create/tanda-operasi', [TtdTandaOperasiController::class, 'create'])->name('penandaan.create');
     Route::get('edit/tanda-operasi/{id}', [TtdTandaOperasiController::class, 'edit'])->name('penandaan.edit');
