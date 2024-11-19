@@ -127,7 +127,25 @@ class PenandaanOperasiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'kode_register' => 'required|string|max:255',
+            'signatureData' => 'required|string',
+            'jenis_operasi' => 'required|string|max:255',
+        ]);
+
+        try {
+            $data = [
+                'kode_register' => $validatedData['kode_register'],
+                'hasil_gambar' => $validatedData['signatureData'],
+                'jenis_operasi' => $validatedData['jenis_operasi'],
+            ];
+
+            $this->penandaanOperasiService->update($id, $data);
+            return redirect()->back()->with('success', 'Penandaan Operasi berhasil di ubah.');
+        } catch (Exception $e) {
+            // Redirect dengan pesan error jika terjadi kegagalan
+            return redirect()->back()->with('error', 'Gagal menambahkan penandaan operasi: ' . $e->getMessage());
+        }
     }
 
     /**
