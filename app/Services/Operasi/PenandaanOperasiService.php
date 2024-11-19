@@ -106,7 +106,16 @@ class PenandaanOperasiService
         }
     }
 
-    public function delete($id) {}
+    public function delete($id)
+    {
+        $penandaan = PenandaanOperasi::find($id);
+
+        if ($penandaan) {
+            $pathImage = 'public/operasi/' . $penandaan->hasil_gambar;
+            Storage::delete($pathImage);
+            $penandaan->delete();
+        }
+    }
 
     private function mapData($penandaans)
     {
