@@ -187,7 +187,7 @@
             </div>
             <div class="modal-body text-center">
                 <p>Hasil Gambar</p>
-                <img id="gambarZoom{{ $penandaan->id }}" src="{{ asset('storage/operasi/' . $penandaan->hasil_gambar) }}" class="img-fluid" alt="Gambar Pengguna"  style="transition: transform 0.3s ease; cursor: zoom-in;">
+                <img id="gambarZoom{{ $penandaan->id }}" src="{{ asset('storage/operasi/penandaan-pasien/image/' . $penandaan->hasil_gambar) }}" class="img-fluid" alt="Gambar Pengguna"  style="transition: transform 0.3s ease; cursor: zoom-in;">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>

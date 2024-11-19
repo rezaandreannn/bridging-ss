@@ -103,7 +103,7 @@ class PenandaanOperasiService
         $file_name = uniqid($data['kode_register'] . '-' . 'tanda-operasi' . '-' . date('Y-m-d') . '-') . '.' . $image_type;
 
         // Save the image to storage
-        Storage::put('public/operasi/' . $file_name, $image_base64);
+        Storage::put('public/operasi/penandaan-pasien/image/' . $file_name, $image_base64);
 
         $penandaan = PenandaanOperasi::create([
             'kode_register' => $data['kode_register'],
@@ -129,8 +129,8 @@ class PenandaanOperasiService
             $file_name = uniqid($data['kode_register'] . '-' . 'tanda-operasi' . '-' . date('Y-m-d') . '-') . '.' . $image_type;
 
             DB::transaction(function () use ($penandaan, $data, $file_name, $image_base64) {
-                Storage::delete('public/operasi/' . $penandaan->hasil_gambar);
-                Storage::put('public/operasi/' . $file_name, $image_base64);
+                Storage::delete('public/operasi/penandaan-pasien/image/' . $penandaan->hasil_gambar);
+                Storage::put('public/operasi/penandaan-pasien/image/' . $file_name, $image_base64);
                 $penandaan->update([
                     'kode_register' => $data['kode_register'],
                     'hasil_gambar' => $file_name,
@@ -149,7 +149,7 @@ class PenandaanOperasiService
         $penandaan = PenandaanOperasi::find($id);
 
         if ($penandaan) {
-            $pathImage = 'public/operasi/' . $penandaan->hasil_gambar;
+            $pathImage = 'public/operasi/penandaan-pasien/image/' . $penandaan->hasil_gambar;
             Storage::delete($pathImage);
             $penandaan->delete();
         }

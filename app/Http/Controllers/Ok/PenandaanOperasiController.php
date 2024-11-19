@@ -46,7 +46,7 @@ class PenandaanOperasiController extends Controller
         $date = date('dMY');
         $tanggal = Carbon::now();
 
-        $filename = 'PenandaanOperasi-' . $date;
+        $filename = 'penandaan-operasi-' . $date;
 
         $pdf = PDF::loadview('pages.ok.penandaan-operasi.cetak-dokumen', ['penandaan' => $penandaan, 'title' => $title, 'tanggal' => $tanggal]);
         // Set paper size to A5
