@@ -180,7 +180,7 @@ class BookingOperasiController extends Controller
     public function destroy($id)
     {
         try {
-            $this->bookingOperasiService->delete($id);
+            $this->bookingOperasiService->deleteWithRelations($id);
             $feedback = 'success';
             $message = 'Data Berhasil Dihapus!';
         } catch (\Throwable $th) {
