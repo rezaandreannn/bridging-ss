@@ -52,7 +52,43 @@ class PenandaanOperasiService
         return $penandaan;
     }
 
-    public function byRegisterWithTtd($kodeRegister) {}
+    public function unduhByRegister($kodeRegister)
+    {
+        $penandaans = PenandaanOperasi::with([
+            'ttdTandaPasien' => function ($query) {
+                $query->select('kode_register', 'ttd_pasien');
+            },
+            'booking' => function ($query) {
+                $query->with([
+                    'pendaftaran' => function ($query) {
+                        $query->select('No_Reg', 'No_MR')
+                            ->with(['registerPasien' => function ($query) {
+                                $query->select('No_MR', 'Nama_Pasien', 'ALAMAT', 'JENIS_KELAMIN', 'TGL_LAHIR');
+                            }]);
+                    },
+                ]);
+            }
+        ])
+            ->get();
+
+        return collect($penandaans->map(function ($item) {
+            return (object) [
+                'id' => $item->id,
+                'kode_register' => $item->kode_register,
+                'tanggal' => optional($item->booking)->tanggal,
+                'gambar' => $item->hasil_gambar,
+                'ttd_pasien' => optional($item->ttdTandaPasien)->ttd_pasien,
+                'no_mr' => optional($item->booking->pendaftaran)->No_MR,
+                'nama_pasien' => optional($item->booking->pendaftaran->registerPasien)->Nama_Pasien,
+                'tanggal_lahir' => optional($item->booking->pendaftaran->registerPasien)->TGL_LAHIR,
+                'ruang_operasi' => optional($item->booking->ruangan)->nama_ruang,
+                'nama_dokter' => optional($item->booking->dokter)->Nama_Dokter,
+                'nama_tindakan' => optional($item->booking)->nama_tindakan,
+                'jam_mulai' => optional($item->booking)->jam_mulai,
+                'jam_selesai' => optional($item->booking)->jam_selesai
+            ];
+        }));
+    }
 
     public function insert(array $data)
     {
