@@ -56,7 +56,7 @@ class PenandaanOperasiService
     {
         $penandaan = PenandaanOperasi::with([
             'ttdTandaPasien' => function ($query) {
-                $query->select('kode_register', 'ttd_pasien');
+                $query->select('kode_register', 'ttd_pasien', 'nama_pasien');
             },
             'booking' => function ($query) {
                 $query->with([
@@ -78,6 +78,7 @@ class PenandaanOperasiService
                 'tanggal' => optional($penandaan->booking)->tanggal,
                 'gambar' => $penandaan->hasil_gambar,
                 'ttd_pasien' => optional($penandaan->ttdTandaPasien)->ttd_pasien,
+                'nama_ttd_pasien' => optional($penandaan->ttdTandaPasien)->nama_pasien,
                 'no_mr' => optional($penandaan->booking->pendaftaran)->No_MR,
                 'nama_pasien' => optional($penandaan->booking->pendaftaran->registerPasien)->Nama_Pasien,
                 'tanggal_lahir' => optional($penandaan->booking->pendaftaran->registerPasien)->TGL_LAHIR,
