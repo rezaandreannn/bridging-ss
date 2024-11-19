@@ -143,15 +143,15 @@
                 <table>
                     <tr>
                         <td>No. RM </td>
-                        <td>: {{ $biodata->pendaftaran->No_MR}}</td>
+                        <td>: {{ $penandaan->no_mr}}</td>
                     </tr>
                     <tr>
                         <td>Nama</td>
-                        <td>: {{ $biodata->pendaftaran->registerPasien->Nama_Pasien}}</td>
+                        <td>: {{ $penandaan->nama_pasien}}</td>
                     </tr>
                     <tr>
                         <td>Tanggal Lahir</td>
-                        <td>: {{ date('d-m-Y', strtotime($biodata->pendaftaran->registerPasien->TGL_LAHIR))}}</td>
+                        <td>: {{ date('d-m-Y', strtotime($penandaan->tanggal_lahir))}}</td>
                     </tr>
                 </table>
             </td>
@@ -171,11 +171,11 @@
                 <table width="100%">
                     <tr>
                         <td class="text3"><b>Ruangan</b></td>
-                        <td class="text3">:  {{$biodata->ruangan->nama_ruang}}</td>
+                        <td class="text3">:  {{$penandaan->ruang_operasi}}</td>
                     </tr>
                     <tr>
                         <td class="text3"><b>Tanggal </b></td>
-                        <td class="text3">: {{date('d-m-Y', strtotime($biodata->tanggal))}}</td>
+                        <td class="text3">: {{date('d-m-Y', strtotime($penandaan->tanggal))}}</td>
                     </tr>
                 </table>
             </td>
@@ -183,11 +183,11 @@
                 <table width="100%">
                     <tr>
                         <td class="text3"><b>Waktu</b></td>
-                        <td class="text3">: {{date('h:i', strtotime($biodata->jam_mulai))}} WIB - {{date('h:i', strtotime($biodata->jam_selesai))}} WIB</td>
+                        <td class="text3">: {{date('h:i', strtotime($penandaan->jam_mulai))}} WIB - {{date('h:i', strtotime($penandaan->jam_selesai))}} WIB</td>
                     </tr>
                     <tr>
                         <td class="text3"><b>Jenis Operasi</b></td>
-                        <td class="text3">: {{$biodata->nama_tindakan}}</td>
+                        <td class="text3">: {{$penandaan->nama_tindakan}}</td>
                     </tr>
                 </table>
             </td>
@@ -195,7 +195,7 @@
     </table>
     <table style="border: 1px solid black; border-bottom:none " width="100%">
         <tr>
-           <td><img src="storage/operasi/{{$penandaan->hasil_gambar}}" width="100%" height="600" /></td>
+           <td><img src="storage/operasi/{{$penandaan->gambar}}" width="100%" height="600" /></td>
         </tr>
     </table>
     <table style="border: 1px solid black;" width="100%">
@@ -204,12 +204,12 @@
             <td width="50%" class="text5">Dokter</td>
         </tr>
         <tr>
-            <td width="50%" class="text5" style="padding-left: 150px;">{!! DNS2D::getBarcodeHTML($biodata->pendaftaran->registerPasien->Nama_Pasien, 'QRCODE', 3, 3) !!}</td>
-            <td width="50%" class="text5" style="padding-left: 150px;">{!! DNS2D::getBarcodeHTML($biodata->pendaftaran->registerPasien->Nama_Pasien, 'QRCODE', 3, 3) !!}</td>
+            <td width="50%" class="text5" style="padding-left: 150px;"><img src="storage/operasi/{{$penandaan->gambar}}" width="50" height="50" /></td>
+            <td width="50%" class="text5" style="padding-left: 150px;"><img src="storage/operasi/{{$penandaan->gambar}}" width="50" height="50" /></td>
         </tr>
         <tr>
-            <td width="50%" class="text5">({{ $biodata->pendaftaran->registerPasien->Nama_Pasien}})</td>
-            <td width="50%" class="text5">({{ $biodata->pendaftaran->registerPasien->Nama_Pasien}})</td>
+            <td width="50%" class="text5">({{ $penandaan->nama_pasien}})</td>
+            <td width="50%" class="text5">({{ $penandaan->nama_dokter}})</td>
         </tr>
     </table>
 </body>

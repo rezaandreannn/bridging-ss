@@ -70,7 +70,7 @@
                                                 </a>
                                                 {{-- <a class="dropdown-item has-icon" href="{{ route('operasi.penandaan.edit', ['id' => $data->id] )}}"><i class="fas fa-pencil-alt"></i>Edit Tandai Lokasi </a> --}}
                                                 {{-- jika sudah diinput bisa diunduh --}}
-                                                <a class="dropdown-item has-icon" href="{{ route('operasi.penandaan.cetak', $data->id) }}"><i class="fas fa-file-download"></i> Unduh</a>
+                                                <a class="dropdown-item has-icon" href="{{ route('operasi.penandaan.cetak', $data->kode_register) }}"><i class="fas fa-file-download"></i> Unduh</a>
                                                 {{-- Hapus --}}
                                                 <form id="delete-form-{{$data->id}}" action="{{ route('operasi.penandaan.destroy', $data->id) }}" method="POST" style="display: none;">
                                                     @method('delete')

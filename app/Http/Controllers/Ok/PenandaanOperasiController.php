@@ -36,24 +36,19 @@ class PenandaanOperasiController extends Controller
         return view($this->view . 'jadwalOperasi.index', compact('title', 'jadwal'));
     }
 
-    public function cetak($id)
+    public function cetak($kodeRegister)
     {
         $title = $this->prefix . ' ' . 'Operasi';
         // Ambil data berdasarkan ID
-        $penandaan = $this->penandaanOperasiService->findById($id);
 
-        // dd($penandaan);
-        $noReg = $penandaan->kode_register;
-
-        // Ambil biodata berdasarkan nomor registrasi
-        $biodata = $this->bookingOperasiService->biodata($noReg);
-        // dd($biodata);
+        $penandaan = $this->penandaanOperasiService->unduhByRegister($kodeRegister);
+        dd($penandaan);
         $date = date('dMY');
         $tanggal = Carbon::now();
 
         $filename = 'PenandaanOperasi-' . $date;
 
-        $pdf = PDF::loadview('pages.ok.penandaan-operasi.cetak-dokumen', ['penandaan' => $penandaan, 'biodata' => $biodata, 'tanggal' => $tanggal]);
+        $pdf = PDF::loadview('pages.ok.penandaan-operasi.cetak-dokumen', ['penandaan' => $penandaan, 'title' => $title, 'tanggal' => $tanggal]);
         // Set paper size to A5
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');

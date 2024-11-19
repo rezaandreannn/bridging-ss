@@ -21,7 +21,7 @@ Route::prefix('operasi')->name('operasi.')->middleware('auth')->group(function (
     Route::get('/penandaan-operasi/{id}/edit', [PenandaanOperasiController::class, 'edit'])->name('penandaan.edit');
     Route::put('/penandaan-operasi/{id}/update', [PenandaanOperasiController::class, 'update'])->name('penandaan.update');
     Route::delete('/penandaan-operasi/delete/{id}', [PenandaanOperasiController::class, 'destroy'])->name('penandaan.destroy');
-    Route::get('/penandaan-operasi/{id}/cetak', [PenandaanOperasiController::class, 'cetak'])->name('penandaan.cetak');
+    Route::get('/penandaan-operasi/cetak/{kode_register}', [PenandaanOperasiController::class, 'cetak'])->name('penandaan.cetak');
 
 
     // OK Ruangan
