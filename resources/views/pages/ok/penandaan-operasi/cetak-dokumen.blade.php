@@ -24,22 +24,25 @@
             font-size: 15px;
             text-align: center;
         }
-        
+
         .text7 {
             font-size: 14px;
-            margin: 5px; 
+            margin: 5px;
             padding: 0;
         }
+
         .text8 {
             font-size: 12px;
             border: 1px solid black;
             text-align: left;
         }
+
         .gambar-mata {
             font-size: 15px;
             border: 1px solid black;
             text-align: center;
         }
+
         .text-mata {
             font-size: 12px;
             border: 1px solid black;
@@ -98,17 +101,20 @@
         }
 
         table {
-                width: 100%;
-                border-collapse: collapse;
-            }
-        .tabel1{
-                border: 1px solid black;
-                padding: 2px;
-                text-align: center;
-            }
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .tabel1 {
+            border: 1px solid black;
+            padding: 2px;
+            text-align: center;
+        }
+
         th {
-                background-color: #f2f2f2;
-            }
+            background-color: #f2f2f2;
+        }
+
     </style>
 </head>
 
@@ -143,7 +149,7 @@
                 <table>
                     <tr>
                         <td>No. RM </td>
-                        <td>: {{ $penandaan->no_mr}}</td>
+                        <td>: {{ $penandaan->no_mr }} </td>
                     </tr>
                     <tr>
                         <td>Nama</td>
@@ -171,7 +177,7 @@
                 <table width="100%">
                     <tr>
                         <td class="text3"><b>Ruangan</b></td>
-                        <td class="text3">:  {{$penandaan->ruang_operasi}}</td>
+                        <td class="text3">: {{$penandaan->ruang_operasi}}</td>
                     </tr>
                     <tr>
                         <td class="text3"><b>Tanggal </b></td>
@@ -195,7 +201,7 @@
     </table>
     <table style="border: 1px solid black; border-bottom:none " width="100%">
         <tr>
-           <td><img src="storage/operasi/{{$penandaan->gambar}}" width="100%" height="600" /></td>
+            <td><img src="storage/operasi/{{$penandaan->gambar}}" width="100%" height="700" /></td>
         </tr>
     </table>
     <table style="border: 1px solid black;" width="100%">
@@ -204,8 +210,8 @@
             <td width="50%" class="text5">Dokter</td>
         </tr>
         <tr>
-            <td width="50%" class="text5" style="padding-left: 150px;"><img src="storage/operasi/{{$penandaan->gambar}}" width="50" height="50" /></td>
-            <td width="50%" class="text5" style="padding-left: 150px;"><img src="storage/operasi/{{$penandaan->gambar}}" width="50" height="50" /></td>
+            <td width="50%" class="text5"><img src="storage/operasi/{{$penandaan->gambar}}" width="80" height="80" /></td>
+            <td width="50%" class="text5"><img src="storage/operasi/{{$penandaan->gambar}}" width="80" height="80" /></td>
         </tr>
         <tr>
             <td width="50%" class="text5">({{ $penandaan->nama_pasien}})</td>

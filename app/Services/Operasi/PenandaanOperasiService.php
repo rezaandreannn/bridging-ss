@@ -54,7 +54,7 @@ class PenandaanOperasiService
 
     public function unduhByRegister($kodeRegister)
     {
-        $penandaans = PenandaanOperasi::with([
+        $penandaan = PenandaanOperasi::with([
             'ttdTandaPasien' => function ($query) {
                 $query->select('kode_register', 'ttd_pasien');
             },
@@ -69,25 +69,27 @@ class PenandaanOperasiService
                 ]);
             }
         ])
-            ->get();
+            ->first();
 
-        return collect($penandaans->map(function ($item) {
+        if ($penandaan) {
             return (object) [
-                'id' => $item->id,
-                'kode_register' => $item->kode_register,
-                'tanggal' => optional($item->booking)->tanggal,
-                'gambar' => $item->hasil_gambar,
-                'ttd_pasien' => optional($item->ttdTandaPasien)->ttd_pasien,
-                'no_mr' => optional($item->booking->pendaftaran)->No_MR,
-                'nama_pasien' => optional($item->booking->pendaftaran->registerPasien)->Nama_Pasien,
-                'tanggal_lahir' => optional($item->booking->pendaftaran->registerPasien)->TGL_LAHIR,
-                'ruang_operasi' => optional($item->booking->ruangan)->nama_ruang,
-                'nama_dokter' => optional($item->booking->dokter)->Nama_Dokter,
-                'nama_tindakan' => optional($item->booking)->nama_tindakan,
-                'jam_mulai' => optional($item->booking)->jam_mulai,
-                'jam_selesai' => optional($item->booking)->jam_selesai
+                'id' => $penandaan->id,
+                'kode_register' => $penandaan->kode_register,
+                'tanggal' => optional($penandaan->booking)->tanggal,
+                'gambar' => $penandaan->hasil_gambar,
+                'ttd_pasien' => optional($penandaan->ttdTandaPasien)->ttd_pasien,
+                'no_mr' => optional($penandaan->booking->pendaftaran)->No_MR,
+                'nama_pasien' => optional($penandaan->booking->pendaftaran->registerPasien)->Nama_Pasien,
+                'tanggal_lahir' => optional($penandaan->booking->pendaftaran->registerPasien)->TGL_LAHIR,
+                'ruang_operasi' => optional($penandaan->booking->ruangan)->nama_ruang,
+                'nama_dokter' => optional($penandaan->booking->dokter)->Nama_Dokter,
+                'nama_tindakan' => optional($penandaan->booking)->nama_tindakan,
+                'jam_mulai' => optional($penandaan->booking)->jam_mulai,
+                'jam_selesai' => optional($penandaan->booking)->jam_selesai,
             ];
-        }));
+        }
+
+        return null;
     }
 
     public function insert(array $data)
