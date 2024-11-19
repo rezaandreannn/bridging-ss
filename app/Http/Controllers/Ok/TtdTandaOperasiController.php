@@ -68,10 +68,16 @@ class TtdTandaOperasiController extends Controller
     public function store(Request $request)
     {
 
+        // cek ttd perwakilan keluarga
+        if ($request->pasien == 1) {
+          $nama = $request->nama_keluarga;
+        }
+
         try {
 
             $data = [
                 'kode_register' => $request->kode_register,
+                'nama_pasien' => $nama ?? $request->nama_pasien,
                 'ttd_pasien' => $request->signed,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')
@@ -130,10 +136,15 @@ class TtdTandaOperasiController extends Controller
     public function update(Request $request, $id)
     {
         
+        if ($request->pasien == 1) {
+            $nama = $request->nama_keluarga;
+          }
+          
         try {
 
             $data = [
                 'kode_register' => $request->kode_register,
+                'nama_pasien' => $nama ?? $request->nama_pasien,
                 'ttd_pasien' => $request->signed,
                 'updated_at' => date('Y-m-d H:i:s')
                 

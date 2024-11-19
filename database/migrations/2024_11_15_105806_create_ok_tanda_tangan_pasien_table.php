@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::connection('pku')->create('ok_tanda_tangan_pasien', function (Blueprint $table) {
             $table->id();
             $table->string('kode_register');
+            $table->string('nama_pasien');
             $table->string('ttd_pasien');
             $table->timestamps();
         });

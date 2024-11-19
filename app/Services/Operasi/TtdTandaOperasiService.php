@@ -19,7 +19,7 @@ class TtdTandaOperasiService
                     'pendaftaran' => function ($query) {
                         $query->select('No_Reg', 'No_MR')->with([
                             'registerPasien' => function ($query) {
-                                $query->select('No_MR', 'Nama_Pasien');
+                                $query->select('No_MR');
                             }
                         ]);
                     }
@@ -62,6 +62,7 @@ class TtdTandaOperasiService
             // Save the image to storage
             $ttdtandapasien = TtdTandaOperasi::create([
                 'kode_register' => $data['kode_register'],
+                'nama_pasien' => $data['nama_pasien'],
                 'ttd_pasien' => $file_name,
                 'created_at' => $data['created_at'],
                 'updated_at' => $data['updated_at']
@@ -96,6 +97,7 @@ class TtdTandaOperasiService
             // Melakukan update data
             $ttdtandapasien->update([
                 'kode_register' => $data['kode_register'],
+                'nama_pasien' => $data['nama_pasien'],
                 'ttd_pasien' => $file_name,
                 'updated_at' => $data['updated_at']
             ]);
@@ -131,7 +133,7 @@ class TtdTandaOperasiService
                 'ttd_pasien' => $item->ttd_pasien,
                 'created_at' => $item->created_at->format('Y-m-d H:i:s'),
                 'no_mr' => optional($item->booking->pendaftaran)->No_MR,
-                'nama_pasien' => optional($item->booking->pendaftaran->registerPasien)->Nama_Pasien,
+                'nama_pasien' => $item->nama_pasien,
                 'tanggal_operasi' => optional($item->booking)->tanggal
             ];
         }));

@@ -18,6 +18,7 @@ class TtdTandaOperasi extends Model
 
     protected $fillable = [
         'kode_register',
+        'nama_pasien',
         'ttd_pasien',
         'created_at',
         'updated_at'

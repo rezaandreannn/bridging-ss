@@ -66,7 +66,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Pasien</th>
+                                    <th>Nama Pasien / keluarga</th>
                                     <th>No MR</th>
                                     <th>No Registrasi</th>
                                     <th>Dibuat</th>
