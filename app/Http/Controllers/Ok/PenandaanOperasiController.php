@@ -84,7 +84,7 @@ class PenandaanOperasiController extends Controller
             $this->penandaanOperasiService->insert($data);
 
             // return redirect()->back()->with('success', 'Penandaan Operasi berhasil ditambahkan.');
-            return redirect('operasi/penandaan-operasi')->with('success', 'Penandaan Operasi berhasil di ubah.');
+            return redirect('operasi/penandaan-operasi')->with('success', 'Penandaan Operasi berhasil di ditambahkan.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
             return redirect()->back()->with('error', 'Gagal menambahkan Penandaan Operasi: ' . $e->getMessage());

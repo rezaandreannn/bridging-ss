@@ -127,28 +127,24 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const images = document.querySelectorAll('img[id^="gambarZoom"]'); // Ambil semua gambar yang relevan
+    const images = document.querySelectorAll('img[id^="gambarZoom"]'); // Pilih semua gambar yang relevan
 
-        images.forEach((img) => {
-            let zoomLevel = 1; // Tingkat zoom awal
-            const maxZoom = 3; // Zoom maksimal
-            const minZoom = 0.5; // Zoom minimal
+    images.forEach((img) => {
+        let zoomLevel = 1; // Default zoom level
+        const maxZoom = 2; // Zoom maksimal
+        const minZoom = 1; // Zoom minimal (normal)
 
-            img.addEventListener('wheel', (event) => {
-                event.preventDefault(); // Cegah scroll halaman
-
-                // Periksa arah scroll (deltaY > 0 = zoom out, deltaY < 0 = zoom in)
-                if (event.deltaY < 0 && zoomLevel < maxZoom) {
-                    zoomLevel += 0.1; // Zoom in
-                } else if (event.deltaY > 0 && zoomLevel > minZoom) {
-                    zoomLevel -= 0.1; // Zoom out
-                }
-
-                // Terapkan transformasi skala ke gambar
+        img.addEventListener('dblclick', () => {
+            if (zoomLevel === 1) {
+                zoomLevel = maxZoom; // Zoom in
                 img.style.transform = `scale(${zoomLevel})`;
-            });
+            } else {
+                zoomLevel = minZoom; // Zoom out (normal)
+                img.style.transform = `scale(${zoomLevel})`;
+            }
         });
     });
+});
 </script>
 
 <script>
