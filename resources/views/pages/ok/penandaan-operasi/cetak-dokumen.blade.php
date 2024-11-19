@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Surat</title>
+    <title>Cetak Penandaan Operasi</title>
     <style>
         table {
             border-collapse: collapse;
@@ -24,22 +24,25 @@
             font-size: 15px;
             text-align: center;
         }
-        
+
         .text7 {
             font-size: 14px;
-            margin: 5px; 
+            margin: 5px;
             padding: 0;
         }
+
         .text8 {
             font-size: 12px;
             border: 1px solid black;
             text-align: left;
         }
+
         .gambar-mata {
             font-size: 15px;
             border: 1px solid black;
             text-align: center;
         }
+
         .text-mata {
             font-size: 12px;
             border: 1px solid black;
@@ -98,17 +101,20 @@
         }
 
         table {
-                width: 100%;
-                border-collapse: collapse;
-            }
-        .tabel1{
-                border: 1px solid black;
-                padding: 2px;
-                text-align: center;
-            }
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .tabel1 {
+            border: 1px solid black;
+            padding: 2px;
+            text-align: center;
+        }
+
         th {
-                background-color: #f2f2f2;
-            }
+            background-color: #f2f2f2;
+        }
+
     </style>
 </head>
 
@@ -143,15 +149,15 @@
                 <table>
                     <tr>
                         <td>No. RM </td>
-                        <td>: {{ $biodata->pendaftaran->No_MR}}</td>
+                        <td>: {{ $penandaan->no_mr }} </td>
                     </tr>
                     <tr>
                         <td>Nama</td>
-                        <td>: {{ $biodata->pendaftaran->registerPasien->Nama_Pasien}}</td>
+                        <td>: {{ $penandaan->nama_pasien}}</td>
                     </tr>
                     <tr>
                         <td>Tanggal Lahir</td>
-                        <td>: {{ date('d-m-Y', strtotime($biodata->pendaftaran->registerPasien->TGL_LAHIR))}}</td>
+                        <td>: {{ date('d-m-Y', strtotime($penandaan->tanggal_lahir))}}</td>
                     </tr>
                 </table>
             </td>
@@ -171,11 +177,11 @@
                 <table width="100%">
                     <tr>
                         <td class="text3"><b>Ruangan</b></td>
-                        <td class="text3">:  {{$biodata->ruangan->nama_ruang}}</td>
+                        <td class="text3">: {{$penandaan->ruang_operasi}}</td>
                     </tr>
                     <tr>
                         <td class="text3"><b>Tanggal </b></td>
-                        <td class="text3">: {{date('d-m-Y', strtotime($biodata->tanggal))}}</td>
+                        <td class="text3">: {{date('d-m-Y', strtotime($penandaan->tanggal))}}</td>
                     </tr>
                 </table>
             </td>
@@ -183,11 +189,11 @@
                 <table width="100%">
                     <tr>
                         <td class="text3"><b>Waktu</b></td>
-                        <td class="text3">: {{date('h:i', strtotime($biodata->jam_mulai))}} WIB - {{date('h:i', strtotime($biodata->jam_selesai))}} WIB</td>
+                        <td class="text3">: {{date('h:i', strtotime($penandaan->jam_mulai))}} WIB - {{date('h:i', strtotime($penandaan->jam_selesai))}} WIB</td>
                     </tr>
                     <tr>
                         <td class="text3"><b>Jenis Operasi</b></td>
-                        <td class="text3">: {{$biodata->nama_tindakan}}</td>
+                        <td class="text3">: {{$penandaan->nama_tindakan}}</td>
                     </tr>
                 </table>
             </td>
@@ -195,21 +201,22 @@
     </table>
     <table style="border: 1px solid black; border-bottom:none " width="100%">
         <tr>
-           <td><img src="storage/operasi/{{$penandaan->hasil_gambar}}" width="100%" height="700" /></td>
+            <td><img src="storage/operasi/{{$penandaan->gambar}}" width="100%" height="650" /></td>
         </tr>
     </table>
-    <table style="border: 1px solid black;" width="100%">
+    <p class="text7"><b>Saya menyatakan bahwa lokasi operasi gambar pada diagram adalah benar</b></p>
+    <table style="border: 1px solid black; border-top:none" width="100%">
         <tr>
-            <td style="padding-top: 50px;" width="60%" class="text5"> Nama Pasien</td>
-            <td style="padding-top: 50px;" class="text5">Dokter</td>
+            <td width="50%" class="text5"> Nama Pasien</td>
+            <td width="50%" class="text5">Dokter</td>
         </tr>
         <tr>
-            <td width="70%" class="text5"></td>
-            <td class="text5"></td>
+            <td width="50%" class="text5"><img src="storage/operasi/ttd/penandaan-operasi-pasien/{{$penandaan->ttd_pasien}}" width="80" height="80" /></td>
+            <td width="50%" class="text5"><img src="storage/operasi/ttd/penandaan-operasi-pasien/{{$penandaan->ttd_pasien}}" width="80" height="80" /></td>
         </tr>
         <tr>
-            <td width="60%" class="text5">(Pasien)</td>
-            <td class="text5" style="padding-right: 50px;">(Dokter)</td>
+            <td width="50%" class="text5">({{ $penandaan->nama_pasien}})</td>
+            <td width="50%" class="text5">({{ $penandaan->nama_dokter}})</td>
         </tr>
     </table>
 </body>

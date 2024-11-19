@@ -52,7 +52,45 @@ class PenandaanOperasiService
         return $penandaan;
     }
 
-    public function byRegisterWithTtd($kodeRegister) {}
+    public function unduhByRegister($kodeRegister)
+    {
+        $penandaan = PenandaanOperasi::with([
+            'ttdTandaPasien' => function ($query) {
+                $query->select('kode_register', 'ttd_pasien');
+            },
+            'booking' => function ($query) {
+                $query->with([
+                    'pendaftaran' => function ($query) {
+                        $query->select('No_Reg', 'No_MR')
+                            ->with(['registerPasien' => function ($query) {
+                                $query->select('No_MR', 'Nama_Pasien', 'ALAMAT', 'JENIS_KELAMIN', 'TGL_LAHIR');
+                            }]);
+                    },
+                ]);
+            }
+        ])
+            ->first();
+
+        if ($penandaan) {
+            return (object) [
+                'id' => $penandaan->id,
+                'kode_register' => $penandaan->kode_register,
+                'tanggal' => optional($penandaan->booking)->tanggal,
+                'gambar' => $penandaan->hasil_gambar,
+                'ttd_pasien' => optional($penandaan->ttdTandaPasien)->ttd_pasien,
+                'no_mr' => optional($penandaan->booking->pendaftaran)->No_MR,
+                'nama_pasien' => optional($penandaan->booking->pendaftaran->registerPasien)->Nama_Pasien,
+                'tanggal_lahir' => optional($penandaan->booking->pendaftaran->registerPasien)->TGL_LAHIR,
+                'ruang_operasi' => optional($penandaan->booking->ruangan)->nama_ruang,
+                'nama_dokter' => optional($penandaan->booking->dokter)->Nama_Dokter,
+                'nama_tindakan' => optional($penandaan->booking)->nama_tindakan,
+                'jam_mulai' => optional($penandaan->booking)->jam_mulai,
+                'jam_selesai' => optional($penandaan->booking)->jam_selesai,
+            ];
+        }
+
+        return null;
+    }
 
     public function insert(array $data)
     {
