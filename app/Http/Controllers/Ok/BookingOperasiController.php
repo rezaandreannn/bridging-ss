@@ -179,8 +179,14 @@ class BookingOperasiController extends Controller
      */
     public function destroy($id)
     {
-        DB::connection('pku')->table('ok_booking_operasi')->where('id', $id)->delete();
-
-        return redirect()->back()->with('success', 'Data Berhasil Dihapus!');
+        try {
+            $this->bookingOperasiService->delete($id);
+            $feedback = 'success';
+            $message = 'Data Berhasil Dihapus!';
+        } catch (\Throwable $th) {
+            $feedback = 'error';
+            $message = 'Data Gagal dihapus';
+        }
+        return redirect()->back()->with($feedback, $message);
     }
 }

@@ -117,6 +117,14 @@ class BookingOperasiService
         }
     }
 
+    public function delete($id)
+    {
+        $data = BookingOperasi::find($id);
+        $data->delete();
+    }
+
+    public function deleteWithRelation($id) {}
+
     private function mapData($databookings)
     {
         return collect($databookings->map(function ($item) {
