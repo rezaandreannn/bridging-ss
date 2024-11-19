@@ -201,17 +201,18 @@
     </table>
     <table style="border: 1px solid black; border-bottom:none " width="100%">
         <tr>
-            <td><img src="storage/operasi/{{$penandaan->gambar}}" width="100%" height="700" /></td>
+            <td><img src="storage/operasi/{{$penandaan->gambar}}" width="100%" height="650" /></td>
         </tr>
     </table>
-    <table style="border: 1px solid black;" width="100%">
+    <p class="text7"><b>Saya menyatakan bahwa lokasi operasi gambar pada diagram adalah benar</b></p>
+    <table style="border: 1px solid black; border-top:none" width="100%">
         <tr>
             <td width="50%" class="text5"> Nama Pasien</td>
             <td width="50%" class="text5">Dokter</td>
         </tr>
         <tr>
-            <td width="50%" class="text5"><img src="storage/operasi/{{$penandaan->gambar}}" width="80" height="80" /></td>
-            <td width="50%" class="text5"><img src="storage/operasi/{{$penandaan->gambar}}" width="80" height="80" /></td>
+            <td width="50%" class="text5"><img src="storage/operasi/ttd/penandaan-operasi-pasien/{{$penandaan->ttd_pasien}}" width="80" height="80" /></td>
+            <td width="50%" class="text5"><img src="storage/operasi/ttd/penandaan-operasi-pasien/{{$penandaan->ttd_pasien}}" width="80" height="80" /></td>
         </tr>
         <tr>
             <td width="50%" class="text5">({{ $penandaan->nama_pasien}})</td>
