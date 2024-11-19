@@ -120,7 +120,7 @@
             </div>
             <div class="modal-body text-center">
                 <p>Dibuat: {{ $ttd->created_at }}</p>
-                <img src="{{ asset('storage/ttd/penandaan-operasi-pasien/' . $ttd->ttd_pasien) }}" class="img-fluid" alt="Gambar Pengguna">
+                <img src="{{ asset('storage/operasi/penandaan-pasien/ttd/' . $ttd->ttd_pasien) }}" class="img-fluid" alt="Gambar Pengguna">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>

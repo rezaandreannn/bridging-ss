@@ -67,7 +67,7 @@ class TtdTandaOperasiService
                 'updated_at' => $data['updated_at']
             ]);
 
-            Storage::put('public/operasi/ttd/penandaan-operasi-pasien/' . $file_name, $image_base64);
+            Storage::put('public/operasi/penandaan-pasien/ttd/' . $file_name, $image_base64);
 
             return $ttdtandapasien;
         } catch (\Throwable $th) {
@@ -91,7 +91,7 @@ class TtdTandaOperasiService
             $ttdtandapasien = TtdTandaOperasi::findOrFail($id);
             // jika gambar sudah ada lakukan hapus
             if ($ttdtandapasien->ttd_pasien) {
-                Storage::delete('public/ttd/penandaan-operasi-pasien/' . $ttdtandapasien->ttd_pasien);
+                Storage::delete('public/operasi/penandaan-pasien/ttd/' . $ttdtandapasien->ttd_pasien);
             }
             // Melakukan update data
             $ttdtandapasien->update([
@@ -100,12 +100,26 @@ class TtdTandaOperasiService
                 'updated_at' => $data['updated_at']
             ]);
 
-            Storage::put('public/ttd/penandaan-operasi-pasien/' . $file_name, $image_base64);
+            Storage::put('public/operasi/penandaan-pasien/ttd/' . $file_name, $image_base64);
 
             return $ttdtandapasien;
         } catch (\Throwable $th) {
             throw new Exception("Gagal memperbarui booking: " . $th->getMessage());
         }
+    }
+
+    public function delete($id)
+    {
+        $ttdtandapasien = TtdTandaOperasi::find($id);
+            // hapus penandaan
+        
+            if ($ttdtandapasien) {
+                $path = 'public/operasi/penandaan-pasien/ttd/' .  $ttdtandapasien->ttd_pasien;
+                Storage::delete($path);
+                $ttdtandapasien->delete();
+            }
+
+        return $ttdtandapasien->delete();
     }
 
     private function mapData($ttdpasiens)

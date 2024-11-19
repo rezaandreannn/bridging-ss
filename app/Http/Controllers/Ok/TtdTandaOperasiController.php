@@ -68,8 +68,6 @@ class TtdTandaOperasiController extends Controller
     public function store(Request $request)
     {
 
-        // dd('ok');
-        //
         try {
 
             $data = [
@@ -82,7 +80,7 @@ class TtdTandaOperasiController extends Controller
 
             $this->ttdTandaOperasiService->insert($data);
 
-            return redirect()->route('ttd-ok.penandaan.index')->with('success', 'Tanda tangan berhasil diperbarui.');
+            return redirect()->route('ttd-ok.penandaan.index')->with('success', 'Tanda tangan berhasil ditambahkan.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
             return redirect()->back()->with('error', 'Gagal menambahkan tanda tangan: ' . $e->getMessage());
@@ -158,15 +156,16 @@ class TtdTandaOperasiController extends Controller
      */
     public function destroy($id)
     {
-        // dd('ok');
-        //
-        $ttdtandapasien = TtdTandaOperasi::findOrFail($id);
-        // jika gambar sudah ada lakukan hapus
-        if($ttdtandapasien->ttd_pasien){
-            Storage::delete('public/ttd/penandaan-operasi-pasien/' . $ttdtandapasien->ttd_pasien);
-        }
-        DB::connection('pku')->table('ok_tanda_tangan_pasien')->where('id', $id)->delete();
+    
+        try{
 
-        return redirect()->back()->with('success', 'Data Berhasil Dihapus!');
+            $this->ttdTandaOperasiService->delete($id);
+
+        return redirect()->route('ttd-ok.penandaan.index')->with('success', 'Tanda tangan berhasil dihapus.');
+
+        } catch (Exception $e) {
+            // Redirect dengan pesan error jika terjadi kegagalan
+            return redirect()->back()->with('error', 'Gagal menghapus tanda tangan: ' . $e->getMessage());
+        }
     }
 }
