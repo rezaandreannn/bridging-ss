@@ -20,6 +20,8 @@ Route::prefix('operasi')->name('operasi.')->middleware('auth')->group(function (
     Route::post('penandaan-operasi', [PenandaanOperasiController::class, 'store'])->name('penandaan.store');
     Route::get('/penandaan-operasi/{id}/edit', [PenandaanOperasiController::class, 'edit'])->name('penandaan.edit');
     Route::put('/penandaan-operasi/{id}/update', [PenandaanOperasiController::class, 'update'])->name('penandaan.update');
+    Route::delete('/penandaan-operasi/delete/{id}', [PenandaanOperasiController::class, 'destroy'])->name('penandaan.destroy');
+    Route::get('/penandaan-operasi/{id}/cetak', [PenandaanOperasiController::class, 'cetak'])->name('penandaan.cetak');
 
 
     // OK Ruangan

@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\OK;
 
 use Exception;
-use App\Models\Rajal;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Helpers\BookingHelper;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
-use App\Models\Operasi\BookingOperasi;
-use App\Models\Operasi\PenandaanOperasi;
 use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\PenandaanOperasiService;
 
@@ -35,6 +34,29 @@ class PenandaanOperasiController extends Controller
         $jadwal = $this->bookingOperasiService->get();
 
         return view($this->view . 'jadwalOperasi.index', compact('title', 'jadwal'));
+    }
+
+    public function cetak($id)
+    {
+        $title = $this->prefix . ' ' . 'Operasi';
+        // Ambil data berdasarkan ID
+        $penandaan = $this->penandaanOperasiService->findById($id);
+
+        // dd($penandaan);
+        $noReg = $penandaan->kode_register;
+
+        // Ambil biodata berdasarkan nomor registrasi
+        $biodata = $this->bookingOperasiService->biodata($noReg);
+        // dd($biodata);
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+
+        $filename = 'PenandaanOperasi-' . $date;
+
+        $pdf = PDF::loadview('pages.ok.penandaan-operasi.cetak-dokumen', ['penandaan' => $penandaan, 'biodata' => $biodata, 'tanggal' => $tanggal]);
+        // Set paper size to A5
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
     }
 
     public function index(Request $request)
@@ -160,6 +182,14 @@ class PenandaanOperasiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $this->penandaanOperasiService->delete($id);
+            $feedback = 'success';
+            $message = 'Data Berhasil Dihapus!';
+        } catch (\Throwable $th) {
+            $feedback = 'error';
+            $message = 'Data Gagal dihapus';
+        }
+        return redirect()->back()->with($feedback, $message);
     }
 }
