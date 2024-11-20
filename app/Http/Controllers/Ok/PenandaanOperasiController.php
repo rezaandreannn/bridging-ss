@@ -62,11 +62,15 @@ class PenandaanOperasiController extends Controller
         // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
         $statusPenandaan = BookingHelper::getStatusPenandaan($penandaans);
 
+        $statusTandaTangan = BookingHelper::getStatusTandaTangan($penandaans);
+        // dd($statusTandaTangan);
+
 
         return view($this->view . 'penandaan-operasi.index', compact('penandaans'))
             ->with([
                 'title' => $title,
-                'statusPenandaan' => $statusPenandaan
+                'statusPenandaan' => $statusPenandaan,
+                'statusTandaTangan' => $statusTandaTangan
             ]);
     }
 
@@ -150,16 +154,16 @@ class PenandaanOperasiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validatedData = $request->validate([
-            'kode_register' => 'required',
-            'jenis_operasi' => 'required',
-        ]);
+        // $validatedData = $request->validate([
+        //     'kode_register' => 'required',
+        //     'jenis_operasi' => 'required',
+        // ]);
 
         try {
             $data = [
-                'kode_register' => $validatedData['kode_register'],
-                'hasil_gambar' => $validatedData['signatureData'],
-                'jenis_operasi' => $validatedData['jenis_operasi'],
+                'kode_register' => $request->kode_register,
+                'hasil_gambar' => $request->signatureData,
+                'jenis_operasi' => $request->jenis_operasi,
             ];
 
             $this->penandaanOperasiService->update($id, $data);
