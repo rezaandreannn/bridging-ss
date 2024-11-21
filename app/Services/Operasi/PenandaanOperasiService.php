@@ -69,6 +69,7 @@ class PenandaanOperasiService
                 ]);
             }
         ])
+            ->where('kode_register', $kodeRegister)
             ->first();
 
         if ($penandaan) {

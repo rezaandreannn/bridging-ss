@@ -68,9 +68,16 @@
                                                 <a class="dropdown-item has-icon" href="{{ isset($statusPenandaan[$data->id]) && $statusPenandaan[$data->id] == 'create' ? route('operasi.penandaan.create', ['noReg' => $data->kode_register]) : route('operasi.penandaan.edit', ['id' => $statusPenandaan[$data->id]]) }}">
                                                     <i class="fas fa-marker"></i> {{ isset($statusPenandaan[$data->id]) && $statusPenandaan[$data->id] == 'create' ? 'Tanda Lokasi' : 'Edit Tanda Lokasi' }}
                                                 </a>
-                                                {{-- <a class="dropdown-item has-icon" href="{{ route('operasi.penandaan.edit', ['id' => $data->id] )}}"><i class="fas fa-pencil-alt"></i>Edit Tandai Lokasi </a> --}}
+
+                                                @if(isset($statusTandaTangan[$data->id]) && $statusTandaTangan[$data->id] == 'create')
+                                                <a class="dropdown-item has-icon" href="{{ route('ttd-ok.penandaan.create', ['kode_register' => $data->kode_register]) }}">
+                                                    <i class="fas fa-signature"></i> Ajukan Tanda Tangan
+                                                </a>
+                                                @endif
+
                                                 {{-- jika sudah diinput bisa diunduh --}}
-                                                <a class="dropdown-item has-icon" href="{{ route('operasi.penandaan.cetak', $data->kode_register) }}"><i class="fas fa-file-download"></i> Unduh</a>
+                                                <a class="dropdown-item has-icon" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" href="{{ route('operasi.penandaan.cetak', $data->kode_register) }}"><i class="fas fa-file-download"></i> Unduh</a>
+
                                                 {{-- Hapus --}}
                                                 <form id="delete-form-{{$data->id}}" action="{{ route('operasi.penandaan.destroy', $data->id) }}" method="POST" style="display: none;">
                                                     @method('delete')

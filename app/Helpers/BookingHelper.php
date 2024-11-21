@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use App\Models\Operasi\PenandaanOperasi;
+use App\Models\Operasi\TtdTandaOperasi;
 
 class BookingHelper
 {
@@ -16,5 +17,17 @@ class BookingHelper
         }
 
         return $statusPenandaan;
+    }
+
+    public static function getStatusTandaTangan($ttds)
+    {
+        $statusTandaTangan = [];
+
+        foreach ($ttds as $ttd) {
+            $exists = TtdTandaOperasi::where('kode_register', $ttd->kode_register)->first();
+            $statusTandaTangan[$ttd->id] = $exists ? $exists->id : 'create';
+        }
+
+        return $statusTandaTangan;
     }
 }
