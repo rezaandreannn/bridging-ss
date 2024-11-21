@@ -32,6 +32,7 @@ use App\Http\Controllers\MasterData\LocationController;
 use App\Http\Controllers\OK\PenandaanOperasiController;
 use App\Http\Controllers\RawatInap\Cppt\CpptController;
 use App\Http\Controllers\IGD\Layanan\SkriningController;
+use App\Http\Controllers\MasterData\TtdDokterController;
 use App\Http\Controllers\Fisio\InformedConcentController;
 use App\Http\Controllers\Kunjungan\PendaftaranController;
 use App\Http\Controllers\MasterData\JenisFisioController;
@@ -147,6 +148,13 @@ Route::middleware('auth')->group(function () {
         Route::post('farmasi/harga_alkes/add_proses', [MasterDataAlkesController::class, 'store_harga'])->name('masterHargaAlkes.store');
         Route::put('farmasi/harga_alkes/update_proses/{id}', [MasterDataAlkesController::class, 'update_harga'])->name('masterHargaAlkes.update');
         Route::delete('farmasi/harga_alkes/delete_proses/{id}', [MasterDataAlkesController::class, 'destroy_harga'])->name('masterHargaAlkes.destroy');
+
+        Route::get('ttd-dokter', [TtdDokterController::class, 'index'])->name('ttd-dokter.index');
+        Route::get('ttd-dokter/create', [TtdDokterController::class, 'create'])->name('ttd-dokter.create');
+        Route::get('ttd-dokter/edit/{id}', [TtdDokterController::class, 'edit'])->name('ttd-dokter.edit');
+        Route::post('ttd-dokter', [TtdDokterController::class, 'store'])->name('ttd-dokter.store');
+        Route::put('ttd-dokter/{id}/update', [TtdDokterController::class, 'update'])->name('ttd-dokter.update');
+        Route::delete('ttd-dokter/delete/{id}', [TtdDokterController::class, 'destroy'])->name('ttd-dokter.destroy');
     });
 
     // ENCOUNTER 
