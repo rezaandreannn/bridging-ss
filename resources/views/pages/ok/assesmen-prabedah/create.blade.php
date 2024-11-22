@@ -40,21 +40,21 @@
                                 <div class="form-group">
                                     <label>Data Subjektif (Anamnesa) <code>*Wajib Diisi</code></label>
                                     <textarea name="anamnesa" class="form-control  @error('anamnesa') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ old('anamnesa') }}</textarea>
+                                    @error('anamnesa')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
-                                @error('anamnesa')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                                @enderror
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Data Objektif (Pemeriksaan Fisik) <code> *Wajib Diisi</code></label>
                                     <textarea name="pemeriksaan_fisik" class="form-control  @error('pemeriksaan_fisik') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ old('pemeriksaan_fisik') }}</textarea>
                                     @error('pemeriksaan_fisik')
-                                    <span class="text-danger" style="font-size: 12px;">
+                                    <div class="invalid-feedback">
                                         {{ $message }}
-                                    </span>
+                                    </div>
                                     @enderror
                                 </div>
                             </div>
@@ -62,6 +62,11 @@
                                 <div class="form-group">
                                     <label>Diagnosis Pra Bedah</label>
                                     <textarea name="diagnosis_prabedah" class="form-control  @error('diagnosis_prabedah') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ old('diagnosis_prabedah') }}</textarea>
+                                    @error('diagnosis_prabedah')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -128,7 +133,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="berkas[]" id="berkasLab" value="1" onclick="toggleLabData()">
+                                                <input class="form-check-input" type="checkbox" name="lab[]" id="berkasLab" value="1" onclick="toggleLabData()">
                                                 <label class="form-check-label" for="berkasLab">
                                                     Laboratorium
                                                 </label>
@@ -142,27 +147,77 @@
                                                 </div>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="berkas" id="flexCheckDefault" value="2">
+                                                <input class="form-check-input" type="checkbox" name="rontgen" id="flexCheckDefault" value="1">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Rontgen
+                                                </label>
+                                                <input type="text" placeholder="Inputan Rontgen" class="form-control" name="rontgen" id="rontgen">
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="ekg" id="flexCheckDefault" value="1">
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     EKG
                                                 </label>
+                                                <input type="text" placeholder="Inputan EKG" class="form-control" name="ekg" id="ekg">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="berkas" id="flexCheckDefault" value="3" >
-                                                <label class="form-check-label" for="flexCheckDefault">
-                                                    Darah / Alat khusus yang di perlukan
+                                                <input class="form-check-input" type="checkbox" name="darah_khusus" id="darah_khusus_check" value="3">
+                                                <label class="form-check-label" for="darah_khusus_check">
+                                                    Darah / Alat khusus yang diperlukan
                                                 </label>
                                             </div>
+                                            <div class="form-group mt-2">
+                                                <input type="text" class="form-control" name="darah_khusus" id="darah_khusus" placeholder="Deskripsi">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <input type="text" class="form-control mb-3 mt-2" name="jumlah_darah" id="jumlah_darah" placeholder="Jumlah">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="text" class="form-control mb-3 mt-2" name="gol_darah" id="gol_darah" placeholder="Gol">
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="berkas" id="flexCheckDefault" value="4" >
+                                                <input class="form-check-input" type="checkbox" name="obat_pasien" id="flexCheckDefault" value="4" >
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Obat-obat pasien yang dibawa
                                                 </label>
+                                                <input type="text" placeholder="Inputan Obat Pasien" class="form-control" name="obat_pasien" id="obat_pasien">
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Estimasi waktu yang dibutuhkan</label>
+                                    <div class="input-group">
+                                        <input type="text" name="estimasi_waktu" id="estimasi_waktu" class="form-control @error('estimasi_waktu') is-invalid  
+                                        @enderror">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <b>Jam</b>
+                                            </div>
+                                        </div>
+                                        @error('estimasi_waktu')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Rencana Tindakan Pembedahan</label>
+                                    <input type="text" name="rencana_tindakan" class="form-control @error('rencana_tindakan') is-invalid @enderror">
+                                    @error('rencana_tindakan')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
