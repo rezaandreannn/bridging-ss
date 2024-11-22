@@ -63,7 +63,13 @@ class PenandaanOperasiService
                     'pendaftaran' => function ($query) {
                         $query->select('No_Reg', 'No_MR')
                             ->with(['registerPasien' => function ($query) {
-                                $query->select('No_MR', 'Nama_Pasien', 'ALAMAT', 'JENIS_KELAMIN', 'TGL_LAHIR');
+                                $query->select(
+                                    'No_MR',
+                                    'Nama_Pasien',
+                                    'ALAMAT',
+                                    'JENIS_KELAMIN',
+                                    DB::raw("FORMAT(TGL_LAHIR, 'yyyy-MM-dd') as TGL_LAHIR")
+                                );
                             }]);
                     },
                 ]);
