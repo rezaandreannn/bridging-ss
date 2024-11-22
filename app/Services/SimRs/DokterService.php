@@ -19,4 +19,9 @@ class DokterService
         ];
         return Dokter::whereIn('Spesialis', $params)->get();
     }
+
+    public function allDokter(){
+        $data = Dokter::where('Jenis_Profesi','DOKTER SPESIALIS')->get();
+        return $data;
+    }
 }

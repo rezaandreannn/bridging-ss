@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="{{ asset('library/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('library/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('ttd/css/jquery.signature.css') }}">
+<link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
 <style>
     .modal-body img {
         display: block;
@@ -24,69 +25,44 @@
         <div class="section-header">
             <h1>{{$title}}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('ttd.pasien.detail') }}">Tanda Tangan Operasi</a></div>
-                <div class="breadcrumb-item">Penandaan Pasien</div>
+                <div class="breadcrumb-item active"><a href="{{ route('ttd.pasien.detail') }}">Tanda Tangan</a></div>
+                <div class="breadcrumb-item">Dokter</div>
             </div>
-        </div>
-
-        <div class="card card-primary">
-            {{-- <form id="filterForm" action="{{ route('transaksi_fisio.fisio') }}" method="get"> --}}
-            <form id="filterForm" action="{{ route ('ttd-ok.penandaan.create') }}" method="get">
-                <div class="card-header">
-                    <h4>Tanda Tangan Penandaan Pasien</h4>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="section-title">Pilih Pasien</div>
-                            <div class="input-group">
-                                <select name="kode_register" class="form-control select2" style="width: 100%;">
-                                    <option value="" selected>-- Pilih Pasien --</option>
-                                    @foreach ($bookings as $pasien)
-                                    <option value="{{$pasien->kode_register}}">{{$pasien->nama_pasien}} - {{$pasien->no_mr}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
-                    <button type="button" class="btn btn-danger" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
-                </div>
-            </form>
         </div>
 
         <div class="section-body">
             <div class="card">
+                <div class="card-header">
+                    <a href="{{route('ttd-dokter.create')}}" class="btn btn-sm btn-primary">
+                        <i class="fas fa-plus"></i> Tanda Tangan
+                    </a>
+                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-striped" id="table-1">
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Pasien / keluarga</th>
-                                    <th>No MR</th>
-                                    <th>No Registrasi</th>
-                                    <th>Dibuat</th>
+                                    <th>Kode Dokter</th>
+                                    <th>Nama Dokter</th>
+                                    <th>Jenis Spesialis</th>
                                     <th>Tanda tangan</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                        
-                                @foreach ($ttdpenandaanpasien as $ttd)
+                                @foreach ($ttdDokters as $ttd)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $ttd->nama_pasien }}</td>
-                                    <td>{{ $ttd->no_mr }}</td>
-                                    <td>{{ $ttd->kode_register }}</td>
-                                    <td>{{ $ttd->created_at }}</td>
+                                    <td>{{ $ttd->kode_dokter }}</td>
+                                    <td>{{ $ttd->nama_dokter }}</td>
+                                    <td>{{ $ttd->spesialis }}</td>
                                     <td>
                                         <a href="#" data-toggle="modal" data-target="#gambarModal{{ $ttd->id }}">Lihat Tanda Tangan</a>
                                     </td>
                                     <td width="15%">
-                                        <form id="delete-form-{{$ttd->id}}" action="{{ route('ttd-ok.penandaan.destroy', $ttd->id) }}" method="POST" style="display: none;">
+                                        <form id="delete-form-{{$ttd->id}}" action="{{ route('ttd-dokter.destroy', $ttd->id) }}" method="POST" style="display: none;">
                                             @method('delete')
                                             @csrf
                                         </form>
@@ -94,7 +70,7 @@
                                             <i class="fas fa-trash"></i> Hapus
                                         </a>
 
-                                        <a href="{{ route('ttd-ok.penandaan.edit', $ttd->id)}}" class="btn btn-sm btn-warning"><i class="fas fa fa-edit"></i> Edit</a>
+                                        <a href="{{ route('ttd-dokter.edit', $ttd->id)}}" class="btn btn-sm btn-warning"><i class="fas fa fa-edit"></i> Edit</a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -107,19 +83,19 @@
     </section>
 </div>
 
-@foreach ($ttdpenandaanpasien as $ttd)
+@foreach ($ttdDokters as $ttd)
 <div class="modal fade" id="gambarModal{{ $ttd->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Tanda Tangan Pengguna - {{ $ttd->nama_pasien }}</h5>
+                <h5 class="modal-title" id="exampleModalCenterTitle">Tanda Tangan Dokter - {{ $ttd->nama_dokter }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body text-center">
                 <p>Dibuat: {{ $ttd->created_at }}</p>
-                <img src="{{ asset('storage/operasi/penandaan-pasien/ttd/' . $ttd->ttd_pasien) }}" class="img-fluid" alt="Gambar Pengguna">
+                <img src="{{ asset('storage/ttd/dokter/' . $ttd->ttd_dokter) }}" class="img-fluid" alt="Gambar Pengguna">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -141,6 +117,8 @@
 <script src="{{ asset('ttd/js/jquery.signature.min.js') }}"></script>
 <script src="{{ asset('ttd/js/jquery.ui.touch-punch.min.js') }}"></script>
 <script src="{{ asset('library/sweetalert/dist/sweetalert.baru.js') }}"></script>
+<script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('library/selectric/public/jquery.selectric.min.js') }}"></script>
 
 
 <!-- Page Specific JS File -->

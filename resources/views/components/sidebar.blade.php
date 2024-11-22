@@ -78,6 +78,13 @@
                     </li>
                 </ul>
                 @endcan
+                @can('tanda tangan dokter')
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('md/ttd-dokter*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('ttd-dokter.index') }}">Ttd Dokter</a>
+                    </li>
+                </ul>
+                @endcan
             </li>
             @endcan
             @can('kunjungan')
