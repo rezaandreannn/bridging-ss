@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Ok\AssesmenPraBedahController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Ok\RuangOperasiController;
 use App\Http\Controllers\OK\BookingOperasiController;
@@ -29,6 +30,13 @@ Route::prefix('operasi')->name('operasi.')->middleware('auth')->group(function (
     Route::post('/ruang-operasi', [RuangOperasiController::class, 'store'])->name('ruang.store');
     Route::put('/ruang-operasi/update/{id}', [RuangOperasiController::class, 'update'])->name('ruang.update');
     Route::delete('/ruang-operasi/delete/{id}', [RuangOperasiController::class, 'destroy'])->name('ruang.destroy');
+
+    // Asesmen Pra Bedah
+    Route::get('/assesmen-prabedah', [AssesmenPraBedahController::class, 'index'])->name('assesmen-prabedah.index');
+    Route::get('/assesmen-prabedah/create', [AssesmenPraBedahController::class, 'create'])->name('assesmen-prabedah.create');
+    Route::post('/assesmen-prabedah', [AssesmenPraBedahController::class, 'store'])->name('assesmen-prabedah.store');
+    Route::put('/assesmen-prabedah/update/{id}', [AssesmenPraBedahController::class, 'update'])->name('assesmen-prabedah.update');
+    Route::delete('/assesmen-prabedah/delete/{id}', [AssesmenPraBedahController::class, 'destroy'])->name('assesmen-prabedah.destroy');
 });
 
 // booking operasi

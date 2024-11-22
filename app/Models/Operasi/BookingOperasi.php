@@ -2,6 +2,7 @@
 
 namespace App\Models\Operasi;
 
+use App\Models\MasterData\TtdDokter;
 use App\Models\Simrs\Dokter;
 use App\Models\Simrs\Pendaftaran;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -48,5 +49,10 @@ class BookingOperasi extends Model
     public function ttdtandapasien()
     {
         return $this->hasOne(Pendaftaran::class, 'No_Reg', 'kode_register');
+    }
+
+    public function ttdDokter()
+    {
+        return $this->hasOne(TtdDokter::class, 'kode_dokter', 'kode_dokter');
     }
 }

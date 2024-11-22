@@ -85,6 +85,7 @@ class PenandaanOperasiService
                 'tanggal_lahir' => optional($penandaan->booking->pendaftaran->registerPasien)->TGL_LAHIR,
                 'ruang_operasi' => optional($penandaan->booking->ruangan)->nama_ruang,
                 'nama_dokter' => optional($penandaan->booking->dokter)->Nama_Dokter,
+                'ttd_dokter' => optional($penandaan->booking->ttdDokter)->ttd_dokter,
                 'nama_tindakan' => optional($penandaan->booking)->nama_tindakan,
                 'jam_mulai' => optional($penandaan->booking)->jam_mulai,
                 'jam_selesai' => optional($penandaan->booking)->jam_selesai,

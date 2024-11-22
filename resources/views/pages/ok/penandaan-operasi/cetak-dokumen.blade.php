@@ -216,7 +216,7 @@
         </tr>
         <tr>
             <td width="50%" class="text5"><img src="storage/operasi/penandaan-pasien/ttd/{{$penandaan->ttd_pasien}}" width="80" height="80" /></td>
-            <td width="50%" class="text5"><img src="storage/operasi/penandaan-pasien/ttd/{{$penandaan->ttd_pasien}}" width="80" height="80" /></td>
+            <td width="50%" class="text5"><img src="storage/ttd/dokter/{{$penandaan->ttd_dokter}}" width="80" height="80" /></td>
         </tr>
         <tr>
             <td width="50%" class="text5">({{ $penandaan->nama_ttd_pasien}})</td>
