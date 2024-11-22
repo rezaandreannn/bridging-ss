@@ -36,12 +36,12 @@
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
-                                    <th scope="col">Kode Register</th>
                                     <th scope="col">No MR</th>
                                     <th scope="col">Nama Pasien</th>
                                     <th scope="col">Tanggal</th>
                                     <th scope="col">Nama Dokter</th>
                                     <th scope="col">Ruangan</th>
+                                    <th scope="col">Terlaksana</th>
                                     <th scope="col">Waktu Operasi</th>
                                 </tr>
                             </thead>
@@ -51,13 +51,16 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td><span class="badge badge-pill badge-success">{{ $data->no_mr }}</span></td>
                                     <td>{{$data->nama_pasien}}</td>
-                                    <td>{{ $data->ruang_operasi}}</td>
-                                    <td>{{ $data->nama_dokter }}</td>
                                     <td>{{ $data->tanggal }}</td>
-                                    <td>Jam : {{ \Carbon\Carbon::parse($data->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($data->jam_selesai)->format('H:i') }}</td>
+                                    <td>{{ $data->nama_dokter }}</td>
+                                    <td>{{ $data->ruang_operasi}}</td>
                                     <td>
-                                        <a href="{{ route('operasi.penandaan.create', ['noReg' => $data->no_mr]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" name="terlaksana" class="custom-control-input" tabindex="3" id="terlaksana" {{ $data->terlaksana == '1' ? 'checked' : '' }} disabled>
+                                            <label class="custom-control-label" for="terlaksana"></label>
+                                        </div>
                                     </td>
+                                    <td>{{ \Carbon\Carbon::parse($data->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($data->jam_selesai)->format('H:i') }} WIB</td>
                                 </tr>
                                 @endforeach
                             </tbody>

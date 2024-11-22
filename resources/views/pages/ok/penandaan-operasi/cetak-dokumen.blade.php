@@ -157,7 +157,8 @@
                     </tr>
                     <tr>
                         <td>Tanggal Lahir</td>
-                        <td>: {{ date('d-m-Y', strtotime($penandaan->tanggal_lahir))}}</td>
+                        <td>: {{ date('d-m-Y', strtotime($penandaan->tanggal_lahir))}}
+                        </td>
                     </tr>
                 </table>
             </td>

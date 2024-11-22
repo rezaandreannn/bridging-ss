@@ -6,6 +6,7 @@ use Exception;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Helpers\BookingHelper;
+use App\Helpers\BiodataHelper;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 use App\Services\Operasi\BookingOperasiService;
@@ -42,6 +43,7 @@ class PenandaanOperasiController extends Controller
         // Ambil data berdasarkan ID
 
         $penandaan = $this->penandaanOperasiService->unduhByRegister($kodeRegister);
+
         // dd($penandaan);
         $date = date('dMY');
         $tanggal = Carbon::now();

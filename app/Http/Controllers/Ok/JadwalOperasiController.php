@@ -31,6 +31,7 @@ class JadwalOperasiController extends Controller
 
         $title = 'Jadwal Operasi';
         $jadwals = $this->bookingOperasiService->byDate($today);
+        // dd($jadwals);
 
 
         return view($this->view . 'jadwal-operasi.index', compact('jadwals'))
