@@ -138,12 +138,46 @@
                                                     Laboratorium
                                                 </label>
                                                 <div id="labData" style="display: none;">
-                                                    <h5 style="font-size: 12px; color:black">HB : <input type="text" name="hb" class="form-control" id="hb" readonly></h5>
-                                                    <h5 style="font-size: 12px; color:black">Trombosite : <input type="text" name="trombosite" class="form-control" id="trombosite" readonly></h5>
-                                                    <h5 style="font-size: 12px; color:black">Leukosit : <input type="text" name="leukosit" class="form-control" id="leukosit" readonly></h5>
-                                                    <h5 style="font-size: 12px; color:black">Hematokrit : <input type="text" name="hematokrit" class="form-control" id="hematokrit" readonly></h5>
-                                                    <h5 style="font-size: 12px; color:black">BT : <input type="text" name="bt" class="form-control" id="bt" readonly></h5>
-                                                    <h5 style="font-size: 12px; color:black">CT : <input type="text" name="ct" class="form-control" id="ct" readonly></h5>
+                                                    {{-- <div class="row">
+                                                        <div class="col-md-6">
+                                                            <h5 style="font-size: 12px; color:black">HB : <input type="text" name="hb" class="form-control" id="hb" readonly></h5>
+                                                            <h5 style="font-size: 12px; color:black">Trombosite : <input type="text" name="trombosite" class="form-control" id="trombosite" readonly></h5>
+                                                            <h5 style="font-size: 12px; color:black">Leukosit : <input type="text" name="leukosit" class="form-control" id="leukosit" readonly></h5>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <h5 style="font-size: 12px; color:black">Hematokrit : <input type="text" name="hematokrit" class="form-control" id="hematokrit" readonly></h5>
+                                                            <h5 style="font-size: 12px; color:black">BT : <input type="text" name="bt" class="form-control" id="bt" readonly></h5>
+                                                            <h5 style="font-size: 12px; color:black">CT : <input type="text" name="ct" class="form-control" id="ct" readonly></h5>
+                                                        </div>
+                                                    </div> --}}
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <h5 style="font-size: 12px; color:black;">HB :</h5>
+                                                            <input type="text" class="form-control" name="hb" id="hb" readonly>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <h5 style="font-size: 12px; color:black;">Trombosite :</h5>
+                                                            <input type="text" class="form-control" name="trombosite" id="trombosite" readonly>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <h5 style="font-size: 12px; color:black;">Leukosit :</h5>
+                                                            <input type="text" class="form-control" name="leukosit" id="leukosit" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-3">
+                                                        <div class="col-md-4">
+                                                            <h5 style="font-size: 12px; color:black;">Hematokrit :</h5>
+                                                            <input type="text" class="form-control" name="hematokrit" id="hematokrit" readonly>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <h5 style="font-size: 12px; color:black;">BT :</h5>
+                                                            <input type="text" class="form-control" name="bt" id="bt" readonly>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <h5 style="font-size: 12px; color:black;">CT :</h5>
+                                                            <input type="text" class="form-control"id="ct" name="ct" readonly>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="form-check">

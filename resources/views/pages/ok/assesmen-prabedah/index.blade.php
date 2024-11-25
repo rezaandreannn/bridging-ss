@@ -31,50 +31,72 @@
         <div class="section-body">
             <div class="card">
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table-striped table" id="table-1">
-                            <thead>
-                                <tr>
-                                    <th scope="col">No</th>
-                                    <th scope="col">No MR</th>
-                                    <th scope="col">Nama Pasien</th>
-                                    <th scope="col">Tanggal</th>
-                                    <th scope="col">Nama Dokter</th>
-                                    <th scope="col">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                              
-                                <tr>
-                                    <td>1</td>
-                                    <td><span class="font-weight-bold">123456</span></td>
-                                    <td>Losss</td>
-                                    <td>22-11-2024</td>
-                                    <td>dr. Harizon MN, Sp. B</td>
-                                    <td>
-                                        <div class="dropdown d-inline">
-                                            <a href="#" class="text-primary" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </a>
-                                            <div class="dropdown-menu">
-                                                {{-- Input --}}
-                                                <a class="dropdown-item has-icon" href="{{ route('operasi.assesmen-prabedah.create') }}"><i class="fas fa-marker"></i> Tambah Assesmen</a>
-
-                                                {{-- Hapus --}}
-                                                {{-- <form id="delete-form-{{$data->id}}" action="{{ route('operasi.assesmen-prabedah.destroy', $data->id) }}" method="POST" style="display: none;">
-                                                    @method('delete')
-                                                    @csrf
-                                                </form>
-                                                <!-- Delete link -->
-                                                <a class="dropdown-item has-icon" href="#" confirm-delete="true" data-menuId="{{$data->id}}">
-                                                    <i class="fas fa-trash"></i> Hapus
-                                                </a> --}}
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <ul class="nav nav-tabs" id="myTab2" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="assesmen-prabedah" data-toggle="tab" href="#assesmen-prabedah2" role="tab" aria-controls="assesmen-prabedah2" aria-selected="true">Assesmen Pra Bedah</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="verifikasi-prabedah" data-toggle="tab" href="#verifikasi-prabedah2" role="tab" aria-controls="verifikasi-prabedah2" aria-selected="false">Verifikasi Pra Bedah</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content tab-bordered" id="myTab3Content">
+                        <!-- Tab 1 Assesmen Pra Bedah -->
+                        <div class="tab-pane fade show active" id="assesmen-prabedah2" role="tabpanel" aria-labelledby="assesmen-prabedah">
+                            <div class="table-responsive">
+                                <table class="table-striped table table-bordered" id="table-1">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">No</th>
+                                            <th scope="col">No MR</th>
+                                            <th scope="col">Nama Pasien</th>
+                                            <th scope="col">Tanggal</th>
+                                            <th scope="col">Dokter Operator</th>
+                                            <th scope="col">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td><span class="font-weight-bold">123456</span></td>
+                                            <td>Losss</td>
+                                            <td>22-11-2024</td>
+                                            <td>dr. Harizon MN, Sp. B</td>
+                                            <td>
+                                                <div class="dropdown d-inline">
+                                                    <a href="#" class="text-primary" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu">
+                                                        {{-- Input --}}
+                                                        <a class="dropdown-item has-icon" href="{{ route('operasi.assesmen-prabedah.create') }}"><i class="fas fa-marker"></i> Tambah Assesmen</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+            
+                        <!-- Tab 2 Verfikasi Pra Bedah -->
+                        <div class="tab-pane fade" id="verifikasi-prabedah2" role="tabpanel" aria-labelledby="verifikasi-prabedah">
+                            <div class="table-responsive">
+                                <table class="table-striped table table-bordered" id="table-2">
+                                    <thead>
+                                        <tr>
+                                            <th>Tanggal</th>
+                                            <th>NO RM dan Nama</th>
+                                            <th>Perawat</th>
+                                            <th>Dokter</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

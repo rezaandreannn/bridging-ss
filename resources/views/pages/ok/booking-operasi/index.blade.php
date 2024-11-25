@@ -181,7 +181,12 @@
                                                     <i class="fas fa-ellipsis-v"></i>
                                                 </a>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item has-icon" href=""><i class="fas fa-info"></i> Detail</a>
+                                                    @if(!empty($statusPenandaan[$booking->id]))
+                                                        <a class="dropdown-item has-icon" href="{{ route('operasi.booking.detail', ['id' => $statusPenandaan[$booking->id]]) }}">
+                                                            <i class="fas fa-info"></i> Detail Booking
+                                                        </a>
+                                                    @endif
+                                                    {{-- <a class="dropdown-item has-icon" href="{{ route('operasi.booking.detail', $booking->id )}}"><i class="fas fa-info"></i> Detail</a> --}}
                                                     <a class="dropdown-item has-icon" href="{{ route('operasi.booking.edit', $booking->id )}}"><i class="fas fa-pencil-alt"></i> Ubah Data</a>
                                                     <a class="dropdown-item has-icon" href="#" data-toggle="modal" data-target="#modal-edit-tanggal{{ $booking->id }}">
                                                         <i class="fas fa-calendar-check"></i> Ganti Tanggal
