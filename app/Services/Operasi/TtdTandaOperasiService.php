@@ -57,13 +57,23 @@ class TtdTandaOperasiService
         // Use uniqid to generate a unique file name
         $file_name = uniqid($data['kode_register'] . '-' . 'ttd-pasien' . '-' . date('Y-m-d') . '-') . '.' . $image_type;
 
+        if ($data['pasien'] == 1) {
+            $nama = $data['nama_keluarga'];
+        }
+
+        $nama_pasien = $nama ?? $data['nama_pasien'];
+        $data['nama_pasien'] = $nama_pasien;
+        $data['ttd_pasien'] = $file_name;
+        $data['created_at'] = date('Y-m-d');
+        $data['updated_at'] = date('Y-m-d');
+
 
         try {
             // Save the image to storage
             $ttdtandapasien = TtdTandaOperasi::create([
                 'kode_register' => $data['kode_register'],
                 'nama_pasien' => $data['nama_pasien'],
-                'ttd_pasien' => $file_name,
+                'ttd_pasien' => $data['ttd_pasien'],
                 'created_at' => $data['created_at'],
                 'updated_at' => $data['updated_at']
             ]);

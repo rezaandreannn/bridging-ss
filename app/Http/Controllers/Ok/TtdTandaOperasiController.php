@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Operasi\PenandaanPasien\Ttd\StoreTtdTandaPasien;
 use App\Models\Operasi\TtdTandaOperasi;
 use Illuminate\Support\Facades\Storage;
 use App\Services\Operasi\BookingOperasiService;
@@ -64,26 +65,14 @@ class TtdTandaOperasiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTtdTandaPasien $request)
     {
 
-        // cek ttd perwakilan keluarga
-        if ($request->pasien == 1) {
-            $nama = $request->nama_keluarga;
-        }
 
         try {
 
-            $data = [
-                'kode_register' => $request->kode_register,
-                'nama_pasien' => $nama ?? $request->nama_pasien,
-                'ttd_pasien' => $request->signed,
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s')
 
-            ];
-
-            $this->ttdTandaOperasiService->insert($data);
+            $this->ttdTandaOperasiService->insert($request->validated());
             return redirect('operasi/penandaan-operasi')->with('success', 'Tanda tangan berhasil ditambahkan.');
 
             // return redirect()->route('ttd-ok.penandaan.index')->with('success', 'Tanda tangan berhasil ditambahkan.');

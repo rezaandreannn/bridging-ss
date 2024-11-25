@@ -5,6 +5,7 @@ namespace App\Http\Controllers\MasterData;
 use Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MasterData\TtdDokter\StoreTtdDokter;
 use App\Models\MasterData\TtdDokter;
 use App\Services\SimRs\DokterService;
 use App\Services\MasterData\TandaTanganDokterService;
@@ -56,20 +57,12 @@ class TtdDokterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTtdDokter $request)
     {
         // dd($request->kode_dokter);
             try {
 
-                $data = [
-                    'kode_dokter' => $request->kode_dokter,
-                    'ttd_dokter' => $request->signed,
-                    'created_at' => date('Y-m-d H:i:s'),
-                    'updated_at' => date('Y-m-d H:i:s')
-                
-                ];
-
-                $this->tandaTanganDokterService->insert($data);
+                $this->tandaTanganDokterService->insert($request->validated());
 
                 return redirect()->route('ttd-dokter.index')->with('success', 'Tanda tangan berhasil ditambahkan.');
             } catch (Exception $e) {
@@ -121,7 +114,7 @@ class TtdDokterController extends Controller
 
             $data = [
                 'kode_dokter' => $request->kode_dokter,
-                'ttd_dokter' => $request->signed,
+                'ttd_dokter' => $request->ttd_dokter,
                 'updated_at' => date('Y-m-d H:i:s'),
             
             ];

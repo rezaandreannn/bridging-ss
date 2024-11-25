@@ -15,14 +15,26 @@ class TandaTanganDokterService
 
     private function baseQuery()
     {
-        return TtdDokter::with([
-            'dokter' => function ($query) {
-                $query->select('Kode_Dokter', 'Nama_Dokter','Jenis_Profesi','Spesialis')
-                ->where('Jenis_Profesi','DOKTER SPESIALIS');
-            },
-        ])
-        ->get();
-   
+        if ((auth()->user()->roles->pluck('name')[0]) != 'super-admin'){
+            $kode_dokter = auth()->user()->username;
+            return TtdDokter::with([
+                'dokter' => function ($query) {
+                    $query->select('Kode_Dokter', 'Nama_Dokter','Jenis_Profesi','Spesialis')
+                    ->where('Jenis_Profesi','DOKTER SPESIALIS');
+                },
+            ])
+            ->where('kode_dokter',$kode_dokter)
+            ->get();
+        } 
+        else{
+            return TtdDokter::with([
+                'dokter' => function ($query) {
+                    $query->select('Kode_Dokter', 'Nama_Dokter','Jenis_Profesi','Spesialis')
+                    ->where('Jenis_Profesi','DOKTER SPESIALIS');
+                },
+            ])
+            ->get();
+        }
     }
 
     public function get()
@@ -48,11 +60,14 @@ class TandaTanganDokterService
         // Use uniqid to generate a unique file name
         $file_name = uniqid($data['kode_dokter'] . '-' . 'ttd_dokter' . '-' . date('Y-m-d') . '-') . '.' . $image_type;
 
+        $data['ttd_dokter'] = $file_name;
+        $data['created_at'] = date('Y-m-d H:i:s');
+        $data['updated_at'] = date('Y-m-d H:i:s');
 
         try {
             $ttddokter = TtdDokter::create([
                 'kode_dokter' => $data['kode_dokter'],
-                'ttd_dokter' => $file_name,
+                'ttd_dokter' => $data['ttd_dokter'],
                 'created_at' => $data['created_at'],
                 'updated_at' => $data['updated_at'],
                 // 'cara_masuk' => $data['cara_masuk'] ?? ''
