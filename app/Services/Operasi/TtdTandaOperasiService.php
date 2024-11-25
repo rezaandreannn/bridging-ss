@@ -139,13 +139,13 @@ class TtdTandaOperasiService
         return collect($ttdpasiens->map(function ($item) {
             return (object) [
                 'id' => $item->id,
-                'kode_register' => $item->kode_register,
-                'ttd_pasien' => $item->ttd_pasien,
-                'created_at' => $item->created_at->format('Y-m-d H:i:s'),
-                'no_mr' => optional($item->booking->pendaftaran)->No_MR,
-                'nama_pasien' => $item->booking->pendaftaran->registerPasien->Nama_Pasien,
-                'nama_penanda_tangan' => $item->nama_pasien,
-                'tanggal_operasi' => optional($item->booking)->tanggal
+                'kode_register' => $item->kode_register ?? '',
+                'ttd_pasien' => $item->ttd_pasien ?? '',
+                'created_at' => $item->created_at->format('Y-m-d H:i:s') ?? '',
+                'no_mr' => optional($item->booking->pendaftaran)->No_MR ?? '',
+                'nama_pasien' => $item->booking->pendaftaran->registerPasien->Nama_Pasien ?? '',
+                'nama_penanda_tangan' => $item->nama_pasien ?? '',
+                'tanggal_operasi' => optional($item->booking)->tanggal ?? ''
             ];
         }));
     }
