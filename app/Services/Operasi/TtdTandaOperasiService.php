@@ -19,7 +19,7 @@ class TtdTandaOperasiService
                     'pendaftaran' => function ($query) {
                         $query->select('No_Reg', 'No_MR')->with([
                             'registerPasien' => function ($query) {
-                                $query->select('No_MR');
+                                $query->select('No_MR','Nama_Pasien');
                             }
                         ]);
                     }
@@ -143,7 +143,8 @@ class TtdTandaOperasiService
                 'ttd_pasien' => $item->ttd_pasien,
                 'created_at' => $item->created_at->format('Y-m-d H:i:s'),
                 'no_mr' => optional($item->booking->pendaftaran)->No_MR,
-                'nama_pasien' => $item->nama_pasien,
+                'nama_pasien' => $item->booking->pendaftaran->registerPasien->Nama_Pasien,
+                'nama_penanda_tangan' => $item->nama_pasien,
                 'tanggal_operasi' => optional($item->booking)->tanggal
             ];
         }));

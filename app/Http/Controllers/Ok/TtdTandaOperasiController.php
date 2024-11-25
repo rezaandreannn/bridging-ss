@@ -33,7 +33,7 @@ class TtdTandaOperasiController extends Controller
     public function index()
     {
         //
-        $title = 'Penandaan Operasi';
+        $title = 'Ttd Penandaan Operasi';
         // $ttdpenandaanpasien = $this->ttdTandaOperasiService->byDate(date('Y-m-d'));
         $ttdpenandaanpasien = $this->ttdTandaOperasiService->get();
         $bookings = $this->bookingOperasiService->get();

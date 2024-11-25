@@ -65,7 +65,8 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Pasien / keluarga</th>
+                                    <th>Nama Pasien</th>
+                                    <th>Nama penanda tangan</th>
                                     <th>No MR</th>
                                     <th>No Registrasi</th>
                                     <th>Dibuat</th>
@@ -79,6 +80,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $ttd->nama_pasien }}</td>
+                                    <td>{{ $ttd->nama_penanda_tangan }}</td>
                                     <td>{{ $ttd->no_mr }}</td>
                                     <td>{{ $ttd->kode_register }}</td>
                                     <td>{{ $ttd->created_at }}</td>
