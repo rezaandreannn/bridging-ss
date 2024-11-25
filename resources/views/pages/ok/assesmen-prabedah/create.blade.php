@@ -138,12 +138,12 @@
                                                     Laboratorium
                                                 </label>
                                                 <div id="labData" style="display: none;">
-                                                    <h5 style="font-size: 12px; color:black">HB : <input type="text" name="hb" class="form-control" id="hb" ></h5>
-                                                    <h5 style="font-size: 12px; color:black">Trombosite : <input type="text" name="trombosite" class="form-control" id="trombosite" disabled></h5>
-                                                    <h5 style="font-size: 12px; color:black">Leukosit : <input type="text" name="leukosit" class="form-control" id="leukosit" disabled></h5>
-                                                    <h5 style="font-size: 12px; color:black">Hematokrit : <input type="text" name="hematokrit" class="form-control" id="hematokrit" disabled></h5>
-                                                    <h5 style="font-size: 12px; color:black">BT : <input type="text" name="bt" class="form-control" id="bt" disabled></h5>
-                                                    <h5 style="font-size: 12px; color:black">CT : <input type="text" name="ct" class="form-control" id="ct" disabled></h5>
+                                                    <h5 style="font-size: 12px; color:black">HB : <input type="text" name="hb" class="form-control" id="hb" readonly></h5>
+                                                    <h5 style="font-size: 12px; color:black">Trombosite : <input type="text" name="trombosite" class="form-control" id="trombosite" readonly></h5>
+                                                    <h5 style="font-size: 12px; color:black">Leukosit : <input type="text" name="leukosit" class="form-control" id="leukosit" readonly></h5>
+                                                    <h5 style="font-size: 12px; color:black">Hematokrit : <input type="text" name="hematokrit" class="form-control" id="hematokrit" readonly></h5>
+                                                    <h5 style="font-size: 12px; color:black">BT : <input type="text" name="bt" class="form-control" id="bt" readonly></h5>
+                                                    <h5 style="font-size: 12px; color:black">CT : <input type="text" name="ct" class="form-control" id="ct" readonly></h5>
                                                 </div>
                                             </div>
                                             <div class="form-check">
@@ -269,12 +269,12 @@
             });
 
             // Optional: Set default values (if needed)
-            document.getElementById('hb').value = '';           // You can set these with dynamic values from server if necessary
-            document.getElementById('trombosite').value = '';
-            document.getElementById('leukosit').value = '';
-            document.getElementById('hematokrit').value = '';
-            document.getElementById('bt').value = '';
-            document.getElementById('ct').value = '';
+            document.getElementById('hb').value = '1.75';           // You can set these with dynamic values from server if necessary
+            document.getElementById('trombosite').value = '2.2';
+            document.getElementById('leukosit').value = '5';
+            document.getElementById('hematokrit').value = '2';
+            document.getElementById('bt').value = '1.21';
+            document.getElementById('ct').value = '1.65';
         } else {
             // Hide the input fields and disable them
             labDataDiv.style.display = 'none';
