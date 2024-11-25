@@ -55,6 +55,7 @@ class BookingOperasiController extends Controller
 
         // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
         $statusPenandaan = BookingHelper::getStatusPenandaan($bookings);
+        // dd($statusPenandaan);
 
         return view($this->view . 'booking-operasi.index', compact('bookings', 'booking'))->with([
             'title' => $title,
@@ -117,6 +118,21 @@ class BookingOperasiController extends Controller
             ->with([
                 'booking_id' => $id
             ]);
+    }
+
+    public function detail($id)
+    {
+        $title = $this->prefix . ' ' . 'Detail Pasien Operasi';
+        // Ambil data berdasarkan ID
+        $penandaan = $this->penandaanOperasiService->findById($id);
+
+        // dd($penandaan);
+        $noReg = $penandaan->kode_register;
+
+        // Ambil biodata berdasarkan nomor registrasi
+        $biodata = $this->bookingOperasiService->biodata($noReg);
+
+        return view($this->view . 'booking-operasi.detail', compact('title', 'biodata', 'penandaan'));
     }
 
     /**

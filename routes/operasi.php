@@ -41,10 +41,11 @@ Route::prefix('operasi')->name('operasi.')->middleware('auth')->group(function (
 
 // booking operasi
 Route::get('/booking-operasi', [BookingOperasiController::class, 'index'])->name('operasi.booking.index');
-Route::get('/create/booking-operasi', [BookingOperasiController::class, 'create'])->name('operasi.booking.create');
-Route::get('booking-operasi/{id}/edit', [BookingOperasiController::class, 'edit'])->name('operasi.booking.edit');
+Route::get('/booking-operasi/create', [BookingOperasiController::class, 'create'])->name('operasi.booking.create');
 Route::post('/booking-operasi', [BookingOperasiController::class, 'store'])->name('operasi.booking.store');
+Route::get('booking-operasi/{id}/edit', [BookingOperasiController::class, 'edit'])->name('operasi.booking.edit');
 Route::put('/booking-operasi/{id}', [BookingOperasiController::class, 'update'])->name('operasi.booking.update');
+Route::get('booking-operasi/{id}/detail', [BookingOperasiController::class, 'detail'])->name('operasi.booking.detail');
 
 Route::delete('/booking-operasi/delete/{id}', [BookingOperasiController::class, 'destroy'])->name('operasi.booking.destroy');
 
