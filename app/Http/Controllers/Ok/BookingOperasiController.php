@@ -131,6 +131,7 @@ class BookingOperasiController extends Controller
 
         // Ambil biodata berdasarkan nomor registrasi
         $biodata = $this->bookingOperasiService->biodata($noReg);
+        // dd($biodata);
 
         return view($this->view . 'booking-operasi.detail', compact('title', 'biodata', 'penandaan'));
     }

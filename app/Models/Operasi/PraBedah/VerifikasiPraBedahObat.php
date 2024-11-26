@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Models\Operasi\PraBedah;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class VerifikasiPraBedahObat extends Model
+{
+    use HasFactory;
+
+    protected $connection = 'pku';
+    protected $table = 'ok_verifikasi_pra_bedah_obat';
+
+    // mass assigment
+    protected $fillable = [
+        'kode_register',
+        'obat',
+        'deskripsi',
+        'created_by',
+        'updated_by'
+    ];
+}
