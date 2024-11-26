@@ -19,60 +19,15 @@
         <div class="section-header">
             <h1>{{ $title ?? ''}}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('operasi.assesmen-prabedah.index') }}">Operasi Kamar</a></div>
-                <div class="breadcrumb-item">Assesmen Pra Bedah</div>
+                <div class="breadcrumb-item active"><a href="{{ route('prabedah.verifikasi-prabedah.index') }}">Operasi Kamar</a></div>
+                <div class="breadcrumb-item">Verifikasi Pra Bedah</div>
             </div>
         </div>
         <div class="section-body">
             <!-- components biodata pasien by no reg -->
             {{-- @include('components.biodata-pasien-bynoreg') --}}
-            <form action="{{ route('operasi.assesmen-prabedah.store') }}" method="POST">
+            <form action="{{ route('prabedah.verifikasi-prabedah.store') }}" method="POST">
             @csrf
-            <!-- components biodata pasien by no reg -->
-                <div class="card mb-3">
-                    <div class="card-header card-khusus-header">
-                        <h6 class="card-khusus-title">Assesmen Pra Bedah</h6>
-                    </div>
-                    <!-- include form -->
-                    <div class="card-body card-khusus-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Data Subjektif (Anamnesa) <code>*Wajib Diisi</code></label>
-                                    <textarea name="anamnesa" class="form-control  @error('anamnesa') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ old('anamnesa') }}</textarea>
-                                    @error('anamnesa')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Data Objektif (Pemeriksaan Fisik) <code> *Wajib Diisi</code></label>
-                                    <textarea name="pemeriksaan_fisik" class="form-control  @error('pemeriksaan_fisik') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ old('pemeriksaan_fisik') }}</textarea>
-                                    @error('pemeriksaan_fisik')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Diagnosis Pra Bedah</label>
-                                    <textarea name="diagnosis_prabedah" class="form-control  @error('diagnosis_prabedah') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ old('diagnosis_prabedah') }}</textarea>
-                                    @error('diagnosis_prabedah')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- include form -->
-                </div>
                 <div class="card mb-3">
                     <div class="card-header card-khusus-header">
                         <h6 class="card-khusus-title">Verifikasi Pra Bedah</h6>
@@ -153,29 +108,29 @@
                                                     <div class="row">
                                                         <div class="col-md-4">
                                                             <h5 style="font-size: 12px; color:black;">HB :</h5>
-                                                            <input type="text" class="form-control" name="hb" id="hb" readonly>
+                                                            <input type="text" class="form-control" name="hb" id="hb">
                                                         </div>
                                                         <div class="col-md-4">
                                                             <h5 style="font-size: 12px; color:black;">Trombosite :</h5>
-                                                            <input type="text" class="form-control" name="trombosite" id="trombosite" readonly>
+                                                            <input type="text" class="form-control" name="trombosite" id="trombosite">
                                                         </div>
                                                         <div class="col-md-4">
                                                             <h5 style="font-size: 12px; color:black;">Leukosit :</h5>
-                                                            <input type="text" class="form-control" name="leukosit" id="leukosit" readonly>
+                                                            <input type="text" class="form-control" name="leukosit" id="leukosit">
                                                         </div>
                                                     </div>
                                                     <div class="row mt-3">
                                                         <div class="col-md-4">
                                                             <h5 style="font-size: 12px; color:black;">Hematokrit :</h5>
-                                                            <input type="text" class="form-control" name="hematokrit" id="hematokrit" readonly>
+                                                            <input type="text" class="form-control" name="hematokrit" id="hematokrit">
                                                         </div>
                                                         <div class="col-md-4">
                                                             <h5 style="font-size: 12px; color:black;">BT :</h5>
-                                                            <input type="text" class="form-control" name="bt" id="bt" readonly>
+                                                            <input type="text" class="form-control" name="bt" id="bt">
                                                         </div>
                                                         <div class="col-md-4">
                                                             <h5 style="font-size: 12px; color:black;">CT :</h5>
-                                                            <input type="text" class="form-control"id="ct" name="ct" readonly>
+                                                            <input type="text" class="form-control"id="ct" name="ct">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -317,6 +272,58 @@
             });
         }
     }
+</script>
+
+{{-- SCRIPT TIDAK BISA HURUF --}}
+<script>
+    document.getElementById('hb').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('trombosite').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('leukosit').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('hematokrit').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('bt').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('ct').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
 </script>
 
 @endpush

@@ -181,19 +181,24 @@
                                                     <i class="fas fa-ellipsis-v"></i>
                                                 </a>
                                                 <div class="dropdown-menu">
-                                                    @if(!empty($statusPenandaan[$booking->id]))
-                                                        <a class="dropdown-item has-icon" href="{{ route('operasi.booking.detail', ['id' => $statusPenandaan[$booking->id]]) }}">
+                                                    {{-- Detail Booking --}}
+                                                    @if (isset($statusPenandaan[$booking->id]) && $statusPenandaan[$booking->id] == 'create')
+                                                    @else    
+                                                    <a class="dropdown-item has-icon" href="{{ route('operasi.booking.detail', ['id' => $statusPenandaan[$booking->id]]) }}">
                                                             <i class="fas fa-info"></i> Detail Booking
                                                         </a>
                                                     @endif
-                                                    {{-- <a class="dropdown-item has-icon" href="{{ route('operasi.booking.detail', $booking->id )}}"><i class="fas fa-info"></i> Detail</a> --}}
+                                                    {{-- Ubah Data --}}
                                                     <a class="dropdown-item has-icon" href="{{ route('operasi.booking.edit', $booking->id )}}"><i class="fas fa-pencil-alt"></i> Ubah Data</a>
+                                                    {{-- Ubah Tanggal --}}
                                                     <a class="dropdown-item has-icon" href="#" data-toggle="modal" data-target="#modal-edit-tanggal{{ $booking->id }}">
                                                         <i class="fas fa-calendar-check"></i> Ganti Tanggal
                                                     </a>
+                                                    {{-- Ubah Ruangan --}}
                                                     <a class="dropdown-item has-icon" href="#" data-toggle="modal" data-target="#modal-edit-ruang{{ $booking->id }}">
                                                         <i class="fas fa-person-booth"></i> Ganti Ruangan
                                                     </a>
+                                                    {{-- Penandaan --}}
                                                     <a class="dropdown-item has-icon" href="{{ isset($statusPenandaan[$booking->id]) && $statusPenandaan[$booking->id] == 'create' ? route('operasi.penandaan.create', ['noReg' => $booking->kode_register]) : route('operasi.penandaan.edit', ['id' => $statusPenandaan[$booking->id]]) }}">
                                                         <i class="fas fa-marker"></i> {{ isset($statusPenandaan[$booking->id]) && $statusPenandaan[$booking->id] == 'create' ? 'Penandaan Operasi' : 'Update Penandaan' }}
                                                     </a>

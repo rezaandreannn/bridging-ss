@@ -299,13 +299,37 @@
                     </li>
                 </ul>
                 @endcan
-                @can('assesmen pra bedah')
+                {{-- @can('assesmen pra bedah')
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('operasi/assesmen-prabedah*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('operasi.assesmen-prabedah.index')}}">Assesmen Pra Bedah</a>
                     </li>
                 </ul>
-                @endcan
+                @endcan --}}
+            </li>
+            <li class="nav-item dropdown  {{ Request::is('prabedah/*') ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span>Pra Bedah</span></a>
+                    @can('assesmen pra bedah')
+                    <ul class="dropdown-menu">
+                        <li class="{{ Request::is('prabedah/assesmen-prabedah*') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('prabedah.assesmen-prabedah.index')}}">Assesmen Pra Bedah</a>
+                        </li>
+                    </ul>
+                    @endcan
+                    @can('verifikasi pra bedah')
+                    <ul class="dropdown-menu">
+                        <li class="{{ Request::is('prabedah/verifikasi-prabedah*') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('prabedah.verifikasi-prabedah.index')}}">Verifikasi Pra Bedah</a>
+                        </li>
+                    </ul>
+                    @endcan
+                    @can('berkas pra bedah')
+                    <ul class="dropdown-menu">
+                        <li class="{{ Request::is('prabedah/berkas-prabedah*') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('prabedah.assesmen-prabedah.index')}}">Berkas Pra Bedah</a>
+                        </li>
+                    </ul>
+                    @endcan
             </li>
             <li class="nav-item dropdown  {{ Request::is('ttd-ok/*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span> Tanda Tangan</span></a>

@@ -827,6 +827,7 @@ select.form-control:not([size]):not([multiple]) {
 .inputan-khusus {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.381);
 }
+
 /* PENUTUP */
 
 .card .navbar {

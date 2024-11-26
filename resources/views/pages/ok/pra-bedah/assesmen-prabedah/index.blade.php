@@ -23,7 +23,7 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('operasi.assesmen-prabedah.index') }}">Operasi Kamar</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('prabedah.assesmen-prabedah.index') }}">Operasi Kamar</a></div>
                 <div class="breadcrumb-item">Assesmen Pra Bedah</div>
             </div>
         </div>
@@ -31,19 +31,8 @@
         <div class="section-body">
             <div class="card">
                 <div class="card-body">
-                    <ul class="nav nav-tabs" id="myTab2" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="assesmen-prabedah" data-toggle="tab" href="#assesmen-prabedah2" role="tab" aria-controls="assesmen-prabedah2" aria-selected="true">Assesmen Pra Bedah</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="verifikasi-prabedah" data-toggle="tab" href="#verifikasi-prabedah2" role="tab" aria-controls="verifikasi-prabedah2" aria-selected="false">Verifikasi Pra Bedah</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content tab-bordered" id="myTab3Content">
-                        <!-- Tab 1 Assesmen Pra Bedah -->
-                        <div class="tab-pane fade show active" id="assesmen-prabedah2" role="tabpanel" aria-labelledby="assesmen-prabedah">
-                            <div class="table-responsive">
-                                <table class="table-striped table table-bordered" id="table-1">
+                    <div class="table-responsive">
+                        <table class="table-striped table table-bordered" id="table-1">
                                     <thead>
                                         <tr>
                                             <th scope="col">No</th>
@@ -68,35 +57,14 @@
                                                     </a>
                                                     <div class="dropdown-menu">
                                                         {{-- Input --}}
-                                                        <a class="dropdown-item has-icon" href="{{ route('operasi.assesmen-prabedah.create') }}"><i class="fas fa-marker"></i> Tambah Assesmen</a>
+                                                        <a class="dropdown-item has-icon" href="{{ route('prabedah.assesmen-prabedah.create') }}"><i class="fas fa-plus"></i> Tambah</a>
+                                                        <a class="dropdown-item has-icon" href="{{ route('prabedah.assesmen-prabedah.create') }}"> <i class="fas fa-signature"></i> Tanda Tangan</a>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
                                     </tbody>
-                                </table>
-                            </div>
-                        </div>
-            
-                        <!-- Tab 2 Verfikasi Pra Bedah -->
-                        <div class="tab-pane fade" id="verifikasi-prabedah2" role="tabpanel" aria-labelledby="verifikasi-prabedah">
-                            <div class="table-responsive">
-                                <table class="table-striped table table-bordered" id="table-2">
-                                    <thead>
-                                        <tr>
-                                            <th>Tanggal</th>
-                                            <th>NO RM dan Nama</th>
-                                            <th>Perawat</th>
-                                            <th>Dokter</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                        </table>
                     </div>
                 </div>
             </div>
