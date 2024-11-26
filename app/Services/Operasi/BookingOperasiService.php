@@ -96,12 +96,38 @@ class BookingOperasiService
         return $this->mapData($filtered);
     }
 
-    public function byDate($date)
+    public function byDate($date, $kodeBangsal)
     {
-        $databookings = $this->baseQuery()
-            ->whereDate('tanggal', $date)
-            ->get();
-        return $this->mapData($databookings);
+        $bookings = BookingOperasi::with([
+            'pendaftaran.registerPasien',
+            'pendaftaran.ruang.bangsal',
+            'ruangan',
+            'dokter',
+        ])->get();
+
+        $filtered = $bookings->filter(function ($booking) use ($date, $kodeBangsal) {
+            if (!empty($kodeBangsal)) {
+                if (!empty($booking->pendaftaran->ruang)) {
+                    $bangsal = optional($booking->pendaftaran->ruang->bangsal)->Kode_Bangsal;
+
+                    if ((string) $bangsal === (string) $kodeBangsal) {
+                        $tanggal = $booking->tanggal;
+                        return $tanggal && $tanggal == $date;
+                    }
+                }
+            } else {
+                $ruang = optional($booking->pendaftaran)->Kode_Ruang;
+                $tanggal = $booking->tanggal;
+
+                return empty($ruang) && ($tanggal && $tanggal == $date);
+            }
+        });
+
+        return $this->mapData($filtered);
+        // $databookings = $this->baseQuery()
+        //     ->whereDate('tanggal', $date)
+        //     ->get();
+        // return $this->mapData($databookings);
     }
 
     public function byRegister($kodeRegister)
