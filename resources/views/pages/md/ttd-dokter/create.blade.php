@@ -42,6 +42,9 @@
                     <form action="{{ route('ttd-dokter.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
+                            @if ((auth()->user()->roles->pluck('name')[0]) != 'super-admin')
+                            <input type="hidden" name="kode_dokter" value="{{auth()->user()->username}}">
+                            @else
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Pilih Dokter</label>
@@ -57,7 +60,8 @@
                                     {{ $message }}
                                 </div>
                                 @enderror
-                            </div>
+                            </div>          
+                            @endif
 
                             <div class="col-md-12">
                                 <label class="" for="">Tanda Tangan:</label>
@@ -65,7 +69,7 @@
                                 <div id="signat"></div>
                                 <br />
                                 <button id="clear">Hapus Tanda Tangan</button>
-                                <textarea id="signature64" name="signed" style="display: none"></textarea>
+                                <textarea id="signature64" name="ttd_dokter" style="display: none"></textarea>
                             </div>
                         </div>
                         <div class="card-footer text-left">

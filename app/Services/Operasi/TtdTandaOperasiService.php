@@ -19,7 +19,7 @@ class TtdTandaOperasiService
                     'pendaftaran' => function ($query) {
                         $query->select('No_Reg', 'No_MR')->with([
                             'registerPasien' => function ($query) {
-                                $query->select('No_MR');
+                                $query->select('No_MR','Nama_Pasien');
                             }
                         ]);
                     }
@@ -57,13 +57,23 @@ class TtdTandaOperasiService
         // Use uniqid to generate a unique file name
         $file_name = uniqid($data['kode_register'] . '-' . 'ttd-pasien' . '-' . date('Y-m-d') . '-') . '.' . $image_type;
 
+        if ($data['pasien'] == 1) {
+            $nama = $data['nama_keluarga'];
+        }
+
+        $nama_pasien = $nama ?? $data['nama_pasien'];
+        $data['nama_pasien'] = $nama_pasien;
+        $data['ttd_pasien'] = $file_name;
+        $data['created_at'] = date('Y-m-d');
+        $data['updated_at'] = date('Y-m-d');
+
 
         try {
             // Save the image to storage
             $ttdtandapasien = TtdTandaOperasi::create([
                 'kode_register' => $data['kode_register'],
                 'nama_pasien' => $data['nama_pasien'],
-                'ttd_pasien' => $file_name,
+                'ttd_pasien' => $data['ttd_pasien'],
                 'created_at' => $data['created_at'],
                 'updated_at' => $data['updated_at']
             ]);
@@ -129,12 +139,13 @@ class TtdTandaOperasiService
         return collect($ttdpasiens->map(function ($item) {
             return (object) [
                 'id' => $item->id,
-                'kode_register' => $item->kode_register,
-                'ttd_pasien' => $item->ttd_pasien,
-                'created_at' => $item->created_at->format('Y-m-d H:i:s'),
-                'no_mr' => optional($item->booking->pendaftaran)->No_MR,
-                'nama_pasien' => $item->nama_pasien,
-                'tanggal_operasi' => optional($item->booking)->tanggal
+                'kode_register' => $item->kode_register ?? '',
+                'ttd_pasien' => $item->ttd_pasien ?? '',
+                'created_at' => $item->created_at->format('Y-m-d H:i:s') ?? '',
+                'no_mr' => optional($item->booking->pendaftaran)->No_MR ?? '',
+                'nama_pasien' => $item->booking->pendaftaran->registerPasien->Nama_Pasien ?? '',
+                'nama_penanda_tangan' => $item->nama_pasien ?? '',
+                'tanggal_operasi' => optional($item->booking)->tanggal ?? ''
             ];
         }));
     }

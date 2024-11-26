@@ -65,7 +65,7 @@
                                 <div id="signat"></div>
                                 <br />
                                 <button id="clear">Hapus Tanda Tangan</button>
-                                <textarea id="signature64" name="signed" style="display: none"></textarea>
+                                <textarea id="signature64" name="ttd_dokter" style="display: none"></textarea>
                             </div>
                         </div>
                         <div class="card-footer text-left">

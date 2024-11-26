@@ -67,7 +67,7 @@
 
                             <div class="col-md-4" id="form1" style="display: none">
                                 <div class="form-group">
-                                    <label>Nama Pasien</label>
+                                    <label>Nama Keluarga</label>
                                     <input type="text" name="nama_keluarga" class="form-control @error('nama_keluarga') is-invalid @enderror" >
                                 </div>
                                 @error('nama_keluarga')
@@ -84,7 +84,7 @@
                                 <div id="signat"></div>
                                 <br />
                                 <button id="clear">Hapus Tanda Tangan</button>
-                                <textarea id="signature64" name="signed" style="display: none"></textarea>
+                                <textarea id="signature64" name="ttd_pasien" style="display: none"></textarea>
                             </div>
                         </div>
                         <div class="card-footer text-left">

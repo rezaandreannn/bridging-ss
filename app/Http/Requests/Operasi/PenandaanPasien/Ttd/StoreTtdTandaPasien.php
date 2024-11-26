@@ -27,6 +27,12 @@ class StoreTtdTandaPasien extends FormRequest
         return [
             //
             'kode_register' => 'required',
+            'nama_pasien' => 'required',
+            'pasien' => 'required',
+            'nama_keluarga' => 'nullable',
+            'ttd_pasien' => 'required',
+            'created_at' => 'nullable',
+            'updated_at' => 'nullable'
         ];
     }
     
