@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Models\Operasi\PraBedah;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class VerifikasiPraBedahDarah extends Model
+{
+    use HasFactory;
+
+    protected $connection = 'pku';
+    protected $table = 'ok_verifikasi_pra_bedah_darah';
+
+    // mass assigment
+    protected $fillable = [
+        'kode_register',
+        'darah',
+        'jumlah',
+        'gol',
+        'deskripsi',
+        'created_by',
+        'updated_by'
+    ];
+}

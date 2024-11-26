@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Ok;
+namespace App\Http\Controllers\Ok\PraBedah;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -13,7 +13,7 @@ class AssesmenPraBedahController extends Controller
 
     public function __construct()
     {
-        $this->view = 'pages.ok.';
+        $this->view = 'pages.ok.pra-bedah.';
         $this->prefix = 'Assesmen Pra Bedah';
     }
 

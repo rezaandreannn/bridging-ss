@@ -13,72 +13,16 @@
 <link rel="stylesheet" href="{{ asset('ttd/css/jquery.signature.css') }}">
 
 <style>
-    .kbw-signature {
-        width: 100%;
-        height: 250px;
+    .grid {
+        display: grid;
+        grid-template-columns: auto 1fr; /* Kolom 1 otomatis, kolom 2 fleksibel */
+        gap: 10px; /* Jarak antar elemen */
+        margin-bottom: 8px;
     }
 
-    .eye-image {
-        max-width: 100%;
+    .grid span:first-child {
+        font-weight: bold; /* Opsi: Bisa buat label lebih tebal */
     }
-
-    .custom-judul {
-        font-size: 18px;
-        padding-left: 20px;
-        color: #6777ef;
-        margin-bottom: 0;
-        width: 100%;
-    }
-
-    .no-margin {
-        margin: 0;
-    }
-
-    .no-padding {
-        padding: 0;
-    }
-
-    .align-items-center {
-        display: flex;
-        align-items: center;
-        margin: 0;
-    }
-
-    @media (max-width: 768px) {
-        .text-right-mobile {
-            text-align: right;
-            font-size: 6px;
-        }
-
-        .text-left-mobile {
-            text-align: left;
-            font-size: 6px;
-        }
-
-        .eye-image {
-            max-width: 100px;
-        }
-
-        .my-mobile {
-            margin-top: 2rem !important;
-            margin-bottom: 1rem !important;
-        }
-
-        .kbw-signature {
-            width: 100%;
-            height: 250px;
-        }
-    }
-
-    .my-0 {
-        margin-top: -10px !important;
-        margin-bottom: 0 !important;
-    }
-
-    .my-1 {
-        margin-bottom: -30px !important;
-    }
-
 </style>
 <!-- <link rel="stylesheet" href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}"> -->
 @endpush
@@ -109,37 +53,41 @@
                             <!-- include form -->
                             <div class="card-body card-khusus-body">
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Tanggal</label>
-                                            <input type="date" name="tanggal" value="{{ old('tanggal', $biodata->tanggal ?? '')}}" class="form-control @error('tanggal') is-invalid @enderror" disabled>
+                                    <div class="col-12 col-lg-7">
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item active">
+                                                <img class="d-block w-100" src="{{ asset('storage/operasi/penandaan-pasien/image/' . $penandaan->hasil_gambar) }}" alt="Gambar Operasi">
+                                            </div>
                                         </div>
-                                        @error('tanggal')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Jenis Tindakan</label>
-                                            <input type="text" name="jenis_operasi" value="{{ old('jenis_operasi', $biodata->nama_tindakan ?? '')}}" class="form-control @error('jenis_operasi') is-invalid @enderror" readonly>
-                                        </div>
-                                        @error('jenis_operasi')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <a href="#" data-toggle="modal" data-target="#gambarModal{{ $penandaan->id }}" class="badge badge-success">Preview Penandaan Operasi</a>
-                                        </div>
-                                        @error('jenis_operasi')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
+                                    <div class="col-12 col-lg-5">
+                                            <div class="mt-2">
+                                                <a href="#">
+                                                    <h6 style="text-decoration: underline">{{$biodata->pendaftaran->registerPasien->Nama_Pasien}}</h6>
+                                                </a>
+                                            </div>
+                
+                                            <div class="my-3">
+                                                {{-- <p><i class="fa fa-bed-pulse"></i> Jenis Tindakan :  {{ $biodata->nama_tindakan }}</p>
+                                                <p><i class="fa fa-user-doctor"></i> Dokter : {{ $biodata->dokter->Nama_Dokter ?? ''}}</p>
+                                                <p><i class="fa fa-hospital-user"></i> Ruangan : {{ $biodata->ruangan->nama_ruang }}</p>
+                                                <p><i class="fa fa-file-medical"></i> Tanggal Operasi : {{ date('d-m-Y', strtotime($biodata->tanggal))}}</p>
+                                                <p><i class="fa fa-clock"></i> Jam Operasi : {{ date('h:i', strtotime($biodata->jam_mulai))}} - {{ date('h:i', strtotime($biodata->jam_selesai))}} WIB</p> --}}
+                                                <dl class="row">
+                                                    <dt class="col-sm-4"><i class="fa fa-bed-pulse"></i> Jenis Tindakan</dt>
+                                                    <dd class="col-sm-8">: {{ $biodata->nama_tindakan }}</dd>
+                                                    <dt class="col-sm-4"><i class="fa fa-user-doctor"></i> Dokter</dt>
+                                                    <dd class="col-sm-8">: {{ $biodata->dokter->Nama_Dokter ?? ''}}</dd>
+                                                    {{-- <dd class="col-sm-12 col-sm-offset-3">-------------</dd> --}}
+                                                    <dt class="col-sm-4"><i class="fa fa-hospital-user"></i> Ruangan</dt>
+                                                    <dd class="col-sm-8">: {{ $biodata->ruangan->nama_ruang }}</dd>
+                                                    <dt class="col-sm-4"><i class="fa fa-file-medical"></i> Tanggal Operasi</dt>
+                                                    <dd class="col-sm-8">: {{ date('d-m-Y', strtotime($biodata->tanggal))}}</dd>
+                                                    <dt class="col-sm-4"><i class="fa fa-clock"></i> Jam Operasi</dt>
+                                                    <dd class="col-sm-8">: {{ date('h:i', strtotime($biodata->jam_mulai))}} - {{ date('h:i', strtotime($biodata->jam_selesai))}} WIB</dd>
+                                                </dl>
+                                            </div>
+                                            <a href="cart.html" class="btn amado-btn w-100"></a>
                                     </div>
                                 </div>
                             </div>
