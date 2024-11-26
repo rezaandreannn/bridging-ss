@@ -44,25 +44,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($bookings as $booking)
                                         <tr>
-                                            <td>1</td>
-                                            <td><span class="font-weight-bold">123456</span></td>
-                                            <td>Losss</td>
-                                            <td>22-11-2024</td>
-                                            <td>Pungky</td>
-                                            <td>
-                                                <div class="dropdown d-inline">
-                                                    <a href="#" class="text-primary" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu">
-                                                        {{-- Input --}}
-                                                        <a class="dropdown-item has-icon" href="{{ route('prabedah.verifikasi-prabedah.create') }}"><i class="fas fa-plus"></i> Tambah</a>
-                                                        <a class="dropdown-item has-icon" href="{{ route('prabedah.verifikasi-prabedah.create') }}"> <i class="fas fa-signature"></i> Tanda Tangan</a>
-                                                    </div>
-                                                </div>
-                                            </td>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{$booking->no_mr}}</td>
+                                            <td>{{$booking->nama_pasien}}</td>
+                                            <td>{{$booking->tanggal}}</td>
+                                            <td></td>
+                                            <td></td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                         </table>
                     </div>

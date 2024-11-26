@@ -2,26 +2,34 @@
 
 namespace App\Http\Controllers\Ok\PraBedah;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Services\Operasi\BookingOperasiService;
+use App\Services\Operasi\PenandaanOperasiService;
 
 class VerifikasiPraBedahController extends Controller
 {
     protected $view;
     protected $routeIndex;
     protected $prefix;
+    protected $penandaanOperasiService;
+    protected $bookingOperasiService;
 
     public function __construct()
     {
         $this->view = 'pages.ok.pra-bedah.';
         $this->prefix = 'Verifikasi Pra Bedah';
+        $this->penandaanOperasiService = new PenandaanOperasiService();
+        $this->bookingOperasiService = new BookingOperasiService();
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $title = $this->prefix . ' ' . 'List';
+        $bookings = $this->bookingOperasiService->get();
+        // dd($bookings);
 
-        return view($this->view . 'verifikasi-prabedah.index', compact('title'));
+        return view($this->view . 'verifikasi-prabedah.index', compact('title', 'bookings'));
     }
 
     /**

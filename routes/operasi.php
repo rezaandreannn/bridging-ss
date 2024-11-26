@@ -22,7 +22,6 @@ Route::prefix('operasi')->name('operasi.')->middleware('auth')->group(function (
     Route::delete('/penandaan-operasi/delete/{id}', [PenandaanOperasiController::class, 'destroy'])->name('penandaan.destroy');
     Route::get('/penandaan-operasi/cetak/{kode_register}', [PenandaanOperasiController::class, 'cetak'])->name('penandaan.cetak');
 
-
     // OK Ruangan
     Route::get('/ruang-operasi', [RuangOperasiController::class, 'index'])->name('ruang.index');
     Route::post('/ruang-operasi', [RuangOperasiController::class, 'store'])->name('ruang.store');
