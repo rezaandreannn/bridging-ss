@@ -28,6 +28,30 @@ class BookingOperasiService
         ]);
     }
 
+    public function byKodeBangsal($kodeBangsal = '')
+    {
+        $bookings = BookingOperasi::with([
+            'pendaftaran.registerPasien',
+            'pendaftaran.ruang.bangsal',
+            'ruangan',
+            'dokter',
+        ])->get();
+
+        $filtered = $bookings->filter(function ($booking) use ($kodeBangsal) {
+            if (!empty($kodeBangsal)) {
+                if (!empty($booking->pendaftaran->ruang)) {
+                    $bangsal = optional($booking->pendaftaran->ruang->bangsal)->Kode_Bangsal;
+                    return (string) $bangsal === (string) $kodeBangsal;
+                }
+            } else {
+                $ruang = optional($booking->pendaftaran)->Kode_Ruang;
+                return empty($ruang);
+            }
+        });
+
+        return $this->mapData($filtered);
+    }
+
     public function biodata($noReg)
     {
         return BookingOperasi::with([
@@ -48,10 +72,28 @@ class BookingOperasiService
             ->first();
     }
 
-    public function get()
+    public function get($kodeBangsal = '')
     {
-        $databookings = $this->baseQuery()->get();
-        return $this->mapData($databookings);
+        $bookings = BookingOperasi::with([
+            'pendaftaran.registerPasien',
+            'pendaftaran.ruang.bangsal',
+            'ruangan',
+            'dokter',
+        ])->get();
+
+        $filtered = $bookings->filter(function ($booking) use ($kodeBangsal) {
+            if (!empty($kodeBangsal)) {
+                if (!empty($booking->pendaftaran->ruang)) {
+                    $bangsal = optional($booking->pendaftaran->ruang->bangsal)->Kode_Bangsal;
+                    return (string) $bangsal === (string) $kodeBangsal;
+                }
+            } else {
+                $ruang = optional($booking->pendaftaran)->Kode_Ruang;
+                return empty($ruang);
+            }
+        });
+
+        return $this->mapData($filtered);
     }
 
     public function byDate($date)

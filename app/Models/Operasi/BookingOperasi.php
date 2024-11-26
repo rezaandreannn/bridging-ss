@@ -43,7 +43,7 @@ class BookingOperasi extends Model
 
     public function pendaftaran()
     {
-        return $this->hasOne(Pendaftaran::class, 'No_Reg', 'kode_register');
+        return $this->belongsTo(Pendaftaran::class, 'kode_register', 'No_Reg');
     }
 
     public function ttdtandapasien()

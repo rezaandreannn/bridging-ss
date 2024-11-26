@@ -46,7 +46,8 @@ class BookingOperasiController extends Controller
         $title = $this->prefix . ' ' . 'List';
 
         // get data from service
-        $bookings = $this->bookingOperasiService->get();
+        $sessionBangsal = 'MNA';
+        $bookings = $this->bookingOperasiService->get($sessionBangsal ?? '');
 
         $booking = null;
         if (session('booking_id')) {
