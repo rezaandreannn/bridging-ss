@@ -12,7 +12,6 @@ class VerifikasiPraBedahEkg extends Model
     protected $connection = 'pku';
     protected $table = 'ok_verifikasi_pra_bedah_ekg';
 
-    // mass assigment
     protected $fillable = [
         'kode_register',
         'ekg',

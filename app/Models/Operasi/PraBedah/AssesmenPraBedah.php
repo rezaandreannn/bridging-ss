@@ -12,7 +12,6 @@ class AssesmenPraBedah extends Model
     protected $connection = 'pku';
     protected $table = 'ok_assesmen_pra_bedah';
 
-    // mass assigment
     protected $fillable = [
         'kode_register',
         'anamnesa',

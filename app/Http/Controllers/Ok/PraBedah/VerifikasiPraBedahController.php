@@ -27,7 +27,7 @@ class VerifikasiPraBedahController extends Controller
     {
         $title = $this->prefix . ' ' . 'List';
         $bookings = $this->bookingOperasiService->get();
-        // dd($bookings);
+        dd($bookings);
 
         return view($this->view . 'verifikasi-prabedah.index', compact('title', 'bookings'));
     }

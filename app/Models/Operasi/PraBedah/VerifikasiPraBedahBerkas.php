@@ -12,7 +12,6 @@ class VerifikasiPraBedahBerkas extends Model
     protected $connection = 'pku';
     protected $table = 'ok_verifikasi_pra_bedah_berkas';
 
-    // mass assigment
     protected $fillable = [
         'kode_register',
         'status_pasien',

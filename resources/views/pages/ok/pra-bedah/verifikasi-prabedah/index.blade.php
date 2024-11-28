@@ -33,28 +33,28 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table-striped table table-bordered" id="table-1">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">No</th>
-                                            <th scope="col">No MR</th>
-                                            <th scope="col">Nama Pasien</th>
-                                            <th scope="col">Tanggal</th>
-                                            <th scope="col">Perawat</th>
-                                            <th scope="col">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($bookings as $booking)
-                                        <tr>
-                                            <td>{{$loop->iteration}}</td>
-                                            <td>{{$booking->no_mr}}</td>
-                                            <td>{{$booking->nama_pasien}}</td>
-                                            <td>{{$booking->tanggal}}</td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
+                            <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">No MR</th>
+                                    <th scope="col">Nama Pasien</th>
+                                    <th scope="col">Tanggal</th>
+                                    <th scope="col">Perawat</th>
+                                    <th scope="col">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($bookings as $booking)
+                                <tr>
+                                    <td>{{$loop->iteration}}</td>
+                                    <td>{{$booking->no_mr}}</td>
+                                    <td>{{$booking->nama_pasien}}</td>
+                                    <td>{{$booking->tanggal}}</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                @endforeach
+                            </tbody>
                         </table>
                     </div>
                 </div>
