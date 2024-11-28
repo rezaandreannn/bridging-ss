@@ -59,7 +59,7 @@
                                 <div class="form-group row mb-4">
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Role</label>
                                     <div class="col-sm-12 col-md-7">
-                                        <select class="form-control select2" name="roles">
+                                        <select class="form-control select2" name="roles" onchange="cek_role_bangsal(this)" id="roleSelect">
                                             @foreach ($roles as $role)
                                             @php $Selected = false; @endphp
                                             @foreach ($user->roles as $userRole)
@@ -71,6 +71,24 @@
                                             <option value="{{ $role->name }}" {{ $Selected ? 'selected' : ''}}>{{ $role->name }}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                </div>
+                                <div id="form1" style="display: none">
+                                    <div class="form-group row mb-4">
+                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Bangsal</label>
+                                        <div class="col-sm-12 col-md-7">
+                                            <select class="form-control select2" name="bangsals">
+                                                <option value="">-- Select bangsal --</option>
+            
+                                                @php
+                                                $kode_bangsal_user= $bangsalById->kode_bangsal ?? isset($bangsalById->kode_bangsal);
+                                                @endphp
+                                                @foreach ($bangsals as $bangsal)
+                                                <option value="{{ $bangsal->Kode_Bangsal }}" {{ ($kode_bangsal_user == $bangsal->Kode_Bangsal) ? 'selected ' : ''}}>{{ $bangsal->Nama_Bangsal }}</option>
+                                                @endforeach
+                                           
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-4">
@@ -90,6 +108,7 @@
                                         </select>
                                     </div>
                                 </div>
+                           
                                 <div class="form-group row mb-4">
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Image</label>
                                     <div class="col-sm-12 col-md-7">
@@ -140,4 +159,20 @@
         }
     }
 </script>
+
+<script>
+    function cek_role_bangsal(selected) {
+        var radiobox = selected.value;
+        var form1 = document.getElementById("form1");
+        form1.style.display = (radiobox === "perawat bangsal") ? "block" : "none";
+    }
+
+       // Tambahkan pemeriksaan saat halaman dimuat untuk menampilkan form1 jika "perawat bangsal" dipilih
+       window.onload = function() {
+        var selectedRole = document.getElementById("roleSelect").value;
+        cek_role_bangsal({ value: selectedRole });
+    };
+</script>
+
+
 @endpush
