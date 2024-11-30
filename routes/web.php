@@ -36,6 +36,7 @@ use App\Http\Controllers\MasterData\TtdDokterController;
 use App\Http\Controllers\Fisio\InformedConcentController;
 use App\Http\Controllers\Kunjungan\PendaftaranController;
 use App\Http\Controllers\MasterData\JenisFisioController;
+use App\Http\Controllers\MasterData\TtdPerawatController;
 use App\Http\Controllers\Farmasi\MasterDataAlkesController;
 use App\Http\Controllers\MasterData\OrganizationController;
 use App\Http\Controllers\profileUser\ProfileUserController;
@@ -155,6 +156,13 @@ Route::middleware('auth')->group(function () {
         Route::post('ttd-dokter', [TtdDokterController::class, 'store'])->name('ttd-dokter.store');
         Route::put('ttd-dokter/{id}/update', [TtdDokterController::class, 'update'])->name('ttd-dokter.update');
         Route::delete('ttd-dokter/delete/{id}', [TtdDokterController::class, 'destroy'])->name('ttd-dokter.destroy');
+        
+        Route::get('ttd-perawat', [TtdPerawatController::class, 'index'])->name('ttd-perawat.index');
+        Route::delete('ttd-perawat/delete/{id}', [TtdPerawatController::class, 'destroy'])->name('ttd-perawat.destroy');
+        Route::get('ttd-perawat/create', [TtdPerawatController::class, 'create'])->name('ttd-perawat.create');
+        Route::get('ttd-perawat/edit/{id}', [TtdPerawatController::class, 'edit'])->name('ttd-perawat.edit');
+        Route::post('ttd-perawat', [TtdPerawatController::class, 'store'])->name('ttd-perawat.store');
+        Route::put('ttd-perawat/{id}/update', [TtdPerawatController::class, 'update'])->name('ttd-perawat.update');
     });
 
     // ENCOUNTER 

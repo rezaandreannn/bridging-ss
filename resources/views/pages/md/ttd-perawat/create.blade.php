@@ -28,11 +28,11 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Tanda Tangan Pasien</h1>
+            <h1>{{$title}}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('ttd-dokter.index') }}">Tanda Tangan </a></div>
-                <div class="breadcrumb-item">Dokter</div>
-                <div class="breadcrumb-item">Edit</div>
+                <div class="breadcrumb-item active"><a href="{{ route('ttd-perawat.index') }}">Tanda Tangan </a></div>
+                <div class="breadcrumb-item">Perawat</div>
+                <div class="breadcrumb-item">Add</div>
             </div>
         </div>
 
@@ -40,24 +40,29 @@
         <div class="section-body">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('ttd-dokter.update',$tandatangandokter->id) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('ttd-perawat.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
-                        @method('put')
                         <div class="card-body">
-                            {{-- <input type="hidden" name="kode_register" value="{{$biodata->pendaftaran->No_Reg}}"> --}}
-
+                            @if ((auth()->user()->roles->pluck('name')[0]) != 'super-admin')
+                            <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
+                            @else
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Pilih Dokter</label>
-                                    <input type="hidden" name="kode_dokter" class="form-control" value="{{$tandatangandokter->kode_dokter}}">
-                                    <input type="text" class="form-control" value="{{$tandatangandokter->dokter->Nama_Dokter}}" readonly>
+                                    <label>Pilih User</label>
+                                    <select name="user_id" class="form-control select2" style="width: 100%;">
+                                        <option value="" selected>-- Pilih User --</option>
+                                        @foreach ($users as $user)
+                                        <option value="{{$user->id}}">{{$user->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                @error('kode_dokter')
+                                @error('user_id')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
                                 @enderror
-                            </div>
+                            </div>          
+                            @endif
 
                             <div class="col-md-12">
                                 <label class="" for="">Tanda Tangan:</label>
@@ -65,7 +70,7 @@
                                 <div id="signat"></div>
                                 <br />
                                 <button id="clear">Hapus Tanda Tangan</button>
-                                <textarea id="signature64" name="ttd_dokter" style="display: none"></textarea>
+                                <textarea id="signature64" name="ttd_perawat" style="display: none"></textarea>
                             </div>
                         </div>
                         <div class="card-footer text-left">
@@ -114,6 +119,5 @@
         } 
     }
 </script>
-
 <!-- Page Specific JS File -->
 @endpush

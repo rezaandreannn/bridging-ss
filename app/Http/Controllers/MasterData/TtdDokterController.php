@@ -68,7 +68,7 @@ class TtdDokterController extends Controller
             } catch (Exception $e) {
                 // Redirect dengan pesan error jika terjadi kegagalan
                 return redirect()->back()->with('error', 'Gagal menambahkan tanda tangan: ' . $e->getMessage());
-        }
+            }
     }
 
     /**

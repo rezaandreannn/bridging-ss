@@ -114,8 +114,22 @@ class TandaTanganDokterService
 
     public function delete($id)
     {
-        $data = TtdDokter::find($id);
-        return $data->delete();
+
+        try{
+
+            $data = TtdDokter::find($id);
+            
+
+            if ($data) {
+                $pathImage = 'public/ttd/dokter/' . $data->ttd_dokter;
+                Storage::delete($pathImage);
+                return $data->delete();
+            }
+
+        } catch (\Throwable $th) {
+            //throw $th;
+            throw new Exception("Gagal menghapus tanda tangan: " . $th->getMessage());
+        }
     }
 
     public function deleteWithRelations($id)

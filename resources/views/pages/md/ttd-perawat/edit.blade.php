@@ -30,8 +30,8 @@
         <div class="section-header">
             <h1>Tanda Tangan Pasien</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('ttd-dokter.index') }}">Tanda Tangan </a></div>
-                <div class="breadcrumb-item">Dokter</div>
+                <div class="breadcrumb-item active"><a href="{{ route('ttd-perawat.index') }}">Tanda Tangan </a></div>
+                <div class="breadcrumb-item">Perawat</div>
                 <div class="breadcrumb-item">Edit</div>
             </div>
         </div>
@@ -40,7 +40,7 @@
         <div class="section-body">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('ttd-dokter.update',$tandatangandokter->id) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('ttd-perawat.update',$ttdperawat->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('put')
                         <div class="card-body">
@@ -48,9 +48,9 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Pilih Dokter</label>
-                                    <input type="hidden" name="kode_dokter" class="form-control" value="{{$tandatangandokter->kode_dokter}}">
-                                    <input type="text" class="form-control" value="{{$tandatangandokter->dokter->Nama_Dokter}}" readonly>
+                                    <label>Nama perawat</label>
+                                    <input type="hidden" name="user_id" class="form-control" value="{{$ttdperawat->user_id}}">
+                                    <input type="text" class="form-control" value="{{$ttdperawat->user->name}}" readonly>
                                 </div>
                                 @error('kode_dokter')
                                 <div class="invalid-feedback">
@@ -65,7 +65,7 @@
                                 <div id="signat"></div>
                                 <br />
                                 <button id="clear">Hapus Tanda Tangan</button>
-                                <textarea id="signature64" name="ttd_dokter" style="display: none"></textarea>
+                                <textarea id="signature64" name="ttd_perawat" style="display: none"></textarea>
                             </div>
                         </div>
                         <div class="card-footer text-left">

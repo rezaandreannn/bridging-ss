@@ -85,6 +85,13 @@
                     </li>
                 </ul>
                 @endcan
+                @can('tanda tangan perawat')
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('md/ttd-perawat*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('ttd-perawat.index') }}">Ttd Perawat</a>
+                    </li>
+                </ul>
+                @endcan
             </li>
             @endcan
             @can('kunjungan')
