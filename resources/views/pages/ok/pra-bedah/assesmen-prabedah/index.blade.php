@@ -40,29 +40,39 @@
                                             <th scope="col">Nama Pasien</th>
                                             <th scope="col">Tanggal</th>
                                             <th scope="col">Dokter Operator</th>
+                                            <th scope="col">Status</th>
                                             <th scope="col">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($bookings as $booking)
                                         <tr>
-                                            <td>1</td>
-                                            <td><span class="font-weight-bold">123456</span></td>
-                                            <td>Losss</td>
-                                            <td>22-11-2024</td>
-                                            <td>dr. Harizon MN, Sp. B</td>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{$booking->no_mr}}</td>
+                                            <td>{{$booking->nama_pasien}}</td>
+                                            <td>{{$booking->tanggal}}</td>
                                             <td>
+                                                @if (isset($statusAssesmen[$booking->id]) && $statusAssesmen[$booking->id] == 'create')
+                                                <span class="badge badge-success">Belum</span>
+                                                @else
+                                                <span class="badge badge-warning">Sudah</span>
+                                                @endif
+                                            </td></td>
+                                            <td>  
                                                 <div class="dropdown d-inline">
                                                     <a href="#" class="text-primary" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </a>
                                                     <div class="dropdown-menu">
                                                         {{-- Input --}}
-                                                        <a class="dropdown-item has-icon" href="{{ route('prabedah.assesmen-prabedah.create') }}"><i class="fas fa-plus"></i> Tambah</a>
-                                                        <a class="dropdown-item has-icon" href="{{ route('prabedah.assesmen-prabedah.create') }}"> <i class="fas fa-signature"></i> Tanda Tangan</a>
+                                                        <a class="dropdown-item has-icon" href="{{ isset($statusAssesmen[$booking->id]) && $statusAssesmen[$booking->id] == 'create' ? route('prabedah.assesmen-prabedah.create', $booking->kode_register) : route('prabedah.assesmen-prabedah.edit', $statusAssesmen[$booking->id]) }}">
+                                                            <i class="fas fa-marker"></i> {{ isset($statusAssesmen[$booking->id]) && $statusAssesmen[$booking->id] == 'create' ? 'Tambah' : 'Edit' }}
+                                                        <a class="dropdown-item has-icon" href="#"> <i class="fas fa-signature"></i> Tanda Tangan</a>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                         </table>
                     </div>

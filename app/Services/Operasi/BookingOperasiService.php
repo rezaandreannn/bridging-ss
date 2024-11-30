@@ -28,30 +28,6 @@ class BookingOperasiService
         ]);
     }
 
-    public function byKodeBangsal($kodeBangsal = '')
-    {
-        $bookings = BookingOperasi::with([
-            'pendaftaran.registerPasien',
-            'pendaftaran.ruang.bangsal',
-            'ruangan',
-            'dokter',
-        ])->get();
-
-        $filtered = $bookings->filter(function ($booking) use ($kodeBangsal) {
-            if (!empty($kodeBangsal)) {
-                if (!empty($booking->pendaftaran->ruang)) {
-                    $bangsal = optional($booking->pendaftaran->ruang->bangsal)->Kode_Bangsal;
-                    return (string) $bangsal === (string) $kodeBangsal;
-                }
-            } else {
-                $ruang = optional($booking->pendaftaran)->Kode_Ruang;
-                return empty($ruang);
-            }
-        });
-
-        return $this->mapData($filtered);
-    }
-
     public function biodata($noReg)
     {
         return BookingOperasi::with([
@@ -72,62 +48,18 @@ class BookingOperasiService
             ->first();
     }
 
-    public function get($kodeBangsal = '')
+    public function get()
     {
-        $bookings = BookingOperasi::with([
-            'pendaftaran.registerPasien',
-            'pendaftaran.ruang.bangsal',
-            'ruangan',
-            'dokter',
-        ])->get();
-
-        $filtered = $bookings->filter(function ($booking) use ($kodeBangsal) {
-            if (!empty($kodeBangsal)) {
-                if (!empty($booking->pendaftaran->ruang)) {
-                    $bangsal = optional($booking->pendaftaran->ruang->bangsal)->Kode_Bangsal;
-                    return (string) $bangsal === (string) $kodeBangsal;
-                }
-            } else {
-                $ruang = optional($booking->pendaftaran)->Kode_Ruang;
-                return empty($ruang);
-            }
-        });
-
-        return $this->mapData($filtered);
+        $databookings = $this->baseQuery()->get();
+        return $this->mapData($databookings);
     }
 
-    public function byDate($date, $kodeBangsal)
+    public function byDate($date)
     {
-        $bookings = BookingOperasi::with([
-            'pendaftaran.registerPasien',
-            'pendaftaran.ruang.bangsal',
-            'ruangan',
-            'dokter',
-        ])->get();
-
-        $filtered = $bookings->filter(function ($booking) use ($date, $kodeBangsal) {
-            if (!empty($kodeBangsal)) {
-                if (!empty($booking->pendaftaran->ruang)) {
-                    $bangsal = optional($booking->pendaftaran->ruang->bangsal)->Kode_Bangsal;
-
-                    if ((string) $bangsal === (string) $kodeBangsal) {
-                        $tanggal = $booking->tanggal;
-                        return $tanggal && $tanggal == $date;
-                    }
-                }
-            } else {
-                $ruang = optional($booking->pendaftaran)->Kode_Ruang;
-                $tanggal = $booking->tanggal;
-
-                return empty($ruang) && ($tanggal && $tanggal == $date);
-            }
-        });
-
-        return $this->mapData($filtered);
-        // $databookings = $this->baseQuery()
-        //     ->whereDate('tanggal', $date)
-        //     ->get();
-        // return $this->mapData($databookings);
+        $databookings = $this->baseQuery()
+            ->whereDate('tanggal', $date)
+            ->get();
+        return $this->mapData($databookings);
     }
 
     public function byRegister($kodeRegister)

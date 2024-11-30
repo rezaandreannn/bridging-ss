@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use App\Models\Operasi\PenandaanOperasi;
+use App\Models\Operasi\PraBedah\AssesmenPraBedah;
 use App\Models\Operasi\TtdTandaOperasi;
 
 class BookingHelper
@@ -29,5 +30,17 @@ class BookingHelper
         }
 
         return $statusTandaTangan;
+    }
+
+    public static function getStatusAssesmen($assesmens)
+    {
+        $statusAssesmen = [];
+
+        foreach ($assesmens as $assesmen) {
+            $exists = AssesmenPraBedah::where('kode_register', $assesmen->kode_register)->first();
+            $statusAssesmen[$assesmen->id] = $exists ? $exists->id : 'create';
+        }
+
+        return $statusAssesmen;
     }
 }
