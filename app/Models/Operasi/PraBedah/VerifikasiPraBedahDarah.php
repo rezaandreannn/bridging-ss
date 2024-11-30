@@ -12,7 +12,6 @@ class VerifikasiPraBedahDarah extends Model
     protected $connection = 'pku';
     protected $table = 'ok_verifikasi_pra_bedah_darah';
 
-    // mass assigment
     protected $fillable = [
         'kode_register',
         'darah',

@@ -22,7 +22,6 @@ Route::prefix('operasi')->name('operasi.')->middleware('auth')->group(function (
     Route::delete('/penandaan-operasi/delete/{id}', [PenandaanOperasiController::class, 'destroy'])->name('penandaan.destroy');
     Route::get('/penandaan-operasi/cetak/{kode_register}', [PenandaanOperasiController::class, 'cetak'])->name('penandaan.cetak');
 
-
     // OK Ruangan
     Route::get('/ruang-operasi', [RuangOperasiController::class, 'index'])->name('ruang.index');
     Route::post('/ruang-operasi', [RuangOperasiController::class, 'store'])->name('ruang.store');
@@ -37,16 +36,18 @@ Route::prefix('ruangan')->name('ruangan.')->middleware('auth')->group(function (
 Route::prefix('prabedah')->name('prabedah.')->middleware('auth')->group(function () {
     // Asesmen Pra Bedah
     Route::get('/assesmen-prabedah', [AssesmenPraBedahController::class, 'index'])->name('assesmen-prabedah.index');
-    Route::get('/assesmen-prabedah/create', [AssesmenPraBedahController::class, 'create'])->name('assesmen-prabedah.create');
+    Route::get('/assesmen-prabedah/create/{kode_register}', [AssesmenPraBedahController::class, 'create'])->name('assesmen-prabedah.create');
     Route::post('/assesmen-prabedah', [AssesmenPraBedahController::class, 'store'])->name('assesmen-prabedah.store');
+    Route::get('/assesmen-prabedah/edit/{id}', [AssesmenPraBedahController::class, 'edit'])->name('assesmen-prabedah.edit');
     Route::put('/assesmen-prabedah/update/{id}', [AssesmenPraBedahController::class, 'update'])->name('assesmen-prabedah.update');
     Route::delete('/assesmen-prabedah/delete/{id}', [AssesmenPraBedahController::class, 'destroy'])->name('assesmen-prabedah.destroy');
 
     // Verifikasi Pra Bedah
     Route::get('/verifikasi-prabedah', [VerifikasiPraBedahController::class, 'index'])->name('verifikasi-prabedah.index');
-    Route::get('/verifikasi-prabedah/create', [VerifikasiPraBedahController::class, 'create'])->name('verifikasi-prabedah.create');
+    Route::get('/verifikasi-prabedah/create/{kode_register}', [VerifikasiPraBedahController::class, 'create'])->name('verifikasi-prabedah.create');
     Route::post('/verifikasi-prabedah', [VerifikasiPraBedahController::class, 'store'])->name('verifikasi-prabedah.store');
-    Route::put('/verifikasi-prabedah/update/{id}', [VerifikasiPraBedahController::class, 'update'])->name('verifikasi-prabedah.update');
+    Route::get('/verifikasi-prabedah/edit/{kode_register}', [VerifikasiPraBedahController::class, 'edit'])->name('verifikasi-prabedah.edit');
+    Route::put('/verifikasi-prabedah/update/{kode_register}', [VerifikasiPraBedahController::class, 'update'])->name('verifikasi-prabedah.update');
     Route::delete('/verifikasi-prabedah/delete/{id}', [VerifikasiPraBedahController::class, 'destroy'])->name('verifikasi-prabedah.destroy');
 });
 

@@ -26,8 +26,9 @@
         <div class="section-body">
             <!-- components biodata pasien by no reg -->
             {{-- @include('components.biodata-pasien-bynoreg') --}}
-            <form action="{{ route('prabedah.verifikasi-prabedah.store') }}" method="POST">
-            @csrf
+            <form action="{{ route('prabedah.verifikasi-prabedah.update', $biodata->kode_register) }}" method="POST">
+                @csrf
+                @method('PUT')
                 <div class="card mb-3">
                     <div class="card-header card-khusus-header">
                         <h6 class="card-khusus-title">Verifikasi Pra Bedah</h6>
@@ -42,25 +43,25 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="status_pasien" id="flexCheckDefault" value="1">
+                                                <input class="form-check-input" type="checkbox" name="status_pasien" id="flexCheckDefault" value="1" {{ $verifikasi['berkas'] && $verifikasi['berkas']->status_pasien ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Status Pasien
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="assesmen_pra_bedah" id="flexCheckDefault" value="1">
+                                                <input class="form-check-input" type="checkbox" name="assesmen_pra_bedah" id="flexCheckDefault" value="1" {{ $verifikasi['berkas'] && $verifikasi['berkas']->assesmen_pra_bedah ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Asesmen Pra Bedah
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="penandaan_lokasi" id="flexCheckDefault" value="1">
+                                                <input class="form-check-input" type="checkbox" name="penandaan_lokasi" id="flexCheckDefault" value="1" {{ $verifikasi['berkas'] && $verifikasi['berkas']->penandaan_lokasi ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Penandaan Lokasi Operasi
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="informed_consent_bedah" id="flexCheckDefault" value="1">
+                                                <input class="form-check-input" type="checkbox" name="informed_consent_bedah" id="flexCheckDefault" value="1" {{ $verifikasi['berkas'] && $verifikasi['berkas']->informed_consent_bedah ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Informed Consent Bedah
                                                 </label>
@@ -68,19 +69,19 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="informed_consent_anastesi" id="flexCheckDefault" value="1">
+                                                <input class="form-check-input" type="checkbox" name="informed_consent_anastesi" id="flexCheckDefault" value="1" {{ $verifikasi['berkas'] && $verifikasi['berkas']->informed_consent_anastesi ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Informed Consent Anestesi / Sedasi
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="assesmen_pra_anastesi_sedasi" id="flexCheckDefault" value="1" >
+                                                <input class="form-check-input" type="checkbox" name="assesmen_pra_anastesi_sedasi" id="flexCheckDefault" value="1" {{ $verifikasi['berkas'] && $verifikasi['berkas']->assesmen_pra_anastesi_sedasi ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Assesmen Pra Anestesi / Sedasi
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="edukasi_anastesi" id="flexCheckDefault" value="1" >
+                                                <input class="form-check-input" type="checkbox" name="edukasi_anastesi" id="flexCheckDefault" value="1" {{ $verifikasi['berkas'] && $verifikasi['berkas']->edukasi_anastesi ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Edukasi Anestesi
                                                 </label>
@@ -95,80 +96,80 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="laboratorium" id="berkasLab" value="1" onclick="toggleLabData()">
+                                                <input class="form-check-input" type="checkbox" name="laboratorium" id="berkasLab" value="1" {{ $verifikasi['lab'] && $verifikasi['lab']->laboratorium ? 'checked' : '' }} onclick="toggleLabData()">
                                                 <label class="form-check-label" for="berkasLab">
                                                     Laboratorium
                                                 </label>
-                                                <div id="labData" style="display: none;">
+                                                <div id="labData" style="{{ isset($verifikasi['lab']) && $verifikasi['lab']->laboratorium ? 'display: block;' : 'display: none;' }}">
                                                     <div class="row">
                                                         <div class="col-md-4">
                                                             <h5 style="font-size: 12px; color:black;">HB :</h5>
-                                                            <input type="text" class="form-control" name="lab_hemoglobin" id="hb">
+                                                            <input type="text" class="form-control" name="lab_hemoglobin" id="hb" value="{{ $verifikasi['lab']->lab_hemoglobin ?? '' }}">
                                                         </div>
                                                         <div class="col-md-4">
                                                             <h5 style="font-size: 12px; color:black;">Trombosite :</h5>
-                                                            <input type="text" class="form-control" name="lab_trombosit" id="trombosite">
+                                                            <input type="text" class="form-control" name="lab_trombosit" id="trombosite" value="{{ $verifikasi['lab']->lab_trombosit ?? '' }}">
                                                         </div>
                                                         <div class="col-md-4">
                                                             <h5 style="font-size: 12px; color:black;">Leukosit :</h5>
-                                                            <input type="text" class="form-control" name="lab_leukosit" id="leukosit">
+                                                            <input type="text" class="form-control" name="lab_leukosit" id="leukosit" value="{{ $verifikasi['lab']->lab_leukosit ?? '' }}">
                                                         </div>
                                                     </div>
                                                     <div class="row mt-3">
                                                         <div class="col-md-4">
                                                             <h5 style="font-size: 12px; color:black;">Hematrokit :</h5>
-                                                            <input type="text" class="form-control" name="lab_hematrokit" id="hematokrit">
+                                                            <input type="text" class="form-control" name="lab_hematrokit" id="hematokrit" value="{{ $verifikasi['lab']->lab_hematrokit ?? '' }}">
                                                         </div>
                                                         <div class="col-md-4">
                                                             <h5 style="font-size: 12px; color:black;">BT :</h5>
-                                                            <input type="text" class="form-control" name="lab_bt" id="bt">
+                                                            <input type="text" class="form-control" name="lab_bt" id="bt" value="{{ $verifikasi['lab']->lab_bt ?? '' }}">
                                                         </div>
                                                         <div class="col-md-4">
                                                             <h5 style="font-size: 12px; color:black;">CT :</h5>
-                                                            <input type="text" class="form-control"id="ct" name="lab_ct">
+                                                            <input type="text" class="form-control"id="ct" name="lab_ct" value="{{ $verifikasi['lab']->lab_ct ?? '' }}">
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="rontgen" id="flexCheckDefault" value="1">
+                                                <input class="form-check-input" type="checkbox" name="rontgen" id="flexCheckDefault" value="1" {{ $verifikasi['rontgen'] && $verifikasi['rontgen']->rontgen ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Rontgen
                                                 </label>
-                                                <input type="text" placeholder="Inputan Rontgen" class="form-control" name="deskripsi_rontgen" id="rontgen">
+                                                <input type="text" placeholder="Inputan Rontgen" class="form-control" name="deskripsi_rontgen" id="rontgen" value="{{ $verifikasi['darah']->deskripsi ?? '' }}">
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="ekg" id="flexCheckDefault" value="1">
+                                                <input class="form-check-input" type="checkbox" name="ekg" id="flexCheckDefault" value="1" {{ $verifikasi['ekg'] && $verifikasi['ekg']->ekg ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     EKG
                                                 </label>
-                                                <input type="text" placeholder="Inputan EKG" class="form-control" name="deskripsi_ekg" id="ekg">
+                                                <input type="text" placeholder="Inputan EKG" class="form-control" name="deskripsi_ekg" id="ekg" value="{{ $verifikasi['ekg']->deskripsi ?? '' }}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="darah" id="darah_khusus_check" value="1">
+                                                <input class="form-check-input" type="checkbox" name="darah" id="darah_khusus_check" value="1" {{ $verifikasi['darah'] && $verifikasi['darah']->darah ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="darah_khusus_check">
                                                     Darah / Alat khusus yang diperlukan
                                                 </label>
                                             </div>
                                             <div class="form-group mt-2">
-                                                <input type="text" class="form-control" name="deskripsi_darah" id="darah_khusus" placeholder="Deskripsi">
+                                                <input type="text" class="form-control" name="deskripsi_darah" id="darah_khusus" placeholder="Deskripsi" value="{{ $verifikasi['darah']->deskripsi ?? '' }}">
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <input type="text" class="form-control mb-3 mt-2" name="jumlah" id="jumlah_darah" placeholder="Jumlah">
+                                                        <input type="text" class="form-control mb-3 mt-2" name="jumlah" id="jumlah_darah" placeholder="Jumlah" value="{{ $verifikasi['darah']->jumlah ?? '' }}">
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <input type="text" class="form-control mb-3 mt-2" name="gol" id="gol_darah" placeholder="Gol">
+                                                        <input type="text" class="form-control mb-3 mt-2" name="gol" id="gol_darah" placeholder="Gol" value="{{ $verifikasi['darah']->gol ?? '' }}">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="obat" id="flexCheckDefault" value="1" >
+                                                <input class="form-check-input" type="checkbox" name="obat" id="flexCheckDefault" value="1" {{ $verifikasi['obat'] && $verifikasi['obat']->obat ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Obat-obat pasien yang dibawa
                                                 </label>
-                                                <input type="text" placeholder="Inputan Obat Pasien" class="form-control" name="deskripsi_obat" id="obat_pasien">
+                                                <input type="text" placeholder="Inputan Obat Pasien" class="form-control" name="deskripsi_obat" id="obat_pasien" value="{{ $verifikasi['obat']->deskripsi ?? '' }}">
                                             </div>
                                         </div>
                                     </div>
@@ -240,25 +241,18 @@
 
 <script>
     function toggleLabData() {
-        const labCheckbox = document.getElementById('berkasLab');
-        const labDataDiv = document.getElementById('labData');
-        const inputs = document.querySelectorAll('#labData input');
-
+        var labCheckbox = document.getElementById('berkasLab');
+        var labData = document.getElementById('labData');
         if (labCheckbox.checked) {
-            // Tampilkan dan aktifkan input
-            labDataDiv.style.display = 'block';
-            labCheckbox.setAttribute('aria-expanded', 'true');
-            inputs.forEach(input => input.disabled = false);
+            labData.style.display = 'block';
         } else {
-                // Sembunyikan dan nonaktifkan input
-                labDataDiv.style.display = 'none';
-                labCheckbox.setAttribute('aria-expanded', 'false');
-                inputs.forEach(input => {
-                    input.disabled = true;
-                    input.value = ''; // Kosongkan nilai jika tidak dipilih
-                });
-            }
+            labData.style.display = 'none';
+        }
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        toggleLabData();  // Ensure the correct initial state when the page loads
+    });
 </script>
 
 {{-- SCRIPT TIDAK BISA HURUF --}}

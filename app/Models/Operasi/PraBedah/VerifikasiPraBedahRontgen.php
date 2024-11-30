@@ -12,7 +12,6 @@ class VerifikasiPraBedahRontgen extends Model
     protected $connection = 'pku';
     protected $table = 'ok_verifikasi_pra_bedah_rontgen';
 
-    // mass assigment
     protected $fillable = [
         'kode_register',
         'rontgen',

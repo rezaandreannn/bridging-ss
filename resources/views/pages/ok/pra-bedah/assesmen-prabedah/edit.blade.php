@@ -26,8 +26,9 @@
         <div class="section-body">
             <!-- components biodata pasien by no reg -->
             @include('components.biodata-pasien-ok-bynoreg')
-            <form action="{{ route('prabedah.assesmen-prabedah.store') }}" method="POST">
-            @csrf
+            <form action="{{ route('prabedah.assesmen-prabedah.update', $assesmen->id) }}" method="POST">
+                @csrf
+                @method('put')
             <!-- components biodata pasien by no reg -->
                 <div class="card mb-3">
                     <div class="card-header card-khusus-header">
@@ -40,7 +41,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Data Subjektif (Anamnesa) <code>*Wajib Diisi</code></label>
-                                    <textarea name="anamnesa" class="form-control  @error('anamnesa') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ old('anamnesa') }}</textarea>
+                                    <textarea name="anamnesa" class="form-control  @error('anamnesa') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ $assesmen->anamnesa }}</textarea>
                                     @error('anamnesa')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -51,7 +52,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Data Objektif (Pemeriksaan Fisik) <code> *Wajib Diisi</code></label>
-                                    <textarea name="pemeriksaan_fisik" class="form-control  @error('pemeriksaan_fisik') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ old('pemeriksaan_fisik') }}</textarea>
+                                    <textarea name="pemeriksaan_fisik" class="form-control  @error('pemeriksaan_fisik') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ $assesmen->pemeriksaan_fisik }}</textarea>
                                     @error('pemeriksaan_fisik')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -62,7 +63,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Diagnosis Pra Bedah</label>
-                                    <textarea name="diagnosa" class="form-control  @error('diagnosa') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ old('diagnosa') }}</textarea>
+                                    <textarea name="diagnosa" class="form-control  @error('diagnosa') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ $assesmen->diagnosa }}</textarea>
                                     @error('diagnosa')
                                     <div class="invalid-feedback">
                                         {{ $message }}

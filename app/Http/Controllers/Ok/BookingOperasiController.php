@@ -55,6 +55,8 @@ class BookingOperasiController extends Controller
             $booking = $this->bookingOperasiService->findById(session('booking_id'));
         }
 
+        // dd($bookings);
+
         // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
         $statusPenandaan = BookingHelper::getStatusPenandaan($bookings);
         // dd($statusPenandaan);

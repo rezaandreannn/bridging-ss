@@ -33,37 +33,41 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table-striped table table-bordered" id="table-1">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">No</th>
-                                            <th scope="col">No MR</th>
-                                            <th scope="col">Nama Pasien</th>
-                                            <th scope="col">Tanggal</th>
-                                            <th scope="col">Perawat</th>
-                                            <th scope="col">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td><span class="font-weight-bold">123456</span></td>
-                                            <td>Losss</td>
-                                            <td>22-11-2024</td>
-                                            <td>Pungky</td>
-                                            <td>
-                                                <div class="dropdown d-inline">
-                                                    <a href="#" class="text-primary" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu">
-                                                        {{-- Input --}}
-                                                        <a class="dropdown-item has-icon" href="{{ route('prabedah.verifikasi-prabedah.create') }}"><i class="fas fa-plus"></i> Tambah</a>
-                                                        <a class="dropdown-item has-icon" href="{{ route('prabedah.verifikasi-prabedah.create') }}"> <i class="fas fa-signature"></i> Tanda Tangan</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
+                            <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">No MR</th>
+                                    <th scope="col">Nama Pasien</th>
+                                    <th scope="col">Tanggal</th>
+                                    <th scope="col">Perawat</th>
+                                    <th scope="col">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($bookings as $booking)
+                                <tr>
+                                    <td>{{$loop->iteration}}</td>
+                                    <td>{{$booking->no_mr}}</td>
+                                    <td>{{$booking->nama_pasien}}</td>
+                                    <td>{{$booking->tanggal}}</td>
+                                    <td>
+                                    </td></td>
+                                    <td>  
+                                        <div class="dropdown d-inline">
+                                            <a href="#" class="text-primary" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>
+                                            <div class="dropdown-menu">
+                                                {{-- Input --}}
+                                                <a class="dropdown-item has-icon" href="{{ route('prabedah.verifikasi-prabedah.create',$booking->kode_register)}}"> <i class="fas fa-plus"></i> Tambah</a>
+                                                <a class="dropdown-item has-icon" href="{{ route('prabedah.verifikasi-prabedah.edit',$booking->kode_register)}}"> <i class="fas fa-plus"></i> Edit</a>
+                                                <a class="dropdown-item has-icon" href="#"> <i class="fas fa-signature"></i> Tanda Tangan</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
                         </table>
                     </div>
                 </div>

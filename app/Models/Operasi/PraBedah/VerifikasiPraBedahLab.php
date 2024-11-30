@@ -12,7 +12,6 @@ class VerifikasiPraBedahLab extends Model
     protected $connection = 'pku';
     protected $table = 'ok_verifikasi_pra_bedah_lab';
 
-    // mass assigment
     protected $fillable = [
         'kode_register',
         'laboratorium',
