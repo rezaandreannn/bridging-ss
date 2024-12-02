@@ -40,18 +40,53 @@
                                     <th scope="col">Nama Pasien</th>
                                     <th scope="col">Tanggal</th>
                                     <th scope="col">Perawat</th>
+                                    <th scope="col">Status</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($bookings as $booking)
+                                @foreach ($verifikasis as $verifikasi)
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
-                                    <td>{{$booking->no_mr}}</td>
-                                    <td>{{$booking->nama_pasien}}</td>
-                                    <td>{{$booking->tanggal}}</td>
+                                    <td>{{$verifikasi->no_mr}}</td>
+                                    <td>{{$verifikasi->nama_pasien}}</td>
+                                    <td>{{$verifikasi->tanggal}}</td>
+                                    <td>Fiki</td>
                                     <td>
-                                    </td></td>
+                                    @if (isset($statusBerkas[$verifikasi->id]))
+                                        <div class="row">
+                                            <ul>
+                                                @if ($statusBerkas[$verifikasi->id]['status_pasien'] == 1)
+                                                    <li class="text-success">Status Pasien</li>
+                                                @endif
+                                        
+                                                @if ($statusBerkas[$verifikasi->id]['assesmen_pra_bedah'] == 1)
+                                                    <li class="text-success">Assesmen Pra Bedah</li>
+                                                @endif
+                                        
+                                                @if ($statusBerkas[$verifikasi->id]['penandaan_lokasi'] == 1)
+                                                    <li class="text-success">Penandaan Lokasi</li>
+                                                @endif
+                                        
+                                                @if ($statusBerkas[$verifikasi->id]['informed_consent_bedah'] == 1)
+                                                    <li class="text-success">Informed Consent Bedah</li>
+                                                @endif
+                                            </ul>
+                                            <ul>
+                                                @if ($statusBerkas[$verifikasi->id]['informed_consent_anastesi'] == 1)
+                                                    <li class="text-success">Informed Consent Anestesi</li>
+                                                @endif
+                                        
+                                                @if ($statusBerkas[$verifikasi->id]['assesmen_pra_anastesi_sedasi'] == 1)
+                                                    <li class="text-success">Assesmen Pra Anastesi Sedasi</li>
+                                                @endif
+                                                @if ($statusBerkas[$verifikasi->id]['edukasi_anastesi'] == 1)
+                                                    <li class="text-success">Edukasi Anastesi</li>
+                                                @endif
+                                            </ul>
+                                        </div>
+                                    @endif
+                                    </td>
                                     <td>  
                                         <div class="dropdown d-inline">
                                             <a href="#" class="text-primary" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -59,8 +94,17 @@
                                             </a>
                                             <div class="dropdown-menu">
                                                 {{-- Input --}}
-                                                <a class="dropdown-item has-icon" href="{{ route('prabedah.verifikasi-prabedah.create',$booking->kode_register)}}"> <i class="fas fa-plus"></i> Tambah</a>
-                                                <a class="dropdown-item has-icon" href="{{ route('prabedah.verifikasi-prabedah.edit',$booking->kode_register)}}"> <i class="fas fa-plus"></i> Edit</a>
+                                                    @if ($statusVerifikasi == true)
+                                                        <a class="dropdown-item has-icon" href="{{ route('prabedah.verifikasi-prabedah.edit', $verifikasi->kode_register) }}">
+                                                            <i class="fas fa-edit"></i> Edit
+                                                        </a>
+                                                    @else
+                                                        <a class="dropdown-item has-icon" href="{{ route('prabedah.verifikasi-prabedah.create', $verifikasi->kode_register) }}">
+                                                            <i class="fas fa-plus"></i> Tambah
+                                                        </a>
+                                                    @endif
+                                                {{-- <a class="dropdown-item has-icon" href="{{ route('prabedah.verifikasi-prabedah.create',$verifikasi->kode_register)}}"> <i class="fas fa-plus"></i> Tambah</a>
+                                                <a class="dropdown-item has-icon" href="{{ route('prabedah.verifikasi-prabedah.edit',$verifikasi->kode_register)}}"> <i class="fas fa-plus"></i> Edit</a> --}}
                                                 <a class="dropdown-item has-icon" href="#"> <i class="fas fa-signature"></i> Tanda Tangan</a>
                                             </div>
                                         </div>

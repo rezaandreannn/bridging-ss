@@ -811,6 +811,7 @@ select.form-control:not([size]):not([multiple]) {
     color: white;
 }
 
+
 /* .card-fixed {
  position: sticky;
   top: 10px;

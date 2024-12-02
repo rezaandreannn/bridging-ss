@@ -42,82 +42,136 @@ class VerifikasiPraBedahService
         ];
     }
 
+    // public function insert(array $data)
+    // {
+    //     DB::beginTransaction();
+    //     try {
+    //         // Insert Table Berkas
+    //         if (!empty($data['status_pasien']) || !empty($data['assesmen_pra_bedah']) || !empty($data['penandaan_lokasi']) || !empty($data['informed_consent_bedah']) || !empty($data['informed_consent_anastesi']) || !empty($data['assesmen_pra_anastesi_sedasi']) || !empty($data['edukasi_anastesi'])) {
+    //             VerifikasiPraBedahBerkas::create([
+    //                 'kode_register' => $data['kode_register'],
+    //                 'status_pasien' => !empty($data['status_pasien']) ? 1 : 0,
+    //                 'assesmen_pra_bedah' => !empty($data['assesmen_pra_bedah']) ? 1 : 0,
+    //                 'penandaan_lokasi' => !empty($data['penandaan_lokasi']) ? 1 : 0,
+    //                 'informed_consent_bedah' => !empty($data['informed_consent_bedah']) ? 1 : 0,
+    //                 'informed_consent_anastesi' => !empty($data['informed_consent_anastesi']) ? 1 : 0,
+    //                 'assesmen_pra_anastesi_sedasi' => !empty($data['assesmen_pra_anastesi_sedasi']) ? 1 : 0,
+    //                 'edukasi_anastesi' => !empty($data['edukasi_anastesi']) ? 1 : 0,
+    //             ]);
+    //         }
+
+    //         // Insert Table Darah (Hanya jika ada data terkait)
+    //         if (!empty($data['darah']) || !empty($data['jumlah']) || !empty($data['gol']) || !empty($data['deskripsi_darah'])) {
+    //             VerifikasiPraBedahDarah::create([
+    //                 'kode_register' => $data['kode_register'],
+    //                 'darah' => !empty($data['darah']) ? 1 : 0,
+    //                 'jumlah' => $data['jumlah'] ?? '',
+    //                 'gol' => $data['gol'] ?? '',
+    //                 'deskripsi' => $data['deskripsi_darah'] ?? '',
+    //             ]);
+    //         }
+
+    //         // Insert Table EKG (Hanya jika ada data terkait)
+    //         if (!empty($data['ekg']) || !empty($data['deskripsi_ekg'])) {
+    //             VerifikasiPraBedahEkg::create([
+    //                 'kode_register' => $data['kode_register'],
+    //                 'ekg' => !empty($data['ekg']) ? 1 : 0,
+    //                 'deskripsi' => $data['deskripsi_ekg'] ?? '',
+    //             ]);
+    //         }
+
+    //         // Insert Table Lab (Hanya jika ada data terkait)
+    //         if (!empty($data['laboratorium']) || !empty($data['lab_hemoglobin']) || !empty($data['lab_leukosit']) || !empty($data['lab_trombosit']) || !empty($data['lab_hematrokit']) || !empty($data['lab_bt']) || !empty($data['lab_ct'])) {
+    //             VerifikasiPraBedahLab::create([
+    //                 'kode_register' => $data['kode_register'],
+    //                 'laboratorium' => !empty($data['laboratorium']) ? 1 : 0,
+    //                 'lab_hemoglobin' => $data['lab_hemoglobin'] ?? '',
+    //                 'lab_leukosit' => $data['lab_leukosit'] ?? '',
+    //                 'lab_trombosit' => $data['lab_trombosit'] ?? '',
+    //                 'lab_hematrokit' => $data['lab_hematrokit'] ?? '',
+    //                 'lab_bt' => $data['lab_bt'] ?? '',
+    //                 'lab_ct' => $data['lab_ct'] ?? '',
+    //             ]);
+    //         }
+
+    //         // Insert Table Obat (Hanya jika ada data terkait)
+    //         if (!empty($data['obat']) || !empty($data['deskripsi_obat'])) {
+    //             VerifikasiPraBedahObat::create([
+    //                 'kode_register' => $data['kode_register'],
+    //                 'obat' => !empty($data['obat']) ? 1 : 0,
+    //                 'deskripsi' => $data['deskripsi_obat'] ?? '',
+    //             ]);
+    //         }
+
+    //         // Insert Table Rontgen (Hanya jika ada data terkait)
+    //         if (!empty($data['rontgen']) || !empty($data['deskripsi_rontgen'])) {
+    //             VerifikasiPraBedahRontgen::create([
+    //                 'kode_register' => $data['kode_register'],
+    //                 'rontgen' => !empty($data['rontgen']) ? 1 : 0,
+    //                 'deskripsi' => $data['deskripsi_rontgen'] ?? '',
+    //             ]);
+    //         }
+
+    //         // Commit the transaction
+    //         DB::commit();
+    //     } catch (\Throwable $th) {
+    //         DB::rollBack();
+    //         // Throw a descriptive exception
+    //         throw new Exception("Gagal menambahkan Verifikasi Pra Bedah: " . $th->getMessage(), 0, $th);
+    //     }
+    // }
+
     public function insert(array $data)
     {
-        DB::beginTransaction();
         try {
-            // Insert Table Berkas
-            if (!empty($data['status_pasien']) || !empty($data['assesmen_pra_bedah']) || !empty($data['penandaan_lokasi']) || !empty($data['informed_consent_bedah']) || !empty($data['informed_consent_anastesi']) || !empty($data['assesmen_pra_anastesi_sedasi']) || !empty($data['edukasi_anastesi'])) {
-                VerifikasiPraBedahBerkas::create([
-                    'kode_register' => $data['kode_register'],
-                    'status_pasien' => !empty($data['status_pasien']) ? 1 : 0,
-                    'assesmen_pra_bedah' => !empty($data['assesmen_pra_bedah']) ? 1 : 0,
-                    'penandaan_lokasi' => !empty($data['penandaan_lokasi']) ? 1 : 0,
-                    'informed_consent_bedah' => !empty($data['informed_consent_bedah']) ? 1 : 0,
-                    'informed_consent_anastesi' => !empty($data['informed_consent_anastesi']) ? 1 : 0,
-                    'assesmen_pra_anastesi_sedasi' => !empty($data['assesmen_pra_anastesi_sedasi']) ? 1 : 0,
-                    'edukasi_anastesi' => !empty($data['edukasi_anastesi']) ? 1 : 0,
-                ]);
-            }
+            $data =  VerifikasiPraBedahBerkas::create([
+                'kode_register' => $data['kode_register'],
+                'status_pasien' => !empty($data['status_pasien']) ? 1 : 0,
+                'assesmen_pra_bedah' => !empty($data['assesmen_pra_bedah']) ? 1 : 0,
+                'penandaan_lokasi' => !empty($data['penandaan_lokasi']) ? 1 : 0,
+                'informed_consent_bedah' => !empty($data['informed_consent_bedah']) ? 1 : 0,
+                'informed_consent_anastesi' => !empty($data['informed_consent_anastesi']) ? 1 : 0,
+                'assesmen_pra_anastesi_sedasi' => !empty($data['assesmen_pra_anastesi_sedasi']) ? 1 : 0,
+                'edukasi_anastesi' => !empty($data['edukasi_anastesi']) ? 1 : 0,
+            ]);
+            $data =  VerifikasiPraBedahDarah::create([
+                'kode_register' => $data['kode_register'],
+                'darah' => !empty($data['darah']) ? 1 : 0,
+                'jumlah' => $data['jumlah'] ?? '',
+                'gol' => $data['gol'] ?? '',
+                'deskripsi' => $data['deskripsi_darah'] ?? '',
+            ]);
+            $data =   VerifikasiPraBedahEkg::create([
+                'kode_register' => $data['kode_register'],
+                'ekg' => !empty($data['ekg']) ? 1 : 0,
+                'deskripsi' => $data['deskripsi_ekg'] ?? '',
+            ]);
 
-            // Insert Table Darah (Hanya jika ada data terkait)
-            if (!empty($data['darah']) || !empty($data['jumlah']) || !empty($data['gol']) || !empty($data['deskripsi_darah'])) {
-                VerifikasiPraBedahDarah::create([
-                    'kode_register' => $data['kode_register'],
-                    'darah' => !empty($data['darah']) ? 1 : 0,
-                    'jumlah' => $data['jumlah'] ?? '',
-                    'gol' => $data['gol'] ?? '',
-                    'deskripsi' => $data['deskripsi_darah'] ?? '',
-                ]);
-            }
+            $data =  VerifikasiPraBedahLab::create([
+                'kode_register' => $data['kode_register'],
+                'laboratorium' => !empty($data['laboratorium']) ? 1 : 0,
+                'lab_hemoglobin' => $data['lab_hemoglobin'] ?? '',
+                'lab_leukosit' => $data['lab_leukosit'] ?? '',
+                'lab_trombosit' => $data['lab_trombosit'] ?? '',
+                'lab_hematrokit' => $data['lab_hematrokit'] ?? '',
+                'lab_bt' => $data['lab_bt'] ?? '',
+                'lab_ct' => $data['lab_ct'] ?? '',
+            ]);
+            $data =  VerifikasiPraBedahObat::create([
+                'kode_register' => $data['kode_register'],
+                'obat' => !empty($data['obat']) ? 1 : 0,
+                'deskripsi' => $data['deskripsi_obat'] ?? '',
+            ]);
 
-            // Insert Table EKG (Hanya jika ada data terkait)
-            if (!empty($data['ekg']) || !empty($data['deskripsi_ekg'])) {
-                VerifikasiPraBedahEkg::create([
-                    'kode_register' => $data['kode_register'],
-                    'ekg' => !empty($data['ekg']) ? 1 : 0,
-                    'deskripsi' => $data['deskripsi_ekg'] ?? '',
-                ]);
-            }
+            $data =  VerifikasiPraBedahRontgen::create([
+                'kode_register' => $data['kode_register'],
+                'rontgen' => !empty($data['rontgen']) ? 1 : 0,
+                'deskripsi' => $data['deskripsi_rontgen'] ?? '',
+            ]);
 
-            // Insert Table Lab (Hanya jika ada data terkait)
-            if (!empty($data['laboratorium']) || !empty($data['lab_hemoglobin']) || !empty($data['lab_leukosit']) || !empty($data['lab_trombosit']) || !empty($data['lab_hematrokit']) || !empty($data['lab_bt']) || !empty($data['lab_ct'])) {
-                VerifikasiPraBedahLab::create([
-                    'kode_register' => $data['kode_register'],
-                    'laboratorium' => !empty($data['laboratorium']) ? 1 : 0,
-                    'lab_hemoglobin' => $data['lab_hemoglobin'] ?? '',
-                    'lab_leukosit' => $data['lab_leukosit'] ?? '',
-                    'lab_trombosit' => $data['lab_trombosit'] ?? '',
-                    'lab_hematrokit' => $data['lab_hematrokit'] ?? '',
-                    'lab_bt' => $data['lab_bt'] ?? '',
-                    'lab_ct' => $data['lab_ct'] ?? '',
-                ]);
-            }
-
-            // Insert Table Obat (Hanya jika ada data terkait)
-            if (!empty($data['obat']) || !empty($data['deskripsi_obat'])) {
-                VerifikasiPraBedahObat::create([
-                    'kode_register' => $data['kode_register'],
-                    'obat' => !empty($data['obat']) ? 1 : 0,
-                    'deskripsi' => $data['deskripsi_obat'] ?? '',
-                ]);
-            }
-
-            // Insert Table Rontgen (Hanya jika ada data terkait)
-            if (!empty($data['rontgen']) || !empty($data['deskripsi_rontgen'])) {
-                VerifikasiPraBedahRontgen::create([
-                    'kode_register' => $data['kode_register'],
-                    'rontgen' => !empty($data['rontgen']) ? 1 : 0,
-                    'deskripsi' => $data['deskripsi_rontgen'] ?? '',
-                ]);
-            }
-
-            // Commit the transaction
-            DB::commit();
+            return $data;
         } catch (\Throwable $th) {
-            DB::rollBack();
-            // Throw a descriptive exception
-            throw new Exception("Gagal menambahkan Verifikasi Pra Bedah: " . $th->getMessage(), 0, $th);
+            throw new Exception("Gagal menambahkan Verifikasi Pra Bedah: " . $th->getMessage());
         }
     }
 
