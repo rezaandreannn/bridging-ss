@@ -81,12 +81,12 @@ class BookingHelper
             $kodeRegister = $verifikasi->kode_register;
 
             $status = [
-                'berkas'  => VerifikasiPraBedahBerkas::where('kode_register', $kodeRegister)->exists(),
-                'darah'   => VerifikasiPraBedahDarah::where('kode_register', $kodeRegister)->exists(),
-                'ekg'     => VerifikasiPraBedahEkg::where('kode_register', $kodeRegister)->exists(),
-                'lab'     => VerifikasiPraBedahLab::where('kode_register', $kodeRegister)->exists(),
-                'obat'    => VerifikasiPraBedahObat::where('kode_register', $kodeRegister)->exists(),
-                'rontgen' => VerifikasiPraBedahRontgen::where('kode_register', $kodeRegister)->exists(),
+                'berkas'  => VerifikasiPraBedahBerkas::where('kode_register', $kodeRegister)->first(),
+                'darah'   => VerifikasiPraBedahDarah::where('kode_register', $kodeRegister)->first(),
+                'ekg'     => VerifikasiPraBedahEkg::where('kode_register', $kodeRegister)->first(),
+                'lab'     => VerifikasiPraBedahLab::where('kode_register', $kodeRegister)->first(),
+                'obat'    => VerifikasiPraBedahObat::where('kode_register', $kodeRegister)->first(),
+                'rontgen' => VerifikasiPraBedahRontgen::where('kode_register', $kodeRegister)->first(),
             ];
 
             $statusVerifikasi[$kodeRegister] = $status;

@@ -45,7 +45,7 @@ class BookingOperasiController extends Controller
         // variable declare
         $title = $this->prefix . ' ' . 'List';
 
-        $date = '2024-11-20';
+        $date = '2024-12-02';
         // get data from service
         $sessionBangsal = 'MNA';
         $bookings = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');

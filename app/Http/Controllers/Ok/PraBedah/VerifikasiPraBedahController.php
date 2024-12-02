@@ -32,14 +32,13 @@ class VerifikasiPraBedahController extends Controller
     public function index(Request $request)
     {
         $title = $this->prefix . ' ' . 'List';
-        $date = '2024-11-20';
+        $date = '2024-12-02';
         // get data from service
         $sessionBangsal = 'MNA';
         $verifikasis = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
         // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
         $statusBerkas = BookingHelper::getStatusBerkasVerifikasi($verifikasis);
         $statusVerifikasi = BookingHelper::getStatusVerifikasi($verifikasis);
-        // dd($statusVerifikasi);
 
         return view($this->view . 'verifikasi-prabedah.index', compact('title', 'verifikasis', 'statusVerifikasi', 'statusBerkas'));
     }

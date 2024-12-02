@@ -123,8 +123,9 @@ class VerifikasiPraBedahService
 
     public function insert(array $data)
     {
+        DB::beginTransaction();
         try {
-            $data =  VerifikasiPraBedahBerkas::create([
+            $praBedahBerkas = VerifikasiPraBedahBerkas::create([
                 'kode_register' => $data['kode_register'],
                 'status_pasien' => !empty($data['status_pasien']) ? 1 : 0,
                 'assesmen_pra_bedah' => !empty($data['assesmen_pra_bedah']) ? 1 : 0,
@@ -134,20 +135,22 @@ class VerifikasiPraBedahService
                 'assesmen_pra_anastesi_sedasi' => !empty($data['assesmen_pra_anastesi_sedasi']) ? 1 : 0,
                 'edukasi_anastesi' => !empty($data['edukasi_anastesi']) ? 1 : 0,
             ]);
-            $data =  VerifikasiPraBedahDarah::create([
+
+            $praBedahDarah = VerifikasiPraBedahDarah::create([
                 'kode_register' => $data['kode_register'],
                 'darah' => !empty($data['darah']) ? 1 : 0,
                 'jumlah' => $data['jumlah'] ?? '',
                 'gol' => $data['gol'] ?? '',
                 'deskripsi' => $data['deskripsi_darah'] ?? '',
             ]);
-            $data =   VerifikasiPraBedahEkg::create([
+
+            $praBedahEkg = VerifikasiPraBedahEkg::create([
                 'kode_register' => $data['kode_register'],
                 'ekg' => !empty($data['ekg']) ? 1 : 0,
                 'deskripsi' => $data['deskripsi_ekg'] ?? '',
             ]);
 
-            $data =  VerifikasiPraBedahLab::create([
+            $praBedahLab = VerifikasiPraBedahLab::create([
                 'kode_register' => $data['kode_register'],
                 'laboratorium' => !empty($data['laboratorium']) ? 1 : 0,
                 'lab_hemoglobin' => $data['lab_hemoglobin'] ?? '',
@@ -157,20 +160,31 @@ class VerifikasiPraBedahService
                 'lab_bt' => $data['lab_bt'] ?? '',
                 'lab_ct' => $data['lab_ct'] ?? '',
             ]);
-            $data =  VerifikasiPraBedahObat::create([
+
+            $praBedahObat = VerifikasiPraBedahObat::create([
                 'kode_register' => $data['kode_register'],
                 'obat' => !empty($data['obat']) ? 1 : 0,
                 'deskripsi' => $data['deskripsi_obat'] ?? '',
             ]);
 
-            $data =  VerifikasiPraBedahRontgen::create([
+            $praBedahRontgen = VerifikasiPraBedahRontgen::create([
                 'kode_register' => $data['kode_register'],
                 'rontgen' => !empty($data['rontgen']) ? 1 : 0,
                 'deskripsi' => $data['deskripsi_rontgen'] ?? '',
             ]);
 
-            return $data;
+            DB::commit();
+
+            return [
+                'berkas' => $praBedahBerkas,
+                'darah' => $praBedahDarah,
+                'ekg' => $praBedahEkg,
+                'lab' => $praBedahLab,
+                'obat' => $praBedahObat,
+                'rontgen' => $praBedahRontgen,
+            ];
         } catch (\Throwable $th) {
+            DB::rollBack();
             throw new Exception("Gagal menambahkan Verifikasi Pra Bedah: " . $th->getMessage());
         }
     }

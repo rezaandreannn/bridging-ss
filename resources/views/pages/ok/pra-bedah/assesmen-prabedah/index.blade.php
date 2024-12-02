@@ -51,11 +51,12 @@
                                             <td>{{$booking->no_mr}}</td>
                                             <td>{{$booking->nama_pasien}}</td>
                                             <td>{{$booking->tanggal}}</td>
+                                            <td></td>
                                             <td>
                                                 @if (isset($statusAssesmen[$booking->id]) && $statusAssesmen[$booking->id] == 'create')
-                                                <span class="badge badge-success">Belum</span>
+                                                <span class="badge badge-warning">Belum</span>
                                                 @else
-                                                <span class="badge badge-warning">Sudah</span>
+                                                <span class="badge badge-success">Sudah</span>
                                                 @endif
                                             </td></td>
                                             <td>  
