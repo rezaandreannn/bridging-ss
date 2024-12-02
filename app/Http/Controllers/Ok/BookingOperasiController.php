@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Services\SimRs\DokterService;
 use App\Models\Operasi\RuanganOperasi;
 use App\Models\Operasi\PenandaanOperasi;
+use App\Services\MasterData\UserService;
 use App\Services\SimRs\PendaftaranService;
 use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\PenandaanOperasiService;
@@ -28,6 +29,7 @@ class BookingOperasiController extends Controller
     protected $dokterService;
     protected $pasienService;
     protected $penandaanOperasiService;
+    protected $userService;
 
 
     public function __construct()
@@ -38,6 +40,7 @@ class BookingOperasiController extends Controller
         $this->bookingOperasiService = new BookingOperasiService();
         $this->dokterService = new DokterService();
         $this->pasienService = new PendaftaranService();
+        $this->userService = new UserService();
     }
 
     public function index(Request $request)
@@ -45,10 +48,13 @@ class BookingOperasiController extends Controller
         // variable declare
         $title = $this->prefix . ' ' . 'List';
 
-        $date = '2024-12-02';
+
+        $date = date('Y-m-d');
         // get data from service
-        $sessionBangsal = 'MNA';
+        $sessionBangsal = $this->userService->get();
         $bookings = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
+
+        // dd($bookings);
 
         $booking = null;
         if (session('booking_id')) {
