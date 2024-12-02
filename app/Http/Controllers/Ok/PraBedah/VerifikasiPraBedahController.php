@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Ok\PraBedah;
 
 use Exception;
 use Illuminate\Http\Request;
+use App\Helpers\BookingHelper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Operasi\Prabedah\StoreVerifikasiPraBedahRequest;
-use App\Http\Requests\Operasi\Prabedah\UpdateVerifikasiPraBedahRequest;
 use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\PraBedah\VerifikasiPraBedahService;
+use App\Http\Requests\Operasi\Prabedah\StoreVerifikasiPraBedahRequest;
+use App\Http\Requests\Operasi\Prabedah\UpdateVerifikasiPraBedahRequest;
 
 class VerifikasiPraBedahController extends Controller
 {
@@ -34,10 +35,13 @@ class VerifikasiPraBedahController extends Controller
         $date = '2024-11-20';
         // get data from service
         $sessionBangsal = 'MNA';
-        $bookings = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
-        // dd($bookings);
+        $verifikasis = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
+        // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
+        $statusBerkas = BookingHelper::getStatusBerkasVerifikasi($verifikasis);
+        $statusVerifikasi = BookingHelper::getStatusVerifikasi($verifikasis);
+        // dd($statusVerifikasi);
 
-        return view($this->view . 'verifikasi-prabedah.index', compact('title', 'bookings'));
+        return view($this->view . 'verifikasi-prabedah.index', compact('title', 'verifikasis', 'statusVerifikasi', 'statusBerkas'));
     }
 
     /**
@@ -64,7 +68,7 @@ class VerifikasiPraBedahController extends Controller
         try {
             $this->verifikasiPraBedahService->insert($request->validated());
 
-            return redirect()->back()->with('success', 'Verifikasi berhasil ditambahkan.');
+            return redirect('/prabedah/verifikasi-prabedah')->with('success', 'Verifikasi berhasil ditambahkan.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
             return redirect()->back()->with('error', 'Gagal menambahkan Verifikasi: ' . $e->getMessage());
@@ -109,7 +113,7 @@ class VerifikasiPraBedahController extends Controller
         try {
             $this->verifikasiPraBedahService->update($kode_register, $request->validated());
 
-            return redirect()->back()->with('success', 'Verifikasi Pra Bedah berhasil di ubah.');
+            return redirect('/prabedah/verifikasi-prabedah')->with('success', 'Verifikasi Pra Bedah berhasil di ubah.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
             return redirect()->back()->with('error', 'Gagal merubah verifikasi pra bedah: ' . $e->getMessage());

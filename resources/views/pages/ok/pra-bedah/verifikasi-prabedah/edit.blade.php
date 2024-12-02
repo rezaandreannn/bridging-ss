@@ -136,7 +136,7 @@
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Rontgen
                                                 </label>
-                                                <input type="text" placeholder="Inputan Rontgen" class="form-control" name="deskripsi_rontgen" id="rontgen" value="{{ $verifikasi['darah']->deskripsi ?? '' }}">
+                                                <input type="text" placeholder="Inputan Rontgen" class="form-control" name="deskripsi_rontgen" id="rontgen" value="{{ $verifikasi['rontgen']->deskripsi ?? '' }}">
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="ekg" id="flexCheckDefault" value="1" {{ $verifikasi['ekg'] && $verifikasi['ekg']->ekg ? 'checked' : '' }}>
