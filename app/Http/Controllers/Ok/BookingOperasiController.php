@@ -29,7 +29,6 @@ class BookingOperasiController extends Controller
     protected $dokterService;
     protected $pasienService;
     protected $penandaanOperasiService;
-    protected $userService;
 
 
     public function __construct()
@@ -40,7 +39,6 @@ class BookingOperasiController extends Controller
         $this->bookingOperasiService = new BookingOperasiService();
         $this->dokterService = new DokterService();
         $this->pasienService = new PendaftaranService();
-        $this->userService = new UserService();
     }
 
     public function index(Request $request)
@@ -51,17 +49,13 @@ class BookingOperasiController extends Controller
 
         $date = date('Y-m-d');
         // get data from service
-        $sessionBangsal = $this->userService->get();
+        $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
         $bookings = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
-
-        // dd($bookings);
 
         $booking = null;
         if (session('booking_id')) {
             $booking = $this->bookingOperasiService->findById(session('booking_id'));
         }
-
-        // dd($bookings);
 
         // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
         $statusPenandaan = BookingHelper::getStatusPenandaan($bookings);
