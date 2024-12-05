@@ -23,8 +23,8 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('prabedah.verifikasi-prabedah.index') }}">Operasi Kamar</a></div>
-                <div class="breadcrumb-item">Verifikasi Pra Bedah</div>
+                <div class="breadcrumb-item active"><a href="{{ route('prabedah.assesmen-prabedah.index') }}">Operasi Kamar</a></div>
+                <div class="breadcrumb-item">Assesmen Pra Bedah</div>
             </div>
         </div>
 
@@ -33,90 +33,38 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table-striped table table-bordered" id="table-1">
-                            <thead>
-                                <tr>
-                                    <th scope="col">No</th>
-                                    <th scope="col">No MR</th>
-                                    <th scope="col">Nama Pasien</th>
-                                    <th scope="col">Tanggal</th>
-                                    <th scope="col">Perawat</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($verifikasis as $verifikasi)
-                                <tr>
-                                    <td>{{$loop->iteration}}</td>
-                                    <td>{{$verifikasi->no_mr}}</td>
-                                    <td>{{$verifikasi->nama_pasien}}</td>
-                                    <td>{{$verifikasi->tanggal}}</td>
-                                    <td>Fiki</td>
-                                    <td>
-                                    @if (isset($statusBerkas[$verifikasi->id]))
-                                        <div class="row">
-                                            <ul>
-                                                @if ($statusBerkas[$verifikasi->id]['status_pasien'] == 1)
-                                                    <li class="text-success">Status Pasien</li>
-                                                @endif
-                                        
-                                                @if ($statusBerkas[$verifikasi->id]['assesmen_pra_bedah'] == 1)
-                                                    <li class="text-success">Assesmen Pra Bedah</li>
-                                                @endif
-                                        
-                                                @if ($statusBerkas[$verifikasi->id]['penandaan_lokasi'] == 1)
-                                                    <li class="text-success">Penandaan Lokasi</li>
-                                                @endif
-                                        
-                                                @if ($statusBerkas[$verifikasi->id]['informed_consent_bedah'] == 1)
-                                                    <li class="text-success">Informed Consent Bedah</li>
-                                                @endif
-                                            </ul>
-                                            <ul>
-                                                @if ($statusBerkas[$verifikasi->id]['informed_consent_anastesi'] == 1)
-                                                    <li class="text-success">Informed Consent Anestesi</li>
-                                                @endif
-                                        
-                                                @if ($statusBerkas[$verifikasi->id]['assesmen_pra_anastesi_sedasi'] == 1)
-                                                    <li class="text-success">Assesmen Pra Anastesi Sedasi</li>
-                                                @endif
-                                                @if ($statusBerkas[$verifikasi->id]['edukasi_anastesi'] == 1)
-                                                    <li class="text-success">Edukasi Anastesi</li>
-                                                @endif
-                                            </ul>
-                                        </div>
-                                    @endif
-                                    </td>
-                                    <td>  
-                                        <div class="dropdown d-inline">
-                                            <a href="#" class="text-primary" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </a>
-                                            <div class="dropdown-menu">
-                                                {{-- Input --}}
-                                                @if (isset($statusVerifikasi[$verifikasi->kode_register]) && 
-                                                    array_filter($statusVerifikasi[$verifikasi->kode_register]))
-                                                    <a class="dropdown-item has-icon" href="{{ route('prabedah.verifikasi-prabedah.edit', $verifikasi->kode_register) }}">
-                                                        <i class="fas fa-edit"></i> Edit
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">No</th>
+                                            <th scope="col">No MR</th>
+                                            <th scope="col">Nama Pasien</th>
+                                            <th scope="col">Tanggal</th>
+                                            <th scope="col">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($assesmens as $assesmen)
+                                        <tr>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{$assesmen->no_mr}}</td>
+                                            <td>{{$assesmen->nama_pasien}}</td>
+                                            <td>{{$assesmen->tanggal}}</td>
+                                            <td>  
+                                                <div class="dropdown d-inline">
+                                                    <a href="#" class="text-primary" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fas fa-ellipsis-v"></i>
                                                     </a>
-                                                @else
-                                                    <a class="dropdown-item has-icon" href="{{ route('prabedah.verifikasi-prabedah.create', $verifikasi->kode_register) }}">
-                                                        <i class="fas fa-plus"></i> Tambah
-                                                    </a>
-                                                @endif
-                                                {{-- <a class="dropdown-item has-icon" href="{{ route('prabedah.verifikasi-prabedah.create',$verifikasi->kode_register)}}"> <i class="fas fa-plus"></i> Tambah</a>
-                                                <a class="dropdown-item has-icon" href="{{ route('prabedah.verifikasi-prabedah.edit',$verifikasi->kode_register)}}"> <i class="fas fa-plus"></i> Edit</a> --}}
-                                                @if (!$statusTtd)
-                                                <a class="dropdown-item has-icon" href="{{ route('ttd-perawat.create') }}"> 
-                                                    <i class="fas fa-signature"></i> Tanda Tangan
-                                                </a>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
+                                                    <div class="dropdown-menu">
+                                                        {{-- Input --}}
+                                                        <a class="dropdown-item has-icon" href="{{ route('prabedah.berkas-prabedah.cetak', $assesmen->kode_register) }}"> 
+                                                            <i class="fas fa-download"></i> Download
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
                         </table>
                     </div>
                 </div>

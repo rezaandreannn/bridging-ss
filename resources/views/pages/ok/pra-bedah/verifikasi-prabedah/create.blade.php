@@ -178,7 +178,7 @@
                                 <div class="form-group">
                                     <label>Estimasi waktu yang dibutuhkan</label>
                                     <div class="input-group">
-                                        <input type="text" name="estimasi_waktu" id="estimasi_waktu" class="form-control @error('estimasi_waktu') is-invalid  
+                                        <input type="time" name="estimasi_waktu" id="estimasi_waktu" class="form-control @error('estimasi_waktu') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">

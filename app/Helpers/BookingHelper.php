@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Models\MasterData\TtdPerawat;
 use App\Models\Operasi\PenandaanOperasi;
 use App\Models\Operasi\PraBedah\AssesmenPraBedah;
 use App\Models\Operasi\PraBedah\VerifikasiPraBedahBerkas;

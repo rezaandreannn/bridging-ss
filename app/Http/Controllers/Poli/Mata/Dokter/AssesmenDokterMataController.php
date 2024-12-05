@@ -77,6 +77,7 @@ class AssesmenDokterMataController extends Controller
         }
         $kode_dokter = auth()->user()->username;
         $pasien = $this->rajaldokter->getPasienByDokterMata(auth()->user()->username);
+        // dd($pasien);
         $pasienKonsul = $this->rajaldokter->getPasienByDokterMataRujukInternal($kode_dokter, $tanggal);
         // dd($pasienKonsul);
         $poliMata = new PoliMata();

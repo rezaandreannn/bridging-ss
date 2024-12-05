@@ -6,6 +6,8 @@ use Exception;
 use Illuminate\Http\Request;
 use App\Helpers\BookingHelper;
 use App\Http\Controllers\Controller;
+use App\Models\MasterData\TtdPerawat;
+use App\Services\MasterData\UserService;
 use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\PraBedah\VerifikasiPraBedahService;
 use App\Http\Requests\Operasi\Prabedah\StoreVerifikasiPraBedahRequest;
@@ -19,28 +21,41 @@ class VerifikasiPraBedahController extends Controller
     protected $bookingOperasiService;
     protected $assesmenOperasiService;
     protected $verifikasiPraBedahService;
+    protected $userService;
 
     public function __construct()
     {
         $this->view = 'pages.ok.pra-bedah.';
         $this->prefix = 'Verifikasi Pra Bedah';
         $this->verifikasiPraBedahService = new VerifikasiPraBedahService();
-
+        $this->userService = new UserService();
         $this->bookingOperasiService = new BookingOperasiService();
     }
 
     public function index(Request $request)
     {
         $title = $this->prefix . ' ' . 'List';
-        $date = '2024-12-02';
+        $date = '2024-12-05';
+        // $date = date('Y-m-d');
+        // Status Tanda Tangan
+        $userId = auth()->id();
+        $statusTtd = TtdPerawat::where('user_id', $userId)->exists();
+        // dd($statusTtd);
+
         // get data from service
-        $sessionBangsal = 'MNA';
+        $sessionBangsal = $this->userService->get();
         $verifikasis = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
         // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
         $statusBerkas = BookingHelper::getStatusBerkasVerifikasi($verifikasis);
         $statusVerifikasi = BookingHelper::getStatusVerifikasi($verifikasis);
 
-        return view($this->view . 'verifikasi-prabedah.index', compact('title', 'verifikasis', 'statusVerifikasi', 'statusBerkas'));
+        return view($this->view . 'verifikasi-prabedah.index', compact('verifikasis'))
+            ->with([
+                'title' => $title,
+                'statusVerifikasi' => $statusVerifikasi,
+                'statusBerkas' => $statusBerkas,
+                'statusTtd' => $statusTtd
+            ]);
     }
 
     /**
@@ -95,6 +110,7 @@ class VerifikasiPraBedahController extends Controller
     {
         $title = $this->prefix . ' ' . 'Edit Data';
         $verifikasi = $this->verifikasiPraBedahService->findById($kode_register);
+        // dd($verifikasi);
         $biodata = $this->bookingOperasiService->biodata($kode_register);
 
         return view($this->view . 'verifikasi-prabedah.edit', compact('title', 'biodata', 'verifikasi'));

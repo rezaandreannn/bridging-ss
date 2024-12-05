@@ -9,26 +9,46 @@ use App\Models\Operasi\PraBedah\VerifikasiPraBedahLab;
 use App\Models\Operasi\PraBedah\VerifikasiPraBedahObat;
 use App\Models\Operasi\PraBedah\VerifikasiPraBedahDarah;
 use App\Models\Operasi\PraBedah\VerifikasiPraBedahBerkas;
+use App\Models\Operasi\PraBedah\VerifikasiPraBedahOther;
 use App\Models\Operasi\PraBedah\VerifikasiPraBedahRontgen;
 
 class VerifikasiPraBedahService
 {
-    private function baseQuery($kode_register)
-    {
-        return [
-            'berkas' => VerifikasiPraBedahBerkas::where('kode_register', $kode_register)->first(),
-            'darah' => VerifikasiPraBedahDarah::where('kode_register', $kode_register)->first(),
-            'ekg' => VerifikasiPraBedahEkg::where('kode_register', $kode_register)->first(),
-            'lab' => VerifikasiPraBedahLab::where('kode_register', $kode_register)->first(),
-            'obat' => VerifikasiPraBedahObat::where('kode_register', $kode_register)->first(),
-            'rontgen' => VerifikasiPraBedahRontgen::where('kode_register', $kode_register)->first()
-        ];
-    }
+    // private function baseQuery($kode_register)
+    // {
+    //     return [
+    //         'berkas' => VerifikasiPraBedahBerkas::where('kode_register', $kode_register)->first(),
+    //         'darah' => VerifikasiPraBedahDarah::where('kode_register', $kode_register)->first(),
+    //         'ekg' => VerifikasiPraBedahEkg::where('kode_register', $kode_register)->first(),
+    //         'lab' => VerifikasiPraBedahLab::where('kode_register', $kode_register)->first(),
+    //         'obat' => VerifikasiPraBedahObat::where('kode_register', $kode_register)->first(),
+    //         'rontgen' => VerifikasiPraBedahRontgen::where('kode_register', $kode_register)->first()
+    //     ];
+    // }
 
-    public function get($kode_register)
-    {
-        return $this->baseQuery($kode_register);
-    }
+    // public function get($kode_register)
+    // {
+    //     return $this->baseQuery($kode_register);
+    // }
+
+    // private function mapData($assesmens)
+    // {
+    //     return collect($assesmens->map(function ($item) {
+    //         return (object) [
+    //             'id' => $item->id,
+    //             'kode_register' => $item->kode_register,
+    //             'tanggal' => optional($item->booking)->tanggal,
+    //             'anamnesa' => $item->anamnesa,
+    //             'pemeriksaan_fisik' => $item->pemeriksaan_fisik,
+    //             'diagnosa' => $item->diagnosa,
+    //             'no_mr' => optional($item->booking->pendaftaran)->No_MR,
+    //             'nama_pasien' => optional($item->booking->pendaftaran->registerPasien)->Nama_Pasien,
+    //             'ruang_operasi' => optional($item->booking->ruangan)->nama_ruang,
+    //             'nama_dokter' => optional($item->booking->dokter)->Nama_Dokter,
+    //             'nama_tindakan' => optional($item->booking)->nama_tindakan
+    //         ];
+    //     }));
+    // }
 
     public function findById($kode_register)
     {
@@ -39,6 +59,7 @@ class VerifikasiPraBedahService
             'lab' => VerifikasiPraBedahLab::where('kode_register', $kode_register)->first(),
             'rontgen' => VerifikasiPraBedahRontgen::where('kode_register', $kode_register)->first(),
             'darah' => VerifikasiPraBedahDarah::where('kode_register', $kode_register)->first(),
+            'other' => VerifikasiPraBedahOther::where('kode_register', $kode_register)->first(),
         ];
     }
 
@@ -173,6 +194,12 @@ class VerifikasiPraBedahService
                 'deskripsi' => $data['deskripsi_rontgen'] ?? '',
             ]);
 
+            $praBedahOther = VerifikasiPraBedahOther::create([
+                'kode_register' => $data['kode_register'],
+                'estimasi_waktu' => $data['estimasi_waktu'] ?? '',
+                'rencana_tindakan' => $data['rencana_tindakan'] ?? '',
+            ]);
+
             DB::commit();
 
             return [
@@ -182,6 +209,7 @@ class VerifikasiPraBedahService
                 'lab' => $praBedahLab,
                 'obat' => $praBedahObat,
                 'rontgen' => $praBedahRontgen,
+                'other' => $praBedahOther,
             ];
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -264,6 +292,11 @@ class VerifikasiPraBedahService
                 'deskripsi' => $data['deskripsi_rontgen'] ?? '',
             ]);
 
+            $this->updateTable(VerifikasiPraBedahOther::class, $kode_register, [
+                'estimasi_waktu' => $data['estimasi_waktu'] ?? '',
+                'rencana_tindakan' => $data['rencana_tindakan'] ?? '',
+            ]);
+
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
@@ -344,28 +377,4 @@ class VerifikasiPraBedahService
     //     }
     // }
 
-    public function delete($id)
-    {
-        $data = AssesmenPraBedah::find($id);
-        return $data->delete();
-    }
-
-    private function mapData($assesmens)
-    {
-        return collect($assesmens->map(function ($item) {
-            return (object) [
-                'id' => $item->id,
-                'kode_register' => $item->kode_register,
-                'tanggal' => optional($item->booking)->tanggal,
-                'anamnesa' => $item->anamnesa,
-                'pemeriksaan_fisik' => $item->pemeriksaan_fisik,
-                'diagnosa' => $item->diagnosa,
-                'no_mr' => optional($item->booking->pendaftaran)->No_MR,
-                'nama_pasien' => optional($item->booking->pendaftaran->registerPasien)->Nama_Pasien,
-                'ruang_operasi' => optional($item->booking->ruangan)->nama_ruang,
-                'nama_dokter' => optional($item->booking->dokter)->Nama_Dokter,
-                'nama_tindakan' => optional($item->booking)->nama_tindakan
-            ];
-        }));
-    }
 }

@@ -333,7 +333,7 @@
                     @can('berkas pra bedah')
                     <ul class="dropdown-menu">
                         <li class="{{ Request::is('prabedah/berkas-prabedah*') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('prabedah.assesmen-prabedah.index')}}">Berkas Pra Bedah</a>
+                            <a class="nav-link" href="{{ route('prabedah.berkas-prabedah.index')}}">Berkas Pra Bedah</a>
                         </li>
                     </ul>
                     @endcan

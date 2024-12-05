@@ -19,4 +19,9 @@ class VerifikasiPraBedahRontgen extends Model
         'created_by',
         'updated_by'
     ];
+
+    public function assesmenPraBedah()
+    {
+        return $this->belongsTo(AssesmenPraBedah::class, 'kode_register', 'kode_register');
+    }
 }

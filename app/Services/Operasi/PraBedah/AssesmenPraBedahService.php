@@ -3,6 +3,7 @@
 namespace App\Services\Operasi\PraBedah;
 
 use Exception;
+use Illuminate\Support\Facades\DB;
 use App\Models\Operasi\PraBedah\AssesmenPraBedah;
 
 class AssesmenPraBedahService
@@ -30,10 +31,162 @@ class AssesmenPraBedahService
         ]);
     }
 
-    public function get()
+    public function cetak($kode_register)
     {
-        $assesmen = $this->baseQuery()->get();
-        return $this->mapData($assesmen);
+        $result = AssesmenPraBedah::with([
+            'praBedahBerkas' => function ($query) {
+                $query->select(
+                    'kode_register',
+                    'status_pasien',
+                    'assesmen_pra_bedah',
+                    'penandaan_lokasi',
+                    'informed_consent_bedah',
+                    'informed_consent_anastesi',
+                    'assesmen_pra_anastesi_sedasi',
+                    'edukasi_anastesi'
+                );
+            },
+            'praBedahDarah' => function ($query) {
+                $query->select(
+                    'kode_register',
+                    'darah',
+                    'jumlah',
+                    'gol',
+                    'deskripsi'
+                );
+            },
+
+            'praBedahEkg' => function ($query) {
+                $query->select(
+                    'kode_register',
+                    'ekg',
+                    'deskripsi'
+                );
+            },
+
+            'praBedahLab' => function ($query) {
+                $query->select(
+                    'kode_register',
+                    'laboratorium',
+                    'lab_hemoglobin',
+                    'lab_leukosit',
+                    'lab_trombosit',
+                    'lab_hematrokit',
+                    'lab_bt',
+                    'lab_ct',
+                );
+            },
+
+            'praBedahObat' => function ($query) {
+                $query->select(
+                    'kode_register',
+                    'obat',
+                    'deskripsi'
+                );
+            },
+
+            'praBedahRontgen' => function ($query) {
+                $query->select(
+                    'kode_register',
+                    'rontgen',
+                    'deskripsi'
+                );
+            },
+
+            'praBedahOther' => function ($query) {
+                $query->select(
+                    'kode_register',
+                    'estimasi_waktu',
+                    'rencana_tindakan'
+                );
+            },
+
+            'ttdPasien' => function ($query) {
+                $query->select(
+                    'kode_register',
+                    'nama_pasien',
+                    'ttd_pasien'
+                );
+            },
+
+            'booking' => function ($query) {
+                $query->select('kode_register', 'tanggal', 'kode_dokter', 'nama_tindakan')->with([
+                    'pendaftaran' => function ($query) {
+                        $query->select('No_Reg', 'No_MR')
+                            ->with(['registerPasien' => function ($query) {
+                                $query->select(
+                                    'No_MR',
+                                    'Nama_Pasien',
+                                    'ALAMAT',
+                                    'JENIS_KELAMIN',
+                                    DB::raw("FORMAT(TGL_LAHIR, 'yyyy-MM-dd') as TGL_LAHIR")
+                                );
+                            }]);
+                    },
+                    'dokter' => function ($query) {
+                        $query->select('Kode_Dokter', 'Nama_Dokter');
+                    },
+                ]);
+            }
+        ])
+            ->where('kode_register', $kode_register)
+            ->first();
+
+        if ($result) {
+            return (object) [
+                'id' => $result->id,
+                'kode_register' => $result->kode_register,
+                'anamnesa' => $result->anamnesa,
+                'pemeriksaan_fisik' => $result->pemeriksaan_fisik,
+                'diagnosa' => $result->diagnosa,
+                'tanggal' => optional($result->booking)->tanggal,
+                'jam_mulai' => optional($result->booking)->jam_mulai,
+                'jam_selesai' => optional($result->booking)->jam_selesai,
+                'no_mr' => optional($result->booking->pendaftaran)->No_MR,
+                'nama_pasien' => optional($result->booking->pendaftaran->registerPasien)->Nama_Pasien,
+                'tanggal_lahir' => optional($result->booking->pendaftaran->registerPasien)->TGL_LAHIR,
+                'jenis_kelamin' => optional($result->booking->pendaftaran->registerPasien)->JENIS_KELAMIN,
+                'nama_dokter' => optional($result->booking->dokter)->Nama_Dokter,
+                // Tanda Tangan
+                'ttd_pasien' => optional($result->ttdPasien)->ttd_pasien,
+                'nama_ttd_pasien' => optional($result->ttdPasien)->nama_pasien,
+                'ttd_dokter' => optional($result->booking->ttdDokter)->ttd_dokter,
+                // Berkas
+                'status_pasien' => optional($result->praBedahBerkas)->status_pasien,
+                'assesmen_pra_bedah' => optional($result->praBedahBerkas)->assesmen_pra_bedah,
+                'penandaan_lokasi' => optional($result->praBedahBerkas)->penandaan_lokasi,
+                'informed_consent_bedah' => optional($result->praBedahBerkas)->informed_consent_bedah,
+                'informed_consent_anastesi' => optional($result->praBedahBerkas)->informed_consent_anastesi,
+                'assesmen_pra_anastesi_sedasi' => optional($result->praBedahBerkas)->assesmen_pra_anastesi_sedasi,
+                // Darah
+                'darah' => optional($result->praBedahDarah)->darah,
+                'jumlah' => optional($result->praBedahDarah)->jumlah,
+                'gol' => optional($result->praBedahDarah)->gol,
+                'deskripsi_darah' => optional($result->praBedahDarah)->deskripsi,
+                // Ekg
+                'ekg' => optional($result->praBedahEkg)->ekg,
+                'deskripsi_ekg' => optional($result->praBedahEkg)->deskripsi,
+                // Lab
+                'laboratorium' => optional($result->praBedahLab)->laboratorium,
+                'lab_hemoglobin' => optional($result->praBedahLab)->lab_hemoglobin,
+                'lab_leukosit' => optional($result->praBedahLab)->lab_leukosit,
+                'lab_trombosit' => optional($result->praBedahLab)->lab_trombosit,
+                'lab_hematrokit' => optional($result->praBedahLab)->lab_hematrokit,
+                'lab_bt' => optional($result->praBedahLab)->lab_bt,
+                'lab_ct' => optional($result->praBedahLab)->lab_ct,
+                // Obat
+                'obat' => optional($result->praBedahObat)->obat,
+                'deskripsi_obat' => optional($result->praBedahObat)->deskripsi,
+                // Rontgen
+                'rontgen' => optional($result->praBedahRontgen)->rontgen,
+                'deskripsi_rontgen' => optional($result->praBedahRontgen)->deskripsi,
+                // Other
+                'estimasi_waktu' => optional($result->praBedahOther)->estimasi_waktu,
+                'rencana_tindakan' => optional($result->praBedahOther)->rencana_tindakan,
+            ];
+        }
+
+        return null;
     }
 
     public function findById($id)
@@ -90,24 +243,5 @@ class AssesmenPraBedahService
     {
         $data = AssesmenPraBedah::find($id);
         return $data->delete();
-    }
-
-    private function mapData($assesmens)
-    {
-        return collect($assesmens->map(function ($item) {
-            return (object) [
-                'id' => $item->id,
-                'kode_register' => $item->kode_register,
-                'tanggal' => optional($item->booking)->tanggal,
-                'anamnesa' => $item->anamnesa,
-                'pemeriksaan_fisik' => $item->pemeriksaan_fisik,
-                'diagnosa' => $item->diagnosa,
-                'no_mr' => optional($item->booking->pendaftaran)->No_MR,
-                'nama_pasien' => optional($item->booking->pendaftaran->registerPasien)->Nama_Pasien,
-                'ruang_operasi' => optional($item->booking->ruangan)->nama_ruang,
-                'nama_dokter' => optional($item->booking->dokter)->Nama_Dokter,
-                'nama_tindakan' => optional($item->booking)->nama_tindakan
-            ];
-        }));
     }
 }

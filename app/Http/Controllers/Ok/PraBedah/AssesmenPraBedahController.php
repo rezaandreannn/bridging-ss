@@ -6,6 +6,8 @@ use Exception;
 use Illuminate\Http\Request;
 use App\Helpers\BookingHelper;
 use App\Http\Controllers\Controller;
+use App\Models\MasterData\TtdPerawat;
+use App\Services\MasterData\UserService;
 use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\PraBedah\AssesmenPraBedahService;
 
@@ -16,6 +18,7 @@ class AssesmenPraBedahController extends Controller
     protected $prefix;
     protected $bookingOperasiService;
     protected $assesmenOperasiService;
+    protected $userService;
 
     public function __construct()
     {
@@ -23,24 +26,31 @@ class AssesmenPraBedahController extends Controller
         $this->prefix = 'Assesmen Pra Bedah';
         $this->assesmenOperasiService = new AssesmenPraBedahService();
         $this->bookingOperasiService = new BookingOperasiService();
+        $this->userService = new UserService();
     }
 
     public function index()
     {
         $title = $this->prefix . ' ' . 'List';
-        $date = '2024-11-20';
-        // get data from service
-        $sessionBangsal = 'MNA';
-        $bookings = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
-        // dd($bookings);
+        // $date = date('Y-m-d');
+        $date = '2024-12-05';
 
-        $statusAssesmen = BookingHelper::getStatusAssesmen($bookings);
+        // Status Tanda Tangan
+        $userId = auth()->id();
+        $statusTtd = TtdPerawat::where('user_id', $userId)->exists();
+
+        // get data from service
+        $sessionBangsal = $this->userService->get();
+        $verifikasis = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
+
+        $statusAssesmen = BookingHelper::getStatusAssesmen($verifikasis);
         // dd($statusAssesmen);
 
-        return view($this->view . 'assesmen-prabedah.index', compact('bookings'))
+        return view($this->view . 'assesmen-prabedah.index', compact('verifikasis'))
             ->with([
                 'title' => $title,
                 'statusAssesmen' => $statusAssesmen,
+                'statusTtd' => $statusTtd
             ]);
     }
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\OK\BookingOperasiController;
 use App\Http\Controllers\OK\JadwalOperasiController;
 use App\Http\Controllers\OK\PenandaanOperasiController;
 use App\Http\Controllers\Ok\PraBedah\AssesmenPraBedahController;
+use App\Http\Controllers\Ok\PraBedah\BerkasPraBedahController;
 use App\Http\Controllers\Ok\PraBedah\VerifikasiPraBedahController;
 use App\Http\Controllers\OK\TtdTandaOperasiController;
 
@@ -49,6 +50,10 @@ Route::prefix('prabedah')->name('prabedah.')->middleware('auth')->group(function
     Route::get('/verifikasi-prabedah/edit/{kode_register}', [VerifikasiPraBedahController::class, 'edit'])->name('verifikasi-prabedah.edit');
     Route::put('/verifikasi-prabedah/update/{kode_register}', [VerifikasiPraBedahController::class, 'update'])->name('verifikasi-prabedah.update');
     Route::delete('/verifikasi-prabedah/delete/{id}', [VerifikasiPraBedahController::class, 'destroy'])->name('verifikasi-prabedah.destroy');
+
+    // Berkas Pra Bedah
+    Route::get('/berkas-prabedah', [BerkasPraBedahController::class, 'index'])->name('berkas-prabedah.index');
+    Route::get('/berkas-prabedah/cetak/{kode_register}', [BerkasPraBedahController::class, 'cetak'])->name('berkas-prabedah.cetak');
 });
 
 // Pembuka Booking Operasi

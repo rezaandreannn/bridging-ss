@@ -51,6 +51,8 @@ class StoreVerifikasiPraBedahRequest extends FormRequest
             'jumlah' => 'nullable|integer',
             'gol' => 'nullable|string',
             'obat' => 'nullable|boolean',
+            'estimasi_waktu' => 'nullable|string',
+            'rencana_tindakan' => 'nullable|string',
         ];
     }
 }
