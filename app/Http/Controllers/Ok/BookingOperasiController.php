@@ -70,6 +70,20 @@ class BookingOperasiController extends Controller
         ]);
     }
 
+    public function filterBookings(Request $request)
+{
+    $date = $request->input('tanggal', date('Y-m-d'));
+
+    // Get bookings filtered by the selected date
+    $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
+    $bookings = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
+
+    // Return filtered data as JSON
+    return response()->json([
+        'bookings' => $bookings
+    ]);
+}
+
     public function create()
     {
 

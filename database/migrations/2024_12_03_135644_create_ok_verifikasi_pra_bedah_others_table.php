@@ -13,7 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ok_verifikasi_pra_bedah_others', function (Blueprint $table) {
+        
+        Schema::connection('pku')->create('ok_verifikasi_pra_bedah_others', function (Blueprint $table) {
             $table->id();
             $table->string('kode_register');
             $table->time('estimasi_waktu');
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ok_verifikasi_pra_bedah_others');
+        Schema::connection('pku')->dropIfExists('ok_verifikasi_pra_bedah_others');
     }
 };
