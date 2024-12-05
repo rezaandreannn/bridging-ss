@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Helpers\BookingHelper;
 use App\Http\Controllers\Controller;
 use App\Models\MasterData\TtdPerawat;
-use App\Services\MasterData\UserService;
 use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\PraBedah\AssesmenPraBedahService;
 
@@ -26,7 +25,6 @@ class AssesmenPraBedahController extends Controller
         $this->prefix = 'Assesmen Pra Bedah';
         $this->assesmenOperasiService = new AssesmenPraBedahService();
         $this->bookingOperasiService = new BookingOperasiService();
-        $this->userService = new UserService();
     }
 
     public function index()
@@ -40,7 +38,7 @@ class AssesmenPraBedahController extends Controller
         $statusTtd = TtdPerawat::where('user_id', $userId)->exists();
 
         // get data from service
-        $sessionBangsal = $this->userService->get();
+        $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
         $verifikasis = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
 
         $statusAssesmen = BookingHelper::getStatusAssesmen($verifikasis);

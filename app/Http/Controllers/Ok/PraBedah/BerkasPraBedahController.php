@@ -19,7 +19,6 @@ class BerkasPraBedahController extends Controller
     protected $bookingOperasiService;
     protected $assesmenOperasiService;
     protected $verifikasiPraBedahService;
-    protected $userService;
 
     public function __construct()
     {
@@ -28,7 +27,6 @@ class BerkasPraBedahController extends Controller
         $this->assesmenOperasiService = new AssesmenPraBedahService();
         $this->verifikasiPraBedahService = new VerifikasiPraBedahService();
         $this->bookingOperasiService = new BookingOperasiService();
-        $this->userService = new UserService();
     }
 
     public function cetak($kode_register)
@@ -37,7 +35,7 @@ class BerkasPraBedahController extends Controller
         // Ambil data berdasarkan ID
 
         $cetak = $this->assesmenOperasiService->cetak($kode_register);
-        dd($cetak);
+        // dd($cetak);
 
         $date = date('dMY');
         $tanggal = Carbon::now();
@@ -56,7 +54,7 @@ class BerkasPraBedahController extends Controller
         $date = '2024-12-02';
 
         // get data from service
-        $sessionBangsal = $this->userService->get();
+        $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
         $assesmens = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
 
         return view($this->view . 'berkas.index', compact('assesmens'))

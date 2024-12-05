@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Helpers\BookingHelper;
 use App\Http\Controllers\Controller;
 use App\Models\MasterData\TtdPerawat;
-use App\Services\MasterData\UserService;
 use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\PraBedah\VerifikasiPraBedahService;
 use App\Http\Requests\Operasi\Prabedah\StoreVerifikasiPraBedahRequest;
@@ -21,14 +20,12 @@ class VerifikasiPraBedahController extends Controller
     protected $bookingOperasiService;
     protected $assesmenOperasiService;
     protected $verifikasiPraBedahService;
-    protected $userService;
 
     public function __construct()
     {
         $this->view = 'pages.ok.pra-bedah.';
         $this->prefix = 'Verifikasi Pra Bedah';
         $this->verifikasiPraBedahService = new VerifikasiPraBedahService();
-        $this->userService = new UserService();
         $this->bookingOperasiService = new BookingOperasiService();
     }
 
@@ -43,7 +40,7 @@ class VerifikasiPraBedahController extends Controller
         // dd($statusTtd);
 
         // get data from service
-        $sessionBangsal = $this->userService->get();
+        $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
         $verifikasis = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
         // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
         $statusBerkas = BookingHelper::getStatusBerkasVerifikasi($verifikasis);
