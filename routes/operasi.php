@@ -58,6 +58,7 @@ Route::prefix('prabedah')->name('prabedah.')->middleware('auth')->group(function
 
 // Pembuka Booking Operasi
 Route::get('/booking-operasi', [BookingOperasiController::class, 'index'])->name('operasi.booking.index');
+Route::get('/booking-operasi/filter', [BookingOperasiController::class, 'filterBookings']);
 Route::get('/booking-operasi/create', [BookingOperasiController::class, 'create'])->name('operasi.booking.create');
 Route::post('/booking-operasi', [BookingOperasiController::class, 'store'])->name('operasi.booking.store');
 Route::get('booking-operasi/{id}/edit', [BookingOperasiController::class, 'edit'])->name('operasi.booking.edit');
