@@ -107,15 +107,14 @@
         .checkbox {
             margin-right: 3px;
         }
+        .area-1 {
+            height: 150px;
+            width: 300px;
+        }
         td, th {
             border: 1px solid black;
             padding: 10px;
             vertical-align: top;
-        }
-
-        textarea {
-            resize: vertical; /* Memungkinkan perubahan ukuran ke bawah */
-            overflow: auto;  /* Menampilkan scroll jika diperlukan */
         }
 
         th {
@@ -192,11 +191,11 @@
             <td colspan="2">
                 <strong>Asesmen Pra Bedah</strong><br>
                 <label>Data Subjektif (Anamnesis):</label>
-                <textarea rows="10"> {{ $cetak->anamnesa}}</textarea><br>
+                <textarea class="area-1"> {{ $cetak->anamnesa}}</textarea><br>
                 <label>Data Objektif (Pemeriksaan Fisik):</label>
-                <textarea rows="10"> {{ $cetak->pemeriksaan_fisik}}</textarea><br>
+                <textarea class="area-1"> {{ $cetak->pemeriksaan_fisik}}</textarea><br>
                 <label>Diagnosis Pra Bedah:</label>
-                <textarea rows="5"> {{ $cetak->diagnosa}}</textarea>
+                <textarea class="area-1"> {{ $cetak->diagnosa}}</textarea>
             </td>
             <td>
                 <strong>Verifikasi Pra Bedah</strong><br>
@@ -245,8 +244,8 @@
             <td width="30%" class="text5"></td>
         </tr>
         <tr>
-            <td width="30%" class="text9">({{ $cetak->nama_pasien}})</td>
-            <td width="40%" class="text5">({{ $cetak->nama_dokter}})</td>
+            <td width="30%" class="text5">({{ $cetak->nama_dokter}})</td>
+            <td width="40%" class="text9">({{ $cetak->nama_pasien}})</td>
             <td width="30%" class="text5">({{ $cetak->nama_dokter}})</td>
         </tr>
     </table>

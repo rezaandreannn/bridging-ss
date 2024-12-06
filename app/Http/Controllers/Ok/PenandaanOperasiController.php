@@ -99,11 +99,6 @@ class PenandaanOperasiController extends Controller
     public function store(Request $request)
     {
         try {
-            // $data = [
-            //     'kode_register' => $request->kode_register,
-            //     'hasil_gambar' => $request->signatureData,
-            //     'jenis_operasi' => $request->jenis_operasi
-            // ];
             // Validasi input
             $validatedData = $request->validate([
                 'kode_register' => 'required',
@@ -111,9 +106,9 @@ class PenandaanOperasiController extends Controller
                 'jenis_operasi' => 'required'
             ]);
 
-            // Map data agar sesuai dengan service
-            $validatedData['hasil_gambar'] = $validatedData['signatureData'];
-            unset($validatedData['signatureData']);
+            // // Map data agar sesuai dengan service
+            // $validatedData['hasil_gambar'] = $validatedData['signatureData'];
+            // unset($validatedData['signatureData']);
 
             $this->penandaanOperasiService->insert($validatedData);
 
@@ -166,26 +161,21 @@ class PenandaanOperasiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $validatedData = $request->validate([
-        //     'kode_register' => 'required',
-        //     'jenis_operasi' => 'required',
-        // ]);
+        // Validasi input
+        $validatedData = $request->validate([
+            'kode_register' => 'required',
+            'jenis_operasi' => 'required',
+        ]);
 
         try {
-            // Validasi input
-            $validatedData = $request->validate([
-                'kode_register' => 'required',
-                'jenis_operasi' => 'required',
-            ]);
-
-            // Map signatureData ke hasil_gambar jika ada
-            if (!empty($validatedData['signatureData'])) {
-                $validatedData['hasil_gambar'] = $validatedData['signatureData'];
-                unset($validatedData['signatureData']);
-            }
+            $data = [
+                'kode_register' => $request->kode_register,
+                'hasil_gambar' => $request->signatureData,
+                'jenis_operasi' => $request->jenis_operasi,
+            ];
 
             // Panggil service untuk melakukan update
-            $this->penandaanOperasiService->update($id, $validatedData);
+            $this->penandaanOperasiService->update($id, $data);
             return redirect('operasi/penandaan-operasi')->with('success', 'Penandaan Operasi berhasil di ubah.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan

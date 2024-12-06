@@ -50,8 +50,8 @@ class BerkasPraBedahController extends Controller
     public function index()
     {
         $title = $this->prefix . ' ' . 'List';
-        // $date = date('Y-m-d');
-        $date = '2024-12-02';
+        // $date = '2024-12-05';
+        $date = date('Y-m-d');
 
         // get data from service
         $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;

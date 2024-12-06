@@ -32,8 +32,8 @@ class VerifikasiPraBedahController extends Controller
     public function index(Request $request)
     {
         $title = $this->prefix . ' ' . 'List';
-        $date = '2024-12-05';
-        // $date = date('Y-m-d');
+        // $date = '2024-12-05';
+        $date = date('Y-m-d');
         // Status Tanda Tangan
         $userId = auth()->id();
         $statusTtd = TtdPerawat::where('user_id', $userId)->exists();

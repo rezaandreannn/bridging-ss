@@ -30,8 +30,8 @@ class AssesmenPraBedahController extends Controller
     public function index()
     {
         $title = $this->prefix . ' ' . 'List';
-        // $date = date('Y-m-d');
-        $date = '2024-12-05';
+        // $date = '2024-12-05';
+        $date = date('Y-m-d');
 
         // Status Tanda Tangan
         $userId = auth()->id();
