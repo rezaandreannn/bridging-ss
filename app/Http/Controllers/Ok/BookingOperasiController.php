@@ -48,7 +48,9 @@ class BookingOperasiController extends Controller
 
 
         $date = date('Y-m-d');
-        // get data from service
+        if ($request->input('tanggal') != null) {
+            $date = $request->input('tanggal');
+        }
         $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
         $bookings = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
 
@@ -61,28 +63,18 @@ class BookingOperasiController extends Controller
         $statusPenandaan = BookingHelper::getStatusPenandaan($bookings);
         // dd($statusPenandaan);
 
+
         return view($this->view . 'booking-operasi.index', compact('bookings', 'booking'))->with([
             'title' => $title,
             'ruanganOperasi' => RuanganOperasi::all(),
             'dokters' => $this->dokterService->byBedahOperasi(),
             'pasien' => $this->pasienService->byStatusActive(),
-            'statusPenandaan' => $statusPenandaan
+            'statusPenandaan' => $statusPenandaan,
+            'filterbooking' =>  response()->json([
+                'bookings' => $bookings
+            ])
         ]);
     }
-
-    public function filterBookings(Request $request)
-{
-    $date = $request->input('tanggal', date('Y-m-d'));
-
-    // Get bookings filtered by the selected date
-    $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
-    $bookings = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
-
-    // Return filtered data as JSON
-    return response()->json([
-        'bookings' => $bookings
-    ]);
-}
 
     public function create()
     {

@@ -143,12 +143,23 @@
             <div class="section-body">
                 <div class="card">
                     <div class="card-body">
-                            <div class="card-footer text-left">
-                                <label for="">Filter tanggal</label>
-                                <div class="form-group">
-                                <input type="date" class="form-control col-4" name="tanggal" value="{{date('Y-m-d')}}" id="datefilter">
+                        <form id="filterForm" action="" method="GET">       
+                        <div class="card-footer text-left">
+                            <label for="">Filter tanggal</label>
+                            <div class="row">
+                                @php
+                                    $date = date('Y-m-d');
+                                @endphp
+                                <div class="form-group col-4">
+                                    <input type="date" class="form-control" name="tanggal" {{(request('tanggal')==null) ?  $date : $date = request('tanggal') }} value="{{$date}}"  id="datefilter">
+                                </div>
+                                <div class="form-group col-4">
+                                    <button type="submit" class="btn btn-primary mr-2" style="margin-top: 5px;"><i class="fas fa-search"></i> Search</button>
+                                    <button type="button" class="btn btn-danger" style="margin-top: 5px;" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
                                 </div>
                             </div>
+                        </div>
+                        </form>
                         <div class="table-responsive">
                             <table class="table-striped table" id="table-1">
                                 <thead>
@@ -175,9 +186,9 @@
                                         <td>{{$booking->nama_dokter}}</td>
                                         <td>
                                             @if (isset($statusPenandaan[$booking->id]) && $statusPenandaan[$booking->id] == 'create')
-                                            <span class="badge badge-success">Create</span>
+                                            <span class="badge badge-danger">Create</span>
                                             @else
-                                            <span class="badge badge-warning">Update</span>
+                                            <span class="badge badge-success">Update</span>
                                             @endif
                                         </td>
                                         <td>{{$booking->ruang_operasi}}</td>
@@ -352,54 +363,11 @@
 </script>
 
 <script>
-    // Add event listener to the date input
-    document.getElementById('datefilter').addEventListener('change', function() {
-        let selectedDate = this.value;
-       
-
-        // Send an AJAX request to the server to filter data based on the selected date
-        fetch(`/booking-operasi/filter?tanggal=${selectedDate}`, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Update the table with filtered data
-            let tbody = document.getElementById('booking-table-body');
-            tbody.innerHTML = '';  // Clear the existing table body
-            // alert(data.bookings);
-
-            data.bookings.forEach((booking, index) => {
-                let row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${index + 1}</td>
-                    <td>${booking.kode_register}</td>
-                    <td>${booking.tanggal}</td>
-                    <td>${booking.nama_pasien}</td>
-                    <td>${booking.no_mr}</td>
-                    <td>${booking.nama_dokter}</td>
-                    <td>${booking.status_penandaan === 'create' ? '<span class="badge badge-success">Create</span>' : '<span class="badge badge-warning">Update</span>'}</td>
-                    <td>${booking.ruang_operasi}</td>
-                    <td>
-                        <div class="dropdown d-inline">
-                            <a href="#" class="text-primary" id="dropdownMenuLink${booking.id}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-ellipsis-v"></i>
-                            </a>
-                            <div class="dropdown-menu">
-                                <!-- Menu items here -->
-                            </div>
-                        </div>
-                    </td>
-                `;
-                tbody.appendChild(row);
-            });
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    });
+    function resetForm() {
+        document.getElementById("filterForm").value = "";
+        alert('Filter telah direset!');
+        window.location.href = "{{ route('operasi.booking.index') }}";
+    }
 </script>
 
 @endpush
