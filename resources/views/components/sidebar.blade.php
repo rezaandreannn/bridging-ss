@@ -337,6 +337,13 @@
                         </li>
                     </ul>
                     @endcan
+                    @can('perencanaan paska bedah')
+                    <ul class="dropdown-menu">
+                        <li class="{{ Request::is('prabedah/berkas-prabedah*') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('prabedah.berkas-prabedah.index')}}">Perencanaan pasca bedah</a>
+                        </li>
+                    </ul>
+                    @endcan
             </li>
             <li class="nav-item dropdown  {{ Request::is('ttd-ok/*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span> Tanda Tangan</span></a>
