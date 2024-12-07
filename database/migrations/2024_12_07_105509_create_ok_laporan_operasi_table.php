@@ -16,10 +16,12 @@ return new class extends Migration
         Schema::connection('pku')->create('ok_laporan_operasi', function (Blueprint $table) {
             $table->id();
             $table->string('kode_register');
+            $table->date('tanggal');
             $table->string('diagnosa_pre_op');
             $table->string('diagnosa_post_op');
             $table->string('jaringan_dieksekusi');
-            $table->date('selesai_operasi');
+            $table->time('mulai_operasi');
+            $table->time('selesai_operasi');
             $table->enum('permintaan_pa', ['Ya', 'Tidak']);
             $table->text('laporan_operasi');
             $table->string('created_by')->nullable();
