@@ -1,68 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\Ok\PraBedah;
+namespace App\Http\Controllers\Ok\Laporan;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
-use App\Services\MasterData\UserService;
 use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\PraBedah\AssesmenPraBedahService;
-use App\Services\Operasi\PraBedah\VerifikasiPraBedahService;
 
-class BerkasPraBedahController extends Controller
+class LaporanOperasiController extends Controller
 {
     protected $view;
     protected $routeIndex;
     protected $prefix;
     protected $bookingOperasiService;
     protected $assesmenOperasiService;
-    protected $verifikasiPraBedahService;
 
     public function __construct()
     {
-        $this->view = 'pages.ok.pra-bedah.';
-        $this->prefix = 'Verifikasi Pra Bedah';
-        $this->assesmenOperasiService = new AssesmenPraBedahService();
-        $this->verifikasiPraBedahService = new VerifikasiPraBedahService();
+        $this->view = 'pages.ok.laporan-operasi.';
+        $this->prefix = 'Laporan Operasi';
         $this->bookingOperasiService = new BookingOperasiService();
-    }
-
-    public function cetak($kode_register)
-    {
-        $title = $this->prefix . ' ' . 'Operasi';
-        // Ambil data berdasarkan ID
-
-        $cetak = $this->assesmenOperasiService->cetak($kode_register);
-        // dd($cetak);
-
-        $date = date('dMY');
-        $tanggal = Carbon::now();
-        $filename = 'AssesmenPraBedah-' . $date;
-
-        $pdf = PDF::loadview('pages.ok.pra-bedah.berkas.cetak-dokumen', ['cetak' => $cetak, 'title' => $title, 'tanggal' => $tanggal]);
-        // Set paper size to A5
-        $pdf->setPaper('A4');
-        return $pdf->stream($filename . '.pdf');
-    }
-
-    public function download($kode_register)
-    {
-        $title = $this->prefix . ' ' . 'Operasi';
-        // Ambil data berdasarkan ID
-
-        $cetak = $this->assesmenOperasiService->cetak($kode_register);
-        // dd($cetak);
-
-        $date = date('dMY');
-        $tanggal = Carbon::now();
-        $filename = 'AssesmenPraBedah-' . $date;
-
-        $pdf = PDF::loadview('pages.ok.pra-bedah.berkas.download', ['cetak' => $cetak, 'title' => $title, 'tanggal' => $tanggal]);
-        // Set paper size to A5
-        $pdf->setPaper('A5');
-        return $pdf->stream($filename . '.pdf');
+        $this->assesmenOperasiService = new AssesmenPraBedahService();
     }
 
     public function index()
@@ -73,9 +31,10 @@ class BerkasPraBedahController extends Controller
 
         // get data from service
         $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
-        $assesmens = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
+        $laporans = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
 
-        return view($this->view . 'berkas.index', compact('assesmens'))
+
+        return view($this->view . 'index', compact('laporans'))
             ->with([
                 'title' => $title,
             ]);
@@ -86,9 +45,13 @@ class BerkasPraBedahController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($kode_register)
     {
-        //
+        $title = $this->prefix . ' ' . 'Input Data';
+        $biodata = $this->bookingOperasiService->biodata($kode_register);
+        // dd($biodata);
+
+        return view($this->view . 'create', compact('title', 'biodata'));
     }
 
     /**

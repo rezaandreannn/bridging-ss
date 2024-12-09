@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Ok\RuangOperasiController;
 use App\Http\Controllers\OK\BookingOperasiController;
 use App\Http\Controllers\OK\JadwalOperasiController;
+use App\Http\Controllers\Ok\Laporan\LaporanOperasiController;
 use App\Http\Controllers\OK\PenandaanOperasiController;
 use App\Http\Controllers\Ok\PraBedah\AssesmenPraBedahController;
 use App\Http\Controllers\Ok\PraBedah\BerkasPraBedahController;
@@ -54,6 +55,15 @@ Route::prefix('prabedah')->name('prabedah.')->middleware('auth')->group(function
     // Berkas Pra Bedah
     Route::get('/berkas-prabedah', [BerkasPraBedahController::class, 'index'])->name('berkas-prabedah.index');
     Route::get('/berkas-prabedah/cetak/{kode_register}', [BerkasPraBedahController::class, 'cetak'])->name('berkas-prabedah.cetak');
+
+
+    Route::get('/berkas-prabedah/download/{kode_register}', [BerkasPraBedahController::class, 'download'])->name('berkas-prabedah.download');
+});
+
+Route::prefix('laporan')->name('laporan.')->middleware('auth')->group(function () {
+    Route::get('operasi', [LaporanOperasiController::class, 'index'])->name('operasi.index');
+    Route::get('operasi/create/{kode_register}', [LaporanOperasiController::class, 'create'])->name('operasi.create');
+    Route::post('operasi', [LaporanOperasiController::class, 'store'])->name('operasi.store');
 });
 
 // Pembuka Booking Operasi

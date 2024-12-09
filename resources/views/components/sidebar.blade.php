@@ -338,6 +338,16 @@
                     </ul>
                     @endcan
             </li>
+            <li class="nav-item dropdown  {{ Request::is('laporan/*') ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span> Laporan</span></a>
+                    @can('laporan operasi')
+                    <ul class="dropdown-menu">
+                        <li class="{{ Request::is('laporan/*') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('laporan.operasi.index')}}">Laporan Operasi</a>
+                        </li>
+                    </ul>
+                    @endcan
+            </li>
             <li class="nav-item dropdown  {{ Request::is('ttd-ok/*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span> Tanda Tangan</span></a>
                     @can('ttd tanda operasi')

@@ -59,6 +59,9 @@
                                                         <a class="dropdown-item has-icon" href="{{ route('prabedah.berkas-prabedah.cetak', $assesmen->kode_register) }}"> 
                                                             <i class="fas fa-download"></i> Download
                                                         </a>
+                                                        <a class="dropdown-item has-icon" href="{{ route('prabedah.berkas-prabedah.download', $assesmen->kode_register) }}"> 
+                                                            <i class="fas fa-download"></i> BPJS
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </td>
