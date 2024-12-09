@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Ok\Laporan;
+namespace App\Http\Controllers\Ok;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Operasi\RuanganOperasi;
 use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\PraBedah\AssesmenPraBedahService;
 
-class LaporanOperasiController extends Controller
+class PreOperasiController extends Controller
 {
     protected $view;
     protected $routeIndex;
@@ -18,8 +17,8 @@ class LaporanOperasiController extends Controller
 
     public function __construct()
     {
-        $this->view = 'pages.ok.laporan-operasi.';
-        $this->prefix = 'Laporan Operasi';
+        $this->view = 'pages.ok.operasi.pre-operasi.';
+        $this->prefix = 'Pre Operasi';
         $this->bookingOperasiService = new BookingOperasiService();
         $this->assesmenOperasiService = new AssesmenPraBedahService();
     }
@@ -32,9 +31,9 @@ class LaporanOperasiController extends Controller
 
         // get data from service
         $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
-        $laporans = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
+        $preOperasi = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
 
-        return view($this->view . 'index', compact('laporans'))
+        return view($this->view . 'index', compact('preOperasi'))
             ->with([
                 'title' => $title,
             ]);
@@ -54,7 +53,6 @@ class LaporanOperasiController extends Controller
         return view($this->view . 'create', compact('biodata'))
             ->with([
                 'title' => $title,
-                'ruanganOperasi' => RuanganOperasi::all(),
             ]);
     }
 

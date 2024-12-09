@@ -306,6 +306,20 @@
                     </li>
                 </ul>
                 @endcan
+                @can('pre operasi')
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('operasi/pre-operasi*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('operasi.pre-operasi.index')}}">Pre Operasi</a>
+                    </li>
+                </ul>
+                @endcan
+                @can('post operasi')
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('operasi/penandaan-operasi*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('operasi.penandaan.index')}}">Post Operasi</a>
+                    </li>
+                </ul>
+                @endcan
                 {{-- @can('assesmen pra bedah')
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('operasi/assesmen-prabedah*') ? 'active' : '' }}">

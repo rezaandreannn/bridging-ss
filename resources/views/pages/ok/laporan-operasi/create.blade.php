@@ -38,15 +38,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Ruangan</label>
-                                    <div class="input-group">
-                                        <input type="text" name="ruang" id="ruang" value="{{ $biodata->ruangan->nama_ruang }}" class="form-control @error('ruang') is-invalid  
-                                        @enderror">
-                                        @error('ruang')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                    </div>
+                                    <select name="ruang_operasi" class="form-control select2 @error('ruang_operasi') is-invalid @enderror">
+                                        @foreach ($ruanganOperasi as $ruangan)
+                                        <option value="{{ $ruangan->id }}" @if($biodata->ruangan->nama_ruang == $ruangan->id) selected @endif>
+                                            {{ $ruangan->nama_ruang }}
+                                        </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -74,12 +72,20 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Umur</label>
-                                    <input type="text" name="umur" value="{{ \Carbon\Carbon::parse($biodata->pendaftaran->registerPasien->TGL_LAHIR)->age }}" class="form-control @error('umur') is-invalid @enderror">
-                                    @error('umur')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
+                                    <div class="input-group">
+                                        <input type="text" name="umur" id="umur" value="{{ \Carbon\Carbon::parse($biodata->pendaftaran->registerPasien->TGL_LAHIR)->age }}" class="form-control @error('umur') is-invalid  
+                                        @enderror">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <b>Tahun</b>
+                                            </div>
+                                        </div>
+                                        @error('umur')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
-                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-4">
