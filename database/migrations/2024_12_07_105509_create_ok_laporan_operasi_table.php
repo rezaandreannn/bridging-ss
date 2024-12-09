@@ -17,14 +17,15 @@ return new class extends Migration
             $table->id();
             $table->string('kode_register');
             $table->date('tanggal');
-            $table->string('diagnosis_pre_operatif');
-            $table->string('jaringan_eksekusi');
-            $table->time('jam_mulai');
-            $table->time('jam_selesai');
-            $table->string('permintaan_pa');
+            $table->string('diagnosa_pre_op');
+            $table->string('diagnosa_post_op');
+            $table->string('jaringan_dieksekusi');
+            $table->time('mulai_operasi');
+            $table->time('selesai_operasi');
+            $table->enum('permintaan_pa', ['Ya', 'Tidak']);
+            $table->text('laporan_operasi');
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
-            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }
@@ -36,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::connection('pku')->dropIfExists('ok_laporan_operasi');
+        Schema::connection('pku')->dropIfExists('ok_laporan_operasis');
     }
 };
