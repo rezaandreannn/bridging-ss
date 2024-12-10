@@ -31,6 +31,23 @@
         <div class="section-body">
             <div class="card">
                 <div class="card-body">
+                    <form id="filterForm" action="" method="GET">       
+                        <div class="card-footer text-left">
+                            <label for="">Filter tanggal</label>
+                            <div class="row">
+                                @php
+                                    $date = date('Y-m-d');
+                                @endphp
+                                <div class="form-group col-md-4">
+                                    <input type="date" class="form-control" name="tanggal" {{(request('tanggal')==null) ?  $date : $date = request('tanggal') }} value="{{$date}}"  id="datefilter">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <button type="submit" class="btn btn-primary mr-2" style="margin-top: 5px;"><i class="fas fa-search"></i> Search</button>
+                                    <button type="button" class="btn btn-danger" style="margin-top: 5px;" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
                     <div class="table-responsive">
                         <table class="table-striped table table-bordered" id="table-1">
                                     <thead>
@@ -210,5 +227,14 @@
     });
 
 </script>
+
+<script>
+    function resetForm() {
+        document.getElementById("filterForm").value = "";
+        alert('Filter telah direset!');
+        window.location.href = "{{ route('laporan.operasi.index') }}";
+    }
+</script>
+
 
 @endpush

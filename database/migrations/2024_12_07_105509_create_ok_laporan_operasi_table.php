@@ -17,12 +17,13 @@ return new class extends Migration
             $table->id();
             $table->string('kode_register');
             $table->date('tanggal');
-            $table->string('diagnosa_pre_op');
-            $table->string('diagnosa_post_op');
-            $table->string('jaringan_dieksekusi');
+            $table->text('diagnosa_pre_op');
+            $table->text('diagnosa_post_op');
+            $table->text('jaringan_dieksekusi');
             $table->time('mulai_operasi');
             $table->time('selesai_operasi');
-            $table->enum('permintaan_pa', ['Ya', 'Tidak']);
+            $table->string('lama_operasi');
+            $table->enum('permintaan_pa', ['1', '0']);
             $table->text('laporan_operasi');
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();

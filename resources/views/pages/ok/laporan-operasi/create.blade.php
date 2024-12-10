@@ -37,22 +37,8 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Ruangan</label>
-                                    <div class="input-group">
-                                        <input type="text" name="ruang" id="ruang" value="{{ $biodata->ruangan->nama_ruang }}" class="form-control @error('ruang') is-invalid  
-                                        @enderror">
-                                        @error('ruang')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
                                     <label>Nomor Register</label>
-                                    <input type="text" name="no_register" value="{{$biodata->pendaftaran->No_Reg}}" class="form-control @error('no_register') is-invalid @enderror">
+                                    <input type="text" name="kode_register" value="{{$biodata->pendaftaran->No_Reg}}" class="form-control @error('no_register') is-invalid @enderror" readonly>
                                     @error('no_register')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -62,30 +48,23 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Nama</label>
-                                    <input type="text" name="nama"  value="{{$biodata->pendaftaran->registerPasien->Nama_Pasien}}" class="form-control @error('nama') is-invalid @enderror">
-                                    @error('nama')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
+                                    <label>Ruangan</label>
+                                    <div class="input-group">
+                                        <input type="text" name="ruang" id="ruang" value="{{ $biodata->ruangan->nama_ruang }}" class="form-control @error('ruang') is-invalid  
+                                        @enderror" readonly>
+                                        @error('ruang')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
-                                    @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Umur</label>
-                                    <input type="text" name="umur" value="{{ \Carbon\Carbon::parse($biodata->pendaftaran->registerPasien->TGL_LAHIR)->age }}" class="form-control @error('umur') is-invalid @enderror">
-                                    @error('umur')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                            </div>
+          
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Nama Operator</label>
-                                    <input type="text" name="nama_operator" value="{{$biodata->dokter->Nama_Dokter}}" class="form-control @error('nama_operator') is-invalid @enderror">
+                                    <input type="text" name="nama_operator" value="{{$biodata->dokter->Nama_Dokter}}" class="form-control @error('nama_operator') is-invalid @enderror" readonly>
                                     @error('nama_operator')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -96,7 +75,12 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Nama Asisten</label>
-                                    <input type="text" name="nama_asisten" class="form-control @error('nama_asisten') is-invalid @enderror">
+                                    <select name="nama_asisten" class="form-control @error('nama_asisten') is-invalid @enderror select2">
+                                        <option value="" selected disabled>--Pilih Asisten--</option>
+                                        @foreach ($asistenOperasi as $asisten)
+                                            <option value="{{$asisten->kode_dokter}}">{{$asisten->nama_asisten}}</option>
+                                        @endforeach
+                                    </select>
                                     @error('nama_asisten')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -107,7 +91,12 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Nama Perawat</label>
-                                    <input type="text" name="nama_perawat" class="form-control @error('nama_perawat') is-invalid @enderror">
+                                    <select name="nama_perawat" class="form-control @error('nama_perawat') is-invalid @enderror select2">
+                                        <option value="" selected disabled>--Pilih Perawat--</option>
+                                        @foreach ($asistenOperasi as $asisten)
+                                            <option value="{{$asisten->kode_dokter}}">{{$asisten->nama_asisten}}</option>
+                                        @endforeach
+                                    </select>
                                     @error('nama_perawat')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -118,8 +107,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Nama Ahli Anestesi</label>
-                                    <input type="text" name="ahli_anestesi" class="form-control @error('ahli_anestesi') is-invalid @enderror">
-                                    @error('nama_perawat')
+                                    <select name="ahli_anastesi" class="form-control @error('ahli_anastesi') is-invalid @enderror select2">
+                                        <option value="" selected disabled>--Pilih Ahli Anastesi--</option>
+                                        @foreach ($spesialisAnastesi as $anastesi)
+                                            <option value="{{$anastesi->kode_dokter}}">{{$anastesi->nama_asisten}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('ahli_anastesi')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -129,8 +123,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Nama Anestesi</label>
-                                    <input type="text" name="nama_anestesi" class="form-control @error('nama_anestesi') is-invalid @enderror">
-                                    @error('nama_anestesi')
+                                    <select name="penata_anastesi" class="form-control @error('penata_anastesi') is-invalid @enderror select2">
+                                        <option value="" selected disabled>--Pilih Penata Anastesi--</option>
+                                        @foreach ($penataAnastesi as $penataAnastesi)
+                                            <option value="{{$penataAnastesi->kode_dokter}}">{{$penataAnastesi->nama_asisten}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('penata_anastesi')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -145,13 +144,14 @@
                     <div class="card-header card-khusus-header">
                         <h6 class="card-khusus-title">Laporan Operasi</h6>
                     </div>
+         
                     <!-- include form -->
                     <div class="card-body card-khusus-body">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Diagnosis Pre-Operatif</label>
-                                    <textarea name="pre_operatif" class="form-control" id="diagnosa_pra_op" style="height: 50px;" rows="3"></textarea>
+                                    <textarea name="diagnosa_pre_op" class="form-control" id="diagnosa_pre_op" style="height: 50px;" rows="3"></textarea>
                                     @error('pre_operatif')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}
@@ -162,7 +162,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Diagnosis Post-Operatif</label>
-                                    <textarea name="post_operatif" class="form-control" id="diagnosa_post_op" style="height: 50px;" rows="3"></textarea>
+                                    <textarea name="diagnosa_post_op" class="form-control" id="diagnosa_post_op" style="height: 50px;" rows="3"></textarea>
                                     @error('post_operatif')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}
@@ -173,7 +173,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Jaringan yang dieksisi</label>
-                                    <textarea name="jaringan" class="form-control" id="jaringan_dieksekusi" style="height: 50px;" rows="3"></textarea>
+                                    <textarea name="jaringan_dieksekusi" class="form-control" id="jaringan_dieksekusi" style="height: 50px;" rows="3"></textarea>
                                     @error('jaringan')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}
@@ -201,7 +201,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Tgl Operasi</label>
-                                    <input type="date" name="tanggal" class="form-control @error('tanggal') is-invalid @enderror">
+                                    <input type="date" name="tanggal" class="form-control @error('tanggal') is-invalid @enderror" value="{{$bookingByRegister->tanggal}}">
                                     @error('tanggal')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -212,7 +212,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Mulai Operasi</label>
-                                    <input type="time" name="mulai_operasi" class="form-control @error('mulai_operasi') is-invalid @enderror">
+                                    <input type="time" name="mulai_operasi" id="mulai_operasi" class="form-control @error('mulai_operasi') is-invalid @enderror" value="{{ date('h:i', strtotime($bookingByRegister->jam_mulai))}}">
                                     @error('mulai_operasi')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -223,7 +223,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Selesai Operasi</label>
-                                    <input type="time" name="selesai_operasi" class="form-control @error('selesai_operasi') is-invalid @enderror">
+                                    <input type="time" name="selesai_operasi" id="selesai_operasi" class="form-control @error('selesai_operasi') is-invalid @enderror" value="{{ date('h:i', strtotime($bookingByRegister->jam_selesai))}}">
                                     @error('selesai_operasi')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -236,7 +236,7 @@
                                     <label>Lama Operasi</label>
                                     <div class="input-group">
                                         <input type="text" name="lama_operasi" id="lama_operasi" class="form-control @error('lama_operasi') is-invalid  
-                                        @enderror">
+                                        @enderror" readonly>
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <b>Jam</b>
@@ -318,56 +318,45 @@
     }
 </script>
 
-{{-- SCRIPT TIDAK BISA HURUF --}}
+
+
 <script>
-    document.getElementById('hb').addEventListener('keypress', function(event) {
-        const keyCode = event.keyCode;
-        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+    // Menambahkan event listener pada kedua input
+    document.getElementById('mulai_operasi').addEventListener('input', calculateDuration);
+    document.getElementById('selesai_operasi').addEventListener('input', calculateDuration);
+    const lamaOperasi = document.getElementById('lama_operasi');
 
-        if (!allowedChars.test(event.key)) {
-            event.preventDefault();
-        }
-    });
-    document.getElementById('trombosite').addEventListener('keypress', function(event) {
-        const keyCode = event.keyCode;
-        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+    // Fungsi untuk menghitung durasi
+    function calculateDuration() {
+        // Ambil nilai input jam mulai dan jam selesai
+        const startTime = document.getElementById('mulai_operasi').value;
+        const endTime = document.getElementById('selesai_operasi').value;
 
-        if (!allowedChars.test(event.key)) {
-            event.preventDefault();
-        }
-    });
-    document.getElementById('leukosit').addEventListener('keypress', function(event) {
-        const keyCode = event.keyCode;
-        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+        // Pastikan kedua input memiliki nilai
+        if (startTime && endTime) {
+            // Ubah jam menjadi format Date untuk manipulasi waktu
+            const start = new Date(`1970-01-01T${startTime}:00`);
+            const end = new Date(`1970-01-01T${endTime}:00`);
 
-        if (!allowedChars.test(event.key)) {
-            event.preventDefault();
-        }
-    });
-    document.getElementById('hematokrit').addEventListener('keypress', function(event) {
-        const keyCode = event.keyCode;
-        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+            // Jika jam selesai lebih kecil dari jam mulai (misalnya, jam selesai pada hari berikutnya)
+            if (end < start) {
+                end.setDate(end.getDate() + 1); // Tambah satu hari pada jam selesai
+            }
 
-        if (!allowedChars.test(event.key)) {
-            event.preventDefault();
-        }
-    });
-    document.getElementById('bt').addEventListener('keypress', function(event) {
-        const keyCode = event.keyCode;
-        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+            // Hitung durasi dalam milidetik, kemudian konversikan ke jam
+            const duration = (end - start) / 1000 / 60 ; // konversi milidetik ke jam
 
-        if (!allowedChars.test(event.key)) {
-            event.preventDefault();
-        }
-    });
-    document.getElementById('ct').addEventListener('keypress', function(event) {
-        const keyCode = event.keyCode;
-        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+            const hours = Math.floor(duration / 60);
+            const minutes = duration % 60;
 
-        if (!allowedChars.test(event.key)) {
-            event.preventDefault();
+            // Tampilkan hasil durasi
+            lamaOperasi.value = `${hours} Jam ${minutes} Menit`;
+        } else {
+            lamaOperasi.value = "";
         }
-    });
+    }
+
+    // Panggil fungsi perhitungan saat halaman dimuat (untuk memastikan hasil pertama)
+    window.onload = calculateDuration;
 </script>
-
 @endpush

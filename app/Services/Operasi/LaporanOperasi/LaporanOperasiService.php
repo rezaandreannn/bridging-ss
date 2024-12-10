@@ -1,14 +1,16 @@
 <?php
 
-namespace App\Services\Operasi;
+namespace App\Services\Operasi\LaporanOperasi;
 
 use Exception;
+use App\Models\Simrs\Dokter;
 use Illuminate\Support\Facades\DB;
 use App\Models\Operasi\BookingOperasi;
-use App\Models\Operasi\PenandaanOperasi;
+use App\Models\Operasi\LaporanOperasi;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Operasi\PenandaanOperasi;
 
-class BookingOperasiService
+class LaporanOperasiService
 {
     private function baseQuery()
     {
@@ -126,46 +128,6 @@ class BookingOperasiService
         return $this->mapData($filtered);
     }
 
-    public function byDokterOrAdmin($date, $kodeDokter)
-    {
-        $bookings = BookingOperasi::with([
-            'pendaftaran.registerPasien',
-            'pendaftaran.ruang.bangsal',
-            'ruangan',
-            'dokter',
-        ])->get();
-
-
-        $filterDateAndDokter = $bookings->filter(function ($booking) use ($date, $kodeDokter) {
-            $dokter = $booking->kode_dokter;
-
-            if ($kodeDokter != null) {
-                
-                if ((string) $dokter ===  $kodeDokter) {
-                    $tanggal = $booking->tanggal;
-                    return $tanggal && $tanggal == $date;
-          
-                }
-            } 
- 
-        });
-
-        $filteredBukanDokter = $bookings->filter(function ($booking) use ($date) {
-            $tanggal = $booking->tanggal;
- 
-                if ((string) $tanggal ===  $date) {
-                    $tanggal = $booking->tanggal;
-                    return $tanggal && $tanggal == $date;
-                }
-      
- 
-        });
-
-        $filtered = ctype_digit($kodeDokter) ? $filterDateAndDokter : $filteredBukanDokter;
-
-        return $this->mapData($filtered);
-    }
-
     public function byRegister($kodeRegister)
     {
         $databookings = $this->baseQuery()
@@ -179,28 +141,28 @@ class BookingOperasiService
         return BookingOperasi::find($id);
     }
 
-    public function findByRegister($kodeRegister)
-    {
-        return BookingOperasi::where('kode_register',$kodeRegister)->first();
-    }
-
     public function insert(array $data)
     {
+        
         try {
-            $booking = BookingOperasi::create([
+            $laporanoperasi = LaporanOperasi::create([
                 'kode_register' => $data['kode_register'],
                 'tanggal' => $data['tanggal'],
-                'ruangan_id' => $data['ruangan_id'],
-                'nama_tindakan' => $data['nama_tindakan'],
-                'kode_dokter' => $data['kode_dokter'],
-                'jam_mulai' => $data['jam_mulai'] ?? '',
-                'jam_selesai' => $data['jam_selesai'] ?? ''
+                'diagnosa_pre_op' => $data['diagnosa_pre_op'],
+                'diagnosa_post_op' => $data['diagnosa_post_op'],
+                'jaringan_dieksekusi' => $data['jaringan_dieksekusi'],
+                'mulai_operasi' => $data['mulai_operasi'] ?? '',
+                'selesai_operasi' => $data['selesai_operasi'] ?? '',
+                'lama_operasi' => $data['lama_operasi'] ?? '',
+                'permintaan_pa' => $data['permintaan_pa'],
+                'laporan_operasi' => $data['laporan_operasi'],
+                'created_by' => auth()->user()->id,
                 // 'cara_masuk' => $data['cara_masuk'] ?? ''
             ]);
 
-            return $booking;
+            return $laporanoperasi;
         } catch (\Throwable $th) {
-            throw new Exception("Gagal menambahkan booking: " . $th->getMessage());
+            throw new Exception("Gagal menambahkan laporan operasi: " . $th->getMessage());
         }
     }
 
@@ -271,6 +233,35 @@ class BookingOperasiService
                 'jam_mulai' => $item->jam_mulai,
                 'jam_selesai' => $item->jam_selesai,
                 'cara_masuk' => $item->cara_masuk
+            ];
+        }));
+    }
+    
+
+    // get data asisten anastesi
+
+    public function getAsistenOperasi(){
+        $data = Dokter::where('Jenis_Profesi','ASISTEN OPERASI')->get();
+        return $this->mapDataAsisten($data);
+    }
+    
+    public function getSpesialisAnastesi(){
+        $data = Dokter::where('Spesialis','SPESIALIS ANASTESI')->get();
+        return $this->mapDataAsisten($data);
+    }
+
+    public function getPenataAsisten(){
+        $data = Dokter::where('Jenis_Profesi','PENATA ANESTESI')->get();
+        return $this->mapDataAsisten($data);
+    }
+
+    private function mapDataAsisten($dataAsistens)
+    {
+        return collect($dataAsistens->map(function ($item) {
+            return (object) [
+                'kode_dokter' => $item->Kode_Dokter,
+                'jenis_profesi' => $item->Jenis_Profesi,
+                'nama_asisten' => $item->Nama_Dokter
             ];
         }));
     }

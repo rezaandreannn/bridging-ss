@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Models\Operasi;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class LaporanOperasi extends Model
+{
+    use HasFactory;
+
+    protected $connection = 'pku';
+    protected $table = 'ok_laporan_operasi';
+
+    // Mass Assignment
+
+    protected $fillable = [
+        'kode_register',
+        'tanggal',
+        'diagnosa_pre_op',
+        'diagnosa_post_op',
+        'jaringan_dieksekusi',
+        'mulai_operasi',
+        'selesai_operasi',
+        'lama_operasi',
+        'permintaan_pa',
+        'laporan_operasi',
+        'created_by',
+        'updated_by'
+    ];
+}
