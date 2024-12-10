@@ -6,9 +6,10 @@ use Exception;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Helpers\BookingHelper;
-use App\Helpers\BiodataHelper;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Operasi\PenandaanPasien\StorePenandaanPasienRequest;
+use App\Http\Requests\Operasi\PenandaanPasien\UpdatePenandaanPasienRequest;
 use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\PenandaanOperasiService;
 
@@ -96,21 +97,17 @@ class PenandaanOperasiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePenandaanPasienRequest $request)
     {
         try {
-            // Validasi input
-            $validatedData = $request->validate([
-                'kode_register' => 'required',
-                'signatureData' => 'required',
-                'jenis_operasi' => 'required'
-            ]);
 
-            // // Map data agar sesuai dengan service
-            // $validatedData['hasil_gambar'] = $validatedData['signatureData'];
-            // unset($validatedData['signatureData']);
+            $data = [
+                'kode_register' => $request->kode_register,
+                'hasil_gambar' => $request->signatureData,
+                'jenis_operasi' => $request->jenis_operasi,
+            ];
 
-            $this->penandaanOperasiService->insert($validatedData);
+            $this->penandaanOperasiService->insert($data);
 
             // return redirect()->back()->with('success', 'Penandaan Operasi berhasil ditambahkan.');
             return redirect('operasi/penandaan-operasi')->with('success', 'Penandaan Operasi berhasil di ditambahkan.');
@@ -159,14 +156,8 @@ class PenandaanOperasiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePenandaanPasienRequest $request, $id)
     {
-        // Validasi input
-        $validatedData = $request->validate([
-            'kode_register' => 'required',
-            'jenis_operasi' => 'required',
-        ]);
-
         try {
             $data = [
                 'kode_register' => $request->kode_register,

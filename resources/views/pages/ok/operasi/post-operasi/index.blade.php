@@ -23,7 +23,7 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('operasi.pre-operasi.index') }}">Operasi Kamar</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('operasi.post-operasi.index') }}">Operasi Kamar</a></div>
                 <div class="breadcrumb-item">Pre Operasi</div>
             </div>
         </div>
@@ -45,7 +45,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($preOperasi as $booking)
+                                        @foreach ($postOperasi as $booking)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$booking->kode_register}}</td>
@@ -60,7 +60,7 @@
                                                     </a>
                                                     <div class="dropdown-menu">
                                                         {{-- Input --}}
-                                                        <a class="dropdown-item has-icon" href="{{ route('operasi.pre-operasi.create', $booking->kode_register )}}"> 
+                                                        <a class="dropdown-item has-icon" href="{{ route('operasi.post-operasi.create', $booking->kode_register )}}"> 
                                                             <i class="fas fa-pencil-alt"></i> Entry
                                                         </a>
                                                     </div>

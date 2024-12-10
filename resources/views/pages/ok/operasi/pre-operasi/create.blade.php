@@ -28,6 +28,7 @@
             @include('components.biodata-pasien-ok-bynoreg')
             <form action="{{ route('laporan.operasi.store') }}" method="POST">
             @csrf
+                {{-- Data UMUM --}}
                 <div class="card mb-3">
                     <div class="card-header card-khusus-header">
                         <h6 class="card-khusus-title">Data Umum</h6>
@@ -118,6 +119,7 @@
                     </div>
                     <!-- include form -->
                 </div>
+                {{-- Pemeriksaan Fisik --}}
                 <div class="card mb-3">
                     <div class="card-header card-khusus-header">
                         <h6 class="card-khusus-title">Pemeriksaan Fisik</h6>
@@ -243,6 +245,7 @@
                     </div>
                     <!-- include form -->
                 </div>
+                {{-- Persiapan Pre Operasi --}}
                 <div class="card mb-3">
                     <div class="card-header card-khusus-header">
                         <h6 class="card-khusus-title">Persiapan Pre Operasi</h6>
@@ -553,7 +556,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">No</th>
-                                        <th scope="col">Penyakit Kornis</th>
+                                        <th scope="col">Penyakit Kronis</th>
                                         <th scope="col">Ya</th>
                                         <th scope="col">Tidak</th>
                                     </tr>
@@ -643,6 +646,146 @@
                             </table>
                         </div>
                     </div>
+                </div>
+                {{-- Data Lainnya --}}
+                <div class="card mb-3">
+                    <div class="card-header card-khusus-header">
+                        <h6 class="card-khusus-title">Data Lainnya</h6>
+                    </div>
+                    <!-- include form -->
+                    <div class="card-body card-khusus-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Premedikasi</label>
+                                    <div class="col-md-12">
+                                        <div class="form-group" style="display: flex; flex-direction: row;">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="premedikasi" id="premedikasi">
+                                            </div>
+                                            <div class="input-group" style="margin-right: 10px;">
+                                                <label for="premedikasi_jam" class="ml-2 mr-2 mt-2">
+                                                    Jam
+                                                </label>
+                                                <input type="text" class="form-control" name="premedikasi_jam" id="premedikasi_jam">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>IVFD</label>
+                                    <div class="input-group">
+                                        <input type="text" name="ivfd" value="{{ old('ivfd') }}" id="ivfd" placeholder="masukkan hanya angka" class="form-control @error('ivfd') is-invalid  
+                                        @enderror">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <b>tts/menit</b>
+                                            </div>
+                                        </div>
+                                        @error('ivfd')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>DC No:</label>
+                                    <input type="text" name="dc_no" class="form-control @error('dc_no') is-invalid @enderror">
+                                    @error('dc_no')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Catatan Medis :</label>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="assesmen_pra_bedah" id="flexCheckDefault" value="1">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Asesmen Pra Bedah
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="informed_consent_bedah" id="flexCheckDefault" value="1">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Informed Consent Bedah
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="informed_consent_anastesi" id="flexCheckDefault" value="1">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Informed Consent Anestesi / Sedasi
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="edukasi_anastesi" id="flexCheckDefault" value="1" >
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Edukasi Anestesi
+                                                </label>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Obat - obat</label>
+                                    <input type="text" name="obat" class="form-control @error('obat') is-invalid @enderror">
+                                    @error('obat')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div> 
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Foto Rontgen</label>
+                                    <input type="text" name="foto_rontgen" class="form-control @error('foto_rontgen') is-invalid @enderror">
+                                    @error('foto_rontgen')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div> 
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Darah</label>
+                                    <div class="col-md-12">
+                                        <div class="form-group" style="display: flex; flex-direction: row;">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="darah" id="darah">
+                                                <div class="input-group-append">
+                                                    <div class="input-group-text">
+                                                        <b>cc</b>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="input-group" style="margin-right: 10px;">
+                                                <label for="gol" class="ml-2 mr-2 mt-2">
+                                                    Gol :
+                                                </label>
+                                                <input type="text" class="form-control" name="gol" id="gol">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- include form -->
                 </div>
                 
                 <div class="text-left">

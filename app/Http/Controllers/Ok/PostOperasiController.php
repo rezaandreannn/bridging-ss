@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\PraBedah\AssesmenPraBedahService;
 
-class PreOperasiController extends Controller
+class PostOperasiController extends Controller
 {
     protected $view;
     protected $routeIndex;
@@ -16,8 +16,8 @@ class PreOperasiController extends Controller
 
     public function __construct()
     {
-        $this->view = 'pages.ok.operasi.pre-operasi.';
-        $this->prefix = 'Pre Operasi';
+        $this->view = 'pages.ok.operasi.post-operasi.';
+        $this->prefix = 'Post Operasi';
         $this->bookingOperasiService = new BookingOperasiService();
     }
 
@@ -29,19 +29,14 @@ class PreOperasiController extends Controller
 
         // get data from service
         $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
-        $preOperasi = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
+        $postOperasi = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
 
-        return view($this->view . 'index', compact('preOperasi'))
+        return view($this->view . 'index', compact('postOperasi'))
             ->with([
                 'title' => $title,
             ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create($kode_register)
     {
         $title = $this->prefix . ' ' . 'Input Data';

@@ -315,8 +315,8 @@
                 @endcan
                 @can('post operasi')
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('operasi/penandaan-operasi*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('operasi.penandaan.index')}}">Post Operasi</a>
+                    <li class="{{ Request::is('operasi/post-operasi*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('operasi.post-operasi.index')}}">Post Operasi</a>
                     </li>
                 </ul>
                 @endcan

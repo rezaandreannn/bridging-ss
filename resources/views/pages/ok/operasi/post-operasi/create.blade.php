@@ -1,0 +1,681 @@
+@extends('layouts.app')
+
+@section('title', $title ?? '')
+
+@push('style')
+<!-- CSS Libraries -->
+<link rel="stylesheet" href="{{ asset('library/datatables/datatables.min.css') }}">
+<link rel="stylesheet" href="{{ asset('library/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ asset('library/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
+<link rel="stylesheet" href="{{ asset('library/selectric/public/selectric.css') }}">
+
+<!-- <link rel="stylesheet" href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}"> -->
+@endpush
+
+@section('main')
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <h1>{{ $title ?? ''}}</h1>
+            <div class="section-header-breadcrumb">
+                <div class="breadcrumb-item active"><a href="{{ route('operasi.pre-operasi.index') }}">Operasi Kamar</a></div>
+                <div class="breadcrumb-item">Laporan Operasi</div>
+            </div>
+        </div>
+        <div class="section-body">
+            <!-- components biodata pasien by no reg -->
+            @include('components.biodata-pasien-ok-bynoreg')
+            <form action="{{ route('laporan.operasi.store') }}" method="POST">
+            @csrf
+                {{-- Data UMUM --}}
+                <div class="card mb-3">
+                    <div class="card-header card-khusus-header">
+                        <h6 class="card-khusus-title">Data Umum</h6>
+                    </div>
+                    <!-- include form -->
+                    <div class="card-body card-khusus-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Diagnosis Pra Bedah</label>
+                                    <textarea name="diagnosa_pra_bedah" class="form-control" id="diagnosa_pra_bedah" style="height: 50px;" rows="3"></textarea>
+                                    @error('diagnosa_pra_bedah')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Diagnosis Pasca Bedah</label>
+                                    <textarea name="diagnosa_pasca_bedah" class="form-control" id="diagnosa_pasca_bedah" style="height: 50px;" rows="3"></textarea>
+                                    @error('diagnosa_pasca_bedah')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Dokter Operator</label>
+                                    <input type="text" name="nama_operator" value="{{$biodata->dokter->Nama_Dokter}}" class="form-control @error('nama_operator') is-invalid @enderror">
+                                    @error('nama_operator')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Asisten Bedah</label>
+                                    <input type="text" name="asisten_bedah" class="form-control @error('asisten_bedah') is-invalid @enderror">
+                                    @error('asisten_bedah')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div> 
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Jenis Operasi</label>
+                                    <input type="text" name="jenis_operasi"  class="form-control @error('jenis_operasi') is-invalid @enderror">
+                                    @error('jenis_operasi')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Jam Operasi</label>
+                                    <input type="text" name="jam_operasi" class="form-control @error('jam_operasi') is-invalid @enderror">
+                                    @error('jam_operasi')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div> 
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Jenis Anestesi</label>
+                                    <input type="text" name="jenis_anestesi" class="form-control @error('jenis_anestesi') is-invalid @enderror">
+                                    @error('jenis_anestesi')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div> 
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Dokter Anestesi</label>
+                                    <input type="text" name="dokter_anestesi" class="form-control @error('dokter_anestesi') is-invalid @enderror">
+                                    @error('dokter_anestesi')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div> 
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Asisten Anestesi</label>
+                                    <input type="text" name="asisten_anestesi" class="form-control @error('asisten_anestesi') is-invalid @enderror">
+                                    @error('asisten_anestesi')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                    <!-- include form -->
+                </div>
+                {{-- Pemeriksaan Fisik --}}
+                <div class="card mb-3">
+                    <div class="card-header card-khusus-header">
+                        <h6 class="card-khusus-title">Pemeriksaan Fisik & Alat</h6>
+                    </div>
+                    <!-- include form -->
+                    <div class="card-body card-khusus-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Alat - Alat :</label>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="ngt" id="flexCheckDefault" value="1">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    NGT
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="drain" id="flexCheckDefault" value="1">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Drain
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="tampon_hidung" id="flexCheckDefault" value="1">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Tampon Hidung
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="tampon_gigi" id="flexCheckDefault" value="1">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Tampon Gigi
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="tampon_abdomen" id="flexCheckDefault" value="1">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Tampon Abdomen
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="lainnya" id="flexCheckDefault" value="1">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Lain - lain
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="tampon_vagina" id="flexCheckDefault" value="1">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Tampon Vagina
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="tranfusi" id="flexCheckDefault" value="1" >
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Tranfusi
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="ivdf" id="flexCheckDefault" value="1" >
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    IVDF
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="kompres_luka" id="flexCheckDefault" value="1" >
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Kompres Luka
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="dc" id="flexCheckDefault" value="1" >
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    DC
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Keadaan Umum</label>
+                                    <select name="KEADAAN_UMUM" id="" class="form-control select2 @error('keadaan_umum') is-invalid  
+                                        @enderror">
+                                        <option value="">-- pilih --</option>
+                                        <option value="1" selected>Baik</option>
+                                        <option value="2">Sedang</option>
+                                        <option value="3">Buruk</option>
+                                    </select>
+                                </div>
+                                @error('keadaan_umum')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Kesadaran</label>
+                                    <select name="KESADARAN" id="kesadaran" class="form-control select2 @error('kesadaran') is-invalid @enderror">
+                                        <option value="">-- pilih --</option>
+                                        <option value="1" selected>Baik</option>
+                                        <option value="2">Sedang</option>
+                                        <option value="3">Buruk</option>
+                                    </select>
+                                    @error('kesadaran')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>R</label>
+                                    <div class="input-group">
+                                        <input type="text" name="respirasi" value="{{ old('respirasi') }}" id="respirasi" placeholder="masukkan hanya angka" class="form-control @error('respirasi') is-invalid  
+                                        @enderror">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <b>x/menit</b>
+                                            </div>
+                                        </div>
+                                        @error('respirasi')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Nadi</label>
+                                    <div class="input-group">
+                                        <input type="text" name="nadi" value="{{ old('nadi') }}" id="nadi" placeholder="masukkan hanya angka" class="form-control @error('nadi') is-invalid  
+                                        @enderror">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <b>x/menit</b>
+                                            </div>
+                                        </div>
+                                        @error('nadi')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Tekanan Darah</label><code> (contoh : 110/90)</code>
+                                    <div class="input-group">
+                                        <input type="text" name="td" id="td" value="{{ old('td') }}" placeholder="masukkan hanya angka" class="form-control @error('td') is-invalid  
+                                        @enderror">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <b>mmHg</b>
+                                            </div>
+                                        </div>
+                                        @error('td')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Suhu</label><code> (gunakan tanda . contoh : 36.5)</code>
+                                    <div class="input-group">
+                                        <input type="text" name="suhu" id="suhu" value="{{ old('suhu') }}" placeholder="masukkan hanya angka" class="form-control @error('suhu') is-invalid  
+                                        @enderror">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <b>C</b>
+                                            </div>
+                                        </div>
+                                        @error('suhu')
+                                            <span class="text-danger" style="font-size: 12px;">
+                                                {{ $message }}
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Instruksi dokter bedah via lisan</label>
+                                    <textarea name="laporan_operasi" class="form-control" id="laporan_operasi" style="height: 100px;" rows="3"></textarea>
+                                    @error('laporan_operasi')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- include form -->
+                </div>
+                {{-- Persiapan Pre Operasi --}}
+                <div class="card mb-3">
+                    <div class="card-header card-khusus-header">
+                        <h6 class="card-khusus-title">Serah Terima Post Operasi</h6>
+                    </div>
+                    <div class="card-body card-khusus-body">
+                        <div class="table-responsive">
+                            <table class="table-striped table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">No</th>
+                                        <th scope="col">Tindakan</th>
+                                        <th scope="col">Isi</th>
+                                        <th scope="col">Ya</th>
+                                        <th scope="col">Tidak</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Status Pasien</td>
+                                        <td></td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="status_pasien" id="status_pasien1" value="ya">
+                                                <label class="form-check-label" for="status_pasien1">Ya</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="status_pasien" id="status_pasien2" value="tidak" checked>
+                                                <label class="form-check-label" for="status_pasien2">Tidak</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Catatan Anestesi / Sedasi</td>
+                                        <td></td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="catatan_anestesi" id="catatan_anestesi1" value="ya">
+                                                <label class="form-check-label" for="catatan_anestesi1">Ya</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="catatan_anestesi" id="catatan_anestesi2" value="tidak" checked>
+                                                <label class="form-check-label" for="catatan_anestesi2">Tidak</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Laporan Pembedahan</td>
+                                        <td></td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="laporan_pembedahan" id="laporan_pembedahan1" value="ya">
+                                                <label class="form-check-label" for="laporan_pembedahan1">Ya</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="laporan_pembedahan" id="laporan_pembedahan2" value="tidak" checked>
+                                                <label class="form-check-label" for="laporan_pembedahan2">Tidak</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>Perencanaan Medis Pasca Bedah</td>
+                                        <td></td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="perencanaan_medis" id="perencanaan_medis1" value="ya">
+                                                <label class="form-check-label" for="perencanaan_medis1">Ya</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="perencanaan_medis" id="perencanaan_medis2" value="tidak" checked>
+                                                <label class="form-check-label" for="perencanaan_medis2">Tidak</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>Cheklist Keselamatan pasien dikamar bedah</td>
+                                        <td></td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="keselamatan_pasien" id="keselamatan_pasien1" value="ya">
+                                                <label class="form-check-label" for="keselamatan_pasien1">Ya</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="keselamatan_pasien" id="keselamatan_pasien2" value="tidak" checked>
+                                                <label class="form-check-label" for="keselamatan_pasien2">Tidak</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td>Cheklist Monitoring alat/bahan/jarum kamar bedah</td>
+                                        <td></td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="monitoring" id="monitoring1" value="ya">
+                                                <label class="form-check-label" for="monitoring1">Ya</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="monitoring" id="monitoring2" value="tidak" checked>
+                                                <label class="form-check-label" for="monitoring2">Tidak</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>7</td>
+                                        <td>Askep Perioperatif</td>
+                                        <td></td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="askep" id="askep1" value="ya">
+                                                <label class="form-check-label" for="askep1">Ya</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="askep" id="askep2" value="tidak" checked>
+                                                <label class="form-check-label" for="askep2">Tidak</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>8</td>
+                                        <td>Lembar pemantauan pembedahan dengan anestesi lokal</td>
+                                        <td></td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="lembar_pemantauan" id="lembar_pemantauan1" value="ya">
+                                                <label class="form-check-label" for="lembar_pemantauan1">Ya</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="lembar_pemantauan" id="lembar_pemantauan2" value="tidak" checked>
+                                                <label class="form-check-label" for="lembar_pemantauan2">Tidak</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>9</td>
+                                        <td>Formulir Pemeriksaan</td>
+                                        <td></td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="formulir_pemeriksaan" id="formulir_pemeriksaan1" value="ya">
+                                                <label class="form-check-label" for="formulir_pemeriksaan1">Ya</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="formulir_pemeriksaan" id="formulir_pemeriksaan2" value="tidak" checked>
+                                                <label class="form-check-label" for="formulir_pemeriksaan2">Tidak</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>10</td>
+                                        <td>Bahan atau sampel pemeriksaan</td>
+                                        <td></td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="sampel_pemeriksaan" id="sampel_pemeriksaan1" value="ya">
+                                                <label class="form-check-label" for="sampel_pemeriksaan1">Ya</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="sampel_pemeriksaan" id="sampel_pemeriksaan2" value="tidak" checked>
+                                                <label class="form-check-label" for="sampel_pemeriksaan2">Tidak</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>11</td>
+                                        <td>Foto Rontgen</td>
+                                        <td></td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="foto_rontgen" id="foto_rontgen1" value="ya">
+                                                <label class="form-check-label" for="foto_rontgen1">Ya</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="foto_rontgen" id="foto_rontgen2" value="tidak" checked>
+                                                <label class="form-check-label" for="foto_rontgen2">Tidak</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>12</td>
+                                        <td>Resep</td>
+                                        <td></td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="resep" id="resep1" value="ya">
+                                                <label class="form-check-label" for="resep1">Ya</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="resep" id="resep2" value="tidak" checked>
+                                                <label class="form-check-label" for="resep2">Tidak</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>13</td>
+                                        <td>Lain-lain</td>
+                                        <td>
+                                            <div class="input-group">
+                                                <input type="text" name="no_dc" class="form-control" placeholder="Lainnya...">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="lain_lain" id="lain_lain1" value="ya">
+                                                <label class="form-check-label" for="lain_lain1">Ya</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="lain_lain" id="lain_lain2" value="tidak" checked>
+                                                <label class="form-check-label" for="lain_lain2">Tidak</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-left">
+                        <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </section>
+</div>
+@endsection
+
+@push('scripts')
+<!-- JS Libraies -->
+<script src="{{ asset('library/datatables/datatables.min.js') }}"></script>
+<script src="{{ asset('library/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('library/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
+<script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('library/selectric/public/jquery.selectric.min.js') }}"></script>
+<script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
+
+<!-- Page Specific JS File -->
+<script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+
+<script>
+    function resetForm() {
+        document.getElementById("filterForm").value = "";
+        alert('Filter telah direset!');
+        window.location.href = "{{ route('rm.bymr') }}";
+    }
+</script>
+
+{{-- SCRIPT VITAL SIGN --}}
+<script>
+    document.getElementById('td').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('suhu').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('nadi').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('bb').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('tb').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+    document.getElementById('respirasi').addEventListener('keypress', function(event) {
+        const keyCode = event.keyCode;
+        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
+
+        if (!allowedChars.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+</script>
+
+@endpush

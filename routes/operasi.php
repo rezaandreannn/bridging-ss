@@ -6,6 +6,7 @@ use App\Http\Controllers\OK\BookingOperasiController;
 use App\Http\Controllers\OK\JadwalOperasiController;
 use App\Http\Controllers\Ok\Laporan\LaporanOperasiController;
 use App\Http\Controllers\OK\PenandaanOperasiController;
+use App\Http\Controllers\Ok\PostOperasiController;
 use App\Http\Controllers\Ok\PraBedah\AssesmenPraBedahController;
 use App\Http\Controllers\Ok\PraBedah\BerkasPraBedahController;
 use App\Http\Controllers\Ok\PraBedah\VerifikasiPraBedahController;
@@ -34,6 +35,10 @@ Route::prefix('operasi')->name('operasi.')->middleware('auth')->group(function (
     // Pre Operasi
     Route::get('/pre-operasi', [PreOperasiController::class, 'index'])->name('pre-operasi.index');
     Route::get('/pre-operasi/create/{kode_register}', [PreOperasiController::class, 'create'])->name('pre-operasi.create');
+
+    // Post Operasi
+    Route::get('/post-operasi', [PostOperasiController::class, 'index'])->name('post-operasi.index');
+    Route::get('/post-operasi/create/{kode_register}', [PostOperasiController::class, 'create'])->name('post-operasi.create');
 });
 
 Route::prefix('ruangan')->name('ruangan.')->middleware('auth')->group(function () {});
