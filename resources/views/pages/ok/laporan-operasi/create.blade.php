@@ -46,21 +46,8 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Ruangan</label>
-                                    <div class="input-group">
-                                        <input type="text" name="ruang" id="ruang" value="{{ $biodata->ruangan->nama_ruang }}" class="form-control @error('ruang') is-invalid  
-                                        @enderror" readonly>
-                                        @error('ruang')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
           
+                            {{-- masih salah bukan dari booking --}}
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Nama Operator</label>

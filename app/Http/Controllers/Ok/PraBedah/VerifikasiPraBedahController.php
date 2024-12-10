@@ -11,6 +11,8 @@ use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\PraBedah\VerifikasiPraBedahService;
 use App\Http\Requests\Operasi\Prabedah\StoreVerifikasiPraBedahRequest;
 use App\Http\Requests\Operasi\Prabedah\UpdateVerifikasiPraBedahRequest;
+use App\Models\Operasi\PenandaanOperasi;
+use App\Models\Operasi\PraBedah\AssesmenPraBedah;
 
 class VerifikasiPraBedahController extends Controller
 {
@@ -65,7 +67,14 @@ class VerifikasiPraBedahController extends Controller
         $title = $this->prefix . ' ' . 'Input Data';
         $biodata = $this->bookingOperasiService->biodata($kode_register);
 
-        return view($this->view . 'verifikasi-prabedah.create', compact('title', 'biodata'));
+        // check penandaan lokasi and assesmen pra bedah
+        $penandaanLokasi = PenandaanOperasi::where('kode_register', $kode_register)->first();
+        $assesmenPraBedah = AssesmenPraBedah::where('kode_register', $kode_register)->first();
+
+        $checklistPenandaan = $penandaanLokasi ? true : false;
+        $checklistAssesmenPraBedah = $assesmenPraBedah ? true : false;
+
+        return view($this->view . 'verifikasi-prabedah.create', compact('title', 'biodata', 'checklistPenandaan', 'checklistAssesmenPraBedah'));
     }
 
     /**
@@ -110,7 +119,14 @@ class VerifikasiPraBedahController extends Controller
         // dd($verifikasi);
         $biodata = $this->bookingOperasiService->biodata($kode_register);
 
-        return view($this->view . 'verifikasi-prabedah.edit', compact('title', 'biodata', 'verifikasi'));
+        // check penandaan lokasi and assesmen pra bedah
+        $penandaanLokasi = PenandaanOperasi::where('kode_register', $kode_register)->first();
+        $assesmenPraBedah = AssesmenPraBedah::where('kode_register', $kode_register)->first();
+
+        $checklistPenandaan = $penandaanLokasi ? true : false;
+        $checklistAssesmenPraBedah = $assesmenPraBedah ? true : false;
+
+        return view($this->view . 'verifikasi-prabedah.edit', compact('title', 'biodata', 'verifikasi', 'checklistPenandaan', 'checklistAssesmenPraBedah'));
     }
 
     /**

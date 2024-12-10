@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Ok\Laporan;
 use Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
 use App\Http\Requests\Operasi\LaporanOperasi\StoreLaporanOperasi;
+
+use App\Models\Operasi\RuanganOperasi;
 use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\PraBedah\AssesmenPraBedahService;
 use App\Services\Operasi\LaporanOperasi\LaporanOperasiService;
@@ -43,7 +46,6 @@ class LaporanOperasiController extends Controller
         $laporans = $this->bookingOperasiService->byDokterOrAdmin($date, $sessionKodeDokter ?? '');
         // dd($laporans);
 
-
         return view($this->view . 'index', compact('laporans'))
             ->with([
                 'title' => $title,
@@ -59,6 +61,7 @@ class LaporanOperasiController extends Controller
     {
         $biodata = $this->bookingOperasiService->biodata($kode_register);
 
+
         // dd($this->laporanOperasiService->getPenataAsisten());
 
         return view($this->view . 'create', compact('biodata'))->with([
@@ -68,6 +71,8 @@ class LaporanOperasiController extends Controller
             'spesialisAnastesi' => $this->laporanOperasiService->getSpesialisAnastesi(),
             'penataAnastesi' => $this->laporanOperasiService->getPenataAsisten(),
         ]);
+
+
     }
 
     /**

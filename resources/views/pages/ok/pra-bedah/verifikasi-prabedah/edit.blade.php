@@ -49,13 +49,13 @@
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="assesmen_pra_bedah" id="flexCheckDefault" value="1" {{ $verifikasi['berkas'] && $verifikasi['berkas']->assesmen_pra_bedah ? 'checked' : '' }}>
+                                                <input class="form-check-input" type="checkbox" name="assesmen_pra_bedah" id="flexCheckDefault" value="1" {{ $verifikasi['berkas'] && $verifikasi['berkas']->assesmen_pra_bedah || ($checklistAssesmenPraBedah == 'true') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Asesmen Pra Bedah
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="penandaan_lokasi" id="flexCheckDefault" value="1" {{ $verifikasi['berkas'] && $verifikasi['berkas']->penandaan_lokasi ? 'checked' : '' }}>
+                                                <input class="form-check-input" type="checkbox" name="penandaan_lokasi" id="flexCheckDefault" value="1" {{ ($verifikasi['berkas'] && $verifikasi['berkas']->penandaan_lokasi) || ($checklistPenandaan == 'true') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Penandaan Lokasi Operasi
                                                 </label>
@@ -126,7 +126,7 @@
                                                         </div>
                                                         <div class="col-md-4">
                                                             <h5 style="font-size: 12px; color:black;">CT :</h5>
-                                                            <input type="text" class="form-control"id="ct" name="lab_ct" value="{{ $verifikasi['lab']->lab_ct ?? '' }}">
+                                                            <input type="text" class="form-control" id="ct" name="lab_ct" value="{{ $verifikasi['lab']->lab_ct ?? '' }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -179,9 +179,7 @@
                                 <div class="form-group">
                                     <label>Estimasi waktu yang dibutuhkan</label>
                                     <div class="input-group">
-                                        <input type="time" name="estimasi_waktu" id="estimasi_waktu" 
-                                        value="{{ isset($verifikasi['other']->estimasi_waktu) ? date('H:i', strtotime($verifikasi['other']->estimasi_waktu)) : '' }}"  
-                                        class="form-control @error('estimasi_waktu') is-invalid @enderror">
+                                        <input type="time" name="estimasi_waktu" id="estimasi_waktu" value="{{ isset($verifikasi['other']->estimasi_waktu) ? date('H:i', strtotime($verifikasi['other']->estimasi_waktu)) : '' }}" class="form-control @error('estimasi_waktu') is-invalid @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <b>Jam</b>
@@ -211,12 +209,12 @@
                     <!-- include form -->
                 </div>
                 <div class="text-left">
-                        <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button>
+                    <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button>
                 </div>
             </form>
-            </div>
         </div>
-    </section>
+</div>
+</section>
 </div>
 @endsection
 
@@ -238,6 +236,7 @@
         alert('Filter telah direset!');
         window.location.href = "{{ route('rm.bymr') }}";
     }
+
 </script>
 
 <script>
@@ -252,8 +251,9 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        toggleLabData();  // Ensure the correct initial state when the page loads
+        toggleLabData(); // Ensure the correct initial state when the page loads
     });
+
 </script>
 
 {{-- SCRIPT TIDAK BISA HURUF --}}
@@ -306,6 +306,7 @@
             event.preventDefault();
         }
     });
+
 </script>
 
 @endpush
