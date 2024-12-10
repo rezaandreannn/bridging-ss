@@ -96,33 +96,36 @@ class BookingOperasiService
         return $this->mapData($filtered);
     }
 
-    public function byDate($date, $kodeBangsal)
+    public function byDate($date, $kodeBangsal = "")
     {
-        $bookings = BookingOperasi::with([
-            'pendaftaran.registerPasien',
-            'pendaftaran.ruang.bangsal',
-            'ruangan',
-            'dokter',
-        ])->get();
+        if (!empty($kodeBangsal)) {
+            $bookings = BookingOperasi::with([
+                'pendaftaran.registerPasien',
+                'pendaftaran.ruang.bangsal',
+                'ruangan',
+                'dokter',
+            ])->get();
 
-        $filtered = $bookings->filter(function ($booking) use ($date, $kodeBangsal) {
-            if (!empty($kodeBangsal)) {
-                if (!empty($booking->pendaftaran->ruang)) {
-                    $bangsal = optional($booking->pendaftaran->ruang->bangsal)->Kode_Bangsal;
+            $filtered = $bookings->filter(function ($booking) use ($date, $kodeBangsal) {
+                if (!empty($kodeBangsal)) {
+                    if (!empty($booking->pendaftaran->ruang)) {
+                        $bangsal = optional($booking->pendaftaran->ruang->bangsal)->Kode_Bangsal;
 
-                    if ((string) $bangsal === (string) $kodeBangsal) {
-                        $tanggal = $booking->tanggal;
-                        return $tanggal && $tanggal == $date;
+                        if ((string) $bangsal === (string) $kodeBangsal) {
+                            $tanggal = $booking->tanggal;
+                            return $tanggal && $tanggal == $date;
+                        }
                     }
+                } else {
+                    $ruang = optional($booking->pendaftaran)->Kode_Ruang;
+                    $tanggal = $booking->tanggal;
+
+                    return empty($ruang) && ($tanggal && $tanggal == $date);
                 }
-            } else {
-                $ruang = optional($booking->pendaftaran)->Kode_Ruang;
-                $tanggal = $booking->tanggal;
-
-                return empty($ruang) && ($tanggal && $tanggal == $date);
-            }
-        });
-
+            });
+        } else {
+            $filtered = $this->baseQuery()->get();
+        }
         return $this->mapData($filtered);
     }
 

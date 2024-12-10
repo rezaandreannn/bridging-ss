@@ -27,7 +27,7 @@
             <!-- components biodata pasien by no reg -->
             {{-- @include('components.biodata-pasien-bynoreg') --}}
             <form action="{{ route('prabedah.verifikasi-prabedah.store') }}" method="POST">
-            @csrf
+                @csrf
                 <div class="card mb-3">
                     <div class="card-header card-khusus-header">
                         <h6 class="card-khusus-title">Verifikasi Pra Bedah</h6>
@@ -49,13 +49,13 @@
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="assesmen_pra_bedah" id="flexCheckDefault" value="1">
-                                                <label class="form-check-label" for="flexCheckDefault">
+                                                <label class="form-check-label" for="flexCheckDefault" {{ $checklistAssesmenPraBedah == 'true' ? 'checked' : ''}}>
                                                     Asesmen Pra Bedah
                                                 </label>
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="penandaan_lokasi" id="flexCheckDefault" value="1">
-                                                <label class="form-check-label" for="flexCheckDefault">
+                                                <label class="form-check-label" for="flexCheckDefault" {{ $checklistPenandaan == 'true' ? 'checked' : ''}}>
                                                     Penandaan Lokasi Operasi
                                                 </label>
                                             </div>
@@ -74,13 +74,13 @@
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="assesmen_pra_anastesi_sedasi" id="flexCheckDefault" value="1" >
+                                                <input class="form-check-input" type="checkbox" name="assesmen_pra_anastesi_sedasi" id="flexCheckDefault" value="1">
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Assesmen Pra Anestesi / Sedasi
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="edukasi_anastesi" id="flexCheckDefault" value="1" >
+                                                <input class="form-check-input" type="checkbox" name="edukasi_anastesi" id="flexCheckDefault" value="1">
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Edukasi Anestesi
                                                 </label>
@@ -125,7 +125,7 @@
                                                         </div>
                                                         <div class="col-md-4">
                                                             <h5 style="font-size: 12px; color:black;">CT :</h5>
-                                                            <input type="text" class="form-control"id="ct" name="lab_ct">
+                                                            <input type="text" class="form-control" id="ct" name="lab_ct">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -164,7 +164,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="obat" id="flexCheckDefault" value="1" >
+                                                <input class="form-check-input" type="checkbox" name="obat" id="flexCheckDefault" value="1">
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Obat-obat pasien yang dibawa
                                                 </label>
@@ -209,12 +209,12 @@
                     <!-- include form -->
                 </div>
                 <div class="text-left">
-                        <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button>
+                    <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button>
                 </div>
             </form>
-            </div>
         </div>
-    </section>
+</div>
+</section>
 </div>
 @endsection
 
@@ -236,6 +236,7 @@
         alert('Filter telah direset!');
         window.location.href = "{{ route('rm.bymr') }}";
     }
+
 </script>
 
 <script>
@@ -250,15 +251,16 @@
             labCheckbox.setAttribute('aria-expanded', 'true');
             inputs.forEach(input => input.disabled = false);
         } else {
-                // Sembunyikan dan nonaktifkan input
-                labDataDiv.style.display = 'none';
-                labCheckbox.setAttribute('aria-expanded', 'false');
-                inputs.forEach(input => {
-                    input.disabled = true;
-                    input.value = ''; // Kosongkan nilai jika tidak dipilih
-                });
-            }
+            // Sembunyikan dan nonaktifkan input
+            labDataDiv.style.display = 'none';
+            labCheckbox.setAttribute('aria-expanded', 'false');
+            inputs.forEach(input => {
+                input.disabled = true;
+                input.value = ''; // Kosongkan nilai jika tidak dipilih
+            });
+        }
     }
+
 </script>
 
 {{-- SCRIPT TIDAK BISA HURUF --}}
@@ -311,6 +313,7 @@
             event.preventDefault();
         }
     });
+
 </script>
 
 @endpush
