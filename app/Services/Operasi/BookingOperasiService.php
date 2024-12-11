@@ -143,25 +143,21 @@ class BookingOperasiService
             $dokter = $booking->kode_dokter;
 
             if ($kodeDokter != null) {
-                
+
                 if ((string) $dokter ===  $kodeDokter) {
                     $tanggal = $booking->tanggal;
                     return $tanggal && $tanggal == $date;
-          
                 }
-            } 
- 
+            }
         });
 
         $filteredBukanDokter = $bookings->filter(function ($booking) use ($date) {
             $tanggal = $booking->tanggal;
- 
-                if ((string) $tanggal ===  $date) {
-                    $tanggal = $booking->tanggal;
-                    return $tanggal && $tanggal == $date;
-                }
-      
- 
+
+            if ((string) $tanggal ===  $date) {
+                $tanggal = $booking->tanggal;
+                return $tanggal && $tanggal == $date;
+            }
         });
 
         $filtered = ctype_digit($kodeDokter) ? $filterDateAndDokter : $filteredBukanDokter;
@@ -184,7 +180,7 @@ class BookingOperasiService
 
     public function findByRegister($kodeRegister)
     {
-        return BookingOperasi::where('kode_register',$kodeRegister)->first();
+        return BookingOperasi::where('kode_register', $kodeRegister)->first();
     }
 
     public function insert(array $data)
@@ -197,7 +193,8 @@ class BookingOperasiService
                 'nama_tindakan' => $data['nama_tindakan'],
                 'kode_dokter' => $data['kode_dokter'],
                 'jam_mulai' => $data['jam_mulai'] ?? '',
-                'jam_selesai' => $data['jam_selesai'] ?? ''
+                'jam_selesai' => $data['jam_selesai'] ?? '',
+                'created_by' => auth()->user()->id,
                 // 'cara_masuk' => $data['cara_masuk'] ?? ''
             ]);
 
@@ -221,7 +218,8 @@ class BookingOperasiService
                 'nama_tindakan' => $data['nama_tindakan'],
                 'kode_dokter' => $data['kode_dokter'],
                 'jam_mulai' => $data['jam_mulai'] ?? '',
-                'jam_selesai' => $data['jam_selesai'] ?? ''
+                'jam_selesai' => $data['jam_selesai'] ?? '',
+                'updated_by' => auth()->user()->id,
                 // 'cara_masuk' => $data['cara_masuk'] ?? ''
             ]);
 

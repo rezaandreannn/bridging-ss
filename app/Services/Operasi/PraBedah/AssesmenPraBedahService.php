@@ -211,6 +211,7 @@ class AssesmenPraBedahService
                 'anamnesa' => $data['anamnesa'],
                 'pemeriksaan_fisik' => $data['pemeriksaan_fisik'],
                 'diagnosa' => $data['diagnosa'],
+                'created_by' => auth()->user()->id
             ]);
 
             return $assesmen;
@@ -231,6 +232,7 @@ class AssesmenPraBedahService
                 'anamnesa' => $data['anamnesa'],
                 'pemeriksaan_fisik' => $data['pemeriksaan_fisik'],
                 'diagnosa' => $data['diagnosa'],
+                'updated_by' => auth()->user()->id
             ]);
 
             return $assesmen;

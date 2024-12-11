@@ -117,7 +117,8 @@ class PenandaanOperasiService
         $penandaan = PenandaanOperasi::create([
             'kode_register' => $data['kode_register'],
             'hasil_gambar' => $file_name,
-            'jenis_operasi' => $data['jenis_operasi']
+            'jenis_operasi' => $data['jenis_operasi'],
+            'created_by' => auth()->user()->id,
         ]);
 
         return $penandaan;
@@ -143,7 +144,8 @@ class PenandaanOperasiService
                 $penandaan->update([
                     'kode_register' => $data['kode_register'],
                     'hasil_gambar' => $file_name,
-                    'jenis_operasi' => $data['jenis_operasi']
+                    'jenis_operasi' => $data['jenis_operasi'],
+                    'updated_by' => auth()->user()->id,
                 ]);
             });
 

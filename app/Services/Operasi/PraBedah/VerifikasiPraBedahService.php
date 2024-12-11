@@ -155,6 +155,7 @@ class VerifikasiPraBedahService
                 'informed_consent_anastesi' => !empty($data['informed_consent_anastesi']) ? 1 : 0,
                 'assesmen_pra_anastesi_sedasi' => !empty($data['assesmen_pra_anastesi_sedasi']) ? 1 : 0,
                 'edukasi_anastesi' => !empty($data['edukasi_anastesi']) ? 1 : 0,
+                'created_by' => auth()->user()->id
             ]);
 
             $praBedahDarah = VerifikasiPraBedahDarah::create([
@@ -163,12 +164,14 @@ class VerifikasiPraBedahService
                 'jumlah' => $data['jumlah'] ?? '',
                 'gol' => $data['gol'] ?? '',
                 'deskripsi' => $data['deskripsi_darah'] ?? '',
+                'created_by' => auth()->user()->id
             ]);
 
             $praBedahEkg = VerifikasiPraBedahEkg::create([
                 'kode_register' => $data['kode_register'],
                 'ekg' => !empty($data['ekg']) ? 1 : 0,
                 'deskripsi' => $data['deskripsi_ekg'] ?? '',
+                'created_by' => auth()->user()->id
             ]);
 
             $praBedahLab = VerifikasiPraBedahLab::create([
@@ -180,24 +183,28 @@ class VerifikasiPraBedahService
                 'lab_hematrokit' => $data['lab_hematrokit'] ?? '',
                 'lab_bt' => $data['lab_bt'] ?? '',
                 'lab_ct' => $data['lab_ct'] ?? '',
+                'created_by' => auth()->user()->id
             ]);
 
             $praBedahObat = VerifikasiPraBedahObat::create([
                 'kode_register' => $data['kode_register'],
                 'obat' => !empty($data['obat']) ? 1 : 0,
                 'deskripsi' => $data['deskripsi_obat'] ?? '',
+                'created_by' => auth()->user()->id
             ]);
 
             $praBedahRontgen = VerifikasiPraBedahRontgen::create([
                 'kode_register' => $data['kode_register'],
                 'rontgen' => !empty($data['rontgen']) ? 1 : 0,
                 'deskripsi' => $data['deskripsi_rontgen'] ?? '',
+                'created_by' => auth()->user()->id
             ]);
 
             $praBedahOther = VerifikasiPraBedahOther::create([
                 'kode_register' => $data['kode_register'],
                 'estimasi_waktu' => $data['estimasi_waktu'] ?? '',
                 'rencana_tindakan' => $data['rencana_tindakan'] ?? '',
+                'created_by' => auth()->user()->id
             ]);
 
             DB::commit();
@@ -257,6 +264,7 @@ class VerifikasiPraBedahService
                 'informed_consent_anastesi' => $data['informed_consent_anastesi'] ?? 0,
                 'assesmen_pra_anastesi_sedasi' => $data['assesmen_pra_anastesi_sedasi'] ?? 0,
                 'edukasi_anastesi' => $data['edukasi_anastesi'] ?? 0,
+                'updated_by' => auth()->user()->id
             ]);
 
             // Update Table Darah
@@ -265,11 +273,13 @@ class VerifikasiPraBedahService
                 'jumlah' => $data['jumlah'] ?? '',
                 'gol' => $data['gol'] ?? '',
                 'deskripsi' => $data['deskripsi_darah'] ?? '',
+                'updated_by' => auth()->user()->id
             ]);
 
             $this->updateTable(VerifikasiPraBedahEkg::class, $kode_register, [
                 'ekg' => $data['ekg'] ?? 0,
                 'deskripsi' => $data['deskripsi_ekg'] ?? '',
+                'updated_by' => auth()->user()->id
             ]);
 
             $this->updateTable(VerifikasiPraBedahLab::class, $kode_register, [
@@ -280,21 +290,25 @@ class VerifikasiPraBedahService
                 'lab_hematrokit' => $data['lab_hematrokit'] ?? '',
                 'lab_bt' => $data['lab_bt'] ?? '',
                 'lab_ct' => $data['lab_ct'] ?? '',
+                'updated_by' => auth()->user()->id
             ]);
 
             $this->updateTable(VerifikasiPraBedahObat::class, $kode_register, [
                 'obat' => $data['obat'] ?? 0,
                 'deskripsi' => $data['deskripsi_obat'] ?? '',
+                'updated_by' => auth()->user()->id
             ]);
 
             $this->updateTable(VerifikasiPraBedahRontgen::class, $kode_register, [
                 'rontgen' => $data['rontgen'] ?? 0,
                 'deskripsi' => $data['deskripsi_rontgen'] ?? '',
+                'updated_by' => auth()->user()->id
             ]);
 
             $this->updateTable(VerifikasiPraBedahOther::class, $kode_register, [
                 'estimasi_waktu' => $data['estimasi_waktu'] ?? '',
                 'rencana_tindakan' => $data['rencana_tindakan'] ?? '',
+                'updated_by' => auth()->user()->id
             ]);
 
             DB::commit();
