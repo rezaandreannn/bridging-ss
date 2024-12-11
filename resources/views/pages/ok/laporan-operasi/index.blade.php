@@ -58,27 +58,38 @@
                                             <th scope="col">Nama Pasien</th>
                                             <th scope="col">No MR</th>
                                             <th scope="col">Nama Dokter</th>
+                                            <th scope="col">Status Penandaan</th>
                                             <th scope="col">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($laporans as $booking)
+                                        @foreach ($laporans as $laporan)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
-                                            <td>{{$booking->kode_register}}</td>
-                                            <td>{{$booking->tanggal}}</td>
-                                            <td>{{$booking->nama_pasien}}</td>
-                                            <td>{{$booking->no_mr}}</td>
-                                            <td>{{$booking->nama_dokter}}</td>
+                                            <td>{{$laporan->kode_register}}</td>
+                                            <td>{{$laporan->tanggal}}</td>
+                                            <td>{{$laporan->nama_pasien}}</td>
+                                            <td>{{$laporan->no_mr}}</td>
+                                            <td>{{$laporan->nama_dokter}}</td>
+
+                                            <td>
+                                                @if (isset($statusLaporanOperasi[$laporan->id]) && $statusLaporanOperasi[$laporan->id] == 'create')
+                                                <span class="badge badge-danger">Create</span>
+                                                 @else
+                                                <span class="badge badge-success">Update</span>
+                                                @endif
+                                            </td>
+                             
                                             <td>  
+
                                                 <div class="dropdown d-inline">
                                                     <a href="#" class="text-primary" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </a>
                                                     <div class="dropdown-menu">
                                                         {{-- Input --}}
-                                                        <a class="dropdown-item has-icon" href="{{ route('laporan.operasi.create', $booking->kode_register )}}"> 
-                                                            <i class="fas fa-pencil-alt"></i> Entry
+                                                        <a class="dropdown-item has-icon" href="{{ isset($statusLaporanOperasi[$laporan->id]) && $statusLaporanOperasi[$laporan->id] == 'create' ? route('laporan.operasi.create', $laporan->kode_register ) : route('laporan.operasi.edit', $laporan->kode_register )}}"> 
+                                                            <i class="fas fa-pencil-alt"></i> {{isset($statusLaporanOperasi[$laporan->id]) && $statusLaporanOperasi[$laporan->id] == 'create' ? 'Entry' : 'Edit'}}
                                                         </a>
                                                     </div>
                                                 </div>

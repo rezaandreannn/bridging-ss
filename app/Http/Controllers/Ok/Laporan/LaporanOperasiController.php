@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Ok\Laporan;
 use Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Operasi\LaporanOperasi\StoreLaporanOperasi;
+use App\Helpers\Ok\LaporanOperasiHelper;
 use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\PraBedah\AssesmenPraBedahService;
 use App\Services\Operasi\LaporanOperasi\LaporanOperasiService;
+use App\Http\Requests\Operasi\LaporanOperasi\StoreLaporanOperasi;
+use App\Models\Operasi\LaporanOperasi;
 
 class LaporanOperasiController extends Controller
 {
@@ -36,16 +38,18 @@ class LaporanOperasiController extends Controller
         if ($request->input('tanggal') != null) {
             $date = $request->input('tanggal');
         }
-
-        // get data from service
+    
         $sessionKodeDokter = auth()->user()->username ?? null;
         // dd($sessionKodeDokter);
         $laporans = $this->bookingOperasiService->byDokterOrAdmin($date, $sessionKodeDokter ?? '');
-        // dd($laporans);
+        $statusLaporanOperasi = LaporanOperasiHelper::getStatusLaporanOperasi($laporans);
+
+        // dd($statusLaporanOperasi);
 
         return view($this->view . 'index', compact('laporans'))
             ->with([
                 'title' => $title,
+                'statusLaporanOperasi' => $statusLaporanOperasi
             ]);
     }
 
@@ -58,8 +62,8 @@ class LaporanOperasiController extends Controller
     {
         $biodata = $this->bookingOperasiService->biodata($kode_register);
 
-
-        // dd($this->laporanOperasiService->getPenataAsisten());
+      
+        // dd($this->bookingOperasiService->findByRegister($kode_register));
 
         return view($this->view . 'create', compact('biodata'))->with([
             'title' => $this->prefix . ' ' . 'Input Data',
@@ -107,9 +111,22 @@ class LaporanOperasiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($kode_register)
     {
         //
+        $biodata = $this->bookingOperasiService->biodata($kode_register);
+
+        $lapId = LaporanOperasi::where('kode_register', $kode_register)->get();
+
+        // dd($this->bookingOperasiService->findByRegister($kode_register));
+
+        return view($this->view . 'create', compact('biodata'))->with([
+            'title' => $this->prefix . ' ' . 'Input Data',
+            'bookingByRegister' => $this->bookingOperasiService->findByRegister($kode_register),
+            'asistenOperasi' => $this->laporanOperasiService->getAsistenOperasi(),
+            'spesialisAnastesi' => $this->laporanOperasiService->getSpesialisAnastesi(),
+            'penataAnastesi' => $this->laporanOperasiService->getPenataAsisten(),
+        ]);
     }
 
     /**

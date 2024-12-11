@@ -48,10 +48,10 @@
                             </div>
           
                             {{-- masih salah bukan dari booking --}}
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Nama Operator</label>
-                                    <input type="text" name="nama_operator" value="{{$biodata->dokter->Nama_Dokter}}" class="form-control @error('nama_operator') is-invalid @enderror" readonly>
+                                    <input type="text" name="nama_operator" value="{{$bookingByRegister->dokter->Nama_Dokter}}" class="form-control @error('nama_operator') is-invalid @enderror" readonly>
                                     @error('nama_operator')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -59,7 +59,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Nama Asisten</label>
                                     <select name="nama_asisten" class="form-control @error('nama_asisten') is-invalid @enderror select2">
@@ -75,7 +75,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Nama Perawat</label>
                                     <select name="nama_perawat" class="form-control @error('nama_perawat') is-invalid @enderror select2">
@@ -138,7 +138,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Diagnosis Pre-Operatif</label>
-                                    <textarea name="diagnosa_pre_op" class="form-control" id="diagnosa_pre_op" style="height: 50px;" rows="3"></textarea>
+                                    <textarea name="diagnosa_pre_op" class="form-control" id="diagnosa_pre_op" style="height: 50px;" rows="3">{{ old('diagnosa_pre_op') }}</textarea>
                                     @error('pre_operatif')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}
@@ -149,7 +149,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Diagnosis Post-Operatif</label>
-                                    <textarea name="diagnosa_post_op" class="form-control" id="diagnosa_post_op" style="height: 50px;" rows="3"></textarea>
+                                    <textarea name="diagnosa_post_op" class="form-control" id="diagnosa_post_op" style="height: 50px;" rows="3">{{ old('diagnosa_post_op') }}</textarea>
                                     @error('post_operatif')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}
@@ -160,7 +160,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Jaringan yang dieksisi</label>
-                                    <textarea name="jaringan_dieksekusi" class="form-control" id="jaringan_dieksekusi" style="height: 50px;" rows="3"></textarea>
+                                    <textarea name="jaringan_dieksekusi" class="form-control" id="jaringan_dieksekusi" style="height: 50px;" rows="3">{{ old('jaringan_dieksekusi') }}</textarea>
                                     @error('jaringan')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}
@@ -172,13 +172,13 @@
                                 <div class="form-group">
                                     <label>Dikirim untuk pemeriksaan PA</label>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="permintaan_pa" id="permintaan_pa1" value="2">
+                                        <input class="form-check-input" type="radio" name="permintaan_pa" id="permintaan_pa1" value="1" {{ old('permintaan_pa') == '1' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="pemeriksaan_pa1">
                                             Ya
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="permintaan_pa" id="permintaan_pa2" value="1" checked>
+                                        <input class="form-check-input" type="radio" name="permintaan_pa" id="permintaan_pa2" value="0" {{ (old('permintaan_pa') !== '1' && old('permintaan_pa') !== '0') || old('permintaan_pa') == '0' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="permintaan_pa2">
                                             Tidak
                                         </label>
@@ -240,7 +240,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Laporan Operasi</label>
-                                    <textarea name="laporan_operasi" class="form-control" id="laporan_operasi" style="height: 100px;" rows="3"></textarea>
+                                    <textarea name="laporan_operasi" class="form-control" id="laporan_operasi" style="height: 100px;" rows="3">{{ old('laporan_operasi') }}</textarea>
                                     @error('laporan_operasi')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}

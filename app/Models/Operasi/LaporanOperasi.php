@@ -28,4 +28,9 @@ class LaporanOperasi extends Model
         'created_by',
         'updated_by'
     ];
+
+    public function booking()
+    {
+        return $this->hasOne(BookingOperasi::class, 'kode_register', 'kode_register');
+    }
 }
