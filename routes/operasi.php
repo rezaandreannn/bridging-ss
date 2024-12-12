@@ -1,17 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Ok\RuangOperasiController;
-use App\Http\Controllers\OK\BookingOperasiController;
-use App\Http\Controllers\OK\JadwalOperasiController;
-use App\Http\Controllers\Ok\Laporan\LaporanOperasiController;
-use App\Http\Controllers\OK\PenandaanOperasiController;
-use App\Http\Controllers\Ok\PostOperasiController;
-use App\Http\Controllers\Ok\PraBedah\AssesmenPraBedahController;
-use App\Http\Controllers\Ok\PraBedah\BerkasPraBedahController;
-use App\Http\Controllers\Ok\PraBedah\VerifikasiPraBedahController;
 use App\Http\Controllers\Ok\PreOperasiController;
+use App\Http\Controllers\Ok\PostOperasiController;
+use App\Http\Controllers\Ok\RuangOperasiController;
+use App\Http\Controllers\OK\JadwalOperasiController;
+use App\Http\Controllers\OK\BookingOperasiController;
 use App\Http\Controllers\OK\TtdTandaOperasiController;
+use App\Http\Controllers\OK\PenandaanOperasiController;
+use App\Http\Controllers\Ok\Laporan\LaporanOperasiController;
+use App\Http\Controllers\Ok\PraBedah\BerkasPraBedahController;
+use App\Http\Controllers\Ok\PraBedah\AssesmenPraBedahController;
+use App\Http\Controllers\Ok\PraBedah\VerifikasiPraBedahController;
 
 Route::prefix('operasi')->name('operasi.')->middleware('auth')->group(function () {
     // jadwal operasi
@@ -74,6 +74,9 @@ Route::prefix('laporan')->name('laporan.')->middleware('auth')->group(function (
     Route::get('operasi', [LaporanOperasiController::class, 'index'])->name('operasi.index');
     Route::get('operasi/create/{kode_register}', [LaporanOperasiController::class, 'create'])->name('operasi.create');
     Route::post('operasi', [LaporanOperasiController::class, 'store'])->name('operasi.store');
+    Route::get('operasi/edit/{kode_register}', [LaporanOperasiController::class, 'edit'])->name('operasi.edit');
+    Route::put('operasi/{kode_register}', [LaporanOperasiController::class, 'update'])->name('operasi.update');
+    Route::delete('operasi/{kode_register}', [LaporanOperasiController::class, 'destroy'])->name('operasi.destroy');
 });
 
 // Pembuka Booking Operasi

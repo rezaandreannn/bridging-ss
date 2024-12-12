@@ -20,14 +20,15 @@
             <h1>{{ $title ?? ''}}</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{ route('laporan.operasi.index') }}">Laporan Operasi</a></div>
-                <div class="breadcrumb-item">Add</div>
+                <div class="breadcrumb-item">Edit</div>
             </div>
         </div>
         <div class="section-body">
             <!-- components biodata pasien by no reg -->
             @include('components.biodata-pasien-ok-bynoreg')
-            <form action="{{ route('laporan.operasi.store') }}" method="POST">
+            <form action="{{ route('laporan.operasi.update',$laporanOperasi->kode_register) }}" method="POST">
             @csrf
+            @method('put')
                 <div class="card mb-3">
                     <div class="card-header card-khusus-header">
                         <h6 class="card-khusus-title">Data Operasi</h6>
@@ -138,7 +139,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Diagnosis Pre-Operatif</label>
-                                    <textarea name="diagnosa_pre_op" class="form-control" id="diagnosa_pre_op" style="height: 50px;" rows="3">{{ old('diagnosa_pre_op') }}</textarea>
+                                    <textarea name="diagnosa_pre_op" class="form-control" id="diagnosa_pre_op" style="height: 50px;" rows="3">{{ $laporanOperasi->diagnosa_pre_op }}</textarea>
                                     @error('pre_operatif')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}
@@ -149,7 +150,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Diagnosis Post-Operatif</label>
-                                    <textarea name="diagnosa_post_op" class="form-control" id="diagnosa_post_op" style="height: 50px;" rows="3">{{ old('diagnosa_post_op') }}</textarea>
+                                    <textarea name="diagnosa_post_op" class="form-control" id="diagnosa_post_op" style="height: 50px;" rows="3">{{ $laporanOperasi->diagnosa_post_op }}</textarea>
                                     @error('post_operatif')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}
@@ -160,7 +161,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Jaringan yang dieksisi</label>
-                                    <textarea name="jaringan_dieksekusi" class="form-control" id="jaringan_dieksekusi" style="height: 50px;" rows="3">{{ old('jaringan_dieksekusi') }}</textarea>
+                                    <textarea name="jaringan_dieksekusi" class="form-control" id="jaringan_dieksekusi" style="height: 50px;" rows="3">{{ $laporanOperasi->jaringan_dieksekusi }}</textarea>
                                     @error('jaringan')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}
@@ -172,13 +173,13 @@
                                 <div class="form-group">
                                     <label>Dikirim untuk pemeriksaan PA</label>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="permintaan_pa" id="permintaan_pa1" value="1" {{ old('permintaan_pa') == '1' ? 'checked' : '' }}>
+                                        <input class="form-check-input" type="radio" name="permintaan_pa" id="permintaan_pa1" {{ ($laporanOperasi->permintaan_pa =='1') ? 'checked' : '' }} value="1" >
                                         <label class="form-check-label" for="pemeriksaan_pa1">
                                             Ya
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="permintaan_pa" id="permintaan_pa2" value="0" {{ (old('permintaan_pa') !== '1' && old('permintaan_pa') !== '0') || old('permintaan_pa') == '0' ? 'checked' : '' }}>
+                                        <input class="form-check-input" type="radio" name="permintaan_pa" id="permintaan_pa2" {{ ($laporanOperasi->permintaan_pa == '0') ? 'checked' : '' }} value="0" >
                                         <label class="form-check-label" for="permintaan_pa2">
                                             Tidak
                                         </label>
@@ -199,7 +200,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Mulai Operasi</label>
-                                    <input type="time" name="mulai_operasi" id="mulai_operasi" class="form-control @error('mulai_operasi') is-invalid @enderror" value="{{ date('h:i', strtotime($bookingByRegister->jam_mulai))}}">
+                                    <input type="time" name="mulai_operasi" id="mulai_operasi" class="form-control @error('mulai_operasi') is-invalid @enderror" value="{{ date('h:i', strtotime($laporanOperasi->mulai_operasi))}}">
                                     @error('mulai_operasi')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -210,7 +211,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Selesai Operasi</label>
-                                    <input type="time" name="selesai_operasi" id="selesai_operasi" class="form-control @error('selesai_operasi') is-invalid @enderror" value="{{ date('h:i', strtotime($bookingByRegister->jam_selesai))}}">
+                                    <input type="time" name="selesai_operasi" id="selesai_operasi" class="form-control @error('selesai_operasi') is-invalid @enderror" value="{{ date('h:i', strtotime($laporanOperasi->selesai_operasi))}}">
                                     @error('selesai_operasi')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -223,7 +224,7 @@
                                     <label>Lama Operasi</label>
                                     <div class="input-group">
                                         <input type="text" name="lama_operasi" id="lama_operasi" class="form-control @error('lama_operasi') is-invalid  
-                                        @enderror" readonly>
+                                        @enderror" value="{{$laporanOperasi->lama_operasi}}" readonly>
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <b>Jam</b>
@@ -240,7 +241,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Laporan Operasi</label>
-                                    <textarea name="laporan_operasi" class="form-control" id="laporan_operasi" style="height: 100px;" rows="3">{{ old('laporan_operasi') }}</textarea>
+                                    <textarea name="laporan_operasi" class="form-control" id="laporan_operasi" style="height: 100px;" rows="3">{{$laporanOperasi->laporan_operasi}}</textarea>
                                     @error('laporan_operasi')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}

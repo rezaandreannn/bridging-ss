@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Ok\Laporan;
 use Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Operasi\LaporanOperasi\StoreLaporanOperasi;
+use App\Models\Operasi\LaporanOperasi;
+use App\Helpers\Ok\LaporanOperasiHelper;
 use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\PraBedah\AssesmenPraBedahService;
 use App\Services\Operasi\LaporanOperasi\LaporanOperasiService;
+use App\Http\Requests\Operasi\LaporanOperasi\StoreLaporanOperasi;
+use App\Http\Requests\Operasi\LaporanOperasi\UpdateLaporanOperasi;
 
 class LaporanOperasiController extends Controller
 {
@@ -36,16 +39,18 @@ class LaporanOperasiController extends Controller
         if ($request->input('tanggal') != null) {
             $date = $request->input('tanggal');
         }
-
-        // get data from service
+    
         $sessionKodeDokter = auth()->user()->username ?? null;
         // dd($sessionKodeDokter);
         $laporans = $this->bookingOperasiService->byDokterOrAdmin($date, $sessionKodeDokter ?? '');
-        // dd($laporans);
+        $statusLaporanOperasi = LaporanOperasiHelper::getStatusLaporanOperasi($laporans);
+
+        // dd($statusLaporanOperasi);
 
         return view($this->view . 'index', compact('laporans'))
             ->with([
                 'title' => $title,
+                'statusLaporanOperasi' => $statusLaporanOperasi
             ]);
     }
 
@@ -58,8 +63,8 @@ class LaporanOperasiController extends Controller
     {
         $biodata = $this->bookingOperasiService->biodata($kode_register);
 
-
-        // dd($this->laporanOperasiService->getPenataAsisten());
+      
+        // dd($this->bookingOperasiService->findByRegister($kode_register));
 
         return view($this->view . 'create', compact('biodata'))->with([
             'title' => $this->prefix . ' ' . 'Input Data',
@@ -83,7 +88,7 @@ class LaporanOperasiController extends Controller
         try {
             $this->laporanOperasiService->insert($request->validated());
 
-            return redirect()->back()->with('success', 'Laporan operasi berhasil ditambahkan.');
+            return redirect('laporan/operasi?tanggal='.$request->input('tanggal'))->with('success', 'Laporan operasi berhasil ditambahkan.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
             return redirect()->back()->with('error', 'Gagal menambahkan laporan operasi: ' . $e->getMessage());
@@ -107,9 +112,22 @@ class LaporanOperasiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($kode_register)
     {
         //
+        $biodata = $this->bookingOperasiService->biodata($kode_register);
+
+        // dd($this->laporanOperasiService->laporanByRegister($kode_register));
+
+
+        return view($this->view . 'edit', compact('biodata'))->with([
+            'title' => $this->prefix . ' ' . 'Edit Data',
+            'bookingByRegister' => $this->bookingOperasiService->findByRegister($kode_register),
+            'asistenOperasi' => $this->laporanOperasiService->getAsistenOperasi(),
+            'spesialisAnastesi' => $this->laporanOperasiService->getSpesialisAnastesi(),
+            'penataAnastesi' => $this->laporanOperasiService->getPenataAsisten(),
+            'laporanOperasi' => $this->laporanOperasiService->laporanByRegister($kode_register),
+        ]);
     }
 
     /**
@@ -119,9 +137,17 @@ class LaporanOperasiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateLaporanOperasi $request, $id)
     {
         //
+        try {
+            $this->laporanOperasiService->update($id,$request->validated());
+
+            return redirect('laporan/operasi?tanggal='.$request->input('tanggal'))->with('success', 'Laporan operasi berhasil diperbarui.');
+        } catch (Exception $e) {
+            // Redirect dengan pesan error jika terjadi kegagalan
+            return redirect()->back()->with('error', 'Gagal memperbarui laporan operasi: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -133,5 +159,13 @@ class LaporanOperasiController extends Controller
     public function destroy($id)
     {
         //
+        try {
+            $this->laporanOperasiService->delete($id);
+
+            return redirect()->back()->with('success', 'Laporan operasi berhasil dihapus.');
+        } catch (Exception $e) {
+            // Redirect dengan pesan error jika terjadi kegagalan
+            return redirect()->back()->with('error', 'Gagal menghapus laporan operasi: ' . $e->getMessage());
+        }
     }
 }
