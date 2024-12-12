@@ -164,13 +164,13 @@
                                         <td></td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="status_pasien" id="status_pasien1" value="1">
+                                                <input class="form-check-input" type="radio" name="status_pasien" id="status_pasien1" value="1" {{ $postOperasi['tindakan'] && $postOperasi['tindakan']->status_pasien ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="status_pasien1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="status_pasien" id="status_pasien2" value="0" checked>
+                                                <input class="form-check-input" type="radio" name="status_pasien" id="status_pasien2" value="0" {{ $postOperasi['tindakan'] && $postOperasi['tindakan']->status_pasien ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="status_pasien2">Tidak</label>
                                             </div>
                                         </td>
@@ -181,13 +181,13 @@
                                         <td></td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="catatan_anestesi" id="catatan_anestesi1" value="1">
+                                                <input class="form-check-input" type="radio" name="catatan_anestesi" id="catatan_anestesi1" value="1" {{ $postOperasi['tindakan'] && $postOperasi['tindakan']->catatan_anestesi ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="catatan_anestesi1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="catatan_anestesi" id="catatan_anestesi2" value="0" checked>
+                                                <input class="form-check-input" type="radio" name="catatan_anestesi" id="catatan_anestesi2" value="0" {{ $postOperasi['tindakan'] && $postOperasi['tindakan']->catatan_anestesi ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="catatan_anestesi2">Tidak</label>
                                             </div>
                                         </td>
@@ -198,13 +198,13 @@
                                         <td></td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="laporan_pembedahan" id="laporan_pembedahan1" value="1">
+                                                <input class="form-check-input" type="radio" name="laporan_pembedahan" id="laporan_pembedahan1" value="1" {{ $postOperasi['tindakan'] && $postOperasi['tindakan']->laporan_pembedahan ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="laporan_pembedahan1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="laporan_pembedahan" id="laporan_pembedahan2" value="0" checked>
+                                                <input class="form-check-input" type="radio" name="laporan_pembedahan" id="laporan_pembedahan2" value="0" {{ $postOperasi['tindakan'] && $postOperasi['tindakan']->laporan_pembedahan ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="laporan_pembedahan2">Tidak</label>
                                             </div>
                                         </td>
@@ -215,13 +215,13 @@
                                         <td></td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="perencanaan_pasca_medis" id="perencanaan_pasca_medis1" value="1">
+                                                <input class="form-check-input" type="radio" name="perencanaan_pasca_medis" id="perencanaan_pasca_medis1" value="1" {{ $postOperasi['tindakan'] && $postOperasi['tindakan']->perencanaan_pasca_medis ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="perencanaan_pasca_medis1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="perencanaan_pasca_medis" id="perencanaan_pasca_medis2" value="0" checked>
+                                                <input class="form-check-input" type="radio" name="perencanaan_pasca_medis" id="perencanaan_pasca_medis2" value="0" {{ $postOperasi['tindakan'] && $postOperasi['tindakan']->perencanaan_pasca_medis ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="perencanaan_pasca_medis2">Tidak</label>
                                             </div>
                                         </td>
@@ -351,13 +351,13 @@
                                         <td></td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="resep" id="resep1" value="1">
+                                                <input class="form-check-input" type="radio" name="resep" id="resep1" value="1" {{ $postOperasi['tindakan'] && $postOperasi['tindakan']->resep ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="resep1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="resep" id="resep2" value="0" checked>
+                                                <input class="form-check-input" type="radio" name="resep" id="resep2" value="0" {{ $postOperasi['tindakan'] && $postOperasi['tindakan']->resep ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="resep2">Tidak</label>
                                             </div>
                                         </td>
@@ -372,13 +372,13 @@
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="lainnya" id="lainnya1" value="1">
+                                                <input class="form-check-input" type="radio" name="lainnya" id="lainnya1" value="1" {{ $postOperasi['tindakan'] && $postOperasi['tindakan']->lainnya ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="lainnya1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="lainnya" id="lainnya2" value="0" checked>
+                                                <input class="form-check-input" type="radio" name="lainnya" id="lainnya2" value="0" {{ $postOperasi['tindakan'] && $postOperasi['tindakan']->lainnya ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="lainnya2">Tidak</label>
                                             </div>
                                         </td>
@@ -402,71 +402,71 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="ngt" id="flexCheckDefault" value="1">
+                                                <input class="form-check-input" type="checkbox" name="ngt" id="flexCheckDefault" value="1" {{ $postOperasi['alat'] && $postOperasi['alat']->ngt ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     NGT
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="drain" id="flexCheckDefault" value="1">
+                                                <input class="form-check-input" type="checkbox" name="drain" id="flexCheckDefault" value="1" {{ $postOperasi['alat'] && $postOperasi['alat']->drain ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Drain
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="tampon_hidung" id="flexCheckDefault" value="1">
+                                                <input class="form-check-input" type="checkbox" name="tampon_hidung" id="flexCheckDefault" value="1" {{ $postOperasi['alat'] && $postOperasi['alat']->tampon_hidung ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Tampon Hidung
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="tampon_gigi" id="flexCheckDefault" value="1">
+                                                <input class="form-check-input" type="checkbox" name="tampon_gigi" id="flexCheckDefault" value="1" {{ $postOperasi['alat'] && $postOperasi['alat']->tampon_gigi ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Tampon Gigi
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="tampon_abdomen" id="flexCheckDefault" value="1">
+                                                <input class="form-check-input" type="checkbox" name="tampon_abdomen" id="flexCheckDefault" value="1" {{ $postOperasi['alat'] && $postOperasi['alat']->tampon_abdomen ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Tampon Abdomen
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="lainnya" id="flexCheckDefault" value="1">
+                                                <input class="form-check-input" type="checkbox" name="lainnya" id="flexCheckDefault" value="1" {{ $postOperasi['alat'] && $postOperasi['alat']->lainnya ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Lain - lain
                                                 </label>
-                                                <input type="text" name="deskripsi_lainnya" placeholder="Deskripsi Lainnya">
+                                                <input type="text" name="deskripsi_lainnya" placeholder="Deskripsi Lainnya" value="{{ $postOperasi['alat']->deskripsi_lainnya ?? '' }}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="tampon_vagina" id="flexCheckDefault" value="1">
+                                                <input class="form-check-input" type="checkbox" name="tampon_vagina" id="flexCheckDefault" value="1" {{ $postOperasi['alat'] && $postOperasi['alat']->tampon_vagina ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Tampon Vagina
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="tranfusi" id="flexCheckDefault" value="1" >
+                                                <input class="form-check-input" type="checkbox" name="tranfusi" id="flexCheckDefault" value="1" {{ $postOperasi['alat'] && $postOperasi['alat']->tranfusi ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Tranfusi
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="ivfd" id="flexCheckDefault" value="1" >
+                                                <input class="form-check-input" type="checkbox" name="ivfd" id="flexCheckDefault" value="1" {{ $postOperasi['alat'] && $postOperasi['alat']->ivfd ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     IVFD
                                                 </label>
-                                                <input type="text" name="deskripsi_ivfd">tts/menit
+                                                <input type="text" name="deskripsi_ivfd" value="{{ $postOperasi['alat']->deskripsi_ivfd ?? '' }}">tts/menit
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="kompres_luka" id="flexCheckDefault" value="1" >
+                                                <input class="form-check-input" type="checkbox" name="kompres_luka" id="flexCheckDefault" value="1" {{ $postOperasi['alat'] && $postOperasi['alat']->kompres_luka ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Kompres Luka
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="dc" id="flexCheckDefault" value="1" >
+                                                <input class="form-check-input" type="checkbox" name="dc" id="flexCheckDefault" value="1" {{ $postOperasi['alat'] && $postOperasi['alat']->dc ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     DC
                                                 </label>
@@ -512,7 +512,7 @@
                                 <div class="form-group">
                                     <label>P</label>
                                     <div class="input-group">
-                                        <input type="text" name="pernafasan" value="{{ old('pernafasan') }}" id="pernafasan" placeholder="masukkan hanya angka" class="form-control @error('pernafasan') is-invalid  
+                                        <input type="text" name="pernafasan" id="pernafasan" value="{{ $postOperasi['ttv']->pernafasan ?? '' }}" placeholder="masukkan hanya angka" class="form-control @error('pernafasan') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
@@ -531,7 +531,7 @@
                                 <div class="form-group">
                                     <label>Nadi</label>
                                     <div class="input-group">
-                                        <input type="text" name="nadi" value="{{ old('nadi') }}" id="nadi" placeholder="masukkan hanya angka" class="form-control @error('nadi') is-invalid  
+                                        <input type="text" name="nadi" id="nadi" value="{{ $postOperasi['ttv']->nadi ?? '' }}" placeholder="masukkan hanya angka" class="form-control @error('nadi') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
@@ -550,7 +550,7 @@
                                 <div class="form-group">
                                     <label>Tekanan Darah</label><code> (contoh : 110/90)</code>
                                     <div class="input-group">
-                                        <input type="text" name="tekanan_darah" id="tekanan_darah" value="{{ old('tekanan_darah') }}" placeholder="masukkan hanya angka" class="form-control @error('tekanan_darah') is-invalid  
+                                        <input type="text" name="tekanan_darah" id="tekanan_darah" value="{{ $postOperasi['ttv']->tekanan_darah ?? '' }}"  placeholder="masukkan hanya angka" class="form-control @error('tekanan_darah') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
@@ -569,7 +569,7 @@
                                 <div class="form-group">
                                     <label>Suhu</label><code> (gunakan tanda . contoh : 36.5)</code>
                                     <div class="input-group">
-                                        <input type="text" name="suhu" id="suhu" value="{{ old('suhu') }}" placeholder="masukkan hanya angka" class="form-control @error('suhu') is-invalid  
+                                        <input type="text" name="suhu" id="suhu" value="{{ $postOperasi['ttv']->suhu ?? '' }}" placeholder="masukkan hanya angka"  class="form-control @error('suhu') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
@@ -587,7 +587,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Instruksi dokter bedah via lisan</label>
-                                    <textarea name="instruksi_dokter" class="form-control" id="instruksi_dokter" style="height: 100px;" rows="3"></textarea>
+                                    <textarea name="instruksi_dokter" class="form-control" id="instruksi_dokter" style="height: 100px;" rows="3">{{ $postOperasi['ttv']->instruksi_dokter ?? '' }}</textarea>
                                     @error('instruksi_dokter')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}

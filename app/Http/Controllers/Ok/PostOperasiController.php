@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Ok;
 
+use Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Operasi\PostOperasi\StorePostOperasiRequest;
+use App\Http\Requests\Operasi\PostOperasi\UpdatePostOperasiRequest;
 use App\Services\Operasi\BookingOperasiService;
-use App\Services\Operasi\PraBedah\AssesmenPraBedahService;
+use App\Services\Operasi\DataUmum\PostOperasiService;
 
 class PostOperasiController extends Controller
 {
@@ -13,12 +16,14 @@ class PostOperasiController extends Controller
     protected $routeIndex;
     protected $prefix;
     protected $bookingOperasiService;
+    protected $postOperasiService;
 
     public function __construct()
     {
         $this->view = 'pages.ok.operasi.post-operasi.';
         $this->prefix = 'Post Operasi';
         $this->bookingOperasiService = new BookingOperasiService();
+        $this->postOperasiService = new PostOperasiService();
     }
 
     public function index()
@@ -55,9 +60,16 @@ class PostOperasiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePostOperasiRequest $request)
     {
-        //
+        try {
+            $this->postOperasiService->insert($request->validated());
+
+            return redirect('/operasi/post-operasi')->with('success', 'Post Operasi berhasil ditambahkan.');
+        } catch (Exception $e) {
+            // Redirect dengan pesan error jika terjadi kegagalan
+            return redirect()->back()->with('error', 'Gagal menambahkan post operasi: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -77,9 +89,14 @@ class PostOperasiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($kode_register)
     {
-        //
+        $title = $this->prefix . ' ' . 'Edit Data';
+        $postOperasi = $this->postOperasiService->findById($kode_register);
+        // dd($postOperasi);
+        $biodata = $this->bookingOperasiService->biodata($kode_register);
+
+        return view($this->view . 'edit', compact('title', 'biodata', 'postOperasi'));
     }
 
     /**
@@ -89,9 +106,16 @@ class PostOperasiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePostOperasiRequest $request, $kode_register)
     {
-        //
+        try {
+            $this->postOperasiService->update($kode_register, $request->validated());
+
+            return redirect('/operasi/post-operasi')->with('success', 'Data Post Operasi berhasil di ubah.');
+        } catch (Exception $e) {
+            // Redirect dengan pesan error jika terjadi kegagalan
+            return redirect()->back()->with('error', 'Gagal merubah post operasi: ' . $e->getMessage());
+        }
     }
 
     /**
