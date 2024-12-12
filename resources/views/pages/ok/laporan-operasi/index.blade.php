@@ -23,8 +23,8 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('prabedah.assesmen-prabedah.index') }}">Operasi Kamar</a></div>
-                <div class="breadcrumb-item">Laporan Operasi</div>
+                <div class="breadcrumb-item active"><a href="{{ route('prabedah.assesmen-prabedah.index') }}">Laporan Operasi</a></div>
+                <div class="breadcrumb-item">List</div>
             </div>
         </div>
 
@@ -91,6 +91,16 @@
                                                         <a class="dropdown-item has-icon" href="{{ isset($statusLaporanOperasi[$laporan->id]) && $statusLaporanOperasi[$laporan->id] == 'create' ? route('laporan.operasi.create', $laporan->kode_register ) : route('laporan.operasi.edit', $laporan->kode_register )}}"> 
                                                             <i class="fas fa-pencil-alt"></i> {{isset($statusLaporanOperasi[$laporan->id]) && $statusLaporanOperasi[$laporan->id] == 'create' ? 'Entry' : 'Edit'}}
                                                         </a>
+
+                                                        @if (isset($statusLaporanOperasi[$laporan->id]) && $statusLaporanOperasi[$laporan->id] != 'create')
+                                                            <form id="delete-form-{{$laporan->kode_register}}" action="{{ route('laporan.operasi.destroy', $laporan->kode_register )}}" method="POST" style="display: none;">
+                                                                @method('delete')
+                                                                @csrf
+                                                            </form>
+                                                            <a class="dropdown-item has-icon" href="#" confirm-delete="true" data-menuId="{{$laporan->kode_register}}"> 
+                                                                <i class="fas fa-trash"></i>Hapus
+                                                            </a>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </td>

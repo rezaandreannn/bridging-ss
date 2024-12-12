@@ -73,6 +73,8 @@ Route::prefix('laporan')->name('laporan.')->middleware('auth')->group(function (
     Route::get('operasi/create/{kode_register}', [LaporanOperasiController::class, 'create'])->name('operasi.create');
     Route::post('operasi', [LaporanOperasiController::class, 'store'])->name('operasi.store');
     Route::get('operasi/edit/{kode_register}', [LaporanOperasiController::class, 'edit'])->name('operasi.edit');
+    Route::put('operasi/{kode_register}', [LaporanOperasiController::class, 'update'])->name('operasi.update');
+    Route::delete('operasi/{kode_register}', [LaporanOperasiController::class, 'destroy'])->name('operasi.destroy');
 });
 
 // Pembuka Booking Operasi

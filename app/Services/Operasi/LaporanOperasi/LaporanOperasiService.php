@@ -9,6 +9,7 @@ use App\Models\Operasi\BookingOperasi;
 use App\Models\Operasi\LaporanOperasi;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Operasi\PenandaanOperasi;
+use PhpParser\Node\Stmt\TryCatch;
 
 class LaporanOperasiService
 {
@@ -30,19 +31,16 @@ class LaporanOperasiService
         ]);
     }
 
- 
 
-    public function byRegister($kodeRegister)
-    {
-        $databookings = $this->baseQuery()
-            ->where('kode_register', $kodeRegister)
-            ->get();
-        return $this->mapData($databookings);
-    }
 
     public function findById($id)
     {
         return BookingOperasi::find($id);
+    }
+
+    public function laporanByRegister($kode_register)
+    {
+        return LaporanOperasi::where('kode_register', $kode_register)->first();
     }
 
     public function insert(array $data)
@@ -73,51 +71,43 @@ class LaporanOperasiService
     public function update($id, array $data)
     {
         try {
-            // Mencari booking berdasarkan ID
-            $booking = BookingOperasi::findOrFail($id);
 
-            // Melakukan update data
-            $booking->update([
+            $id=LaporanOperasi::where('kode_register', $id)->first();
+
+            $laporanoperasi = LaporanOperasi::findOrFail($id->id);
+
+            $laporanoperasi -> update([
                 'kode_register' => $data['kode_register'],
                 'tanggal' => $data['tanggal'],
-                'ruangan_id' => $data['ruangan_id'],
-                'nama_tindakan' => $data['nama_tindakan'],
-                'kode_dokter' => $data['kode_dokter'],
-                'jam_mulai' => $data['jam_mulai'] ?? '',
-                'jam_selesai' => $data['jam_selesai'] ?? ''
+                'diagnosa_pre_op' => $data['diagnosa_pre_op'],
+                'diagnosa_post_op' => $data['diagnosa_post_op'],
+                'jaringan_dieksekusi' => $data['jaringan_dieksekusi'],
+                'mulai_operasi' => $data['mulai_operasi'] ?? '',
+                'selesai_operasi' => $data['selesai_operasi'] ?? '',
+                'lama_operasi' => $data['lama_operasi'] ?? '',
+                'permintaan_pa' => $data['permintaan_pa'],
+                'laporan_operasi' => $data['laporan_operasi'],
+                'created_by' => auth()->user()->id,
                 // 'cara_masuk' => $data['cara_masuk'] ?? ''
             ]);
 
-            return $booking;
+            return $laporanoperasi;
         } catch (\Throwable $th) {
-            throw new Exception("Gagal memperbarui booking: " . $th->getMessage());
+            throw new Exception("Gagal memperbarui laporan operasi: " . $th->getMessage());
         }
     }
 
     public function delete($id)
     {
-        $data = BookingOperasi::find($id);
-        return $data->delete();
-    }
-
-    public function deleteWithRelations($id)
-    {
-        $booking = BookingOperasi::find($id);
-        if ($booking) {
-            $bookingKodeRegister = $booking->kode_register;
-
-            // where by kode register in model penandaan
-            $penandaan = PenandaanOperasi::where('kode_register', $bookingKodeRegister)->first();
-
-            // hapus booking
-            $booking->delete();
-
-            // hapus penandaan
-            if ($penandaan) {
-                $path = 'public/operasi/' .  $penandaan->hasil_gambar;
-                Storage::delete($path);
-                $penandaan->delete();
-            }
+        try {
+            //code...
+            $id=LaporanOperasi::where('kode_register', $id)->first();
+            $laporanoperasi = LaporanOperasi::findOrFail($id->id)->delete();
+            return $laporanoperasi;
+        
+        } catch (\Throwable $th) {
+            //throw $th;
+            throw new Exception("Gagal menghapus laporan operasi: " . $th->getMessage());
         }
     }
 

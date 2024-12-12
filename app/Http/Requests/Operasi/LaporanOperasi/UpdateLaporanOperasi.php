@@ -5,7 +5,7 @@ namespace App\Http\Requests\Operasi\LaporanOperasi;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreLaporanOperasi extends FormRequest
+class UpdateLaporanOperasi extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -41,19 +41,4 @@ class StoreLaporanOperasi extends FormRequest
         ];
     }
 
-    public function withValidator($validator)
-    {
-        $validator->after(function ($validator) {
-            $kodeRegister = $this->input('kode_register');
-
-            $exists = DB::connection('pku')
-                ->table('ok_laporan_operasi')
-                ->where('kode_register', $kodeRegister)
-                ->exists();
-
-            if ($exists) {
-                $validator->errors()->add('kode_register', 'Kode register sudah ada.');
-            }
-        });
-    }
 }
