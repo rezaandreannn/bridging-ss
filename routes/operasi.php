@@ -35,6 +35,7 @@ Route::prefix('operasi')->name('operasi.')->middleware('auth')->group(function (
     // Pre Operasi
     Route::get('/pre-operasi', [PreOperasiController::class, 'index'])->name('pre-operasi.index');
     Route::get('/pre-operasi/create/{kode_register}', [PreOperasiController::class, 'create'])->name('pre-operasi.create');
+    Route::post('/pre-operasi', [PreOperasiController::class, 'store'])->name('pre-operasi.store');
 
     // Post Operasi
     Route::get('/post-operasi', [PostOperasiController::class, 'index'])->name('post-operasi.index');
