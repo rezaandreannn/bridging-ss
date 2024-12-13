@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Ok;
 
 use Exception;
 use Illuminate\Http\Request;
+use App\Helpers\BookingHelper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Operasi\PostOperasi\StorePostOperasiRequest;
-use App\Http\Requests\Operasi\PostOperasi\UpdatePostOperasiRequest;
 use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\DataUmum\PostOperasiService;
+use App\Http\Requests\Operasi\PostOperasi\StorePostOperasiRequest;
+use App\Http\Requests\Operasi\PostOperasi\UpdatePostOperasiRequest;
 
 class PostOperasiController extends Controller
 {
@@ -36,9 +37,12 @@ class PostOperasiController extends Controller
         $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
         $postOperasi = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
 
+        $statusPost = BookingHelper::getStatusPostOperasi($postOperasi);
+
         return view($this->view . 'index', compact('postOperasi'))
             ->with([
                 'title' => $title,
+                'statusPost' => $statusPost,
             ]);
     }
 

@@ -3,15 +3,18 @@
 namespace App\Helpers;
 
 use App\Models\MasterData\TtdPerawat;
+use App\Models\Operasi\TtdTandaOperasi;
 use App\Models\Operasi\PenandaanOperasi;
 use App\Models\Operasi\PraBedah\AssesmenPraBedah;
-use App\Models\Operasi\PraBedah\VerifikasiPraBedahBerkas;
-use App\Models\Operasi\PraBedah\VerifikasiPraBedahDarah;
+use App\Models\Operasi\PostOperasi\AlatPostOperasi;
 use App\Models\Operasi\PraBedah\VerifikasiPraBedahEkg;
 use App\Models\Operasi\PraBedah\VerifikasiPraBedahLab;
+use App\Models\Operasi\PostOperasi\TindakanPostOperasi;
 use App\Models\Operasi\PraBedah\VerifikasiPraBedahObat;
+use App\Models\Operasi\PraBedah\VerifikasiPraBedahDarah;
+use App\Models\Operasi\PraBedah\VerifikasiPraBedahBerkas;
 use App\Models\Operasi\PraBedah\VerifikasiPraBedahRontgen;
-use App\Models\Operasi\TtdTandaOperasi;
+use App\Models\Operasi\PostOperasi\PemeriksaanFisikPostOperasi;
 
 class BookingHelper
 {
@@ -94,5 +97,24 @@ class BookingHelper
         }
 
         return $statusVerifikasi;
+    }
+
+    public static function getStatusPostOperasi($postOperasi)
+    {
+        $statusPostOperasi = [];
+
+        foreach ($postOperasi as $post) {
+            $kodeRegister = $post->kode_register;
+
+            $status = [
+                'tindakan' => TindakanPostOperasi::where('kode_register', $kodeRegister)->first(),
+                'alat' => AlatPostOperasi::where('kode_register', $kodeRegister)->first(),
+                'ttv' => PemeriksaanFisikPostOperasi::where('kode_register', $kodeRegister)->first()
+            ];
+
+            $statusPostOperasi[$kodeRegister] = $status;
+        }
+
+        return $statusPostOperasi;
     }
 }

@@ -41,6 +41,7 @@ Route::prefix('operasi')->name('operasi.')->middleware('auth')->group(function (
     Route::get('/post-operasi/create/{kode_register}', [PostOperasiController::class, 'create'])->name('post-operasi.create');
     Route::post('/post-operasi', [PostOperasiController::class, 'store'])->name('post-operasi.store');
     Route::get('/post-operasi/update/{kode_register}', [PostOperasiController::class, 'edit'])->name('post-operasi.edit');
+    Route::put('/post-operasi/update/{kode_register}', [PostOperasiController::class, 'update'])->name('post-operasi.update');
 });
 
 Route::prefix('ruangan')->name('ruangan.')->middleware('auth')->group(function () {});
