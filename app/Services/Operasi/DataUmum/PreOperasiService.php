@@ -8,6 +8,7 @@ use App\Models\Operasi\PostOperasi\AlatPostOperasi;
 use App\Models\Operasi\PreOperasi\TindakanPreOperasi;
 use App\Models\Operasi\PostOperasi\TindakanPostOperasi;
 use App\Models\Operasi\PostOperasi\PemeriksaanFisikPostOperasi;
+use App\Models\Operasi\PreOperasi\PemeriksaanFisikPreOperasi;
 
 class PreOperasiService
 {
@@ -16,8 +17,7 @@ class PreOperasiService
     {
         return [
             'tindakan' => TindakanPreOperasi::where('kode_register', $kode_register)->first(),
-            'alat' => AlatPostOperasi::where('kode_register', $kode_register)->first(),
-            'ttv' => PemeriksaanFisikPostOperasi::where('kode_register', $kode_register)->first()
+            'ttv' => PemeriksaanFisikPreOperasi::where('kode_register', $kode_register)->first()
         ];
     }
 
@@ -54,10 +54,22 @@ class PreOperasiService
                 'created_by' => auth()->user()->id
             ]);
 
+            $ttvPreOperasi = PemeriksaanFisikPreOperasi::create([
+                'kode_register' => $data['kode_register'],
+                'tinggi_badan' => $data['tinggi_badan'],
+                'berat_badan' => $data['berat_badan'],
+                'tekanan_darah' => $data['tekanan_darah'],
+                'nadi' => $data['nadi'],
+                'suhu' => $data['suhu'],
+                'pernafasan' => $data['pernafasan'],
+                'created_by' => auth()->user()->id
+            ]);
+
             DB::commit();
 
             return [
                 'tindakan' => $tindakanPreOperasi,
+                'ttv' => $ttvPreOperasi,
             ];
         } catch (\Throwable $th) {
             DB::rollBack();

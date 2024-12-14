@@ -92,6 +92,10 @@
                                                             <i class="fas fa-pencil-alt"></i> {{isset($statusLaporanOperasi[$laporan->id]) && $statusLaporanOperasi[$laporan->id] == 'create' ? 'Entry' : 'Edit'}}
                                                         </a>
 
+                                                        <a class="dropdown-item has-icon" href="{{ route('laporan.operasi.cetak', $laporan->kode_register) }}"> 
+                                                            <i class="fas fa-download"></i> Download
+                                                        </a>
+
                                                         @if (isset($statusLaporanOperasi[$laporan->id]) && $statusLaporanOperasi[$laporan->id] != 'create')
                                                             <form id="delete-form-{{$laporan->kode_register}}" action="{{ route('laporan.operasi.destroy', $laporan->kode_register )}}" method="POST" style="display: none;">
                                                                 @method('delete')

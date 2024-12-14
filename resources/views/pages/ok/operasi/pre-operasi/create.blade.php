@@ -130,16 +130,16 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>R</label>
+                                    <label>P</label>
                                     <div class="input-group">
-                                        <input type="text" name="respirasi" value="{{ old('respirasi') }}" id="respirasi" placeholder="masukkan hanya angka" class="form-control @error('respirasi') is-invalid  
+                                        <input type="text" name="pernafasan" value="{{ old('pernafasan') }}" id="pernafasan" placeholder="masukkan hanya angka" class="form-control @error('pernafasan') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <b>x/menit</b>
                                             </div>
                                         </div>
-                                        @error('respirasi')
+                                        @error('pernafasan')
                                             <span class="text-danger" style="font-size: 12px;">
                                                 {{ $message }}
                                             </span>
@@ -170,14 +170,14 @@
                                 <div class="form-group">
                                     <label>Tekanan Darah</label><code> (contoh : 110/90)</code>
                                     <div class="input-group">
-                                        <input type="text" name="td" id="td" value="{{ old('td') }}" placeholder="masukkan hanya angka" class="form-control @error('td') is-invalid  
+                                        <input type="text" name="tekanan_darah" id="tekanan_darah" value="{{ old('tekanan_darah') }}" placeholder="masukkan hanya angka" class="form-control @error('tekanan_darah') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <b>mmHg</b>
                                             </div>
                                         </div>
-                                        @error('td')
+                                        @error('tekanan_darah')
                                             <span class="text-danger" style="font-size: 12px;">
                                                 {{ $message }}
                                             </span>
@@ -208,14 +208,14 @@
                                 <div class="form-group">
                                     <label>Berat Badan</label><code> (jika kosong beri tanda -)</code>
                                     <div class="input-group">
-                                        <input type="text" name="bb" id="bb" value="{{ old('bb') }}" placeholder="masukkan hanya angka" class="form-control @error('bb') is-invalid  
+                                        <input type="text" name="berat_badan" id="berat_badan" value="{{ old('berat_badan') }}" placeholder="masukkan hanya angka" class="form-control @error('berat_badan') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <b>Kg</b>
                                             </div>
                                         </div>
-                                        @error('bb')
+                                        @error('berat_badan')
                                             <span class="text-danger" style="font-size: 12px;">
                                                 {{ $message }}
                                             </span>
@@ -227,13 +227,13 @@
                                 <div class="form-group">
                                     <label>Tinggi Badan</label><code> (jika kosong beri tanda -)</code>
                                     <div class="input-group">
-                                        <input type="text" name="tb" id="tb" value="{{ old('tb') }}" placeholder="masukkan hanya angka" class="form-control @error('tb') is-invalid  
+                                        <input type="text" name="tinggi_badan" id="tinggi_badan" value="{{ old('tinggi_badan') }}" placeholder="masukkan hanya angka" class="form-control @error('tinggi_badan') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <b>M/Cm</b>
                                             </div>
-                                            @error('tb')
+                                            @error('tinggi_badan')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
@@ -821,7 +821,7 @@
 
 {{-- SCRIPT VITAL SIGN --}}
 <script>
-    document.getElementById('td').addEventListener('keypress', function(event) {
+    document.getElementById('tekanan_darah').addEventListener('keypress', function(event) {
         const keyCode = event.keyCode;
         const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
 
@@ -845,7 +845,7 @@
             event.preventDefault();
         }
     });
-    document.getElementById('bb').addEventListener('keypress', function(event) {
+    document.getElementById('berat_badan').addEventListener('keypress', function(event) {
         const keyCode = event.keyCode;
         const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
 
@@ -853,7 +853,7 @@
             event.preventDefault();
         }
     });
-    document.getElementById('tb').addEventListener('keypress', function(event) {
+    document.getElementById('tinggi_badan').addEventListener('keypress', function(event) {
         const keyCode = event.keyCode;
         const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
 
@@ -861,7 +861,7 @@
             event.preventDefault();
         }
     });
-    document.getElementById('respirasi').addEventListener('keypress', function(event) {
+    document.getElementById('pernafasan').addEventListener('keypress', function(event) {
         const keyCode = event.keyCode;
         const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
 

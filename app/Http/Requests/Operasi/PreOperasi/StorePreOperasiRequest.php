@@ -50,6 +50,13 @@ class StorePreOperasiRequest extends FormRequest
             'penyakit_tb_paru' => 'nullable',
             'penyakit_hiv' => 'nullable',
             'penyakit_hepatitis' => 'nullable',
+            // Ttv Pre Operasi
+            'tinggi_badan' => 'string|nullable',
+            'berat_badan' => 'string|nullable',
+            'tekanan_darah' => 'string',
+            'nadi' => 'string',
+            'suhu' => 'string',
+            'pernafasan' => 'string',
         ];
     }
 }
