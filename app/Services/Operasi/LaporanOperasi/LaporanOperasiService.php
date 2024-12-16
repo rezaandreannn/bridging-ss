@@ -4,12 +4,13 @@ namespace App\Services\Operasi\LaporanOperasi;
 
 use Exception;
 use App\Models\Simrs\Dokter;
+use PhpParser\Node\Stmt\TryCatch;
 use Illuminate\Support\Facades\DB;
 use App\Models\Operasi\BookingOperasi;
 use App\Models\Operasi\LaporanOperasi;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Operasi\PenandaanOperasi;
-use PhpParser\Node\Stmt\TryCatch;
+use App\Models\Operasi\OperatorAsistenDetail;
 
 class LaporanOperasiService
 {
@@ -45,8 +46,29 @@ class LaporanOperasiService
 
     public function insert(array $data)
     {
-        
+        DB::beginTransaction();
         try {
+
+            // pisahkan array dengan koma menjadi string
+            $asisten = $data['nama_asisten'] ?? '';
+            if(!empty($asisten)){
+                $data['nama_asisten'] = implode(', ', $asisten);
+            }
+
+            $perawat = $data['nama_perawat'] ?? '';
+            if(!empty($perawat)){
+                $data['nama_perawat'] = implode(', ', $perawat);
+            }
+            // dd($insertPerawat);
+            // Insert Asisten dan Perawat Bersamaan (Nama Asisten dan Nama Perawat)
+            $operasiasistendetail=OperatorAsistenDetail::create([
+                'kode_register' => $data['kode_register'],
+                'nama_operator' => $data['nama_operator'],
+                'nama_asisten' => $data['nama_asisten'], // Tentukan apakah ini asisten
+                'nama_perawat' => $data['nama_perawat'], // Tentukan apakah ini perawat
+                'created_by' => auth()->user()->id,
+            ]);
+
             $laporanoperasi = LaporanOperasi::create([
                 'kode_register' => $data['kode_register'],
                 'tanggal' => $data['tanggal'],
@@ -62,8 +84,16 @@ class LaporanOperasiService
                 // 'cara_masuk' => $data['cara_masuk'] ?? ''
             ]);
 
-            return $laporanoperasi;
+            DB::commit();
+
+            return [
+                'operasiasistendetail' => $operasiasistendetail,
+                'laporanoperasi' => $laporanoperasi,
+
+            ];
+
         } catch (\Throwable $th) {
+            DB::rollback();
             throw new Exception("Gagal menambahkan laporan operasi: " . $th->getMessage());
         }
     }
