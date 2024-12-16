@@ -26,7 +26,7 @@
         <div class="section-body">
             <!-- components biodata pasien by no reg -->
             @include('components.biodata-pasien-ok-bynoreg')
-            <form action="{{ route('laporan.operasi.store') }}" method="POST">
+            <form action="{{ route('operasi.pre-operasi.store') }}" method="POST">
             @csrf
                 {{-- Data UMUM --}}
                 <div class="card mb-3">
@@ -37,6 +37,7 @@
                     <div class="card-body card-khusus-body">
                         <div class="row">
                             <div class="col-md-6">
+                                <input type="hidden" name="kode_register" value="{{$biodata->pendaftaran->No_Reg}}">
                                 <div class="form-group">
                                     <label>Diagnosa</label>
                                     <input type="text" name="diagnosa" class="form-control @error('diagnosa') is-invalid @enderror">
@@ -129,16 +130,16 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>R</label>
+                                    <label>P</label>
                                     <div class="input-group">
-                                        <input type="text" name="respirasi" value="{{ old('respirasi') }}" id="respirasi" placeholder="masukkan hanya angka" class="form-control @error('respirasi') is-invalid  
+                                        <input type="text" name="pernafasan" value="{{ old('pernafasan') }}" id="pernafasan" placeholder="masukkan hanya angka" class="form-control @error('pernafasan') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <b>x/menit</b>
                                             </div>
                                         </div>
-                                        @error('respirasi')
+                                        @error('pernafasan')
                                             <span class="text-danger" style="font-size: 12px;">
                                                 {{ $message }}
                                             </span>
@@ -169,14 +170,14 @@
                                 <div class="form-group">
                                     <label>Tekanan Darah</label><code> (contoh : 110/90)</code>
                                     <div class="input-group">
-                                        <input type="text" name="td" id="td" value="{{ old('td') }}" placeholder="masukkan hanya angka" class="form-control @error('td') is-invalid  
+                                        <input type="text" name="tekanan_darah" id="tekanan_darah" value="{{ old('tekanan_darah') }}" placeholder="masukkan hanya angka" class="form-control @error('tekanan_darah') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <b>mmHg</b>
                                             </div>
                                         </div>
-                                        @error('td')
+                                        @error('tekanan_darah')
                                             <span class="text-danger" style="font-size: 12px;">
                                                 {{ $message }}
                                             </span>
@@ -207,14 +208,14 @@
                                 <div class="form-group">
                                     <label>Berat Badan</label><code> (jika kosong beri tanda -)</code>
                                     <div class="input-group">
-                                        <input type="text" name="bb" id="bb" value="{{ old('bb') }}" placeholder="masukkan hanya angka" class="form-control @error('bb') is-invalid  
+                                        <input type="text" name="berat_badan" id="berat_badan" value="{{ old('berat_badan') }}" placeholder="masukkan hanya angka" class="form-control @error('berat_badan') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <b>Kg</b>
                                             </div>
                                         </div>
-                                        @error('bb')
+                                        @error('berat_badan')
                                             <span class="text-danger" style="font-size: 12px;">
                                                 {{ $message }}
                                             </span>
@@ -226,13 +227,13 @@
                                 <div class="form-group">
                                     <label>Tinggi Badan</label><code> (jika kosong beri tanda -)</code>
                                     <div class="input-group">
-                                        <input type="text" name="tb" id="tb" value="{{ old('tb') }}" placeholder="masukkan hanya angka" class="form-control @error('tb') is-invalid  
+                                        <input type="text" name="tinggi_badan" id="tinggi_badan" value="{{ old('tinggi_badan') }}" placeholder="masukkan hanya angka" class="form-control @error('tinggi_badan') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <b>M/Cm</b>
                                             </div>
-                                            @error('tb')
+                                            @error('tinggi_badan')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
@@ -303,13 +304,13 @@
                                         <td></td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="izin_pembedahan" id="izin_pembedahan1" value="ya">
+                                                <input class="form-check-input" type="radio" name="surat_izin_pembedahan" id="izin_pembedahan1" value="ya">
                                                 <label class="form-check-label" for="izin_pembedahan1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="izin_pembedahan" id="izin_pembedahan2" value="tidak" checked>
+                                                <input class="form-check-input" type="radio" name="surat_izin_pembedahan" id="izin_pembedahan2" value="tidak" checked>
                                                 <label class="form-check-label" for="izin_pembedahan2">Tidak</label>
                                             </div>
                                         </td>
@@ -320,13 +321,13 @@
                                         <td></td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="tandai_operasi" id="tandai_operasi1" value="ya">
+                                                <input class="form-check-input" type="radio" name="tandai_daerah_operasi" id="tandai_operasi1" value="ya">
                                                 <label class="form-check-label" for="tandai_operasi1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="tandai_operasi" id="tandai_operasi2" value="tidak" checked>
+                                                <input class="form-check-input" type="radio" name="tandai_daerah_operasi" id="tandai_operasi2" value="tidak" checked>
                                                 <label class="form-check-label" for="tandai_operasi2">Tidak</label>
                                             </div>
                                         </td>
@@ -337,13 +338,13 @@
                                         <td></td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="geland_identitas" id="geland_identitas1" value="ya">
+                                                <input class="form-check-input" type="radio" name="memakai_gelang_identitas" id="geland_identitas1" value="ya">
                                                 <label class="form-check-label" for="geland_identitas1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="geland_identitas" id="geland_identitas2" value="tidak" checked>
+                                                <input class="form-check-input" type="radio" name="memakai_gelang_identitas" id="geland_identitas2" value="tidak" checked>
                                                 <label class="form-check-label" for="geland_identitas2">Tidak</label>
                                             </div>
                                         </td>
@@ -388,13 +389,13 @@
                                         <td></td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="oral_hygiene" id="oral_hygiene1" value="ya">
+                                                <input class="form-check-input" type="radio" name="melakukan_oral_hygiene" id="oral_hygiene1" value="ya">
                                                 <label class="form-check-label" for="oral_hygiene1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="oral_hygiene" id="oral_hygiene2" value="tidak" checked>
+                                                <input class="form-check-input" type="radio" name="melakukan_oral_hygiene" id="oral_hygiene2" value="tidak" checked>
                                                 <label class="form-check-label" for="oral_hygiene2">Tidak</label>
                                             </div>
                                         </td>
@@ -405,13 +406,13 @@
                                         <td></td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="memasang_bidai_fiksasi" id="memasang_bidai_fiksasi1" value="ya">
+                                                <input class="form-check-input" type="radio" name="memasang_bidai" id="memasang_bidai_fiksasi1" value="ya">
                                                 <label class="form-check-label" for="memasang_bidai_fiksasi1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="memasang_bidai_fiksasi" id="memasang_bidai_fiksasi2" value="tidak" checked>
+                                                <input class="form-check-input" type="radio" name="memasang_bidai" id="memasang_bidai_fiksasi2" value="tidak" checked>
                                                 <label class="form-check-label" for="memasang_bidai_fiksasi2">Tidak</label>
                                             </div>
                                         </td>
@@ -438,7 +439,7 @@
                                         <td>Memasang DC</td>
                                         <td>
                                             <div class="input-group">
-                                                <input type="text" name="no_dc" class="form-control" placeholder="No :">
+                                                <input type="text" name="deskripsi_dc" class="form-control" placeholder="No :">
                                             </div>
                                         </td>
                                         <td>
@@ -459,7 +460,7 @@
                                         <td>Memasang NGT</td>
                                         <td>
                                             <div class="input-group">
-                                                <input type="text" name="no_dc" class="form-control" placeholder="No :">
+                                                <input type="text" name="deskripsi_ngt" class="form-control" placeholder="No :">
                                             </div>
                                         </td>
                                         <td>
@@ -515,13 +516,13 @@
                                         <td></td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="mencukur_daerah" id="mencukur_daerah1" value="ya">
+                                                <input class="form-check-input" type="radio" name="mencukur_daerah_operasi" id="mencukur_daerah1" value="ya">
                                                 <label class="form-check-label" for="mencukur_daerah1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="mencukur_daerah" id="mencukur_daerah2" value="tidak" checked>
+                                                <input class="form-check-input" type="radio" name="mencukur_daerah_operasi" id="mencukur_daerah2" value="tidak" checked>
                                                 <label class="form-check-label" for="mencukur_daerah2">Tidak</label>
                                             </div>
                                         </td>
@@ -531,18 +532,18 @@
                                         <td>Lain-lain</td>
                                         <td>
                                             <div class="input-group">
-                                                <input type="text" name="no_dc" class="form-control" placeholder="Lainnya...">
+                                                <input type="text" name="deskripsi_lainnya" class="form-control" placeholder="Lainnya...">
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="lain_lain" id="lain_lain1" value="ya">
+                                                <input class="form-check-input" type="radio" name="lainnya" id="lain_lain1" value="ya">
                                                 <label class="form-check-label" for="lain_lain1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="lain_lain" id="lain_lain2" value="tidak" checked>
+                                                <input class="form-check-input" type="radio" name="lainnya" id="lain_lain2" value="tidak" checked>
                                                 <label class="form-check-label" for="lain_lain2">Tidak</label>
                                             </div>
                                         </td>
@@ -567,13 +568,13 @@
                                         <td>DM</td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="dm" id="dm1" value="ya">
+                                                <input class="form-check-input" type="radio" name="penyakit_dm" id="dm1" value="ya">
                                                 <label class="form-check-label" for="dm1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="dm" id="dm2" value="tidak" checked>
+                                                <input class="form-check-input" type="radio" name="penyakit_dm" id="dm2" value="tidak" checked>
                                                 <label class="form-check-label" for="dm2">Tidak</label>
                                             </div>
                                         </td>
@@ -583,13 +584,13 @@
                                         <td>Hipertensi</td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="hipertensi" id="hipertensi1" value="ya">
+                                                <input class="form-check-input" type="radio" name="penyakit_hipertensi" id="hipertensi1" value="ya">
                                                 <label class="form-check-label" for="hipertensi1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="hipertensi" id="hipertensi2" value="tidak" checked>
+                                                <input class="form-check-input" type="radio" name="penyakit_hipertensi" id="hipertensi2" value="tidak" checked>
                                                 <label class="form-check-label" for="hipertensi2">Tidak</label>
                                             </div>
                                         </td>
@@ -599,13 +600,13 @@
                                         <td>TB Paru</td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="tb_paru" id="tb_paru1" value="ya">
+                                                <input class="form-check-input" type="radio" name="penyakit_tb_paru" id="tb_paru1" value="ya">
                                                 <label class="form-check-label" for="tb_paru1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="tb_paru" id="tb_paru2" value="tidak" checked>
+                                                <input class="form-check-input" type="radio" name="penyakit_tb_paru" id="tb_paru2" value="tidak" checked>
                                                 <label class="form-check-label" for="tb_paru2">Tidak</label>
                                             </div>
                                         </td>
@@ -615,13 +616,13 @@
                                         <td>HIV / AIDS</td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="hiv_aids" id="hiv_aids1" value="ya">
+                                                <input class="form-check-input" type="radio" name="penyakit_hiv" id="hiv_aids1" value="ya">
                                                 <label class="form-check-label" for="hiv_aids1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="hiv_aids" id="hiv_aids2" value="tidak" checked>
+                                                <input class="form-check-input" type="radio" name="penyakit_hiv" id="hiv_aids2" value="tidak" checked>
                                                 <label class="form-check-label" for="hiv_aids2">Tidak</label>
                                             </div>
                                         </td>
@@ -631,13 +632,13 @@
                                         <td>Hepatitis B-C-A</td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="hepatitis" id="hepatitis1" value="ya">
+                                                <input class="form-check-input" type="radio" name="penyakit_hepatitis" id="hepatitis1" value="ya">
                                                 <label class="form-check-label" for="hepatitis1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="hepatitis" id="hepatitis2" value="tidak" checked>
+                                                <input class="form-check-input" type="radio" name="penyakit_hepatitis" id="hepatitis2" value="tidak" checked>
                                                 <label class="form-check-label" for="hepatitis2">Tidak</label>
                                             </div>
                                         </td>
@@ -820,7 +821,7 @@
 
 {{-- SCRIPT VITAL SIGN --}}
 <script>
-    document.getElementById('td').addEventListener('keypress', function(event) {
+    document.getElementById('tekanan_darah').addEventListener('keypress', function(event) {
         const keyCode = event.keyCode;
         const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
 
@@ -844,7 +845,7 @@
             event.preventDefault();
         }
     });
-    document.getElementById('bb').addEventListener('keypress', function(event) {
+    document.getElementById('berat_badan').addEventListener('keypress', function(event) {
         const keyCode = event.keyCode;
         const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
 
@@ -852,7 +853,7 @@
             event.preventDefault();
         }
     });
-    document.getElementById('tb').addEventListener('keypress', function(event) {
+    document.getElementById('tinggi_badan').addEventListener('keypress', function(event) {
         const keyCode = event.keyCode;
         const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
 
@@ -860,7 +861,7 @@
             event.preventDefault();
         }
     });
-    document.getElementById('respirasi').addEventListener('keypress', function(event) {
+    document.getElementById('pernafasan').addEventListener('keypress', function(event) {
         const keyCode = event.keyCode;
         const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
 

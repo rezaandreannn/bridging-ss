@@ -35,10 +35,14 @@ Route::prefix('operasi')->name('operasi.')->middleware('auth')->group(function (
     // Pre Operasi
     Route::get('/pre-operasi', [PreOperasiController::class, 'index'])->name('pre-operasi.index');
     Route::get('/pre-operasi/create/{kode_register}', [PreOperasiController::class, 'create'])->name('pre-operasi.create');
+    Route::post('/pre-operasi', [PreOperasiController::class, 'store'])->name('pre-operasi.store');
 
     // Post Operasi
     Route::get('/post-operasi', [PostOperasiController::class, 'index'])->name('post-operasi.index');
     Route::get('/post-operasi/create/{kode_register}', [PostOperasiController::class, 'create'])->name('post-operasi.create');
+    Route::post('/post-operasi', [PostOperasiController::class, 'store'])->name('post-operasi.store');
+    Route::get('/post-operasi/update/{kode_register}', [PostOperasiController::class, 'edit'])->name('post-operasi.edit');
+    Route::put('/post-operasi/update/{kode_register}', [PostOperasiController::class, 'update'])->name('post-operasi.update');
 });
 
 Route::prefix('ruangan')->name('ruangan.')->middleware('auth')->group(function () {});
@@ -75,6 +79,7 @@ Route::prefix('laporan')->name('laporan.')->middleware('auth')->group(function (
     Route::get('operasi/edit/{kode_register}', [LaporanOperasiController::class, 'edit'])->name('operasi.edit');
     Route::put('operasi/{kode_register}', [LaporanOperasiController::class, 'update'])->name('operasi.update');
     Route::delete('operasi/{kode_register}', [LaporanOperasiController::class, 'destroy'])->name('operasi.destroy');
+    Route::get('operasi/cetak/{kode_register}', [LaporanOperasiController::class, 'cetak'])->name('operasi.cetak');
 });
 
 // Pembuka Booking Operasi

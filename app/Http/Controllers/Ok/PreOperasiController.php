@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Ok;
 
+use Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Operasi\PreOperasi\StorePreOperasiRequest;
 use App\Services\Operasi\BookingOperasiService;
+use App\Services\Operasi\DataUmum\PreOperasiService;
 use App\Services\Operasi\PraBedah\AssesmenPraBedahService;
 
 class PreOperasiController extends Controller
@@ -13,12 +16,14 @@ class PreOperasiController extends Controller
     protected $routeIndex;
     protected $prefix;
     protected $bookingOperasiService;
+    protected $preOperasiService;
 
     public function __construct()
     {
         $this->view = 'pages.ok.operasi.pre-operasi.';
         $this->prefix = 'Pre Operasi';
         $this->bookingOperasiService = new BookingOperasiService();
+        $this->preOperasiService = new PreOperasiService();
     }
 
     public function index()
@@ -60,9 +65,16 @@ class PreOperasiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePreOperasiRequest $request)
     {
-        //
+        try {
+            $this->preOperasiService->insert($request->validated());
+
+            return redirect('/operasi/pre-operasi')->with('success', 'Pre Operasi berhasil ditambahkan.');
+        } catch (Exception $e) {
+            // Redirect dengan pesan error jika terjadi kegagalan
+            return redirect()->back()->with('error', 'Gagal menambahkan post operasi: ' . $e->getMessage());
+        }
     }
 
     /**

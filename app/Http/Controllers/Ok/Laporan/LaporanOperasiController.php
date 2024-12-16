@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Ok\Laporan;
 
 use Exception;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 use App\Models\Operasi\LaporanOperasi;
 use App\Helpers\Ok\LaporanOperasiHelper;
@@ -31,6 +33,25 @@ class LaporanOperasiController extends Controller
         $this->laporanOperasiService = new LaporanOperasiService();
     }
 
+    public function cetak($kode_register)
+    {
+        $title = $this->prefix . ' ' . 'Operasi';
+        // Ambil data berdasarkan ID
+
+        $cetak = $this->laporanOperasiService->laporanByRegister($kode_register);
+        $biodata = $this->bookingOperasiService->biodata($kode_register);
+        // dd($biodata);
+
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+        $filename = 'LaporanOperasi-' . $date;
+
+        $pdf = PDF::loadview('pages.ok.laporan-operasi.cetak-laporan', ['cetak' => $cetak, 'title' => $title, 'tanggal' => $tanggal, 'biodata' => $biodata]);
+        // Set paper size to A5
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
+    }
+
     public function index(Request $request)
     {
         $title = $this->prefix . ' ' . 'List';
@@ -39,7 +60,7 @@ class LaporanOperasiController extends Controller
         if ($request->input('tanggal') != null) {
             $date = $request->input('tanggal');
         }
-    
+
         $sessionKodeDokter = auth()->user()->username ?? null;
         // dd($sessionKodeDokter);
         $laporans = $this->bookingOperasiService->byDokterOrAdmin($date, $sessionKodeDokter ?? '');
@@ -63,7 +84,7 @@ class LaporanOperasiController extends Controller
     {
         $biodata = $this->bookingOperasiService->biodata($kode_register);
 
-      
+
         // dd($this->bookingOperasiService->findByRegister($kode_register));
 
         return view($this->view . 'create', compact('biodata'))->with([
@@ -88,7 +109,7 @@ class LaporanOperasiController extends Controller
         try {
             $this->laporanOperasiService->insert($request->validated());
 
-            return redirect('laporan/operasi?tanggal='.$request->input('tanggal'))->with('success', 'Laporan operasi berhasil ditambahkan.');
+            return redirect('laporan/operasi?tanggal=' . $request->input('tanggal'))->with('success', 'Laporan operasi berhasil ditambahkan.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
             return redirect()->back()->with('error', 'Gagal menambahkan laporan operasi: ' . $e->getMessage());
@@ -141,9 +162,9 @@ class LaporanOperasiController extends Controller
     {
         //
         try {
-            $this->laporanOperasiService->update($id,$request->validated());
+            $this->laporanOperasiService->update($id, $request->validated());
 
-            return redirect('laporan/operasi?tanggal='.$request->input('tanggal'))->with('success', 'Laporan operasi berhasil diperbarui.');
+            return redirect('laporan/operasi?tanggal=' . $request->input('tanggal'))->with('success', 'Laporan operasi berhasil diperbarui.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
             return redirect()->back()->with('error', 'Gagal memperbarui laporan operasi: ' . $e->getMessage());

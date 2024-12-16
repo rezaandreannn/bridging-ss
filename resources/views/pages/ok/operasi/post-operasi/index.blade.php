@@ -60,9 +60,16 @@
                                                     </a>
                                                     <div class="dropdown-menu">
                                                         {{-- Input --}}
-                                                        <a class="dropdown-item has-icon" href="{{ route('operasi.post-operasi.create', $booking->kode_register )}}"> 
-                                                            <i class="fas fa-pencil-alt"></i> Entry
-                                                        </a>
+                                                        @if (isset($statusPost[$booking->kode_register]) && 
+                                                            array_filter($statusPost[$booking->kode_register]))
+                                                            <a class="dropdown-item has-icon" href="{{ route('operasi.post-operasi.edit', $booking->kode_register) }}">
+                                                                <i class="fas fa-edit"></i> Edit
+                                                            </a>
+                                                        @else
+                                                            <a class="dropdown-item has-icon" href="{{ route('operasi.post-operasi.create', $booking->kode_register) }}">
+                                                                <i class="fas fa-plus"></i> Tambah
+                                                            </a>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </td>
