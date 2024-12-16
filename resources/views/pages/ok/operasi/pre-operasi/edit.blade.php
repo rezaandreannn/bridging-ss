@@ -26,8 +26,9 @@
         <div class="section-body">
             <!-- components biodata pasien by no reg -->
             @include('components.biodata-pasien-ok-bynoreg')
-            <form action="{{ route('operasi.pre-operasi.store') }}" method="POST">
-            @csrf
+            <form action="{{ route('operasi.pre-operasi.update',$biodata->kode_register) }}" method="POST">
+                @csrf
+                @method('put')
                 {{-- Data UMUM --}}
                 <div class="card mb-3">
                     <div class="card-header card-khusus-header">
@@ -132,114 +133,114 @@
                                 <div class="form-group">
                                     <label>P</label>
                                     <div class="input-group">
-                                        <input type="text" name="pernafasan" value="{{ old('pernafasan') }}" id="pernafasan" placeholder="masukkan hanya angka" class="form-control @error('pernafasan') is-invalid  
+                                        <input type="text" name="pernafasan" value="{{ $preOperasi['ttv']->pernafasan ?? '' }}" id="pernafasan" placeholder="masukkan hanya angka" class="form-control @error('pernafasan') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <b>x/menit</b>
                                             </div>
                                         </div>
-                                        @error('pernafasan')
-                                            <span class="text-danger" style="font-size: 12px;">
-                                                {{ $message }}
-                                            </span>
-                                        @enderror
                                     </div>
+                                    @error('pernafasan')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Nadi</label>
                                     <div class="input-group">
-                                        <input type="text" name="nadi" value="{{ old('nadi') }}" id="nadi" placeholder="masukkan hanya angka" class="form-control @error('nadi') is-invalid  
+                                        <input type="text" name="nadi" value="{{ $preOperasi['ttv']->nadi ?? '' }}" id="nadi" placeholder="masukkan hanya angka" class="form-control @error('nadi') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <b>x/menit</b>
                                             </div>
                                         </div>
-                                        @error('nadi')
-                                        <span class="text-danger" style="font-size: 12px;">
-                                            {{ $message }}
-                                        </span>
-                                        @enderror
                                     </div>
+                                    @error('nadi')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Tekanan Darah</label><code> (contoh : 110/90)</code>
                                     <div class="input-group">
-                                        <input type="text" name="tekanan_darah" id="tekanan_darah" value="{{ old('tekanan_darah') }}" placeholder="masukkan hanya angka" class="form-control @error('tekanan_darah') is-invalid  
+                                        <input type="text" name="tekanan_darah" id="tekanan_darah" value="{{ $preOperasi['ttv']->tekanan_darah ?? '' }}" placeholder="masukkan hanya angka" class="form-control @error('tekanan_darah') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <b>mmHg</b>
                                             </div>
                                         </div>
-                                        @error('tekanan_darah')
-                                            <span class="text-danger" style="font-size: 12px;">
-                                                {{ $message }}
-                                            </span>
-                                        @enderror
                                     </div>
+                                    @error('tekanan_darah')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Suhu</label><code> (gunakan tanda . contoh : 36.5)</code>
                                     <div class="input-group">
-                                        <input type="text" name="suhu" id="suhu" value="{{ old('suhu') }}" placeholder="masukkan hanya angka" class="form-control @error('suhu') is-invalid  
+                                        <input type="text" name="suhu" id="suhu" value="{{ $preOperasi['ttv']->suhu ?? '' }}" placeholder="masukkan hanya angka" class="form-control @error('suhu') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <b>C</b>
                                             </div>
                                         </div>
-                                        @error('suhu')
-                                            <span class="text-danger" style="font-size: 12px;">
-                                                {{ $message }}
-                                            </span>
-                                        @enderror
                                     </div>
+                                    @error('suhu')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Berat Badan</label><code> (jika kosong beri tanda -)</code>
                                     <div class="input-group">
-                                        <input type="text" name="berat_badan" id="berat_badan" value="{{ old('berat_badan') }}" placeholder="masukkan hanya angka" class="form-control @error('berat_badan') is-invalid  
+                                        <input type="text" name="berat_badan" id="berat_badan" value="{{ $preOperasi['ttv']->berat_badan ?? '' }}" placeholder="masukkan hanya angka" class="form-control @error('berat_badan') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <b>Kg</b>
                                             </div>
                                         </div>
-                                        @error('berat_badan')
-                                            <span class="text-danger" style="font-size: 12px;">
-                                                {{ $message }}
-                                            </span>
-                                        @enderror
                                     </div>
+                                    @error('berat_badan')
+                                        <span class="text-danger" style="font-size: 12px;">
+                                            {{ $message }}
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Tinggi Badan</label><code> (jika kosong beri tanda -)</code>
                                     <div class="input-group">
-                                        <input type="text" name="tinggi_badan" id="tinggi_badan" value="{{ old('tinggi_badan') }}" placeholder="masukkan hanya angka" class="form-control @error('tinggi_badan') is-invalid  
+                                        <input type="text" name="tinggi_badan" id="tinggi_badan" value="{{ $preOperasi['ttv']->tinggi_badan ?? '' }}" placeholder="masukkan hanya angka" class="form-control @error('tinggi_badan') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <b>M/Cm</b>
                                             </div>
-                                            @error('tinggi_badan')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                            @enderror
                                         </div>
                                     </div>
+                                    @error('tinggi_badan')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -270,13 +271,13 @@
                                         <td></td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="lapor_dokter" id="lapor_dokter1" value="1">
+                                                <input class="form-check-input" type="radio" name="lapor_dokter" id="lapor_dokter1" value="1" {{ ($preOperasi['tindakan']->lapor_dokter =='1') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="lapor_dokter1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="lapor_dokter" id="lapor_dokter2" value="0" checked>
+                                                <input class="form-check-input" type="radio" name="lapor_dokter" id="lapor_dokter2" value="0" {{ ($preOperasi['tindakan']->lapor_dokter =='0') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="lapor_dokter2">Tidak</label>
                                             </div>
                                         </td>
@@ -287,13 +288,13 @@
                                         <td></td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="lapor_kamar" id="lapor_kamar1" value="1">
+                                                <input class="form-check-input" type="radio" name="lapor_kamar" id="lapor_kamar1" value="1" {{ ($preOperasi['tindakan']->lapor_kamar =='1') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="lapor_kamar1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="lapor_kamar" id="lapor_kamar2" value="0" checked>
+                                                <input class="form-check-input" type="radio" name="lapor_kamar" id="lapor_kamar2" value="0" {{ ($preOperasi['tindakan']->lapor_kamar =='0') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="lapor_kamar2">Tidak</label>
                                             </div>
                                         </td>
@@ -304,13 +305,13 @@
                                         <td></td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="surat_izin_pembedahan" id="izin_pembedahan1" value="1">
+                                                <input class="form-check-input" type="radio" name="surat_izin_pembedahan" id="izin_pembedahan1" value="1" {{ ($preOperasi['tindakan']->surat_izin_pembedahan =='1') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="izin_pembedahan1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="surat_izin_pembedahan" id="izin_pembedahan2" value="0" checked>
+                                                <input class="form-check-input" type="radio" name="surat_izin_pembedahan" id="izin_pembedahan2" value="0" {{ ($preOperasi['tindakan']->surat_izin_pembedahan =='0') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="izin_pembedahan2">Tidak</label>
                                             </div>
                                         </td>
@@ -321,13 +322,13 @@
                                         <td></td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="tandai_daerah_operasi" id="tandai_operasi1" value="1">
+                                                <input class="form-check-input" type="radio" name="tandai_daerah_operasi" id="tandai_operasi1" value="1" {{ ($preOperasi['tindakan']->tandai_daerah_operasi =='1') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="tandai_operasi1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="tandai_daerah_operasi" id="tandai_operasi2" value="0" checked>
+                                                <input class="form-check-input" type="radio" name="tandai_daerah_operasi" id="tandai_operasi2" value="0" {{ ($preOperasi['tindakan']->tandai_daerah_operasi =='0') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="tandai_operasi2">Tidak</label>
                                             </div>
                                         </td>
@@ -338,13 +339,13 @@
                                         <td></td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="memakai_gelang_identitas" id="geland_identitas1" value="1">
+                                                <input class="form-check-input" type="radio" name="memakai_gelang_identitas" id="geland_identitas1" value="1" {{ ($preOperasi['tindakan']->memakai_gelang_identitas =='1') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="geland_identitas1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="memakai_gelang_identitas" id="geland_identitas2" value="0" checked>
+                                                <input class="form-check-input" type="radio" name="memakai_gelang_identitas" id="geland_identitas2" value="0" {{ ($preOperasi['tindakan']->memakai_gelang_identitas =='0') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="geland_identitas2">Tidak</label>
                                             </div>
                                         </td>
@@ -355,13 +356,13 @@
                                         <td></td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="melepas_aksesoris" id="melepas_aksesoris1" value="1">
+                                                <input class="form-check-input" type="radio" name="melepas_aksesoris" id="melepas_aksesoris1" value="1" {{ ($preOperasi['tindakan']->melepas_aksesoris =='1') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="melepas_aksesoris1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="melepas_aksesoris" id="melepas_aksesoris2" value="0" checked>
+                                                <input class="form-check-input" type="radio" name="melepas_aksesoris" id="melepas_aksesoris2" value="0" {{ ($preOperasi['tindakan']->melepas_aksesoris =='0') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="melepas_aksesoris2">Tidak</label>
                                             </div>
                                         </td>
@@ -372,13 +373,13 @@
                                         <td></td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="menghapus_aksesoris" id="menghapus_aksesoris1" value="1">
+                                                <input class="form-check-input" type="radio" name="menghapus_aksesoris" id="menghapus_aksesoris1" value="1" {{ ($preOperasi['tindakan']->menghapus_aksesoris =='1') ? 'checked' : '' }}> 
                                                 <label class="form-check-label" for="menghapus_aksesoris1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="menghapus_aksesoris" id="menghapus_aksesoris2" value="0" checked>
+                                                <input class="form-check-input" type="radio" name="menghapus_aksesoris" id="menghapus_aksesoris2" value="0" {{ ($preOperasi['tindakan']->menghapus_aksesoris =='0') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="menghapus_aksesoris2">Tidak</label>
                                             </div>
                                         </td>
@@ -389,13 +390,13 @@
                                         <td></td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="melakukan_oral_hygiene" id="oral_hygiene1" value="1">
+                                                <input class="form-check-input" type="radio" name="melakukan_oral_hygiene" id="oral_hygiene1" value="1" {{ ($preOperasi['tindakan']->melakukan_oral_hygiene =='1') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="oral_hygiene1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="melakukan_oral_hygiene" id="oral_hygiene2" value="0" checked>
+                                                <input class="form-check-input" type="radio" name="melakukan_oral_hygiene" id="oral_hygiene2" value="0" {{ ($preOperasi['tindakan']->melakukan_oral_hygiene =='0') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="oral_hygiene2">Tidak</label>
                                             </div>
                                         </td>
@@ -406,13 +407,13 @@
                                         <td></td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="memasang_bidai" id="memasang_bidai_fiksasi1" value="1">
+                                                <input class="form-check-input" type="radio" name="memasang_bidai" id="memasang_bidai_fiksasi1" value="1" {{ ($preOperasi['tindakan']->memasang_bidai =='1') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="memasang_bidai_fiksasi1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="memasang_bidai" id="memasang_bidai_fiksasi2" value="0" checked>
+                                                <input class="form-check-input" type="radio" name="memasang_bidai" id="memasang_bidai_fiksasi2" value="0" {{ ($preOperasi['tindakan']->memasang_bidai =='0') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="memasang_bidai_fiksasi2">Tidak</label>
                                             </div>
                                         </td>
@@ -423,13 +424,13 @@
                                         <td></td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="memasang_infuse" id="memasang_infuse1" value="1">
+                                                <input class="form-check-input" type="radio" name="memasang_infuse" id="memasang_infuse1" value="1" {{ ($preOperasi['tindakan']->memasang_infuse =='1') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="memasang_infuse1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="memasang_infuse" id="memasang_infuse2" value="0" checked>
+                                                <input class="form-check-input" type="radio" name="memasang_infuse" id="memasang_infuse2" value="0" {{ ($preOperasi['tindakan']->memasang_infuse =='0') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="memasang_infuse2">Tidak</label>
                                             </div>
                                         </td>
@@ -439,18 +440,18 @@
                                         <td>Memasang DC</td>
                                         <td>
                                             <div class="input-group">
-                                                <input type="text" name="deskripsi_dc" class="form-control" placeholder="No :">
+                                                <input type="text" name="deskripsi_dc" class="form-control" placeholder="No :" value="{{ $preOperasi['tindakan']->deskripsi_dc ?? '' }}">
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="memasang_dc" id="memasang_dc1" value="1">
+                                                <input class="form-check-input" type="radio" name="memasang_dc" id="memasang_dc1" value="1" {{ ($preOperasi['tindakan']->memasang_dc =='1') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="memasang_dc1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="memasang_dc" id="memasang_dc2" value="0" checked>
+                                                <input class="form-check-input" type="radio" name="memasang_dc" id="memasang_dc2" value="0" {{ ($preOperasi['tindakan']->memasang_dc =='0') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="memasang_dc2">Tidak</label>
                                             </div>
                                         </td>
@@ -460,18 +461,18 @@
                                         <td>Memasang NGT</td>
                                         <td>
                                             <div class="input-group">
-                                                <input type="text" name="deskripsi_ngt" class="form-control" placeholder="No :">
+                                                <input type="text" name="deskripsi_ngt" class="form-control" placeholder="No :" value="{{ $preOperasi['tindakan']->deskripsi_ngt ?? '' }}">
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="memasang_ngt" id="memasang_ngt1" value="1">
+                                                <input class="form-check-input" type="radio" name="memasang_ngt" id="memasang_ngt1" value="1" {{ ($preOperasi['tindakan']->memasang_ngt =='1') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="memasang_ngt1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="memasang_ngt" id="memasang_ngt2" value="0" checked>
+                                                <input class="form-check-input" type="radio" name="memasang_ngt" id="memasang_ngt2" value="0" {{ ($preOperasi['tindakan']->memasang_ngt =='0') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="memasang_ngt2">Tidak</label>
                                             </div>
                                         </td>
@@ -482,13 +483,13 @@
                                         <td></td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="memasang_drainage" id="memasang_drainage1" value="1">
+                                                <input class="form-check-input" type="radio" name="memasang_drainage" id="memasang_drainage1" value="1" {{ ($preOperasi['tindakan']->memasang_drainage =='1') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="memasang_drainage1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="memasang_drainage" id="memasang_drainage2" value="0" checked>
+                                                <input class="form-check-input" type="radio" name="memasang_drainage" id="memasang_drainage2" value="0" {{ ($preOperasi['tindakan']->memasang_drainage =='0') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="memasang_drainage2">Tidak</label>
                                             </div>
                                         </td>
@@ -499,13 +500,13 @@
                                         <td></td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="memasang_wsd" id="memasang_wsd1" value="1">
+                                                <input class="form-check-input" type="radio" name="memasang_wsd" id="memasang_wsd1" value="1" {{ ($preOperasi['tindakan']->memasang_wsd =='1') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="memasang_wsd1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="memasang_wsd" id="memasang_wsd2" value="0" checked>
+                                                <input class="form-check-input" type="radio" name="memasang_wsd" id="memasang_wsd2" value="0" {{ ($preOperasi['tindakan']->memasang_wsd =='0') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="memasang_wsd2">Tidak</label>
                                             </div>
                                         </td>
@@ -516,13 +517,13 @@
                                         <td></td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="mencukur_daerah_operasi" id="mencukur_daerah1" value="1">
+                                                <input class="form-check-input" type="radio" name="mencukur_daerah_operasi" id="mencukur_daerah1" value="1" {{ ($preOperasi['tindakan']->mencukur_daerah_operasi =='1') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="mencukur_daerah1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="mencukur_daerah_operasi" id="mencukur_daerah2" value="0" checked>
+                                                <input class="form-check-input" type="radio" name="mencukur_daerah_operasi" id="mencukur_daerah2" value="0" {{ ($preOperasi['tindakan']->mencukur_daerah_operasi =='0') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="mencukur_daerah2">Tidak</label>
                                             </div>
                                         </td>
@@ -532,18 +533,18 @@
                                         <td>Lain-lain</td>
                                         <td>
                                             <div class="input-group">
-                                                <input type="text" name="deskripsi_lainnya" class="form-control" placeholder="Lainnya...">
+                                                <input type="text" name="deskripsi_lainnya" class="form-control" value="{{ $preOperasi['tindakan']->deskripsi_lainnya ?? '' }}" placeholder="Lainnya...">
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="lainnya" id="lain_lain1" value="1">
+                                                <input class="form-check-input" type="radio" name="lainnya" id="lain_lain1" value="1" {{ ($preOperasi['tindakan']->lainnya =='1') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="lain_lain1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="lainnya" id="lain_lain2" value="0" checked>
+                                                <input class="form-check-input" type="radio" name="lainnya" id="lain_lain2" value="0" {{ ($preOperasi['tindakan']->lainnya =='0') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="lain_lain2">Tidak</label>
                                             </div>
                                         </td>
@@ -568,13 +569,13 @@
                                         <td>DM</td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="penyakit_dm" id="dm1" value="1">
+                                                <input class="form-check-input" type="radio" name="penyakit_dm" id="dm1" value="1" {{ ($preOperasi['tindakan']->penyakit_dm =='1') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="dm1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="penyakit_dm" id="dm2" value="0" checked>
+                                                <input class="form-check-input" type="radio" name="penyakit_dm" id="dm2" value="0" {{ ($preOperasi['tindakan']->penyakit_dm =='0') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="dm2">Tidak</label>
                                             </div>
                                         </td>
@@ -584,13 +585,13 @@
                                         <td>Hipertensi</td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="penyakit_hipertensi" id="hipertensi1" value="1">
+                                                <input class="form-check-input" type="radio" name="penyakit_hipertensi" id="hipertensi1" value="1" {{ ($preOperasi['tindakan']->penyakit_hipertensi =='1') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="hipertensi1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="penyakit_hipertensi" id="hipertensi2" value="0" checked>
+                                                <input class="form-check-input" type="radio" name="penyakit_hipertensi" id="hipertensi2" value="0" {{ ($preOperasi['tindakan']->penyakit_hipertensi =='0') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="hipertensi2">Tidak</label>
                                             </div>
                                         </td>
@@ -600,13 +601,13 @@
                                         <td>TB Paru</td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="penyakit_tb_paru" id="tb_paru1" value="1">
+                                                <input class="form-check-input" type="radio" name="penyakit_tb_paru" id="tb_paru1" value="1" {{ ($preOperasi['tindakan']->penyakit_tb_paru =='1') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="tb_paru1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="penyakit_tb_paru" id="tb_paru2" value="0" checked>
+                                                <input class="form-check-input" type="radio" name="penyakit_tb_paru" id="tb_paru2" value="0" {{ ($preOperasi['tindakan']->penyakit_tb_paru =='0') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="tb_paru2">Tidak</label>
                                             </div>
                                         </td>
@@ -616,13 +617,13 @@
                                         <td>HIV / AIDS</td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="penyakit_hiv" id="hiv_aids1" value="1">
+                                                <input class="form-check-input" type="radio" name="penyakit_hiv" id="hiv_aids1" value="1" {{ ($preOperasi['tindakan']->penyakit_hiv =='1') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="hiv_aids1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="penyakit_hiv" id="hiv_aids2" value="0" checked>
+                                                <input class="form-check-input" type="radio" name="penyakit_hiv" id="hiv_aids2" value="0" {{ ($preOperasi['tindakan']->penyakit_hiv =='0') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="hiv_aids2">Tidak</label>
                                             </div>
                                         </td>
@@ -632,13 +633,13 @@
                                         <td>Hepatitis B-C-A</td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="penyakit_hepatitis" id="hepatitis1" value="1">
+                                                <input class="form-check-input" type="radio" name="penyakit_hepatitis" id="hepatitis1" value="1" {{ ($preOperasi['tindakan']->penyakit_hepatitis =='1') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="hepatitis1">Ya</label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="penyakit_hepatitis" id="hepatitis2" value="0" checked>
+                                                <input class="form-check-input" type="radio" name="penyakit_hepatitis" id="hepatitis2" value="0" {{ ($preOperasi['tindakan']->penyakit_hepatitis =='0') ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="hepatitis2">Tidak</label>
                                             </div>
                                         </td>

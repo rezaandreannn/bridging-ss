@@ -63,6 +63,10 @@
                                                         <a class="dropdown-item has-icon" href="{{ route('operasi.pre-operasi.create', $booking->kode_register )}}"> 
                                                             <i class="fas fa-pencil-alt"></i> Entry
                                                         </a>
+
+                                                        <a class="dropdown-item has-icon" href="{{ route('operasi.pre-operasi.edit', $booking->kode_register) }}">
+                                                            <i class="fas fa-edit"></i> Edit
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </td>

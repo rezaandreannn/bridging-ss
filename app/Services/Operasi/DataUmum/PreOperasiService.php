@@ -109,21 +109,41 @@ class PreOperasiService
         try {
 
             // Update Table Tindakan Post Operasi
-            $this->updateTable(TindakanPostOperasi::class, $kode_register, [
+            $this->updateTable(TindakanPreOperasi::class, $kode_register, [
                 'lapor_dokter' => $data['lapor_dokter'] ?? 0,
                 'lapor_kamar' => $data['lapor_kamar'] ?? 0,
                 'surat_izin_pembedahan' => $data['surat_izin_pembedahan'] ?? 0,
                 'tandai_daerah_operasi' => $data['tandai_daerah_operasi'] ?? 0,
-                'checklist_keselamatan_pasien' => $data['checklist_keselamatan_pasien'] ?? 0,
-                'checklist_monitoring' => $data['checklist_monitoring'] ?? 0,
-                'askep_perioperatif' => $data['askep_perioperatif'] ?? 0,
-                'lembar_pemantauan' => $data['lembar_pemantauan'] ?? 0,
-                'formulir_pemeriksaan' => $data['formulir_pemeriksaan'] ?? 0,
-                'sampel_pemeriksaan' => $data['sampel_pemeriksaan'] ?? 0,
-                'foto_rontgen' => $data['foto_rontgen'] ?? 0,
-                'resep' => $data['resep'] ?? 0,
+                'memakai_gelang_identitas' => $data['memakai_gelang_identitas'] ?? 0,
+                'melepas_aksesoris' => $data['melepas_aksesoris'] ?? 0,
+                'menghapus_aksesoris' => $data['menghapus_aksesoris'] ?? 0,
+                'melakukan_oral_hygiene' => $data['melakukan_oral_hygiene'] ?? 0,
+                'memasang_bidai' => $data['memasang_bidai'] ?? 0,
+                'memasang_infuse' => $data['memasang_infuse'] ?? 0,
+                'memasang_dc' => $data['memasang_dc'] ?? 0,
+                'deskripsi_dc' => $data['deskripsi_dc'] ?? '',
+                'memasang_ngt' => $data['memasang_ngt'] ?? 0,
+                'deskripsi_ngt' => $data['deskripsi_ngt'] ?? '',
+                'memasang_drainage' => $data['memasang_drainage'] ?? 0,
+                'memasang_wsd' => $data['memasang_wsd'] ?? 0,
+                'mencukur_daerah_operasi' => $data['mencukur_daerah_operasi'] ?? 0,
                 'lainnya' => $data['lainnya'] ?? 0,
                 'deskripsi_lainnya' => $data['deskripsi_lainnya'] ?? '',
+                'penyakit_dm' => $data['penyakit_dm'] ?? 0,
+                'penyakit_hipertensi' => $data['penyakit_hipertensi'] ?? 0,
+                'penyakit_tb_paru' => $data['penyakit_tb_paru'] ?? 0,
+                'penyakit_hiv' => $data['penyakit_hiv'] ?? 0,
+                'penyakit_hepatitis' => $data['penyakit_hepatitis'] ?? 0,
+                'updated_by' => auth()->user()->id
+            ]);
+
+            $this->updateTable(PemeriksaanFisikPreOperasi::class, $kode_register, [
+                'tinggi_badan' => $data['tinggi_badan'] ?? '',
+                'berat_badan' => $data['berat_badan'] ?? '',
+                'tekanan_darah' => $data['tekanan_darah'] ?? '',
+                'nadi' => $data['nadi'] ?? '',
+                'suhu' => $data['suhu'] ?? '',
+                'pernafasan' => $data['pernafasan'] ?? '',
                 'updated_by' => auth()->user()->id
             ]);
 
