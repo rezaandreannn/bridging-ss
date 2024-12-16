@@ -25,7 +25,6 @@ class StoreLaporanOperasi extends FormRequest
     public function rules()
     {
 
-
         return [
             'kode_register' => 'required|string',
             'tanggal' => 'required',
@@ -37,6 +36,9 @@ class StoreLaporanOperasi extends FormRequest
             'lama_operasi' => 'nullable',
             'permintaan_pa' => 'nullable',
             'laporan_operasi' => 'required',
+            'nama_operator' => 'required',
+            'nama_asisten' => 'required',
+            'nama_perawat' => 'required',
             // 'cara_masuk' => 'nullable|string'
         ];
     }
