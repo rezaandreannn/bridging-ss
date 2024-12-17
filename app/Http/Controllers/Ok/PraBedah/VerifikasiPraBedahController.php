@@ -34,8 +34,9 @@ class VerifikasiPraBedahController extends Controller
     public function index(Request $request)
     {
         $title = $this->prefix . ' ' . 'List';
-        // $date = '2024-12-05';
         $date = date('Y-m-d');
+
+
         // Status Tanda Tangan
         $userId = auth()->id();
         $statusTtd = TtdPerawat::where('user_id', $userId)->exists();
@@ -44,8 +45,10 @@ class VerifikasiPraBedahController extends Controller
         // get data from service
         $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
         $verifikasis = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
+
         // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
         $statusBerkas = BookingHelper::getStatusBerkasVerifikasi($verifikasis);
+        // dd($statusBerkas);
         $statusVerifikasi = BookingHelper::getStatusVerifikasi($verifikasis);
 
         return view($this->view . 'verifikasi-prabedah.index', compact('verifikasis'))
@@ -73,6 +76,7 @@ class VerifikasiPraBedahController extends Controller
 
         $checklistPenandaan = $penandaanLokasi ? true : false;
         $checklistAssesmenPraBedah = $assesmenPraBedah ? true : false;
+        // dd($assesmenPraBedah);
 
         return view($this->view . 'verifikasi-prabedah.create', compact('title', 'biodata', 'checklistPenandaan', 'checklistAssesmenPraBedah'));
     }

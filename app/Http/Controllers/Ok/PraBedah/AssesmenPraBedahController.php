@@ -40,7 +40,7 @@ class AssesmenPraBedahController extends Controller
         // get data from service
         $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
         $verifikasis = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
-
+        // dd($verifikasis);
         $statusAssesmen = BookingHelper::getStatusAssesmen($verifikasis);
         // dd($statusAssesmen);
 

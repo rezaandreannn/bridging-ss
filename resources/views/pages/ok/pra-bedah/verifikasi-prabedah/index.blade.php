@@ -39,7 +39,7 @@
                                     <th scope="col">No MR</th>
                                     <th scope="col">Nama Pasien</th>
                                     <th scope="col">Tanggal</th>
-                                    <th scope="col">Perawat</th>
+                                    <th scope="col">Dokter Operator</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
@@ -51,7 +51,7 @@
                                     <td>{{$verifikasi->no_mr}}</td>
                                     <td>{{$verifikasi->nama_pasien}}</td>
                                     <td>{{$verifikasi->tanggal}}</td>
-                                    <td>Fiki</td>
+                                    <td>{{$verifikasi->nama_dokter}}</td>
                                     <td>
                                     @if (isset($statusBerkas[$verifikasi->id]))
                                         <div class="row">

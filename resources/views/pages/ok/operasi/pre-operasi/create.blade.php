@@ -36,7 +36,7 @@
                     <!-- include form -->
                     <div class="card-body card-khusus-body">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <input type="hidden" name="kode_register" value="{{$biodata->pendaftaran->No_Reg}}">
                                 <div class="form-group">
                                     <label>Diagnosa</label>
@@ -62,7 +62,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Dokter Operator</label>
-                                    <input type="text" name="nama_operator" value="{{$biodata->dokter->Nama_Dokter}}" class="form-control @error('nama_operator') is-invalid @enderror" disabled>
+                                    <input type="text" name="nama_operator" value="{{$bookingByRegister->dokter->Nama_Dokter}}" class="form-control @error('nama_operator') is-invalid @enderror" readonly>
                                     @error('nama_operator')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -85,19 +85,30 @@
                                 <div class="form-group">
                                     <label>Riwayat Asma</label>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="riwayat_asma" id="riwayat_asma1" value="2">
+                                        <input class="form-check-input" type="radio" name="riwayat_asma" id="riwayat_asma1" value="1">
                                         <label class="form-check-label" for="riwayat_asma1">
                                             Ya
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="riwayat_asma" id="riwayat_asma2" value="1" checked>
+                                        <input class="form-check-input" type="radio" name="riwayat_asma" id="riwayat_asma2" value="0" checked>
                                         <label class="form-check-label" for="riwayat_asma2">
                                             Tidak
                                         </label>
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Alergi</label>
+                                    <input type="text" name="alergi" class="form-control @error('alergi') is-invalid @enderror">
+                                    @error('alergi')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div> 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Antibiotik Profilaksis</label>
@@ -107,10 +118,10 @@
                                                 <input type="text" class="form-control" name="antibiotik_profilaksis" id="antibiotik_profilaksis">
                                             </div>
                                             <div class="input-group" style="margin-right: 10px;">
-                                                <label for="antibiotik_jam" class="ml-2 mr-2 mt-2">
+                                                <label for="antibiotik_profilaksis_jam" class="ml-2 mr-2 mt-2">
                                                     Jam
                                                 </label>
-                                                <input type="text" class="form-control" name="antibiotik_jam" id="antibiotik_jam">
+                                                <input type="text" class="form-control" name="antibiotik_profilaksis_jam" id="antibiotik_profilaksis_jam">
                                             </div>
                                         </div>
                                     </div>
@@ -696,8 +707,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>DC No:</label>
-                                    <input type="text" name="dc_no" class="form-control @error('dc_no') is-invalid @enderror">
-                                    @error('dc_no')
+                                    <input type="text" name="dc" class="form-control @error('dc') is-invalid @enderror">
+                                    @error('dc')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -732,7 +743,7 @@
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="edukasi_anastesi" id="flexCheckDefault" value="1" >
                                                 <label class="form-check-label" for="flexCheckDefault">
-                                                    Edukasi Anestesi
+                                                    Edukasi Anastesi
                                                 </label>
                                             </div> 
                                         </div>
@@ -753,8 +764,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Foto Rontgen</label>
-                                    <input type="text" name="foto_rontgen" class="form-control @error('foto_rontgen') is-invalid @enderror">
-                                    @error('foto_rontgen')
+                                    <input type="text" name="rontgen" class="form-control @error('rontgen') is-invalid @enderror">
+                                    @error('rontgen')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -790,7 +801,7 @@
                 </div>
                 
                 <div class="text-left">
-                        <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button>
+                    <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button>
                 </div>
             </form>
             </div>

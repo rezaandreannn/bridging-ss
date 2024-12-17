@@ -37,11 +37,11 @@
                     <!-- include form -->
                     <div class="card-body card-khusus-body">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <input type="hidden" name="kode_register" value="{{$biodata->pendaftaran->No_Reg}}">
                                 <div class="form-group">
                                     <label>Diagnosa</label>
-                                    <input type="text" name="diagnosa" class="form-control @error('diagnosa') is-invalid @enderror">
+                                    <input type="text" name="diagnosa" value="{{ $preOperasi['dataUmum']->diagnosa ?? '' }}" class="form-control @error('diagnosa') is-invalid @enderror">
                                     @error('diagnosa')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -52,7 +52,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Jenis Operasi</label>
-                                    <input type="text" name="jenis_operasi"  class="form-control @error('jenis_operasi') is-invalid @enderror">
+                                    <input type="text" name="jenis_operasi" value="{{ $preOperasi['dataUmum']->jenis_operasi ?? '' }}"  class="form-control @error('jenis_operasi') is-invalid @enderror">
                                     @error('jenis_operasi')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -63,7 +63,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Dokter Operator</label>
-                                    <input type="text" name="nama_operator" value="{{$biodata->dokter->Nama_Dokter}}" class="form-control @error('nama_operator') is-invalid @enderror" disabled>
+                                    <input type="text" name="nama_operator" value="{{ $preOperasi['dataUmum']->nama_operator ?? '' }}" class="form-control @error('nama_operator') is-invalid @enderror" readonly>
                                     @error('nama_operator')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -74,7 +74,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Makan Minum terakhir / Puasa Jam</label>
-                                    <input type="text" name="puasa_jam" class="form-control @error('puasa_jam') is-invalid @enderror">
+                                    <input type="text" name="puasa_jam" value="{{ $preOperasi['dataUmum']->puasa_jam ?? '' }}" class="form-control @error('puasa_jam') is-invalid @enderror">
                                     @error('puasa_jam')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -86,13 +86,13 @@
                                 <div class="form-group">
                                     <label>Riwayat Asma</label>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="riwayat_asma" id="riwayat_asma1" value="2">
+                                        <input class="form-check-input" type="radio" name="riwayat_asma" id="riwayat_asma1" value="1" {{ ($preOperasi['dataUmum']->riwayat_asma =='1') ? 'checked' : '' }}>
                                         <label class="form-check-label" for="riwayat_asma1">
                                             Ya
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="riwayat_asma" id="riwayat_asma2" value="1" checked>
+                                        <input class="form-check-input" type="radio" name="riwayat_asma" id="riwayat_asma2" value="0" {{ ($preOperasi['dataUmum']->riwayat_asma =='0') ? 'checked' : '' }}>
                                         <label class="form-check-label" for="riwayat_asma2">
                                             Tidak
                                         </label>
@@ -101,17 +101,28 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label>Alergi</label>
+                                    <input type="text" name="alergi" value="{{ $preOperasi['dataUmum']->alergi ?? '' }}" class="form-control @error('alergi') is-invalid @enderror">
+                                    @error('alergi')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div> 
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label>Antibiotik Profilaksis</label>
                                     <div class="col-md-12">
                                         <div class="form-group" style="display: flex; flex-direction: row;">
                                             <div class="input-group">
-                                                <input type="text" class="form-control" name="antibiotik_profilaksis" id="antibiotik_profilaksis">
+                                                <input type="text" class="form-control" value="{{ $preOperasi['dataUmum']->antibiotik_profilaksis ?? '' }}" name="antibiotik_profilaksis" id="antibiotik_profilaksis">
                                             </div>
                                             <div class="input-group" style="margin-right: 10px;">
-                                                <label for="antibiotik_jam" class="ml-2 mr-2 mt-2">
+                                                <label for="antibiotik_profilaksis_jam" class="ml-2 mr-2 mt-2">
                                                     Jam
                                                 </label>
-                                                <input type="text" class="form-control" name="antibiotik_jam" id="antibiotik_jam">
+                                                <input type="text" class="form-control" value="{{ $preOperasi['dataUmum']->antibiotik_profilaksis_jam ?? '' }}" name="antibiotik_profilaksis_jam" id="antibiotik_profilaksis_jam">
                                             </div>
                                         </div>
                                     </div>
@@ -663,13 +674,13 @@
                                     <div class="col-md-12">
                                         <div class="form-group" style="display: flex; flex-direction: row;">
                                             <div class="input-group">
-                                                <input type="text" class="form-control" name="premedikasi" id="premedikasi">
+                                                <input type="text" class="form-control" name="premedikasi" value="{{ $preOperasi['dataUmum']->premedikasi ?? '' }}" id="premedikasi">
                                             </div>
                                             <div class="input-group" style="margin-right: 10px;">
                                                 <label for="premedikasi_jam" class="ml-2 mr-2 mt-2">
                                                     Jam
                                                 </label>
-                                                <input type="text" class="form-control" name="premedikasi_jam" id="premedikasi_jam">
+                                                <input type="text" class="form-control" name="premedikasi_jam" value="{{ $preOperasi['dataUmum']->premedikasi_jam ?? '' }}" id="premedikasi_jam">
                                             </div>
                                         </div>
                                     </div>
@@ -679,7 +690,7 @@
                                 <div class="form-group">
                                     <label>IVFD</label>
                                     <div class="input-group">
-                                        <input type="text" name="ivfd" value="{{ old('ivfd') }}" id="ivfd" placeholder="masukkan hanya angka" class="form-control @error('ivfd') is-invalid  
+                                        <input type="text" name="ivfd" value="{{ $preOperasi['dataUmum']->ivfd ?? '' }}" id="ivfd" placeholder="masukkan hanya angka" class="form-control @error('ivfd') is-invalid  
                                         @enderror">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
@@ -697,8 +708,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>DC No:</label>
-                                    <input type="text" name="dc_no" class="form-control @error('dc_no') is-invalid @enderror">
-                                    @error('dc_no')
+                                    <input type="text" name="dc" value="{{ $preOperasi['dataUmum']->dc ?? '' }}" class="form-control @error('dc') is-invalid @enderror">
+                                    @error('dc')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -711,13 +722,13 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="assesmen_pra_bedah" id="flexCheckDefault" value="1">
+                                                <input class="form-check-input" type="checkbox" name="assesmen_pra_bedah" id="flexCheckDefault" value="1"  {{ $preOperasi['dataUmum'] && $preOperasi['dataUmum']->assesmen_pra_bedah ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Asesmen Pra Bedah
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="informed_consent_bedah" id="flexCheckDefault" value="1">
+                                                <input class="form-check-input" type="checkbox" name="informed_consent_bedah" id="flexCheckDefault" value="1"  {{ $preOperasi['dataUmum'] && $preOperasi['dataUmum']->informed_consent_bedah ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Informed Consent Bedah
                                                 </label>
@@ -725,13 +736,13 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="informed_consent_anastesi" id="flexCheckDefault" value="1">
+                                                <input class="form-check-input" type="checkbox" name="informed_consent_anastesi" id="flexCheckDefault" value="1"  {{ $preOperasi['dataUmum'] && $preOperasi['dataUmum']->informed_consent_anastesi ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Informed Consent Anestesi / Sedasi
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="edukasi_anastesi" id="flexCheckDefault" value="1" >
+                                                <input class="form-check-input" type="checkbox" name="edukasi_anastesi" id="flexCheckDefault" value="1" {{ $preOperasi['dataUmum'] && $preOperasi['dataUmum']->edukasi_anastesi ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Edukasi Anestesi
                                                 </label>
@@ -743,7 +754,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Obat - obat</label>
-                                    <input type="text" name="obat" class="form-control @error('obat') is-invalid @enderror">
+                                    <input type="text" name="obat" value="{{ $preOperasi['dataUmum']->obat ?? '' }}" class="form-control @error('obat') is-invalid @enderror">
                                     @error('obat')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -754,8 +765,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Foto Rontgen</label>
-                                    <input type="text" name="foto_rontgen" class="form-control @error('foto_rontgen') is-invalid @enderror">
-                                    @error('foto_rontgen')
+                                    <input type="text" name="rontgen" value="{{ $preOperasi['dataUmum']->rontgen ?? '' }}" class="form-control @error('rontgen') is-invalid @enderror">
+                                    @error('rontgen')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -768,7 +779,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group" style="display: flex; flex-direction: row;">
                                             <div class="input-group">
-                                                <input type="text" class="form-control" name="darah" id="darah">
+                                                <input type="text" class="form-control" value="{{ $preOperasi['dataUmum']->darah ?? '' }}" name="darah" id="darah">
                                                 <div class="input-group-append">
                                                     <div class="input-group-text">
                                                         <b>cc</b>
@@ -779,7 +790,7 @@
                                                 <label for="gol" class="ml-2 mr-2 mt-2">
                                                     Gol :
                                                 </label>
-                                                <input type="text" class="form-control" name="gol" id="gol">
+                                                <input type="text" class="form-control" value="{{ $preOperasi['dataUmum']->gol ?? '' }}" name="gol" id="gol">
                                             </div>
                                         </div>
                                     </div>

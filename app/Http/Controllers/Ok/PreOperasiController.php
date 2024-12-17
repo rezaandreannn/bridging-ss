@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Ok;
 
 use Exception;
 use Illuminate\Http\Request;
+use App\Helpers\BookingHelper;
 use App\Http\Controllers\Controller;
 use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\DataUmum\PreOperasiService;
@@ -37,9 +38,12 @@ class PreOperasiController extends Controller
         $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
         $preOperasi = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
 
+        $statusPre = BookingHelper::getStatusPreOperasi($preOperasi);
+
         return view($this->view . 'index', compact('preOperasi'))
             ->with([
                 'title' => $title,
+                'statusPre' => $statusPre,
             ]);
     }
 
@@ -57,6 +61,7 @@ class PreOperasiController extends Controller
         return view($this->view . 'create', compact('biodata'))
             ->with([
                 'title' => $title,
+                'bookingByRegister' => $this->bookingOperasiService->findByRegister($kode_register),
             ]);
     }
 

@@ -15,6 +15,9 @@ use App\Models\Operasi\PraBedah\VerifikasiPraBedahDarah;
 use App\Models\Operasi\PraBedah\VerifikasiPraBedahBerkas;
 use App\Models\Operasi\PraBedah\VerifikasiPraBedahRontgen;
 use App\Models\Operasi\PostOperasi\PemeriksaanFisikPostOperasi;
+use App\Models\Operasi\PreOperasi\DataUmumPreOperasi;
+use App\Models\Operasi\PreOperasi\PemeriksaanFisikPreOperasi;
+use App\Models\Operasi\PreOperasi\TindakanPreOperasi;
 
 class BookingHelper
 {
@@ -116,5 +119,24 @@ class BookingHelper
         }
 
         return $statusPostOperasi;
+    }
+
+    public static function getStatusPreOperasi($postOperasi)
+    {
+        $statusPreOperasi = [];
+
+        foreach ($postOperasi as $post) {
+            $kodeRegister = $post->kode_register;
+
+            $status = [
+                'tindakan' => TindakanPreOperasi::where('kode_register', $kodeRegister)->first(),
+                'dataUmum' => DataUmumPreOperasi::where('kode_register', $kodeRegister)->first(),
+                'ttv' => PemeriksaanFisikPreOperasi::where('kode_register', $kodeRegister)->first()
+            ];
+
+            $statusPreOperasi[$kodeRegister] = $status;
+        }
+
+        return $statusPreOperasi;
     }
 }

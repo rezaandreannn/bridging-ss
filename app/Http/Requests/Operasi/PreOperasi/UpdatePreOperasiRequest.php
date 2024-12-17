@@ -57,6 +57,27 @@ class UpdatePreOperasiRequest extends FormRequest
             'nadi' => 'string',
             'suhu' => 'string',
             'pernafasan' => 'string',
+            // Data Umum Pre Operasi
+            'diagnosa' => 'required|string',
+            'jenis_operasi' => 'required|string',
+            'nama_operator' => 'string',
+            'puasa_jam' => 'string|nullable',
+            'riwayat_asma' => 'string|nullable',
+            'alergi' => 'string|nullable',
+            'antibiotik_profilaksis' => 'string|nullable',
+            'antibiotik_profilaksis_jam' => 'string|nullable',
+            'premedikasi' => 'string|nullable',
+            'premedikasi_jam' => 'string|nullable',
+            'ivfd' => 'string|nullable',
+            'dc' => 'string|nullable',
+            'assesmen_pra_bedah' => 'nullable|boolean',
+            'informed_consent_bedah' => 'nullable|boolean',
+            'informed_consent_anastesi' => 'nullable|boolean',
+            'edukasi_anastesi' => 'nullable|boolean',
+            'darah' => 'string|nullable',
+            'gol' => 'string|nullable',
+            'obat' => 'string|nullable',
+            'rontgen' => 'string|nullable',
         ];
     }
 }
