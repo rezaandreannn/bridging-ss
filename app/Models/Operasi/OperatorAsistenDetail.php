@@ -17,6 +17,8 @@ class OperatorAsistenDetail extends Model
         'nama_operator',
         'nama_asisten',
         'nama_perawat',
+        'nama_ahli_anastesi',
+        'nama_anastesi',
         'created_by',
         'updated_by'
     ];

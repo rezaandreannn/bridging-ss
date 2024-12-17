@@ -136,18 +136,21 @@ class LaporanOperasiController extends Controller
     public function edit($kode_register)
     {
         //
-        $biodata = $this->bookingOperasiService->biodata($kode_register);
+        // dd($this->laporanOperasiService->getAsistenArray($kode_register));
 
-        // dd($this->laporanOperasiService->laporanByRegister($kode_register));
+        $laporanOperasi = $this->laporanOperasiService->laporanByRegister($kode_register);
 
-
-        return view($this->view . 'edit', compact('biodata'))->with([
+        return view($this->view . 'edit', compact('laporanOperasi'))->with([
             'title' => $this->prefix . ' ' . 'Edit Data',
             'bookingByRegister' => $this->bookingOperasiService->findByRegister($kode_register),
             'asistenOperasi' => $this->laporanOperasiService->getAsistenOperasi(),
             'spesialisAnastesi' => $this->laporanOperasiService->getSpesialisAnastesi(),
             'penataAnastesi' => $this->laporanOperasiService->getPenataAsisten(),
-            'laporanOperasi' => $this->laporanOperasiService->laporanByRegister($kode_register),
+            'biodata' => $this->bookingOperasiService->biodata($kode_register),
+            'perawatArray' => $this->laporanOperasiService->getPerawatArray($kode_register),
+            'ahliAnastesiArray' => $this->laporanOperasiService->getAhliAnastesiArray($kode_register),
+            'anastesiArray' => $this->laporanOperasiService->getAnastesiArray($kode_register),
+            'asistenArray' => $this->laporanOperasiService->getAsistenArray($kode_register),
         ]);
     }
 

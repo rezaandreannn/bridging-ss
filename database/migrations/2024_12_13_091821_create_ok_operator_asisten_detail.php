@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('nama_operator')->nullable();
             $table->string('nama_asisten')->nullable();
             $table->string('nama_perawat')->nullable();
+            $table->string('nama_ahli_anastesi')->nullable();
+            $table->string('nama_anastesi')->nullable();
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->timestamps();

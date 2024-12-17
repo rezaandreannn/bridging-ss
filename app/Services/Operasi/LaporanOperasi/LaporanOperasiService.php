@@ -44,6 +44,55 @@ class LaporanOperasiService
         return LaporanOperasi::where('kode_register', $kode_register)->first();
     }
 
+    public function getAsistenArray($kode_register)
+    {
+        $data = LaporanOperasi::where('kode_register', $kode_register)->first();
+        $string = trim($data->detailAsisten->nama_asisten ?? '', ','); // Menghapus koma di awal dan akhir string (jika ada)
+        $asisten = array();
+        if (!empty($string)) {
+            $asisten = explode(', ', $string);
+        }
+
+        return $asisten;
+    }
+
+    public function getPerawatArray($kode_register)
+    {
+        
+        $data = LaporanOperasi::where('kode_register', $kode_register)->first();
+        $string = trim($data->detailAsisten->nama_perawat ?? '', ','); // Menghapus koma di awal dan akhir string (jika ada)
+        $perawat = array();
+        if (!empty($string)) {
+            $perawat = explode(', ', $string);
+        }
+
+        return $perawat;
+    }
+
+    public function getAhliAnastesiArray($kode_register)
+    {
+        $data = LaporanOperasi::where('kode_register', $kode_register)->first();
+        $string = trim($data->detailAsisten->nama_ahli_anastesi ?? '', ','); // Menghapus koma di awal dan akhir string (jika ada)
+        $ahli_anastesi = array();
+        if (!empty($string)) {
+            $ahli_anastesi = explode(', ', $string);
+        }
+
+        return $ahli_anastesi;
+    }
+
+    public function getAnastesiArray($kode_register)
+    {
+        $data = LaporanOperasi::where('kode_register', $kode_register)->first();
+        $string = trim($data->detailAsisten->nama_anastesi ?? '', ','); // Menghapus koma di awal dan akhir string (jika ada)
+        $anastesi = array();
+        if (!empty($string)) {
+            $anastesi = explode(', ', $string);
+        }
+
+        return $anastesi;
+    }
+
     public function insert(array $data)
     {
         DB::beginTransaction();
@@ -51,13 +100,25 @@ class LaporanOperasiService
 
             // pisahkan array dengan koma menjadi string
             $asisten = $data['nama_asisten'] ?? '';
+            $data['nama_asisten'] = $asisten;
             if(!empty($asisten)){
                 $data['nama_asisten'] = implode(', ', $asisten);
             }
 
             $perawat = $data['nama_perawat'] ?? '';
+            $data['nama_perawat'] = $perawat;
             if(!empty($perawat)){
                 $data['nama_perawat'] = implode(', ', $perawat);
+            }
+            $ahli_anastesi= $data['nama_ahli_anastesi'] ?? '';
+            $data['nama_ahli_anastesi'] = $ahli_anastesi;
+            if(!empty($ahli_anastesi)){
+                $data['nama_ahli_anastesi'] = implode(', ', $ahli_anastesi);
+            }
+            $penata_anastesi = $data['nama_anastesi'] ?? '';
+            $data['nama_anastesi'] = $penata_anastesi;
+            if(!empty($penata_anastesi)){
+                $data['nama_anastesi'] = implode(', ', $penata_anastesi);
             }
             // dd($insertPerawat);
             // Insert Asisten dan Perawat Bersamaan (Nama Asisten dan Nama Perawat)
@@ -66,6 +127,8 @@ class LaporanOperasiService
                 'nama_operator' => $data['nama_operator'],
                 'nama_asisten' => $data['nama_asisten'], // Tentukan apakah ini asisten
                 'nama_perawat' => $data['nama_perawat'], // Tentukan apakah ini perawat
+                'nama_ahli_anastesi' => $data['nama_ahli_anastesi'],
+                'nama_anastesi' => $data['nama_anastesi'],
                 'created_by' => auth()->user()->id,
             ]);
 
@@ -102,8 +165,45 @@ class LaporanOperasiService
     {
         try {
 
-            $id=LaporanOperasi::where('kode_register', $id)->first();
+            $id_detail_asisten=OperatorAsistenDetail::where('kode_register', $id)->first();
 
+            $operasiasistendetail = OperatorAsistenDetail::findOrFail($id_detail_asisten->id);
+                   // pisahkan array dengan koma menjadi string
+                $asisten = $data['nama_asisten'] ?? '';
+                $data['nama_asisten'] = $asisten;
+                if(!empty($asisten)){
+                    $data['nama_asisten'] = implode(', ', $asisten);
+                }
+
+                $perawat = $data['nama_perawat'] ?? '';
+                $data['nama_perawat'] = $perawat;
+                if(!empty($perawat)){
+                    $data['nama_perawat'] = implode(', ', $perawat);
+                }
+                $ahli_anastesi= $data['nama_ahli_anastesi'] ?? '';
+                $data['nama_ahli_anastesi'] = $ahli_anastesi;
+                if(!empty($ahli_anastesi)){
+                    $data['nama_ahli_anastesi'] = implode(', ', $ahli_anastesi);
+                }
+                $penata_anastesi = $data['nama_anastesi'] ?? '';
+                $data['nama_anastesi'] = $penata_anastesi;
+                if(!empty($penata_anastesi)){
+                    $data['nama_anastesi'] = implode(', ', $penata_anastesi);
+                }
+                   // dd($insertPerawat);
+                   // Insert Asisten dan Perawat Bersamaan (Nama Asisten dan Nama Perawat)
+                   $operasiasistendetail->update([
+                       'kode_register' => $data['kode_register'],
+                       'nama_operator' => $data['nama_operator'],
+                       'nama_asisten' => $data['nama_asisten'], // Tentukan apakah ini asisten
+                       'nama_perawat' => $data['nama_perawat'], // Tentukan apakah ini perawat
+                       'nama_ahli_anastesi' => $data['nama_ahli_anastesi'],
+                       'nama_anastesi' => $data['nama_anastesi'],
+                       'updated_by' => auth()->user()->id,
+                   ]);
+
+            // id laporan operasi
+            $id=LaporanOperasi::where('kode_register', $id)->first();
             $laporanoperasi = LaporanOperasi::findOrFail($id->id);
 
             $laporanoperasi -> update([
@@ -117,7 +217,7 @@ class LaporanOperasiService
                 'lama_operasi' => $data['lama_operasi'] ?? '',
                 'permintaan_pa' => $data['permintaan_pa'],
                 'laporan_operasi' => $data['laporan_operasi'],
-                'created_by' => auth()->user()->id,
+                'updated_by' => auth()->user()->id,
                 // 'cara_masuk' => $data['cara_masuk'] ?? ''
             ]);
 
@@ -127,13 +227,16 @@ class LaporanOperasiService
         }
     }
 
-    public function delete($id)
+    public function delete($kode_register)
     {
         try {
             //code...
-            $id=LaporanOperasi::where('kode_register', $id)->first();
-            $laporanoperasi = LaporanOperasi::findOrFail($id->id)->delete();
-            return $laporanoperasi;
+            $id_detail_asisten=OperatorAsistenDetail::where('kode_register', $kode_register)->first();
+            $detailasisten = OperatorAsistenDetail::findOrFail($id_detail_asisten->id)->delete();
+
+            $id_laporan=LaporanOperasi::where('kode_register', $kode_register)->first();
+            $laporanoperasi = LaporanOperasi::findOrFail($id_laporan->id)->delete();
+            return 'ok';
         
         } catch (\Throwable $th) {
             //throw $th;
@@ -170,7 +273,7 @@ class LaporanOperasiService
     }
     
     public function getSpesialisAnastesi(){
-        $data = Dokter::where('Spesialis','SPESIALIS ANASTESI')->get();
+        $data = Dokter::where('Spesialis','DOKTER SPESIALIS ANASTESI')->get();
         return $this->mapDataAsisten($data);
     }
 

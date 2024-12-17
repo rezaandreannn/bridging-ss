@@ -12,6 +12,8 @@ class LaporanOperasi extends Model
     protected $connection = 'pku';
     protected $table = 'ok_laporan_operasi';
 
+    protected $with = ['detailAsisten'];
+
     // Mass Assignment
 
     protected $fillable = [
@@ -29,8 +31,8 @@ class LaporanOperasi extends Model
         'updated_by'
     ];
 
-    public function booking()
+    public function detailAsisten()
     {
-        return $this->hasOne(BookingOperasi::class, 'kode_register', 'kode_register');
+        return $this->belongsTo(OperatorAsistenDetail::class, 'kode_register', 'kode_register');
     }
 }

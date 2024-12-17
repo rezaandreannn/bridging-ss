@@ -52,7 +52,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Nama Operator</label>
-                                    <input type="text" name="nama_operator" value="{{$bookingByRegister->dokter->Nama_Dokter}}" class="form-control @error('nama_operator') is-invalid @enderror" readonly>
+                                    <input type="hidden" value="{{$bookingByRegister->dokter->Kode_Dokter}}" name="nama_operator">
+                                    <input type="text" value="{{$bookingByRegister->dokter->Nama_Dokter}}" class="form-control @error('nama_operator') is-invalid @enderror" readonly>
                                     @error('nama_operator')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -63,10 +64,10 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Nama Asisten</label>
-                                    <select name="nama_asisten" class="form-control @error('nama_asisten') is-invalid @enderror select2">
-                                        <option value="" selected disabled>--Pilih Asisten--</option>
+                                    <select name="nama_asisten[]" class="form-control @error('nama_asisten') is-invalid @enderror select2" multiple>
+                                        <option value="" disabled>--Pilih Asisten--</option>
                                         @foreach ($asistenOperasi as $asisten)
-                                            <option value="{{$asisten->kode_dokter}}">{{$asisten->nama_asisten}}</option>
+                                            <option value="{{$asisten->kode_dokter}}" {{(in_array($asisten->kode_dokter,$asistenArray)) ? 'selected' : ''}}>{{$asisten->nama_asisten}}</option>
                                         @endforeach
                                     </select>
                                     @error('nama_asisten')
@@ -79,10 +80,10 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Nama Perawat</label>
-                                    <select name="nama_perawat" class="form-control @error('nama_perawat') is-invalid @enderror select2">
-                                        <option value="" selected disabled>--Pilih Perawat--</option>
+                                    <select name="nama_perawat[]" class="form-control @error('nama_perawat') is-invalid @enderror select2" multiple>
+                                        <option value="" disabled>--Pilih Perawat--</option>
                                         @foreach ($asistenOperasi as $asisten)
-                                            <option value="{{$asisten->kode_dokter}}">{{$asisten->nama_asisten}}</option>
+                                            <option value="{{$asisten->kode_dokter}}" {{(in_array($asisten->kode_dokter,$perawatArray)) ? 'selected' : ''}}>{{$asisten->nama_asisten}}</option>
                                         @endforeach
                                     </select>
                                     @error('nama_perawat')
@@ -95,10 +96,10 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Nama Ahli Anestesi</label>
-                                    <select name="ahli_anastesi" class="form-control @error('ahli_anastesi') is-invalid @enderror select2">
-                                        <option value="" selected disabled>--Pilih Ahli Anastesi--</option>
+                                    <select name="nama_ahli_anastesi[]" class="form-control @error('ahli_anastesi') is-invalid @enderror select2" multiple>
+                                        <option value="" disabled>--Pilih Ahli Anastesi--</option>
                                         @foreach ($spesialisAnastesi as $anastesi)
-                                            <option value="{{$anastesi->kode_dokter}}">{{$anastesi->nama_asisten}}</option>
+                                            <option value="{{$anastesi->kode_dokter}}" {{(in_array($anastesi->kode_dokter,$ahliAnastesiArray)) ? 'selected' : ''}}>{{$anastesi->nama_asisten}}</option>
                                         @endforeach
                                     </select>
                                     @error('ahli_anastesi')
@@ -111,10 +112,10 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Nama Anestesi</label>
-                                    <select name="penata_anastesi" class="form-control @error('penata_anastesi') is-invalid @enderror select2">
-                                        <option value="" selected disabled>--Pilih Penata Anastesi--</option>
+                                    <select name="nama_anastesi[]" class="form-control @error('penata_anastesi') is-invalid @enderror select2" multiple>
+                                        <option value="" disabled>--Pilih Penata Anastesi--</option>
                                         @foreach ($penataAnastesi as $penataAnastesi)
-                                            <option value="{{$penataAnastesi->kode_dokter}}">{{$penataAnastesi->nama_asisten}}</option>
+                                            <option value="{{$penataAnastesi->kode_dokter}}" {{(in_array($penataAnastesi->kode_dokter,$anastesiArray)) ? 'selected' : ''}}>{{$penataAnastesi->nama_asisten}}</option>
                                         @endforeach
                                     </select>
                                     @error('penata_anastesi')
