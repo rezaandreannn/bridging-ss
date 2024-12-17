@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Ok;
 
 use Exception;
 use Illuminate\Http\Request;
+use App\Helpers\BookingHelper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Operasi\PreOperasi\StorePreOperasiRequest;
 use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\DataUmum\PreOperasiService;
 use App\Services\Operasi\PraBedah\AssesmenPraBedahService;
+use App\Http\Requests\Operasi\PreOperasi\StorePreOperasiRequest;
+use App\Http\Requests\Operasi\PreOperasi\UpdatePreOperasiRequest;
 
 class PreOperasiController extends Controller
 {
@@ -36,9 +38,12 @@ class PreOperasiController extends Controller
         $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
         $preOperasi = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
 
+        $statusPre = BookingHelper::getStatusPreOperasi($preOperasi);
+
         return view($this->view . 'index', compact('preOperasi'))
             ->with([
                 'title' => $title,
+                'statusPre' => $statusPre,
             ]);
     }
 
@@ -56,6 +61,7 @@ class PreOperasiController extends Controller
         return view($this->view . 'create', compact('biodata'))
             ->with([
                 'title' => $title,
+                'bookingByRegister' => $this->bookingOperasiService->findByRegister($kode_register),
             ]);
     }
 
@@ -94,9 +100,14 @@ class PreOperasiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($kode_register)
     {
-        //
+        $title = $this->prefix . ' ' . 'Edit Data';
+        $preOperasi = $this->preOperasiService->findById($kode_register);
+        // dd($preOperasi);
+        $biodata = $this->bookingOperasiService->biodata($kode_register);
+
+        return view($this->view . 'edit', compact('title', 'biodata', 'preOperasi'));
     }
 
     /**
@@ -106,9 +117,16 @@ class PreOperasiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePreOperasiRequest $request, $kode_register)
     {
-        //
+        try {
+            $this->preOperasiService->update($kode_register, $request->validated());
+
+            return redirect('/operasi/pre-operasi')->with('success', 'Data Pre Operasi berhasil di ubah.');
+        } catch (Exception $e) {
+            // Redirect dengan pesan error jika terjadi kegagalan
+            return redirect()->back()->with('error', 'Gagal merubah post operasi: ' . $e->getMessage());
+        }
     }
 
     /**

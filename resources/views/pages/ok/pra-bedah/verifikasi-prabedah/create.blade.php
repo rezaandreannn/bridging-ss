@@ -48,14 +48,14 @@
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="assesmen_pra_bedah" id="flexCheckDefault" value="1">
-                                                <label class="form-check-label" for="flexCheckDefault" {{ $checklistAssesmenPraBedah == 'true' ? 'checked' : ''}}>
+                                                <input class="form-check-input" type="checkbox" name="assesmen_pra_bedah" id="flexCheckDefault" value="1" {{ $checklistAssesmenPraBedah == 'true' ? 'checked' : ''}}>
+                                                <label class="form-check-label" for="flexCheckDefault" >
                                                     Asesmen Pra Bedah
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="penandaan_lokasi" id="flexCheckDefault" value="1">
-                                                <label class="form-check-label" for="flexCheckDefault" {{ $checklistPenandaan == 'true' ? 'checked' : ''}}>
+                                                <input class="form-check-input" type="checkbox" name="penandaan_lokasi" id="flexCheckDefault" value="1" {{ $checklistPenandaan == 'true' ? 'checked' : ''}}>
+                                                <label class="form-check-label" for="flexCheckDefault" >
                                                     Penandaan Lokasi Operasi
                                                 </label>
                                             </div>

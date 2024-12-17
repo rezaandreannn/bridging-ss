@@ -8,6 +8,7 @@ use App\Models\Operasi\PostOperasi\AlatPostOperasi;
 use App\Models\Operasi\PreOperasi\TindakanPreOperasi;
 use App\Models\Operasi\PostOperasi\TindakanPostOperasi;
 use App\Models\Operasi\PostOperasi\PemeriksaanFisikPostOperasi;
+use App\Models\Operasi\PreOperasi\DataUmumPreOperasi;
 use App\Models\Operasi\PreOperasi\PemeriksaanFisikPreOperasi;
 
 class PreOperasiService
@@ -17,7 +18,8 @@ class PreOperasiService
     {
         return [
             'tindakan' => TindakanPreOperasi::where('kode_register', $kode_register)->first(),
-            'ttv' => PemeriksaanFisikPreOperasi::where('kode_register', $kode_register)->first()
+            'ttv' => PemeriksaanFisikPreOperasi::where('kode_register', $kode_register)->first(),
+            'dataUmum' => DataUmumPreOperasi::where('kode_register', $kode_register)->first()
         ];
     }
 
@@ -65,11 +67,37 @@ class PreOperasiService
                 'created_by' => auth()->user()->id
             ]);
 
+            $dataUmumPreOperasi = DataUmumPreOperasi::create([
+                'kode_register' => $data['kode_register'],
+                'diagnosa' => $data['diagnosa'],
+                'jenis_operasi' => $data['jenis_operasi'] ?? '',
+                'nama_operator' => $data['nama_operator'],
+                'puasa_jam' => $data['puasa_jam'] ?? '',
+                'riwayat_asma' => !empty($data['riwayat_asma']) ? 1 : 0,
+                'alergi' => $data['alergi'] ?? '',
+                'antibiotik_profilaksis' => $data['antibiotik_profilaksis'] ?? '',
+                'antibiotik_profilaksis_jam' => $data['antibiotik_profilaksis_jam'] ?? '',
+                'premedikasi' => $data['premedikasi'] ?? '',
+                'premedikasi_jam' => $data['premedikasi_jam'] ?? '',
+                'ivfd' => $data['ivfd'] ?? '',
+                'dc' => $data['dc'] ?? '',
+                'assesmen_pra_bedah' => !empty($data['assesmen_pra_bedah']) ? 1 : 0,
+                'informed_consent_bedah' => !empty($data['informed_consent_bedah']) ? 1 : 0,
+                'informed_consent_anastesi' => !empty($data['informed_consent_anastesi']) ? 1 : 0,
+                'edukasi_anastesi' => !empty($data['edukasi_anastesi']) ? 1 : 0,
+                'darah' => $data['darah'] ?? '',
+                'gol' => $data['gol'] ?? '',
+                'obat' => $data['obat'] ?? '',
+                'rontgen' => $data['rontgen'] ?? '',
+                'created_by' => auth()->user()->id
+            ]);
+
             DB::commit();
 
             return [
                 'tindakan' => $tindakanPreOperasi,
                 'ttv' => $ttvPreOperasi,
+                'dataUmum' => $dataUmumPreOperasi,
             ];
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -109,21 +137,65 @@ class PreOperasiService
         try {
 
             // Update Table Tindakan Post Operasi
-            $this->updateTable(TindakanPostOperasi::class, $kode_register, [
+            $this->updateTable(TindakanPreOperasi::class, $kode_register, [
                 'lapor_dokter' => $data['lapor_dokter'] ?? 0,
                 'lapor_kamar' => $data['lapor_kamar'] ?? 0,
                 'surat_izin_pembedahan' => $data['surat_izin_pembedahan'] ?? 0,
                 'tandai_daerah_operasi' => $data['tandai_daerah_operasi'] ?? 0,
-                'checklist_keselamatan_pasien' => $data['checklist_keselamatan_pasien'] ?? 0,
-                'checklist_monitoring' => $data['checklist_monitoring'] ?? 0,
-                'askep_perioperatif' => $data['askep_perioperatif'] ?? 0,
-                'lembar_pemantauan' => $data['lembar_pemantauan'] ?? 0,
-                'formulir_pemeriksaan' => $data['formulir_pemeriksaan'] ?? 0,
-                'sampel_pemeriksaan' => $data['sampel_pemeriksaan'] ?? 0,
-                'foto_rontgen' => $data['foto_rontgen'] ?? 0,
-                'resep' => $data['resep'] ?? 0,
+                'memakai_gelang_identitas' => $data['memakai_gelang_identitas'] ?? 0,
+                'melepas_aksesoris' => $data['melepas_aksesoris'] ?? 0,
+                'menghapus_aksesoris' => $data['menghapus_aksesoris'] ?? 0,
+                'melakukan_oral_hygiene' => $data['melakukan_oral_hygiene'] ?? 0,
+                'memasang_bidai' => $data['memasang_bidai'] ?? 0,
+                'memasang_infuse' => $data['memasang_infuse'] ?? 0,
+                'memasang_dc' => $data['memasang_dc'] ?? 0,
+                'deskripsi_dc' => $data['deskripsi_dc'] ?? '',
+                'memasang_ngt' => $data['memasang_ngt'] ?? 0,
+                'deskripsi_ngt' => $data['deskripsi_ngt'] ?? '',
+                'memasang_drainage' => $data['memasang_drainage'] ?? 0,
+                'memasang_wsd' => $data['memasang_wsd'] ?? 0,
+                'mencukur_daerah_operasi' => $data['mencukur_daerah_operasi'] ?? 0,
                 'lainnya' => $data['lainnya'] ?? 0,
                 'deskripsi_lainnya' => $data['deskripsi_lainnya'] ?? '',
+                'penyakit_dm' => $data['penyakit_dm'] ?? 0,
+                'penyakit_hipertensi' => $data['penyakit_hipertensi'] ?? 0,
+                'penyakit_tb_paru' => $data['penyakit_tb_paru'] ?? 0,
+                'penyakit_hiv' => $data['penyakit_hiv'] ?? 0,
+                'penyakit_hepatitis' => $data['penyakit_hepatitis'] ?? 0,
+                'updated_by' => auth()->user()->id
+            ]);
+
+            $this->updateTable(PemeriksaanFisikPreOperasi::class, $kode_register, [
+                'tinggi_badan' => $data['tinggi_badan'] ?? '',
+                'berat_badan' => $data['berat_badan'] ?? '',
+                'tekanan_darah' => $data['tekanan_darah'] ?? '',
+                'nadi' => $data['nadi'] ?? '',
+                'suhu' => $data['suhu'] ?? '',
+                'pernafasan' => $data['pernafasan'] ?? '',
+                'updated_by' => auth()->user()->id
+            ]);
+
+            $this->updateTable(DataUmumPreOperasi::class, $kode_register, [
+                'diagnosa' => $data['diagnosa'],
+                'jenis_operasi' => $data['jenis_operasi'] ?? '',
+                'nama_operator' => $data['nama_operator'] ?? '',
+                'puasa_jam' => $data['puasa_jam'] ?? '',
+                'riwayat_asma' => $data['riwayat_asma'] ?? 0,
+                'alergi' => $data['alergi'] ?? '',
+                'antibiotik_profilaksis' => $data['antibiotik_profilaksis'] ?? '',
+                'antibiotik_profilaksis_jam' => $data['antibiotik_profilaksis_jam'] ?? '',
+                'premedikasi' => $data['premedikasi'] ?? '',
+                'premedikasi_jam' => $data['premedikasi_jam'] ?? '',
+                'ivfd' => $data['ivfd'] ?? '',
+                'dc' => $data['dc'] ?? '',
+                'assesmen_pra_bedah' => $data['assesmen_pra_bedah'] ?? 0,
+                'informed_consent_bedah' => $data['informed_consent_bedah'] ?? 0,
+                'informed_consent_anastesi' => $data['informed_consent_anastesi'] ?? 0,
+                'edukasi_anastesi' => $data['edukasi_anastesi'] ?? 0,
+                'darah' => $data['darah'] ?? '',
+                'gol' => $data['gol'] ?? '',
+                'obat' => $data['obat'] ?? '',
+                'rontgen' => $data['rontgen'] ?? '',
                 'updated_by' => auth()->user()->id
             ]);
 
