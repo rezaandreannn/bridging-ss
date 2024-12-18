@@ -57,21 +57,28 @@
             </tr>
             <tr>
                 <td rowspan="2">LAPORAN OPERASI</td>
-                <td colspan="3">Ruang : </td>
+                <td colspan="3">Ruang : {{ $biodata->ruangan->nama_ruang }}</td>
                 <td colspan="3">Nomor Register :  {{ $cetak->kode_register}}</td>
             </tr>
             <tr>
-                <td colspan="3">Nama : {{ $biodata->nama_pasien}}</td>
+                <td colspan="3">Nama : <br>{{$biodata->pendaftaran->registerPasien->Nama_Pasien}}</td>
                 <td colspan="3">Umur : </td>
             </tr>
             <tr>
-                <td colspan="2">Nama Operator : <br>dr. Aji Yudho Prabowo, Sp.BS</td>
-                <td colspan="2">Nama Asisten : <br>HARDIANSYAH PUTRA</td>
-                <td colspan="3">Nama Perawat : <br>WULAN</td>
+                <td colspan="2">Nama Operator : <br></td>
+                <td colspan="2">Nama Asisten : <br>
+                @if ($asistenOperasi->isNotEmpty())
+                    @foreach ($asistenOperasi as $asisten)
+                        {{ $asisten->Nama_Dokter }}<br>
+                    @endforeach
+                @else
+                    -
+                @endif</td>
+                <td colspan="3">Nama Perawat : <br></td>
             </tr>
             <tr>
-                <td colspan="3">Nama Ahli Anestesi : <br>TRI SETIABUDI</td>
-                <td colspan="4">Nama Anestesi : <br>TRI SETIABUDI</td>
+                <td colspan="3">Nama Ahli Anestesi : <br></td>
+                <td colspan="4">Nama Anestesi : <br></td>
             </tr>
             <tr>
                 <td colspan="7" class="diagnosa">Diagnosis Pre-Operatif : <br>{{ $cetak->diagnosa_pre_op}}</td>

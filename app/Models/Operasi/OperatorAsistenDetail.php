@@ -2,6 +2,7 @@
 
 namespace App\Models\Operasi;
 
+use App\Models\Simrs\Dokter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,6 +23,4 @@ class OperatorAsistenDetail extends Model
         'created_by',
         'updated_by'
     ];
-
-
 }

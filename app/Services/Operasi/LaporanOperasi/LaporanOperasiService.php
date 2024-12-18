@@ -44,6 +44,7 @@ class LaporanOperasiService
         return LaporanOperasi::where('kode_register', $kode_register)->first();
     }
 
+
     public function getAsistenArray($kode_register)
     {
         $data = LaporanOperasi::where('kode_register', $kode_register)->first();
@@ -58,7 +59,7 @@ class LaporanOperasiService
 
     public function getPerawatArray($kode_register)
     {
-        
+
         $data = LaporanOperasi::where('kode_register', $kode_register)->first();
         $string = trim($data->detailAsisten->nama_perawat ?? '', ','); // Menghapus koma di awal dan akhir string (jika ada)
         $perawat = array();
@@ -101,28 +102,28 @@ class LaporanOperasiService
             // pisahkan array dengan koma menjadi string
             $asisten = $data['nama_asisten'] ?? '';
             $data['nama_asisten'] = $asisten;
-            if(!empty($asisten)){
+            if (!empty($asisten)) {
                 $data['nama_asisten'] = implode(', ', $asisten);
             }
 
             $perawat = $data['nama_perawat'] ?? '';
             $data['nama_perawat'] = $perawat;
-            if(!empty($perawat)){
+            if (!empty($perawat)) {
                 $data['nama_perawat'] = implode(', ', $perawat);
             }
-            $ahli_anastesi= $data['nama_ahli_anastesi'] ?? '';
+            $ahli_anastesi = $data['nama_ahli_anastesi'] ?? '';
             $data['nama_ahli_anastesi'] = $ahli_anastesi;
-            if(!empty($ahli_anastesi)){
+            if (!empty($ahli_anastesi)) {
                 $data['nama_ahli_anastesi'] = implode(', ', $ahli_anastesi);
             }
             $penata_anastesi = $data['nama_anastesi'] ?? '';
             $data['nama_anastesi'] = $penata_anastesi;
-            if(!empty($penata_anastesi)){
+            if (!empty($penata_anastesi)) {
                 $data['nama_anastesi'] = implode(', ', $penata_anastesi);
             }
             // dd($insertPerawat);
             // Insert Asisten dan Perawat Bersamaan (Nama Asisten dan Nama Perawat)
-            $operasiasistendetail=OperatorAsistenDetail::create([
+            $operasiasistendetail = OperatorAsistenDetail::create([
                 'kode_register' => $data['kode_register'],
                 'nama_operator' => $data['nama_operator'],
                 'nama_asisten' => $data['nama_asisten'], // Tentukan apakah ini asisten
@@ -154,7 +155,6 @@ class LaporanOperasiService
                 'laporanoperasi' => $laporanoperasi,
 
             ];
-
         } catch (\Throwable $th) {
             DB::rollback();
             throw new Exception("Gagal menambahkan laporan operasi: " . $th->getMessage());
@@ -165,48 +165,48 @@ class LaporanOperasiService
     {
         try {
 
-            $id_detail_asisten=OperatorAsistenDetail::where('kode_register', $id)->first();
+            $id_detail_asisten = OperatorAsistenDetail::where('kode_register', $id)->first();
 
             $operasiasistendetail = OperatorAsistenDetail::findOrFail($id_detail_asisten->id);
-                   // pisahkan array dengan koma menjadi string
-                $asisten = $data['nama_asisten'] ?? '';
-                $data['nama_asisten'] = $asisten;
-                if(!empty($asisten)){
-                    $data['nama_asisten'] = implode(', ', $asisten);
-                }
+            // pisahkan array dengan koma menjadi string
+            $asisten = $data['nama_asisten'] ?? '';
+            $data['nama_asisten'] = $asisten;
+            if (!empty($asisten)) {
+                $data['nama_asisten'] = implode(', ', $asisten);
+            }
 
-                $perawat = $data['nama_perawat'] ?? '';
-                $data['nama_perawat'] = $perawat;
-                if(!empty($perawat)){
-                    $data['nama_perawat'] = implode(', ', $perawat);
-                }
-                $ahli_anastesi= $data['nama_ahli_anastesi'] ?? '';
-                $data['nama_ahli_anastesi'] = $ahli_anastesi;
-                if(!empty($ahli_anastesi)){
-                    $data['nama_ahli_anastesi'] = implode(', ', $ahli_anastesi);
-                }
-                $penata_anastesi = $data['nama_anastesi'] ?? '';
-                $data['nama_anastesi'] = $penata_anastesi;
-                if(!empty($penata_anastesi)){
-                    $data['nama_anastesi'] = implode(', ', $penata_anastesi);
-                }
-                   // dd($insertPerawat);
-                   // Insert Asisten dan Perawat Bersamaan (Nama Asisten dan Nama Perawat)
-                   $operasiasistendetail->update([
-                       'kode_register' => $data['kode_register'],
-                       'nama_operator' => $data['nama_operator'],
-                       'nama_asisten' => $data['nama_asisten'], // Tentukan apakah ini asisten
-                       'nama_perawat' => $data['nama_perawat'], // Tentukan apakah ini perawat
-                       'nama_ahli_anastesi' => $data['nama_ahli_anastesi'],
-                       'nama_anastesi' => $data['nama_anastesi'],
-                       'updated_by' => auth()->user()->id,
-                   ]);
+            $perawat = $data['nama_perawat'] ?? '';
+            $data['nama_perawat'] = $perawat;
+            if (!empty($perawat)) {
+                $data['nama_perawat'] = implode(', ', $perawat);
+            }
+            $ahli_anastesi = $data['nama_ahli_anastesi'] ?? '';
+            $data['nama_ahli_anastesi'] = $ahli_anastesi;
+            if (!empty($ahli_anastesi)) {
+                $data['nama_ahli_anastesi'] = implode(', ', $ahli_anastesi);
+            }
+            $penata_anastesi = $data['nama_anastesi'] ?? '';
+            $data['nama_anastesi'] = $penata_anastesi;
+            if (!empty($penata_anastesi)) {
+                $data['nama_anastesi'] = implode(', ', $penata_anastesi);
+            }
+            // dd($insertPerawat);
+            // Insert Asisten dan Perawat Bersamaan (Nama Asisten dan Nama Perawat)
+            $operasiasistendetail->update([
+                'kode_register' => $data['kode_register'],
+                'nama_operator' => $data['nama_operator'],
+                'nama_asisten' => $data['nama_asisten'], // Tentukan apakah ini asisten
+                'nama_perawat' => $data['nama_perawat'], // Tentukan apakah ini perawat
+                'nama_ahli_anastesi' => $data['nama_ahli_anastesi'],
+                'nama_anastesi' => $data['nama_anastesi'],
+                'updated_by' => auth()->user()->id,
+            ]);
 
             // id laporan operasi
-            $id=LaporanOperasi::where('kode_register', $id)->first();
+            $id = LaporanOperasi::where('kode_register', $id)->first();
             $laporanoperasi = LaporanOperasi::findOrFail($id->id);
 
-            $laporanoperasi -> update([
+            $laporanoperasi->update([
                 'kode_register' => $data['kode_register'],
                 'tanggal' => $data['tanggal'],
                 'diagnosa_pre_op' => $data['diagnosa_pre_op'],
@@ -231,13 +231,12 @@ class LaporanOperasiService
     {
         try {
             //code...
-            $id_detail_asisten=OperatorAsistenDetail::where('kode_register', $kode_register)->first();
+            $id_detail_asisten = OperatorAsistenDetail::where('kode_register', $kode_register)->first();
             $detailasisten = OperatorAsistenDetail::findOrFail($id_detail_asisten->id)->delete();
 
-            $id_laporan=LaporanOperasi::where('kode_register', $kode_register)->first();
+            $id_laporan = LaporanOperasi::where('kode_register', $kode_register)->first();
             $laporanoperasi = LaporanOperasi::findOrFail($id_laporan->id)->delete();
             return 'ok';
-        
         } catch (\Throwable $th) {
             //throw $th;
             throw new Exception("Gagal menghapus laporan operasi: " . $th->getMessage());
@@ -263,22 +262,25 @@ class LaporanOperasiService
             ];
         }));
     }
-    
+
 
     // get data asisten anastesi
 
-    public function getAsistenOperasi(){
-        $data = Dokter::where('Jenis_Profesi','ASISTEN OPERASI')->get();
-        return $this->mapDataAsisten($data);
-    }
-    
-    public function getSpesialisAnastesi(){
-        $data = Dokter::where('Spesialis','DOKTER SPESIALIS ANASTESI')->get();
+    public function getAsistenOperasi()
+    {
+        $data = Dokter::where('Jenis_Profesi', 'ASISTEN OPERASI')->get();
         return $this->mapDataAsisten($data);
     }
 
-    public function getPenataAsisten(){
-        $data = Dokter::where('Jenis_Profesi','PENATA ANESTESI')->get();
+    public function getSpesialisAnastesi()
+    {
+        $data = Dokter::where('Spesialis', 'DOKTER SPESIALIS ANASTESI')->get();
+        return $this->mapDataAsisten($data);
+    }
+
+    public function getPenataAsisten()
+    {
+        $data = Dokter::where('Jenis_Profesi', 'PENATA ANESTESI')->get();
         return $this->mapDataAsisten($data);
     }
 
@@ -291,5 +293,34 @@ class LaporanOperasiService
                 'nama_asisten' => $item->Nama_Dokter
             ];
         }));
+    }
+
+    public function getDetailAsistenByRegister($kode_register)
+    {
+        // Ambil data dari tabel ok_operator_asisten_detail berdasarkan kode_register
+        $operatorAsistenDetail = DB::connection('pku')->table('ok_operator_asisten_detail')
+            ->where('kode_register', $kode_register)
+            ->first();
+
+        if ($operatorAsistenDetail && $operatorAsistenDetail->nama_asisten) {
+            // Konversi kode asisten menjadi array
+            $kodeAsisten = explode(',', $operatorAsistenDetail->nama_asisten);
+
+            // Ambil data nama dokter berdasarkan kode dokter
+            $asistenOperasi = Dokter::whereIn('Kode_Dokter', $kodeAsisten)
+                ->select('Kode_Dokter', 'Nama_Dokter')
+                ->get();
+
+            return [
+                'operatorAsistenDetail' => $operatorAsistenDetail,
+                'asistenOperasi' => $asistenOperasi
+            ];
+        }
+
+        // Return kosong jika tidak ada data
+        return [
+            'operatorAsistenDetail' => null,
+            'asistenOperasi' => collect([]) // Koleksi kosong
+        ];
     }
 }

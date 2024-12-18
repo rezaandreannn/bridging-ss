@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Ok\Laporan;
 
 use Exception;
 use Carbon\Carbon;
+use App\Models\Simrs\Dokter;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
@@ -14,6 +15,7 @@ use App\Services\Operasi\PraBedah\AssesmenPraBedahService;
 use App\Services\Operasi\LaporanOperasi\LaporanOperasiService;
 use App\Http\Requests\Operasi\LaporanOperasi\StoreLaporanOperasi;
 use App\Http\Requests\Operasi\LaporanOperasi\UpdateLaporanOperasi;
+use Illuminate\Support\Facades\DB;
 
 class LaporanOperasiController extends Controller
 {
@@ -40,13 +42,22 @@ class LaporanOperasiController extends Controller
 
         $cetak = $this->laporanOperasiService->laporanByRegister($kode_register);
         $biodata = $this->bookingOperasiService->biodata($kode_register);
-        // dd($biodata);
+
+        // Ambil data asisten operasi dari service
+        $detailAsisten = $this->laporanOperasiService->getDetailAsistenByRegister($kode_register);
 
         $date = date('dMY');
         $tanggal = Carbon::now();
         $filename = 'LaporanOperasi-' . $date;
 
-        $pdf = PDF::loadview('pages.ok.laporan-operasi.cetak-laporan', ['cetak' => $cetak, 'title' => $title, 'tanggal' => $tanggal, 'biodata' => $biodata]);
+        $pdf = PDF::loadview('pages.ok.laporan-operasi.cetak-laporan', [
+            'cetak' => $cetak,
+            'title' => $title,
+            'tanggal' => $tanggal,
+            'biodata' => $biodata,
+            'asistenOperasi' => $detailAsisten['asistenOperasi'],
+        ]);
+
         // Set paper size to A5
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
