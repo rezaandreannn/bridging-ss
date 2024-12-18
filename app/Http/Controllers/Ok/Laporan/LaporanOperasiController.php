@@ -15,6 +15,7 @@ use App\Services\Operasi\PraBedah\AssesmenPraBedahService;
 use App\Services\Operasi\LaporanOperasi\LaporanOperasiService;
 use App\Http\Requests\Operasi\LaporanOperasi\StoreLaporanOperasi;
 use App\Http\Requests\Operasi\LaporanOperasi\UpdateLaporanOperasi;
+use App\Models\Operasi\OperatorAsistenDetail;
 use Illuminate\Support\Facades\DB;
 
 class LaporanOperasiController extends Controller
@@ -44,7 +45,14 @@ class LaporanOperasiController extends Controller
         $biodata = $this->bookingOperasiService->biodata($kode_register);
 
         // Ambil data asisten operasi dari service
-        $detailAsisten = $this->laporanOperasiService->getDetailAsistenByRegister($kode_register);
+
+        // ambil data field assisten code
+        $perawatByReg = OperatorAsistenDetail::where('kode_register', $kode_register)->first()->toArray();
+
+        $assistenCodes = explode(', ', $perawatByReg["nama_asisten"]);
+
+        $assistenNames =  $this->laporanOperasiService->getNameAssistenByCodes($assistenCodes);
+        dd($assistenNames);
 
         $date = date('dMY');
         $tanggal = Carbon::now();

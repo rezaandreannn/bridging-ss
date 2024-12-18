@@ -323,4 +323,13 @@ class LaporanOperasiService
             'asistenOperasi' => collect([]) // Koleksi kosong
         ];
     }
+
+    public function getNameAssistenByCodes(array $perawatCode)
+    {
+        $nurses =  Dokter::whereIn('Kode_Dokter', $perawatCode)
+            ->pluck('Nama_Dokter')
+            ->toArray();
+
+        return $nurses;
+    }
 }
