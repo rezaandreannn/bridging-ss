@@ -72,15 +72,20 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Asisten Bedah</label>
-                                    <input type="text" name="asisten_bedah" class="form-control @error('asisten_bedah') is-invalid @enderror">
-                                    @error('asisten_bedah')
+                                    <label>Nama Asisten</label>
+                                    <select name="nama_asisten[]" class="form-control @error('nama_asisten') is-invalid @enderror select2" multiple>
+                                        <option value="" disabled>--Pilih Asisten--</option>
+                                        @foreach ($asistenOperasi as $asisten)
+                                            <option value="{{$asisten->kode_dokter}}" {{(in_array($asisten->kode_dokter,$asistenArray)) ? 'selected' : ''}}>{{$asisten->nama_asisten}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('nama_asisten')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                     @enderror
                                 </div>
-                            </div> 
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Jenis Operasi</label>
@@ -116,26 +121,36 @@
                             </div> 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Dokter Anestesi</label>
-                                    <input type="text" name="dokter_anestesi" class="form-control @error('dokter_anestesi') is-invalid @enderror">
-                                    @error('dokter_anestesi')
+                                    <label>Nama Ahli Anestesi</label>
+                                    <select name="nama_ahli_anastesi[]" class="form-control @error('ahli_anastesi') is-invalid @enderror select2" multiple>
+                                        <option value="" disabled>--Pilih Ahli Anastesi--</option>
+                                        @foreach ($spesialisAnastesi as $anastesi)
+                                            <option value="{{$anastesi->kode_dokter}}" {{(in_array($anastesi->kode_dokter,$ahliAnastesiArray)) ? 'selected' : ''}}>{{$anastesi->nama_asisten}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('ahli_anastesi')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                     @enderror
                                 </div>
-                            </div> 
+                            </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Asisten Anestesi</label>
-                                    <input type="text" name="asisten_anestesi" class="form-control @error('asisten_anestesi') is-invalid @enderror">
-                                    @error('asisten_anestesi')
+                                    <label>Nama Anestesi</label>
+                                    <select name="nama_anastesi[]" class="form-control @error('penata_anastesi') is-invalid @enderror select2" multiple>
+                                        <option value="" disabled>--Pilih Penata Anastesi--</option>
+                                        @foreach ($penataAnastesi as $penataAnastesi)
+                                            <option value="{{$penataAnastesi->kode_dokter}}" {{(in_array($penataAnastesi->kode_dokter,$anastesiArray)) ? 'selected' : ''}}>{{$penataAnastesi->nama_asisten}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('penata_anastesi')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                     @enderror
                                 </div>
-                            </div> 
+                            </div>
                         </div>
                     </div>
                     <!-- include form -->
