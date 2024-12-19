@@ -13,37 +13,47 @@
             border: 1px solid black;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
         }
-        th, td {
+
+        th,
+        td {
             border: 1px solid #000;
             padding: 8px;
             text-align: left;
         }
+
         .header {
             text-align: center;
             font-weight: bold;
             font-size: 18px;
         }
+
         .diagnosa {
             padding-bottom: 50px;
         }
+
         .section-title {
             text-align: left;
             padding: 10px 10px;
         }
+
         .signature {
             margin-top: 100px;
             text-align: right;
         }
+
         .sign {
             padding-right: 50px;
         }
+
         .no-border {
             border: none;
         }
+
     </style>
 </head>
 <body>
@@ -55,29 +65,29 @@
             <tr>
                 <td rowspan="2">LAPORAN OPERASI</td>
                 <td colspan="3">Ruang : {{ $biodata->ruangan->nama_ruang }}</td>
-                <td colspan="3">Nomor Register :  {{ $cetak->kode_register}}</td>
+                <td colspan="3">No Register : {{ $cetak->kode_register}}</td>
             </tr>
             <tr>
-                <td colspan="3">Nama : <br>{{ ucwords($biodata->pendaftaran->registerPasien->Nama_Pasien) }}</td>
+                <td colspan="3">Nama : {{ ucwords(strtolower(trim($biodata->pendaftaran->registerPasien->Nama_Pasien))) }}</td>
                 <td colspan="3">Umur : {{ \Carbon\Carbon::parse($biodata->pendaftaran->registerPasien->TGL_LAHIR)->age }} tahun</td>
             </tr>
             <tr>
                 <td colspan="2">Nama Operator : <br>
                     @foreach ($operators as $operator)
-                       {{ $operator }}
+                    {{ $operator }}
                     @endforeach
                 </td>
                 <td colspan="2">Nama Asisten : <br>
                     <ol style="padding: 0; margin: 0;">
                         @foreach ($assistens as $asisten)
-                            <li style="list-style-position: inside;">{{ $asisten }}</li>
+                        <li style="list-style-position: inside;">{{ ucwords(strtolower(trim($asisten))) }}</li>
                         @endforeach
                     </ol>
                 </td>
                 <td colspan="3">Nama Perawat : <br>
                     <ol style="padding: 0; margin: 0;">
                         @foreach ($perawats as $perawat)
-                            <li style="list-style-position: inside;">{{ $perawat }}</li>
+                        <li style="list-style-position: inside;">{{ ucwords(strtolower(trim($perawat))) }}</li>
                         @endforeach
                     </ol>
                 </td>
@@ -85,14 +95,14 @@
             <tr>
                 <td colspan="3">Nama Ahli Anestesi : <br>
                     @foreach ($dokters as $dokter)
-                        {{ $dokter }}<br>
+                    {{ $dokter }}<br>
                     @endforeach
                 </td>
                 <td colspan="4">Nama Anestesi : <br>
                     @foreach ($anastesis as $anastesi)
-                        {{ $anastesi }}<br>
+                    {{ $anastesi }}<br>
                     @endforeach
-            </td>
+                </td>
             </tr>
             <tr>
                 <td colspan="7" class="diagnosa">Diagnosis Pre-Operatif : <br>{{ $cetak->diagnosa_pre_op}}</td>
