@@ -239,8 +239,8 @@
             <td width="30%" class="text5"> Tanda Tangan Perawat</td>
         </tr>
         <tr>
-            <td width="30%" class="text5"><img src="storage/ttd/dokter/{{$cetak->ttd_dokter}}" width="80" height="80" /></td>
-            <td width="40%" class="text5"><img src="storage/operasi/penandaan-pasien/ttd/{{$cetak->ttd_pasien}}" width="80" height="80" /></td>
+            <td width="30%" class="text5">{!! DNS2D::getBarcodeHTML($cetak->nama_dokter, 'QRCODE', 3, 3) !!}</td>
+            <td width="40%" class="text5"></td>
             <td width="30%" class="text5"></td>
         </tr>
         <tr>

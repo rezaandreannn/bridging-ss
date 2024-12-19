@@ -44,16 +44,27 @@ class LaporanOperasiController extends Controller
         $cetak = $this->laporanOperasiService->laporanByRegister($kode_register);
         $biodata = $this->bookingOperasiService->biodata($kode_register);
 
-        // Ambil data asisten operasi dari service
-
         // ambil data field assisten code
         $perawatByReg = OperatorAsistenDetail::where('kode_register', $kode_register)->first()->toArray();
 
-        $assistenCodes = explode(', ', $perawatByReg["nama_asisten"]);
+        // Dokter Operator
+        $operatorCodes = explode(', ', $perawatByReg["nama_operator"]);
+        $operators =  $this->laporanOperasiService->getNameAssistenByCodes($operatorCodes);
+        // Asisten Bedah
+        $asistenCodes = explode(', ', $perawatByReg["nama_asisten"]);
+        $assistens =  $this->laporanOperasiService->getNameAssistenByCodes($asistenCodes);
+        // Perawat
+        $perawatCode = explode(', ', $perawatByReg["nama_perawat"]);
+        $perawats =  $this->laporanOperasiService->getNameAssistenByCodes($perawatCode);
+        // Dokter Anastesi
+        $dokterCodes = explode(', ', $perawatByReg["nama_ahli_anastesi"]);
+        $dokters =  $this->laporanOperasiService->getNameAssistenByCodes($dokterCodes);
+        // Perawat Anastesi
+        $anastesiCodes = explode(', ', $perawatByReg["nama_anastesi"]);
+        $anastesis =  $this->laporanOperasiService->getNameAssistenByCodes($anastesiCodes);
 
-        $assistenNames =  $this->laporanOperasiService->getNameAssistenByCodes($assistenCodes);
-        dd($assistenNames);
 
+        // dd($assistenNames);
         $date = date('dMY');
         $tanggal = Carbon::now();
         $filename = 'LaporanOperasi-' . $date;
@@ -63,7 +74,11 @@ class LaporanOperasiController extends Controller
             'title' => $title,
             'tanggal' => $tanggal,
             'biodata' => $biodata,
-            'asistenOperasi' => $detailAsisten['asistenOperasi'],
+            'operators' => $operators,
+            'assistens' => $assistens,
+            'perawats' => $perawats,
+            'dokters' => $dokters,
+            'anastesis' => $anastesis,
         ]);
 
         // Set paper size to A5

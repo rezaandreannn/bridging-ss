@@ -324,9 +324,34 @@ class LaporanOperasiService
         ];
     }
 
-    public function getNameAssistenByCodes(array $perawatCode)
+    public function getNameAssistenByCodes(array $assistenCode)
+    {
+        $nurses =  Dokter::whereIn('Kode_Dokter', $assistenCode)
+            ->pluck('Nama_Dokter')
+            ->toArray();
+
+        return $nurses;
+    }
+
+    public function getNamePerawatByCodes(array $perawatCode)
     {
         $nurses =  Dokter::whereIn('Kode_Dokter', $perawatCode)
+            ->pluck('Nama_Dokter')
+            ->toArray();
+
+        return $nurses;
+    }
+    public function getNameDoktertByCodes(array $doktertCode)
+    {
+        $nurses =  Dokter::whereIn('Kode_Dokter', $doktertCode)
+            ->pluck('Nama_Dokter')
+            ->toArray();
+
+        return $nurses;
+    }
+    public function getNameAnastesiByCodes(array $anastesiCode)
+    {
+        $nurses =  Dokter::whereIn('Kode_Dokter', $anastesiCode)
             ->pluck('Nama_Dokter')
             ->toArray();
 
