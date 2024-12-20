@@ -13,10 +13,7 @@ use App\Http\Controllers\Ok\PraBedah\BerkasPraBedahController;
 use App\Http\Controllers\Ok\PraBedah\AssesmenPraBedahController;
 use App\Http\Controllers\Ok\PraBedah\VerifikasiPraBedahController;
 
-Route::prefix('operasi')->name('operasi.')->middleware('auth')->group(function () {
-    // jadwal operasi
-    Route::get('jadwal-operasi', JadwalOperasiController::class)->name('jadwal.index');
-
+Route::prefix('penandaan')->name('operasi.')->middleware('auth')->group(function () {
     // Penandaan Lokasi Operasi
     Route::get('penandaan-operasi', [PenandaanOperasiController::class, 'index'])->name('penandaan.index');
     Route::get('/penandaan-operasi/{noReg}', [PenandaanOperasiController::class, 'create'])->name('penandaan.create');
@@ -25,13 +22,10 @@ Route::prefix('operasi')->name('operasi.')->middleware('auth')->group(function (
     Route::put('/penandaan-operasi/{id}/update', [PenandaanOperasiController::class, 'update'])->name('penandaan.update');
     Route::delete('/penandaan-operasi/delete/{id}', [PenandaanOperasiController::class, 'destroy'])->name('penandaan.destroy');
     Route::get('/penandaan-operasi/cetak/{kode_register}', [PenandaanOperasiController::class, 'cetak'])->name('penandaan.cetak');
+});
 
-    // OK Ruangan
-    Route::get('/ruang-operasi', [RuangOperasiController::class, 'index'])->name('ruang.index');
-    Route::post('/ruang-operasi', [RuangOperasiController::class, 'store'])->name('ruang.store');
-    Route::put('/ruang-operasi/update/{id}', [RuangOperasiController::class, 'update'])->name('ruang.update');
-    Route::delete('/ruang-operasi/delete/{id}', [RuangOperasiController::class, 'destroy'])->name('ruang.destroy');
-
+// Pre Post
+Route::prefix('pre-post')->name('operasi.')->middleware('auth')->group(function () {
     // Pre Operasi
     Route::get('/pre-operasi', [PreOperasiController::class, 'index'])->name('pre-operasi.index');
     Route::get('/pre-operasi/create/{kode_register}', [PreOperasiController::class, 'create'])->name('pre-operasi.create');
@@ -47,8 +41,20 @@ Route::prefix('operasi')->name('operasi.')->middleware('auth')->group(function (
     Route::put('/post-operasi/update/{kode_register}', [PostOperasiController::class, 'update'])->name('post-operasi.update');
 });
 
-Route::prefix('ruangan')->name('ruangan.')->middleware('auth')->group(function () {});
 
+// IBS
+Route::prefix('ibs')->name('operasi.')->middleware('auth')->group(function () {
+    // jadwal operasi
+    Route::get('jadwal-operasi', JadwalOperasiController::class)->name('jadwal.index');
+
+    // OK Ruangan
+    Route::get('/ruang-operasi', [RuangOperasiController::class, 'index'])->name('ruang.index');
+    Route::post('/ruang-operasi', [RuangOperasiController::class, 'store'])->name('ruang.store');
+    Route::put('/ruang-operasi/update/{id}', [RuangOperasiController::class, 'update'])->name('ruang.update');
+    Route::delete('/ruang-operasi/delete/{id}', [RuangOperasiController::class, 'destroy'])->name('ruang.destroy');
+});
+
+// Prabedah
 Route::prefix('prabedah')->name('prabedah.')->middleware('auth')->group(function () {
     // Asesmen Pra Bedah
     Route::get('/assesmen-prabedah', [AssesmenPraBedahController::class, 'index'])->name('assesmen-prabedah.index');

@@ -49,7 +49,7 @@
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$verifikasi->no_mr}}</td>
-                                    <td>{{$verifikasi->nama_pasien}}</td>
+                                    <td>{{ ucwords(strtolower(trim($verifikasi->nama_pasien))) }}</td>
                                     <td>{{$verifikasi->tanggal}}</td>
                                     <td>{{$verifikasi->nama_dokter}}</td>
                                     <td>

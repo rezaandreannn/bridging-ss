@@ -51,7 +51,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td><span class="font-weight-bold">{{ $data->no_mr }}</span></td>
-                                    <td>{{$data->nama_pasien}}</td>
+                                    <td>{{ ucwords(strtolower(trim($data->nama_pasien))) }}</td>
                                     <td>{{ $data->tanggal }}</td>
                                     <td>{{ $data->nama_tindakan }}</td>
                                     <td>{{ $data->nama_dokter }}</td>

@@ -50,7 +50,7 @@
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$booking->kode_register}}</td>
                                             <td>{{$booking->tanggal}}</td>
-                                            <td>{{$booking->nama_pasien}}</td>
+                                            <td>{{ ucwords(strtolower(trim($booking->nama_pasien))) }}</td>
                                             <td>{{$booking->no_mr}}</td>
                                             <td>{{$booking->nama_dokter}}</td>
                                             <td>  

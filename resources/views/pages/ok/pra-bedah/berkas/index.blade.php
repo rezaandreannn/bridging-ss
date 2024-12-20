@@ -47,7 +47,7 @@
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$assesmen->no_mr}}</td>
-                                            <td>{{$assesmen->nama_pasien}}</td>
+                                            <td>{{ ucwords(strtolower(trim($assesmen->nama_pasien))) }}</td>
                                             <td>{{$assesmen->tanggal}}</td>
                                             <td>  
                                                 <div class="dropdown d-inline">

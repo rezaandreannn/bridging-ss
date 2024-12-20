@@ -68,7 +68,7 @@
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$laporan->kode_register}}</td>
                                             <td>{{$laporan->tanggal}}</td>
-                                            <td>{{ ucwords($laporan->nama_pasien) }}</td>
+                                            <td>{{ ucwords(strtolower(trim($laporan->nama_pasien))) }}</td>
                                             <td>{{$laporan->no_mr}}</td>
                                             <td>{{$laporan->nama_dokter}}</td>
 
