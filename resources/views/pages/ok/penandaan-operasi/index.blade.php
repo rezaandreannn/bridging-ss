@@ -42,6 +42,7 @@
                                     <th scope="col">Tindakan</th>
                                     <th scope="col">Nama Dokter</th>
                                     <th scope="col">Ruangan</th>
+                                    <th scope="col">Status</th>
                                     <th scope="col">Gambar</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
@@ -57,7 +58,18 @@
                                     <td>{{ $data->nama_dokter }}</td>
                                     <td>{{ $data->ruang_operasi}}</td>
                                     <td>
+                                        @if (isset($statusPenandaan[$data->id]) && $statusPenandaan[$data->id] == 'create')
+                                        <span class="badge badge-danger">Create</span>
+                                        @else
+                                        <span class="badge badge-success">Update</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if (isset($statusPenandaan[$data->id]) && $statusPenandaan[$data->id] == 'Detail')
                                         <a href="#" data-toggle="modal" data-target="#gambarModal{{ $data->id }}" class="badge badge-success">Detail</a>
+                                        @else
+                                        -
+                                        @endif
                                     </td>
                                     <td>
                                         <div class="dropdown d-inline">
@@ -101,7 +113,7 @@
     </section>
 </div>
 
-@foreach ($penandaans as $data)
+@foreach ($penandaan as $data)
 <div class="modal fade" id="gambarModal{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">

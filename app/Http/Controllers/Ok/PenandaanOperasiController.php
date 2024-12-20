@@ -61,9 +61,19 @@ class PenandaanOperasiController extends Controller
     {
         $title = 'Penandaan Operasi';
 
-        $penandaans = $this->penandaanOperasiService->get();
+        $penandaan = $this->penandaanOperasiService->get();
+
+        $date = date('Y-m-d');
+        if ($request->input('tanggal') != null) {
+            $date = $request->input('tanggal');
+        }
+        $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
+        $penandaans = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
+
         // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
         $statusPenandaan = BookingHelper::getStatusPenandaan($penandaans);
+
+        $statusGambar = BookingHelper::getStatusGambar($penandaans);
 
         $statusTandaTangan = BookingHelper::getStatusTandaTangan($penandaans);
         // dd($statusTandaTangan);
@@ -73,6 +83,8 @@ class PenandaanOperasiController extends Controller
             ->with([
                 'title' => $title,
                 'statusPenandaan' => $statusPenandaan,
+                'penandaan' => $penandaan,
+                'statusGambar' => $statusGambar,
                 'statusTandaTangan' => $statusTandaTangan
             ]);
     }

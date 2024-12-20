@@ -33,6 +33,18 @@ class BookingHelper
         return $statusPenandaan;
     }
 
+    public static function getStatusGambar($bookings)
+    {
+        $statusGambar = [];
+
+        foreach ($bookings as $booking) {
+            $exists = PenandaanOperasi::where('kode_register', $booking->kode_register)->first();
+            $statusGambar[$booking->id] = $exists ? $exists->id : 'detail';
+        }
+
+        return $statusGambar;
+    }
+
     public static function getStatusTandaTangan($ttds)
     {
         $statusTandaTangan = [];

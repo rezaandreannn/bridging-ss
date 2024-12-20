@@ -170,7 +170,6 @@
                                         <th scope="col">Nama Pasien</th>
                                         <th scope="col">No MR</th>
                                         <th scope="col">Nama Dokter</th>
-                                        <th scope="col">Status Penandaan</th>
                                         <th scope="col">Nama Ruang Operasi</th>
                                         <th scope="col">Aksi</th>
                                     </tr>
@@ -184,13 +183,6 @@
                                         <td>{{ ucwords(strtolower(trim($booking->nama_pasien))) }}</td>
                                         <td>{{$booking->no_mr}}</td>
                                         <td>{{$booking->nama_dokter}}</td>
-                                        <td>
-                                            @if (isset($statusPenandaan[$booking->id]) && $statusPenandaan[$booking->id] == 'create')
-                                            <span class="badge badge-danger">Create</span>
-                                            @else
-                                            <span class="badge badge-success">Update</span>
-                                            @endif
-                                        </td>
                                         <td>{{$booking->ruang_operasi}}</td>
                                         <td>
                                             <div class="dropdown d-inline">
@@ -214,10 +206,6 @@
                                                     {{-- Ubah Ruangan --}}
                                                     <a class="dropdown-item has-icon" href="#" data-toggle="modal" data-target="#modal-edit-ruang{{ $booking->id }}">
                                                         <i class="fas fa-person-booth"></i> Ganti Ruangan
-                                                    </a>
-                                                    {{-- Penandaan --}}
-                                                    <a class="dropdown-item has-icon" href="{{ isset($statusPenandaan[$booking->id]) && $statusPenandaan[$booking->id] == 'create' ? route('operasi.penandaan.create', ['noReg' => $booking->kode_register]) : route('operasi.penandaan.edit', ['id' => $statusPenandaan[$booking->id]]) }}">
-                                                        <i class="fas fa-marker"></i> {{ isset($statusPenandaan[$booking->id]) && $statusPenandaan[$booking->id] == 'create' ? 'Penandaan Operasi' : 'Update Penandaan' }}
                                                     </a>
                                                     <!-- Hidden form for deletion -->
                                                     <form id="delete-form-{{$booking->id}}" action="{{ route('operasi.booking.destroy', $booking->id) }}" method="POST" style="display: none;">
