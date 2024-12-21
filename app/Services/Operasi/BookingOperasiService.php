@@ -96,7 +96,7 @@ class BookingOperasiService
         return $this->mapData($filtered);
     }
 
-    public function byDate($date, $kodeBangsal = "")
+    public function byDate($date, $kodeBangsal = "", $kodeDokter = "")
     {
         if (!empty($kodeBangsal)) {
             $bookings = BookingOperasi::with([
@@ -116,6 +116,7 @@ class BookingOperasiService
                             return $tanggal && $tanggal == $date;
                         }
                     }
+                    // dd('OK');
                 } else {
                     $ruang = optional($booking->pendaftaran)->Kode_Ruang;
                     $tanggal = $booking->tanggal;
@@ -123,7 +124,28 @@ class BookingOperasiService
                     return empty($ruang) && ($tanggal && $tanggal == $date);
                 }
             });
+        } else if (!empty($kodeDokter)) {
+            // dd('ok');
+            $bookings = BookingOperasi::with([
+                'pendaftaran.registerPasien',
+                'pendaftaran.ruang.bangsal',
+                'ruangan',
+                'dokter',
+            ])->get();
+
+            $filtered = $bookings->filter(function ($booking) use ($date, $kodeDokter) {
+                $dokter = $booking->kode_dokter;
+
+                if ($kodeDokter != null) {
+
+                    if ((string) $dokter ===  $kodeDokter) {
+                        $tanggal = $booking->tanggal;
+                        return $tanggal && $tanggal == $date;
+                    }
+                }
+            });
         } else {
+
             $filtered = $this->baseQuery()->get();
         }
         return $this->mapData($filtered);

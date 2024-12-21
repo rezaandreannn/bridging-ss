@@ -67,17 +67,33 @@ class PenandaanOperasiController extends Controller
         if ($request->input('tanggal') != null) {
             $date = $request->input('tanggal');
         }
-        $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
-        $penandaans = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
 
-        // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
-        $statusPenandaan = BookingHelper::getStatusPenandaan($penandaans);
+        $penandaans = [];
+        $statusPenandaan = null;
+        $statusGambar = null;
 
-        $statusGambar = BookingHelper::getStatusGambar($penandaans);
+        // Cek jika login sebagai userbangsal
+        if (auth()->user()->hasRole('perawat bangsal')) {
+            $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
+            // Ambil pasien bangsal
+            $penandaans = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '', '');
 
-        $statusTandaTangan = BookingHelper::getStatusTandaTangan($penandaans);
-        // dd($statusTandaTangan);
+            // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
+            $statusPenandaan = BookingHelper::getStatusPenandaan($penandaans);
+            $statusGambar = BookingHelper::getStatusGambar($penandaans);
+        }
+        // Cek jika login sebagai dokter
+        elseif (auth()->user()->hasRole('dokter bedah')) {
+            $sessionKodeDokter = auth()->user()->username ?? null;
+            // Ambil pasien dokter
+            $penandaans = $this->bookingOperasiService->byDate($date, '', $sessionKodeDokter ?? '');
 
+            // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
+            $statusPenandaan = BookingHelper::getStatusPenandaan($penandaans);
+            $statusGambar = BookingHelper::getStatusGambar($penandaans);
+        }
+
+        // dd($penandaans); // Uncomment if you want to debug the result
 
         return view($this->view . 'penandaan-operasi.index', compact('penandaans'))
             ->with([
@@ -85,9 +101,9 @@ class PenandaanOperasiController extends Controller
                 'statusPenandaan' => $statusPenandaan,
                 'penandaan' => $penandaan,
                 'statusGambar' => $statusGambar,
-                'statusTandaTangan' => $statusTandaTangan
             ]);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -122,7 +138,7 @@ class PenandaanOperasiController extends Controller
             $this->penandaanOperasiService->insert($data);
 
             // return redirect()->back()->with('success', 'Penandaan Operasi berhasil ditambahkan.');
-            return redirect('operasi/penandaan-operasi')->with('success', 'Penandaan Operasi berhasil di ditambahkan.');
+            return redirect('penandaan/penandaan-operasi')->with('success', 'Penandaan Operasi berhasil di ditambahkan.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
             return redirect()->back()->with('error', 'Gagal menambahkan Penandaan Operasi: ' . $e->getMessage());
@@ -179,7 +195,7 @@ class PenandaanOperasiController extends Controller
 
             // Panggil service untuk melakukan update
             $this->penandaanOperasiService->update($id, $data);
-            return redirect('operasi/penandaan-operasi')->with('success', 'Penandaan Operasi berhasil di ubah.');
+            return redirect('penandaan/penandaan-operasi')->with('success', 'Penandaan Operasi berhasil di ubah.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
             return redirect()->back()->with('error', 'Gagal menambahkan penandaan operasi: ' . $e->getMessage());

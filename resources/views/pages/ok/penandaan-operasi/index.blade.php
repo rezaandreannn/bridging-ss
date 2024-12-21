@@ -65,10 +65,10 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if (isset($statusPenandaan[$data->id]) && $statusPenandaan[$data->id] == 'Detail')
-                                        <a href="#" data-toggle="modal" data-target="#gambarModal{{ $data->id }}" class="badge badge-success">Detail</a>
+                                        @if (!empty($statusGambar[$data->id]))
+                                            <a href="#" data-toggle="modal" data-target="#gambarModal{{ $data->id }}" class="badge badge-success">Detail</a>
                                         @else
-                                        -
+                                            <span class="text-muted">-</span>
                                         @endif
                                     </td>
                                     <td>
