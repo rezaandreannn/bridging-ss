@@ -15,13 +15,15 @@ class DokterService
             'SPESIALIS BEDAH MULUT',
             'SPESIALIS THT-KL',
             'SPESIALIS UROLOGI',
-            'SPESIALIS BEDAH SARAF'
+            'SPESIALIS BEDAH SARAF',
+            'SPESIALIS MATA'
         ];
         return Dokter::whereIn('Spesialis', $params)->get();
     }
 
-    public function allDokter(){
-        $data = Dokter::where('Jenis_Profesi','DOKTER SPESIALIS')->get();
+    public function allDokter()
+    {
+        $data = Dokter::where('Jenis_Profesi', 'DOKTER SPESIALIS')->get();
         return $data;
     }
 }

@@ -51,8 +51,28 @@ class BookingOperasiController extends Controller
         if ($request->input('tanggal') != null) {
             $date = $request->input('tanggal');
         }
-        $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
-        $bookings = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
+
+
+        $bookings = [];
+        // Check if the user is a 'perawat poli' (Nurse in Poli)
+        $isPerawatPoli = auth()->user()->hasRole('perawat poli');  // Check if the user is a 'perawat poli'
+
+        if ($isPerawatPoli) {
+            // Get the selected doctor from the request (if any)
+            $kode_dokter = $request->input('kode_dokter');
+            // If a doctor is selected, fetch the filtered bookings
+            if ($kode_dokter) {
+                // Ensure $sessionBangsal is defined (can be null or a specific value)
+                $sessionBangsal = null;  // Add any logic for sessionBangsal if needed
+                $bookings = $this->bookingOperasiService->byDate($date, $sessionBangsal, $kode_dokter);
+            }
+        }
+        // Check if the user is a 'perawat bangsal' (Nurse in Bangsal)
+        elseif (auth()->user()->hasRole('perawat bangsal')) {
+            $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
+            $bookings = $this->bookingOperasiService->byDate($date, $sessionBangsal);
+        }
+
 
         $booking = null;
         if (session('booking_id')) {
@@ -60,16 +80,15 @@ class BookingOperasiController extends Controller
         }
 
         // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
-        $statusPenandaan = BookingHelper::getStatusPenandaan($bookings);
+        // $statusPenandaan = BookingHelper::getStatusPenandaan($bookings);
         // dd($statusPenandaan);
 
 
-        return view($this->view . 'booking-operasi.index', compact('bookings', 'booking'))->with([
+        return view($this->view . 'booking-operasi.index', compact('bookings', 'booking', 'isPerawatPoli'))->with([
             'title' => $title,
             'ruanganOperasi' => RuanganOperasi::all(),
             'dokters' => $this->dokterService->byBedahOperasi(),
             'pasien' => $this->pasienService->byStatusActive(),
-            'statusPenandaan' => $statusPenandaan,
             'filterbooking' =>  response()->json([
                 'bookings' => $bookings
             ])

@@ -145,17 +145,47 @@
                     <div class="card-body">
                         <form id="filterForm" action="" method="GET">       
                         <div class="card-footer text-left">
-                            <label for="">Filter tanggal</label>
                             <div class="row">
-                                @php
-                                    $date = date('Y-m-d');
-                                @endphp
-                                <div class="form-group col-4">
-                                    <input type="date" class="form-control" name="tanggal" {{(request('tanggal')==null) ?  $date : $date = request('tanggal') }} value="{{$date}}"  id="datefilter">
+                                <div class="col-md-4">
+                                    <label for="">Filter tanggal</label>
+                                    @php
+                                        $date = date('Y-m-d');
+                                    @endphp
+                                    <div class="form-group">
+                                        <input type="date" class="form-control" name="tanggal" {{(request('tanggal')==null) ?  $date : $date = request('tanggal') }} value="{{$date}}"  id="datefilter">
+                                    </div>
                                 </div>
-                                <div class="form-group col-4">
-                                    <button type="submit" class="btn btn-primary mr-2" style="margin-top: 5px;"><i class="fas fa-search"></i> Search</button>
-                                    <button type="button" class="btn btn-danger" style="margin-top: 5px;" onclick="resetForm()"><i class="fas fa-sync"></i> Reset</button>
+                                 <!-- Only show doctor filter if the user is NOT a perawat bangsal -->
+                                @if($isPerawatPoli)
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Pilih Dokter</label>
+                                        <select name="kode_dokter" class="form-control select2 @error('kode_dokter') is-invalid @enderror">
+                                            <option value="" selected disabled>--Pilih Dokter--</option>
+                                            @foreach ($dokters as $dokter)
+                                                <option value="{{ $dokter->Kode_Dokter }}" 
+                                                    @if(request('kode_dokter') == $dokter->Kode_Dokter) selected @endif>
+                                                    {{ $dokter->Nama_Dokter }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('kode_dokter')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                @endif
+                                <div class="col-md-4">
+                                    <div class="form-group mt-4">
+                                        <button type="submit" class="btn btn-primary mr-2" style="margin-top: 5px;">
+                                            <i class="fas fa-search"></i> Filter
+                                        </button>
+                                        <button type="button" class="btn btn-danger" style="margin-top: 5px;" onclick="resetForm()">
+                                            <i class="fas fa-sync"></i> Reset
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -191,12 +221,12 @@
                                                 </a>
                                                 <div class="dropdown-menu">
                                                     {{-- Detail Booking --}}
-                                                    @if (isset($statusPenandaan[$booking->id]) && $statusPenandaan[$booking->id] == 'create')
+                                                    {{-- @if (isset($statusPenandaan[$booking->id]) && $statusPenandaan[$booking->id] == 'create')
                                                     @else    
                                                     <a class="dropdown-item has-icon" href="{{ route('operasi.booking.detail', ['id' => $statusPenandaan[$booking->id]]) }}">
                                                             <i class="fas fa-info"></i> Detail Booking
                                                         </a>
-                                                    @endif
+                                                    @endif --}}
                                                     {{-- Ubah Data --}}
                                                     <a class="dropdown-item has-icon" href="{{ route('operasi.booking.edit', $booking->id )}}"><i class="fas fa-pencil-alt"></i> Ubah Data</a>
                                                     {{-- Ubah Tanggal --}}
