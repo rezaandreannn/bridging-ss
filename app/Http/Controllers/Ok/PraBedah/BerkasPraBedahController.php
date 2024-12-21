@@ -71,9 +71,19 @@ class BerkasPraBedahController extends Controller
         // $date = '2024-12-05';
         $date = date('Y-m-d');
 
-        // get data from service
-        $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
-        $assesmens = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
+        $assesmens = [];
+        // Cek jika login sebagai userbangsal
+        if (auth()->user()->hasRole('perawat bangsal')) {
+            $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
+            // Ambil pasien bangsal
+            $assesmens = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '', '');
+        }
+        // Cek jika login sebagai dokter
+        elseif (auth()->user()->hasRole('dokter bedah')) {
+            $sessionKodeDokter = auth()->user()->username ?? null;
+            // Ambil pasien dokter
+            $assesmens = $this->bookingOperasiService->byDate($date, '', $sessionKodeDokter ?? '');
+        }
 
         return view($this->view . 'berkas.index', compact('assesmens'))
             ->with([

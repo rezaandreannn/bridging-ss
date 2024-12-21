@@ -7,12 +7,13 @@ use Illuminate\Http\Request;
 use App\Helpers\BookingHelper;
 use App\Http\Controllers\Controller;
 use App\Models\MasterData\TtdPerawat;
+use App\Services\SimRs\DokterService;
+use App\Models\Operasi\PenandaanOperasi;
 use App\Services\Operasi\BookingOperasiService;
+use App\Models\Operasi\PraBedah\AssesmenPraBedah;
 use App\Services\Operasi\PraBedah\VerifikasiPraBedahService;
 use App\Http\Requests\Operasi\Prabedah\StoreVerifikasiPraBedahRequest;
 use App\Http\Requests\Operasi\Prabedah\UpdateVerifikasiPraBedahRequest;
-use App\Models\Operasi\PenandaanOperasi;
-use App\Models\Operasi\PraBedah\AssesmenPraBedah;
 
 class VerifikasiPraBedahController extends Controller
 {
@@ -22,12 +23,14 @@ class VerifikasiPraBedahController extends Controller
     protected $bookingOperasiService;
     protected $assesmenOperasiService;
     protected $verifikasiPraBedahService;
+    protected $dokterService;
 
     public function __construct()
     {
         $this->view = 'pages.ok.pra-bedah.';
         $this->prefix = 'Verifikasi Pra Bedah';
         $this->verifikasiPraBedahService = new VerifikasiPraBedahService();
+        $this->dokterService = new DokterService();
         $this->bookingOperasiService = new BookingOperasiService();
     }
 
@@ -42,18 +45,40 @@ class VerifikasiPraBedahController extends Controller
         $statusTtd = TtdPerawat::where('user_id', $userId)->exists();
         // dd($statusTtd);
 
-        // get data from service
-        $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
-        $verifikasis = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
+        $verifikasis = [];
+        $statusBerkas = null;
+        $statusVerifikasi = null;
 
-        // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
-        $statusBerkas = BookingHelper::getStatusBerkasVerifikasi($verifikasis);
-        // dd($statusBerkas);
-        $statusVerifikasi = BookingHelper::getStatusVerifikasi($verifikasis);
+        $isPerawatPoli = auth()->user()->hasRole('perawat poli');
 
-        return view($this->view . 'verifikasi-prabedah.index', compact('verifikasis'))
+        if ($isPerawatPoli) {
+
+            $kode_dokter = $request->input('kode_dokter');
+
+            if ($kode_dokter) {
+
+                $sessionBangsal = null;
+                $verifikasis = $this->bookingOperasiService->byDate($date, $sessionBangsal, $kode_dokter);
+
+                $statusBerkas = BookingHelper::getStatusBerkasVerifikasi($verifikasis);
+
+                $statusVerifikasi = BookingHelper::getStatusVerifikasi($verifikasis);
+            }
+        }
+        // Check if the user is a 'perawat bangsal' (Nurse in Bangsal)
+        elseif (auth()->user()->hasRole('perawat bangsal')) {
+            $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
+            $verifikasis = $this->bookingOperasiService->byDate($date, $sessionBangsal);
+
+            $statusBerkas = BookingHelper::getStatusBerkasVerifikasi($verifikasis);
+
+            $statusVerifikasi = BookingHelper::getStatusVerifikasi($verifikasis);
+        }
+
+        return view($this->view . 'verifikasi-prabedah.index', compact('verifikasis', 'isPerawatPoli'))
             ->with([
                 'title' => $title,
+                'dokters' => $this->dokterService->byBedahOperasi(),
                 'statusVerifikasi' => $statusVerifikasi,
                 'statusBerkas' => $statusBerkas,
                 'statusTtd' => $statusTtd

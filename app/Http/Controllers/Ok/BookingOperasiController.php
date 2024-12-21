@@ -54,21 +54,19 @@ class BookingOperasiController extends Controller
 
 
         $bookings = [];
-        // Check if the user is a 'perawat poli' (Nurse in Poli)
-        $isPerawatPoli = auth()->user()->hasRole('perawat poli');  // Check if the user is a 'perawat poli'
+
+        $isPerawatPoli = auth()->user()->hasRole('perawat poli');
 
         if ($isPerawatPoli) {
-            // Get the selected doctor from the request (if any)
+
             $kode_dokter = $request->input('kode_dokter');
-            // If a doctor is selected, fetch the filtered bookings
+
             if ($kode_dokter) {
-                // Ensure $sessionBangsal is defined (can be null or a specific value)
-                $sessionBangsal = null;  // Add any logic for sessionBangsal if needed
+
+                $sessionBangsal = null;
                 $bookings = $this->bookingOperasiService->byDate($date, $sessionBangsal, $kode_dokter);
             }
-        }
-        // Check if the user is a 'perawat bangsal' (Nurse in Bangsal)
-        elseif (auth()->user()->hasRole('perawat bangsal')) {
+        } elseif (auth()->user()->hasRole('perawat bangsal')) {
             $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
             $bookings = $this->bookingOperasiService->byDate($date, $sessionBangsal);
         }

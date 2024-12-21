@@ -37,12 +37,25 @@ class AssesmenPraBedahController extends Controller
         $userId = auth()->id();
         $statusTtd = TtdPerawat::where('user_id', $userId)->exists();
 
-        // get data from service
-        $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
-        $verifikasis = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
-        // dd($verifikasis);
-        $statusAssesmen = BookingHelper::getStatusAssesmen($verifikasis);
-        // dd($statusAssesmen);
+
+        $verifikasis = [];
+        $statusAssesmen = null;
+        // Cek jika login sebagai userbangsal
+        if (auth()->user()->hasRole('perawat bangsal')) {
+            $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
+            // Ambil pasien bangsal
+            $verifikasis = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '', '');
+
+            $statusAssesmen = BookingHelper::getStatusAssesmen($verifikasis);
+        }
+        // Cek jika login sebagai dokter
+        elseif (auth()->user()->hasRole('dokter bedah')) {
+            $sessionKodeDokter = auth()->user()->username ?? null;
+            // Ambil pasien dokter
+            $verifikasis = $this->bookingOperasiService->byDate($date, '', $sessionKodeDokter ?? '');
+
+            $statusAssesmen = BookingHelper::getStatusAssesmen($verifikasis);
+        }
 
         return view($this->view . 'assesmen-prabedah.index', compact('verifikasis'))
             ->with([
