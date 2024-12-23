@@ -38,6 +38,7 @@ class BerkasPraBedahController extends Controller
         $booking = collect($this->bookingOperasiService->byRegister($kode_register))->first();
         $biodataPasien = $this->bookingOperasiService->biodata($kode_register);
         $pasien = $biodataPasien->pendaftaran->registerPasien;
+        // dd($cetak);
 
 
         // dd($booking);

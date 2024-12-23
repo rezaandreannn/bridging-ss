@@ -189,7 +189,7 @@
                 <label>Dokter Operator: {{ $booking->nama_dokter ?? ''}}</label>
             </td>
             <td>
-                <label>Perawat: {{ $booking->created_by ?? ''}}</label>
+                <label>Perawat: {{ optional($cetak)->created_by ?? ''}}</label>
                 <label>Tgl: {{ optional($cetak)->tanggal ? date('d-m-Y', strtotime($cetak->tanggal)) : '' }}</label>
                 <label>Jam: {{ optional($cetak)->jam_mulai ? date('h:i', strtotime($cetak->jam_mulai)) : '' }}
                     -
@@ -266,7 +266,7 @@
         <tr>
             <td width="30%" class="text5">({{ $booking->nama_dokter}})</td>
             <td width="40%" class="text9">({{ $booking->nama_pasien}})</td>
-            <td width="30%" class="text5">({{ $booking->created_by}})</td>
+            <td width="30%" class="text5">({{ optional($cetak)->created_by ?? ''}})</td>
         </tr>
     </table>
 </body>

@@ -61,7 +61,8 @@ class PenandaanOperasiController extends Controller
     {
         $title = 'Penandaan Operasi';
 
-        $penandaan = $this->penandaanOperasiService->get();
+
+        // dd($penandaan);
 
         $date = date('Y-m-d');
         if ($request->input('tanggal') != null) {
@@ -69,6 +70,7 @@ class PenandaanOperasiController extends Controller
         }
 
         $penandaans = [];
+        $penandaan = [];
         $statusPenandaan = null;
         $statusGambar = null;
 
@@ -77,6 +79,8 @@ class PenandaanOperasiController extends Controller
             $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
             // Ambil pasien bangsal
             $penandaans = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '', '');
+
+            $penandaan = $this->penandaanOperasiService->get();
 
             // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
             $statusPenandaan = BookingHelper::getStatusPenandaan($penandaans);
@@ -87,7 +91,7 @@ class PenandaanOperasiController extends Controller
             $sessionKodeDokter = auth()->user()->username ?? null;
             // Ambil pasien dokter
             $penandaans = $this->bookingOperasiService->byDate($date, '', $sessionKodeDokter ?? '');
-
+            $penandaan = $this->penandaanOperasiService->get();
             // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
             $statusPenandaan = BookingHelper::getStatusPenandaan($penandaans);
             $statusGambar = BookingHelper::getStatusGambar($penandaans);

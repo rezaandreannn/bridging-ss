@@ -297,7 +297,7 @@ class BookingOperasiService
                 'jam_mulai' => $item->jam_mulai,
                 'jam_selesai' => $item->jam_selesai,
                 'cara_masuk' => $item->cara_masuk,
-                'created_by' => optional($item->user)->name,
+                'created_by' => optional($item->user)->name ?? '',
             ];
         }));
     }

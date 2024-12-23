@@ -34,6 +34,15 @@ class AssesmenPraBedahService
     public function cetak($kode_register)
     {
         $result = AssesmenPraBedah::with([
+            'praBedahDarah' => function ($query) {
+                $query->select(
+                    'kode_register',
+                    'darah',
+                    'jumlah',
+                    'gol',
+                    'deskripsi'
+                );
+            },
             'praBedahBerkas' => function ($query) {
                 $query->select(
                     'kode_register',
@@ -43,17 +52,13 @@ class AssesmenPraBedahService
                     'informed_consent_bedah',
                     'informed_consent_anastesi',
                     'assesmen_pra_anastesi_sedasi',
-                    'edukasi_anastesi'
-                );
-            },
-            'praBedahDarah' => function ($query) {
-                $query->select(
-                    'kode_register',
-                    'darah',
-                    'jumlah',
-                    'gol',
-                    'deskripsi'
-                );
+                    'edukasi_anastesi',
+                    'created_by'
+                )->with([
+                    'user' => function ($query) {
+                        $query->select('id', 'name');
+                    }
+                ]);
             },
 
             'praBedahEkg' => function ($query) {
@@ -125,7 +130,7 @@ class AssesmenPraBedahService
                     },
                     'dokter' => function ($query) {
                         $query->select('Kode_Dokter', 'Nama_Dokter');
-                    },
+                    }
                 ]);
             }
         ])
@@ -158,6 +163,9 @@ class AssesmenPraBedahService
                 'informed_consent_bedah' => optional($result->praBedahBerkas)->informed_consent_bedah,
                 'informed_consent_anastesi' => optional($result->praBedahBerkas)->informed_consent_anastesi,
                 'assesmen_pra_anastesi_sedasi' => optional($result->praBedahBerkas)->assesmen_pra_anastesi_sedasi,
+                'created_by' => optional(optional($result->praBedahBerkas)->user)->id > 0
+                    ? optional($result->praBedahBerkas->user)->name
+                    : NULL,
                 // Darah
                 'darah' => optional($result->praBedahDarah)->darah,
                 'jumlah' => optional($result->praBedahDarah)->jumlah,
@@ -183,6 +191,7 @@ class AssesmenPraBedahService
                 // Other
                 'estimasi_waktu' => optional($result->praBedahOther)->estimasi_waktu,
                 'rencana_tindakan' => optional($result->praBedahOther)->rencana_tindakan,
+
             ];
         }
 

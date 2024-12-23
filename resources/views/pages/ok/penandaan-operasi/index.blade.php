@@ -66,7 +66,9 @@
                                     </td>
                                     <td>
                                         @if (!empty($statusGambar[$data->id]))
-                                            <a href="#" data-toggle="modal" data-target="#gambarModal{{ $data->id }}" class="badge badge-success">Detail</a>
+                                            <a href="#" data-toggle="modal" data-target="#gambarModal{{ $data->id }}" class="badge badge-success">
+                                                Detail
+                                            </a>
                                         @else
                                             <span class="text-muted">-</span>
                                         @endif
@@ -113,19 +115,19 @@
     </section>
 </div>
 
-@foreach ($penandaan as $data)
-<div class="modal fade" id="gambarModal{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+@foreach ($penandaan as $p)
+<div class="modal fade" id="gambarModal{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="gambarModalLabel{{ $data->id }}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">{{ $data->nama_pasien }}</h5>
+                <h5 class="modal-title" id="exampleModalCenterTitle">{{ $p->nama_pasien }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body text-center">
-                <p>Tindakan: {{ $data->nama_tindakan }}</p>
-                <img id="gambarZoom{{ $data->id }}" src="{{ asset('storage/operasi/penandaan-pasien/image/' . $data->gambar) }}" class="img-fluid" alt="Gambar Pengguna"  style="transition: transform 0.3s ease; cursor: zoom-in;">
+                <p>Tindakan: {{ $p->nama_tindakan }}</p>
+                <img id="gambarZoom{{ $data->id }}" src="{{ asset('storage/operasi/penandaan-pasien/image/' . $p->gambar) }}" class="img-fluid" alt="Gambar Pengguna"  style="transition: transform 0.3s ease; cursor: zoom-in;">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -146,96 +148,6 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const images = document.querySelectorAll('img[id^="gambarZoom"]'); // Pilih semua gambar dengan ID yang sesuai
-
-        images.forEach((img) => {
-            let scale = 1; // Tingkat zoom awal
-            let maxScale = 3; // Zoom maksimal
-            let minScale = 1; // Zoom minimal
-            let translateX = 0, translateY = 0; // Posisi translasi
-            let isDragging = false; // Status drag
-            let startX = 0, startY = 0; // Posisi awal drag
-
-            // Zoom dengan scroll
-            img.addEventListener('wheel', (e) => {
-                e.preventDefault(); // Cegah scroll default
-
-                const zoomDelta = 0.1; // Tingkat perubahan zoom
-                if (e.deltaY < 0 && scale < maxScale) {
-                    scale += zoomDelta; // Zoom in
-                } else if (e.deltaY > 0 && scale > minScale) {
-                    scale -= zoomDelta; // Zoom out
-                }
-
-                // Terapkan transformasi
-                img.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
-            });
-
-            // Double click untuk zoom in/out
-            img.addEventListener('dblclick', () => {
-                if (scale === 1) {
-                    scale = 2; // Zoom in ke skala tertentu
-                    img.style.cursor = 'grab';
-                } else {
-                    scale = 1; // Reset zoom
-                    translateX = 0;
-                    translateY = 0;
-                    img.style.cursor = 'default';
-                }
-
-                // Terapkan transformasi
-                img.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
-            });
-
-            // Mulai drag
-            img.addEventListener('mousedown', (e) => {
-                if (scale > 1) {
-                    isDragging = true;
-                    startX = e.clientX - translateX;
-                    startY = e.clientY - translateY;
-                    img.style.cursor = 'grabbing';
-                }
-            });
-
-            // Drag gambar
-            img.addEventListener('mousemove', (e) => {
-                if (isDragging && scale > 1) {
-                    translateX = e.clientX - startX;
-                    translateY = e.clientY - startY;
-
-                    // Batasan agar gambar tidak terlalu jauh
-                    const maxTranslateX = (img.offsetWidth * (scale - 1)) / 2;
-                    const maxTranslateY = (img.offsetHeight * (scale - 1)) / 2;
-                    translateX = Math.max(-maxTranslateX, Math.min(maxTranslateX, translateX));
-                    translateY = Math.max(-maxTranslateY, Math.min(maxTranslateY, translateY));
-
-                    // Terapkan transformasi
-                    img.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
-                }
-            });
-
-            // Akhiri drag
-            img.addEventListener('mouseup', () => {
-                if (scale > 1) {
-                    isDragging = false;
-                    img.style.cursor = 'grab';
-                }
-            });
-
-            // Hentikan drag jika kursor keluar
-            img.addEventListener('mouseleave', () => {
-                if (scale > 1) {
-                    isDragging = false;
-                    img.style.cursor = 'grab';
-                }
-            });
-        });
-    });
-
-</script>
 
 <script>
     $(document).ready(function() {
