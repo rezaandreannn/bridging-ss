@@ -35,13 +35,24 @@ class BerkasPraBedahController extends Controller
         // Ambil data berdasarkan ID
 
         $cetak = $this->assesmenOperasiService->cetak($kode_register);
+        $booking = collect($this->bookingOperasiService->byRegister($kode_register))->first();
+        $biodataPasien = $this->bookingOperasiService->biodata($kode_register);
+        $pasien = $biodataPasien->pendaftaran->registerPasien;
+
+
         // dd($cetak);
 
         $date = date('dMY');
         $tanggal = Carbon::now();
         $filename = 'AssesmenPraBedah-' . $date;
 
-        $pdf = PDF::loadview('pages.ok.pra-bedah.berkas.cetak-dokumen', ['cetak' => $cetak, 'title' => $title, 'tanggal' => $tanggal]);
+        $pdf = PDF::loadview('pages.ok.pra-bedah.berkas.cetak-dokumen', [
+            'cetak' => $cetak,
+            'pasien' => $pasien,
+            'booking' => $booking,
+            'title' => $title,
+            'tanggal' => $tanggal
+        ]);
         // Set paper size to A5
         $pdf->setPaper('A4');
         return $pdf->stream($filename . '.pdf');
