@@ -24,6 +24,9 @@ class BookingOperasiService
             },
             'dokter' => function ($query) {
                 $query->select('Kode_Dokter', 'Nama_Dokter');
+            },
+            'user' => function ($query) {
+                $query->select('id', 'name');
             }
         ]);
     }
@@ -293,7 +296,8 @@ class BookingOperasiService
                 'terlaksana' => $item->terlaksana,
                 'jam_mulai' => $item->jam_mulai,
                 'jam_selesai' => $item->jam_selesai,
-                'cara_masuk' => $item->cara_masuk
+                'cara_masuk' => $item->cara_masuk,
+                'created_by' => optional($item->user)->name,
             ];
         }));
     }

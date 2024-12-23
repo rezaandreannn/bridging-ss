@@ -32,7 +32,7 @@ class StoreBookingRequest extends FormRequest
             'kode_dokter' => 'required',
             'nama_tindakan' => 'required',
             'jam_mulai' => 'nullable',
-            'jam_selesai' => 'nullable'
+            'jam_selesai' => 'nullable',
             // 'cara_masuk' => 'nullable|string'
         ];
     }

@@ -40,7 +40,7 @@ class BerkasPraBedahController extends Controller
         $pasien = $biodataPasien->pendaftaran->registerPasien;
 
 
-        // dd($cetak);
+        // dd($booking);
 
         $date = date('dMY');
         $tanggal = Carbon::now();
