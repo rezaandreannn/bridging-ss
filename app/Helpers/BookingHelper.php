@@ -18,6 +18,7 @@ use App\Models\Operasi\PostOperasi\PemeriksaanFisikPostOperasi;
 use App\Models\Operasi\PreOperasi\DataUmumPreOperasi;
 use App\Models\Operasi\PreOperasi\PemeriksaanFisikPreOperasi;
 use App\Models\Operasi\PreOperasi\TindakanPreOperasi;
+use App\Models\Simrs\Pendaftaran;
 
 class BookingHelper
 {
@@ -31,6 +32,23 @@ class BookingHelper
         }
 
         return $statusPenandaan;
+    }
+
+    public static function getStatusPendaftaran($bookings)
+    {
+        $statusPendaftaran = [];
+
+        foreach ($bookings as $booking) {
+            $pendaftaran = Pendaftaran::where('No_Reg', $booking->kode_register)->first();
+
+            if ($pendaftaran) {
+                $statusPendaftaran[$booking->kode_register] = $pendaftaran->Status == 1 ? 1 : 0;  // Menggunakan angka 1 atau 0
+            } else {
+                $statusPendaftaran[$booking->kode_register] = 0;  // Jika tidak ditemukan, anggap nonaktif
+            }
+        }
+
+        return $statusPendaftaran;
     }
 
     public static function getStatusGambar($bookings)

@@ -201,6 +201,7 @@
                                         <th scope="col">No MR</th>
                                         <th scope="col">Nama Dokter</th>
                                         <th scope="col">Nama Ruang Operasi</th>
+                                        <th scope="col">Status Kunjungan</th>
                                         <th scope="col">Aksi</th>
                                     </tr>
                                 </thead>
@@ -215,6 +216,14 @@
                                         <td>{{$booking->nama_dokter}}</td>
                                         <td>{{$booking->ruang_operasi}}</td>
                                         <td>
+                                            @if(isset($statusPendaftaran[$booking->kode_register]) && $statusPendaftaran[$booking->kode_register] == 1)
+                                            <span class="badge badge-success">Aktif</span>
+                                            @else
+                                            <span class="badge badge-danger">Closing</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if(isset($statusPendaftaran[$booking->kode_register]) && $statusPendaftaran[$booking->kode_register] == 1)
                                             <div class="dropdown d-inline">
                                                 <a href="#" class="text-primary" id="dropdownMenuLink{{$booking->id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <i class="fas fa-ellipsis-v"></i>
@@ -248,6 +257,7 @@
                                                     </a>
                                                 </div>
                                             </div>
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach
