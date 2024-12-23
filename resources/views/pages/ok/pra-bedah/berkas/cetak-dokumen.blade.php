@@ -14,8 +14,9 @@
             font-size: 10px;
             text-align: center;
         }
+
         .text-3 {
-            margin-bottom:10px;
+            margin-bottom: 10px;
         }
 
         .text5 {
@@ -60,9 +61,9 @@
             margin: auto;
         }
 
-        .table-kop, 
-        .table-kop td, 
-        .table-nama, 
+        .table-kop,
+        .table-kop td,
+        .table-nama,
         .table-nama td {
             border: none;
         }
@@ -75,6 +76,7 @@
         .table-nama td {
             padding: 4px;
         }
+
         .table-kop td {
             font-size: 6px;
             padding: 4px;
@@ -100,18 +102,23 @@
             padding: 2px;
             text-align: center;
         }
+
         .section-title {
             font-weight: bold;
             text-align: center;
         }
+
         .checkbox {
             margin-right: 3px;
         }
+
         .area-1 {
             height: 150px;
             width: 300px;
         }
-        td, th {
+
+        td,
+        th {
             border: 1px solid black;
             padding: 10px;
             vertical-align: top;
@@ -155,19 +162,19 @@
                 <table class="table-nama">
                     <tr>
                         <td>No. RM </td>
-                        <td>: {{ $cetak->no_mr }} </td>
+                        <td>: {{ $pasien->No_MR ?? '' }} </td>
                     </tr>
                     <tr>
                         <td>Nama</td>
-                        <td>: {{ $cetak->nama_pasien}}</td>
+                        <td>: {{ $pasien->Nama_Pasien ?? ''}}</td>
                     </tr>
                     <tr>
                         <td>Tanggal Lahir</td>
-                        <td>: {{ date('d-m-Y', strtotime($cetak->tanggal_lahir))}}</td>
+                        <td>: {{ date('d-m-Y', strtotime($pasien->TGL_LAHIR))}}</td>
                     </tr>
                     <tr>
                         <td>Jenis Kelamin</td>
-                        <td>: {{ $cetak->jenis_kelamin }}</td>
+                        <td>: {{ $pasien->JENIS_KELAMIN ?? '' }}</td>
                     </tr>
                 </table>
             </td>
@@ -179,56 +186,69 @@
         </tr>
         <tr>
             <td colspan="2">
-                <label>Dokter Operator: {{ $cetak->nama_dokter}}</label>
+                <label>Dokter Operator: {{ $booking->nama_dokter ?? ''}}</label>
             </td>
             <td>
                 <label>Perawat: Fiki</label>
-                <label>Tgl: {{date('d-m-Y', strtotime($cetak->tanggal))}}</label>
-                <label>Jam: {{date('h:i', strtotime($cetak->jam_mulai))}} - {{date('h:i', strtotime($cetak->jam_selesai))}} WIB</label>
+                <label>Tgl: {{ optional($cetak)->tanggal ? date('d-m-Y', strtotime($cetak->tanggal)) : '' }}</label>
+                <label>Jam: {{ optional($cetak)->jam_mulai ? date('h:i', strtotime($cetak->jam_mulai)) : '' }}
+                    -
+                    {{ optional($cetak)->jam_selesai ? date('h:i', strtotime($cetak->jam_selesai)) : '' }} WIB</label>
             </td>
         </tr>
         <tr>
             <td colspan="2">
                 <strong>Asesmen Pra Bedah</strong><br>
                 <label>Data Subjektif (Anamnesis):</label>
-                <textarea class="area-1"> {{ $cetak->anamnesa}}</textarea><br>
+                <textarea class="area-1"> {{ $cetak->anamnesa ?? ''}}</textarea><br>
                 <label>Data Objektif (Pemeriksaan Fisik):</label>
-                <textarea class="area-1"> {{ $cetak->pemeriksaan_fisik}}</textarea><br>
+                <textarea class="area-1"> {{ $cetak->pemeriksaan_fisik ?? ''}}</textarea><br>
                 <label>Diagnosis Pra Bedah:</label>
-                <textarea class="area-1"> {{ $cetak->diagnosa}}</textarea>
+                <textarea class="area-1"> {{ $cetak->diagnosa ?? ''}}</textarea>
             </td>
             <td>
                 <strong>Verifikasi Pra Bedah</strong><br>
                 <span>Berkas Rekam Medis Terkait :</span><br>
-                <input type="checkbox" {{ $cetak->status_pasien == '1' ? 'checked' : '' }} class="checkbox"> Status Pasien<br>
-                <input type="checkbox" {{ $cetak->assesmen_pra_bedah == '1' ? 'checked' : '' }} class="checkbox"> Assesmen Pra Bedah<br>
-                <input type="checkbox" {{ $cetak->penandaan_lokasi == '1' ? 'checked' : '' }} class="checkbox"> Penandaan Lokasi<br>
-                <input type="checkbox" {{ $cetak->informed_consent_bedah == '1' ? 'checked' : '' }} class="checkbox"> Informed Consent Bedah<br>
-                <input type="checkbox" {{ $cetak->informed_consent_anastesi == '1' ? 'checked' : '' }} class="checkbox"> Assesmen Pra Anestesi/Sedasi<br>
-                <input type="checkbox" {{ $cetak->assesmen_pra_anastesi_sedasi == '1' ? 'checked' : '' }} class="checkbox"> Edukasi Anestesi<br>
+                <input type="checkbox" {{ optional($cetak)->status_pasien == '1' ? 'checked' : '' }} class="checkbox"> Status Pasien<br>
+                <input type="checkbox" {{ optional($cetak)->assesmen_pra_bedah == '1' ? 'checked' : '' }} class="checkbox"> Assesmen Pra Bedah<br>
+                <input type="checkbox" {{ optional($cetak)->penandaan_lokasi == '1' ? 'checked' : '' }} class="checkbox"> Penandaan Lokasi<br>
+                <input type="checkbox" {{ optional($cetak)->informed_consent_bedah == '1' ? 'checked' : '' }} class="checkbox"> Informed Consent Bedah<br>
+                <input type="checkbox" {{ optional($cetak)->informed_consent_anastesi == '1' ? 'checked' : '' }} class="checkbox"> Assesmen Pra Anestesi/Sedasi<br>
+                <input type="checkbox" {{ optional($cetak)->assesmen_pra_anastesi_sedasi == '1' ? 'checked' : '' }} class="checkbox"> Edukasi Anestesi<br>
+
                 <span>Hasil Pemeriksaan Penunjang:</span><br>
-                <input type="checkbox" {{ $cetak->laboratorium == '1' ? 'checked' : '' }} class="checkbox"> Laboratorium:<br>
+                <input type="checkbox" {{ optional($cetak)->laboratorium == '1' ? 'checked' : '' }} class="checkbox"> Laboratorium:<br>
                 <ul style="margin: 0; padding-left: 40px;">
-                    <li>Hb : {{ $cetak->lab_hemoglobin}} Trombos : {{ $cetak->lab_hemoglobin}} BT : {{ $cetak->lab_bt}}</li>
-                    <li>Leukosit : {{ $cetak->lab_hemoglobin}} Hematokrit : {{ $cetak->lab_hemoglobin}} CT : {{ $cetak->lab_ct}}</li>
+                    <li>Hb: {{ optional($cetak)->lab_hemoglobin ?? '' }} Trombos: {{ optional($cetak)->lab_trombos ?? '' }} BT: {{ optional($cetak)->lab_bt ?? '' }}</li>
+                    <li>Leukosit: {{ optional($cetak)->lab_leukosit ?? '' }} Hematokrit: {{ optional($cetak)->lab_hematokrit ?? '' }} CT: {{ optional($cetak)->lab_ct ?? '' }}</li>
                 </ul>
+
                 {{-- Rontgen --}}
-                <input type="checkbox" {{ $cetak->rontgen == '1' ? 'checked' : '' }} class="checkbox">
-                <span class="text-3">Rontgen: <b>{{ $cetak->deskripsi_rontgen }}</b></span><br>
-                {{-- Ekg --}}
-                <input type="checkbox" {{ $cetak->ekg == '1' ? 'checked' : '' }} class="checkbox">
-                <span class="text-3">EKG: <b>{{ $cetak->deskripsi_ekg }}</b></span><br>
+                <input type="checkbox" {{ optional($cetak)->rontgen == '1' ? 'checked' : '' }} class="checkbox">
+                <span class="text-3">Rontgen: <b>{{ optional($cetak)->deskripsi_rontgen ?? '' }}</b></span><br>
+
+                {{-- EKG --}}
+                <input type="checkbox" {{ optional($cetak)->ekg == '1' ? 'checked' : '' }} class="checkbox">
+                <span class="text-3">EKG: <b>{{ optional($cetak)->deskripsi_ekg ?? '' }}</b></span><br>
+
                 {{-- Darah --}}
-                <input type="checkbox" {{ $cetak->darah == '1' ? 'checked' : '' }} class="checkbox">
-                <span class="text-3">Darah/Alat Khusus: <b>{{ $cetak->deskripsi_obat}}</b></span><br>
-                <span style="padding-left: 25px;">Gol : {{ $cetak->gol}}</span> <span>Jumlah: {{ $cetak->jumlah }}</span> <br>
+                <input type="checkbox" {{ optional($cetak)->darah == '1' ? 'checked' : '' }} class="checkbox">
+                <span class="text-3">Darah/Alat Khusus: <b>{{ optional($cetak)->deskripsi_obat ?? '' }}</b></span><br>
+                <span style="padding-left: 25px;">Gol : {{ optional($cetak)->gol ?? '' }}</span>
+                <span>Jumlah: {{ optional($cetak)->jumlah ?? '' }}</span><br>
+
                 {{-- Obat --}}
-                <input type="checkbox" {{ $cetak->obat == '1' ? 'checked' : '' }} class="checkbox">
+                <input type="checkbox" {{ optional($cetak)->obat == '1' ? 'checked' : '' }} class="checkbox">
                 <span class="text-3">Obat-Obatan yang Dibawa:</span>
-                <textarea rows="2" style="width: 100%;">{{$cetak->deskripsi_obat}}</textarea><br>
-                <span>Estimasi Waktu:<b>{{date('h:i', strtotime($cetak->estimasi_waktu))}}</b></span><br>
+                <textarea rows="2" style="width: 100%;">{{ optional($cetak)->deskripsi_obat ?? '' }}</textarea><br>
+
+                {{-- Estimasi Waktu --}}
+                <span>Estimasi Waktu: <b>{{ optional($cetak)->estimasi_waktu ? date('h:i', strtotime($cetak->estimasi_waktu)) : '' }}</b></span><br>
+
+                {{-- Rencana Tindakan --}}
                 <label>Rencana Tindakan:</label>
-                <textarea rows="2" style="width: 100%;">{{ $cetak->rencana_tindakan}}</textarea>
+                <textarea rows="2" style="width: 100%;">{{ optional($cetak)->rencana_tindakan ?? '' }}</textarea>
+
             </td>
         </tr>
     </table>
@@ -239,14 +259,14 @@
             <td width="30%" class="text5"> Tanda Tangan Perawat</td>
         </tr>
         <tr>
-            <td width="30%" class="text5">{!! DNS2D::getBarcodeHTML($cetak->nama_dokter, 'QRCODE', 3, 3) !!}</td>
+            <td width="30%" class="text5">{!! DNS2D::getBarcodeHTML($booking->nama_dokter, 'QRCODE', 3, 3) !!}</td>
             <td width="40%" class="text5"></td>
             <td width="30%" class="text5"></td>
         </tr>
         <tr>
-            <td width="30%" class="text5">({{ $cetak->nama_dokter}})</td>
-            <td width="40%" class="text9">({{ $cetak->nama_pasien}})</td>
-            <td width="30%" class="text5">({{ $cetak->nama_dokter}})</td>
+            <td width="30%" class="text5">({{ $booking->nama_dokter}})</td>
+            <td width="40%" class="text9">({{ $booking->nama_pasien}})</td>
+            <td width="30%" class="text5">({{ $booking->nama_dokter}})</td>
         </tr>
     </table>
 </body>
