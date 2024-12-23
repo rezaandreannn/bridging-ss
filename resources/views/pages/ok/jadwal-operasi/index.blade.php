@@ -43,6 +43,7 @@
                                     <th scope="col">Ruangan</th>
                                     <th scope="col">Terlaksana</th>
                                     <th scope="col">Waktu Operasi</th>
+                                    <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -61,6 +62,24 @@
                                         </div>
                                     </td>
                                     <td>{{ \Carbon\Carbon::parse($data->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($data->jam_selesai)->format('H:i') }} WIB</td>
+                                    <td>
+                                        <div class="dropdown d-inline">
+                                            <a href="#" class="text-primary" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>
+                                            <div class="dropdown-menu">
+                                                @if (isset($statusPenandaan[$data->id]) && $statusPenandaan[$data->id] != 'create')
+                                                <a class="dropdown-item has-icon" href="{{ route('operasi.penandaan.cetak', $data->kode_register) }}">
+                                                        <i class="fas fa-download"></i> Cetak Penandaan Operasi
+                                                </a>
+                                                @endif
+
+                                                <a class="dropdown-item has-icon" href="{{ route('prabedah.berkas-prabedah.cetak', $data->kode_register) }}"> 
+                                                    <i class="fas fa-download"></i> Cetak Pra Bedah
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>

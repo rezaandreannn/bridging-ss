@@ -52,6 +52,9 @@ Route::prefix('ibs')->name('operasi.')->middleware('auth')->group(function () {
     Route::post('/ruang-operasi', [RuangOperasiController::class, 'store'])->name('ruang.store');
     Route::put('/ruang-operasi/update/{id}', [RuangOperasiController::class, 'update'])->name('ruang.update');
     Route::delete('/ruang-operasi/delete/{id}', [RuangOperasiController::class, 'destroy'])->name('ruang.destroy');
+
+    // jadwal operasi
+    Route::get('berkas-operasi', JadwalOperasiController::class)->name('berkas.cetak');
 });
 
 // Prabedah

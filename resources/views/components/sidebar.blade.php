@@ -1,10 +1,10 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="index.html">SIMRS-BRIDGE</a>
+            <a href="index.html">EMR V2 (DEV)</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
-            <a href="index.html">SB</a>
+            <a href="index.html">EMR</a>
         </div>
         <ul class="sidebar-menu">
             @can('dashboard')
@@ -276,18 +276,31 @@
 
             @can('ok')
             <li class="menu-header">Modul Operasi / OK</li>
-            {{-- Booking Operasi --}}
+                {{-- Booking Operasi --}}
                 @can('booking operasi')
                 <li class="{{ Request::is('booking-operasi*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('operasi.booking.index') }}"><i class="fas fa-id-card-clip"></i> <span>Booking Operasi</span></a></li>
                 @endcan
+
                 {{-- Penandaan Operasi --}}
                 @can('penandaan operasi')
                 <li class="{{ Request::is('penandaan/penandaan-operasi*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('operasi.penandaan.index')}}"><i class="fas fa-file-medical"></i> <span>Penandaan Operasi</span></a></li>
                 @endcan
-                {{-- Laporan Operasi --}}
-                @can('laporan operasi')
-                <li class="{{ Request::is('laporan/*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('laporan.operasi.index')}}"><i class="fas fa-book-medical"></i> <span>Laporan Operasi</span></a></li>
+
+                {{-- IBS Operasi --}}
+                @can('ibs')
+                    @can('jadwal operasi')
+                    <li class="{{ Request::is('ibs/jadwal-operasi*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('operasi.jadwal.index')}}"><i class="fas fa-stethoscope"></i> <span>Jadwal</span></a></li>
+                    @endcan
+                    @can('ruang operasi')
+                    <li class="{{ Request::is('ibs/ruang-operasi*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('operasi.ruang.index')}}"><i class="fas fa-hospital-symbol"></i> <span>Master Ruangan</span></a></li>
+                    @endcan
+                    
+                    {{-- Berkas Operasi --}}
+                    @can('berkas operasi')
+                    <li class="{{ Request::is('berkas-operasi/*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('berkas.operasi.index')}}"><i class="fas fa-book-medical"></i> <span>Laporan Operasi</span></a></li>
+                    @endcan
                 @endcan
+
                 {{-- Pre & Post Operasi --}}
                 @can('pre post')
                 <li class="nav-item dropdown  {{ Request::is('pre-post/*') ? 'active' : '' }}">
@@ -308,26 +321,7 @@
                     @endcan
                 </li>
                 @endcan
-                {{-- IBS --}}
-                @can('ibs')
-                <li class="nav-item dropdown  {{ Request::is('ibs/*') ? 'active' : '' }}">
-                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-stethoscope"></i> <span>IBS</span></a>
-                    @can('jadwal operasi')
-                        <ul class="dropdown-menu">
-                            <li class="{{ Request::is('ibs/jadwal-operasi*') ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ route('operasi.jadwal.index')}}">Jadwal</a>
-                            </li>
-                        </ul>
-                    @endcan
-                    @can('ruang operasi')
-                        <ul class="dropdown-menu">
-                            <li class="{{ Request::is('ibs/ruang-operasi*') ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ route('operasi.ruang.index')}}">Master Ruangan</a>
-                            </li>
-                        </ul>
-                    @endcan
-                </li>
-                @endcan
+
                 {{-- Pra Bedah --}}
                 @can('pra bedah')
                 <li class="nav-item dropdown  {{ Request::is('prabedah/*') ? 'active' : '' }}">
@@ -355,16 +349,22 @@
                         @endcan
                 </li>
                 @endcan
+
+                {{-- Laporan Operasi --}}
+                @can('laporan operasi')
+                  <li class="{{ Request::is('laporan/*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('laporan.operasi.index')}}"><i class="fas fa-book-medical"></i> <span>Laporan Operasi</span></a></li>
+                @endcan
+
+                @can('ttd tanda operasi')
                 <li class="nav-item dropdown  {{ Request::is('ttd-ok/*') ? 'active' : '' }}">
                     <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-file-medical"></i> <span> Tanda Tangan</span></a>
-                        @can('ttd tanda operasi')
                         <ul class="dropdown-menu">
                             <li class="{{ Request::is('ttd-ok/*') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ route('ttd-ok.penandaan.index')}}">Tanda Operasi</a>
                             </li>
                         </ul>
-                        @endcan
-                </li>
+                    </li>
+                @endcan
             @endcan
 
             @can('igd')
@@ -589,7 +589,7 @@
                 </ul>
             </li>
             @endcan
-            <li class="menu-header">Docs</li>
+            {{-- <li class="menu-header">Docs</li>
             <li class="nav-item dropdown  {{ Request::is('dc*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-rocket"></i><span>Terminology</span></a>
                 <ul class="dropdown-menu">
@@ -603,7 +603,7 @@
                         <a class="nav-link" href="{{ route('docs.encounter') }}">Encounter</a>
                     </li>
                 </ul>
-            </li>
+            </li> --}}
         </ul>
 
         <div class="hide-sidebar-mini mt-4 mb-4 p-3">

@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use App\Models\MasterData\TtdPerawat;
+use App\Models\Operasi\LaporanOperasi;
 use App\Models\Operasi\TtdTandaOperasi;
 use App\Models\Operasi\PenandaanOperasi;
 use App\Models\Operasi\PraBedah\AssesmenPraBedah;
@@ -32,6 +33,18 @@ class BookingHelper
         }
 
         return $statusPenandaan;
+    }
+
+    public static function getStatusLaporan($bookings)
+    {
+        $statusLaporan = [];
+
+        foreach ($bookings as $booking) {
+            $exists = LaporanOperasi::where('kode_register', $booking->kode_register)->first();
+            $statusLaporan[$booking->id] = $exists ? $exists->id : 'Downlaod';
+        }
+
+        return $statusLaporan;
     }
 
     public static function getStatusPendaftaran($bookings)
