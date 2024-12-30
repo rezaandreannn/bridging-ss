@@ -23,7 +23,7 @@ class BerkasPraBedahController extends Controller
     public function __construct()
     {
         $this->view = 'pages.ok.pra-bedah.';
-        $this->prefix = 'Verifikasi Pra Bedah';
+        $this->prefix = 'Berkas Pra Bedah';
         $this->assesmenOperasiService = new AssesmenPraBedahService();
         $this->verifikasiPraBedahService = new VerifikasiPraBedahService();
         $this->bookingOperasiService = new BookingOperasiService();

@@ -100,34 +100,20 @@
                                                     Laboratorium
                                                 </label>
                                                 <div id="labData" style="display: none;">
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <h5 style="font-size: 12px; color:black;">HB :</h5>
-                                                            <input type="text" class="form-control" name="lab_hemoglobin" id="hb">
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <h5 style="font-size: 12px; color:black;">Trombosite :</h5>
-                                                            <input type="text" class="form-control" name="lab_trombosit" id="trombosite">
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <h5 style="font-size: 12px; color:black;">Leukosit :</h5>
-                                                            <input type="text" class="form-control" name="lab_leukosit" id="leukosit">
-                                                        </div>
-                                                    </div>
-                                                    <div class="row mt-3">
-                                                        <div class="col-md-4">
-                                                            <h5 style="font-size: 12px; color:black;">Hematrokit :</h5>
-                                                            <input type="text" class="form-control" name="lab_hematrokit" id="hematokrit">
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <h5 style="font-size: 12px; color:black;">BT :</h5>
-                                                            <input type="text" class="form-control" name="lab_bt" id="bt">
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <h5 style="font-size: 12px; color:black;">CT :</h5>
-                                                            <input type="text" class="form-control" id="ct" name="lab_ct">
-                                                        </div>
-                                                    </div>
+                                                   <div class="row">
+                                                    <table class="table-striped table table-bordered">
+                                                        <tr>
+                                                            <th>No</th>
+                                                            <th>Deskripsi</th>
+                                                            <th>Jumlah</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>1</td>
+                                                            <td>ek</td>
+                                                            <td>1</td>
+                                                        </tr>
+                                                    </table>
+                                                   </div>
                                                 </div>
                                             </div>
                                             <div class="form-check">
@@ -135,21 +121,19 @@
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Rontgen
                                                 </label>
-                                                <input type="text" placeholder="Inputan Rontgen" class="form-control" name="deskripsi_rontgen" id="rontgen">
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="ekg" id="flexCheckDefault" value="1">
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     EKG
                                                 </label>
-                                                <input type="text" placeholder="Inputan EKG" class="form-control" name="deskripsi_ekg" id="ekg">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="darah" id="darah_khusus_check" value="1">
                                                 <label class="form-check-label" for="darah_khusus_check">
-                                                    Darah / Alat khusus yang diperlukan
+                                                    Darah
                                                 </label>
                                             </div>
                                             <div class="form-group mt-2">
@@ -159,7 +143,7 @@
                                                         <input type="text" class="form-control mb-3 mt-2" name="jumlah" id="jumlah_darah" placeholder="Jumlah">
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <input type="text" class="form-control mb-3 mt-2" name="gol" id="gol_darah" placeholder="Gol">
+                                                        <input type="text" class="form-control mb-3 mt-2" name="gol" id="gol_darah" placeholder="Golongan Darah">
                                                     </div>
                                                 </div>
                                             </div>
@@ -172,36 +156,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Estimasi waktu yang dibutuhkan</label>
-                                    <div class="input-group">
-                                        <input type="time" name="estimasi_waktu" id="estimasi_waktu" class="form-control @error('estimasi_waktu') is-invalid  
-                                        @enderror">
-                                        <div class="input-group-append">
-                                            <div class="input-group-text">
-                                                <b>Jam</b>
-                                            </div>
-                                        </div>
-                                        @error('estimasi_waktu')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Rencana Tindakan Pembedahan</label>
-                                    <input type="text" name="rencana_tindakan" class="form-control @error('rencana_tindakan') is-invalid @enderror">
-                                    @error('rencana_tindakan')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
                                 </div>
                             </div>
                         </div>

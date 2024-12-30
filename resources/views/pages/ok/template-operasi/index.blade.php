@@ -23,8 +23,8 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('prabedah.assesmen-prabedah.index') }}">Operasi Kamar</a></div>
-                <div class="breadcrumb-item">Assesmen Pra Bedah</div>
+                <div class="breadcrumb-item active"><a href="{{ route('operasi.template.index') }}">Laporan Operasi</a></div>
+                <div class="breadcrumb-item">List</div>
             </div>
         </div>
 
@@ -36,32 +36,28 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">No</th>
-                                            <th scope="col">No MR</th>
-                                            <th scope="col">Nama Pasien</th>
-                                            <th scope="col">Tanggal</th>
+                                            <th scope="col">Tindakan</th>
+                                            <th scope="col">Template Operasi</th>
                                             <th scope="col">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($assesmens as $assesmen)
+                                        @foreach ($data as $template)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
-                                            <td>{{$assesmen->no_mr}}</td>
-                                            <td>{{ ucwords(strtolower(trim($assesmen->nama_pasien))) }}</td>
-                                            <td>{{$assesmen->tanggal}}</td>
+                                            <td>{{$template->tindakan}}</td>
+                                            <td>{{$template->template_operasi}}</td>
+                             
                                             <td>  
+
                                                 <div class="dropdown d-inline">
                                                     <a href="#" class="text-primary" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </a>
                                                     <div class="dropdown-menu">
-                                                        {{-- Input --}}
-                                                        <a class="dropdown-item has-icon" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" href="{{ route('prabedah.berkas-prabedah.cetak', $assesmen->kode_register) }}"> 
-                                                            <i class="fas fa-download"></i> Download
+                                                        <a class="dropdown-item has-icon" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" href="#">
+                                                                <i class="fas fa-download"></i> Download
                                                         </a>
-                                                        {{-- <a class="dropdown-item has-icon" href="{{ route('prabedah.berkas-prabedah.download', $assesmen->kode_register) }}"> 
-                                                            <i class="fas fa-download"></i> BPJS
-                                                        </a> --}}
                                                     </div>
                                                 </div>
                                             </td>
@@ -209,5 +205,14 @@
     });
 
 </script>
+
+<script>
+    function resetForm() {
+        document.getElementById("filterForm").value = "";
+        alert('Filter telah direset!');
+        window.location.href = "{{ route('laporan.operasi.index') }}";
+    }
+</script>
+
 
 @endpush

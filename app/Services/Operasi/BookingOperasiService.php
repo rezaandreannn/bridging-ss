@@ -214,11 +214,10 @@ class BookingOperasiService
             $booking = BookingOperasi::create([
                 'kode_register' => $data['kode_register'],
                 'tanggal' => $data['tanggal'],
-                'ruangan_id' => $data['ruangan_id'],
-                'nama_tindakan' => $data['nama_tindakan'],
+                'asal_ruangan' => $data['asal_ruangan'],
+                // 'jenis_operasi' => $data['jenis_operasi'],
                 'kode_dokter' => $data['kode_dokter'],
-                'jam_mulai' => $data['jam_mulai'] ?? '',
-                'jam_selesai' => $data['jam_selesai'] ?? '',
+                'rencana_operasi' => $data['rencana_operasi'] ?? '',
                 'created_by' => auth()->user()->id,
                 // 'cara_masuk' => $data['cara_masuk'] ?? ''
             ]);
@@ -239,11 +238,10 @@ class BookingOperasiService
             $booking->update([
                 'kode_register' => $data['kode_register'],
                 'tanggal' => $data['tanggal'],
-                'ruangan_id' => $data['ruangan_id'],
-                'nama_tindakan' => $data['nama_tindakan'],
+                'asal_ruangan' => $data['asal_ruangan'],
+                // 'jenis_operasi' => $data['jenis_operasi'],
                 'kode_dokter' => $data['kode_dokter'],
-                'jam_mulai' => $data['jam_mulai'] ?? '',
-                'jam_selesai' => $data['jam_selesai'] ?? '',
+                'rencana_operasi' => $data['rencana_operasi'] ?? '',
                 'updated_by' => auth()->user()->id,
                 // 'cara_masuk' => $data['cara_masuk'] ?? ''
             ]);
@@ -290,12 +288,11 @@ class BookingOperasiService
                 'tanggal' => $item->tanggal,
                 'no_mr' => optional($item->pendaftaran)->No_MR,
                 'nama_pasien' => optional($item->pendaftaran->registerPasien)->Nama_Pasien,
-                'ruang_operasi' => optional($item->ruangan)->nama_ruang,
+                'asal_ruangan' => $item->asal_ruangan,
                 'nama_dokter' => optional($item->dokter)->Nama_Dokter,
-                'nama_tindakan' => $item->nama_tindakan,
+                'jenis_operasi' => $item->jenis_operasi,
                 'terlaksana' => $item->terlaksana,
-                'jam_mulai' => $item->jam_mulai,
-                'jam_selesai' => $item->jam_selesai,
+                'rencana_operasi' => $item->rencana_operasi,
                 'cara_masuk' => $item->cara_masuk,
                 'created_by' => optional($item->user)->name ?? '',
             ];

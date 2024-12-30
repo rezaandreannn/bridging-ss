@@ -296,8 +296,11 @@
                     @endcan
                     
                     {{-- Berkas Operasi --}}
-                    @can('berkas operasi')
-                    <li class="{{ Request::is('berkas-operasi/*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('berkas.operasi.index')}}"><i class="fas fa-book-medical"></i> <span>Laporan Operasi</span></a></li>
+                    {{-- @can('berkas operasi')
+                    <li class="{{ Request::is('berkas-operasi/*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('laporan.operasi.index')}}"><i class="fas fa-book-medical"></i> <span>Laporan Operasi</span></a></li>
+                    @endcan --}}
+                    @can('template operasi')
+                    <li class="{{ Request::is('ibs/template-operasi/*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('operasi.template.index')}}"><i class="fas fa-book-medical"></i> <span>Template Operasi</span></a></li>
                     @endcan
                 @endcan
 

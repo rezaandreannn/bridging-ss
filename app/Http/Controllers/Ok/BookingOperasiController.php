@@ -212,7 +212,7 @@ class BookingOperasiController extends Controller
 
             // dd($booking);
             $booking->update([
-                'ruangan_id' => $request->input('ruang_operasi'),
+                'asal_ruangan' => $request->input('asal_ruangan'),
             ]);
 
             return redirect()->back()->with('success', 'Ruangan berhasil di ubah.');

@@ -9,6 +9,7 @@ use App\Http\Controllers\OK\BookingOperasiController;
 use App\Http\Controllers\OK\TtdTandaOperasiController;
 use App\Http\Controllers\OK\PenandaanOperasiController;
 use App\Http\Controllers\Ok\Laporan\LaporanOperasiController;
+use App\Http\Controllers\Ok\MasterData\TemplateOperasiController;
 use App\Http\Controllers\Ok\PraBedah\BerkasPraBedahController;
 use App\Http\Controllers\Ok\PraBedah\AssesmenPraBedahController;
 use App\Http\Controllers\Ok\PraBedah\VerifikasiPraBedahController;
@@ -55,6 +56,12 @@ Route::prefix('ibs')->name('operasi.')->middleware('auth')->group(function () {
 
     // jadwal operasi
     Route::get('berkas-operasi', JadwalOperasiController::class)->name('berkas.cetak');
+
+    // Template Operasi
+    Route::get('/template-operasi', [TemplateOperasiController::class, 'index'])->name('template.index');
+    Route::post('/template-operasi', [TemplateOperasiController::class, 'store'])->name('template.store');
+    Route::put('/template-operasi/update/{id}', [TemplateOperasiController::class, 'update'])->name('template.update');
+    Route::delete('/template-operasi/delete/{id}', [TemplateOperasiController::class, 'destroy'])->name('template.destroy');
 });
 
 // Prabedah
@@ -63,8 +70,8 @@ Route::prefix('prabedah')->name('prabedah.')->middleware('auth')->group(function
     Route::get('/assesmen-prabedah', [AssesmenPraBedahController::class, 'index'])->name('assesmen-prabedah.index');
     Route::get('/assesmen-prabedah/create/{kode_register}', [AssesmenPraBedahController::class, 'create'])->name('assesmen-prabedah.create');
     Route::post('/assesmen-prabedah', [AssesmenPraBedahController::class, 'store'])->name('assesmen-prabedah.store');
-    Route::get('/assesmen-prabedah/edit/{id}', [AssesmenPraBedahController::class, 'edit'])->name('assesmen-prabedah.edit');
-    Route::put('/assesmen-prabedah/update/{id}', [AssesmenPraBedahController::class, 'update'])->name('assesmen-prabedah.update');
+    Route::get('/assesmen-prabedah/edit/{kode_register}', [AssesmenPraBedahController::class, 'edit'])->name('assesmen-prabedah.edit');
+    Route::put('/assesmen-prabedah/update/{kode_register}', [AssesmenPraBedahController::class, 'update'])->name('assesmen-prabedah.update');
     Route::delete('/assesmen-prabedah/delete/{id}', [AssesmenPraBedahController::class, 'destroy'])->name('assesmen-prabedah.destroy');
 
     // Verifikasi Pra Bedah

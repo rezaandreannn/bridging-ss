@@ -19,13 +19,12 @@ class BookingOperasi extends Model
     // Mass Assignment
     protected $fillable = [
         'kode_register',
-        'ruangan_id',
+        'asal_ruangan',
         'kode_dokter',
-        'nama_tindakan',
+        'jenis_operasi',
         'terlaksana',
         'tanggal',
-        'jam_mulai',
-        'jam_selesai',
+        'rencana_operasi',
         'created_by'
     ];
 

@@ -59,12 +59,12 @@ class RuangOperasiController extends Controller
             'kode_ruang' => ['required', new UniqueInConnection('ok_ruangan', 'kode_ruang', 'pku')],
         ]);
 
-        $userEmr = $this->rajal->getUserEmr(auth()->user()->username);
+        // $userEmr = $this->rajal->getUserEmr(auth()->user()->username);
 
         DB::connection('pku')->table('ok_ruangan')->insert([
             'kode_ruang' => $request->input('kode_ruang'),
             'nama_ruang' => $request->input('nama_ruang'),
-            'created_by' => $userEmr->user_id ?? '',
+            'created_by' => auth()->user()->id ?? '',
             'created_at' => now()
         ]);
         return redirect()->route('operasi.ruang.index')->with('success', 'Nama Ruang Berhasil Ditambahkan!');
@@ -101,12 +101,12 @@ class RuangOperasiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $userEmr = $this->rajal->getUserEmr(auth()->user()->username);
+        // $userEmr = $this->rajal->getUserEmr(auth()->user()->username);
 
         DB::connection('pku')->table('ok_ruangan')->where('id', $id)->update([
             'kode_ruang' => $request->input('kode_ruang'),
             'nama_ruang' => $request->input('nama_ruang'),
-            'updated_by' => $userEmr->user_id,
+            'updated_by' => auth()->user()->id ?? '',
             'updated_at' => now(),
 
         ]);

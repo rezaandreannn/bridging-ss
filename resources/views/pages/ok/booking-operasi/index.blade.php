@@ -83,9 +83,9 @@
                             </div>
                             <div class="col-12 col-lg-4 col-md-6">
                                 <div class="form-group">
-                                    <label>Jam Mulai(optional)</label>
-                                    <input type="time" name="jam_mulai" value="{{ isset($booking) && $booking->jam_mulai ? date('H:i', strtotime($booking->jam_mulai)) : '' }}" class="form-control @error('jam_mulai') is-invalid @enderror">
-                                    @error('jam_mulai')
+                                    <label>Rencana Operasi</label>
+                                    <input type="time" name="rencana_operasi" value="{{ isset($booking) && $booking->rencana_operasi ? date('H:i', strtotime($booking->rencana_operasi)) : '' }}" class="form-control @error('rencana_operasi') is-invalid @enderror">
+                                    @error('rencana_operasi')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -94,42 +94,26 @@
                             </div>
                             <div class="col-12 col-lg-4 col-md-6">
                                 <div class="form-group">
-                                    <label>Jam Selesai(optional)</label>
-                                    <input type="time" name="jam_selesai" value="{{ isset($booking) && $booking->jam_selesai ? date('H:i', strtotime($booking->jam_selesai)) : '' }}" class="form-control @error('jam_selesai') is-invalid @enderror">
-                                    @error('jam_selesai')
+                                    <label>Ruang Asal</label><code> (Contoh : Poli/IGD/Ranap)</code>
+                                    <input type="text" name="asal_ruangan" value="{{ old('asal_ruangan', $booking->asal_ruangan ?? '')}}" class="form-control @error('asal_ruangan') is-invalid @enderror">
+                                    @error('asal_ruangan')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-12 col-lg-6 col-md-6">
+                            {{-- <div class="col-12 col-lg-6 col-md-6">
                                 <div class="form-group">
-                                    <label>Pilih Ruangan Operasi</label>
-                                    <select name="ruangan_id" class="form-control select2 @error('ruangan_id') is-invalid @enderror" id="">
-                                        <option value="" selected disabled>--Pilih Ruangan Operasi--</option>
-                                        @foreach ($ruanganOperasi as $ruangan)
-                                        <option value="{{ $ruangan->id}}" @if(old('ruangan_id', $booking->ruangan_id ?? '')==$ruangan->id ) selected @endif>{{$ruangan->nama_ruang}}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('ruangan_id')
+                                    <label>Jenis Operasi</label>
+                                    <input type="text" name="jenis_operasi" value="{{ old('jenis_operasi', $booking->jenis_operasi ?? '')}}" class="form-control @error('jenis_operasi') is-invalid @enderror">
+                                    @error('jenis_operasi')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                     @enderror
                                 </div>
-                            </div>
-                            <div class="col-12 col-lg-6 col-md-6">
-                                <div class="form-group">
-                                    <label>Jenis Tindakan</label>
-                                    <input type="text" name="nama_tindakan" value="{{ old('nama_tindakan', $booking->nama_tindakan ?? '')}}" class="form-control @error('nama_tindakan') is-invalid @enderror">
-                                    @error('nama_tindakan')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     <div class="card-footer text-left">
@@ -200,7 +184,7 @@
                                         <th scope="col">Nama Pasien</th>
                                         <th scope="col">No MR</th>
                                         <th scope="col">Nama Dokter</th>
-                                        <th scope="col">Nama Ruang Operasi</th>
+                                        <th scope="col">Asal Ruangan</th>
                                         <th scope="col">Status Kunjungan</th>
                                         <th scope="col">Aksi</th>
                                     </tr>
@@ -214,7 +198,7 @@
                                         <td>{{ ucwords(strtolower(trim($booking->nama_pasien))) }}</td>
                                         <td>{{$booking->no_mr}}</td>
                                         <td>{{$booking->nama_dokter}}</td>
-                                        <td>{{$booking->ruang_operasi}}</td>
+                                        <td>{{$booking->asal_ruangan}}</td>
                                         <td>
                                             @if(isset($statusPendaftaran[$booking->kode_register]) && $statusPendaftaran[$booking->kode_register] == 1)
                                             <span class="badge badge-success">Aktif</span>
@@ -314,13 +298,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="editNamaRuang{{ $booking->id }}">Nama Ruang</label>
-                        <select name="ruang_operasi" class="form-control select2 @error('ruang_operasi') is-invalid @enderror" id="editNamaRuang{{ $booking->id }}">
-                            @foreach ($ruanganOperasi as $ruangan)
-                            <option value="{{ $ruangan->id }}" @if($booking->ruang_operasi == $ruangan->id) selected @endif>
-                                {{ $ruangan->nama_ruang }}
-                            </option>
-                            @endforeach
-                        </select>
+                       <input type="text" name="asal_ruangan"  class="form-control" value="{{ old('asal_ruangan', $booking->asal_ruangan ?? '')}}">
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>

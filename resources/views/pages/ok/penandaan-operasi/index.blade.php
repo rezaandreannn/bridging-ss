@@ -39,9 +39,7 @@
                                     <th scope="col">No MR</th>
                                     <th scope="col">Nama Pasien</th>
                                     <th scope="col">Tanggal</th>
-                                    <th scope="col">Tindakan</th>
                                     <th scope="col">Nama Dokter</th>
-                                    <th scope="col">Ruangan</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Gambar</th>
                                     <th scope="col">Aksi</th>
@@ -54,9 +52,7 @@
                                     <td><span class="font-weight-bold">{{ $data->no_mr }}</span></td>
                                     <td>{{ ucwords(strtolower(trim($data->nama_pasien))) }}</td>
                                     <td>{{ $data->tanggal }}</td>
-                                    <td>{{ $data->nama_tindakan }}</td>
                                     <td>{{ $data->nama_dokter }}</td>
-                                    <td>{{ $data->ruang_operasi}}</td>
                                     <td>
                                         @if (isset($statusPenandaan[$data->id]) && $statusPenandaan[$data->id] == 'create')
                                         <span class="badge badge-danger">Create</span>
@@ -90,7 +86,10 @@
                                                 @endif
 
                                                 {{-- jika sudah diinput bisa diunduh --}}
+                                                @if (isset($statusPenandaan[$data->id]) && $statusPenandaan[$data->id] != 'create')
                                                 <a class="dropdown-item has-icon" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" href="{{ route('operasi.penandaan.cetak', $data->kode_register) }}"><i class="fas fa-file-download"></i> Unduh</a>
+                                                @endif
+                                             
 
                                                 {{-- Hapus --}}
                                                 <form id="delete-form-{{$data->id}}" action="{{ route('operasi.penandaan.destroy', $data->id) }}" method="POST" style="display: none;">
@@ -126,7 +125,7 @@
                 </button>
             </div>
             <div class="modal-body text-center">
-                <p>Tindakan: {{ $p->nama_tindakan }}</p>
+                <p>Jenis Operasi: {{ $p->jenis_operasi }}</p>
                 <img id="gambarZoom{{ $data->id }}" src="{{ asset('storage/operasi/penandaan-pasien/image/' . $p->gambar) }}" class="img-fluid" alt="Gambar Pengguna"  style="transition: transform 0.3s ease; cursor: zoom-in;">
             </div>
             <div class="modal-footer">

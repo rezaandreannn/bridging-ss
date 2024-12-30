@@ -115,8 +115,8 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Tanggal</label>
-                                            <input type="date" name="tanggal" value="{{ old('tanggal', $biodata->tanggal ?? '')}}" class="form-control @error('tanggal') is-invalid @enderror" disabled>
+                                            <label>Asal Ruangan</label>
+                                            <input type="text" name="asal_ruangan" value="{{ old('asal_ruangan', $biodata->asal_ruangan ?? '')}}" class="form-control @error('asal_ruangan') is-invalid @enderror">
                                         </div>
                                         @error('tanggal')
                                         <div class="invalid-feedback">
@@ -126,8 +126,8 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Jenis Tindakan</label>
-                                            <input type="text" name="jenis_operasi" value="{{ old('jenis_operasi', $biodata->nama_tindakan ?? '')}}" class="form-control @error('jenis_operasi') is-invalid @enderror" readonly>
+                                            <label>Jenis Operasi</label>
+                                            <input type="text" name="jenis_operasi" class="form-control @error('jenis_operasi') is-invalid @enderror">
                                         </div>
                                         @error('jenis_operasi')
                                         <div class="invalid-feedback">

@@ -64,7 +64,7 @@
             </tr>
             <tr>
                 <td rowspan="2">LAPORAN OPERASI</td>
-                <td colspan="3">Ruang : {{ $biodata->ruangan->nama_ruang }}</td>
+                <td colspan="3">Ruang : {{ $biodata->asal_ruangan }}</td>
                 <td colspan="3">No Register : {{ $cetak->kode_register}}</td>
             </tr>
             <tr>
@@ -98,7 +98,7 @@
                     {{ $dokter }}<br>
                     @endforeach
                 </td>
-                <td colspan="4">Nama Anestesi : <br>
+                <td colspan="4">Nama Penata Anestesi : <br>
                     @foreach ($anastesis as $anastesi)
                     {{ $anastesi }}<br>
                     @endforeach
@@ -111,10 +111,8 @@
                 <td colspan="7" class="diagnosa">Diagnosis Post-Operatif : <br>{{ $cetak->diagnosa_post_op}}</td>
             </tr>
             <tr>
-                <td colspan="7" class="diagnosa">Jaringan yang Dieksisi/Insisi : <br>{{ $cetak->jaringan_dieksekusi}}</td>
-            </tr>
-            <tr>
-                <td colspan="7">
+                <td colspan="3" class="diagnosa">Jaringan yang Dieksisi/Insisi : <br>{{ $cetak->jaringan_dieksekusi}}</td>
+                <td colspan="4">
                     Dikirim untuk pemeriksa PA: <br>
                     <label>
                         <input type="radio" name="pemeriksa_pa" value="1" {{ ($cetak->permintaan_pa =='1') ? 'checked' : '' }}> Ya
@@ -126,9 +124,14 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="3">Tgl Operasi : {{ date('d-m-Y', strtotime($cetak->tanggal))}}</td>
+              <td colspan="4">Nama Operasi :</td>
+              <td colspan="3">Pendarahan : CC</td>
+            </tr>
+            <tr>
+                <td>Tgl Operasi <br>{{ date('d-m-Y', strtotime($cetak->tanggal))}}</td>
                 <td colspan="2">Jam Operasi Mulai <br>{{ date('h:i', strtotime($cetak->mulai_operasi))}} WIB</td>
                 <td colspan="2">Jam Operasi Selesai <br>{{ date('h:i', strtotime($cetak->selesai_operasi))}} WIB</td>
+                <td colspan="2">Lama Operasi Berlangsung <br>{{ $cetak->lama_operasi}}</td>
             </tr>
             <tr>
                 <td colspan="7">Lama Operasi Berlangsung : {{ $cetak->lama_operasi}}</td>

@@ -219,7 +219,7 @@
                 <span>Hasil Pemeriksaan Penunjang:</span><br>
                 <input type="checkbox" {{ optional($cetak)->laboratorium == '1' ? 'checked' : '' }} class="checkbox"> Laboratorium:<br>
                 <ul style="margin: 0; padding-left: 40px;">
-                    <li>Hb: {{ optional($cetak)->lab_hemoglobin ?? '' }} Trombos: {{ optional($cetak)->lab_trombos ?? '' }} BT: {{ optional($cetak)->lab_bt ?? '' }}</li>
+                    <li>Hb: {{ optional($cetak)->lab_hemoglobin ?? '' }} Trombos: {{ optional($cetak)->lab_trombosit ?? '' }} BT: {{ optional($cetak)->lab_bt ?? '' }}</li>
                     <li>Leukosit: {{ optional($cetak)->lab_leukosit ?? '' }} Hematokrit: {{ optional($cetak)->lab_hematokrit ?? '' }} CT: {{ optional($cetak)->lab_ct ?? '' }}</li>
                 </ul>
 
@@ -259,7 +259,7 @@
             <td width="30%" class="text5"> Tanda Tangan Perawat</td>
         </tr>
         <tr>
-            <td width="30%" class="text5">{!! DNS2D::getBarcodeHTML($booking->nama_dokter, 'QRCODE', 3, 3) !!}</td>
+            <td width="30%" class="text5" style="padding-right: 30px;">{!! DNS2D::getBarcodeHTML($booking->nama_dokter, 'QRCODE', 3, 3) !!}</td>
             <td width="40%" class="text5"></td>
             <td width="30%" class="text5"></td>
         </tr>

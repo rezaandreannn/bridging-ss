@@ -200,12 +200,7 @@ class VerifikasiPraBedahService
                 'created_by' => auth()->user()->id
             ]);
 
-            $praBedahOther = VerifikasiPraBedahOther::create([
-                'kode_register' => $data['kode_register'],
-                'estimasi_waktu' => $data['estimasi_waktu'] ?? '',
-                'rencana_tindakan' => $data['rencana_tindakan'] ?? '',
-                'created_by' => auth()->user()->id
-            ]);
+
 
             DB::commit();
 
@@ -216,7 +211,6 @@ class VerifikasiPraBedahService
                 'lab' => $praBedahLab,
                 'obat' => $praBedahObat,
                 'rontgen' => $praBedahRontgen,
-                'other' => $praBedahOther,
             ];
         } catch (\Throwable $th) {
             DB::rollBack();

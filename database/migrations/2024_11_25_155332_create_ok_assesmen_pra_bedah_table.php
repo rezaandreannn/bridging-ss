@@ -16,9 +16,10 @@ return new class extends Migration
         Schema::connection('pku')->create('ok_assesmen_pra_bedah', function (Blueprint $table) {
             $table->id();
             $table->string('kode_register');
-            $table->string('anamnesa');
-            $table->string('pemeriksaan_fisik');
-            $table->string('diagnosa');
+            $table->text('anamnesa');
+            $table->text('pemeriksaan_fisik');
+            $table->text('diagnosa');
+            $table->text('planning');
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->timestamps();

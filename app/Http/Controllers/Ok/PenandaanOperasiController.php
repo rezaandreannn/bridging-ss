@@ -44,6 +44,7 @@ class PenandaanOperasiController extends Controller
         // Ambil data berdasarkan ID
 
         $penandaan = $this->penandaanOperasiService->unduhByRegister($kodeRegister);
+        // dd($penandaan);
 
         // dd($penandaan);
         $date = date('dMY');
@@ -136,6 +137,7 @@ class PenandaanOperasiController extends Controller
             $data = [
                 'kode_register' => $request->kode_register,
                 'hasil_gambar' => $request->signatureData,
+                'asal_ruangan' => $request->asal_ruangan,
                 'jenis_operasi' => $request->jenis_operasi,
             ];
 
@@ -194,6 +196,7 @@ class PenandaanOperasiController extends Controller
             $data = [
                 'kode_register' => $request->kode_register,
                 'hasil_gambar' => $request->signatureData,
+                'asal_ruangan' => $request->asal_ruangan,
                 'jenis_operasi' => $request->jenis_operasi,
             ];
 

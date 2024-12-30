@@ -18,12 +18,11 @@ return new class extends Migration
         Schema::connection('pku')->create('ok_booking_operasi', function (Blueprint $table) {
             $table->id();
             $table->string('kode_register');
-            $table->bigInteger('ruangan_id');
+            $table->string('asal_ruangan');
             $table->string('kode_dokter');
             $table->date('tanggal');
-            $table->time('jam_mulai')->nullable();
-            $table->time('jam_selesai')->nullable();
-            $table->string('nama_tindakan');
+            $table->time('rencana_operasi')->nullable();
+            $table->string('jenis_operasi')->nullable();
             $table->boolean('terlaksana')->default(0);
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
@@ -35,9 +34,9 @@ return new class extends Migration
             // Untuk foreign key antar-database, kita akan menggunakan query raw, bukan schema builder
 
             // Foreign key reference menggunakan query raw
-            $table->foreign('ruangan_id')
-                ->references('id')
-                ->on('ok_ruangan'); // Nama tabel di db1
+            // $table->foreign('ruangan_id')
+            //     ->references('id')
+            //     ->on('ok_ruangan'); // Nama tabel di db1
 
         });
     }
@@ -50,9 +49,9 @@ return new class extends Migration
     public function down()
     {
         // Menghapus foreign key menggunakan raw SQL query
-        Schema::connection('pku')->table('ok_booking_operasi', function (Blueprint $table) {
-            $table->dropForeign(['ruangan_id']);
-        });
+        // Schema::connection('pku')->table('ok_booking_operasi', function (Blueprint $table) {
+        //     $table->dropForeign(['ruangan_id']);
+        // });
 
         // Menghapus tabel 'ok_booking_operasi' dari koneksi 'pku'
         Schema::connection('pku')->dropIfExists('ok_booking_operasi');

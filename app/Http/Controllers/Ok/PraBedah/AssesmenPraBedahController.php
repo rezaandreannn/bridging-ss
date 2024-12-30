@@ -6,6 +6,8 @@ use Exception;
 use Illuminate\Http\Request;
 use App\Helpers\BookingHelper;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Operasi\AssesmenPraBedah\StoreAssesmenPraBedahRequest;
+use App\Http\Requests\Operasi\AssesmenPraBedah\UpdateAssesmenPraBedahRequest;
 use App\Models\MasterData\TtdPerawat;
 use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\PraBedah\AssesmenPraBedahService;
@@ -85,17 +87,11 @@ class AssesmenPraBedahController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAssesmenPraBedahRequest $request)
     {
         try {
-            // Validasi input
-            $validatedData = $request->validate([
-                'kode_register' => 'required',
-                'anamnesa' => 'required',
-                'pemeriksaan_fisik' => 'required',
-                'diagnosa' => 'required'
-            ]);
-            $this->assesmenOperasiService->insert($validatedData);
+            $this->assesmenOperasiService->insert($request->validated());
+            // $this->assesmenOperasiService->insert($validatedData);
             return redirect('prabedah/assesmen-prabedah')->with('success', 'Assesmen Pra Bedah berhasil ditambahkan.');
 
             // return redirect()->route('ttd-ok.penandaan.index')->with('success', 'Tanda tangan berhasil ditambahkan.');
@@ -122,17 +118,15 @@ class AssesmenPraBedahController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($kodeRegister)
     {
         $title = $this->prefix . ' ' . 'Operasi';
         // Ambil data berdasarkan ID
-        $assesmen = $this->assesmenOperasiService->findById($id);
-
+        $assesmen = $this->assesmenOperasiService->findById($kodeRegister);
         // dd($assesmen);
-        $noReg = $assesmen->kode_register;
 
         // Ambil biodata berdasarkan nomor registrasi
-        $biodata = $this->bookingOperasiService->biodata($noReg);
+        $biodata = $this->bookingOperasiService->biodata($kodeRegister);
         return view($this->view . 'assesmen-prabedah.edit', compact('title', 'biodata', 'assesmen'));
     }
 
@@ -143,18 +137,11 @@ class AssesmenPraBedahController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateAssesmenPraBedahRequest $request, $kode_register)
     {
         try {
             // Validasi input
-            $validatedData = $request->validate([
-                'kode_register' => 'required',
-                'anamnesa' => 'required',
-                'pemeriksaan_fisik' => 'required',
-                'diagnosa' => 'required'
-            ]);
-
-            $this->assesmenOperasiService->update($id, $validatedData);
+            $this->assesmenOperasiService->update($kode_register, $request->validated());
 
             return redirect('prabedah/assesmen-prabedah')->with('success', 'Assesmen Pra Bedah berhasil di ubah.');
         } catch (Exception $e) {

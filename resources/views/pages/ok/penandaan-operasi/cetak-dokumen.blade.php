@@ -178,11 +178,11 @@
                 <table width="100%">
                     <tr>
                         <td class="text3"><b>Ruangan</b></td>
-                        <td class="text3">: {{$penandaan->ruang_operasi}}</td>
+                        <td class="text3">: {{$penandaan->asal_ruangan}}</td>
                     </tr>
                     <tr>
                         <td class="text3"><b>Tanggal </b></td>
-                        <td class="text3">: {{date('d-m-Y', strtotime($penandaan->tanggal))}}</td>
+                        <td class="text3">: {{date('d-m-Y', strtotime($penandaan->created_at))}}</td>
                     </tr>
                 </table>
             </td>
@@ -190,11 +190,11 @@
                 <table width="100%">
                     <tr>
                         <td class="text3"><b>Waktu</b></td>
-                        <td class="text3">: {{date('h:i', strtotime($penandaan->jam_mulai))}} WIB - {{date('h:i', strtotime($penandaan->jam_selesai))}} WIB</td>
+                        <td class="text3">: {{date('h:i', strtotime($penandaan->created_at))}} WIB</td>
                     </tr>
                     <tr>
                         <td class="text3"><b>Jenis Operasi</b></td>
-                        <td class="text3">: {{$penandaan->nama_tindakan}}</td>
+                        <td class="text3">: {{$penandaan->jenis_operasi}}</td>
                     </tr>
                 </table>
             </td>

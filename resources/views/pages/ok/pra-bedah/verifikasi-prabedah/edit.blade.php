@@ -175,35 +175,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Estimasi waktu yang dibutuhkan</label>
-                                    <div class="input-group">
-                                        <input type="time" name="estimasi_waktu" id="estimasi_waktu" value="{{ isset($verifikasi['other']->estimasi_waktu) ? date('H:i', strtotime($verifikasi['other']->estimasi_waktu)) : '' }}" class="form-control @error('estimasi_waktu') is-invalid @enderror">
-                                        <div class="input-group-append">
-                                            <div class="input-group-text">
-                                                <b>Jam</b>
-                                            </div>
-                                        </div>
-                                        @error('estimasi_waktu')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Rencana Tindakan Pembedahan</label>
-                                    <input type="text" name="rencana_tindakan" class="form-control" value="{{ $verifikasi['other']->rencana_tindakan ?? '' }}" @error('rencana_tindakan') is-invalid @enderror">
-                                    @error('rencana_tindakan')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <!-- include form -->

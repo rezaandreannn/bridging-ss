@@ -70,6 +70,47 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Planning</label>
+                                    <textarea name="planning" class="form-control  @error('planning') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ old('planning') }}</textarea>
+                                    @error('planning')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Estimasi waktu yang dibutuhkan</label>
+                                    <div class="input-group">
+                                        <input type="text" name="estimasi_waktu" id="waktu" class="form-control @error('estimasi_waktu') is-invalid  
+                                        @enderror">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <b>Jam</b>
+                                            </div>
+                                        </div>
+                                        @error('estimasi_waktu')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Rencana Tindakan Pembedahan</label>
+                                    <input type="text" name="rencana_tindakan" class="form-control @error('rencana_tindakan') is-invalid @enderror">
+                                    @error('rencana_tindakan')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- include form -->
@@ -104,80 +145,9 @@
     }
 </script>
 
-<script>
-   // Function to toggle the display and enable/disable fields based on checkbox selection
-    function toggleLabData() {
-        var labCheckbox = document.getElementById('berkasLab');
-        var labDataDiv = document.getElementById('labData');
-        var inputs = document.querySelectorAll('#labData input');
-
-        if (labCheckbox.checked) {
-            // Show the input fields and enable them
-            labDataDiv.style.display = 'block';
-            inputs.forEach(function(input) {
-                input.disabled = false; // Enable each input
-            });
-
-            // Optional: Set default values (if needed)
-            document.getElementById('hb').value = '1.75';           // You can set these with dynamic values from server if necessary
-            document.getElementById('trombosite').value = '2.2';
-            document.getElementById('leukosit').value = '5';
-            document.getElementById('hematokrit').value = '2';
-            document.getElementById('bt').value = '1.21';
-            document.getElementById('ct').value = '1.65';
-        } else {
-            // Hide the input fields and disable them
-            labDataDiv.style.display = 'none';
-            inputs.forEach(function(input) {
-                input.disabled = true; // Disable each input
-            });
-        }
-    }
-</script>
-
 {{-- SCRIPT TIDAK BISA HURUF --}}
 <script>
-    document.getElementById('hb').addEventListener('keypress', function(event) {
-        const keyCode = event.keyCode;
-        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
-
-        if (!allowedChars.test(event.key)) {
-            event.preventDefault();
-        }
-    });
-    document.getElementById('trombosite').addEventListener('keypress', function(event) {
-        const keyCode = event.keyCode;
-        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
-
-        if (!allowedChars.test(event.key)) {
-            event.preventDefault();
-        }
-    });
-    document.getElementById('leukosit').addEventListener('keypress', function(event) {
-        const keyCode = event.keyCode;
-        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
-
-        if (!allowedChars.test(event.key)) {
-            event.preventDefault();
-        }
-    });
-    document.getElementById('hematokrit').addEventListener('keypress', function(event) {
-        const keyCode = event.keyCode;
-        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
-
-        if (!allowedChars.test(event.key)) {
-            event.preventDefault();
-        }
-    });
-    document.getElementById('bt').addEventListener('keypress', function(event) {
-        const keyCode = event.keyCode;
-        const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
-
-        if (!allowedChars.test(event.key)) {
-            event.preventDefault();
-        }
-    });
-    document.getElementById('ct').addEventListener('keypress', function(event) {
+    document.getElementById('waktu').addEventListener('keypress', function(event) {
         const keyCode = event.keyCode;
         const allowedChars = /^[0-9+-/]*$/; // Regex untuk angka, tanda plus, dan tanda minus /
 

@@ -5,6 +5,7 @@ namespace App\Services\Operasi\PraBedah;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use App\Models\Operasi\PraBedah\AssesmenPraBedah;
+use App\Models\Operasi\PraBedah\VerifikasiPraBedahOther;
 
 class AssesmenPraBedahService
 {
@@ -198,9 +199,13 @@ class AssesmenPraBedahService
         return null;
     }
 
-    public function findById($id)
+
+    public function findById($kodeRegister)
     {
-        return AssesmenPraBedah::find($id);
+        return [
+            'assesmen' => AssesmenPraBedah::where('kode_register', $kodeRegister)->first(),
+            'other' => VerifikasiPraBedahOther::where('kode_register', $kodeRegister)->first(),
+        ];
     }
 
 
@@ -214,39 +219,84 @@ class AssesmenPraBedahService
 
     public function insert(array $data)
     {
+        DB::beginTransaction();
         try {
             $assesmen = AssesmenPraBedah::create([
                 'kode_register' => $data['kode_register'],
                 'anamnesa' => $data['anamnesa'],
                 'pemeriksaan_fisik' => $data['pemeriksaan_fisik'],
                 'diagnosa' => $data['diagnosa'],
+                'planning' => $data['planning'],
                 'created_by' => auth()->user()->id
             ]);
 
-            return $assesmen;
+            $praBedahOther = VerifikasiPraBedahOther::create([
+                'kode_register' => $data['kode_register'],
+                'estimasi_waktu' => $data['estimasi_waktu'] ?? '',
+                'rencana_tindakan' => $data['rencana_tindakan'] ?? '',
+                'created_by' => auth()->user()->id
+            ]);
+
+            DB::commit();
+
+            return [
+                'assesmen' => $assesmen,
+                'other' => $praBedahOther,
+            ];
         } catch (\Throwable $th) {
             throw new Exception("Gagal menambahkan Assesmen Pra Bedah: " . $th->getMessage());
         }
     }
 
-    public function update($id, array $data)
+    private function updateTable(string $modelClass, string $kodeRegister, array $fields)
     {
-        try {
-            // Mencari booking berdasarkan ID
-            $assesmen = AssesmenPraBedah::findOrFail($id);
+        // Fetch the existing record
+        $record = $modelClass::where('kode_register', $kodeRegister)->first();
 
-            // Melakukan update data
-            $assesmen->update([
-                'kode_register' => $data['kode_register'],
-                'anamnesa' => $data['anamnesa'],
-                'pemeriksaan_fisik' => $data['pemeriksaan_fisik'],
-                'diagnosa' => $data['diagnosa'],
+        // If no record exists, create a new one
+        if (!$record) {
+            $fields['kode_register'] = $kodeRegister;
+            $modelClass::create($fields);
+            return;
+        }
+
+        // Update the record only if there are changes
+        $updatedFields = [];
+        foreach ($fields as $key => $value) {
+            if (array_key_exists($key, $record->getAttributes()) && $record->{$key} !== $value) {
+                $updatedFields[$key] = $value;
+            }
+        }
+
+        if (!empty($updatedFields)) {
+            $record->update($updatedFields);
+        }
+    }
+
+    public function update($kode_register, array $data)
+    {
+        DB::beginTransaction();
+        try {
+
+            // Update Table Tindakan Post Operasi
+            $this->updateTable(AssesmenPraBedah::class, $kode_register, [
+                'anamnesa' => $data['anamnesa'] ?? '',
+                'pemeriksaan_fisik' => $data['pemeriksaan_fisik'] ?? '',
+                'diagnosa' => $data['diagnosa'] ?? '',
+                'planning' => $data['planning'] ?? '',
                 'updated_by' => auth()->user()->id
             ]);
 
-            return $assesmen;
-        } catch (\Throwable $th) {
-            throw new Exception("Gagal memperbarui Assesmen Pra Bedah: " . $th->getMessage());
+            $this->updateTable(VerifikasiPraBedahOther::class, $kode_register, [
+                'estimasi_waktu' => $data['estimasi_waktu'] ?? '',
+                'rencana_tindakan' => $data['rencana_tindakan'] ?? '',
+                'updated_by' => auth()->user()->id
+            ]);
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw new Exception('Gagal memperbarui Data Assesmen Pra Bedah: ' . $e->getMessage());
         }
     }
 

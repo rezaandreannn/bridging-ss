@@ -97,8 +97,8 @@
                                                         </a> --}}
 
                                                         @if (isset($statusLaporanOperasi[$laporan->id]) && $statusLaporanOperasi[$laporan->id] != 'create')
-                                                        <a class="dropdown-item has-icon" href="{{ route('laporan.operasi.cetak', $laporan->kode_register) }}">
-                                                                <i class="fas fa-info"></i> Download
+                                                        <a class="dropdown-item has-icon" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" href="{{ route('laporan.operasi.cetak', $laporan->kode_register) }}">
+                                                                <i class="fas fa-download"></i> Download
                                                             </a>
                                                         @endif
 

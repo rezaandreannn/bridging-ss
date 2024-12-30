@@ -69,12 +69,12 @@
                                             </a>
                                             <div class="dropdown-menu">
                                                 @if (isset($statusPenandaan[$data->id]) && $statusPenandaan[$data->id] != 'create')
-                                                <a class="dropdown-item has-icon" href="{{ route('operasi.penandaan.cetak', $data->kode_register) }}">
+                                                <a class="dropdown-item has-icon" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" href="{{ route('operasi.penandaan.cetak', $data->kode_register) }}">
                                                         <i class="fas fa-download"></i> Cetak Penandaan Operasi
                                                 </a>
                                                 @endif
 
-                                                <a class="dropdown-item has-icon" href="{{ route('prabedah.berkas-prabedah.cetak', $data->kode_register) }}"> 
+                                                <a class="dropdown-item has-icon" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" href="{{ route('prabedah.berkas-prabedah.cetak', $data->kode_register) }}"> 
                                                     <i class="fas fa-download"></i> Cetak Pra Bedah
                                                 </a>
                                             </div>

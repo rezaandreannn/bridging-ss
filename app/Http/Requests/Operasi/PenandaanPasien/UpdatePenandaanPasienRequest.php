@@ -26,7 +26,8 @@ class UpdatePenandaanPasienRequest extends FormRequest
         return [
             'kode_register' => 'required',
             'signatureData' => 'required',
-            'jenis_operasi' => 'required'
+            'asal_ruangan' => 'required',
+            'jenis_operasi' => 'required',
         ];
     }
 }

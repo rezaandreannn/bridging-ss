@@ -13,16 +13,13 @@ class PenandaanOperasiService
     {
         return PenandaanOperasi::with([
             'booking' => function ($query) {
-                $query->select('kode_register', 'tanggal', 'ruangan_id', 'kode_dokter', 'nama_tindakan')
+                $query->select('kode_register', 'tanggal', 'kode_dokter', 'jenis_operasi')
                     ->with([
                         'pendaftaran' => function ($query) {
                             $query->select('No_Reg', 'No_MR')
                                 ->with(['registerPasien' => function ($query) {
                                     $query->select('No_MR', 'Nama_Pasien');
                                 }]);
-                        },
-                        'ruangan' => function ($query) {
-                            $query->select('id', 'kode_ruang', 'nama_ruang');
                         },
                         'dokter' => function ($query) {
                             $query->select('Kode_Dokter', 'Nama_Dokter');
@@ -89,12 +86,11 @@ class PenandaanOperasiService
                 'no_mr' => optional($penandaan->booking->pendaftaran)->No_MR,
                 'nama_pasien' => optional($penandaan->booking->pendaftaran->registerPasien)->Nama_Pasien,
                 'tanggal_lahir' => optional($penandaan->booking->pendaftaran->registerPasien)->TGL_LAHIR,
-                'ruang_operasi' => optional($penandaan->booking->ruangan)->nama_ruang,
+                'asal_ruangan' => $penandaan->asal_ruangan,
                 'nama_dokter' => optional($penandaan->booking->dokter)->Nama_Dokter,
                 'ttd_dokter' => optional($penandaan->booking->ttdDokter)->ttd_dokter,
-                'nama_tindakan' => optional($penandaan->booking)->nama_tindakan,
-                'jam_mulai' => optional($penandaan->booking)->jam_mulai,
-                'jam_selesai' => optional($penandaan->booking)->jam_selesai,
+                'jenis_operasi' => $penandaan->jenis_operasi,
+                'created_at' => $penandaan->created_at,
             ];
         }
 
@@ -117,6 +113,7 @@ class PenandaanOperasiService
         $penandaan = PenandaanOperasi::create([
             'kode_register' => $data['kode_register'],
             'hasil_gambar' => $file_name,
+            'asal_ruangan' => $data['asal_ruangan'],
             'jenis_operasi' => $data['jenis_operasi'],
             'created_by' => auth()->user()->id,
         ]);
@@ -144,6 +141,7 @@ class PenandaanOperasiService
                 $penandaan->update([
                     'kode_register' => $data['kode_register'],
                     'hasil_gambar' => $file_name,
+                    'asal_ruangan' => $data['asal_ruangan'],
                     'jenis_operasi' => $data['jenis_operasi'],
                     'updated_by' => auth()->user()->id,
                 ]);
@@ -174,11 +172,11 @@ class PenandaanOperasiService
                 'kode_register' => $item->kode_register,
                 'tanggal' => optional($item->booking)->tanggal,
                 'gambar' => $item->hasil_gambar,
+                'jenis_operasi' => $item->jenis_operasi,
+                'asal_ruangan' => $item->asal_ruangan,
                 'no_mr' => optional($item->booking->pendaftaran)->No_MR,
                 'nama_pasien' => optional($item->booking->pendaftaran->registerPasien)->Nama_Pasien,
-                'ruang_operasi' => optional($item->booking->ruangan)->nama_ruang,
                 'nama_dokter' => optional($item->booking->dokter)->Nama_Dokter,
-                'nama_tindakan' => optional($item->booking)->nama_tindakan
             ];
         }));
     }

@@ -66,7 +66,7 @@
                                                     </a>
                                                     <div class="dropdown-menu">
                                                         {{-- Input --}}
-                                                        <a class="dropdown-item has-icon" href="{{ isset($statusAssesmen[$booking->id]) && $statusAssesmen[$booking->id] == 'create' ? route('prabedah.assesmen-prabedah.create', $booking->kode_register) : route('prabedah.assesmen-prabedah.edit', $statusAssesmen[$booking->id]) }}">
+                                                        <a class="dropdown-item has-icon" href="{{ isset($statusAssesmen[$booking->id]) && $statusAssesmen[$booking->id] == 'create' ? route('prabedah.assesmen-prabedah.create', $booking->kode_register) : route('prabedah.assesmen-prabedah.edit', $booking->kode_register) }}">
                                                             <i class="fas fa-marker"></i> {{ isset($statusAssesmen[$booking->id]) && $statusAssesmen[$booking->id] == 'create' ? 'Tambah' : 'Edit' }}</a>
                                                             @if (!$statusTtd)
                                                             <a class="dropdown-item has-icon" href="{{ route('ttd-perawat.create') }}"> 

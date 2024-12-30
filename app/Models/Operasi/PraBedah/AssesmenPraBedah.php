@@ -20,6 +20,7 @@ class AssesmenPraBedah extends Model
         'anamnesa',
         'pemeriksaan_fisik',
         'diagnosa',
+        'planning',
         'created_by',
         'updated_by'
     ];

@@ -26,7 +26,7 @@
         <div class="section-body">
             <!-- components biodata pasien by no reg -->
             @include('components.biodata-pasien-ok-bynoreg')
-            <form action="{{ route('prabedah.assesmen-prabedah.update', $assesmen->id) }}" method="POST">
+            <form action="{{ route('prabedah.assesmen-prabedah.update', $biodata->kode_register) }}" method="POST">
                 @csrf
                 @method('put')
             <!-- components biodata pasien by no reg -->
@@ -41,7 +41,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Data Subjektif (Anamnesa) <code>*Wajib Diisi</code></label>
-                                    <textarea name="anamnesa" class="form-control  @error('anamnesa') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ $assesmen->anamnesa }}</textarea>
+                                    <textarea name="anamnesa" class="form-control  @error('anamnesa') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ $assesmen['assesmen']->anamnesa ?? '' }}</textarea>
                                     @error('anamnesa')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -52,7 +52,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Data Objektif (Pemeriksaan Fisik) <code> *Wajib Diisi</code></label>
-                                    <textarea name="pemeriksaan_fisik" class="form-control  @error('pemeriksaan_fisik') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ $assesmen->pemeriksaan_fisik }}</textarea>
+                                    <textarea name="pemeriksaan_fisik" class="form-control  @error('pemeriksaan_fisik') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ $assesmen['assesmen']->pemeriksaan_fisik ?? '' }}</textarea>
                                     @error('pemeriksaan_fisik')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -63,8 +63,48 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Diagnosis Pra Bedah</label>
-                                    <textarea name="diagnosa" class="form-control  @error('diagnosa') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ $assesmen->diagnosa }}</textarea>
+                                    <textarea name="diagnosa" class="form-control  @error('diagnosa') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ $assesmen['assesmen']->diagnosa ?? '' }}</textarea>
                                     @error('diagnosa')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Planning</label>
+                                    <textarea name="planning" class="form-control  @error('planning') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ $assesmen['assesmen']->planning ?? '' }}</textarea>
+                                    @error('planning')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Estimasi waktu yang dibutuhkan</label>
+                                    <div class="input-group">
+                                        <input type="text" name="estimasi_waktu" id="estimasi_waktu" value="{{ $assesmen['other']->estimasi_waktu ?? '' }}" class="form-control @error('estimasi_waktu') is-invalid @enderror">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <b>Jam</b>
+                                            </div>
+                                        </div>
+                                        @error('estimasi_waktu')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Rencana Tindakan Pembedahan</label>
+                                    <input type="text" name="rencana_tindakan" class="form-control @error('rencana_tindakan') is-invalid @enderror" value="{{ $assesmen['other']->rencana_tindakan ?? '' }}">
+                                    @error('rencana_tindakan')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>

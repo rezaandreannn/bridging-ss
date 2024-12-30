@@ -18,6 +18,7 @@ class PenandaanOperasi extends Model
         'kode_register',
         'hasil_gambar',
         'jenis_operasi',
+        'asal_ruangan',
         'created_by',
         'updated_by'
     ];

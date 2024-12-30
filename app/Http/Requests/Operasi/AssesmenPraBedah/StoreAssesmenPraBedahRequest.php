@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Operasi\PenandaanPasien;
+namespace App\Http\Requests\Operasi\AssesmenPraBedah;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePenandaanPasienRequest extends FormRequest
+class StoreAssesmenPraBedahRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,13 @@ class StorePenandaanPasienRequest extends FormRequest
     public function rules()
     {
         return [
-            'kode_register' => 'required',
-            'signatureData' => 'required|string',
-            'asal_ruangan' => 'required',
-            'jenis_operasi' => 'required'
+            'kode_register' => 'required|string',
+            'anamnesa' => 'required',
+            'pemeriksaan_fisik' => 'required',
+            'diagnosa' => 'required',
+            'planning' => 'required',
+            'estimasi_waktu' => 'nullable',
+            'rencana_tindakan' => 'nullable',
         ];
     }
 }
