@@ -94,7 +94,7 @@
                                     </td>
                                     <td width="25%">
                                         @if ($item->kode_register==null)
-                                        <a href="{{ route('koding.add', $item->No_Reg )}}" class="btn btn-sm btn-warning"><i class="fas fa-notes-medical"></i> Entry Diagnosa</a>
+                                        <a href="{{ route('koding.add', [$item->No_Reg, $tanggal,$kode_dokter] )}}" class="btn btn-sm btn-warning"><i class="fas fa-notes-medical"></i> Entry Diagnosa</a>
                                         @else
                                         <a href="{{ route('koding.showEdit', $item->No_Reg )}}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i> Edit Diagnosa</a>
                                         

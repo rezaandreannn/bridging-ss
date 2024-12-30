@@ -600,7 +600,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('koding')->group(function () {
 
         Route::get('kodingDiagnosa/rajal/list', [KodingRajalController::class, 'index'])->name('koding.index');
-        Route::get('kodingDiagnosa/rajal/addDiagnosa/{noReg}', [KodingRajalController::class, 'create'])->name('koding.add');
+        Route::get('kodingDiagnosa/rajal/addDiagnosa/{noReg}/{tanggal}/{kode_dokter}', [KodingRajalController::class, 'create'])->name('koding.add');
         Route::get('kodingDiagnosa/rajal/editDiagnosa/{noReg}', [KodingRajalController::class, 'show'])->name('koding.showEdit');
         Route::post('kodingDiagnosa/rajal/addProsesDiagnosa/{noReg}', [KodingRajalController::class, 'store'])->name('koding.addproses');
         Route::put('kodingDiagnosa/rajal/updateProsesDiagnosa/{noReg}', [KodingRajalController::class, 'update'])->name('koding.updateproses');
