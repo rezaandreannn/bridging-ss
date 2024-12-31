@@ -607,7 +607,27 @@ class RajalDokter extends Model
 
         $data = DB::connection('bridging_ss')
             ->table('satusehat_icd10')
+            ->select(
+                'id',
+                'icd10_code',
+                'icd10_en',
+                'icd10_id'
+                )
             ->get();
-        return $data;
-    }
+
+            return $this->mapData($data);
+
+        }
+
+        private function mapData($icd10)
+        {
+            return collect($icd10->map(function ($item) {
+                return (object) [
+                    'id' => $item->id,
+                    'icd10_code' => $item->icd10_code,
+                    'icd10_en' => $item->icd10_en,
+                    'icd10_id' => $item->icd10_id,
+                ];
+            }));
+        }
 }
