@@ -26,4 +26,9 @@ class DokterService
         $data = Dokter::where('Jenis_Profesi', 'DOKTER SPESIALIS')->get();
         return $data;
     }
+
+    public function byCode($doctorCode)
+    {
+        return Dokter::where('Kode_Dokter', $doctorCode)->first();
+    }
 }

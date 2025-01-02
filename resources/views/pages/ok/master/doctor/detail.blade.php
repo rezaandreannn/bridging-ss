@@ -1,0 +1,193 @@
+@extends('layouts.app')
+
+@section('title', $title)
+
+@push('style')
+<!-- CSS Libraries -->
+<link rel="stylesheet" href="{{ asset('library/datatables/datatables.min.css') }}">
+<link rel="stylesheet" href="{{ asset('library/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ asset('library/datatables/Select-1.2.4/css/select.bootstrap4.min.css') }}">
+<!-- Select -->
+<link rel="stylesheet" href="{{ asset('library/selectric/public/selectric.css') }}">
+<link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.css" rel="stylesheet">
+
+<style>
+
+</style>
+<!-- <link rel="stylesheet" href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}"> -->
+@endpush
+
+@section('main')
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <h1>{{ $title }}</h1>
+            <div class="section-header-breadcrumb">
+                <div class="breadcrumb-item active"><a href="{{ route('operasi.template.index') }}">Laporan Operasi</a></div>
+                <div class="breadcrumb-item">List</div>
+            </div>
+        </div>
+
+        <div class="section-body">
+            {{-- menampilkan detail dokter --}}
+
+            <div class="card">
+                <div class="card-header">
+                    <h4>Detail Dokter</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                            {{-- Foto Dokter --}}
+                            <img src="{{ $doctor->photo_url ?? 'https://ui-avatars.com/api/?name=' . urlencode($findDoctor->Spesialis ?? 'Dokter') . '&background=random&size=150' }}" alt="Foto Dokter" class="rounded-circle img-fluid" style="width: 150px; height: 150px;">
+                        </div>
+                        <div class="col-md-8">
+                            {{-- Informasi Dokter --}}
+                            <div class="row mb-3">
+                                <div class="col-sm-4 font-weight-bold">Nama:</div>
+                                <div class="col-sm-8">{{ $findDoctor->Nama_Dokter ?? '-' }}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-4 font-weight-bold">Spesialisasi:</div>
+                                <div class="col-sm-8">{{ $findDoctor->Spesialis ?? '-' }}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-4 font-weight-bold">Kode:</div>
+                                <div class="col-sm-8">{{ $findDoctor->Kode_Dokter ?? '-' }}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-4 font-weight-bold">No. Telepon:</div>
+                                <div class="col-sm-8">{{ $findDoctor->HP1 ?? '-' }}</div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-4 font-weight-bold">Email:</div>
+                                <div class="col-sm-8">{{ $findDoctor->Email ?? '-' }}</div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4>Daftar Template Laporan Operasi</h4>
+                    <a href="#" class="btn btn-primary btn-icon icon-left" data-toggle="modal" data-target="#modal-add-ruang">
+                        <i class="fas fa-plus"></i> Tambah Template
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table-striped table table-bordered" id="table-1">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Nama / Macam Tindakan</th>
+                                    <th scope="col">Template Laporan Operasi</th>
+                                    <th scope="col">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <a href="#" class="btn btn-primary">
+                                            Set Template Laporan Operasi
+                                        </a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<div class="modal fade" id="modal-add-ruang">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Tambah Template</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{ route('operasi.ruang.store') }}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <div class="card-body">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Nama / Macam Operasi</label>
+                                <input type="text" name="macam_operasi" value="{{ old('macam_operasi')}}" class="form-control @error('macam_operasi') is-invalid @enderror">
+                            </div>
+                            @error('macam_operasi')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Template Laporan Operasi</label>
+                                <textarea id="summernote" name="content" class="form-control"></textarea>
+                            </div>
+                            @error('nama_ruang')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-left">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-print"></i> Simpan</button>
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Tutup</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@endsection
+
+@push('scripts')
+<script src="{{ asset('library/datatables/datatables.min.js') }}"></script>
+<script src="{{ asset('library/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('library/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
+<script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('library/sweetalert/dist/sweetalert.baru.js') }}"></script>
+
+<!-- Page Specific JS File -->
+<script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#summernote').summernote({
+            height: 300
+            , minHeight: null
+            , maxHeight: null
+            , focus: true
+            , placeholder: 'Tulis sesuatu di sini...'
+            , toolbar: [
+                ['font', ['bold', 'italic', 'underline']]
+                , ['color', ['color']]
+                , ['height', ['height']]
+                , ['view', ['fullscreen', 'help']]
+            ]
+        });
+    });
+
+</script>
+
+
+@endpush

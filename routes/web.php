@@ -3,7 +3,9 @@
 use App\Models\Fisioterapi;
 use App\Models\Simrs\Icd10;
 use App\Models\Simrs\Antrean;
+use App\Models\Simrs\TrBiayaRinci;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
@@ -62,6 +64,8 @@ use App\Http\Controllers\Poli\Mata\MasterData\PenyakitSekarangController;
 use App\Http\Controllers\Berkas\Rekam_medis_by_mr\RekamMedisByMrController;
 use App\Http\Controllers\Berkas\Rekam_medis_harian\RekamMedisHarianController;
 use App\Http\Controllers\IGD\Layanan\AssesmenController as LayananAssesmenController;
+use App\Models\Simrs\Pendaftaran;
+use App\Services\Operasi\BookingOperasiService;
 
 /*
 |--------------------------------------------------------------------------
@@ -156,7 +160,7 @@ Route::middleware('auth')->group(function () {
         Route::post('ttd-dokter', [TtdDokterController::class, 'store'])->name('ttd-dokter.store');
         Route::put('ttd-dokter/{id}/update', [TtdDokterController::class, 'update'])->name('ttd-dokter.update');
         Route::delete('ttd-dokter/delete/{id}', [TtdDokterController::class, 'destroy'])->name('ttd-dokter.destroy');
-        
+
         Route::get('ttd-perawat', [TtdPerawatController::class, 'index'])->name('ttd-perawat.index');
         Route::delete('ttd-perawat/delete/{id}', [TtdPerawatController::class, 'destroy'])->name('ttd-perawat.destroy');
         Route::get('ttd-perawat/create', [TtdPerawatController::class, 'create'])->name('ttd-perawat.create');
@@ -655,6 +659,14 @@ Route::get('/server', function () {
 Route::get('/server2', function () {
     return view('pages/rekam_medis/bymr/index');
 });
+
+Route::get('/test-biayarinci', function () {
+    $bookingService = new BookingOperasiService();
+    $data = $bookingService->byDate('2025-01-02', '', '223');
+    dd($data);
+});
+
+
 
 
 

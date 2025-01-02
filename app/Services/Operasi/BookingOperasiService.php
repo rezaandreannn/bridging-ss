@@ -128,10 +128,10 @@ class BookingOperasiService
                 }
             });
         } else if (!empty($kodeDokter)) {
-            // dd('ok');
             $bookings = BookingOperasi::with([
                 'pendaftaran.registerPasien',
                 'pendaftaran.ruang.bangsal',
+                'pendaftaran.biayaDetails',
                 'ruangan',
                 'dokter',
             ])->get();
@@ -287,7 +287,7 @@ class BookingOperasiService
                 'kode_register' => $item->kode_register,
                 'tanggal' => $item->tanggal,
                 'no_mr' => optional($item->pendaftaran)->No_MR,
-                'nama_pasien' => optional($item->pendaftaran->registerPasien)->Nama_Pasien,
+                'nama_pasien' => optional($item->pendaftaran->registerPasien)->Nama_Pasien ?? '',
                 'asal_ruangan' => $item->asal_ruangan,
                 'nama_dokter' => optional($item->dokter)->Nama_Dokter,
                 'jenis_operasi' => $item->jenis_operasi,

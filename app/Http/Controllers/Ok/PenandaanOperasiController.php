@@ -79,7 +79,7 @@ class PenandaanOperasiController extends Controller
         if (auth()->user()->hasRole('perawat bangsal')) {
             $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
             // Ambil pasien bangsal
-            $penandaans = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '', '');
+            $penandaans = $this->bookingOperasiService->byDate($date, $sessionBangsal, '');
 
             $penandaan = $this->penandaanOperasiService->get();
 

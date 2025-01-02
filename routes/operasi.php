@@ -9,6 +9,7 @@ use App\Http\Controllers\OK\BookingOperasiController;
 use App\Http\Controllers\OK\TtdTandaOperasiController;
 use App\Http\Controllers\OK\PenandaanOperasiController;
 use App\Http\Controllers\Ok\Laporan\LaporanOperasiController;
+use App\Http\Controllers\OK\MasterData\DoctorController;
 use App\Http\Controllers\Ok\MasterData\TemplateOperasiController;
 use App\Http\Controllers\Ok\PraBedah\BerkasPraBedahController;
 use App\Http\Controllers\Ok\PraBedah\AssesmenPraBedahController;
@@ -56,6 +57,10 @@ Route::prefix('ibs')->name('operasi.')->middleware('auth')->group(function () {
 
     // jadwal operasi
     Route::get('berkas-operasi', JadwalOperasiController::class)->name('berkas.cetak');
+
+    Route::resource('doctor', DoctorController::class)->except('show');
+    Route::get('/doctor/{code}', [DoctorController::class, 'show'])->name('doctor.show');
+
 
     // Template Operasi
     Route::get('/template-operasi', [TemplateOperasiController::class, 'index'])->name('template.index');
