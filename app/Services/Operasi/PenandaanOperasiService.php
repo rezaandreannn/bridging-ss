@@ -70,7 +70,7 @@ class PenandaanOperasiService
                             }]);
                     },
                 ]);
-            }
+            },
         ])
             ->where('kode_register', $kodeRegister)
             ->first();
@@ -90,7 +90,7 @@ class PenandaanOperasiService
                 'nama_dokter' => optional($penandaan->booking->dokter)->Nama_Dokter,
                 'ttd_dokter' => optional($penandaan->booking->ttdDokter)->ttd_dokter,
                 'jenis_operasi' => $penandaan->jenis_operasi,
-                'created_at' => $penandaan->created_at,
+                'created_at' => $penandaan->created_at->format('Y-m-d H:i:s'),
             ];
         }
 
