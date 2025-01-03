@@ -8,12 +8,13 @@ use App\Http\Controllers\OK\JadwalOperasiController;
 use App\Http\Controllers\OK\BookingOperasiController;
 use App\Http\Controllers\OK\TtdTandaOperasiController;
 use App\Http\Controllers\OK\PenandaanOperasiController;
-use App\Http\Controllers\Ok\Laporan\LaporanOperasiController;
 use App\Http\Controllers\OK\MasterData\DoctorController;
-use App\Http\Controllers\Ok\MasterData\TemplateOperasiController;
+use App\Http\Controllers\Ok\Laporan\LaporanOperasiController;
 use App\Http\Controllers\Ok\PraBedah\BerkasPraBedahController;
 use App\Http\Controllers\Ok\PraBedah\AssesmenPraBedahController;
+use App\Http\Controllers\Ok\MasterData\TemplateOperasiController;
 use App\Http\Controllers\Ok\PraBedah\VerifikasiPraBedahController;
+use App\Http\Controllers\Ok\PascaBedah\PerencanaanPascaBedahController;
 
 Route::prefix('penandaan')->name('operasi.')->middleware('auth')->group(function () {
     // Penandaan Lokasi Operasi
@@ -93,6 +94,17 @@ Route::prefix('prabedah')->name('prabedah.')->middleware('auth')->group(function
 
 
     Route::get('/berkas-prabedah/download/{kode_register}', [BerkasPraBedahController::class, 'download'])->name('berkas-prabedah.download');
+});
+
+// pasca bedah
+Route::prefix('pascabedah')->name('pascabedah.')->middleware('auth')->group(function () {
+    // Asesmen Pra Bedah
+    Route::get('/perencanaan-pascabedah', [PerencanaanPascaBedahController::class, 'index'])->name('perencanaan-pascabedah.index');
+    Route::get('/perencanaan-pascabedah/create/{kode_register}', [PerencanaanPascaBedahController::class, 'create'])->name('perencanaan-pascabedah.create');
+    Route::post('/perencanaan-pascabedah', [PerencanaanPascaBedahController::class, 'store'])->name('perencanaan-pascabedah.store');
+    Route::get('/perencanaan-pascabedah/edit/{kode_register}', [PerencanaanPascaBedahController::class, 'edit'])->name('perencanaan-pascabedah.edit');
+    Route::put('/perencanaan-pascabedah/update/{kode_register}', [PerencanaanPascaBedahController::class, 'update'])->name('perencanaan-pascabedah.update');
+    Route::delete('/perencanaan-pascabedah/delete/{id}', [PerencanaanPascaBedahController::class, 'destroy'])->name('perencanaan-pascabedah.destroy');
 });
 
 Route::prefix('laporan')->name('laporan.')->middleware('auth')->group(function () {
