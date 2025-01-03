@@ -62,7 +62,7 @@
                                     </td>
                                     <td>
                                         @if (!empty($statusGambar[$data->id]))
-                                        <a href="#" data-toggle="modal" data-target="#gambarModal{{ $data->id }}" class="badge badge-success">
+                                        <a href="#" data-toggle="modal" data-target="#gambarModal{{ $data->kode_register }}" class="badge badge-success">
                                             Detail
                                         </a>
                                         @else
@@ -92,12 +92,12 @@
 
 
                                                 {{-- Hapus --}}
-                                                <form id="delete-form-{{$data->id}}" action="{{ route('operasi.penandaan.destroy', $data->id) }}" method="POST" style="display: none;">
+                                                <form id="delete-form-{{$data->kode_register}}" action="{{ route('operasi.penandaan.destroy', $data->kode_register) }}" method="POST" style="display: none;">
                                                     @method('delete')
                                                     @csrf
                                                 </form>
                                                 <!-- Delete link -->
-                                                <a class="dropdown-item has-icon" href="#" confirm-delete="true" data-menuId="{{$data->id}}">
+                                                <a class="dropdown-item has-icon" href="#" confirm-delete="true" data-menuId="{{$data->kode_register}}">
                                                     <i class="fas fa-trash"></i> Hapus
                                                 </a>
                                             </div>
@@ -116,7 +116,7 @@
 
 
 @foreach ($penandaan as $p)
-<div class="modal fade" id="gambarModal{{ $data->id ?? '' }}" tabindex="-1" role="dialog" aria-labelledby="gambarModalLabel{{ $data->id ?? '' }}" aria-hidden="true">
+<div class="modal fade" id="gambarModal{{ $p->kode_register ?? '' }}" tabindex="-1" role="dialog" aria-labelledby="gambarModalLabel{{ $p->kode_register ?? '' }}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -128,7 +128,7 @@
             <div class="modal-body text-center">
                 <p>Jenis Operasi: {{ $p->jenis_operasi }}</p>
 
-                <img id="gambarZoom{{ $data->id ?? '' }}" src="{{ asset('storage/operasi/penandaan-pasien/image/' . $p->gambar) }}" class="img-fluid" alt="Gambar Pengguna" style="transition: transform 0.3s ease; cursor: zoom-in;">
+                <img id="gambarZoom{{ $p->id ?? '' }}" src="{{ asset('storage/operasi/penandaan-pasien/image/' . $p->gambar) }}" class="img-fluid" alt="Gambar Pengguna" style="transition: transform 0.3s ease; cursor: zoom-in;">
 
             </div>
             <div class="modal-footer">

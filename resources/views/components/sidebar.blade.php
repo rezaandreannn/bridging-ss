@@ -353,7 +353,7 @@
             </li>
             @endcan
 
-            belum clear
+            {{-- belum clear --}}
             @can('pasca bedah')
             <li class="nav-item dropdown  {{ Request::is('pascabedah/*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-bed-pulse"></i> <span>Pasca Bedah</span></a>

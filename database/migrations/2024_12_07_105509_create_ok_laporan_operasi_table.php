@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('lama_operasi');
             $table->enum('permintaan_pa', ['1', '0']);
             $table->text('laporan_operasi');
+            $table->string('pendarahan')->nullable();
+            $table->string('macam_operasi')->nullable();
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->timestamps();
