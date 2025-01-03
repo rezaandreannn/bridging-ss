@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Models\Operasi\MasterData;
+namespace App\Models\Operasi;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TemplateOperasi extends Model
+class UseTemplateLaporanOperasi extends Model
 {
     use HasFactory;
 
     protected $connection = 'pku';
-    protected $table = 'ok_template_laporan_operasi';
+    protected $table = 'ok_use_template_laporan_operasi';
 
     protected $fillable = [
-        'macam_operasi',
         'kode_dokter',
-        'laporan_operasi',
+        'use_template'
     ];
 }

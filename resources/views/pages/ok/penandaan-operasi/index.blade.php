@@ -116,8 +116,7 @@
 
 
 @foreach ($penandaan as $p)
-
-<div class="modal fade" id="gambarModal{{ $p->id }}" tabindex="-1" role="dialog" aria-labelledby="gambarModalLabel{{ $p->id }}" aria-hidden="true">
+<div class="modal fade" id="gambarModal{{ $data->id ?? '' }}" tabindex="-1" role="dialog" aria-labelledby="gambarModalLabel{{ $data->id ?? '' }}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -129,7 +128,7 @@
             <div class="modal-body text-center">
                 <p>Jenis Operasi: {{ $p->jenis_operasi }}</p>
 
-                <img id="gambarZoom{{ $p->id }}" src="{{ asset('storage/operasi/penandaan-pasien/image/' . $p->gambar) }}" class="img-fluid" alt="Gambar Pengguna" style="transition: transform 0.3s ease; cursor: zoom-in;">
+                <img id="gambarZoom{{ $data->id ?? '' }}" src="{{ asset('storage/operasi/penandaan-pasien/image/' . $p->gambar) }}" class="img-fluid" alt="Gambar Pengguna" style="transition: transform 0.3s ease; cursor: zoom-in;">
 
             </div>
             <div class="modal-footer">

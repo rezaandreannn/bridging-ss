@@ -66,6 +66,7 @@ Route::prefix('ibs')->name('operasi.')->middleware('auth')->group(function () {
     // Template Operasi
     Route::get('/template-operasi', [TemplateOperasiController::class, 'index'])->name('template.index');
     Route::post('/template-operasi', [TemplateOperasiController::class, 'store'])->name('template.store');
+    Route::post('/doctor/{kodeDokter}/toggle-template', [TemplateOperasiController::class, 'toggle'])->name('doctor.toggle-template');
     Route::put('/template-operasi/update/{id}', [TemplateOperasiController::class, 'update'])->name('template.update');
     Route::delete('/template-operasi/delete/{id}', [TemplateOperasiController::class, 'destroy'])->name('template.destroy');
 });

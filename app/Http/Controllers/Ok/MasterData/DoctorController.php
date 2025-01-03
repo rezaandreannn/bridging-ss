@@ -4,6 +4,7 @@ namespace App\Http\Controllers\OK\MasterData;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Operasi\MasterData\TemplateOperasi;
 use App\Services\SimRs\DokterService;
 
 class DoctorController extends Controller
@@ -58,8 +59,11 @@ class DoctorController extends Controller
     {
         $title = 'Detail dokter';
         $findDoctor = $this->doctorService->byCode($code);
-        // dd($findDoctor);
-        return view('pages.ok.master.doctor.detail', compact('title', 'findDoctor'));
+
+        $TemplateByCodeDoctor = TemplateOperasi::where('kode_dokter', $code)->get();
+
+
+        return view('pages.ok.master.doctor.detail', compact('title', 'findDoctor', 'TemplateByCodeDoctor'));
     }
 
     /**

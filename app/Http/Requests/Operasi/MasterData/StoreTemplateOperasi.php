@@ -24,8 +24,8 @@ class StoreTemplateOperasi extends FormRequest
     public function rules()
     {
         return [
-            'tindakan' => 'required',
-            'template_operasi' => 'required',
+            'macam_operasi' => 'required',
+            'laporan_operasi' => 'required',
         ];
     }
 }

@@ -18,6 +18,7 @@ use App\Services\Operasi\PraBedah\AssesmenPraBedahService;
 use App\Services\Operasi\LaporanOperasi\LaporanOperasiService;
 use App\Http\Requests\Operasi\LaporanOperasi\StoreLaporanOperasi;
 use App\Http\Requests\Operasi\LaporanOperasi\UpdateLaporanOperasi;
+use App\Models\Operasi\MasterData\TemplateOperasi;
 
 class LaporanOperasiController extends Controller
 {
@@ -120,6 +121,11 @@ class LaporanOperasiController extends Controller
     {
         $biodata = $this->bookingOperasiService->biodata($kode_register);
 
+        // ambil data template aktif berdasarkan user login name
+        $codeDoctor = auth()->user()->username ?? null;
+
+        $templateLaporan = TemplateOperasi::where('kode_dokter', $codeDoctor)->get();
+
 
         // dd($this->bookingOperasiService->findByRegister($kode_register));
 
@@ -129,6 +135,7 @@ class LaporanOperasiController extends Controller
             'asistenOperasi' => $this->laporanOperasiService->getAsistenOperasi(),
             'spesialisAnastesi' => $this->laporanOperasiService->getSpesialisAnastesi(),
             'penataAnastesi' => $this->laporanOperasiService->getPenataAsisten(),
+            'templates' => $templateLaporan
         ]);
     }
 
