@@ -89,17 +89,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-
+                                @foreach($TemplateByCodeDoctor as $template)
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $template->macam_operasi }}</td>
+                                    <td>{!! $template->laporan_operasi !!}</td>
                                     <td>
-                                        <a href="#" class="btn btn-primary">
-                                            Set Template Laporan Operasi
+                                        <a href="#">
+                                            <i class="fas fa-pencil-alt m-2"></i>
+                                        </a>
+                                        <a href="#">
+                                            <i class="fas fa-trash-alt"></i>
                                         </a>
                                     </td>
                                 </tr>
+                                @endforeach
 
                             </tbody>
                         </table>
@@ -120,10 +124,11 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('operasi.ruang.store') }}" method="POST">
+            <form action="{{ route('operasi.template.store') }}" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="card-body">
+                        <input type="hidden" name="kode_dokter" value="{{ $findDoctor->Kode_Dokter}}" />
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Nama / Macam Operasi</label>
@@ -138,9 +143,9 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Template Laporan Operasi</label>
-                                <textarea id="summernote" name="content" class="form-control"></textarea>
+                                <textarea id="summernote" name="laporan_operasi" class="form-control"></textarea>
                             </div>
-                            @error('nama_ruang')
+                            @error('laporan_operasi')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>

@@ -47,10 +47,22 @@
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$doctor->Nama_Dokter}}</td>
                                     <td>{{$doctor->Spesialis}}</td>
+
+                                    @php
+                                    $useTemplate = \App\Models\Operasi\UseTemplateLaporanOperasi::where('kode_dokter', $doctor->Kode_Dokter)->first();
+                                    @endphp
+
                                     <td>
-                                        <a href="{{ route('operasi.doctor.show', $doctor->Kode_Dokter)}}" class="btn btn-primary">
+                                        <a href="{{ route('operasi.doctor.show', $doctor->Kode_Dokter)}}" class="badge badge-primary border-0 rounded-0">
                                             Set Template Laporan Operasi
                                         </a>
+                                        <form method="post" action="{{ route('operasi.doctor.toggle-template', $doctor->Kode_Dokter) }}" class="d-inline">
+                                            @csrf
+                                            <input type="hidden" name="use_template" value="{{ $useTemplate && $useTemplate->use_template ? 'false' : 'true' }}">
+                                            <button type="submit" class="badge {{ $useTemplate && $useTemplate->use_template ? 'badge-success' : 'badge-danger' }} border-0 rounded-0">
+                                                {{ $useTemplate && $useTemplate->use_template ? 'Enabled' : 'Disabled' }}
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                                 @endforeach

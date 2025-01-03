@@ -198,18 +198,33 @@
                                     </div>
                                 </div>
                             </div>
+                            @php
+                            // Ambil status `use_template` dari database
+                            $useTemplate = \App\Models\Operasi\UseTemplateLaporanOperasi::where('kode_dokter', auth()->user()->username)->first();
+                            @endphp
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Nama / Macam Operasi</label>
+                                    @if ($useTemplate && $useTemplate->use_template)
                                     <select name="" class="form-control @error('nama_ahli_anastesi') is-invalid @enderror select2">
-                                        <option value="" disabled>--Pilih Ahli Anastesi--</option>
-                                        <option value=""></option>
+                                        <option value="" disabled>--Pilih --</option>
+                                        @foreach($templates as $template)
+                                        <option value="">{{ $template->macam_operasi }}</option>
+                                        @endforeach
                                     </select>
                                     @error('jaringan')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}
                                     </span>
                                     @enderror
+                                    @else
+                                    <input type="text" name="nama_operasi" class="form-control @error('nama_operasi') is-invalid @enderror" placeholder="Masukkan Nama Operasi" value="{{ old('nama_operasi') }}">
+                                    @error('nama_operasi')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-md-6">
