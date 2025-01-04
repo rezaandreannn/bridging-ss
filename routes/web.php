@@ -66,6 +66,7 @@ use App\Http\Controllers\Berkas\Rekam_medis_harian\RekamMedisHarianController;
 use App\Http\Controllers\IGD\Layanan\AssesmenController as LayananAssesmenController;
 use App\Models\Simrs\Pendaftaran;
 use App\Services\Operasi\BookingOperasiService;
+use App\Services\Operasi\PraBedah\AssesmenPraBedahService;
 
 /*
 |--------------------------------------------------------------------------
@@ -660,9 +661,9 @@ Route::get('/server2', function () {
     return view('pages/rekam_medis/bymr/index');
 });
 
-Route::get('/test-biayarinci', function () {
-    $bookingService = new BookingOperasiService();
-    $data = $bookingService->byDate('2025-01-02', '', '223');
+Route::get('/test-lab', function () {
+    $praService = new AssesmenPraBedahService();
+    $data = $praService->getLabByKodeReg('23-00136634');
     dd($data);
 });
 
