@@ -217,10 +217,16 @@
         </tr>
         <tr>
             <td width="50%" class="text5"></td>
+            @if($penandaan->ttd_dokter == null)
+            <td width="50%" class="text5" style="padding-left:30px; padding-top:60px">
+               
+            </td>
+            @else
             <td width="50%" class="text5" style="padding-left:30px;">
-                <img src="public/ttd/dokter/{{$penandaan->ttd_dokter}}" width="60" height="80" />
+                <img src="storage/ttd/dokter/{{$penandaan->ttd_dokter}}" width="60" height="80" />
                 {{-- {!! DNS2D::getBarcodeHTML($penandaan->nama_dokter, 'QRCODE', 3, 3) !!} --}}
             </td>
+            @endif
         </tr>
         <tr>
             <td width="50%" class="text5">({{ $penandaan->nama_pasien}})</td>

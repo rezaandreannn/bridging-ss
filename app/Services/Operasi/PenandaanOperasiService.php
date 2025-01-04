@@ -153,14 +153,17 @@ class PenandaanOperasiService
         }
     }
 
-    public function delete($id)
+    public function delete($kode_register)
     {
-        $penandaan = PenandaanOperasi::find($id);
+        // dd($kode_register);
+        $idpenandaan = PenandaanOperasi::where('kode_register',$kode_register)->first();
 
-        if ($penandaan) {
-            $pathImage = 'public/operasi/penandaan-pasien/image/' . $penandaan->hasil_gambar;
+        if ($idpenandaan) {
+            // dd($id);
+            $pathImage = 'public/operasi/penandaan-pasien/image/' . $idpenandaan->hasil_gambar;
             Storage::delete($pathImage);
-            $penandaan->delete();
+            $deletePenandaan=PenandaanOperasi::find($idpenandaan->id);
+            $deletePenandaan->delete();
         }
     }
 

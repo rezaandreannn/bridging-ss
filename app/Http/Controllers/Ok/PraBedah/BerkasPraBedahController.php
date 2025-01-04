@@ -35,10 +35,11 @@ class BerkasPraBedahController extends Controller
         // Ambil data berdasarkan ID
 
         $cetak = $this->assesmenOperasiService->cetak($kode_register);
+        $lab = $this->assesmenOperasiService->getLabByKodeReg($kode_register);
         $booking = collect($this->bookingOperasiService->byRegister($kode_register))->first();
         $biodataPasien = $this->bookingOperasiService->biodata($kode_register);
         $pasien = $biodataPasien->pendaftaran->registerPasien;
-        // dd($cetak);
+        // dd($lab);
 
 
         // dd($booking);
@@ -49,6 +50,7 @@ class BerkasPraBedahController extends Controller
 
         $pdf = PDF::loadview('pages.ok.pra-bedah.berkas.cetak-dokumen', [
             'cetak' => $cetak,
+            'lab' => $lab,
             'pasien' => $pasien,
             'booking' => $booking,
             'title' => $title,

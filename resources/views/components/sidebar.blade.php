@@ -297,10 +297,10 @@
 
             {{-- Berkas Operasi --}}
 
-            <li class="{{ Request::is('ibs/doctor*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('operasi.doctor.index')}}"><i class="fas fa-book-medical"></i> <span>Dokter Bedah</span></a></li>
+            <li class="{{ Request::is('ibs/doctor*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('operasi.doctor.index')}}"><i class="fa-solid fa-user-doctor"></i> <span>Dokter Bedah</span></a></li>
 
             @can('template operasi')
-            <li class="{{ Request::is('ibs/template-operasi/*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('operasi.template.index')}}"><i class="fas fa-book-medical"></i> <span>Template Operasi</span></a></li>
+            {{-- <li class="{{ Request::is('ibs/template-operasi/*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('operasi.template.index')}}"><i class="fas fa-book-medical"></i> <span>Template Operasi</span></a></li> --}}
             @endcan
             @endcan
 
@@ -347,6 +347,20 @@
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('prabedah/berkas-prabedah*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('prabedah.berkas-prabedah.index')}}">Berkas Pra Bedah</a>
+                    </li>
+                </ul>
+                @endcan
+            </li>
+            @endcan
+
+            {{-- belum clear --}}
+            @can('pasca bedah')
+            <li class="nav-item dropdown  {{ Request::is('pascabedah/*') ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-bed-pulse"></i> <span>Pasca Bedah</span></a>
+                @can('perencanaan pasca bedah')
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('pascabedah/perencanaan-pascabedah*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('pascabedah.perencanaan-pascabedah.index')}}">Perencanaan Pasca Bedah</a>
                     </li>
                 </ul>
                 @endcan

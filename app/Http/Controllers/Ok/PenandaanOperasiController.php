@@ -92,6 +92,8 @@ class PenandaanOperasiController extends Controller
             // Ambil pasien dokter
             $penandaans = $this->bookingOperasiService->byDate($date, '', $sessionKodeDokter ?? '');
 
+            // dd($penandaans);
+
             $penandaan = $this->penandaanOperasiService->get();
             // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
             $statusPenandaan = BookingHelper::getStatusPenandaan($penandaans);
@@ -216,15 +218,16 @@ class PenandaanOperasiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($kode_register)
     {
+        // dd($kode_register);
         try {
-            $this->penandaanOperasiService->delete($id);
+            $this->penandaanOperasiService->delete($kode_register);
             $feedback = 'success';
             $message = 'Data Berhasil Dihapus!';
-        } catch (\Throwable $th) {
+        } catch (\Throwable $e) {
             $feedback = 'error';
-            $message = 'Data Gagal dihapus';
+            $message = 'Data Gagal dihapus' . $e->getMessage();
         }
         return redirect()->back()->with($feedback, $message);
     }

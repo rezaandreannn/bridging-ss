@@ -14,6 +14,7 @@ use App\Models\Operasi\PraBedah\AssesmenPraBedah;
 use App\Services\Operasi\PraBedah\VerifikasiPraBedahService;
 use App\Http\Requests\Operasi\Prabedah\StoreVerifikasiPraBedahRequest;
 use App\Http\Requests\Operasi\Prabedah\UpdateVerifikasiPraBedahRequest;
+use App\Services\Operasi\PraBedah\AssesmenPraBedahService;
 
 class VerifikasiPraBedahController extends Controller
 {
@@ -29,6 +30,7 @@ class VerifikasiPraBedahController extends Controller
     {
         $this->view = 'pages.ok.pra-bedah.';
         $this->prefix = 'Verifikasi Pra Bedah';
+        $this->assesmenOperasiService = new AssesmenPraBedahService();
         $this->verifikasiPraBedahService = new VerifikasiPraBedahService();
         $this->dokterService = new DokterService();
         $this->bookingOperasiService = new BookingOperasiService();
@@ -94,6 +96,7 @@ class VerifikasiPraBedahController extends Controller
     {
         $title = $this->prefix . ' ' . 'Input Data';
         $biodata = $this->bookingOperasiService->biodata($kode_register);
+        $lab = $this->assesmenOperasiService->getLabByKodeReg($kode_register);
 
         // check penandaan lokasi and assesmen pra bedah
         $penandaanLokasi = PenandaanOperasi::where('kode_register', $kode_register)->first();
@@ -103,7 +106,7 @@ class VerifikasiPraBedahController extends Controller
         $checklistAssesmenPraBedah = $assesmenPraBedah ? true : false;
         // dd($assesmenPraBedah);
 
-        return view($this->view . 'verifikasi-prabedah.create', compact('title', 'biodata', 'checklistPenandaan', 'checklistAssesmenPraBedah'));
+        return view($this->view . 'verifikasi-prabedah.create', compact('title', 'biodata', 'checklistPenandaan', 'checklistAssesmenPraBedah', 'lab'));
     }
 
     /**
