@@ -29,6 +29,17 @@ class TemplateOperasiController extends Controller
         $this->prefix = 'Template';
     }
 
+    public function getTemplateByID(Request $request)
+    {
+        $id = $request->input('macam_operasi');
+
+        $templateOperasiID = $this->templateOperasiService->TemplateId($id);
+        // dd($templateOperasiID);
+        return response()->json([
+            'data' => $templateOperasiID
+        ]);
+    }
+
     public function index()
     {
         $title = $this->prefix . ' ' . 'Operasi';

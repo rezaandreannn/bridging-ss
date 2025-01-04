@@ -93,7 +93,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Nama Ahli Anestesi</label>
                                     <select name="nama_ahli_anastesi[]" class="form-control @error('ahli_anastesi') is-invalid @enderror select2" multiple>
@@ -109,7 +109,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Nama Anestesi</label>
                                     <select name="nama_anastesi[]" class="form-control @error('penata_anastesi') is-invalid @enderror select2" multiple>
@@ -119,6 +119,17 @@
                                         @endforeach
                                     </select>
                                     @error('penata_anastesi')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Jenis Anestesi</label>
+                                    <input type="text" name="jenis_anastesi" class="form-control @error('jenis_anastesi') is-invalid @enderror">
+                                    @error('jenis_anastesi')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -185,6 +196,46 @@
                                             Tidak
                                         </label>
                                     </div>
+                                </div>
+                            </div>
+                            @php
+                            // Ambil status `use_template` dari database
+                            $useTemplate = \App\Models\Operasi\UseTemplateLaporanOperasi::where('kode_dokter', auth()->user()->username)->first();
+                            @endphp
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Nama / Macam Operasi</label>
+                                    @if ($useTemplate && $useTemplate->use_template)
+                                    <select name="macam_operasi" id="macam_operasi" class="form-control @error('macam_operasi') is-invalid @enderror select2">
+                                        <option value="">--Pilih Macam Operasi --</option>
+                                        @foreach($templates as $template)
+                                            <option value="{{ $template->macam_operasi }}">{{ $template->macam_operasi }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('macam_operasi')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
+                                    @else
+                                    <input type="text" name="macam_operasi" class="form-control @error('macam_operasi') is-invalid @enderror" placeholder="Masukkan Nama Operasi" value="{{$laporanOperasi->macam_operasi}}">
+                                    @error('macam_operasi')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Perdarahan</label>
+                                    <input type="text" name="pendarahan" class="form-control @error('pendarahan') is-invalid @enderror" value="{{$laporanOperasi->pendarahan}}">
+                                    @error('pendarahan')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -307,8 +358,6 @@
     }
 </script>
 
-
-
 <script>
     // Menambahkan event listener pada kedua input
     document.getElementById('mulai_operasi').addEventListener('input', calculateDuration);
@@ -348,4 +397,55 @@
     // Panggil fungsi perhitungan saat halaman dimuat (untuk memastikan hasil pertama)
     window.onload = calculateDuration;
 </script>
+
+<script>
+    $(document).ready(function () {
+        // Menangani perubahan pada dropdown
+        $("#macam_operasi").change(function () {
+            
+            // Ambil nilai ID yang dipilih dari select
+            var macam_operasi = $("#macam_operasi").val();
+
+            if (macam_operasi) {
+                // Lakukan AJAX request ke server untuk mendapatkan laporan_operasi
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('operasi.template.macam-operasi') }}",
+                    data: {
+                        macam_operasi: macam_operasi
+                    },
+                    success: function (data) {
+                        // alert(data.data.laporan_operasi);
+
+                        var laporanOperasi = data.data.laporan_operasi
+                        // Hapus tag HTML menggunakan regex
+                        laporanOperasi = laporanOperasi.replace(/<\/?[^>]+(>|$)/g, "\n"); // Menghapus tag HTML
+
+                        // Ganti &nbsp; dengan spasi biasa
+                        laporanOperasi = laporanOperasi.replace(/&nbsp;/g, " ");
+
+                        // Hapus baris kosong ekstra (newline berturut-turut)
+                        laporanOperasi = laporanOperasi.replace(/(\r\n|\r|\n){2,}/g, "\n");
+
+                        // Hapus whitespace di awal dan akhir teks
+                        laporanOperasi = laporanOperasi.trim();
+
+                        // Set teks baru ke dalam textarea
+                        $("#laporan_operasi").val(laporanOperasi);
+
+                        // Reset dropdown
+                        $(this).val(null).trigger('change');
+                    },
+
+                    error: function (xhr, status, error) {
+                        // Tangani kesalahan, misalnya tampilkan pesan error
+                        console.error("Error:", error);
+                        alert("Terjadi kesalahan saat mengambil data.");
+                    }
+                });
+            }
+        });
+    });
+</script>
+
 @endpush

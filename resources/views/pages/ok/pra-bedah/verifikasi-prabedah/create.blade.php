@@ -104,14 +104,16 @@
                                                     <table class="table-striped table table-bordered">
                                                         <tr>
                                                             <th>No</th>
-                                                            <th>Deskripsi</th>
-                                                            <th>Jumlah</th>
+                                                            <th>Pemeriksaan</th>
+                                                            <th>Hasil</th>
                                                         </tr>
+                                                        @foreach ($lab as $data)
                                                         <tr>
-                                                            <td>1</td>
-                                                            <td>ek</td>
-                                                            <td>1</td>
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ $data->PEMERIKSAAN }}</td>
+                                                            <td>{{ $data->Hasil }}</td>
                                                         </tr>
+                                                        @endforeach
                                                     </table>
                                                    </div>
                                                 </div>

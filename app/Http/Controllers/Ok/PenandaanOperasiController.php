@@ -100,7 +100,7 @@ class PenandaanOperasiController extends Controller
             $statusGambar = BookingHelper::getStatusGambar($penandaans);
         }
 
-        // dd($penandaans); // Uncomment if you want to debug the result
+        // dd($penandaan);
 
         return view($this->view . 'penandaan-operasi.index', compact('penandaans'))
             ->with([
@@ -175,6 +175,7 @@ class PenandaanOperasiController extends Controller
         $title = $this->prefix . ' ' . 'Operasi';
         // Ambil data berdasarkan ID
         $penandaan = $this->penandaanOperasiService->findById($id);
+        // dd($penandaan);
 
         // dd($penandaan);
         $noReg = $penandaan->kode_register;

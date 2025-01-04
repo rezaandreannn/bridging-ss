@@ -297,10 +297,10 @@
 
             {{-- Berkas Operasi --}}
 
-            <li class="{{ Request::is('ibs/doctor*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('operasi.doctor.index')}}"><i class="fas fa-book-medical"></i> <span>Dokter Bedah</span></a></li>
+            <li class="{{ Request::is('ibs/doctor*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('operasi.doctor.index')}}"><i class="fa-solid fa-user-doctor"></i> <span>Dokter Bedah</span></a></li>
 
             @can('template operasi')
-            <li class="{{ Request::is('ibs/template-operasi/*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('operasi.template.index')}}"><i class="fas fa-book-medical"></i> <span>Template Operasi</span></a></li>
+            {{-- <li class="{{ Request::is('ibs/template-operasi/*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('operasi.template.index')}}"><i class="fas fa-book-medical"></i> <span>Template Operasi</span></a></li> --}}
             @endcan
             @endcan
 

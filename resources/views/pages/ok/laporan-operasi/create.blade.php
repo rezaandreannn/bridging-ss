@@ -206,20 +206,20 @@
                                 <div class="form-group">
                                     <label>Nama / Macam Operasi</label>
                                     @if ($useTemplate && $useTemplate->use_template)
-                                    <select name="" class="form-control @error('nama_ahli_anastesi') is-invalid @enderror select2">
-                                        <option value="" disabled>--Pilih --</option>
+                                    <select name="macam_operasi" id="macam_operasi" class="form-control @error('macam_operasi') is-invalid @enderror select2">
+                                        <option value="">--Pilih Macam Operasi --</option>
                                         @foreach($templates as $template)
-                                        <option value="">{{ $template->macam_operasi }}</option>
+                                            <option value="{{ $template->macam_operasi }}">{{ $template->macam_operasi }}</option>
                                         @endforeach
                                     </select>
-                                    @error('jaringan')
+                                    @error('macam_operasi')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}
                                     </span>
                                     @enderror
                                     @else
-                                    <input type="text" name="nama_operasi" class="form-control @error('nama_operasi') is-invalid @enderror" placeholder="Masukkan Nama Operasi" value="{{ old('nama_operasi') }}">
-                                    @error('nama_operasi')
+                                    <input type="text" name="macam_operasi" class="form-control @error('macam_operasi') is-invalid @enderror" placeholder="Masukkan Nama Operasi" value="{{ old('macam_operasi') }}">
+                                    @error('macam_operasi')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}
                                     </span>
@@ -230,11 +230,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Perdarahan</label>
-                                    <select name="" class="form-control @error('nama_ahli_anastesi') is-invalid @enderror select2">
-                                        <option value="" disabled>--Pilih Ahli Anastesi--</option>
-                                        <option value=""></option>
-                                    </select>
-                                    @error('jaringan')
+                                    <input type="text" name="pendarahan" class="form-control @error('pendarahan') is-invalid @enderror" value="{{ old('pendarahan') }}">
+                                    @error('pendarahan')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}
                                     </span>
@@ -362,6 +359,90 @@
     }
 
 </script>
+
+<script>
+    $(document).ready(function () {
+        // Menangani perubahan pada dropdown
+        $("#macam_operasi").change(function () {
+            
+            // Ambil nilai ID yang dipilih dari select
+            var macam_operasi = $("#macam_operasi").val();
+
+            if (macam_operasi) {
+                // Lakukan AJAX request ke server untuk mendapatkan laporan_operasi
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('operasi.template.macam-operasi') }}",
+                    data: {
+                        macam_operasi: macam_operasi
+                    },
+                    success: function (data) {
+                        // alert(data.data.laporan_operasi);
+
+                        var laporanOperasi = data.data.laporan_operasi
+                        // Hapus tag HTML menggunakan regex
+                        laporanOperasi = laporanOperasi.replace(/<\/?[^>]+(>|$)/g, "\n"); // Menghapus tag HTML
+
+                        // Ganti &nbsp; dengan spasi biasa
+                        laporanOperasi = laporanOperasi.replace(/&nbsp;/g, " ");
+
+                        // Hapus baris kosong ekstra (newline berturut-turut)
+                        laporanOperasi = laporanOperasi.replace(/(\r\n|\r|\n){2,}/g, "\n");
+
+                        // Hapus whitespace di awal dan akhir teks
+                        laporanOperasi = laporanOperasi.trim();
+
+                        // Set teks baru ke dalam textarea
+                        $("#laporan_operasi").val(laporanOperasi);
+
+                        // Reset dropdown
+                        $(this).val(null).trigger('change');
+                    },
+
+                    error: function (xhr, status, error) {
+                        // Tangani kesalahan, misalnya tampilkan pesan error
+                        console.error("Error:", error);
+                        alert("Terjadi kesalahan saat mengambil data.");
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+{{-- <script>
+       $(document).ready(function () {
+        $("#macam_operasi").change(function () {
+            // Ambil nilai yang dipilih dari select
+            var selectedValue = $(this).val();
+            
+            // Ambil teks lama dari textarea
+            var existingText = $("#laporan_operasi").val();
+
+            // Hapus tag HTML menggunakan regex
+            selectedValue = selectedValue.replace(/<\/?[^>]+(>|$)/g, "\n"); // Menghapus tag HTML
+            
+            // Ganti &nbsp; dengan spasi biasa
+            selectedValue = selectedValue.replace(/&nbsp;/g, " ");
+
+            // Pastikan tidak ada baris kosong ekstra di akhir existingText
+            existingText = existingText.trimEnd();
+
+            // Tambahkan teks baru ke textarea
+            if (selectedValue) {
+                // Tambahkan newline hanya jika ada teks sebelumnya
+                var updatedText = existingText 
+                    ? existingText + "\n" + selectedValue 
+                    : selectedValue;
+
+                $("#laporan_operasi").val(updatedText);
+                
+                // Reset pilihan setelah teks ditambahkan (opsional)
+                $(this).val(null).trigger('change');
+            }
+        });
+    });
+</script> --}}
 
 
 

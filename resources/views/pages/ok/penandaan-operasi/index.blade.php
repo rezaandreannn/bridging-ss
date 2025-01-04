@@ -127,9 +127,7 @@
             </div>
             <div class="modal-body text-center">
                 <p>Jenis Operasi: {{ $p->jenis_operasi }}</p>
-
                 <img id="gambarZoom{{ $p->id ?? '' }}" src="{{ asset('storage/operasi/penandaan-pasien/image/' . $p->gambar) }}" class="img-fluid" alt="Gambar Pengguna" style="transition: transform 0.3s ease; cursor: zoom-in;">
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -180,7 +178,6 @@
             });
         });
     });
-
 </script>
 
 @endpush

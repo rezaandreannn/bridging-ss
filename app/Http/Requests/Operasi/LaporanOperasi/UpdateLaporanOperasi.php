@@ -36,6 +36,8 @@ class UpdateLaporanOperasi extends FormRequest
             'selesai_operasi' => 'nullable',
             'lama_operasi' => 'nullable',
             'permintaan_pa' => 'nullable',
+            'pendarahan' => 'nullable',
+            'macam_operasi' => 'required',
             'laporan_operasi' => 'required',
             'nama_operator' => 'nullable',
             'nama_asisten' => 'nullable',
@@ -46,5 +48,4 @@ class UpdateLaporanOperasi extends FormRequest
             // 'cara_masuk' => 'nullable|string'
         ];
     }
-
 }

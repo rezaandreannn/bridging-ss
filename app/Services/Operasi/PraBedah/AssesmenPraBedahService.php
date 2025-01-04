@@ -13,7 +13,7 @@ class AssesmenPraBedahService
     {
         return AssesmenPraBedah::with([
             'booking' => function ($query) {
-                $query->select('kode_register', 'tanggal', 'ruangan_id', 'kode_dokter', 'nama_tindakan')
+                $query->select('kode_register', 'tanggal', 'ruangan_id', 'kode_dokter', 'jenis_operasi')
                     ->with([
                         'pendaftaran' => function ($query) {
                             $query->select('No_Reg', 'No_MR')
@@ -116,7 +116,7 @@ class AssesmenPraBedahService
             },
 
             'booking' => function ($query) {
-                $query->select('kode_register', 'tanggal', 'kode_dokter', 'nama_tindakan')->with([
+                $query->select('kode_register', 'tanggal', 'kode_dokter', 'jenis_operasi')->with([
                     'pendaftaran' => function ($query) {
                         $query->select('No_Reg', 'No_MR')
                             ->with(['registerPasien' => function ($query) {
@@ -145,6 +145,7 @@ class AssesmenPraBedahService
                 'anamnesa' => $result->anamnesa,
                 'pemeriksaan_fisik' => $result->pemeriksaan_fisik,
                 'diagnosa' => $result->diagnosa,
+                'planning' => $result->planning,
                 'tanggal' => optional($result->booking)->tanggal,
                 'jam_mulai' => optional($result->booking)->jam_mulai,
                 'jam_selesai' => optional($result->booking)->jam_selesai,
@@ -304,5 +305,25 @@ class AssesmenPraBedahService
     {
         $data = AssesmenPraBedah::find($id);
         return $data->delete();
+    }
+
+    public function getLabByKodeReg($kodeRegister)
+    {
+        $result = DB::connection('db_rsmm')
+            ->table('TR_MASTER_LAB as tml')
+            ->join('TR_DETAIL_LAB as tdl', 'tdl.Id_Lab', '=', 'tml.Id_Lab')
+            ->join('LAB_HASIL as lh', 'lh.Kode_Hasil', '=', 'tdl.Kode_Hasil')
+            ->select('tml.No_Reg', 'tml.Tanggal', 'tdl.Hasil', 'lh.PEMERIKSAAN')
+            ->where('tml.No_Reg', $kodeRegister)
+            ->whereNotNull('tdl.Hasil')
+            ->where('tdl.Hasil', '!=', '')
+            ->where('tml.Tanggal', function ($query) {
+                $query->selectRaw('MAX(tml_sub.Tanggal)')
+                    ->from('TR_MASTER_LAB as tml_sub')
+                    ->whereColumn('tml_sub.No_Reg', 'tml.No_Reg');
+            });
+
+
+        return $result->get();
     }
 }

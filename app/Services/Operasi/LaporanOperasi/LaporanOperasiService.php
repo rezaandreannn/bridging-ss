@@ -177,7 +177,9 @@ class LaporanOperasiService
                 'selesai_operasi' => $data['selesai_operasi'] ?? '',
                 'lama_operasi' => $data['lama_operasi'] ?? '',
                 'permintaan_pa' => $data['permintaan_pa'],
+                'macam_operasi' => $data['macam_operasi'],
                 'laporan_operasi' => $data['laporan_operasi'],
+                'pendarahan' => $data['pendarahan'],
                 'created_by' => auth()->user()->id,
                 // 'cara_masuk' => $data['cara_masuk'] ?? ''
             ]);
@@ -258,7 +260,9 @@ class LaporanOperasiService
                 'selesai_operasi' => $data['selesai_operasi'] ?? '',
                 'lama_operasi' => $data['lama_operasi'] ?? '',
                 'permintaan_pa' => $data['permintaan_pa'],
+                'macam_operasi' => $data['macam_operasi'],
                 'laporan_operasi' => $data['laporan_operasi'],
+                'pendarahan' => $data['pendarahan'],
                 'updated_by' => auth()->user()->id,
                 // 'cara_masuk' => $data['cara_masuk'] ?? ''
             ]);

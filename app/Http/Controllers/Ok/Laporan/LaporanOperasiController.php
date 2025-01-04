@@ -183,7 +183,12 @@ class LaporanOperasiController extends Controller
 
         $laporanOperasi = $this->laporanOperasiService->laporanByRegister($kode_register);
 
-        // dd($laporanOperasi);
+
+        // ambil data template aktif berdasarkan user login name
+        $codeDoctor = auth()->user()->username ?? null;
+
+        $templateLaporan = TemplateOperasi::where('kode_dokter', $codeDoctor)->get();
+
 
         return view($this->view . 'edit', compact('laporanOperasi'))->with([
             'title' => $this->prefix . ' ' . 'Edit Data',
@@ -196,6 +201,7 @@ class LaporanOperasiController extends Controller
             'ahliAnastesiArray' => $this->laporanOperasiService->getAhliAnastesiArray($kode_register),
             'anastesiArray' => $this->laporanOperasiService->getAnastesiArray($kode_register),
             'asistenArray' => $this->laporanOperasiService->getAsistenArray($kode_register),
+            'templates' => $templateLaporan
         ]);
     }
 

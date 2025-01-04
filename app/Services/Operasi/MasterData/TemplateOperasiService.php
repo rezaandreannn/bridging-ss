@@ -17,6 +17,12 @@ class TemplateOperasiService
         return TemplateOperasi::find($id);
     }
 
+    public function TemplateId($id)
+    {
+        return TemplateOperasi::where('macam_operasi', $id)->first();
+    }
+
+
     public function insert(array $data)
     {
         DB::beginTransaction();
