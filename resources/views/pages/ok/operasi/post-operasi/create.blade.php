@@ -111,7 +111,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Jenis Anestesi</label>
-                                    <input type="text" name="jenis_anestesi" class="form-control @error('jenis_anestesi') is-invalid @enderror">
+                                    <input type="text" name="jenis_anestesi" class="form-control @error('jenis_anestesi') is-invalid @enderror" value="{{$laporanOperasi->jenis_anastesi}}">
                                     @error('jenis_anestesi')
                                     <div class="invalid-feedback">
                                         {{ $message }}

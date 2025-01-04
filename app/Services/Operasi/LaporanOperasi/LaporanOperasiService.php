@@ -4,6 +4,7 @@ namespace App\Services\Operasi\LaporanOperasi;
 
 use Exception;
 use App\Models\Simrs\Dokter;
+use App\Models\Operasi\Operasi;
 use PhpParser\Node\Stmt\TryCatch;
 use Illuminate\Support\Facades\DB;
 use App\Models\Operasi\BookingOperasi;
@@ -41,7 +42,40 @@ class LaporanOperasiService
 
     public function laporanByRegister($kode_register)
     {
-        return LaporanOperasi::where('kode_register', $kode_register)->first();
+
+ 
+        $laporanOperasi =  LaporanOperasi::where('kode_register', $kode_register)->first();
+        if ($laporanOperasi) {
+          
+            return (object) [
+                'id' => $laporanOperasi->id,
+                'kode_register' => $laporanOperasi->kode_register,
+                'tanggal' => $laporanOperasi->tanggal,
+                'diagnosa_pre_op' => $laporanOperasi->diagnosa_pre_op,
+                'diagnosa_post_op' => $laporanOperasi->diagnosa_post_op,
+                'jaringan_dieksekusi' => $laporanOperasi->jaringan_dieksekusi,
+                'mulai_operasi' => $laporanOperasi->mulai_operasi,
+                'selesai_operasi' => $laporanOperasi->selesai_operasi,
+                'lama_operasi' => $laporanOperasi->lama_operasi,
+                'permintaan_pa' => $laporanOperasi->permintaan_pa,
+                'laporan_operasi' => $laporanOperasi->laporan_operasi,
+                'pendarahan' => $laporanOperasi->pendarahan,
+                'macam_operasi' => $laporanOperasi->macam_operasi,
+                'created_by' => $laporanOperasi->created_by,
+                'updated_by' => $laporanOperasi->updated_by,
+                'created_at' => $laporanOperasi->created_at->format('Y-m-d H:i:s'),
+                'updated_at' => $laporanOperasi->updated_at->format('Y-m-d H:i:s'),
+                'nama_operator' => optional($laporanOperasi->detailAsisten)->nama_operator,
+                'nama_asisten' => optional($laporanOperasi->detailAsisten)->nama_asisten,
+                'nama_perawat' => optional($laporanOperasi->detailAsisten)->nama_perawat,
+                'nama_ahli_anastesi' => optional($laporanOperasi->detailAsisten)->nama_ahli_anastesi,
+                'nama_anastesi' => optional($laporanOperasi->detailAsisten)->nama_anastesi,
+                'jenis_anastesi' => optional($laporanOperasi->tableOperasi)->jenis_anastesi
+            ];
+        }
+
+        return $laporanOperasi;
+        
     }
 
 
@@ -150,11 +184,19 @@ class LaporanOperasiService
                 // 'cara_masuk' => $data['cara_masuk'] ?? ''
             ]);
 
+            $operasi = Operasi::create([
+                'kode_register' => $data['kode_register'],
+                'jenis_anastesi' => $data['jenis_anastesi'],
+                'created_by' => auth()->user()->id,
+                // 'cara_masuk' => $data['cara_masuk'] ?? ''
+            ]);
+
             DB::commit();
 
             return [
                 'operasiasistendetail' => $operasiasistendetail,
                 'laporanoperasi' => $laporanoperasi,
+                'operasi' => $operasi,
 
             ];
         } catch (\Throwable $th) {
@@ -163,11 +205,13 @@ class LaporanOperasiService
         }
     }
 
-    public function update($id, array $data)
+    public function update($kode_register, array $data)
     {
         try {
 
-            $id_detail_asisten = OperatorAsistenDetail::where('kode_register', $id)->first();
+   
+
+            $id_detail_asisten = OperatorAsistenDetail::where('kode_register', $kode_register)->first();
 
             $operasiasistendetail = OperatorAsistenDetail::findOrFail($id_detail_asisten->id);
             // pisahkan array dengan koma menjadi string
@@ -205,7 +249,8 @@ class LaporanOperasiService
             ]);
 
             // id laporan operasi
-            $id = LaporanOperasi::where('kode_register', $id)->first();
+            $id = LaporanOperasi::where('kode_register', $kode_register)->first();
+         
             $laporanoperasi = LaporanOperasi::findOrFail($id->id);
 
             $laporanoperasi->update([
@@ -225,7 +270,25 @@ class LaporanOperasiService
                 // 'cara_masuk' => $data['cara_masuk'] ?? ''
             ]);
 
-            return $laporanoperasi;
+                // id laporan operasi
+                $idOperasi = Operasi::where('kode_register', $kode_register)->first();     
+                $operasi = Operasi::findOrFail($idOperasi->id);
+
+                $operasi->update([
+                    'kode_register' => $data['kode_register'],
+                    'jenis_anastesi' => $data['jenis_anastesi'],
+                    'created_by' => auth()->user()->id,
+                    // 'cara_masuk' => $data['cara_masuk'] ?? ''
+                ]);
+
+      
+
+            return [
+                'operasiasistendetail' => $operasiasistendetail,
+                'laporanoperasi' => $laporanoperasi,
+                'operasi' => $operasi,
+
+            ];
         } catch (\Throwable $th) {
             throw new Exception("Gagal memperbarui laporan operasi: " . $th->getMessage());
         }
@@ -240,6 +303,9 @@ class LaporanOperasiService
 
             $id_laporan = LaporanOperasi::where('kode_register', $kode_register)->first();
             $laporanoperasi = LaporanOperasi::findOrFail($id_laporan->id)->delete();
+
+            $id_operasi = Operasi::where('kode_register', $kode_register)->first();
+            $idoperasi = Operasi::findOrFail($id_operasi->id)->delete();
             return 'ok';
         } catch (\Throwable $th) {
             //throw $th;
