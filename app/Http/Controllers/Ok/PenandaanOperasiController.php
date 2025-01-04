@@ -44,7 +44,6 @@ class PenandaanOperasiController extends Controller
         // Ambil data berdasarkan ID
 
         $penandaan = $this->penandaanOperasiService->unduhByRegister($kodeRegister);
-        // dd($penandaan);
 
         // dd($penandaan);
         $date = date('dMY');
@@ -79,7 +78,7 @@ class PenandaanOperasiController extends Controller
         if (auth()->user()->hasRole('perawat bangsal')) {
             $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
             // Ambil pasien bangsal
-            $penandaans = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '', '');
+            $penandaans = $this->bookingOperasiService->byDate($date, $sessionBangsal, '');
 
             $penandaan = $this->penandaanOperasiService->get();
 
@@ -92,6 +91,7 @@ class PenandaanOperasiController extends Controller
             $sessionKodeDokter = auth()->user()->username ?? null;
             // Ambil pasien dokter
             $penandaans = $this->bookingOperasiService->byDate($date, '', $sessionKodeDokter ?? '');
+
             $penandaan = $this->penandaanOperasiService->get();
             // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
             $statusPenandaan = BookingHelper::getStatusPenandaan($penandaans);

@@ -113,7 +113,7 @@
         }
 
         .area-1 {
-            height: 150px;
+            height: 80px;
             width: 300px;
         }
 
@@ -200,11 +200,19 @@
             <td colspan="2">
                 <strong>Asesmen Pra Bedah</strong><br>
                 <label>Data Subjektif (Anamnesis):</label>
-                <textarea class="area-1"> {{ $cetak->anamnesa ?? ''}}</textarea><br>
+                <textarea class="area-1"> {{ $cetak->anamnesa ?? ''}}</textarea>
                 <label>Data Objektif (Pemeriksaan Fisik):</label>
-                <textarea class="area-1"> {{ $cetak->pemeriksaan_fisik ?? ''}}</textarea><br>
+                <textarea class="area-1"> {{ $cetak->pemeriksaan_fisik ?? ''}}</textarea>
                 <label>Diagnosis Pra Bedah:</label>
                 <textarea class="area-1"> {{ $cetak->diagnosa ?? ''}}</textarea>
+                <label>Planning:</label>
+                <textarea class="area-1"> {{ $cetak->planning ?? ''}}</textarea>
+                 {{-- Estimasi Waktu --}}
+                 <span>Estimasi Waktu: <b>{{ optional($cetak)->estimasi_waktu ? date('h:i', strtotime($cetak->estimasi_waktu)) : '' }}</b></span><br>
+
+                 {{-- Rencana Tindakan --}}
+                 <label>Rencana Tindakan:</label>
+                 <textarea rows="2" style="width: 100%;">{{ optional($cetak)->rencana_tindakan ?? '' }}</textarea>
             </td>
             <td>
                 <strong>Verifikasi Pra Bedah</strong><br>
@@ -241,13 +249,6 @@
                 <input type="checkbox" {{ optional($cetak)->obat == '1' ? 'checked' : '' }} class="checkbox">
                 <span class="text-3">Obat-Obatan yang Dibawa:</span>
                 <textarea rows="2" style="width: 100%;">{{ optional($cetak)->deskripsi_obat ?? '' }}</textarea><br>
-
-                {{-- Estimasi Waktu --}}
-                <span>Estimasi Waktu: <b>{{ optional($cetak)->estimasi_waktu ? date('h:i', strtotime($cetak->estimasi_waktu)) : '' }}</b></span><br>
-
-                {{-- Rencana Tindakan --}}
-                <label>Rencana Tindakan:</label>
-                <textarea rows="2" style="width: 100%;">{{ optional($cetak)->rencana_tindakan ?? '' }}</textarea>
 
             </td>
         </tr>

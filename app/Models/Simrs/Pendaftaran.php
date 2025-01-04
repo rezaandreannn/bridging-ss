@@ -13,7 +13,7 @@ class Pendaftaran extends Model
     protected $connection = 'db_rsmm';
     protected $table = 'PENDAFTARAN';
 
-    // protected $with = ['registerPasien', 'ruang'];
+    // protected $with = ['registerPasien', 'ruang', 'biayaDetails'];
 
     public function registerPasien()
     {
@@ -23,5 +23,10 @@ class Pendaftaran extends Model
     public function ruang()
     {
         return $this->belongsTo(Ruang::class, 'Kode_Ruang', 'Kode_Ruang');
+    }
+
+    public function biayaDetails()
+    {
+        return $this->hasMany(TrBiayaRinci::class, 'No_Reg', 'No_Reg');
     }
 }

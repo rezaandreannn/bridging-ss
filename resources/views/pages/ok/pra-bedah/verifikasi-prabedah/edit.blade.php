@@ -100,57 +100,41 @@
                                                 <label class="form-check-label" for="berkasLab">
                                                     Laboratorium
                                                 </label>
-                                                <div id="labData" style="{{ isset($verifikasi['lab']) && $verifikasi['lab']->laboratorium ? 'display: block;' : 'display: none;' }}">
+                                                <div id="labData" style="display: none;">
                                                     <div class="row">
-                                                        <div class="col-md-4">
-                                                            <h5 style="font-size: 12px; color:black;">HB :</h5>
-                                                            <input type="text" class="form-control" name="lab_hemoglobin" id="hb" value="{{ $verifikasi['lab']->lab_hemoglobin ?? '' }}">
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <h5 style="font-size: 12px; color:black;">Trombosite :</h5>
-                                                            <input type="text" class="form-control" name="lab_trombosit" id="trombosite" value="{{ $verifikasi['lab']->lab_trombosit ?? '' }}">
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <h5 style="font-size: 12px; color:black;">Leukosit :</h5>
-                                                            <input type="text" class="form-control" name="lab_leukosit" id="leukosit" value="{{ $verifikasi['lab']->lab_leukosit ?? '' }}">
-                                                        </div>
+                                                     <table class="table-striped table table-bordered">
+                                                         <tr>
+                                                             <th>No</th>
+                                                             <th>Deskripsi</th>
+                                                             <th>Jumlah</th>
+                                                         </tr>
+                                                         <tr>
+                                                             <td>1</td>
+                                                             <td>ek</td>
+                                                             <td>1</td>
+                                                         </tr>
+                                                     </table>
                                                     </div>
-                                                    <div class="row mt-3">
-                                                        <div class="col-md-4">
-                                                            <h5 style="font-size: 12px; color:black;">Hematrokit :</h5>
-                                                            <input type="text" class="form-control" name="lab_hematrokit" id="hematokrit" value="{{ $verifikasi['lab']->lab_hematrokit ?? '' }}">
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <h5 style="font-size: 12px; color:black;">BT :</h5>
-                                                            <input type="text" class="form-control" name="lab_bt" id="bt" value="{{ $verifikasi['lab']->lab_bt ?? '' }}">
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <h5 style="font-size: 12px; color:black;">CT :</h5>
-                                                            <input type="text" class="form-control" id="ct" name="lab_ct" value="{{ $verifikasi['lab']->lab_ct ?? '' }}">
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                 </div>
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="rontgen" id="flexCheckDefault" value="1" {{ $verifikasi['rontgen'] && $verifikasi['rontgen']->rontgen ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     Rontgen
                                                 </label>
-                                                <input type="text" placeholder="Inputan Rontgen" class="form-control" name="deskripsi_rontgen" id="rontgen" value="{{ $verifikasi['rontgen']->deskripsi ?? '' }}">
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="ekg" id="flexCheckDefault" value="1" {{ $verifikasi['ekg'] && $verifikasi['ekg']->ekg ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
                                                     EKG
                                                 </label>
-                                                <input type="text" placeholder="Inputan EKG" class="form-control" name="deskripsi_ekg" id="ekg" value="{{ $verifikasi['ekg']->deskripsi ?? '' }}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="darah" id="darah_khusus_check" value="1" {{ $verifikasi['darah'] && $verifikasi['darah']->darah ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="darah_khusus_check">
-                                                    Darah / Alat khusus yang diperlukan
+                                                    Darah
                                                 </label>
                                             </div>
                                             <div class="form-group mt-2">

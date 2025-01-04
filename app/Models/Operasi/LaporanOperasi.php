@@ -27,6 +27,8 @@ class LaporanOperasi extends Model
         'lama_operasi',
         'permintaan_pa',
         'laporan_operasi',
+        'macam_operasi',
+        'pendarahan',
         'created_by',
         'updated_by'
     ];

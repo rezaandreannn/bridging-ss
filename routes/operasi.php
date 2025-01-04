@@ -9,6 +9,7 @@ use App\Http\Controllers\OK\BookingOperasiController;
 use App\Http\Controllers\OK\TtdTandaOperasiController;
 use App\Http\Controllers\OK\PenandaanOperasiController;
 use App\Http\Controllers\Ok\Laporan\LaporanOperasiController;
+use App\Http\Controllers\OK\MasterData\DoctorController;
 use App\Http\Controllers\Ok\MasterData\TemplateOperasiController;
 use App\Http\Controllers\Ok\PraBedah\BerkasPraBedahController;
 use App\Http\Controllers\Ok\PraBedah\AssesmenPraBedahController;
@@ -57,9 +58,15 @@ Route::prefix('ibs')->name('operasi.')->middleware('auth')->group(function () {
     // jadwal operasi
     Route::get('berkas-operasi', JadwalOperasiController::class)->name('berkas.cetak');
 
+    Route::resource('doctor', DoctorController::class)->except('show');
+    Route::get('/doctor/{code}', [DoctorController::class, 'show'])->name('doctor.show');
+
+
     // Template Operasi
+    Route::get('/template-operasi-Byid', [TemplateOperasiController::class, 'getTemplateByID'])->name('template.macam-operasi');
     Route::get('/template-operasi', [TemplateOperasiController::class, 'index'])->name('template.index');
     Route::post('/template-operasi', [TemplateOperasiController::class, 'store'])->name('template.store');
+    Route::post('/doctor/{kodeDokter}/toggle-template', [TemplateOperasiController::class, 'toggle'])->name('doctor.toggle-template');
     Route::put('/template-operasi/update/{id}', [TemplateOperasiController::class, 'update'])->name('template.update');
     Route::delete('/template-operasi/delete/{id}', [TemplateOperasiController::class, 'destroy'])->name('template.destroy');
 });

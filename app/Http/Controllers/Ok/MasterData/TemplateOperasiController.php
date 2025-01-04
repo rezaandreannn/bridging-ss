@@ -9,6 +9,8 @@ use App\Services\Operasi\BookingOperasiService;
 use App\Models\Operasi\MasterData\TemplateOperasi;
 use App\Services\Operasi\MasterData\TemplateOperasiService;
 use App\Http\Requests\Operasi\MasterData\StoreTemplateOperasi;
+use App\Models\Operasi\UseTemplateLaporanOperasi;
+use App\Services\SimRs\DokterService;
 
 class TemplateOperasiController extends Controller
 {
@@ -25,6 +27,17 @@ class TemplateOperasiController extends Controller
         $this->templateOperasiService = new TemplateOperasiService;
         $this->view = 'pages.ok.';
         $this->prefix = 'Template';
+    }
+
+    public function getTemplateByID(Request $request)
+    {
+        $id = $request->input('macam_operasi');
+
+        $templateOperasiID = $this->templateOperasiService->TemplateId($id);
+        // dd($templateOperasiID);
+        return response()->json([
+            'data' => $templateOperasiID
+        ]);
     }
 
     public function index()
@@ -56,8 +69,13 @@ class TemplateOperasiController extends Controller
     public function store(StoreTemplateOperasi $request)
     {
         try {
-            $this->templateOperasiService->insert($request->validated());
-            return redirect('ibs/template-operasi')->with('success', 'Template Operasi berhasil ditambahkan.');
+            $data = [
+                'macam_operasi' => $request->macam_operasi,
+                'kode_dokter' => $request->kode_dokter,
+                'laporan_operasi' => $request->laporan_operasi
+            ];
+            $this->templateOperasiService->insert($data);
+            return redirect('ibs/doctor/' . $request->kode_dokter)->with('success', 'Template Operasi berhasil ditambahkan.');
 
             // return redirect()->route('ttd-ok.penandaan.index')->with('success', 'Tanda tangan berhasil ditambahkan.');
         } catch (Exception $e) {
@@ -109,5 +127,25 @@ class TemplateOperasiController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function toggle(Request $request, $kodeDokter)
+    {
+        $useTemplate = UseTemplateLaporanOperasi::updateOrCreate(
+            ['kode_dokter' => $kodeDokter],
+            ['use_template' => $request->input('use_template') === 'true']
+        );
+
+        // find dokter
+
+        $dokter = new DokterService();
+        $findDokter = $dokter->byCode($kodeDokter);
+
+        $message = $useTemplate->use_template
+            ? 'Template laporan operasi diaktifkan untuk dokter ' . $findDokter->Nama_Dokter
+            : 'Template laporan operasi dinonaktifkan untuk dokter ' . $findDokter->Nama_Dokter;
+
+        return redirect()->back()->with('success', $message);
     }
 }

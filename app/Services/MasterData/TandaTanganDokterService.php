@@ -163,8 +163,8 @@ class TandaTanganDokterService
                 'nama_dokter' => optional($item->dokter)->Nama_Dokter,
                 'spesialis' => optional($item->dokter)->Spesialis,
                 'jenis_profesi' => optional($item->dokter)->Jenis_Profesi,
-                'created_at' => $item->created_at->format('Y-m-d H:i:s'),
-                'updated_at' => $item->updated_at->format('Y-m-d H:i:s')
+                'created_at' => optional($item->created_at)->format('Y-m-d H:i:s'),
+                'updated_at' => optional($item->updated_at)->format('Y-m-d H:i:s')
             ];
         }));
     }

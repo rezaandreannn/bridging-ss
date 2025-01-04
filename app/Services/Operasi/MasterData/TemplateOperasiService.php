@@ -17,15 +17,21 @@ class TemplateOperasiService
         return TemplateOperasi::find($id);
     }
 
+    public function TemplateId($id)
+    {
+        return TemplateOperasi::where('macam_operasi', $id)->first();
+    }
+
+
     public function insert(array $data)
     {
         DB::beginTransaction();
         try {
 
             $template = TemplateOperasi::create([
-                'tindakan' => $data['tindakan'],
-                'template_operasi' => $data['template_operasi'],
-                'created_by' => auth()->user()->id
+                'macam_operasi' => $data['macam_operasi'],
+                'kode_dokter' => $data['kode_dokter'],
+                'laporan_operasi' => $data['laporan_operasi'],
             ]);
 
             DB::commit();

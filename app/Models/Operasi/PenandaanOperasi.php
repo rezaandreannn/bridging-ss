@@ -2,6 +2,7 @@
 
 namespace App\Models\Operasi;
 
+use App\Models\MasterData\TtdDokter;
 use App\Models\Simrs\Pendaftaran;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -32,4 +33,5 @@ class PenandaanOperasi extends Model
     {
         return $this->hasOne(TtdTandaOperasi::class, 'kode_register', 'kode_register');
     }
+
 }

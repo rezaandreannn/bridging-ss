@@ -217,7 +217,10 @@
         </tr>
         <tr>
             <td width="50%" class="text5"></td>
-            <td width="50%" class="text5" style="padding-left:130px;">{!! DNS2D::getBarcodeHTML($penandaan->nama_dokter, 'QRCODE', 3, 3) !!}</td>
+            <td width="50%" class="text5" style="padding-left:30px;">
+                <img src="public/ttd/dokter/{{$penandaan->ttd_dokter}}" width="60" height="80" />
+                {{-- {!! DNS2D::getBarcodeHTML($penandaan->nama_dokter, 'QRCODE', 3, 3) !!} --}}
+            </td>
         </tr>
         <tr>
             <td width="50%" class="text5">({{ $penandaan->nama_pasien}})</td>

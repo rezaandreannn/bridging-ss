@@ -13,7 +13,7 @@ class AssesmenPraBedahService
     {
         return AssesmenPraBedah::with([
             'booking' => function ($query) {
-                $query->select('kode_register', 'tanggal', 'ruangan_id', 'kode_dokter', 'nama_tindakan')
+                $query->select('kode_register', 'tanggal', 'ruangan_id', 'kode_dokter', 'jenis_operasi')
                     ->with([
                         'pendaftaran' => function ($query) {
                             $query->select('No_Reg', 'No_MR')
@@ -116,7 +116,7 @@ class AssesmenPraBedahService
             },
 
             'booking' => function ($query) {
-                $query->select('kode_register', 'tanggal', 'kode_dokter', 'nama_tindakan')->with([
+                $query->select('kode_register', 'tanggal', 'kode_dokter', 'jenis_operasi')->with([
                     'pendaftaran' => function ($query) {
                         $query->select('No_Reg', 'No_MR')
                             ->with(['registerPasien' => function ($query) {
@@ -145,6 +145,7 @@ class AssesmenPraBedahService
                 'anamnesa' => $result->anamnesa,
                 'pemeriksaan_fisik' => $result->pemeriksaan_fisik,
                 'diagnosa' => $result->diagnosa,
+                'planning' => $result->planning,
                 'tanggal' => optional($result->booking)->tanggal,
                 'jam_mulai' => optional($result->booking)->jam_mulai,
                 'jam_selesai' => optional($result->booking)->jam_selesai,

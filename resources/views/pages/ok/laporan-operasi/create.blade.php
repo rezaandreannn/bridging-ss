@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="{{ asset('library/select2/dist/css/select2.min.css') }}">
 <link rel="stylesheet" href="{{ asset('library/selectric/public/selectric.css') }}">
 
+
 <!-- <link rel="stylesheet" href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}"> -->
 @endpush
 
@@ -27,7 +28,7 @@
             <!-- components biodata pasien by no reg -->
             @include('components.biodata-pasien-ok-bynoreg')
             <form action="{{ route('laporan.operasi.store') }}" method="POST">
-            @csrf
+                @csrf
                 <div class="card mb-3">
                     <div class="card-header card-khusus-header">
                         <h6 class="card-khusus-title">Data Operasi</h6>
@@ -46,7 +47,7 @@
                                     @enderror
                                 </div>
                             </div>
-          
+
                             {{-- masih salah bukan dari booking --}}
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -66,7 +67,7 @@
                                     <select name="nama_asisten[]" class="form-control @error('nama_asisten') is-invalid @enderror select2" multiple>
                                         <option value="" disabled>--Pilih Asisten--</option>
                                         @foreach ($asistenOperasi as $asisten)
-                                            <option value="{{$asisten->kode_dokter}}">{{$asisten->nama_asisten}}</option>
+                                        <option value="{{$asisten->kode_dokter}}">{{$asisten->nama_asisten}}</option>
                                         @endforeach
                                     </select>
                                     @error('nama_asisten')
@@ -82,7 +83,7 @@
                                     <select name="nama_perawat[]" class="form-control @error('nama_perawat') is-invalid @enderror select2" multiple>
                                         <option value="" disabled>--Pilih Perawat--</option>
                                         @foreach ($asistenOperasi as $asisten)
-                                            <option value="{{$asisten->kode_dokter}}">{{$asisten->nama_asisten}}</option>
+                                        <option value="{{$asisten->kode_dokter}}">{{$asisten->nama_asisten}}</option>
                                         @endforeach
                                     </select>
                                     @error('nama_perawat')
@@ -92,13 +93,13 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Nama Ahli Anestesi</label>
                                     <select name="nama_ahli_anastesi[]" class="form-control @error('nama_ahli_anastesi') is-invalid @enderror select2" multiple>
                                         <option value="" disabled>--Pilih Ahli Anastesi--</option>
                                         @foreach ($spesialisAnastesi as $anastesi)
-                                            <option value="{{$anastesi->kode_dokter}}">{{$anastesi->nama_asisten}}</option>
+                                        <option value="{{$anastesi->kode_dokter}}">{{$anastesi->nama_asisten}}</option>
                                         @endforeach
                                     </select>
                                     @error('nama_ahli_anastesi')
@@ -108,16 +109,27 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Nama Anestesi</label>
+                                    <label>Nama Perawat Anestesi</label>
                                     <select name="nama_anastesi[]" class="form-control @error('nama_anastesi') is-invalid @enderror select2" multiple>
                                         <option value="" disabled>--Pilih Penata Anastesi--</option>
                                         @foreach ($penataAnastesi as $penataAnastesi)
-                                            <option value="{{$penataAnastesi->kode_dokter}}">{{$penataAnastesi->nama_asisten}}</option>
+                                        <option value="{{$penataAnastesi->kode_dokter}}">{{$penataAnastesi->nama_asisten}}</option>
                                         @endforeach
                                     </select>
                                     @error('nama_anastesi')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Jenis Anestesi</label>
+                                    <input type="text" name="jenis_anastesi" class="form-control @error('jenis_anastesi') is-invalid @enderror">
+                                    @error('jenis_anastesi')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -132,7 +144,7 @@
                     <div class="card-header card-khusus-header">
                         <h6 class="card-khusus-title">Laporan Operasi</h6>
                     </div>
-         
+
                     <!-- include form -->
                     <div class="card-body card-khusus-body">
                         <div class="row">
@@ -184,6 +196,46 @@
                                             Tidak
                                         </label>
                                     </div>
+                                </div>
+                            </div>
+                            @php
+                            // Ambil status `use_template` dari database
+                            $useTemplate = \App\Models\Operasi\UseTemplateLaporanOperasi::where('kode_dokter', auth()->user()->username)->first();
+                            @endphp
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Nama / Macam Operasi</label>
+                                    @if ($useTemplate && $useTemplate->use_template)
+                                    <select name="macam_operasi" id="macam_operasi" class="form-control @error('macam_operasi') is-invalid @enderror select2">
+                                        <option value="">--Pilih Macam Operasi --</option>
+                                        @foreach($templates as $template)
+                                            <option value="{{ $template->macam_operasi }}">{{ $template->macam_operasi }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('macam_operasi')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
+                                    @else
+                                    <input type="text" name="macam_operasi" class="form-control @error('macam_operasi') is-invalid @enderror" placeholder="Masukkan Nama Operasi" value="{{ old('macam_operasi') }}">
+                                    @error('macam_operasi')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Perdarahan</label>
+                                    <input type="text" name="pendarahan" class="form-control @error('pendarahan') is-invalid @enderror" value="{{ old('pendarahan') }}">
+                                    @error('pendarahan')
+                                    <span class="text-danger" style="font-size: 12px;">
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -254,12 +306,12 @@
                     <!-- include form -->
                 </div>
                 <div class="text-left">
-                        <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button>
+                    <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button>
                 </div>
             </form>
-            </div>
         </div>
-    </section>
+</div>
+</section>
 </div>
 @endsection
 
@@ -281,6 +333,7 @@
         alert('Filter telah direset!');
         window.location.href = "{{ route('rm.bymr') }}";
     }
+
 </script>
 
 <script>
@@ -295,16 +348,101 @@
             labCheckbox.setAttribute('aria-expanded', 'true');
             inputs.forEach(input => input.disabled = false);
         } else {
-                // Sembunyikan dan nonaktifkan input
-                labDataDiv.style.display = 'none';
-                labCheckbox.setAttribute('aria-expanded', 'false');
-                inputs.forEach(input => {
-                    input.disabled = true;
-                    input.value = ''; // Kosongkan nilai jika tidak dipilih
+            // Sembunyikan dan nonaktifkan input
+            labDataDiv.style.display = 'none';
+            labCheckbox.setAttribute('aria-expanded', 'false');
+            inputs.forEach(input => {
+                input.disabled = true;
+                input.value = ''; // Kosongkan nilai jika tidak dipilih
+            });
+        }
+    }
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Menangani perubahan pada dropdown
+        $("#macam_operasi").change(function () {
+            
+            // Ambil nilai ID yang dipilih dari select
+            var macam_operasi = $("#macam_operasi").val();
+
+            if (macam_operasi) {
+                // Lakukan AJAX request ke server untuk mendapatkan laporan_operasi
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('operasi.template.macam-operasi') }}",
+                    data: {
+                        macam_operasi: macam_operasi
+                    },
+                    success: function (data) {
+                        // alert(data.data.laporan_operasi);
+
+                        var laporanOperasi = data.data.laporan_operasi
+                        // Hapus tag HTML menggunakan regex
+                        laporanOperasi = laporanOperasi.replace(/<\/?[^>]+(>|$)/g, "\n"); // Menghapus tag HTML
+
+                        // Ganti &nbsp; dengan spasi biasa
+                        laporanOperasi = laporanOperasi.replace(/&nbsp;/g, " ");
+
+                        // Hapus baris kosong ekstra (newline berturut-turut)
+                        laporanOperasi = laporanOperasi.replace(/(\r\n|\r|\n){2,}/g, "\n");
+
+                        // Hapus whitespace di awal dan akhir teks
+                        laporanOperasi = laporanOperasi.trim();
+
+                        // Set teks baru ke dalam textarea
+                        $("#laporan_operasi").val(laporanOperasi);
+
+                        // Reset dropdown
+                        $(this).val(null).trigger('change');
+                    },
+
+                    error: function (xhr, status, error) {
+                        // Tangani kesalahan, misalnya tampilkan pesan error
+                        console.error("Error:", error);
+                        alert("Terjadi kesalahan saat mengambil data.");
+                    }
                 });
             }
-    }
+        });
+    });
 </script>
+
+{{-- <script>
+       $(document).ready(function () {
+        $("#macam_operasi").change(function () {
+            // Ambil nilai yang dipilih dari select
+            var selectedValue = $(this).val();
+            
+            // Ambil teks lama dari textarea
+            var existingText = $("#laporan_operasi").val();
+
+            // Hapus tag HTML menggunakan regex
+            selectedValue = selectedValue.replace(/<\/?[^>]+(>|$)/g, "\n"); // Menghapus tag HTML
+            
+            // Ganti &nbsp; dengan spasi biasa
+            selectedValue = selectedValue.replace(/&nbsp;/g, " ");
+
+            // Pastikan tidak ada baris kosong ekstra di akhir existingText
+            existingText = existingText.trimEnd();
+
+            // Tambahkan teks baru ke textarea
+            if (selectedValue) {
+                // Tambahkan newline hanya jika ada teks sebelumnya
+                var updatedText = existingText 
+                    ? existingText + "\n" + selectedValue 
+                    : selectedValue;
+
+                $("#laporan_operasi").val(updatedText);
+                
+                // Reset pilihan setelah teks ditambahkan (opsional)
+                $(this).val(null).trigger('change');
+            }
+        });
+    });
+</script> --}}
 
 
 
@@ -332,7 +470,7 @@
             }
 
             // Hitung durasi dalam milidetik, kemudian konversikan ke jam
-            const duration = (end - start) / 1000 / 60 ; // konversi milidetik ke jam
+            const duration = (end - start) / 1000 / 60; // konversi milidetik ke jam
 
             const hours = Math.floor(duration / 60);
             const minutes = duration % 60;
@@ -346,5 +484,6 @@
 
     // Panggil fungsi perhitungan saat halaman dimuat (untuk memastikan hasil pertama)
     window.onload = calculateDuration;
+
 </script>
 @endpush
