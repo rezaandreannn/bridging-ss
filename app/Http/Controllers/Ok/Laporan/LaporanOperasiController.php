@@ -183,6 +183,8 @@ class LaporanOperasiController extends Controller
 
         $laporanOperasi = $this->laporanOperasiService->laporanByRegister($kode_register);
 
+        // dd($laporanOperasi);
+
         return view($this->view . 'edit', compact('laporanOperasi'))->with([
             'title' => $this->prefix . ' ' . 'Edit Data',
             'bookingByRegister' => $this->bookingOperasiService->findByRegister($kode_register),

@@ -2,8 +2,10 @@
 
 namespace App\Models\Operasi;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Operasi\OperatorAsistenDetail;
+use App\Models\Operasi\Operasi;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class LaporanOperasi extends Model
 {
@@ -12,7 +14,7 @@ class LaporanOperasi extends Model
     protected $connection = 'pku';
     protected $table = 'ok_laporan_operasi';
 
-    protected $with = ['detailAsisten'];
+    protected $with = ['detailAsisten','tableOperasi'];
 
     // Mass Assignment
 
@@ -34,5 +36,10 @@ class LaporanOperasi extends Model
     public function detailAsisten()
     {
         return $this->belongsTo(OperatorAsistenDetail::class, 'kode_register', 'kode_register');
+    }
+
+    public function tableOperasi()
+    {
+        return $this->belongsTo(Operasi::class, 'kode_register', 'kode_register');
     }
 }

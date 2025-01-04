@@ -10,6 +10,7 @@ use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\DataUmum\PostOperasiService;
 use App\Http\Requests\Operasi\PostOperasi\StorePostOperasiRequest;
 use App\Http\Requests\Operasi\PostOperasi\UpdatePostOperasiRequest;
+use App\Services\Operasi\LaporanOperasi\LaporanOperasiService;
 
 class PostOperasiController extends Controller
 {
@@ -18,6 +19,7 @@ class PostOperasiController extends Controller
     protected $prefix;
     protected $bookingOperasiService;
     protected $postOperasiService;
+    protected $laporanOperasiService;
 
     public function __construct()
     {
@@ -25,6 +27,7 @@ class PostOperasiController extends Controller
         $this->prefix = 'Post Operasi';
         $this->bookingOperasiService = new BookingOperasiService();
         $this->postOperasiService = new PostOperasiService();
+        $this->laporanOperasiService = new LaporanOperasiService();
     }
 
     public function index()
@@ -48,13 +51,23 @@ class PostOperasiController extends Controller
 
     public function create($kode_register)
     {
+        // dd('ok');
         $title = $this->prefix . ' ' . 'Input Data';
-        $biodata = $this->bookingOperasiService->biodata($kode_register);
-        // dd($biodata);
+        $laporanOperasi = $this->laporanOperasiService->laporanByRegister($kode_register);
+        // dd($laporanOperasi);
 
-        return view($this->view . 'create', compact('biodata'))
+        return view($this->view . 'create', compact('laporanOperasi'))
             ->with([
                 'title' => $title,
+                'biodata' =>$this->bookingOperasiService->biodata($kode_register),
+                'asistenOperasi' => $this->laporanOperasiService->getAsistenOperasi(),
+                'spesialisAnastesi' => $this->laporanOperasiService->getSpesialisAnastesi(),
+                'penataAnastesi' => $this->laporanOperasiService->getPenataAsisten(),
+                'ahliAnastesiArray' => $this->laporanOperasiService->getAhliAnastesiArray($kode_register),
+                'anastesiArray' => $this->laporanOperasiService->getAnastesiArray($kode_register),
+                'asistenArray' => $this->laporanOperasiService->getAsistenArray($kode_register),
+
+
             ]);
     }
 
