@@ -9,6 +9,7 @@ use App\Services\Operasi\BookingOperasiService;
 use App\Models\Operasi\MasterData\TemplateOperasi;
 use App\Services\Operasi\MasterData\TemplateOperasiService;
 use App\Http\Requests\Operasi\MasterData\StoreTemplateOperasi;
+use App\Http\Requests\Operasi\MasterData\UpdateTemplateOperasi;
 use App\Models\Operasi\UseTemplateLaporanOperasi;
 use App\Services\SimRs\DokterService;
 
@@ -113,9 +114,18 @@ class TemplateOperasiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateTemplateOperasi $request, $id)
     {
-        //
+        try {
+            $this->templateOperasiService->update($id, $request->validated());
+
+            return redirect('ibs/doctor/' . $request->kode_dokter)->with('success', 'Template Operasi berhasil ditambahkan.');
+
+            // return redirect()->route('ttd-ok.penandaan.index')->with('success', 'Tanda tangan berhasil ditambahkan.');
+        } catch (Exception $e) {
+            // Redirect dengan pesan error jika terjadi kegagalan
+            return redirect()->back()->with('error', 'Gagal menambahkan template operasi: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -126,7 +136,13 @@ class TemplateOperasiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $this->templateOperasiService->delete($id);
+
+            return redirect()->back()->with('success', 'Template Operasi berhasil dihapus.');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Gagal menghapus template operasi: ' . $e->getMessage());
+        }
     }
 
 

@@ -73,7 +73,7 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h4>Daftar Template Laporan Operasi</h4>
-                    <a href="#" class="btn btn-primary btn-icon icon-left" data-toggle="modal" data-target="#modal-add-ruang">
+                    <a href="#" class="btn btn-primary btn-icon icon-left" data-toggle="modal" data-target="#modal-add-template">
                         <i class="fas fa-plus"></i> Tambah Template
                     </a>
                 </div>
@@ -95,10 +95,15 @@
                                     <td>{{ $template->macam_operasi }}</td>
                                     <td>{!! $template->laporan_operasi !!}</td>
                                     <td>
-                                        <a href="#">
+                                        <a href="#" data-toggle="modal" data-target="#modal-edit-template{{ $template->id }}">
                                             <i class="fas fa-pencil-alt m-2"></i>
                                         </a>
-                                        <a href="#">
+                                        <form id="delete-form-{{$template->id}}" action="{{ route('operasi.template.destroy', $template->id) }}" method="POST" style="display: none;">
+                                            @method('delete')
+                                            @csrf
+                                        </form>
+                                        <!-- Delete link -->
+                                        <a href="#" confirm-delete="true" data-menuId="{{$template->id}}">
                                             <i class="fas fa-trash-alt"></i>
                                         </a>
                                     </td>
@@ -115,7 +120,7 @@
 </div>
 
 
-<div class="modal fade" id="modal-add-ruang">
+<div class="modal fade" id="modal-add-template">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -143,7 +148,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Template Laporan Operasi</label>
-                                <textarea id="summernote" name="laporan_operasi" class="form-control"></textarea>
+                                <textarea name="laporan_operasi" class="form-control summernote"></textarea>
                             </div>
                             @error('laporan_operasi')
                             <div class="invalid-feedback">
@@ -162,6 +167,51 @@
     </div>
 </div>
 
+
+@foreach ($TemplateByCodeDoctor as $template)
+<div class="modal fade" id="modal-edit-template{{ $template->id }}" tabindex="-1" role="dialog" aria-labelledby="edit-template-label{{ $template->id }}" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form action="{{ route('operasi.template.update', $template->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="modal-header">
+                    <h5 class="modal-title" id="edit-template-label{{ $template->id }}">Edit Template Operasi</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="kode_dokter" value="{{ $findDoctor->Kode_Dokter }}">
+                    
+                    <div class="form-group">
+                        <label for="macam-operasi-{{ $template->id }}">Nama / Macam Operasi</label>
+                        <input type="text" id="macam-operasi-{{ $template->id }}" name="macam_operasi" 
+                               class="form-control @error('macam_operasi') is-invalid @enderror" 
+                               value="{{ $template->macam_operasi }}">
+                        @error('macam_operasi')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="laporan-operasi-{{ $template->id }}">Template Laporan Operasi</label>
+                        <textarea name="laporan_operasi" class="form-control summernote @error('laporan_operasi') is-invalid @enderror">{{ $template->laporan_operasi }}</textarea>
+                        @error('laporan_operasi')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endforeach
+
 @endsection
 
 @push('scripts')
@@ -177,7 +227,7 @@
 
 <script>
     $(document).ready(function() {
-        $('#summernote').summernote({
+        $('.summernote').summernote({
             height: 300
             , minHeight: null
             , maxHeight: null
@@ -189,6 +239,38 @@
                 , ['height', ['height']]
                 , ['view', ['fullscreen', 'help']]
             ]
+        });
+    });
+
+</script>
+
+<script>
+    $(document).ready(function() {
+        // Inisialisasi DataTable
+        var table = $('#table-1').DataTable();
+
+        // Event delegation untuk tombol delete
+        $('#table-1').on('click', '[confirm-delete="true"]', function(event) {
+            event.preventDefault();
+            var menuId = $(this).data('menuid');
+            Swal.fire({
+                title: 'Apakah Kamu Yakin?'
+                , text: "Menghapus data ini!"
+                , icon: 'warning'
+                , showCancelButton: true
+                , confirmButtonColor: '#6777EF'
+                , cancelButtonColor: '#d33'
+                , confirmButtonText: 'Ya, Hapus saja!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var form = $('#delete-form-' + menuId);
+                    if (form.length) {
+                        form.submit();
+                    } else {
+                        console.error('Data will not be deleted!:', menuId);
+                    }
+                }
+            });
         });
     });
 
