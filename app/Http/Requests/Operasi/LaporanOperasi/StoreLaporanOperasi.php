@@ -43,7 +43,7 @@ class StoreLaporanOperasi extends FormRequest
             'nama_perawat' => 'nullable',
             'nama_ahli_anastesi' => 'nullable',
             'nama_anastesi' => 'nullable',
-            'jenis_anastesi' => 'nullable',
+            'jenis_anastesi' => 'required',
             // 'cara_masuk' => 'nullable|string'
         ];
     }

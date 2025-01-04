@@ -205,11 +205,13 @@ class LaporanOperasiService
         }
     }
 
-    public function update($id, array $data)
+    public function update($kode_register, array $data)
     {
         try {
 
-            $id_detail_asisten = OperatorAsistenDetail::where('kode_register', $id)->first();
+   
+
+            $id_detail_asisten = OperatorAsistenDetail::where('kode_register', $kode_register)->first();
 
             $operasiasistendetail = OperatorAsistenDetail::findOrFail($id_detail_asisten->id);
             // pisahkan array dengan koma menjadi string
@@ -247,7 +249,8 @@ class LaporanOperasiService
             ]);
 
             // id laporan operasi
-            $id = LaporanOperasi::where('kode_register', $id)->first();
+            $id = LaporanOperasi::where('kode_register', $kode_register)->first();
+         
             $laporanoperasi = LaporanOperasi::findOrFail($id->id);
 
             $laporanoperasi->update([
@@ -267,16 +270,18 @@ class LaporanOperasiService
                 // 'cara_masuk' => $data['cara_masuk'] ?? ''
             ]);
 
-  // id laporan operasi
-            $idOperasi = Operasi::where('kode_register', $id)->first();
-            $operasi = Operasi::findOrFail($idOperasi->id);
+                // id laporan operasi
+                $idOperasi = Operasi::where('kode_register', $kode_register)->first();     
+                $operasi = Operasi::findOrFail($idOperasi->id);
 
-            $operasi->update([
-                'kode_register' => $data['kode_register'],
-                'jenis_anastesi' => $data['jenis_anastesi'],
-                'created_by' => auth()->user()->id,
-                // 'cara_masuk' => $data['cara_masuk'] ?? ''
-            ]);
+                $operasi->update([
+                    'kode_register' => $data['kode_register'],
+                    'jenis_anastesi' => $data['jenis_anastesi'],
+                    'created_by' => auth()->user()->id,
+                    // 'cara_masuk' => $data['cara_masuk'] ?? ''
+                ]);
+
+      
 
             return [
                 'operasiasistendetail' => $operasiasistendetail,
