@@ -183,10 +183,12 @@ class LaporanOperasiController extends Controller
 
         $laporanOperasi = $this->laporanOperasiService->laporanByRegister($kode_register);
 
+
         // ambil data template aktif berdasarkan user login name
         $codeDoctor = auth()->user()->username ?? null;
 
         $templateLaporan = TemplateOperasi::where('kode_dokter', $codeDoctor)->get();
+
 
         return view($this->view . 'edit', compact('laporanOperasi'))->with([
             'title' => $this->prefix . ' ' . 'Edit Data',
