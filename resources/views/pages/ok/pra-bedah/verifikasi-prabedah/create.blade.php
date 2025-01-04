@@ -11,6 +11,25 @@
 <link rel="stylesheet" href="{{ asset('library/selectric/public/selectric.css') }}">
 
 <!-- <link rel="stylesheet" href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}"> -->
+<style>
+    tbody.small tr td {
+        padding: 0.3rem;
+    }
+
+    .table-blue thead tr {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .table-blue tbody tr {
+        background-color: white !important;
+    }
+
+    .table-blue tbody tr:hover {
+        background-color: #f2f2f2 !important;
+    }
+
+</style>
 @endpush
 
 @section('main')
@@ -49,13 +68,13 @@
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="assesmen_pra_bedah" id="flexCheckDefault" value="1" {{ $checklistAssesmenPraBedah == 'true' ? 'checked' : ''}}>
-                                                <label class="form-check-label" for="flexCheckDefault" >
+                                                <label class="form-check-label" for="flexCheckDefault">
                                                     Asesmen Pra Bedah
                                                 </label>
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="penandaan_lokasi" id="flexCheckDefault" value="1" {{ $checklistPenandaan == 'true' ? 'checked' : ''}}>
-                                                <label class="form-check-label" for="flexCheckDefault" >
+                                                <label class="form-check-label" for="flexCheckDefault">
                                                     Penandaan Lokasi Operasi
                                                 </label>
                                             </div>
@@ -95,28 +114,40 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="laboratorium" id="berkasLab" value="1" onclick="toggleLabData()">
+                                                <input class="form-check-input" type="checkbox" name="laboratorium" id="berkasLab" value="1" onclick="toggleLabData()" {{ count($labs) > 0 ? 'checked' : ''}}>
                                                 <label class="form-check-label" for="berkasLab">
                                                     Laboratorium
                                                 </label>
-                                                <div id="labData" style="display: none;">
-                                                   <div class="row">
-                                                    <table class="table-striped table table-bordered">
-                                                        <tr>
-                                                            <th>No</th>
-                                                            <th>Pemeriksaan</th>
-                                                            <th>Hasil</th>
-                                                        </tr>
-                                                        @foreach ($lab as $data)
-                                                        <tr>
-                                                            <td>{{ $loop->iteration }}</td>
-                                                            <td>{{ $data->PEMERIKSAAN }}</td>
-                                                            <td>{{ $data->Hasil }}</td>
-                                                        </tr>
-                                                        @endforeach
-                                                    </table>
-                                                   </div>
+                                                @if(count($labs) > 0)
+                                                <div id="labData">
+                                                    <div class="row">
+                                                        <table class="table table-bordered table-blue table-sm">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>No</th>
+                                                                    <th>Pemeriksaan</th>
+                                                                    <th>Hasil</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody class="small">
+                                                                @forelse ($labs as $data)
+                                                                <tr>
+                                                                    <td>{{ $loop->iteration }}</td>
+                                                                    <td>{{ $data->PEMERIKSAAN ?? '' }}</td>
+                                                                    <td>{{ $data->Hasil ?? '' }}</td>
+                                                                </tr>
+                                                                @empty
+                                                                <tr>
+                                                                    <td colspan="3" class="text-center">
+                                                                        <h5>Data lab kosong</h5>
+                                                                    </td>
+                                                                </tr>
+                                                                @endforelse
+                                                            <tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
+                                                @endif
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="rontgen" id="flexCheckDefault" value="1">
