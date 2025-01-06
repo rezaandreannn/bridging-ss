@@ -14,7 +14,7 @@ class LaporanOperasi extends Model
     protected $connection = 'pku';
     protected $table = 'ok_laporan_operasi';
 
-    protected $with = ['detailAsisten','tableOperasi'];
+    protected $with = ['detailAsisten','tableOperasi','penandaanOperasi'];
 
     // Mass Assignment
 
@@ -43,5 +43,10 @@ class LaporanOperasi extends Model
     public function tableOperasi()
     {
         return $this->belongsTo(Operasi::class, 'kode_register', 'kode_register');
+    }
+
+    public function penandaanOperasi()
+    {
+        return $this->belongsTo(penandaanOperasi::class, 'kode_register', 'kode_register');
     }
 }

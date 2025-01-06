@@ -3,6 +3,7 @@
 namespace App\Services\Operasi\DataUmum;
 
 use App\Models\Operasi\PostOperasi\AlatPostOperasi;
+use App\Models\Operasi\PostOperasi\DataUmumPostOperasi;
 use App\Models\Operasi\PostOperasi\PemeriksaanFisikPostOperasi;
 use App\Models\Operasi\PostOperasi\TindakanPostOperasi;
 use Exception;
@@ -24,6 +25,43 @@ class PostOperasiService
     {
         DB::beginTransaction();
         try {
+
+            
+            // pisahkan array dengan koma menjadi string
+            $asisten_bedah = $data['asisten_bedah'] ?? '';
+            $data['asisten_bedah'] = $asisten_bedah;
+            if (!empty($asisten_bedah)) {
+                $data['asisten_bedah'] = implode(', ', $asisten_bedah);
+            }
+
+            $asisten_anastesi = $data['asisten_anastesi'] ?? '';
+            $data['asisten_anastesi'] = $asisten_anastesi;
+            if (!empty($asisten_anastesi)) {
+                $data['asisten_anastesi'] = implode(', ', $asisten_anastesi);
+            }
+            $dokter_anastesi = $data['dokter_anastesi'] ?? '';
+            $data['dokter_anastesi'] = $dokter_anastesi;
+            if (!empty($dokter_anastesi)) {
+                $data['dokter_anastesi'] = implode(', ', $dokter_anastesi);
+            }
+
+        
+
+            $data_umum_post_op = DataUmumPostOperasi::create([
+                'kode_register' => $data['kode_register'],
+                'diagnosa_prabedah' => $data['diagnosa_prabedah'],
+                'diagnosa_pascabedah' => $data['diagnosa_pascabedah'],
+                'jenis_operasi' => $data['jenis_operasi'],
+                'dokter_operator' => $data['dokter_operator'],
+                'asisten_bedah' => $data['asisten_bedah'],
+                'jam_operasi' => $data['jam_operasi'],
+                'jenis_anastesi' => $data['jenis_anastesi'],
+                'dokter_anastesi' => $data['dokter_anastesi'],
+                'asisten_anastesi' => $data['asisten_anastesi'],
+                'created_by' => auth()->user()->id
+            ]);
+
+
             $tindakanPostOperasi = TindakanPostOperasi::create([
                 'kode_register' => $data['kode_register'],
                 'status_pasien' => !empty($data['status_pasien']) ? 1 : 0,
@@ -76,6 +114,7 @@ class PostOperasiService
             DB::commit();
 
             return [
+                'data_umum_post_op' => $data_umum_post_op,
                 'tindakan' => $tindakanPostOperasi,
                 'alat' => $alatPostOperasi,
                 'ttv' => $ttvPostOperasi

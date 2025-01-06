@@ -40,8 +40,8 @@
                                 <input type="hidden" name="kode_register" value="{{$biodata->pendaftaran->No_Reg}}">
                                 <div class="form-group">
                                     <label>Diagnosis Pra Bedah</label>
-                                    <textarea name="diagnosa_pra_bedah" class="form-control" id="diagnosa_pra_bedah" style="height: 50px;" rows="3"></textarea>
-                                    @error('diagnosa_pra_bedah')
+                                    <textarea name="diagnosa_prabedah" class="form-control" id="diagnosa_prabedah" style="height: 50px;" rows="3">{{ old('diagnosa_prabedah') }}</textarea>
+                                    @error('diagnosa_prabedah')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}
                                     </span>
@@ -51,8 +51,8 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Diagnosis Pasca Bedah</label>
-                                    <textarea name="diagnosa_pasca_bedah" class="form-control" id="diagnosa_pasca_bedah" style="height: 50px;" rows="3"></textarea>
-                                    @error('diagnosa_pasca_bedah')
+                                    <textarea name="diagnosa_pascabedah" class="form-control" id="diagnosa_pascabedah" style="height: 50px;" rows="3">{{ old('diagnosa_pascabedah') }}</textarea>
+                                    @error('diagnosa_pascabedah')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}
                                     </span>
@@ -62,8 +62,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Dokter Operator</label>
-                                    <input type="text" name="nama_operator" value="{{$biodata->dokter->Nama_Dokter}}" class="form-control @error('nama_operator') is-invalid @enderror">
-                                    @error('nama_operator')
+                                    <input type="text" name="dokter_operator" value="{{$biodata->dokter->Nama_Dokter}}" class="form-control @error('dokter_operator') is-invalid @enderror">
+                                    @error('dokter_operator')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -73,13 +73,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Nama Asisten</label>
-                                    <select name="nama_asisten[]" class="form-control @error('nama_asisten') is-invalid @enderror select2" multiple>
+                                    <select name="asisten_bedah[]" class="form-control @error('asisten_bedah') is-invalid @enderror select2" multiple>
                                         <option value="" disabled>--Pilih Asisten--</option>
                                         @foreach ($asistenOperasi as $asisten)
                                             <option value="{{$asisten->kode_dokter}}" {{(in_array($asisten->kode_dokter,$asistenArray)) ? 'selected' : ''}}>{{$asisten->nama_asisten}}</option>
                                         @endforeach
                                     </select>
-                                    @error('nama_asisten')
+                                    @error('asisten_bedah')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -89,7 +89,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Jenis Operasi</label>
-                                    <input type="text" name="jenis_operasi"  class="form-control @error('jenis_operasi') is-invalid @enderror">
+                                    <input type="text" name="jenis_operasi"  class="form-control @error('jenis_operasi') is-invalid @enderror" value="{{$laporanOperasi->jenis_operasi}}">
                                     @error('jenis_operasi')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -100,7 +100,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Jam Operasi</label>
-                                    <input type="text" name="jam_operasi" class="form-control @error('jam_operasi') is-invalid @enderror">
+                                    <input type="time" name="jam_operasi" class="form-control @error('jam_operasi') is-invalid @enderror" value="{{date('H:i:s',strtotime($laporanOperasi->mulai_operasi))}}">
                                     @error('jam_operasi')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -111,8 +111,8 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Jenis Anestesi</label>
-                                    <input type="text" name="jenis_anestesi" class="form-control @error('jenis_anestesi') is-invalid @enderror" value="{{$laporanOperasi->jenis_anastesi}}">
-                                    @error('jenis_anestesi')
+                                    <input type="text" name="jenis_anastesi" class="form-control @error('jenis_anastesi') is-invalid @enderror" value="{{$laporanOperasi->jenis_anastesi}}">
+                                    @error('jenis_anastesi')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -122,29 +122,30 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Nama Ahli Anestesi</label>
-                                    <select name="nama_ahli_anastesi[]" class="form-control @error('ahli_anastesi') is-invalid @enderror select2" multiple>
+                                    <select name="dokter_anastesi[]" class="form-control @error('dokter_anastesi') is-invalid @enderror select2" multiple>
                                         <option value="" disabled>--Pilih Ahli Anastesi--</option>
                                         @foreach ($spesialisAnastesi as $anastesi)
                                             <option value="{{$anastesi->kode_dokter}}" {{(in_array($anastesi->kode_dokter,$ahliAnastesiArray)) ? 'selected' : ''}}>{{$anastesi->nama_asisten}}</option>
                                         @endforeach
                                     </select>
-                                    @error('ahli_anastesi')
+                                    @error('dokter_anastesi')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                     @enderror
                                 </div>
                             </div>
+                            
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Nama Anestesi</label>
-                                    <select name="nama_anastesi[]" class="form-control @error('penata_anastesi') is-invalid @enderror select2" multiple>
+                                    <select name="asisten_anastesi[]" class="form-control @error('asisten_anastesi') is-invalid @enderror select2" multiple>
                                         <option value="" disabled>--Pilih Penata Anastesi--</option>
                                         @foreach ($penataAnastesi as $penataAnastesi)
                                             <option value="{{$penataAnastesi->kode_dokter}}" {{(in_array($penataAnastesi->kode_dokter,$anastesiArray)) ? 'selected' : ''}}>{{$penataAnastesi->nama_asisten}}</option>
                                         @endforeach
                                     </select>
-                                    @error('penata_anastesi')
+                                    @error('asisten_anastesi')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -602,7 +603,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Instruksi dokter bedah via lisan</label>
-                                    <textarea name="instruksi_dokter" class="form-control" id="instruksi_dokter" style="height: 100px;" rows="3"></textarea>
+                                    <textarea name="instruksi_dokter" class="form-control" id="instruksi_dokter" style="height: 100px;" rows="3">{{ old('instruksi_dokter') }}</textarea>
                                     @error('instruksi_dokter')
                                     <span class="text-danger" style="font-size: 12px;">
                                         {{ $message }}

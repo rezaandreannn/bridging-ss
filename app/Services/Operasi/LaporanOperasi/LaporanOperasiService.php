@@ -45,8 +45,8 @@ class LaporanOperasiService
 
  
         $laporanOperasi =  LaporanOperasi::where('kode_register', $kode_register)->first();
+        // dd($laporanOperasi);
         if ($laporanOperasi) {
-          
             return (object) [
                 'id' => $laporanOperasi->id,
                 'kode_register' => $laporanOperasi->kode_register,
@@ -70,9 +70,12 @@ class LaporanOperasiService
                 'nama_perawat' => optional($laporanOperasi->detailAsisten)->nama_perawat,
                 'nama_ahli_anastesi' => optional($laporanOperasi->detailAsisten)->nama_ahli_anastesi,
                 'nama_anastesi' => optional($laporanOperasi->detailAsisten)->nama_anastesi,
-                'jenis_anastesi' => optional($laporanOperasi->tableOperasi)->jenis_anastesi
+                'jenis_anastesi' => optional($laporanOperasi->tableOperasi)->jenis_anastesi,
+                'jenis_operasi' => optional($laporanOperasi->penandaanOperasi)->jenis_operasi
             ];
         }
+
+       
 
         return $laporanOperasi;
         
