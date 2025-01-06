@@ -6,6 +6,7 @@ use App\Http\Controllers\Ok\PostOperasiController;
 use App\Http\Controllers\Ok\RuangOperasiController;
 use App\Http\Controllers\OK\JadwalOperasiController;
 use App\Http\Controllers\OK\BookingOperasiController;
+use App\Http\Controllers\Ok\ChecklistPembedahan\SignInController;
 use App\Http\Controllers\OK\TtdTandaOperasiController;
 use App\Http\Controllers\OK\PenandaanOperasiController;
 use App\Http\Controllers\OK\MasterData\DoctorController;
@@ -55,6 +56,13 @@ Route::prefix('ibs')->name('operasi.')->middleware('auth')->group(function () {
     Route::post('/ruang-operasi', [RuangOperasiController::class, 'store'])->name('ruang.store');
     Route::put('/ruang-operasi/update/{id}', [RuangOperasiController::class, 'update'])->name('ruang.update');
     Route::delete('/ruang-operasi/delete/{id}', [RuangOperasiController::class, 'destroy'])->name('ruang.destroy');
+
+    // CheckList Pembedahan
+    Route::get('/checklist-pembedahan', [SignInController::class, 'index'])->name('signin.index');
+    Route::get('/checklist-pembedahan/create/{kode_register}', [SignInController::class, 'create'])->name('signin.create');
+    Route::post('/checklist-pembedahan', [SignInController::class, 'store'])->name('signin.store');
+    Route::get('/checklist-pembedahan/edit/{kode_register}', [SignInController::class, 'edit'])->name('signin.edit');
+    Route::put('/checklist-pembedahan/update/{id}', [SignInController::class, 'update'])->name('signin.update');
 
     // jadwal operasi
     Route::get('berkas-operasi', JadwalOperasiController::class)->name('berkas.cetak');

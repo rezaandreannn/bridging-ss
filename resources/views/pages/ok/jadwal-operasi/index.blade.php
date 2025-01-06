@@ -40,9 +40,8 @@
                                     <th scope="col">Nama Pasien</th>
                                     <th scope="col">Tanggal</th>
                                     <th scope="col">Nama Dokter</th>
-                                    <th scope="col">Ruangan</th>
+                                    <th scope="col">Asal Ruangan</th>
                                     <th scope="col">Terlaksana</th>
-                                    <th scope="col">Waktu Operasi</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
@@ -54,14 +53,14 @@
                                     <td>{{ ucwords(strtolower(trim($data->nama_pasien))) }}</td>
                                     <td>{{ $data->tanggal }}</td>
                                     <td>{{ $data->nama_dokter }}</td>
-                                    <td>{{ $data->ruang_operasi}}</td>
+                                    <td>{{ $data->asal_ruangan}}</td>
                                     <td>
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" name="terlaksana" class="custom-control-input" tabindex="3" id="terlaksana" {{ $data->terlaksana == '1' ? 'checked' : '' }} disabled>
                                             <label class="custom-control-label" for="terlaksana"></label>
                                         </div>
                                     </td>
-                                    <td>{{ \Carbon\Carbon::parse($data->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($data->jam_selesai)->format('H:i') }} WIB</td>
+                                    {{-- <td>{{ \Carbon\Carbon::parse($data->rencana_operasi)->format('H:i') }}  WIB</td> --}}
                                     <td>
                                         <div class="dropdown d-inline">
                                             <a href="#" class="text-primary" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

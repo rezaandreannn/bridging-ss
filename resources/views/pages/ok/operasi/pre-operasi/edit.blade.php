@@ -19,8 +19,8 @@
         <div class="section-header">
             <h1>{{ $title ?? ''}}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('operasi.pre-operasi.index') }}">Operasi Kamar</a></div>
-                <div class="breadcrumb-item">Laporan Operasi</div>
+                <div class="breadcrumb-item active"><a href="{{ route('operasi.pre-operasi.index') }}">Operasi</a></div>
+                <div class="breadcrumb-item">Pre Operasi</div>
             </div>
         </div>
         <div class="section-body">

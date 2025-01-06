@@ -43,10 +43,10 @@ class LaporanOperasiService
     public function laporanByRegister($kode_register)
     {
 
- 
+
         $laporanOperasi =  LaporanOperasi::where('kode_register', $kode_register)->first();
         if ($laporanOperasi) {
-          
+
             return (object) [
                 'id' => $laporanOperasi->id,
                 'kode_register' => $laporanOperasi->kode_register,
@@ -75,7 +75,6 @@ class LaporanOperasiService
         }
 
         return $laporanOperasi;
-        
     }
 
 
@@ -209,7 +208,7 @@ class LaporanOperasiService
     {
         try {
 
-   
+
 
             $id_detail_asisten = OperatorAsistenDetail::where('kode_register', $kode_register)->first();
 
@@ -250,7 +249,7 @@ class LaporanOperasiService
 
             // id laporan operasi
             $id = LaporanOperasi::where('kode_register', $kode_register)->first();
-         
+
             $laporanoperasi = LaporanOperasi::findOrFail($id->id);
 
             $laporanoperasi->update([
@@ -270,18 +269,18 @@ class LaporanOperasiService
                 // 'cara_masuk' => $data['cara_masuk'] ?? ''
             ]);
 
-                // id laporan operasi
-                $idOperasi = Operasi::where('kode_register', $kode_register)->first();     
-                $operasi = Operasi::findOrFail($idOperasi->id);
+            // id laporan operasi
+            $idOperasi = Operasi::where('kode_register', $kode_register)->first();
+            $operasi = Operasi::findOrFail($idOperasi->id);
 
-                $operasi->update([
-                    'kode_register' => $data['kode_register'],
-                    'jenis_anastesi' => $data['jenis_anastesi'],
-                    'created_by' => auth()->user()->id,
-                    // 'cara_masuk' => $data['cara_masuk'] ?? ''
-                ]);
+            $operasi->update([
+                'kode_register' => $data['kode_register'],
+                'jenis_anastesi' => $data['jenis_anastesi'],
+                'created_by' => auth()->user()->id,
+                // 'cara_masuk' => $data['cara_masuk'] ?? ''
+            ]);
 
-      
+
 
             return [
                 'operasiasistendetail' => $operasiasistendetail,

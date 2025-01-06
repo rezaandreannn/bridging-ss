@@ -39,26 +39,16 @@
                                             <th scope="col">No MR</th>
                                             <th scope="col">Nama Pasien</th>
                                             <th scope="col">Tanggal</th>
-                                            <th scope="col">Dokter Operator</th>
-                                            <th scope="col">Status</th>
                                             <th scope="col">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($verifikasis as $booking)
+                                        @foreach ($checklist as $sign)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
-                                            <td>{{$booking->no_mr}}</td>
-                                            <td>{{ ucwords(strtolower(trim($booking->nama_pasien))) }}</td>
-                                            <td>{{$booking->tanggal}}</td>
-                                            <td>{{$booking->nama_dokter}}</td>
-                                            <td>
-                                                @if (isset($statusAssesmen[$booking->id]) && $statusAssesmen[$booking->id] == 'create')
-                                                <span class="badge badge-warning">Belum</span>
-                                                @else
-                                                <span class="badge badge-success">Sudah</span>
-                                                @endif
-                                            </td>
+                                            <td>{{$sign->no_mr}}</td>
+                                            <td>{{ ucwords(strtolower(trim($sign->nama_pasien))) }}</td>
+                                            <td>{{$sign->tanggal}}</td>
                                             <td>  
                                                 <div class="dropdown d-inline">
                                                     <a href="#" class="text-primary" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -66,13 +56,12 @@
                                                     </a>
                                                     <div class="dropdown-menu">
                                                         {{-- Input --}}
-                                                        <a class="dropdown-item has-icon" href="{{ isset($statusAssesmen[$booking->id]) && $statusAssesmen[$booking->id] == 'create' ? route('prabedah.assesmen-prabedah.create', $booking->kode_register) : route('prabedah.assesmen-prabedah.edit', $booking->kode_register) }}">
-                                                            <i class="fas fa-marker"></i> {{ isset($statusAssesmen[$booking->id]) && $statusAssesmen[$booking->id] == 'create' ? 'Tambah' : 'Edit' }}</a>
-                                                            @if (!$statusTtd)
-                                                            <a class="dropdown-item has-icon" href="{{ route('ttd-perawat.create') }}"> 
-                                                                <i class="fas fa-signature"></i> Tanda Tangan
-                                                            </a>
-                                                            @endif
+                                                        <a class="dropdown-item has-icon" href="{{ route('operasi.signin.create', $sign->kode_register) }}">
+                                                            <i class="fas fa-plus"></i> Tambah
+                                                        </a>
+                                                        <a class="dropdown-item has-icon" href="{{ route('operasi.signin.edit', $sign->kode_register) }}">
+                                                            <i class="fas fa-plus"></i> Edit
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </td>

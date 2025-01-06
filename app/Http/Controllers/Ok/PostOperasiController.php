@@ -59,7 +59,7 @@ class PostOperasiController extends Controller
         return view($this->view . 'create', compact('laporanOperasi'))
             ->with([
                 'title' => $title,
-                'biodata' =>$this->bookingOperasiService->biodata($kode_register),
+                'biodata' => $this->bookingOperasiService->biodata($kode_register),
                 'asistenOperasi' => $this->laporanOperasiService->getAsistenOperasi(),
                 'spesialisAnastesi' => $this->laporanOperasiService->getSpesialisAnastesi(),
                 'penataAnastesi' => $this->laporanOperasiService->getPenataAsisten(),
@@ -82,7 +82,7 @@ class PostOperasiController extends Controller
         try {
             $this->postOperasiService->insert($request->validated());
 
-            return redirect('/operasi/post-operasi')->with('success', 'Post Operasi berhasil ditambahkan.');
+            return redirect('/pre-post/post-operasi')->with('success', 'Post Operasi berhasil ditambahkan.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
             return redirect()->back()->with('error', 'Gagal menambahkan post operasi: ' . $e->getMessage());
@@ -128,7 +128,7 @@ class PostOperasiController extends Controller
         try {
             $this->postOperasiService->update($kode_register, $request->validated());
 
-            return redirect('/operasi/post-operasi')->with('success', 'Data Post Operasi berhasil di ubah.');
+            return redirect('/pre-post/post-operasi')->with('success', 'Data Post Operasi berhasil di ubah.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
             return redirect()->back()->with('error', 'Gagal merubah post operasi: ' . $e->getMessage());

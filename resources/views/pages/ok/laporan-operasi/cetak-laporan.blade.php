@@ -65,7 +65,7 @@
             <tr>
                 <td rowspan="2">LAPORAN OPERASI</td>
                 <td colspan="3">Ruang : {{ $biodata->asal_ruangan }}</td>
-                <td colspan="3">No Register : {{ $cetak->kode_register}}</td>
+                <td colspan="3">No MR : {{ $biodata->pendaftaran->registerPasien->No_MR}}</td>
             </tr>
             <tr>
                 <td colspan="3">Nama : {{ ucwords(strtolower(trim($biodata->pendaftaran->registerPasien->Nama_Pasien))) }}</td>
@@ -93,16 +93,17 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="3">Nama Ahli Anestesi : <br>
+                <td colspan="2">Nama Ahli Anestesi : <br>
                     @foreach ($dokters as $dokter)
                     {{ $dokter }}<br>
                     @endforeach
                 </td>
-                <td colspan="4">Nama Penata Anestesi : <br>
+                <td colspan="3">Nama Penata Anestesi : <br>
                     @foreach ($anastesis as $anastesi)
                     {{ $anastesi }}<br>
                     @endforeach
                 </td>
+                <td colspan="2">Jenis Anastesi : <br>{{ $cetak->jenis_anastesi}}</td>
             </tr>
             <tr>
                 <td colspan="7" class="diagnosa">Diagnosis Pre-Operatif : <br>{{ $cetak->diagnosa_pre_op}}</td>
@@ -111,8 +112,8 @@
                 <td colspan="7" class="diagnosa">Diagnosis Post-Operatif : <br>{{ $cetak->diagnosa_post_op}}</td>
             </tr>
             <tr>
-                <td colspan="3" class="diagnosa">Jaringan yang Dieksisi/Insisi : <br>{{ $cetak->jaringan_dieksekusi}}</td>
-                <td colspan="4">
+                <td colspan="4" class="diagnosa">Jaringan yang Dieksisi/Insisi : <br>{{ $cetak->jaringan_dieksekusi}}</td>
+                <td colspan="3">
                     Dikirim untuk pemeriksa PA: <br>
                     <label>
                         <input type="radio" name="pemeriksa_pa" value="1" {{ ($cetak->permintaan_pa =='1') ? 'checked' : '' }}> Ya
@@ -124,8 +125,8 @@
                 </td>
             </tr>
             <tr>
-              <td colspan="4">Nama Operasi :</td>
-              <td colspan="3">Pendarahan : CC</td>
+              <td colspan="4">Nama/Macam Operasi : {{ $cetak->macam_operasi }}</td>
+              <td colspan="3">Pendarahan : {{ $cetak->pendarahan }} CC</td>
             </tr>
             <tr>
                 <td>Tgl Operasi <br>{{ date('d-m-Y', strtotime($cetak->tanggal))}}</td>
@@ -137,7 +138,7 @@
                 <td colspan="7">Lama Operasi Berlangsung : {{ $cetak->lama_operasi}}</td>
             </tr>
         </table>
-        <div class="section-title"><b>Laporan Operasi :</b> <br>{{ $cetak->laporan_operasi}}</div>
+        <div class="section-title"><b>Laporan Operasi :</b> <br>{!! $cetak->laporan_operasi !!}</div>
         <div class="signature">
             <p class="sign">Operator,</p>
             <p></p>

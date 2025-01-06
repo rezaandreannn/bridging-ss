@@ -45,7 +45,7 @@ class LaporanOperasiController extends Controller
 
         $cetak = $this->laporanOperasiService->laporanByRegister($kode_register);
         $biodata = $this->bookingOperasiService->biodata($kode_register);
-        // dd($biodata);
+        // dd($cetak);
 
         // ambil data field assisten code
         $perawatByReg = OperatorAsistenDetail::where('kode_register', $kode_register)->first()->toArray();

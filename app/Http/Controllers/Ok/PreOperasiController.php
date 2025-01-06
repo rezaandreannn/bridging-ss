@@ -76,7 +76,7 @@ class PreOperasiController extends Controller
         try {
             $this->preOperasiService->insert($request->validated());
 
-            return redirect('/operasi/pre-operasi')->with('success', 'Pre Operasi berhasil ditambahkan.');
+            return redirect('/pre-post/pre-operasi/')->with('success', 'Pre Operasi berhasil ditambahkan.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
             return redirect()->back()->with('error', 'Gagal menambahkan post operasi: ' . $e->getMessage());
@@ -122,7 +122,7 @@ class PreOperasiController extends Controller
         try {
             $this->preOperasiService->update($kode_register, $request->validated());
 
-            return redirect('/operasi/pre-operasi')->with('success', 'Data Pre Operasi berhasil di ubah.');
+            return redirect('/pre-post/pre-operasi/')->with('success', 'Data Pre Operasi berhasil di ubah.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
             return redirect()->back()->with('error', 'Gagal merubah post operasi: ' . $e->getMessage());
