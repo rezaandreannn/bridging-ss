@@ -26,6 +26,17 @@ class StorePostOperasiRequest extends FormRequest
     {
         return [
             'kode_register' => 'required|string',
+            // data umum post operasi
+            'diagnosa_prabedah' => 'required',
+            'diagnosa_pascabedah' => 'required',
+            'jenis_operasi' => 'required',
+            'dokter_operator' => 'required',
+            'asisten_bedah' => 'required',
+            'jam_operasi' => 'required',
+            'jenis_anastesi' => 'required',
+            'dokter_anastesi' => 'required',
+            'asisten_anastesi' => 'required',
+
             // Tindakan Post Operasi
             'status_pasien' => 'nullable',
             'catatan_anestesi' => 'nullable',
