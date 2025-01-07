@@ -108,12 +108,20 @@ class PostOperasiController extends Controller
      */
     public function edit($kode_register)
     {
-        $title = $this->prefix . ' ' . 'Edit Data';
         $postOperasi = $this->postOperasiService->findById($kode_register);
         // dd($postOperasi);
-        $biodata = $this->bookingOperasiService->biodata($kode_register);
 
-        return view($this->view . 'edit', compact('title', 'biodata', 'postOperasi'));
+        return view($this->view . 'edit', compact('postOperasi'))->with([
+            'title' => $this->prefix . ' ' . 'Edit Data',
+            'biodata' =>$this->bookingOperasiService->biodata($kode_register),
+            'asistenOperasi' => $this->laporanOperasiService->getAsistenOperasi(),
+            'spesialisAnastesi' => $this->laporanOperasiService->getSpesialisAnastesi(),
+            'penataAnastesi' => $this->laporanOperasiService->getPenataAsisten(),
+            'ahliAnastesiArray' => $this->laporanOperasiService->getAhliAnastesiPostOpArray($kode_register),
+            'anastesiArray' => $this->laporanOperasiService->getAnastesiPostOpArray($kode_register),
+            'asistenArray' => $this->laporanOperasiService->getAsistenPostOpArray($kode_register),
+
+        ]);
     }
 
     /**
