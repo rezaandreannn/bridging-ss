@@ -14,6 +14,8 @@ use App\Http\Controllers\Ok\Laporan\LaporanOperasiController;
 use App\Http\Controllers\Ok\PraBedah\BerkasPraBedahController;
 use App\Http\Controllers\Ok\PraBedah\AssesmenPraBedahController;
 use App\Http\Controllers\Ok\MasterData\TemplateOperasiController;
+use App\Http\Controllers\Ok\Medis\DetailPasienController;
+use App\Http\Controllers\Ok\Medis\ListPasienController;
 use App\Http\Controllers\Ok\PraBedah\VerifikasiPraBedahController;
 use App\Http\Controllers\Ok\PascaBedah\PerencanaanPascaBedahController;
 
@@ -50,6 +52,9 @@ Route::prefix('pre-post')->name('operasi.')->middleware('auth')->group(function 
 Route::prefix('ibs')->name('operasi.')->middleware('auth')->group(function () {
     // jadwal operasi
     Route::get('jadwal-operasi', JadwalOperasiController::class)->name('jadwal.index');
+
+    Route::get('list-pasien', [ListPasienController::class, 'index'])->name('list-pasien.index');
+    Route::get('list-pasien-detail/{kodeReg}', [DetailPasienController::class, 'index'])->name('list-pasien-detail.show');
 
     // OK Ruangan
     Route::get('/ruang-operasi', [RuangOperasiController::class, 'index'])->name('ruang.index');
