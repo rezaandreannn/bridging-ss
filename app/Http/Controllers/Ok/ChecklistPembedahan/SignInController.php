@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Ok\ChecklistPembedahan;
 use Exception;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Helpers\BookingHelper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Operasi\ChecklistPembedahan\SignIn\StorePembedahanSignRequest;
-use App\Http\Requests\Operasi\ChecklistPembedahan\SignIn\UpdatePembedahanSignRequest;
 use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\ChecklistPembedahan\ChecklistPembedahanSignInService;
+use App\Http\Requests\Operasi\ChecklistPembedahan\SignIn\StorePembedahanSignRequest;
+use App\Http\Requests\Operasi\ChecklistPembedahan\SignIn\UpdatePembedahanSignRequest;
 
 class SignInController extends Controller
 {
@@ -48,10 +49,12 @@ class SignInController extends Controller
         // }
 
         $checklist = $this->bookingOperasiService->byDate($today);
+        $statusSign = BookingHelper::getStatusPembedahanSignIn($checklist);
 
         return view($this->view . 'signin.index', compact('checklist'))
             ->with([
                 'title' => $title,
+                'statusSign' => $statusSign
             ]);
     }
 
@@ -83,7 +86,7 @@ class SignInController extends Controller
         try {
             $this->pembedahanSignIn->insert($request->validated());
 
-            return redirect('/ibs/checklist-pembedahan/')->with('success', 'Checklist Sign In berhasil ditambahkan.');
+            return redirect('/ibs/checklist-pembedahan-signin/')->with('success', 'Checklist Sign In berhasil ditambahkan.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
             return redirect()->back()->with('error', 'Gagal menambahkan Sign In: ' . $e->getMessage());
@@ -129,7 +132,7 @@ class SignInController extends Controller
         try {
             $this->pembedahanSignIn->update($kode_register, $request->validated());
 
-            return redirect('/ibs/checklist-pembedahan/')->with('success', 'Checklist Sign In berhasil di ubah.');
+            return redirect('/ibs/checklist-pembedahan-signin/')->with('success', 'Checklist Sign In berhasil di ubah.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
             return redirect()->back()->with('error', 'Gagal merubah Checklist Sign: ' . $e->getMessage());

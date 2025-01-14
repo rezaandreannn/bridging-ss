@@ -11,6 +11,26 @@
 <link rel="stylesheet" href="{{ asset('library/selectric/public/selectric.css') }}">
 
 <!-- <link rel="stylesheet" href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}"> -->
+
+<style>
+    tbody.small tr td {
+        padding: 0.3rem;
+    }
+
+    .table-blue thead tr {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .table-blue tbody tr {
+        background-color: white !important;
+    }
+
+    .table-blue tbody tr:hover {
+        background-color: #f2f2f2 !important;
+    }
+
+</style>
 @endpush
 
 @section('main')
@@ -96,32 +116,47 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="laboratorium" id="berkasLab" value="1" {{ $verifikasi['lab'] && $verifikasi['lab']->laboratorium ? 'checked' : '' }} onclick="toggleLabData()">
+                                                <input class="form-check-input" type="checkbox" name="laboratorium" id="berkasLab" value="1" onclick="toggleLabData()" {{ count($labs) > 0 ? 'checked' : ''}} disabled>
                                                 <label class="form-check-label" for="berkasLab">
                                                     Laboratorium
                                                 </label>
-                                                <div id="labData" style="display: none;">
+                                                @if(count($labs) > 0)
+                                                <div id="labData">
                                                     <div class="row">
-                                                     <table class="table-striped table table-bordered">
-                                                         <tr>
-                                                             <th>No</th>
-                                                             <th>Deskripsi</th>
-                                                             <th>Jumlah</th>
-                                                         </tr>
-                                                         <tr>
-                                                             <td>1</td>
-                                                             <td>ek</td>
-                                                             <td>1</td>
-                                                         </tr>
-                                                     </table>
+                                                        <table class="table table-bordered table-blue table-sm">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>No</th>
+                                                                    <th>Pemeriksaan</th>
+                                                                    <th>Hasil</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody class="small">
+                                                                @forelse ($labs as $data)
+                                                                <tr>
+                                                                    <td>{{ $loop->iteration }}</td>
+                                                                    <td>{{ $data->PEMERIKSAAN ?? '' }}</td>
+                                                                    <td>{{ $data->Hasil ?? '' }}</td>
+                                                                </tr>
+                                                                @empty
+                                                                <tr>
+                                                                    <td colspan="3" class="text-center">
+                                                                        <h5>Data lab kosong</h5>
+                                                                    </td>
+                                                                </tr>
+                                                                @endforelse
+                                                            <tbody>
+                                                        </table>
                                                     </div>
-                                                 </div>
+                                                </div>
+                                                @endif
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="rontgen" id="flexCheckDefault" value="1" {{ $verifikasi['rontgen'] && $verifikasi['rontgen']->rontgen ? 'checked' : '' }}>
+                                                <input class="form-check-input" type="checkbox" name="radiologi" id="flexCheckDefault" value="1" {{ $verifikasi['radiologi'] && $verifikasi['radiologi']->radiologi ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexCheckDefault">
-                                                    Rontgen
+                                                    Radiologi
                                                 </label>
+                                                <input type="text" placeholder="Inputan Radiologi" class="form-control" name="deskripsi_radiologi" id="radiologi_pasien" value="{{ $verifikasi['radiologi']->deskripsi ?? '' }}">
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="ekg" id="flexCheckDefault" value="1" {{ $verifikasi['ekg'] && $verifikasi['ekg']->ekg ? 'checked' : '' }}>

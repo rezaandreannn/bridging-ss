@@ -60,9 +60,9 @@ class AssesmenPraBedah extends Model
         return $this->hasOne(VerifikasiPraBedahObat::class, 'kode_register', 'kode_register');
     }
 
-    public function praBedahRontgen()
+    public function praBedahRadiologi()
     {
-        return $this->hasOne(VerifikasiPraBedahRontgen::class, 'kode_register', 'kode_register');
+        return $this->hasOne(VerifikasiPraBedahRadiologi::class, 'kode_register', 'kode_register');
     }
 
     public function praBedahOther()

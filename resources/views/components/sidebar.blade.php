@@ -312,6 +312,13 @@
                         </li>
                     </ul>
                     @endcan
+                    @can('checklist sign out')
+                    <ul class="dropdown-menu">
+                        <li class="{{ Request::is('check-list/signout*') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('operasi.signout.index')}}">Checklist Sign Out</a>
+                        </li>
+                    </ul>
+                    @endcan
                 </li>
                 @endcan
                 {{-- Berkas Operasi --}}

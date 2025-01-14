@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::connection('pku')->create('ok_verifikasi_pra_bedah_rontgen', function (Blueprint $table) {
+        Schema::connection('pku')->create('ok_verifikasi_pra_bedah_radiologi', function (Blueprint $table) {
             $table->id();
             $table->string('kode_register');
-            $table->string('rontgen');
+            $table->string('radiologi');
             $table->string('deskripsi');
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::connection('pku')->dropIfExists('ok_verifikasi_pra_bedah_rontgen');
+        Schema::connection('pku')->dropIfExists('ok_verifikasi_pra_bedah_radiologi');
     }
 };

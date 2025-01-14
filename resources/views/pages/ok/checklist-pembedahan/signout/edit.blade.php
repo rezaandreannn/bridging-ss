@@ -20,7 +20,7 @@
             <h1>{{ $title ?? ''}}</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{ route('operasi.signin.index') }}">Checklist Pembedahan</a></div>
-                <div class="breadcrumb-item">Sign In</div>
+                <div class="breadcrumb-item">Sign Out</div>
             </div>
         </div>
         <div class="section-body">

@@ -23,8 +23,8 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('prabedah.assesmen-prabedah.index') }}">Operasi Kamar</a></div>
-                <div class="breadcrumb-item">Assesmen Pra Bedah</div>
+                <div class="breadcrumb-item active"><a href="{{ route('operasi.signout.index') }}">Checklist Pembedahan</a></div>
+                <div class="breadcrumb-item">Sign Out</div>
             </div>
         </div>
 
@@ -39,23 +39,21 @@
                                             <th scope="col">No MR</th>
                                             <th scope="col">Nama Pasien</th>
                                             <th scope="col">Tanggal</th>
-                                            <th scope="col">Dokter Operator</th>
-                                            <th scope="col">Status</th>
+                                            <th scope="col">Status Sign</th>
                                             <th scope="col">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($verifikasis as $booking)
+                                        @foreach ($checklist as $sign)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
-                                            <td>{{$booking->no_mr}}</td>
-                                            <td>{{ ucwords(strtolower(trim($booking->nama_pasien))) }}</td>
-                                            <td>{{$booking->tanggal}}</td>
-                                            <td>{{$booking->nama_dokter}}</td>
+                                            <td>{{$sign->no_mr}}</td>
+                                            <td>{{ ucwords(strtolower(trim($sign->nama_pasien))) }}</td>
+                                            <td>{{$sign->tanggal}}</td>
                                             <td>
-                                                @if (isset($statusAssesmen[$booking->id]) && $statusAssesmen[$booking->id] == 'create')
-                                                <span class="badge badge-warning">Belum</span>
-                                                @else
+                                                @if (isset($statusSign[$sign->id]) && $statusSign[$sign->id] == 'create')
+                                                <span class="badge badge-danger">Belum</span>
+                                                 @else
                                                 <span class="badge badge-success">Sudah</span>
                                                 @endif
                                             </td>
@@ -66,13 +64,9 @@
                                                     </a>
                                                     <div class="dropdown-menu">
                                                         {{-- Input --}}
-                                                        <a class="dropdown-item has-icon" href="{{ isset($statusAssesmen[$booking->id]) && $statusAssesmen[$booking->id] == 'create' ? route('prabedah.assesmen-prabedah.create', $booking->kode_register) : route('prabedah.assesmen-prabedah.edit', $booking->kode_register) }}">
-                                                            <i class="fas fa-marker"></i> {{ isset($statusAssesmen[$booking->id]) && $statusAssesmen[$booking->id] == 'create' ? 'Tambah' : 'Edit' }}</a>
-                                                            @if (!$statusTtd)
-                                                            {{-- <a class="dropdown-item has-icon" href="{{ route('ttd-perawat.create') }}"> 
-                                                                <i class="fas fa-signature"></i> Tanda Tangan
-                                                            </a> --}}
-                                                            @endif
+                                                        <a class="dropdown-item has-icon" href="{{ isset($statusSign[$sign->id]) && $statusSign[$sign->id] == 'create' ? route('operasi.signout.create', $sign->kode_register) : route('operasi.signout.edit', $sign->kode_register) }}">
+                                                            <i class="fas fa-marker"></i> {{ isset($statusSign[$sign->id]) && $statusSign[$sign->id] == 'create' ? 'Tambah' : 'Edit' }}</a>
+                                                        
                                                     </div>
                                                 </div>
                                             </td>

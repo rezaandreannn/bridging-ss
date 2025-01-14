@@ -5,16 +5,16 @@ namespace App\Models\Operasi\PraBedah;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class VerifikasiPraBedahRontgen extends Model
+class VerifikasiPraBedahRadiologi extends Model
 {
     use HasFactory;
 
     protected $connection = 'pku';
-    protected $table = 'ok_verifikasi_pra_bedah_rontgen';
+    protected $table = 'ok_verifikasi_pra_bedah_radiologi';
 
     protected $fillable = [
         'kode_register',
-        'rontgen',
+        'radiologi',
         'deskripsi',
         'created_by',
         'updated_by'

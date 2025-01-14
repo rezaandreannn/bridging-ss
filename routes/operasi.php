@@ -7,6 +7,7 @@ use App\Http\Controllers\Ok\RuangOperasiController;
 use App\Http\Controllers\OK\JadwalOperasiController;
 use App\Http\Controllers\OK\BookingOperasiController;
 use App\Http\Controllers\Ok\ChecklistPembedahan\SignInController;
+use App\Http\Controllers\Ok\ChecklistPembedahan\SignOutController;
 use App\Http\Controllers\OK\TtdTandaOperasiController;
 use App\Http\Controllers\OK\PenandaanOperasiController;
 use App\Http\Controllers\OK\MasterData\DoctorController;
@@ -57,12 +58,18 @@ Route::prefix('ibs')->name('operasi.')->middleware('auth')->group(function () {
     Route::put('/ruang-operasi/update/{id}', [RuangOperasiController::class, 'update'])->name('ruang.update');
     Route::delete('/ruang-operasi/delete/{id}', [RuangOperasiController::class, 'destroy'])->name('ruang.destroy');
 
-    // CheckList Pembedahan
-    Route::get('/checklist-pembedahan', [SignInController::class, 'index'])->name('signin.index');
-    Route::get('/checklist-pembedahan/create/{kode_register}', [SignInController::class, 'create'])->name('signin.create');
-    Route::post('/checklist-pembedahan', [SignInController::class, 'store'])->name('signin.store');
-    Route::get('/checklist-pembedahan/edit/{kode_register}', [SignInController::class, 'edit'])->name('signin.edit');
-    Route::put('/checklist-pembedahan/update/{id}', [SignInController::class, 'update'])->name('signin.update');
+    // CheckList Pembedahan Sign In
+    Route::get('/checklist-pembedahan-signin', [SignInController::class, 'index'])->name('signin.index');
+    Route::get('/checklist-pembedahan-signin/create/{kode_register}', [SignInController::class, 'create'])->name('signin.create');
+    Route::post('/checklist-pembedahan-signin', [SignInController::class, 'store'])->name('signin.store');
+    Route::get('/checklist-pembedahan-signin/edit/{kode_register}', [SignInController::class, 'edit'])->name('signin.edit');
+    Route::put('/checklist-pembedahan-signin/update/{id}', [SignInController::class, 'update'])->name('signin.update');
+    // CheckList Pembedahan Sign Out
+    Route::get('/checklist-pembedahan-signout', [SignOutController::class, 'index'])->name('signout.index');
+    Route::get('/checklist-pembedahan-signout/create/{kode_register}', [SignOutController::class, 'create'])->name('signout.create');
+    Route::post('/checklist-pembedahan-signout', [SignOutController::class, 'store'])->name('signout.store');
+    Route::get('/checklist-pembedahan-signout/edit/{kode_register}', [SignOutController::class, 'edit'])->name('signout.edit');
+    Route::put('/checklist-pembedahan-signout/update/{id}', [SignOutController::class, 'update'])->name('signout.update');
 
     // jadwal operasi
     Route::get('berkas-operasi', JadwalOperasiController::class)->name('berkas.cetak');
@@ -101,6 +108,9 @@ Route::prefix('prabedah')->name('prabedah.')->middleware('auth')->group(function
     // Berkas Pra Bedah
     Route::get('/berkas-prabedah', [BerkasPraBedahController::class, 'index'])->name('berkas-prabedah.index');
     Route::get('/berkas-prabedah/cetak/{kode_register}', [BerkasPraBedahController::class, 'cetak'])->name('berkas-prabedah.cetak');
+
+
+    Route::get('/berkas-pascabedah/cetak/{kode_register}', [BerkasPraBedahController::class, 'cetak_pascabedah'])->name('berkas-pascabedah.cetak');
 
 
     Route::get('/berkas-prabedah/download/{kode_register}', [BerkasPraBedahController::class, 'download'])->name('berkas-prabedah.download');

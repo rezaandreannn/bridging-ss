@@ -23,8 +23,8 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('prabedah.assesmen-prabedah.index') }}">Operasi Kamar</a></div>
-                <div class="breadcrumb-item">Assesmen Pra Bedah</div>
+                <div class="breadcrumb-item active"><a href="{{ route('operasi.signin.index') }}">Checklist Pembedahan</a></div>
+                <div class="breadcrumb-item">Sign In</div>
             </div>
         </div>
 
@@ -39,6 +39,7 @@
                                             <th scope="col">No MR</th>
                                             <th scope="col">Nama Pasien</th>
                                             <th scope="col">Tanggal</th>
+                                            <th scope="col">Status Sign</th>
                                             <th scope="col">Aksi</th>
                                         </tr>
                                     </thead>
@@ -49,6 +50,13 @@
                                             <td>{{$sign->no_mr}}</td>
                                             <td>{{ ucwords(strtolower(trim($sign->nama_pasien))) }}</td>
                                             <td>{{$sign->tanggal}}</td>
+                                            <td>
+                                                @if (isset($statusSign[$sign->id]) && $statusSign[$sign->id] == 'create')
+                                                <span class="badge badge-danger">Belum</span>
+                                                 @else
+                                                <span class="badge badge-success">Sudah</span>
+                                                @endif
+                                            </td>
                                             <td>  
                                                 <div class="dropdown d-inline">
                                                     <a href="#" class="text-primary" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -56,12 +64,9 @@
                                                     </a>
                                                     <div class="dropdown-menu">
                                                         {{-- Input --}}
-                                                        <a class="dropdown-item has-icon" href="{{ route('operasi.signin.create', $sign->kode_register) }}">
-                                                            <i class="fas fa-plus"></i> Tambah
-                                                        </a>
-                                                        <a class="dropdown-item has-icon" href="{{ route('operasi.signin.edit', $sign->kode_register) }}">
-                                                            <i class="fas fa-plus"></i> Edit
-                                                        </a>
+                                                        <a class="dropdown-item has-icon" href="{{ isset($statusSign[$sign->id]) && $statusSign[$sign->id] == 'create' ? route('operasi.signin.create', $sign->kode_register) : route('operasi.signin.edit', $sign->kode_register) }}">
+                                                            <i class="fas fa-marker"></i> {{ isset($statusSign[$sign->id]) && $statusSign[$sign->id] == 'create' ? 'Tambah' : 'Edit' }}</a>
+                                                        
                                                     </div>
                                                 </div>
                                             </td>

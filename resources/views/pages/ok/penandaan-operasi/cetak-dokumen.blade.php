@@ -190,7 +190,7 @@
                 <table width="100%">
                     <tr>
                         <td class="text3"><b>Waktu</b></td>
-                        <td class="text3">: {{date('h:i', strtotime($penandaan->created_at))}} WIB</td>
+                        <td class="text3">: {{ \Carbon\Carbon::parse($penandaan->created_at)->timezone('Asia/Jakarta')->format('H:i') }} WIB</td>
                     </tr>
                     <tr>
                         <td class="text3"><b>Jenis Operasi</b></td>

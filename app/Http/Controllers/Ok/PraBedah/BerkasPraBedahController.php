@@ -35,7 +35,7 @@ class BerkasPraBedahController extends Controller
         // Ambil data berdasarkan ID
 
         $cetak = $this->assesmenOperasiService->cetak($kode_register);
-        $lab = $this->assesmenOperasiService->getLabByKodeReg($kode_register);
+        $labs = $this->assesmenOperasiService->getLabByKodeReg($kode_register);
         $booking = collect($this->bookingOperasiService->byRegister($kode_register))->first();
         $biodataPasien = $this->bookingOperasiService->biodata($kode_register);
         $pasien = $biodataPasien->pendaftaran->registerPasien;
@@ -50,11 +50,36 @@ class BerkasPraBedahController extends Controller
 
         $pdf = PDF::loadview('pages.ok.pra-bedah.berkas.cetak-dokumen', [
             'cetak' => $cetak,
-            'lab' => $lab,
+            'labs' => $labs,
             'pasien' => $pasien,
             'booking' => $booking,
             'title' => $title,
             'tanggal' => $tanggal
+        ]);
+        // Set paper size to A5
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
+    }
+
+    public function cetak_pascabedah($kode_register)
+    {
+        $title = $this->prefix . ' ' . 'Operasi';
+        // Ambil data berdasarkan ID
+
+        $cetak = $this->assesmenOperasiService->cetak($kode_register);
+        $biodataPasien = $this->bookingOperasiService->biodata($kode_register);
+        $pasien = $biodataPasien->pendaftaran->registerPasien;
+        // dd($cetak);
+
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+        $filename = 'AssesmenPraBedah-' . $date;
+
+        $pdf = PDF::loadview('pages.ok.pra-bedah.berkas.cetak-pascabedah', [
+            'cetak' => $cetak,
+            'title' => $title,
+            'tanggal' => $tanggal,
+            'pasien' => $pasien
         ]);
         // Set paper size to A5
         $pdf->setPaper('A4');

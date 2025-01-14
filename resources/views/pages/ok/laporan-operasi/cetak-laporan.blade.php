@@ -33,7 +33,7 @@
         }
 
         .diagnosa {
-            padding-bottom: 50px;
+            padding-bottom: 20px;
         }
 
         .section-title {
@@ -76,7 +76,7 @@
                     @foreach ($operators as $operator)
                     {{ $operator }}
                     @endforeach
-                </td>
+                </td> 
                 <td colspan="2">Nama Asisten : <br>
                     <ol style="padding: 0; margin: 0;">
                         @foreach ($assistens as $asisten)
@@ -112,7 +112,7 @@
                 <td colspan="7" class="diagnosa">Diagnosis Post-Operatif : <br>{{ $cetak->diagnosa_post_op}}</td>
             </tr>
             <tr>
-                <td colspan="4" class="diagnosa">Jaringan yang Dieksisi/Insisi : <br>{{ $cetak->jaringan_dieksekusi}}</td>
+                <td colspan="2">Jaringan yang Dieksisi/Insisi : <br>{{ $cetak->jaringan_dieksekusi}}</td>
                 <td colspan="3">
                     Dikirim untuk pemeriksa PA: <br>
                     <label>
@@ -123,10 +123,10 @@
                         <input type="radio" name="pemeriksa_pa" value="0" {{ ($cetak->permintaan_pa =='0') ? 'checked' : '' }}> Tidak
                     </label>
                 </td>
+                <td colspan="2">Pendarahan : <br> {{ $cetak->pendarahan }} CC</td>
             </tr>
             <tr>
-              <td colspan="4">Nama/Macam Operasi : {{ $cetak->macam_operasi }}</td>
-              <td colspan="3">Pendarahan : {{ $cetak->pendarahan }} CC</td>
+              <td colspan="7">Nama/Macam Operasi : {{ $cetak->macam_operasi }}</td>
             </tr>
             <tr>
                 <td>Tgl Operasi <br>{{ date('d-m-Y', strtotime($cetak->tanggal))}}</td>
@@ -134,11 +134,8 @@
                 <td colspan="2">Jam Operasi Selesai <br>{{ date('h:i', strtotime($cetak->selesai_operasi))}} WIB</td>
                 <td colspan="2">Lama Operasi Berlangsung <br>{{ $cetak->lama_operasi}}</td>
             </tr>
-            <tr>
-                <td colspan="7">Lama Operasi Berlangsung : {{ $cetak->lama_operasi}}</td>
-            </tr>
         </table>
-        <div class="section-title"><b>Laporan Operasi :</b> <br>{!! $cetak->laporan_operasi !!}</div>
+        <div class="section-title" style="white-space: pre-wrap;"><b>Laporan Operasi :</b> <br> {!! e($cetak->laporan_operasi) !!}</div>
         <div class="signature">
             <p class="sign">Operator,</p>
             <p></p>

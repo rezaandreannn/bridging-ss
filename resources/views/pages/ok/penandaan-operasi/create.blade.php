@@ -116,7 +116,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Asal Ruangan</label>
-                                            <input type="text" name="asal_ruangan" value="{{ old('asal_ruangan', $biodata->asal_ruangan ?? '')}}" class="form-control @error('asal_ruangan') is-invalid @enderror">
+                                            <input type="text" name="asal_ruangan" value="{{ old('asal_ruangan', $biodata->asal_ruangan ?? '')}}" class="form-control @error('asal_ruangan') is-invalid @enderror" readonly>
                                         </div>
                                         @error('tanggal')
                                         <div class="invalid-feedback">

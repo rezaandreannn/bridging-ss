@@ -91,10 +91,10 @@ class AssesmenPraBedahService
                 );
             },
 
-            'praBedahRontgen' => function ($query) {
+            'praBedahRadiologi' => function ($query) {
                 $query->select(
                     'kode_register',
-                    'rontgen',
+                    'radiologi',
                     'deskripsi'
                 );
             },
@@ -187,9 +187,9 @@ class AssesmenPraBedahService
                 // Obat
                 'obat' => optional($result->praBedahObat)->obat,
                 'deskripsi_obat' => optional($result->praBedahObat)->deskripsi,
-                // Rontgen
-                'rontgen' => optional($result->praBedahRontgen)->rontgen,
-                'deskripsi_rontgen' => optional($result->praBedahRontgen)->deskripsi,
+                // Radiologi
+                'radiologi' => optional($result->praBedahRadiologi)->radiologi,
+                'deskripsi_radiologi' => optional($result->praBedahRadiologi)->deskripsi,
                 // Other
                 'estimasi_waktu' => optional($result->praBedahOther)->estimasi_waktu,
                 'rencana_tindakan' => optional($result->praBedahOther)->rencana_tindakan,

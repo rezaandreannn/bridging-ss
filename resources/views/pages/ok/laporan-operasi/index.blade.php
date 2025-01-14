@@ -58,7 +58,7 @@
                                             <th scope="col">Nama Pasien</th>
                                             <th scope="col">No MR</th>
                                             <th scope="col">Nama Dokter</th>
-                                            <th scope="col">Status Penandaan</th>
+                                            <th scope="col">Status Laporan</th>
                                             <th scope="col">Aksi</th>
                                         </tr>
                                     </thead>

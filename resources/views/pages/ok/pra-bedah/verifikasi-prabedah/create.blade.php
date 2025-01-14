@@ -114,7 +114,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="laboratorium" id="berkasLab" value="1" onclick="toggleLabData()" {{ count($labs) > 0 ? 'checked' : ''}}>
+                                                <input class="form-check-input" type="checkbox" name="laboratorium" id="berkasLab" value="1" onclick="toggleLabData()" {{ count($labs) > 0 ? 'checked' : ''}} disabled>
                                                 <label class="form-check-label" for="berkasLab">
                                                     Laboratorium
                                                 </label>
@@ -150,10 +150,11 @@
                                                 @endif
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="rontgen" id="flexCheckDefault" value="1">
+                                                <input class="form-check-input" type="checkbox" name="radiologi" id="flexCheckDefault" value="1">
                                                 <label class="form-check-label" for="flexCheckDefault">
-                                                    Rontgen
+                                                    Radiologi
                                                 </label>
+                                                <input type="text" placeholder="Inputan Radiologi" class="form-control" name="deskripsi_radiologi" id="radiologi_pasien">
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="ekg" id="flexCheckDefault" value="1">

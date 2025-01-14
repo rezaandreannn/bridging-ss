@@ -150,6 +150,8 @@ class VerifikasiPraBedahController extends Controller
         $verifikasi = $this->verifikasiPraBedahService->findById($kode_register);
         // dd($verifikasi);
         $biodata = $this->bookingOperasiService->biodata($kode_register);
+        $labs = $this->assesmenOperasiService->getLabByKodeReg($kode_register);
+
 
         // check penandaan lokasi and assesmen pra bedah
         $penandaanLokasi = PenandaanOperasi::where('kode_register', $kode_register)->first();
@@ -158,7 +160,7 @@ class VerifikasiPraBedahController extends Controller
         $checklistPenandaan = $penandaanLokasi ? true : false;
         $checklistAssesmenPraBedah = $assesmenPraBedah ? true : false;
 
-        return view($this->view . 'verifikasi-prabedah.edit', compact('title', 'biodata', 'verifikasi', 'checklistPenandaan', 'checklistAssesmenPraBedah'));
+        return view($this->view . 'verifikasi-prabedah.edit', compact('title', 'biodata', 'verifikasi', 'checklistPenandaan', 'checklistAssesmenPraBedah', 'labs'));
     }
 
     /**

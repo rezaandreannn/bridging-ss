@@ -10,6 +10,7 @@ use App\Models\Operasi\PraBedah\VerifikasiPraBedahObat;
 use App\Models\Operasi\PraBedah\VerifikasiPraBedahDarah;
 use App\Models\Operasi\PraBedah\VerifikasiPraBedahBerkas;
 use App\Models\Operasi\PraBedah\VerifikasiPraBedahOther;
+use App\Models\Operasi\PraBedah\VerifikasiPraBedahRadiologi;
 use App\Models\Operasi\PraBedah\VerifikasiPraBedahRontgen;
 
 class VerifikasiPraBedahService
@@ -57,7 +58,7 @@ class VerifikasiPraBedahService
             'obat' => VerifikasiPraBedahObat::where('kode_register', $kode_register)->first(),
             'ekg' => VerifikasiPraBedahEkg::where('kode_register', $kode_register)->first(),
             'lab' => VerifikasiPraBedahLab::where('kode_register', $kode_register)->first(),
-            'rontgen' => VerifikasiPraBedahRontgen::where('kode_register', $kode_register)->first(),
+            'radiologi' => VerifikasiPraBedahRadiologi::where('kode_register', $kode_register)->first(),
             'darah' => VerifikasiPraBedahDarah::where('kode_register', $kode_register)->first(),
             'other' => VerifikasiPraBedahOther::where('kode_register', $kode_register)->first(),
         ];
@@ -193,10 +194,10 @@ class VerifikasiPraBedahService
                 'created_by' => auth()->user()->id
             ]);
 
-            $praBedahRontgen = VerifikasiPraBedahRontgen::create([
+            $praBedahRadiologi = VerifikasiPraBedahRadiologi::create([
                 'kode_register' => $data['kode_register'],
-                'rontgen' => !empty($data['rontgen']) ? 1 : 0,
-                'deskripsi' => $data['deskripsi_rontgen'] ?? '',
+                'radiologi' => !empty($data['radiologi']) ? 1 : 0,
+                'deskripsi' => $data['deskripsi_radiologi'] ?? '',
                 'created_by' => auth()->user()->id
             ]);
 
@@ -210,7 +211,7 @@ class VerifikasiPraBedahService
                 'ekg' => $praBedahEkg,
                 'lab' => $praBedahLab,
                 'obat' => $praBedahObat,
-                'rontgen' => $praBedahRontgen,
+                'radiologi' => $praBedahRadiologi,
             ];
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -293,9 +294,9 @@ class VerifikasiPraBedahService
                 'updated_by' => auth()->user()->id
             ]);
 
-            $this->updateTable(VerifikasiPraBedahRontgen::class, $kode_register, [
-                'rontgen' => $data['rontgen'] ?? 0,
-                'deskripsi' => $data['deskripsi_rontgen'] ?? '',
+            $this->updateTable(VerifikasiPraBedahRadiologi::class, $kode_register, [
+                'radiologi' => $data['radiologi'] ?? 0,
+                'deskripsi' => $data['deskripsi_radiologi'] ?? '',
                 'updated_by' => auth()->user()->id
             ]);
 

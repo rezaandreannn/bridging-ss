@@ -3,6 +3,8 @@
 namespace App\Helpers;
 
 use App\Models\MasterData\TtdPerawat;
+use App\Models\Operasi\ChecklistPembedahan\SignIn;
+use App\Models\Operasi\ChecklistPembedahan\SignOut;
 use App\Models\Operasi\LaporanOperasi;
 use App\Models\Operasi\TtdTandaOperasi;
 use App\Models\Operasi\PenandaanOperasi;
@@ -16,6 +18,7 @@ use App\Models\Operasi\PraBedah\VerifikasiPraBedahDarah;
 use App\Models\Operasi\PraBedah\VerifikasiPraBedahBerkas;
 use App\Models\Operasi\PraBedah\VerifikasiPraBedahRontgen;
 use App\Models\Operasi\PostOperasi\PemeriksaanFisikPostOperasi;
+use App\Models\Operasi\PraBedah\VerifikasiPraBedahRadiologi;
 use App\Models\Operasi\PreOperasi\DataUmumPreOperasi;
 use App\Models\Operasi\PreOperasi\PemeriksaanFisikPreOperasi;
 use App\Models\Operasi\PreOperasi\TindakanPreOperasi;
@@ -74,6 +77,30 @@ class BookingHelper
         }
 
         return $statusGambar;
+    }
+
+    public static function getStatusPembedahanSignIn($signin)
+    {
+        $statusSignIn = [];
+
+        foreach ($signin as $sign) {
+            $exists = SignIn::where('kode_register', $sign->kode_register)->first();
+            $statusSignIn[$sign->id] = $exists ? $exists->id : 'create';
+        }
+
+        return $statusSignIn;
+    }
+
+    public static function getStatusPembedahanSignOut($signout)
+    {
+        $statusSignOut = [];
+
+        foreach ($signout as $sign) {
+            $exists = SignOut::where('kode_register', $sign->kode_register)->first();
+            $statusSignOut[$sign->id] = $exists ? $exists->id : 'create';
+        }
+
+        return $statusSignOut;
     }
 
     public static function getStatusTandaTangan($ttds)
@@ -136,7 +163,7 @@ class BookingHelper
                 'ekg'     => VerifikasiPraBedahEkg::where('kode_register', $kodeRegister)->first(),
                 'lab'     => VerifikasiPraBedahLab::where('kode_register', $kodeRegister)->first(),
                 'obat'    => VerifikasiPraBedahObat::where('kode_register', $kodeRegister)->first(),
-                'rontgen' => VerifikasiPraBedahRontgen::where('kode_register', $kodeRegister)->first(),
+                'radiologi' => VerifikasiPraBedahRadiologi::where('kode_register', $kodeRegister)->first(),
             ];
 
             $statusVerifikasi[$kodeRegister] = $status;
