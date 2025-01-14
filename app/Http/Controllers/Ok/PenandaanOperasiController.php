@@ -145,8 +145,8 @@ class PenandaanOperasiController extends Controller
 
             $this->penandaanOperasiService->insert($data);
 
-            // return redirect()->back()->with('success', 'Penandaan Operasi berhasil ditambahkan.');
-            return redirect('penandaan/penandaan-operasi')->with('success', 'Penandaan Operasi berhasil di ditambahkan.');
+            return redirect()->back()->with('success', 'Penandaan Operasi berhasil ditambahkan.');
+            // return redirect('ibs/list-pasien-detail/' . $request->kode_register)->with('success', 'Penandaan Operasi berhasil di ditambahkan.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
             return redirect()->back()->with('error', 'Gagal menambahkan Penandaan Operasi: ' . $e->getMessage());
@@ -205,7 +205,8 @@ class PenandaanOperasiController extends Controller
 
             // Panggil service untuk melakukan update
             $this->penandaanOperasiService->update($id, $data);
-            return redirect('penandaan/penandaan-operasi')->with('success', 'Penandaan Operasi berhasil di ubah.');
+            return redirect()->back()->with('success', 'Penandaan Operasi berhasil di ubah.');
+            // return redirect('penandaan/penandaan-operasi')->with('success', 'Penandaan Operasi berhasil di ubah.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
             return redirect()->back()->with('error', 'Gagal menambahkan penandaan operasi: ' . $e->getMessage());

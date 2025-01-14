@@ -92,7 +92,8 @@ class AssesmenPraBedahController extends Controller
         try {
             $this->assesmenOperasiService->insert($request->validated());
             // $this->assesmenOperasiService->insert($validatedData);
-            return redirect('prabedah/assesmen-prabedah')->with('success', 'Assesmen Pra Bedah berhasil ditambahkan.');
+            return redirect()->back()->with('success', 'Assesmen Pra Bedah berhasil ditambahkan.');
+            // return redirect('prabedah/assesmen-prabedah')->with('success', 'Assesmen Pra Bedah berhasil ditambahkan.');
 
             // return redirect()->route('ttd-ok.penandaan.index')->with('success', 'Tanda tangan berhasil ditambahkan.');
         } catch (Exception $e) {
@@ -143,7 +144,8 @@ class AssesmenPraBedahController extends Controller
             // Validasi input
             $this->assesmenOperasiService->update($kode_register, $request->validated());
 
-            return redirect('prabedah/assesmen-prabedah')->with('success', 'Assesmen Pra Bedah berhasil di ubah.');
+            return redirect()->back()->with('success', 'Assesmen Pra Bedah berhasil di ubah.');
+            // return redirect('prabedah/assesmen-prabedah')->with('success', 'Assesmen Pra Bedah berhasil di ubah.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
             return redirect()->back()->with('error', 'Gagal menambahkan Assesmen Pra Bedah: ' . $e->getMessage());

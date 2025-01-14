@@ -12,6 +12,7 @@ use App\Models\Operasi\LaporanOperasi;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Operasi\PenandaanOperasi;
 use App\Models\Operasi\OperatorAsistenDetail;
+use App\Models\Operasi\PostOperasi\DataUmumPostOperasi;
 
 class LaporanOperasiService
 {
@@ -130,6 +131,41 @@ class LaporanOperasiService
         return $anastesi;
     }
 
+    public function getAsistenPostOpArray($kode_register)
+    {
+        $data = DataUmumPostOperasi::where('kode_register', $kode_register)->first();
+        $string = trim($data->asisten_bedah ?? '', ','); // Menghapus koma di awal dan akhir string (jika ada)
+        $asisten = array();
+        if (!empty($string)) {
+            $asisten = explode(', ', $string);
+        }
+
+        return $asisten;
+    }
+
+    public function getAhliAnastesiPostOpArray($kode_register)
+    {
+        $data = DataUmumPostOperasi::where('kode_register', $kode_register)->first();
+        $string = trim($data->dokter_anastesi ?? '', ','); // Menghapus koma di awal dan akhir string (jika ada)
+        $ahli_anastesi = array();
+        if (!empty($string)) {
+            $ahli_anastesi = explode(', ', $string);
+        }
+
+        return $ahli_anastesi;
+    }
+
+    public function getAnastesiPostOpArray($kode_register)
+    {
+        $data = DataUmumPostOperasi::where('kode_register', $kode_register)->first();
+        $string = trim($data->asisten_anastesi ?? '', ','); // Menghapus koma di awal dan akhir string (jika ada)
+        $anastesi = array();
+        if (!empty($string)) {
+            $anastesi = explode(', ', $string);
+        }
+
+        return $anastesi;
+    }
     public function insert(array $data)
     {
         DB::beginTransaction();

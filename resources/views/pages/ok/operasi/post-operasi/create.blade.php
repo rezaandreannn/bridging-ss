@@ -62,7 +62,9 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Dokter Operator</label>
-                                    <input type="text" name="dokter_operator" value="{{$biodata->dokter->Nama_Dokter}}" class="form-control @error('dokter_operator') is-invalid @enderror">
+                                    <select name="nama_operator" id="" class="form-control @error('nama_operator') is-invalid @enderror" readonly>
+                                        <option value="{{$biodata->dokter->Kode_Dokter}}" selected>{{$biodata->dokter->Nama_Dokter}}</option>
+                                    </select>
                                     @error('dokter_operator')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -121,7 +123,7 @@
                             </div> 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Nama Ahli Anestesi</label>
+                                    <label>Dokter Anestesi</label>
                                     <select name="dokter_anastesi[]" class="form-control @error('dokter_anastesi') is-invalid @enderror select2" multiple>
                                         <option value="" disabled>--Pilih Ahli Anastesi--</option>
                                         @foreach ($spesialisAnastesi as $anastesi)
@@ -138,7 +140,7 @@
                             
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Nama Anestesi</label>
+                                    <label>Asisten Anestesi</label>
                                     <select name="asisten_anastesi[]" class="form-control @error('asisten_anastesi') is-invalid @enderror select2" multiple>
                                         <option value="" disabled>--Pilih Penata Anastesi--</option>
                                         @foreach ($penataAnastesi as $penataAnastesi)

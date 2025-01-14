@@ -17,7 +17,8 @@ class PostOperasiService
         return [
             'tindakan' => TindakanPostOperasi::where('kode_register', $kode_register)->first(),
             'alat' => AlatPostOperasi::where('kode_register', $kode_register)->first(),
-            'ttv' => PemeriksaanFisikPostOperasi::where('kode_register', $kode_register)->first()
+            'ttv' => PemeriksaanFisikPostOperasi::where('kode_register', $kode_register)->first(),
+            'dataUmum'=> DataUmumPostOperasi::where('kode_register', $kode_register)->first()
         ];
     }
 
@@ -156,7 +157,38 @@ class PostOperasiService
         DB::beginTransaction();
         try {
 
+                     // pisahkan array dengan koma menjadi string
+                     $asisten_bedah = $data['asisten_bedah'] ?? '';
+                     $data['asisten_bedah'] = $asisten_bedah;
+                     if (!empty($asisten_bedah)) {
+                         $data['asisten_bedah'] = implode(', ', $asisten_bedah);
+                     }
+         
+                     $asisten_anastesi = $data['asisten_anastesi'] ?? '';
+                     $data['asisten_anastesi'] = $asisten_anastesi;
+                     if (!empty($asisten_anastesi)) {
+                         $data['asisten_anastesi'] = implode(', ', $asisten_anastesi);
+                     }
+                     $dokter_anastesi = $data['dokter_anastesi'] ?? '';
+                     $data['dokter_anastesi'] = $dokter_anastesi;
+                     if (!empty($dokter_anastesi)) {
+                         $data['dokter_anastesi'] = implode(', ', $dokter_anastesi);
+                     }
+
             // Update Table Tindakan Post Operasi
+            $this->updateTable(DataUmumPostOperasi::class, $kode_register, [
+                'diagnosa_prabedah' => $data['diagnosa_prabedah'],
+                'diagnosa_pascabedah' => $data['diagnosa_pascabedah'],
+                'jenis_operasi' => $data['jenis_operasi'],
+                'dokter_operator' => $data['dokter_operator'],
+                'asisten_bedah' => $data['asisten_bedah'],
+                'jam_operasi' => $data['jam_operasi'],
+                'jenis_anastesi' => $data['jenis_anastesi'],
+                'dokter_anastesi' => $data['dokter_anastesi'],
+                'asisten_anastesi' => $data['asisten_anastesi'],
+                'updated_by' => auth()->user()->id
+            ]);
+
             $this->updateTable(TindakanPostOperasi::class, $kode_register, [
                 'status_pasien' => $data['status_pasien'] ?? 0,
                 'catatan_anestesi' => $data['catatan_anestesi'] ?? 0,

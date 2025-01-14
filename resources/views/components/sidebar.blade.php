@@ -281,6 +281,10 @@
             <li class="{{ Request::is('booking-operasi*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('operasi.booking.index') }}"><i class="fas fa-id-card-clip"></i> <span>Booking Operasi</span></a></li>
             @endcan
 
+            {{-- @can('pasca bedah') --}}
+            <li class="{{ Request::is('ibs/list-pasien*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('operasi.list-pasien.index')}}"><i class="fas fa-list-alt"></i><span>List Pasien</span></a></li>
+            {{-- @endcan --}}
+
             {{-- Penandaan Operasi --}}
             @can('penandaan operasi')
             <li class="{{ Request::is('penandaan/penandaan-operasi*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('operasi.penandaan.index')}}"><i class="fas fa-file-medical"></i> <span>Penandaan Operasi</span></a></li>
@@ -288,46 +292,39 @@
 
             {{-- IBS Operasi --}}
             @can('ibs')
-                @can('jadwal operasi')
-                <li class="{{ Request::is('ibs/jadwal-operasi*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('operasi.jadwal.index')}}"><i class="fas fa-stethoscope"></i> <span>Jadwal</span></a></li>
-                @endcan
-                @can('ruang operasi')
-                <li class="{{ Request::is('ibs/ruang-operasi*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('operasi.ruang.index')}}"><i class="fas fa-hospital-symbol"></i> <span>Master Ruangan</span></a></li>
-                @endcan
+            @can('jadwal operasi')
+            <li class="{{ Request::is('ibs/jadwal-operasi*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('operasi.jadwal.index')}}"><i class="fas fa-stethoscope"></i> <span>Jadwal</span></a></li>
+            @endcan
+            @can('ruang operasi')
+            <li class="{{ Request::is('ibs/ruang-operasi*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('operasi.ruang.index')}}"><i class="fas fa-hospital-symbol"></i> <span>Master Ruangan</span></a></li>
+            @endcan
 
-                @can('checklist pembedahan')
-                <li class="nav-item dropdown  {{ Request::is('check-list/*') ? 'active' : '' }}">
-                    <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-house-medical-circle-check"></i> <span> CheckList Pembedahan</span></a>
-                    @can('checklist sign in')
-                    <ul class="dropdown-menu">
-                        <li class="{{ Request::is('check-list/signin*') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('operasi.signin.index')}}">Checklist Sign In</a>
-                        </li>
-                    </ul>
-                    @endcan
-                    @can('checklist time out')
-                    <ul class="dropdown-menu">
-                        <li class="{{ Request::is('check-list/timeout*') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('operasi.signin.index')}}">Checklist Time Out</a>
-                        </li>
-                    </ul>
-                    @endcan
-                    @can('checklist sign out')
-                    <ul class="dropdown-menu">
-                        <li class="{{ Request::is('check-list/signout*') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('operasi.signout.index')}}">Checklist Sign Out</a>
-                        </li>
-                    </ul>
-                    @endcan
-                </li>
+            @can('checklist pembedahan')
+            <li class="nav-item dropdown  {{ Request::is('check-list/*') ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-house-medical-circle-check"></i> <span> CheckList Pembedahan</span></a>
+                @can('checklist sign in')
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('check-list/signin*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('operasi.signin.index')}}">Checklist Sign In</a>
+                    </li>
+                </ul>
                 @endcan
-                {{-- Berkas Operasi --}}
-
-                <li class="{{ Request::is('ibs/doctor*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('operasi.doctor.index')}}"><i class="fa-solid fa-user-doctor"></i> <span>Dokter Bedah</span></a></li>
-
-                @can('template operasi')
-                {{-- <li class="{{ Request::is('ibs/template-operasi/*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('operasi.template.index')}}"><i class="fas fa-book-medical"></i> <span>Template Operasi</span></a></li> --}}
+                @can('checklist time out')
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('check-list/timeout*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('operasi.signin.index')}}">Checklist Time Out</a>
+                    </li>
+                </ul>
                 @endcan
+            </li>
+            @endcan
+            {{-- Berkas Operasi --}}
+
+            <li class="{{ Request::is('ibs/doctor*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('operasi.doctor.index')}}"><i class="fa-solid fa-user-doctor"></i> <span>Dokter Bedah</span></a></li>
+
+            @can('template operasi')
+            {{-- <li class="{{ Request::is('ibs/template-operasi/*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('operasi.template.index')}}"><i class="fas fa-book-medical"></i> <span>Template Operasi</span></a></li> --}}
+            @endcan
             @endcan
 
             {{-- Pre & Post Operasi --}}
@@ -397,6 +394,10 @@
             @can('laporan operasi')
             <li class="{{ Request::is('laporan/*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('laporan.operasi.index')}}"><i class="fas fa-book-medical"></i> <span>Laporan Operasi</span></a></li>
             @endcan
+
+            {{-- @can('pasca bedah') --}}
+            <li class="{{ Request::is('laporan/*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('laporan.operasi.index')}}"><i class="fas fa-book-medical"></i> <span>Pasca Bedah</span></a></li>
+            {{-- @endcan --}}
 
             @can('ttd tanda operasi')
             <li class="nav-item dropdown  {{ Request::is('ttd-ok/*') ? 'active' : '' }}">
