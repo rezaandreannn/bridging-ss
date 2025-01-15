@@ -507,7 +507,7 @@
                                     </form>
                                 </div>
                                 {{-- Perencanaan Pasca Bedah --}}
-                                <div class="tab-pane fade" id="pasca-bedah" role="tabpanel" aria-labelledby="contact-tab3">
+                                <div class="tab-pane fade" id="pasca-bedah" role="tabpanel" aria-labelledby="pasca-bedah-tab4">
                                     <form action="{{ isset($laporanOperasi) ? route('laporan.operasi.update', $laporanOperasi->kode_register) : route('laporan.operasi.store') }}" method="POST">
                                         @csrf
                                         @if(isset($laporanOperasi))
@@ -519,74 +519,47 @@
                                             </div>
                                             <!-- include form -->
                                             <div class="card-body card-khusus-body">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label>Nomor Register</label>
-                                                            <input type="text" name="kode_register" value="{{$biodata->pendaftaran->No_Reg}}" class="form-control @error('no_register') is-invalid @enderror" readonly>
-                                                            @error('no_register')
-                                                            <div class="invalid-feedback">
-                                                                {{ $message }}
-                                                            </div>
-                                                            @enderror
+                                                {{-- masih salah bukan dari booking --}}
+                                                <input type="hidden" value="{{$bookingByRegister->dokter->Kode_Dokter}}" name="nama_operator">
+                                                <div class="mb-3 row">
+                                                    <label class="col-3 col-form-label">Tingkat Perawatan Medis</label>
+                                                    <div class="col-9">
+                                                        <select name="" class="form-control @error('tingkat_perawat_medis') is-invalid @enderror selectric">
+                                                            <option value="">Tinggi (ICU)</option>
+                                                            <option value="">Sedang (HCU)</option>
+                                                            <option value="">Rendah (Ruang rawat, ODC / Pulang)</option>
+                                                        </select>
+                                                        @error('tingkat_perawat_medis')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
                                                         </div>
+                                                        @enderror
                                                     </div>
+                                                </div>
 
-                                                    {{-- masih salah bukan dari booking --}}
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label>Nama Operator</label>
-                                                            <input type="hidden" value="{{$bookingByRegister->dokter->Kode_Dokter}}" name="nama_operator">
-                                                            <input type="text" value="{{$bookingByRegister->dokter->Nama_Dokter}}" class="form-control @error('nama_operator') is-invalid @enderror" readonly>
-                                                            @error('nama_operator')
-                                                            <div class="invalid-feedback">
-                                                                {{ $message }}
-                                                            </div>
-                                                            @enderror
+                                                <div class="mb-3 row">
+                                                    <label class="col-3 col-form-label">Monitoring TD, Nadi, RR, Suhu setiap</label>
+                                                    <div class="col-9">
+                                                        <div class="input-group mb-3">
+                                                            <input type="text" class="form-control">
+                                                            <span class="input-group-text"><b>Sampai</b></span>
+                                                            <input type="text" class="form-control">
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label>Tanggal Pembedahan</label>
-                                                            <input type="date" name="tanggal" class="form-control @error('tanggal') is-invalid @enderror">
-                                                            @error('tanggal')
-                                                            <div class="invalid-feedback">
-                                                                {{ $message }}
-                                                            </div>
-                                                            @enderror
-                                                        </div>
+                                                </div>
+
+                                                <div class="mb-3 row">
+                                                    <label class="col-3 col-form-label">Konsultasi pembari pelayanan lain</label>
+                                                    <div class="col-9">
+                                                        <input type="text" id="" class="form-control">
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label>Tingkat Perawatan Medis</label>
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input" type="checkbox" name="tinggi" id="flexCheckDefault" value="1">
-                                                                        <label class="form-check-label" for="flexCheckDefault">
-                                                                            Tinggi (ICU)
-                                                                        </label>
-                                                                    </div>
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input" type="checkbox" name="sedang" id="flexCheckDefault" value="1">
-                                                                        <label class="form-check-label" for="flexCheckDefault">
-                                                                            Sedang (HCU)
-                                                                        </label>
-                                                                    </div>
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input" type="checkbox" name="rendah" id="flexCheckDefault" value="1">
-                                                                        <label class="form-check-label" for="flexCheckDefault">
-                                                                            Rendah (Ruang Rawat, ODC/Pulang)
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            @error('tanggal')
-                                                            <div class="invalid-feedback">
-                                                                {{ $message }}
-                                                            </div>
-                                                            @enderror
-                                                        </div>
+                                                </div>
+
+
+                                                <div class="row">
+                                                    <label class="col-3 col-form-label">Pengobatan yang diperlukan</label>
+                                                    <div class="col-9">
+                                                        <textarea class="form-control" id="" style="height: 200px;"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -619,7 +592,7 @@
             </div>
             <div class="modal-body text-center">
                 <p>Hasil Gambar</p>
-                <img id="gambarZoom{{ $penandaan->id }}" src="{{ asset('storage/operasi/penandaan-pasien/image/' . $penandaan->hasil_gambar) }}" class="img-fluid" alt="Gambar Pengguna"  style="transition: transform 0.3s ease; cursor: zoom-in;">
+                <img id="gambarZoom{{ $penandaan->id }}" src="{{ asset('storage/operasi/penandaan-pasien/image/' . $penandaan->hasil_gambar) }}" class="img-fluid" alt="Gambar Pengguna" style="transition: transform 0.3s ease; cursor: zoom-in;">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -689,7 +662,7 @@
             }
 
             // Hitung durasi dalam milidetik, kemudian konversikan ke jam
-            const duration = (end - start) / 1000 / 60 ; // konversi milidetik ke jam
+            const duration = (end - start) / 1000 / 60; // konversi milidetik ke jam
 
             const hours = Math.floor(duration / 60);
             const minutes = duration % 60;
@@ -703,25 +676,26 @@
 
     // Panggil fungsi perhitungan saat halaman dimuat (untuk memastikan hasil pertama)
     window.onload = calculateDuration;
+
 </script>
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         // Menangani perubahan pada dropdown
-        $("#macam_operasi").change(function () {
-            
+        $("#macam_operasi").change(function() {
+
             // Ambil nilai ID yang dipilih dari select
             var macam_operasi = $("#macam_operasi").val();
 
             if (macam_operasi) {
                 // Lakukan AJAX request ke server untuk mendapatkan laporan_operasi
                 $.ajax({
-                    type: "GET",
-                    url: "{{ route('operasi.template.macam-operasi') }}",
-                    data: {
+                    type: "GET"
+                    , url: "{{ route('operasi.template.macam-operasi') }}"
+                    , data: {
                         macam_operasi: macam_operasi
-                    },
-                    success: function (data) {
+                    }
+                    , success: function(data) {
                         // alert(data.data.laporan_operasi);
 
                         var laporanOperasi = data.data.laporan_operasi
@@ -744,7 +718,7 @@
                         $(this).val(null).trigger('change');
                     },
 
-                    error: function (xhr, status, error) {
+                    error: function(xhr, status, error) {
                         // Tangani kesalahan, misalnya tampilkan pesan error
                         console.error("Error:", error);
                         alert("Terjadi kesalahan saat mengambil data.");
@@ -753,5 +727,6 @@
             }
         });
     });
+
 </script>
 @endpush
