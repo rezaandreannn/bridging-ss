@@ -36,7 +36,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4> Silahkan isi formulir di bawah ini.</h4>
+                            <h4> Silahkan pilih formulir yang akan diisi.</h4>
                         </div>
                         <div class="card-body">
                             <ul class="nav nav-pills" id="myTab3" role="tablist">
