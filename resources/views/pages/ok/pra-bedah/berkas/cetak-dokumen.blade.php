@@ -119,6 +119,9 @@
         .area-1 {
             height: 80px;
             width: 300px;
+            font-family: Arial, Helvetica, sans-serif;
+            border:none;
+            font-size: 12px;
         }
 
         td,
@@ -216,7 +219,7 @@
 
                  {{-- Rencana Tindakan --}}
                  <label>Rencana Tindakan:</label>
-                 <textarea rows="2" style="width: 100%;">{{ optional($cetak)->rencana_tindakan ?? '' }}</textarea>
+                 <textarea rows="2" class="area-1" style="width: 100%;">{{ optional($cetak)->rencana_tindakan ?? '' }}</textarea>
             </td>
             <td>
                 <strong>Verifikasi Pra Bedah</strong><br>
@@ -246,7 +249,7 @@
                 {{-- Obat --}}
                 <input type="checkbox" {{ optional($cetak)->obat == '1' ? 'checked' : '' }} class="checkbox">
                 <span class="text-3">Obat-Obatan yang Dibawa:</span>
-                <textarea rows="2" style="width: 100%;">{{ optional($cetak)->deskripsi_obat ?? '' }}</textarea><br>
+                <textarea rows="2" style="width: 100%;" class="area-1">{{ optional($cetak)->deskripsi_obat ?? '' }}</textarea><br>
 
             </td>
         </tr>

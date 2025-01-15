@@ -377,7 +377,7 @@
             @endcan
 
             {{-- belum clear --}}
-            @can('pasca bedah')
+            {{-- @can('pasca bedah')
             <li class="nav-item dropdown  {{ Request::is('pascabedah/*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-bed-pulse"></i> <span>Pasca Bedah</span></a>
                 @can('perencanaan pasca bedah')
@@ -388,7 +388,7 @@
                 </ul>
                 @endcan
             </li>
-            @endcan
+            @endcan --}}
 
             {{-- Laporan Operasi --}}
             @can('laporan operasi')
@@ -396,7 +396,7 @@
             @endcan
 
             {{-- @can('pasca bedah') --}}
-            <li class="{{ Request::is('laporan/*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('laporan.operasi.index')}}"><i class="fas fa-book-medical"></i> <span>Pasca Bedah</span></a></li>
+            <li class="{{ Request::is('pascabedah/*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('pascabedah.perencanaan-pascabedah.index')}}"><i class="fas fa-book-medical"></i> <span>Pasca Bedah</span></a></li>
             {{-- @endcan --}}
 
             @can('ttd tanda operasi')

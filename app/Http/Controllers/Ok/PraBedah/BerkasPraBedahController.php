@@ -61,31 +61,6 @@ class BerkasPraBedahController extends Controller
         return $pdf->stream($filename . '.pdf');
     }
 
-    public function cetak_pascabedah($kode_register)
-    {
-        $title = $this->prefix . ' ' . 'Operasi';
-        // Ambil data berdasarkan ID
-
-        $cetak = $this->assesmenOperasiService->cetak($kode_register);
-        $biodataPasien = $this->bookingOperasiService->biodata($kode_register);
-        $pasien = $biodataPasien->pendaftaran->registerPasien;
-        // dd($cetak);
-
-        $date = date('dMY');
-        $tanggal = Carbon::now();
-        $filename = 'AssesmenPraBedah-' . $date;
-
-        $pdf = PDF::loadview('pages.ok.pra-bedah.berkas.cetak-pascabedah', [
-            'cetak' => $cetak,
-            'title' => $title,
-            'tanggal' => $tanggal,
-            'pasien' => $pasien
-        ]);
-        // Set paper size to A5
-        $pdf->setPaper('A4');
-        return $pdf->stream($filename . '.pdf');
-    }
-
     public function download($kode_register)
     {
         $title = $this->prefix . ' ' . 'Operasi';

@@ -508,11 +508,12 @@
                                 </div>
                                 {{-- Perencanaan Pasca Bedah --}}
                                 <div class="tab-pane fade" id="pasca-bedah" role="tabpanel" aria-labelledby="pasca-bedah-tab4">
-                                    <form action="{{ isset($laporanOperasi) ? route('laporan.operasi.update', $laporanOperasi->kode_register) : route('laporan.operasi.store') }}" method="POST">
+                                    <form action="{{ isset($pascaBedah) ? route('pascabedah.perencanaan-pascabedah.update', $pascaBedah->kode_register) : route('pascabedah.perencanaan-pascabedah.store') }}" method="POST">
                                         @csrf
-                                        @if(isset($laporanOperasi))
+                                        @if(isset($pascaBedah))
                                         @method('PUT')
                                         @endif
+                                        <input type="hidden" name="kode_register" value="{{$biodata->pendaftaran->No_Reg}}">
                                         <div class="card mb-3">
                                             <div class="card-header card-khusus-header">
                                                 <h6 class="card-khusus-title">Pasca Bedah</h6>
@@ -524,12 +525,12 @@
                                                 <div class="mb-3 row">
                                                     <label class="col-3 col-form-label">Tingkat Perawatan Medis</label>
                                                     <div class="col-9">
-                                                        <select name="" class="form-control @error('tingkat_perawat_medis') is-invalid @enderror selectric">
-                                                            <option value="">Tinggi (ICU)</option>
-                                                            <option value="">Sedang (HCU)</option>
-                                                            <option value="">Rendah (Ruang rawat, ODC / Pulang)</option>
+                                                        <select name="tingkat_perawatan" class="form-control @error('tingkat_perawatan') is-invalid @enderror selectric">
+                                                            <option value="tinggi" {{ isset($pascaBedah) && $pascaBedah->tingkat_perawatan == 'tinggi' ? 'selected' : '' }}>Tinggi (ICU)</option>
+                                                            <option value="sedang" {{ isset($pascaBedah) && $pascaBedah->tingkat_perawatan == 'sedang' ? 'selected' : '' }}>Sedang (HCU)</option>
+                                                            <option value="rendah" {{ isset($pascaBedah) && $pascaBedah->tingkat_perawatan == 'rendah' ? 'selected' : '' }}>Rendah (Ruang rawat, ODC / Pulang)</option>
                                                         </select>
-                                                        @error('tingkat_perawat_medis')
+                                                        @error('tingkat_perawatan')
                                                         <div class="invalid-feedback">
                                                             {{ $message }}
                                                         </div>
@@ -541,9 +542,9 @@
                                                     <label class="col-3 col-form-label">Monitoring TD, Nadi, RR, Suhu setiap</label>
                                                     <div class="col-9">
                                                         <div class="input-group mb-3">
-                                                            <input type="text" class="form-control">
+                                                            <input type="text" name="monitoring_ttv_start" class="form-control" value="{{ isset($pascaBedah) && $pascaBedah->monitoring_ttv_start ? $pascaBedah->monitoring_ttv_start : '' }}">
                                                             <span class="input-group-text"><b>Sampai</b></span>
-                                                            <input type="text" class="form-control">
+                                                            <input type="text" name="monitoring_ttv_end" class="form-control" value="{{ isset($pascaBedah) && $pascaBedah->monitoring_ttv_end ? $pascaBedah->monitoring_ttv_end : '' }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -551,7 +552,7 @@
                                                 <div class="mb-3 row">
                                                     <label class="col-3 col-form-label">Konsultasi pembari pelayanan lain</label>
                                                     <div class="col-9">
-                                                        <input type="text" id="" class="form-control">
+                                                        <input type="text" id="" name="konsultasi_pelayanan" class="form-control" value="{{ isset($pascaBedah) && $pascaBedah->konsultasi_pelayanan ? $pascaBedah->konsultasi_pelayanan : '' }}">
                                                     </div>
                                                 </div>
 
@@ -559,14 +560,14 @@
                                                 <div class="row">
                                                     <label class="col-3 col-form-label">Pengobatan yang diperlukan</label>
                                                     <div class="col-9">
-                                                        <textarea class="form-control" id="" style="height: 200px;"></textarea>
+                                                        <textarea class="form-control" id="" name="terapi" style="height: 200px;">{{ isset($pascaBedah) && $pascaBedah->terapi ? $pascaBedah->terapi : '' }}</textarea>
                                                     </div>
                                                 </div>
                                             </div>
                                             <!-- include form -->
                                         </div>
                                         <div class="text-left">
-                                            <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> {{ isset($laporanOperasi) ? 'Update' : 'Simpan' }}</button>
+                                            <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> {{ isset($pascaBedah) ? 'Update' : 'Simpan' }}</button>
                                         </div>
                                     </form>
                                 </div>

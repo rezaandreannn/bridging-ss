@@ -115,21 +115,19 @@ Route::prefix('prabedah')->name('prabedah.')->middleware('auth')->group(function
     Route::get('/berkas-prabedah/cetak/{kode_register}', [BerkasPraBedahController::class, 'cetak'])->name('berkas-prabedah.cetak');
 
 
-    Route::get('/berkas-pascabedah/cetak/{kode_register}', [BerkasPraBedahController::class, 'cetak_pascabedah'])->name('berkas-pascabedah.cetak');
-
-
     Route::get('/berkas-prabedah/download/{kode_register}', [BerkasPraBedahController::class, 'download'])->name('berkas-prabedah.download');
 });
 
 // pasca bedah
 Route::prefix('pascabedah')->name('pascabedah.')->middleware('auth')->group(function () {
-    // Asesmen Pra Bedah
+    // Perencanaan Pasca Bedah
     Route::get('/perencanaan-pascabedah', [PerencanaanPascaBedahController::class, 'index'])->name('perencanaan-pascabedah.index');
     Route::get('/perencanaan-pascabedah/create/{kode_register}', [PerencanaanPascaBedahController::class, 'create'])->name('perencanaan-pascabedah.create');
     Route::post('/perencanaan-pascabedah', [PerencanaanPascaBedahController::class, 'store'])->name('perencanaan-pascabedah.store');
     Route::get('/perencanaan-pascabedah/edit/{kode_register}', [PerencanaanPascaBedahController::class, 'edit'])->name('perencanaan-pascabedah.edit');
     Route::put('/perencanaan-pascabedah/update/{kode_register}', [PerencanaanPascaBedahController::class, 'update'])->name('perencanaan-pascabedah.update');
     Route::delete('/perencanaan-pascabedah/delete/{id}', [PerencanaanPascaBedahController::class, 'destroy'])->name('perencanaan-pascabedah.destroy');
+    Route::get('/perencanaan-pascabedah/cetak/{kode_register}', [PerencanaanPascaBedahController::class, 'cetak'])->name('perencanaan-pascabedah.cetak');
 });
 
 Route::prefix('laporan')->name('laporan.')->middleware('auth')->group(function () {

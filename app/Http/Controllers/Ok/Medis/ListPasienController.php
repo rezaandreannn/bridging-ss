@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Ok\Medis;
 
+use App\Models\Simrs\Dokter;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Simrs\Dokter;
+use App\Helpers\Ok\LaporanOperasiHelper;
+use App\Helpers\Ok\PascaBedahHelper;
 use App\Services\Operasi\BookingOperasiService;
 
 class ListPasienController extends Controller
@@ -28,10 +30,17 @@ class ListPasienController extends Controller
 
             // Ambil pasien dokter
             $patients = $this->bookingOperasiService->byDate($date, '', $sessionKodeDokter ?? '');
+            $statusLaporanOperasi = LaporanOperasiHelper::getStatusLaporanOperasi($patients);
+            $statusPascaBedah = PascaBedahHelper::getStatusPascaBedah($patients);
         } else {
             abort(403);
         }
 
-        return view('pages.ok.list-pasien.index', compact('title', 'patients', 'date', 'DoctorName'));
+        return view('pages.ok.list-pasien.index', compact('patients', 'date', 'DoctorName'))
+            ->with([
+                'title' => $title,
+                'statusLaporanOperasi' => $statusLaporanOperasi,
+                'statusPascaBedah' => $statusPascaBedah
+            ]);
     }
 }

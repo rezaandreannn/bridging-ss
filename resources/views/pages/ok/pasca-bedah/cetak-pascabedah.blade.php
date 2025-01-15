@@ -119,6 +119,8 @@
         .area-1 {
             height: 400px;
             width: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+            border:none;
         }
 
         td,
@@ -193,30 +195,30 @@
                 <label>Dokter Operator: {{ $cetak->nama_dokter ?? ''}}</label>
             </td>
             <td>
-                <label>Tanggal Pembedahan: {{ optional($cetak)->tanggal ? date('d-m-Y', strtotime($cetak->tanggal)) : '' }}</label>
+                <label>Tanggal Pembedahan: {{ optional($cetak)->created_at ? date('d-m-Y', strtotime($cetak->created_at)) : '' }}</label>
             </td>
         </tr>
         <tr>
             <td colspan="2" style="border-right:none;border-bottom:none;">
-                <span>1. Tingkat Perawatan Medis :</span>
+                <span><b> 1. Tingkat Perawatan Medis : </b></span>
             </td>
             <td style="border-left:none;border-bottom:none;">
-                <input type="checkbox">Tinggi<br>
-                <input type="checkbox"> Sedang<br>
-                <input type="checkbox"> Rendah<br>
+                <input type="checkbox" {{ optional($cetak)->tingkat_perawatan == 'tinggi' ? 'checked' : '' }}> Tinggi<br>
+                <input type="checkbox" {{ optional($cetak)->tingkat_perawatan == 'sedang' ? 'checked' : '' }}> Sedang<br>
+                <input type="checkbox" {{ optional($cetak)->tingkat_perawatan == 'rendah' ? 'checked' : '' }}> Rendah<br>
             </td>
         </tr>
         <tr>
             <td colspan="3" style="border-top:none;border-bottom:none;">
-                <label>2. Monitor dan Terapi lanjutan :</label><br>
-                <label>a. Monitor TD, Nadi, RR, Suhu Setiap : Sampai :</label><br>
-                <label>b. Konsultasi pemberi pelayanan lain :</label>
+                <label><b>2. Monitor dan Terapi lanjutan :</b></label><br>
+                <label style="padding-left:15px;">a. Monitor TD, Nadi, RR, Suhu Setiap  : {{ optional($cetak)->monitoring_ttv_start ?? '' }} Sampai : {{ optional($cetak)->monitoring_ttv_end ?? '' }}</label><br>
+                <label style="padding-left:15px;">b. Konsultasi pemberi pelayanan lain : {{ optional($cetak)->konsultasi_pelayanan ?? '' }}</label>
             </td>
         </tr>
         <tr>
             <td colspan="3" style="border-top:none;">
-                <label>3. Pengobatan yang diperlukan:</label>
-                <textarea rows="2" class="area-1">{{ optional($cetak)->rencana_tindakan ?? '' }}</textarea>
+                <label><b>3. Pengobatan yang diperlukan:</b></label>
+                <textarea rows="2" class="area-1">{{ optional($cetak)->terapi ?? '' }}</textarea>
             </td>
         </tr>
     </table>

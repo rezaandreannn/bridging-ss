@@ -17,11 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('kode_register');
             $table->string('tingkat_perawatan');
-            $table->string('deskripsi_tingkat_perawatan');
             $table->string('monitoring_ttv_start');
             $table->string('monitoring_ttv_end');
             $table->string('konsultasi_pelayanan');
-            $table->string('terapi');
+            $table->text('terapi');
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->timestamps();

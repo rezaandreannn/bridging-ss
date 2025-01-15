@@ -23,61 +23,47 @@
         <div class="section-header">
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="{{ route('pascabedah.perencanaan-pascabedah.index') }}">perencanaan medis prabedah</a></div>
-                <div class="breadcrumb-item">Assesmen Pra Bedah</div>
+                <div class="breadcrumb-item active"><a href="{{ route('operasi.penandaan.index') }}">Operasi</a></div>
+                <div class="breadcrumb-item">{{ $title }}</div>
             </div>
         </div>
 
         <div class="section-body">
+            <h2 class="section-title">{{ $DoctorName ?? '' }}</h2>
+            <p class="section-lead">
+                Menampilkan list pasien yang sudah terjadwal untuk operasi pada hari ini tanggal <b>{{ date('d-m-Y', strtotime($date ))}}</b>.
+            </p>
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table-striped table table-bordered" id="table-1">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">No</th>
-                                            <th scope="col">No MR</th>
-                                            <th scope="col">Nama Pasien</th>
-                                            <th scope="col">Tanggal</th>
-                                            <th scope="col">Dokter Operator</th>
-                                            <th scope="col">Status</th>
-                                            <th scope="col">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($verifikasis as $booking)
-                                        <tr>
-                                            <td>{{$loop->iteration}}</td>
-                                            <td>{{$booking->no_mr}}</td>
-                                            <td>{{ ucwords(strtolower(trim($booking->nama_pasien))) }}</td>
-                                            <td>{{$booking->tanggal}}</td>
-                                            <td>{{$booking->nama_dokter}}</td>
-                                            <td>
-                                                @if (isset($statusAssesmen[$booking->id]) && $statusAssesmen[$booking->id] == 'create')
-                                                <span class="badge badge-warning">Belum</span>
-                                                @else
-                                                <span class="badge badge-success">Sudah</span>
-                                                @endif
-                                            <td>  
-                                                <div class="dropdown d-inline">
-                                                    <a href="#" class="text-primary" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu">
-                                                        {{-- Input --}}
-                                                        <a class="dropdown-item has-icon" href="{{ isset($statusAssesmen[$booking->id]) && $statusAssesmen[$booking->id] == 'create' ? route('prabedah.assesmen-prabedah.create', $booking->kode_register) : route('prabedah.assesmen-prabedah.edit', $booking->kode_register) }}">
-                                                            <i class="fas fa-marker"></i> {{ isset($statusAssesmen[$booking->id]) && $statusAssesmen[$booking->id] == 'create' ? 'Tambah' : 'Edit' }}</a>
-                                                            @if (!$statusTtd)
-                                                            <a class="dropdown-item has-icon" href="{{ route('ttd-perawat.create') }}"> 
-                                                                <i class="fas fa-signature"></i> Tanda Tangan
-                                                            </a>
-                                                            @endif
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
+                        <table class="table-striped table" id="table-1">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">No MR</th>
+                                    <th scope="col">Nama Pasien</th>
+                                    <th scope="col">Asal Ruangan</th>
+                                    <th scope="col">Booking by</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($patients as $patient)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td><b>{{ $patient->no_mr }}</b></td>
+                                    <td>{{ ucwords(strtolower(trim($patient->nama_pasien))) }}</td>
+                                    <td>{{ $patient->asal_ruangan ?? ''}}</td>
+                                    <td>{{ $patient->created_by ?? ''}}</td>
+                                    <td>
+                                        <a href="{{ route('pascabedah.perencanaan-pascabedah.create', $patient->kode_register )}}" class="badge badge-primary rounded-0">
+                                            <i class="fas fa-file-alt"></i>
+                                            Entry
+                                        </a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -85,7 +71,6 @@
         </div>
     </section>
 </div>
-
 @endsection
 
 @push('scripts')
@@ -97,37 +82,4 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
-
-<script>
-    $(document).ready(function() {
-        // Inisialisasi DataTable
-        var table = $('#table-1').DataTable();
-
-        // Event delegation untuk tombol delete
-        $('#table-1').on('click', '[confirm-delete="true"]', function(event) {
-            event.preventDefault();
-            var menuId = $(this).data('menuid');
-            Swal.fire({
-                title: 'Apakah Kamu Yakin?'
-                , text: "Anda tidak akan dapat mengembalikan ini!"
-                , icon: 'warning'
-                , showCancelButton: true
-                , confirmButtonColor: '#6777EF'
-                , cancelButtonColor: '#d33'
-                , confirmButtonText: 'Ya, Hapus saja!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    var form = $('#delete-form-' + menuId);
-                    if (form.length) {
-                        form.submit();
-                    } else {
-                        console.error('Data will not be deleted!:', menuId);
-                    }
-                }
-            });
-        });
-    });
-
-</script>
-
 @endpush

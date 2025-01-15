@@ -10,6 +10,7 @@ use App\Services\Operasi\BookingOperasiService;
 use App\Models\Operasi\MasterData\TemplateOperasi;
 use App\Models\Operasi\Operasi;
 use App\Models\Operasi\OperatorAsistenDetail;
+use App\Models\Operasi\PascaBedah\PerencanaanPascaBedah;
 use App\Models\Operasi\PraBedah\AssesmenPraBedah;
 use App\Models\Operasi\PraBedah\VerifikasiPraBedahOther;
 use App\Services\Operasi\LaporanOperasi\LaporanOperasiService;
@@ -45,10 +46,13 @@ class DetailPasienController extends Controller
         $anestesi = Operasi::where('kode_register', $kodeReg)->first();
         // dd($detailOperasi);
 
+        // Pasca Bedah
+        $pascaBedah = PerencanaanPascaBedah::where('kode_register', $kodeReg)->first();
+
 
         $biodata = $this->bookingOperasiService->biodata($kodeReg);
 
-        return view('pages.ok.list-pasien.detail', compact('title', 'biodata', 'penandaan', 'assesmen', 'other', 'detailOperasi', 'laporanOperasi', 'anestesi'))->with([
+        return view('pages.ok.list-pasien.detail', compact('title', 'biodata', 'penandaan', 'assesmen', 'other', 'detailOperasi', 'laporanOperasi', 'anestesi', 'pascaBedah'))->with([
             'bookingByRegister' => $this->bookingOperasiService->findByRegister($kodeReg),
             'asistenOperasi' => $this->laporanOperasiService->getAsistenOperasi(),
             'spesialisAnastesi' => $this->laporanOperasiService->getSpesialisAnastesi(),
