@@ -152,7 +152,8 @@ class LaporanOperasiController extends Controller
         try {
             $this->laporanOperasiService->insert($request->validated());
 
-            return redirect('laporan/operasi')->with('success', 'Laporan operasi berhasil ditambahkan.');
+            return redirect()->back()->with('success', 'Laporan operasi berhasil ditambahkan.');
+            // return redirect('laporan/operasi')->with('success', 'Laporan operasi berhasil ditambahkan.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
             return redirect()->back()->with('error', 'Gagal menambahkan laporan operasi: ' . $e->getMessage());
@@ -218,7 +219,8 @@ class LaporanOperasiController extends Controller
         try {
             $this->laporanOperasiService->update($id, $request->validated());
 
-            return redirect('laporan/operasi')->with('success', 'Laporan operasi berhasil diperbarui.');
+            return redirect()->back()->with('success', 'Laporan operasi berhasil diperbarui.');
+            // return redirect('laporan/operasi')->with('success', 'Laporan operasi berhasil diperbarui.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
             return redirect()->back()->with('error', 'Gagal memperbarui laporan operasi: ' . $e->getMessage());

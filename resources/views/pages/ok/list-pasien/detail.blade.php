@@ -264,7 +264,7 @@
                                                             <select name="nama_asisten[]" class="form-control @error('nama_asisten') is-invalid @enderror select2" multiple>
                                                                 <option value="" disabled>--Pilih Asisten--</option>
                                                                 @foreach ($asistenOperasi as $asisten)
-                                                                <option value="{{$asisten->kode_dokter}}">{{$asisten->nama_asisten}}</option>
+                                                                <option value="{{$asisten->kode_dokter}}" {{(in_array($asisten->kode_dokter,$asistenArray)) ? 'selected' : ''}}>{{$asisten->nama_asisten}}</option>
                                                                 @endforeach
                                                             </select>
                                                             @error('nama_asisten')
@@ -280,7 +280,7 @@
                                                             <select name="nama_perawat[]" class="form-control @error('nama_perawat') is-invalid @enderror select2" multiple>
                                                                 <option value="" disabled>--Pilih Perawat--</option>
                                                                 @foreach ($asistenOperasi as $asisten)
-                                                                <option value="{{$asisten->kode_dokter}}">{{$asisten->nama_asisten}}</option>
+                                                                <option value="{{$asisten->kode_dokter}}" {{(in_array($asisten->kode_dokter,$perawatArray)) ? 'selected' : ''}}>{{$asisten->nama_asisten}}</option>
                                                                 @endforeach
                                                             </select>
                                                             @error('nama_perawat')
@@ -296,7 +296,7 @@
                                                             <select name="nama_ahli_anastesi[]" class="form-control @error('nama_ahli_anastesi') is-invalid @enderror select2" multiple>
                                                                 <option value="" disabled>--Pilih Ahli Anastesi--</option>
                                                                 @foreach ($spesialisAnastesi as $anastesi)
-                                                                <option value="{{$anastesi->kode_dokter}}">{{$anastesi->nama_asisten}}</option>
+                                                                <option value="{{$anastesi->kode_dokter}}" {{(in_array($anastesi->kode_dokter,$ahliAnastesiArray)) ? 'selected' : ''}}>{{$anastesi->nama_asisten}}</option>
                                                                 @endforeach
                                                             </select>
                                                             @error('nama_ahli_anastesi')
@@ -312,7 +312,7 @@
                                                             <select name="nama_anastesi[]" class="form-control @error('nama_anastesi') is-invalid @enderror select2" multiple>
                                                                 <option value="" disabled>--Pilih Penata Anastesi--</option>
                                                                 @foreach ($penataAnastesi as $penataAnastesi)
-                                                                <option value="{{$penataAnastesi->kode_dokter}}">{{$penataAnastesi->nama_asisten}}</option>
+                                                                <option value="{{$penataAnastesi->kode_dokter}}" {{(in_array($penataAnastesi->kode_dokter,$anastesiArray)) ? 'selected' : ''}}>{{$penataAnastesi->nama_asisten}}</option>
                                                                 @endforeach
                                                             </select>
                                                             @error('nama_anastesi')
@@ -325,7 +325,7 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>Jenis Anestesi</label>
-                                                            <input type="text" name="jenis_anastesi" class="form-control @error('jenis_anastesi') is-invalid @enderror">
+                                                            <input type="text" name="jenis_anastesi" value="{{ isset($anestesi) && $anestesi->jenis_anastesi ? $anestesi->jenis_anastesi : '' }}" class="form-control @error('jenis_anastesi') is-invalid @enderror">
                                                             @error('jenis_anastesi')
                                                             <div class="invalid-feedback">
                                                                 {{ $message }}
@@ -382,13 +382,13 @@
                                                         <div class="form-group">
                                                             <label>Dikirim untuk pemeriksaan PA</label>
                                                             <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="permintaan_pa" id="permintaan_pa1" value="1" {{ old('permintaan_pa') == '1' ? 'checked' : '' }}>
+                                                                <input class="form-check-input" type="radio" name="permintaan_pa" id="permintaan_pa1" value="1" {{ isset($laporanOperasi) && $laporanOperasi->permintaan_pa == 1 ? 'checked' : '' }}>
                                                                 <label class="form-check-label" for="pemeriksaan_pa1">
                                                                     Ya
                                                                 </label>
                                                             </div>
                                                             <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="permintaan_pa" id="permintaan_pa2" value="0" {{ (old('permintaan_pa') !== '1' && old('permintaan_pa') !== '0') || old('permintaan_pa') == '0' ? 'checked' : '' }}>
+                                                                <input class="form-check-input" type="radio" name="permintaan_pa" id="permintaan_pa2" value="0" {{ isset($laporanOperasi) && $laporanOperasi->permintaan_pa == 0 ? 'checked' : '' }}>
                                                                 <label class="form-check-label" for="permintaan_pa2">
                                                                     Tidak
                                                                 </label>
@@ -449,7 +449,7 @@
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label>Mulai Operasi</label>
-                                                            <input type="time" name="mulai_operasi" id="mulai_operasi" class="form-control @error('mulai_operasi') is-invalid @enderror" value="{{ date('h:i', strtotime($bookingByRegister->jam_mulai))}}">
+                                                            <input type="time" name="mulai_operasi" id="mulai_operasi" class="form-control @error('mulai_operasi') is-invalid @enderror" value="{{ isset($laporanOperasi) && $laporanOperasi->mulai_operasi ? date('H:i', strtotime($laporanOperasi->mulai_operasi)) : '' }}">
                                                             @error('mulai_operasi')
                                                             <div class="invalid-feedback">
                                                                 {{ $message }}
@@ -460,7 +460,7 @@
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label>Selesai Operasi</label>
-                                                            <input type="time" name="selesai_operasi" id="selesai_operasi" class="form-control @error('selesai_operasi') is-invalid @enderror" value="{{ date('h:i', strtotime($bookingByRegister->jam_selesai))}}">
+                                                            <input type="time" name="selesai_operasi" id="selesai_operasi" class="form-control @error('selesai_operasi') is-invalid @enderror" value="{{ isset($laporanOperasi) && $laporanOperasi->selesai_operasi ? date('H:i', strtotime($laporanOperasi->selesai_operasi)) : '' }}">
                                                             @error('selesai_operasi')
                                                             <div class="invalid-feedback">
                                                                 {{ $message }}
@@ -472,8 +472,7 @@
                                                         <div class="form-group">
                                                             <label>Lama Operasi</label>
                                                             <div class="input-group">
-                                                                <input type="text" name="lama_operasi" id="lama_operasi" class="form-control @error('lama_operasi') is-invalid  
-                                        @enderror" readonly>
+                                                                <input type="text" name="lama_operasi" id="lama_operasi" value="{{ isset($laporanOperasi) && $laporanOperasi->lama_operasi ? date('H:i', strtotime($laporanOperasi->lama_operasi)) : '' }}" class="form-control @error('lama_operasi') is-invalid @enderror" readonly>
                                                                 <div class="input-group-append">
                                                                     <div class="input-group-text">
                                                                         <b>Jam</b>
@@ -490,7 +489,7 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>Laporan Operasi</label>
-                                                            <textarea name="laporan_operasi" class="form-control" id="laporan_operasi" style="height: 100px;" rows="3">{{ old('laporan_operasi') }}</textarea>
+                                                            <textarea name="laporan_operasi" class="form-control" id="laporan_operasi" style="height: 100px;" rows="3">{{ isset($laporanOperasi) && $laporanOperasi->laporan_operasi ? $laporanOperasi->laporan_operasi : '' }}</textarea>
                                                             @error('laporan_operasi')
                                                             <span class="text-danger" style="font-size: 12px;">
                                                                 {{ $message }}
@@ -503,13 +502,100 @@
                                             <!-- include form -->
                                         </div>
                                         <div class="text-left">
-                                            <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> {{ isset($assesmen) ? 'Update' : 'Simpan' }}</button>
+                                            <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> {{ isset($laporanOperasi) ? 'Update' : 'Simpan' }}</button>
                                         </div>
                                     </form>
                                 </div>
                                 {{-- Perencanaan Pasca Bedah --}}
                                 <div class="tab-pane fade" id="pasca-bedah" role="tabpanel" aria-labelledby="contact-tab3">
-                                    pasca bedah
+                                    <form action="{{ isset($laporanOperasi) ? route('laporan.operasi.update', $laporanOperasi->kode_register) : route('laporan.operasi.store') }}" method="POST">
+                                        @csrf
+                                        @if(isset($laporanOperasi))
+                                        @method('PUT')
+                                        @endif
+                                        <div class="card mb-3">
+                                            <div class="card-header card-khusus-header">
+                                                <h6 class="card-khusus-title">Pasca Bedah</h6>
+                                            </div>
+                                            <!-- include form -->
+                                            <div class="card-body card-khusus-body">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Nomor Register</label>
+                                                            <input type="text" name="kode_register" value="{{$biodata->pendaftaran->No_Reg}}" class="form-control @error('no_register') is-invalid @enderror" readonly>
+                                                            @error('no_register')
+                                                            <div class="invalid-feedback">
+                                                                {{ $message }}
+                                                            </div>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+
+                                                    {{-- masih salah bukan dari booking --}}
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Nama Operator</label>
+                                                            <input type="hidden" value="{{$bookingByRegister->dokter->Kode_Dokter}}" name="nama_operator">
+                                                            <input type="text" value="{{$bookingByRegister->dokter->Nama_Dokter}}" class="form-control @error('nama_operator') is-invalid @enderror" readonly>
+                                                            @error('nama_operator')
+                                                            <div class="invalid-feedback">
+                                                                {{ $message }}
+                                                            </div>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Tanggal Pembedahan</label>
+                                                            <input type="date" name="tanggal" class="form-control @error('tanggal') is-invalid @enderror">
+                                                            @error('tanggal')
+                                                            <div class="invalid-feedback">
+                                                                {{ $message }}
+                                                            </div>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Tingkat Perawatan Medis</label>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="checkbox" name="tinggi" id="flexCheckDefault" value="1">
+                                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                                            Tinggi (ICU)
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="checkbox" name="sedang" id="flexCheckDefault" value="1">
+                                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                                            Sedang (HCU)
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="checkbox" name="rendah" id="flexCheckDefault" value="1">
+                                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                                            Rendah (Ruang Rawat, ODC/Pulang)
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @error('tanggal')
+                                                            <div class="invalid-feedback">
+                                                                {{ $message }}
+                                                            </div>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- include form -->
+                                        </div>
+                                        <div class="text-left">
+                                            <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> {{ isset($laporanOperasi) ? 'Update' : 'Simpan' }}</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -578,5 +664,94 @@
         $("#signature2").val('');
     });
 
+</script>
+<script>
+    // Menambahkan event listener pada kedua input
+    document.getElementById('mulai_operasi').addEventListener('input', calculateDuration);
+    document.getElementById('selesai_operasi').addEventListener('input', calculateDuration);
+    const lamaOperasi = document.getElementById('lama_operasi');
+
+    // Fungsi untuk menghitung durasi
+    function calculateDuration() {
+        // Ambil nilai input jam mulai dan jam selesai
+        const startTime = document.getElementById('mulai_operasi').value;
+        const endTime = document.getElementById('selesai_operasi').value;
+
+        // Pastikan kedua input memiliki nilai
+        if (startTime && endTime) {
+            // Ubah jam menjadi format Date untuk manipulasi waktu
+            const start = new Date(`1970-01-01T${startTime}:00`);
+            const end = new Date(`1970-01-01T${endTime}:00`);
+
+            // Jika jam selesai lebih kecil dari jam mulai (misalnya, jam selesai pada hari berikutnya)
+            if (end < start) {
+                end.setDate(end.getDate() + 1); // Tambah satu hari pada jam selesai
+            }
+
+            // Hitung durasi dalam milidetik, kemudian konversikan ke jam
+            const duration = (end - start) / 1000 / 60 ; // konversi milidetik ke jam
+
+            const hours = Math.floor(duration / 60);
+            const minutes = duration % 60;
+
+            // Tampilkan hasil durasi
+            lamaOperasi.value = `${hours} Jam ${minutes} Menit`;
+        } else {
+            lamaOperasi.value = "";
+        }
+    }
+
+    // Panggil fungsi perhitungan saat halaman dimuat (untuk memastikan hasil pertama)
+    window.onload = calculateDuration;
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Menangani perubahan pada dropdown
+        $("#macam_operasi").change(function () {
+            
+            // Ambil nilai ID yang dipilih dari select
+            var macam_operasi = $("#macam_operasi").val();
+
+            if (macam_operasi) {
+                // Lakukan AJAX request ke server untuk mendapatkan laporan_operasi
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('operasi.template.macam-operasi') }}",
+                    data: {
+                        macam_operasi: macam_operasi
+                    },
+                    success: function (data) {
+                        // alert(data.data.laporan_operasi);
+
+                        var laporanOperasi = data.data.laporan_operasi
+                        // Hapus tag HTML menggunakan regex
+                        laporanOperasi = laporanOperasi.replace(/<\/?[^>]+(>|$)/g, "\n"); // Menghapus tag HTML
+
+                        // Ganti &nbsp; dengan spasi biasa
+                        laporanOperasi = laporanOperasi.replace(/&nbsp;/g, " ");
+
+                        // Hapus baris kosong ekstra (newline berturut-turut)
+                        laporanOperasi = laporanOperasi.replace(/(\r\n|\r|\n){2,}/g, "\n");
+
+                        // Hapus whitespace di awal dan akhir teks
+                        laporanOperasi = laporanOperasi.trim();
+
+                        // Set teks baru ke dalam textarea
+                        $("#laporan_operasi").val(laporanOperasi);
+
+                        // Reset dropdown
+                        $(this).val(null).trigger('change');
+                    },
+
+                    error: function (xhr, status, error) {
+                        // Tangani kesalahan, misalnya tampilkan pesan error
+                        console.error("Error:", error);
+                        alert("Terjadi kesalahan saat mengambil data.");
+                    }
+                });
+            }
+        });
+    });
 </script>
 @endpush

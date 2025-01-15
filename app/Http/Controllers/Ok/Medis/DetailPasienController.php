@@ -8,6 +8,7 @@ use App\Models\Operasi\LaporanOperasi;
 use App\Models\Operasi\PenandaanOperasi;
 use App\Services\Operasi\BookingOperasiService;
 use App\Models\Operasi\MasterData\TemplateOperasi;
+use App\Models\Operasi\Operasi;
 use App\Models\Operasi\OperatorAsistenDetail;
 use App\Models\Operasi\PraBedah\AssesmenPraBedah;
 use App\Models\Operasi\PraBedah\VerifikasiPraBedahOther;
@@ -41,15 +42,21 @@ class DetailPasienController extends Controller
         // Laporan
         $detailOperasi = OperatorAsistenDetail::where('kode_register', $kodeReg)->first();
         $laporanOperasi = LaporanOperasi::where('kode_register', $kodeReg)->first();
+        $anestesi = Operasi::where('kode_register', $kodeReg)->first();
+        // dd($detailOperasi);
 
 
         $biodata = $this->bookingOperasiService->biodata($kodeReg);
 
-        return view('pages.ok.list-pasien.detail', compact('title', 'biodata', 'penandaan', 'assesmen', 'other', 'detailOperasi', 'laporanOperasi'))->with([
+        return view('pages.ok.list-pasien.detail', compact('title', 'biodata', 'penandaan', 'assesmen', 'other', 'detailOperasi', 'laporanOperasi', 'anestesi'))->with([
             'bookingByRegister' => $this->bookingOperasiService->findByRegister($kodeReg),
             'asistenOperasi' => $this->laporanOperasiService->getAsistenOperasi(),
             'spesialisAnastesi' => $this->laporanOperasiService->getSpesialisAnastesi(),
             'penataAnastesi' => $this->laporanOperasiService->getPenataAsisten(),
+            'perawatArray' => $this->laporanOperasiService->getPerawatArray($kodeReg),
+            'ahliAnastesiArray' => $this->laporanOperasiService->getAhliAnastesiArray($kodeReg),
+            'anastesiArray' => $this->laporanOperasiService->getAnastesiArray($kodeReg),
+            'asistenArray' => $this->laporanOperasiService->getAsistenArray($kodeReg),
             'templates' => TemplateOperasi::where('kode_dokter', auth()->user()->username)->get()
         ]);
     }
