@@ -117,8 +117,8 @@
         }
 
         .area-1 {
-            height: 80px;
-            width: 300px;
+            height: 400px;
+            width: 100%;
         }
 
         td,
@@ -197,37 +197,44 @@
             </td>
         </tr>
         <tr>
-            <td colspan="3">
+            <td colspan="2" style="border-right:none;border-bottom:none;">
                 <span>1. Tingkat Perawatan Medis :</span>
-                <input type="checkbox" >Tinggi<br>
+            </td>
+            <td style="border-left:none;border-bottom:none;">
+                <input type="checkbox">Tinggi<br>
                 <input type="checkbox"> Sedang<br>
-                <input type="checkbox" > Rendah<br>
+                <input type="checkbox"> Rendah<br>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="border-top:none;border-bottom:none;">
                 <label>2. Monitor dan Terapi lanjutan :</label><br>
-                <label>a. Monitor TD, Nadi, RR, Suhu Setiap :</label><br>
-                <label>b. Konsultasi pemberi pelayanan lain:</label>
-               
-                 {{-- Rencana Tindakan --}}
-                 <br>
-                 <label>3. Pengobatan yang diperlukan:</label>
-                 <textarea rows="2" style="width: 100%;">{{ optional($cetak)->rencana_tindakan ?? '' }}</textarea>
+                <label>a. Monitor TD, Nadi, RR, Suhu Setiap : Sampai :</label><br>
+                <label>b. Konsultasi pemberi pelayanan lain :</label>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="border-top:none;">
+                <label>3. Pengobatan yang diperlukan:</label>
+                <textarea rows="2" class="area-1">{{ optional($cetak)->rencana_tindakan ?? '' }}</textarea>
             </td>
         </tr>
     </table>
     <table style="border: 1px solid black; border-top:none" width="100%">
         <tr>
-            <td width="30%" class="text5"> </td>
-            <td width="40%" class="text5"> Dokter Bedah</td>
-            <td width="30%" class="text5"> </td>
+            <td width="30%" class="text5" style="border:none;"> </td>
+            <td width="40%" class="text5" style="border:none;"> Dokter Bedah</td>
+            <td width="30%" class="text5" style="border:none;"> </td>
         </tr>
         <tr>
-            <td width="30%" class="text5" ></td>
-            <td width="40%" class="text5" style="padding-right: 30px;">{!! DNS2D::getBarcodeHTML($cetak->nama_dokter, 'QRCODE', 3, 3) !!}</td>
-            <td width="30%" class="text5"></td>
+            <td width="30%" class="text5" style="border:none;"></td>
+            <td width="40%" class="text5" style="padding-left: 100px;border:none;">{!! DNS2D::getBarcodeHTML($cetak->nama_dokter, 'QRCODE', 3, 3) !!}</td>
+            <td width="30%" class="text5" style="border:none;"></td>
         </tr>
         <tr>
-            <td width="30%" class="text5"></td>
-            <td width="40%" class="text9">({{ $cetak->nama_dokter}})</td>
-            <td width="30%" class="text5"></td>
+            <td width="30%" class="text5" style="border:none;"></td>
+            <td width="40%" class="text9" style="border:none;">({{ $cetak->nama_dokter}})</td>
+            <td width="30%" class="text5" style="border:none;"></td>
         </tr>
     </table>
 </body>
