@@ -281,9 +281,9 @@
             <li class="{{ Request::is('booking-operasi*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('operasi.booking.index') }}"><i class="fas fa-id-card-clip"></i> <span>Booking Operasi</span></a></li>
             @endcan
 
-            {{-- @can('pasca bedah') --}}
+            @can('list pasien')
             <li class="{{ Request::is('ibs/list-pasien*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('operasi.list-pasien.index')}}"><i class="fas fa-list-alt"></i><span>List Pasien</span></a></li>
-            {{-- @endcan --}}
+            @endcan
 
             {{-- Penandaan Operasi --}}
             @can('penandaan operasi')
@@ -395,9 +395,9 @@
             <li class="{{ Request::is('laporan/*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('laporan.operasi.index')}}"><i class="fas fa-book-medical"></i> <span>Laporan Operasi</span></a></li>
             @endcan
 
-            {{-- @can('pasca bedah') --}}
+            @can('pasca bedah')
             <li class="{{ Request::is('pascabedah/*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('pascabedah.perencanaan-pascabedah.index')}}"><i class="fas fa-book-medical"></i> <span>Pasca Bedah</span></a></li>
-            {{-- @endcan --}}
+            @endcan
 
             @can('ttd tanda operasi')
             <li class="nav-item dropdown  {{ Request::is('ttd-ok/*') ? 'active' : '' }}">

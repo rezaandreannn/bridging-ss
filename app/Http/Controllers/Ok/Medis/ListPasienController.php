@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Ok\Medis;
 
+use Carbon\Carbon;
 use App\Models\Simrs\Dokter;
 use Illuminate\Http\Request;
+use App\Helpers\Ok\PascaBedahHelper;
 use App\Http\Controllers\Controller;
 use App\Helpers\Ok\LaporanOperasiHelper;
-use App\Helpers\Ok\PascaBedahHelper;
 use App\Services\Operasi\BookingOperasiService;
 
 class ListPasienController extends Controller
@@ -21,6 +22,11 @@ class ListPasienController extends Controller
         $title = 'List pasien operasi';
         $date = date('Y-m-d');
 
+
+        $patients = [];
+        $DoctorName = '';
+        $statusLaporanOperasi = null;
+        $statusPascaBedah = null;
         if (auth()->user()->hasRole('dokter bedah')) {
             $sessionKodeDokter = auth()->user()->username ?? null;
 
@@ -32,8 +38,8 @@ class ListPasienController extends Controller
             $patients = $this->bookingOperasiService->byDate($date, '', $sessionKodeDokter ?? '');
             $statusLaporanOperasi = LaporanOperasiHelper::getStatusLaporanOperasi($patients);
             $statusPascaBedah = PascaBedahHelper::getStatusPascaBedah($patients);
-        } else {
-            abort(403);
+        } elseif (auth()->user()->hasRole('ibs')) {
+            $patients = $this->bookingOperasiService->byDate($date);
         }
 
         return view('pages.ok.list-pasien.index', compact('patients', 'date', 'DoctorName'))

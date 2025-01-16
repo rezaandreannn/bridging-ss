@@ -40,20 +40,25 @@
                         </div>
                         <div class="card-body">
                             <ul class="nav nav-pills" id="myTab3" role="tablist">
+                                @if (auth()->user()->hasRole('dokter bedah'))
                                 <li class="nav-item">
                                     <a class="nav-link active" id="home-tab3" data-toggle="tab" href="#penandaan-operasi" role="tab" aria-controls="home" aria-selected="true">Penandaan Operasi</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="profile-tab3" data-toggle="tab" href="#assesmen-pra-bedah" role="tab" aria-controls="profile" aria-selected="false">Assesmen Pra Bedah</a>
                                 </li>
+                                @if (auth()->user()->hasAnyRole(['ibs', 'dokter bedah']))
                                 <li class="nav-item">
                                     <a class="nav-link" id="contact-tab3" data-toggle="tab" href="#laporan-operasi" role="tab" aria-controls="contact" aria-selected="false">Laporan Operasi</a>
                                 </li>
+                                @endif
                                 <li class="nav-item">
                                     <a class="nav-link" id="contact-tab3" data-toggle="tab" href="#pasca-bedah" role="tab" aria-controls="contact" aria-selected="false">Pasca Bedah</a>
                                 </li>
+                                @endif
                             </ul>
                             <div class="tab-content" id="myTabContent2">
+                                @if (auth()->user()->hasRole('dokter bedah'))
                                 {{-- Penandaan Operasi --}}
                                 <div class="tab-pane fade show active" id="penandaan-operasi" role="tabpanel" aria-labelledby="home-tab3">
                                     <form id="myForm" action="{{ isset($penandaan) ? route('operasi.penandaan.update', $penandaan->id) : route('operasi.penandaan.store') }}" method="POST" enctype="multipart/form-data">
@@ -219,6 +224,7 @@
                                         </div>
                                     </form>
                                 </div>
+                                @if (auth()->user()->hasAnyRole(['ibs', 'dokter bedah']))
                                 {{-- Laporan Operasi --}}
                                 <div class="tab-pane fade" id="laporan-operasi" role="tabpanel" aria-labelledby="contact-tab3">
                                     <form action="{{ isset($laporanOperasi) ? route('laporan.operasi.update', $laporanOperasi->kode_register) : route('laporan.operasi.store') }}" method="POST">
@@ -481,6 +487,7 @@
                                         </div>
                                     </form>
                                 </div>
+                                @endif
                                 {{-- Perencanaan Pasca Bedah --}}
                                 <div class="tab-pane fade" id="pasca-bedah" role="tabpanel" aria-labelledby="pasca-bedah-tab4">
                                     <form action="{{ isset($pascaBedah) ? route('pascabedah.perencanaan-pascabedah.update', $pascaBedah->kode_register) : route('pascabedah.perencanaan-pascabedah.store') }}" method="POST">
@@ -546,6 +553,7 @@
                                         </div>
                                     </form>
                                 </div>
+                                @endif
                             </div>
                         </div>
                     </div>
