@@ -24,9 +24,10 @@ class ListPasienController extends Controller
 
 
         $patients = [];
-        $DoctorName = '';
+        $DoctorName = null;
         $statusLaporanOperasi = null;
         $statusPascaBedah = null;
+
         if (auth()->user()->hasRole('dokter bedah')) {
             $sessionKodeDokter = auth()->user()->username ?? null;
 
@@ -38,8 +39,10 @@ class ListPasienController extends Controller
             $patients = $this->bookingOperasiService->byDate($date, '', $sessionKodeDokter ?? '');
             $statusLaporanOperasi = LaporanOperasiHelper::getStatusLaporanOperasi($patients);
             $statusPascaBedah = PascaBedahHelper::getStatusPascaBedah($patients);
-        } elseif (auth()->user()->hasRole('ibs')) {
-            $patients = $this->bookingOperasiService->byDate($date);
+        } elseif (auth()->user()->hasRole('perawat ibs')) {
+            $sessionIbs = auth()->user()->username ?? null;
+            $patients = $this->bookingOperasiService->byDate($date, '',  '');
+            // dd($patients);
         }
 
         return view('pages.ok.list-pasien.index', compact('patients', 'date', 'DoctorName'))

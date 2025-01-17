@@ -60,7 +60,7 @@
                                             <i class="fas fa-file-alt"></i>
                                             Forms
                                         </a>
-                                        
+                                        @if (auth()->user()->hasRole('dokter bedah'))
                                         <div class="dropdown d-inline">
                                             <a href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-sm btn-success">
                                                 <i class="fas fa-download"></i>
@@ -84,6 +84,7 @@
                                                 @endif
                                             </div>
                                         </div>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach

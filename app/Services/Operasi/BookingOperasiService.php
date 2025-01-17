@@ -148,8 +148,21 @@ class BookingOperasiService
                 }
             });
         } else {
+            $bookings = BookingOperasi::with([
+                'pendaftaran.registerPasien',
+                'pendaftaran.ruang.bangsal',
+                'pendaftaran.biayaDetails',
+                'ruangan',
+                'dokter',
+            ])->get();
+            // dd('ok');
+            $filtered = $bookings->filter(function ($booking) use ($date) {
 
-            $filtered = $this->baseQuery()->get();
+                $tanggal = $booking->tanggal;
+                return $tanggal && $tanggal == $date;
+            });
+
+            // $filtered = $this->baseQuery()->get();
         }
         return $this->mapData($filtered);
     }
