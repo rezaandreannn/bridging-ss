@@ -12,6 +12,7 @@ use App\Http\Requests\Operasi\PenandaanPasien\StorePenandaanPasienRequest;
 use App\Http\Requests\Operasi\PenandaanPasien\UpdatePenandaanPasienRequest;
 use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\PenandaanOperasiService;
+use App\Services\SimRs\DokterService;
 
 class PenandaanOperasiController extends Controller
 {
@@ -20,6 +21,7 @@ class PenandaanOperasiController extends Controller
     protected $prefix;
     protected $bookingOperasiService;
     protected $penandaanOperasiService;
+    protected $dokterService;
 
     public function __construct()
     {
@@ -28,6 +30,7 @@ class PenandaanOperasiController extends Controller
         $this->prefix = 'Penandaan Lokasi';
         $this->bookingOperasiService = new BookingOperasiService();
         $this->penandaanOperasiService = new PenandaanOperasiService();
+        $this->dokterService = new DokterService();
     }
 
     public function jadwal(Request $request)
@@ -62,13 +65,15 @@ class PenandaanOperasiController extends Controller
         $title = 'Penandaan Operasi';
 
 
-        // dd($penandaan);
+        // dd('ok');
 
         $date = date('Y-m-d');
         if ($request->input('tanggal') != null) {
             $date = $request->input('tanggal');
         }
 
+        $isDokterUmum = auth()->user()->hasRole('dokter umum');
+        
         $penandaans = [];
         $penandaan = [];
         $statusPenandaan = null;
@@ -99,13 +104,31 @@ class PenandaanOperasiController extends Controller
             $statusGambar = BookingHelper::getStatusGambar($penandaans);
         }
 
+        elseif (auth()->user()->hasRole('dokter umum')) {
+            $kode_dokter = $request->input('kode_dokter');
+            
+            if ($kode_dokter) {
+                
+                $sessionBangsal = null;
+                $penandaans = $this->bookingOperasiService->byDate($date, $sessionBangsal, $kode_dokter);
+
+                // dd($penandaans);
+
+                $penandaan = $this->penandaanOperasiService->get();
+                // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
+                $statusPenandaan = BookingHelper::getStatusPenandaan($penandaans);
+                $statusGambar = BookingHelper::getStatusGambar($penandaans);
+            }
+        }
+
         // dd($penandaan);
 
-        return view($this->view . 'penandaan-operasi.index', compact('penandaans'))
+        return view($this->view . 'penandaan-operasi.index', compact('penandaans','isDokterUmum'))
             ->with([
                 'title' => $title,
                 'statusPenandaan' => $statusPenandaan,
                 'penandaan' => $penandaan,
+                'dokters' => $this->dokterService->byBedahOperasi(),
                 'statusGambar' => $statusGambar,
             ]);
     }
