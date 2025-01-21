@@ -196,7 +196,7 @@
                 <label>Dokter Operator: {{ $booking->nama_dokter ?? ''}}</label>
             </td>
             <td>
-                <label>Perawat: {{ optional($cetak)->created_by ?? ''}}</label>
+                <label>Perawat: {{ optional($cetak)->created_by ?? ''}} |</label>
                 <label>Tgl: {{ optional($cetak)->tanggal ? date('d-m-Y', strtotime($cetak->tanggal)) : '' }}</label>
                 <label>Jam: {{ optional($cetak)->jam_mulai ? date('h:i', strtotime($cetak->jam_mulai)) : '' }}
                     -
@@ -261,9 +261,9 @@
             <td width="30%" class="text5"> Tanda Tangan Perawat</td>
         </tr>
         <tr>
-            <td width="30%" class="text5" style="padding-right: 30px;">{!! DNS2D::getBarcodeHTML($booking->nama_dokter, 'QRCODE', 3, 3) !!}</td>
-            <td width="40%" class="text5"></td>
-            <td width="30%" class="text5"></td>
+            <td width="30%" class="text5" style="padding-left: 60px;">{!! DNS2D::getBarcodeHTML($booking->nama_dokter, 'QRCODE', 3, 3) !!}</td>
+            <td width="40%" class="text5" style="padding-left: 80px;"> {!! DNS2D::getBarcodeHTML($booking->nama_pasien, 'QRCODE', 3, 3) !!}</td>
+            <td width="30%" class="text5" style="padding-left: 70px;">{!! DNS2D::getBarcodeHTML($booking->created_by, 'QRCODE', 3, 3) !!}</td>
         </tr>
         <tr>
             <td width="30%" class="text5">({{ $booking->nama_dokter}})</td>

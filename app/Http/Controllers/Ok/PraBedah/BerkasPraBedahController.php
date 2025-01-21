@@ -42,7 +42,7 @@ class BerkasPraBedahController extends Controller
         // dd($lab);
 
 
-        // dd($booking);
+        // dd($cetak);
 
         $date = date('dMY');
         $tanggal = Carbon::now();

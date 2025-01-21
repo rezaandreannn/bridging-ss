@@ -43,22 +43,43 @@
                             <ul class="nav nav-pills" id="myTab3" role="tablist">
                                 @if (auth()->user()->hasRole('dokter bedah'))
                                     <li class="nav-item">
-                                        <a class="nav-link" id="home-tab3" data-toggle="tab" href="#penandaan-operasi" role="tab" aria-controls="home" aria-selected="true">Penandaan Operasi</a>
+                                        <a class="nav-link {{ auth()->user()->hasRole('dokter bedah') ? 'active' : '' }}" id="home-tab3" data-toggle="tab" href="#penandaan-operasi" role="tab" aria-controls="home" aria-selected="true">
+                                            Penandaan Operasi
+                                            @if(isset($penandaan))
+                                            ✅
+                                            @endif
+                                        </a>
                                     </li>
+                                    
                                     <li class="nav-item">
-                                        <a class="nav-link" id="profile-tab3" data-toggle="tab" href="#assesmen-pra-bedah" role="tab" aria-controls="profile" aria-selected="false">Assesmen Pra Bedah</a>
+                                        <a class="nav-link" id="profile-tab3" data-toggle="tab" href="#assesmen-pra-bedah" role="tab" aria-controls="profile" aria-selected="false">
+                                            Assesmen Pra Bedah 
+                                            @if(isset($assesmen))
+                                            ✅
+                                            @endif
+                                        </a>
                                     </li>
                                 @endif
                         
                                 @if (auth()->user()->hasRole('perawat ibs') || auth()->user()->hasRole('dokter bedah'))
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="contact-tab3" data-toggle="tab" href="#laporan-operasi" role="tab" aria-controls="contact" aria-selected="false">Laporan Operasi</a>
+                                        <a class="nav-link {{ auth()->user()->hasRole('perawat ibs') ? 'active' : '' }}" id="contact-tab3" data-toggle="tab" href="#laporan-operasi" role="tab" aria-controls="contact" aria-selected="false">
+                                            Laporan Operasi
+                                            @if(isset($laporanOperasi))
+                                            ✅
+                                            @endif
+                                        </a>
                                     </li>
                                 @endif
                         
                                 @if (auth()->user()->hasRole('dokter bedah'))
                                     <li class="nav-item">
-                                        <a class="nav-link" id="pasca-bedah-tab4" data-toggle="tab" href="#pasca-bedah" role="tab" aria-controls="contact" aria-selected="false">Pasca Bedah</a>
+                                        <a class="nav-link" id="pasca-bedah-tab4" data-toggle="tab" href="#pasca-bedah" role="tab" aria-controls="contact" aria-selected="false">
+                                            Pasca Bedah
+                                            @if(isset($pascaBedah))
+                                            ✅
+                                            @endif
+                                        </a>
                                     </li>
                                 @endif
                             </ul>
@@ -67,7 +88,7 @@
                             <div class="tab-content" id="myTabContent2">
                                 @if (auth()->user()->hasRole('dokter bedah'))
                                 {{-- Penandaan Operasi --}}
-                                <div class="tab-pane fade" id="penandaan-operasi" role="tabpanel" aria-labelledby="home-tab3">
+                                <div class="tab-pane fade {{ auth()->user()->hasRole('dokter bedah') ? 'show active' : '' }}" id="penandaan-operasi" role="tabpanel" aria-labelledby="home-tab3">
                                     <form id="myForm" action="{{ isset($penandaan) ? route('operasi.penandaan.update', $penandaan->id) : route('operasi.penandaan.store') }}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         @if(isset($penandaan))
@@ -234,7 +255,7 @@
                                 @endif
                                 @if (auth()->user()->hasRole('perawat ibs') || auth()->user()->hasRole('dokter bedah'))
                                 {{-- Laporan Operasi --}}
-                                <div class="tab-pane fade show active" id="laporan-operasi" role="tabpanel" aria-labelledby="contact-tab3">
+                                <div class="tab-pane fade {{ auth()->user()->hasRole('perawat ibs') ? 'show active' : '' }}" id="laporan-operasi" role="tabpanel" aria-labelledby="contact-tab3">
                                     <form action="{{ isset($laporanOperasi) ? route('laporan.operasi.update', $laporanOperasi->kode_register) : route('laporan.operasi.store') }}" method="POST">
                                         @csrf
                                         @if(isset($laporanOperasi))

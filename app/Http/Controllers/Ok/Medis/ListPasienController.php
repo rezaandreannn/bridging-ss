@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Ok\Medis;
 use Carbon\Carbon;
 use App\Models\Simrs\Dokter;
 use Illuminate\Http\Request;
+use App\Helpers\BookingHelper;
 use App\Helpers\Ok\PascaBedahHelper;
 use App\Http\Controllers\Controller;
 use App\Helpers\Ok\LaporanOperasiHelper;
@@ -39,6 +40,7 @@ class ListPasienController extends Controller
             $patients = $this->bookingOperasiService->byDate($date, '', $sessionKodeDokter ?? '');
             $statusLaporanOperasi = LaporanOperasiHelper::getStatusLaporanOperasi($patients);
             $statusPascaBedah = PascaBedahHelper::getStatusPascaBedah($patients);
+            $statusPenandaan = BookingHelper::getStatusPenandaan($patients);
         } elseif (auth()->user()->hasRole('perawat ibs')) {
             $sessionIbs = auth()->user()->username ?? null;
             $patients = $this->bookingOperasiService->byDate($date, '',  '');
@@ -49,7 +51,8 @@ class ListPasienController extends Controller
             ->with([
                 'title' => $title,
                 'statusLaporanOperasi' => $statusLaporanOperasi,
-                'statusPascaBedah' => $statusPascaBedah
+                'statusPascaBedah' => $statusPascaBedah,
+                'statusPenandaan' => $statusPenandaan
             ]);
     }
 }

@@ -75,10 +75,9 @@ class PenandaanOperasiController extends Controller
         $statusGambar = null;
 
         // Cek jika login sebagai userbangsal
-        if (auth()->user()->hasRole('perawat bangsal')) {
-            $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
-            // Ambil pasien bangsal
-            $penandaans = $this->bookingOperasiService->byDate($date, $sessionBangsal, '');
+        if (auth()->user()->hasRole('dokter umum')) {
+            $sessionIbs = auth()->user()->username ?? null;
+            $penandaans = $this->bookingOperasiService->byDate($date, '',  '');
 
             $penandaan = $this->penandaanOperasiService->get();
 

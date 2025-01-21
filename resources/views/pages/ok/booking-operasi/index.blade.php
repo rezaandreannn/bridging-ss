@@ -94,7 +94,7 @@
                             </div>
                             <div class="col-12 col-lg-4 col-md-6">
                                 <div class="form-group">
-                                    <label>Ruang Asal</label><code> (Contoh : Poli/IGD/Ranap)</code>
+                                    <label>Ruang Asal</label><code> (Contoh : Poli/IGD/Ruangan : Firdaus)</code>
                                     <input type="text" name="asal_ruangan" value="{{ old('asal_ruangan', $booking->asal_ruangan ?? '')}}" class="form-control @error('asal_ruangan') is-invalid @enderror">
                                     @error('asal_ruangan')
                                     <div class="invalid-feedback">
