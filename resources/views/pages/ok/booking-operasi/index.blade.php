@@ -83,9 +83,9 @@
                             </div>
                             <div class="col-12 col-lg-4 col-md-6">
                                 <div class="form-group">
-                                    <label>Jam Mulai(optional)</label>
-                                    <input type="time" name="jam_mulai" value="{{ isset($booking) && $booking->jam_mulai ? date('H:i', strtotime($booking->jam_mulai)) : '' }}" class="form-control @error('jam_mulai') is-invalid @enderror">
-                                    @error('jam_mulai')
+                                    <label>Rencana Operasi</label>
+                                    <input type="time" name="rencana_operasi" value="{{ isset($booking) && $booking->rencana_operasi ? date('H:i', strtotime($booking->rencana_operasi)) : '' }}" class="form-control @error('rencana_operasi') is-invalid @enderror">
+                                    @error('rencana_operasi')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -94,42 +94,26 @@
                             </div>
                             <div class="col-12 col-lg-4 col-md-6">
                                 <div class="form-group">
-                                    <label>Jam Selesai(optional)</label>
-                                    <input type="time" name="jam_selesai" value="{{ isset($booking) && $booking->jam_selesai ? date('H:i', strtotime($booking->jam_selesai)) : '' }}" class="form-control @error('jam_selesai') is-invalid @enderror">
-                                    @error('jam_selesai')
+                                    <label>Ruang Asal</label><code> (Contoh : Poli/IGD/Ruangan : Firdaus)</code>
+                                    <input type="text" name="asal_ruangan" value="{{ old('asal_ruangan', $booking->asal_ruangan ?? '')}}" class="form-control @error('asal_ruangan') is-invalid @enderror">
+                                    @error('asal_ruangan')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-12 col-lg-6 col-md-6">
+                            {{-- <div class="col-12 col-lg-6 col-md-6">
                                 <div class="form-group">
-                                    <label>Pilih Ruangan Operasi</label>
-                                    <select name="ruangan_id" class="form-control select2 @error('ruangan_id') is-invalid @enderror" id="">
-                                        <option value="" selected disabled>--Pilih Ruangan Operasi--</option>
-                                        @foreach ($ruanganOperasi as $ruangan)
-                                        <option value="{{ $ruangan->id}}" @if(old('ruangan_id', $booking->ruangan_id ?? '')==$ruangan->id ) selected @endif>{{$ruangan->nama_ruang}}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('ruangan_id')
+                                    <label>Jenis Operasi</label>
+                                    <input type="text" name="jenis_operasi" value="{{ old('jenis_operasi', $booking->jenis_operasi ?? '')}}" class="form-control @error('jenis_operasi') is-invalid @enderror">
+                                    @error('jenis_operasi')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                     @enderror
                                 </div>
-                            </div>
-                            <div class="col-12 col-lg-6 col-md-6">
-                                <div class="form-group">
-                                    <label>Jenis Tindakan</label>
-                                    <input type="text" name="nama_tindakan" value="{{ old('nama_tindakan', $booking->nama_tindakan ?? '')}}" class="form-control @error('nama_tindakan') is-invalid @enderror">
-                                    @error('nama_tindakan')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     <div class="card-footer text-left">
@@ -143,6 +127,53 @@
             <div class="section-body">
                 <div class="card">
                     <div class="card-body">
+                        <form id="filterForm" action="" method="GET">       
+                        <div class="card-footer text-left">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="">Filter tanggal</label>
+                                    @php
+                                        $date = date('Y-m-d');
+                                    @endphp
+                                    <div class="form-group">
+                                        <input type="date" class="form-control" name="tanggal" {{(request('tanggal')==null) ?  $date : $date = request('tanggal') }} value="{{$date}}"  id="datefilter">
+                                    </div>
+                                </div>
+                                 <!-- Only show doctor filter if the user is NOT a perawat bangsal -->
+                                @if($isPerawatPoli)
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Pilih Dokter</label>
+                                        <select name="kode_dokter" class="form-control select2 @error('kode_dokter') is-invalid @enderror">
+                                            <option value="" selected disabled>--Pilih Dokter--</option>
+                                            @foreach ($dokters as $dokter)
+                                                <option value="{{ $dokter->Kode_Dokter }}" 
+                                                    @if(request('kode_dokter') == $dokter->Kode_Dokter) selected @endif>
+                                                    {{ $dokter->Nama_Dokter }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('kode_dokter')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                @endif
+                                <div class="col-md-4">
+                                    <div class="form-group mt-4">
+                                        <button type="submit" class="btn btn-primary mr-2" style="margin-top: 5px;">
+                                            <i class="fas fa-search"></i> Filter
+                                        </button>
+                                        <button type="button" class="btn btn-danger" style="margin-top: 5px;" onclick="resetForm()">
+                                            <i class="fas fa-sync"></i> Reset
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
                         <div class="table-responsive">
                             <table class="table-striped table" id="table-1">
                                 <thead>
@@ -153,38 +184,53 @@
                                         <th scope="col">Nama Pasien</th>
                                         <th scope="col">No MR</th>
                                         <th scope="col">Nama Dokter</th>
-                                        <th scope="col">Nama Ruang Operasi</th>
+                                        <th scope="col">Asal Ruangan</th>
+                                        <th scope="col">Status Kunjungan</th>
                                         <th scope="col">Aksi</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="booking-table-body">
                                     @foreach ($bookings as $booking)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$booking->kode_register}}</td>
                                         <td>{{$booking->tanggal}}</td>
-                                        <td>{{$booking->nama_pasien}}</td>
+                                        <td>{{ ucwords(strtolower(trim($booking->nama_pasien))) }}</td>
                                         <td>{{$booking->no_mr}}</td>
                                         <td>{{$booking->nama_dokter}}</td>
-                                        <td>{{$booking->ruang_operasi}}</td>
+                                        <td>{{$booking->asal_ruangan}}</td>
                                         <td>
+                                            @if(isset($statusPendaftaran[$booking->kode_register]) && $statusPendaftaran[$booking->kode_register] == 1)
+                                            <span class="badge badge-success">Aktif</span>
+                                            @else
+                                            <span class="badge badge-danger">Closing</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if(isset($statusPendaftaran[$booking->kode_register]) && $statusPendaftaran[$booking->kode_register] == 1)
                                             <div class="dropdown d-inline">
                                                 <a href="#" class="text-primary" id="dropdownMenuLink{{$booking->id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <i class="fas fa-ellipsis-v"></i>
                                                 </a>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item has-icon" href=""><i class="fas fa-info"></i> Detail</a>
+                                                    {{-- Detail Booking --}}
+                                                    {{-- @if (isset($statusPenandaan[$booking->id]) && $statusPenandaan[$booking->id] == 'create')
+                                                    @else    
+                                                    <a class="dropdown-item has-icon" href="{{ route('operasi.booking.detail', ['id' => $statusPenandaan[$booking->id]]) }}">
+                                                            <i class="fas fa-info"></i> Detail Booking
+                                                        </a>
+                                                    @endif --}}
+                                                    {{-- Ubah Data --}}
                                                     <a class="dropdown-item has-icon" href="{{ route('operasi.booking.edit', $booking->id )}}"><i class="fas fa-pencil-alt"></i> Ubah Data</a>
+                                                    {{-- Ubah Tanggal --}}
                                                     <a class="dropdown-item has-icon" href="#" data-toggle="modal" data-target="#modal-edit-tanggal{{ $booking->id }}">
                                                         <i class="fas fa-calendar-check"></i> Ganti Tanggal
                                                     </a>
+                                                    {{-- Ubah Ruangan --}}
                                                     <a class="dropdown-item has-icon" href="#" data-toggle="modal" data-target="#modal-edit-ruang{{ $booking->id }}">
                                                         <i class="fas fa-person-booth"></i> Ganti Ruangan
                                                     </a>
-                                                    <a class="dropdown-item has-icon" href="{{ route('operasi.penandaan.create', ['noReg' => $booking->kode_register]) }}">
-                                                        <i class="fas fa-marker"></i> Penandaan Operasi
-                                                    </a>
-                                                     <!-- Hidden form for deletion -->
+                                                    <!-- Hidden form for deletion -->
                                                     <form id="delete-form-{{$booking->id}}" action="{{ route('operasi.booking.destroy', $booking->id) }}" method="POST" style="display: none;">
                                                         @method('delete')
                                                         @csrf
@@ -195,6 +241,7 @@
                                                     </a>
                                                 </div>
                                             </div>
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach
@@ -245,19 +292,13 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('operasi.ruang.update', $booking->id) }}" method="POST">
+            <form action="{{ route('operasi.ruangan.update', $booking->id) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="editNamaRuang{{ $booking->id }}">Nama Ruang</label>
-                        <select name="ruang_operasi" class="form-control select2 @error('ruang_operasi') is-invalid @enderror" id="editNamaRuang{{ $booking->id }}">
-                            @foreach ($ruanganOperasi as $ruangan)
-                            <option value="{{ $ruangan->id }}" @if($booking->ruang_operasi == $ruangan->id) selected @endif>
-                                {{ $ruangan->nama_ruang }}
-                            </option>
-                            @endforeach
-                        </select>
+                       <input type="text" name="asal_ruangan"  class="form-control" value="{{ old('asal_ruangan', $booking->asal_ruangan ?? '')}}">
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
@@ -299,19 +340,19 @@
     $(document).ready(function() {
         // Inisialisasi DataTable
         var table = $('#table-1').DataTable();
-    
+
         // Event delegation untuk tombol delete
         $('#table-1').on('click', '[confirm-delete="true"]', function(event) {
             event.preventDefault();
             var menuId = $(this).data('menuid');
             Swal.fire({
-                title: 'Apakah Kamu Yakin?',
-                text: "Anda tidak akan dapat mengembalikan ini!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#6777EF',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, Hapus saja!'
+                title: 'Apakah Kamu Yakin?'
+                , text: "Semua data yang berkaitan dengan booking akan ikut terhapus!"
+                , icon: 'warning'
+                , showCancelButton: true
+                , confirmButtonColor: '#6777EF'
+                , cancelButtonColor: '#d33'
+                , confirmButtonText: 'Ya, Hapus saja!'
             }).then((result) => {
                 if (result.isConfirmed) {
                     var form = $('#delete-form-' + menuId);
@@ -324,6 +365,15 @@
             });
         });
     });
+
+</script>
+
+<script>
+    function resetForm() {
+        document.getElementById("filterForm").value = "";
+        alert('Filter telah direset!');
+        window.location.href = "{{ route('operasi.booking.index') }}";
+    }
 </script>
 
 @endpush

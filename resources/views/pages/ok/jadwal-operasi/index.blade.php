@@ -36,13 +36,13 @@
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
-                                    <th scope="col">Kode Register</th>
                                     <th scope="col">No MR</th>
                                     <th scope="col">Nama Pasien</th>
                                     <th scope="col">Tanggal</th>
                                     <th scope="col">Nama Dokter</th>
-                                    <th scope="col">Ruangan</th>
-                                    <th scope="col">Waktu Operasi</th>
+                                    <th scope="col">Asal Ruangan</th>
+                                    <th scope="col">Terlaksana</th>
+                                    <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -50,13 +50,34 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td><span class="badge badge-pill badge-success">{{ $data->no_mr }}</span></td>
-                                    <td>{{$data->nama_pasien}}</td>
-                                    <td>{{ $data->ruang_operasi}}</td>
-                                    <td>{{ $data->nama_dokter }}</td>
+                                    <td>{{ ucwords(strtolower(trim($data->nama_pasien))) }}</td>
                                     <td>{{ $data->tanggal }}</td>
-                                    <td>Jam : {{ \Carbon\Carbon::parse($data->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($data->jam_selesai)->format('H:i') }}</td>
+                                    <td>{{ $data->nama_dokter }}</td>
+                                    <td>{{ $data->asal_ruangan}}</td>
                                     <td>
-                                        <a href="{{ route('operasi.penandaan.create', ['noReg' => $data->no_mr]) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i> Entry</a>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" name="terlaksana" class="custom-control-input" tabindex="3" id="terlaksana" {{ $data->terlaksana == '1' ? 'checked' : '' }} disabled>
+                                            <label class="custom-control-label" for="terlaksana"></label>
+                                        </div>
+                                    </td>
+                                    {{-- <td>{{ \Carbon\Carbon::parse($data->rencana_operasi)->format('H:i') }}  WIB</td> --}}
+                                    <td>
+                                        <div class="dropdown d-inline">
+                                            <a href="#" class="text-primary" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>
+                                            <div class="dropdown-menu">
+                                                @if (isset($statusPenandaan[$data->id]) && $statusPenandaan[$data->id] != 'create')
+                                                <a class="dropdown-item has-icon" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" href="{{ route('operasi.penandaan.cetak', $data->kode_register) }}">
+                                                        <i class="fas fa-download"></i> Cetak Penandaan Operasi
+                                                </a>
+                                                @endif
+
+                                                <a class="dropdown-item has-icon" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" href="{{ route('prabedah.berkas-prabedah.cetak', $data->kode_register) }}"> 
+                                                    <i class="fas fa-download"></i> Cetak Pra Bedah
+                                                </a>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                                 @endforeach

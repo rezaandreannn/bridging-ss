@@ -110,7 +110,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>koreg</label>
+                                            <label>noreg</label>
                                             <input type="text" name="kode_register" value="{{ old('kode_register')}}" class="form-control @error('kode_register') is-invalid @enderror">
                                         </div>
                                         @error('kode_register')

@@ -607,8 +607,14 @@ class RajalDokter extends Model
 
         $data = DB::connection('bridging_ss')
             ->table('satusehat_icd10')
+            ->select(
+                'id',
+                'icd10_code',
+                'icd10_en',
+                'icd10_id'
+                )
             ->get();
-        return $data;
+
         return $this->mapData($data);
 
     }
@@ -624,4 +630,5 @@ class RajalDokter extends Model
             ];
         }));
     }
+
 }

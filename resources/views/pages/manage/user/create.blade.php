@@ -65,12 +65,25 @@
                                 <div class="form-group row mb-4">
                                     <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Role</label>
                                     <div class="col-sm-12 col-md-7">
-                                        <select class="form-control select2" name="roles">
+                                        <select class="form-control select2" name="roles"  onchange="cek_role_bangsal(this)">
                                             <option value="">-- Select a role --</option>
                                             @foreach ($roles as $role)
                                             <option value="{{ $role->name }}">{{ $role->name }}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                </div>
+                                <div id="form1" style="display: none">
+                                    <div class="form-group row mb-4">
+                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Bangsal</label>
+                                        <div class="col-sm-12 col-md-7">
+                                            <select class="form-control select2" name="bangsals">
+                                                <option value="">-- Select bangsal --</option>
+                                                @foreach ($bangsals as $bangsal)
+                                                <option value="{{ $bangsal->Kode_Bangsal }}">{{ $bangsal->Nama_Bangsal }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-4">
@@ -127,6 +140,14 @@
         oFReader.onload = function(oFREvent) {
             imgPreview.src = oFREvent.target.result;
         }
+    }
+</script>
+
+<script>
+    function cek_role_bangsal(selected) {
+        var radiobox = selected.value;
+        var form1 = document.getElementById("form1");
+        form1.style.display = (radiobox === "perawat bangsal") ? "block" : "none";
     }
 </script>
 @endpush

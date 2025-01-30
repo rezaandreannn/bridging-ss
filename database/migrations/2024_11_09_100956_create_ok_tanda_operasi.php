@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::connection('pku')->create('ok_tanda_operasi', function (Blueprint $table) {
             $table->id();
             $table->string('kode_register');
+            $table->string('asal_ruangan');
             $table->string('hasil_gambar');
             $table->string('jenis_operasi');
             $table->string('created_by')->nullable();

@@ -25,8 +25,7 @@
             <h1>{{$title}}</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{ route('ttd.pasien.detail') }}">Tanda Tangan Operasi</a></div>
-                <div class="breadcrumb-item">Penandaan</div>
-                <div class="breadcrumb-item">Pasien</div>
+                <div class="breadcrumb-item">Penandaan Pasien</div>
             </div>
         </div>
 
@@ -34,7 +33,7 @@
             {{-- <form id="filterForm" action="{{ route('transaksi_fisio.fisio') }}" method="get"> --}}
             <form id="filterForm" action="{{ route ('ttd-ok.penandaan.create') }}" method="get">
                 <div class="card-header">
-                    <h4>Poli Mata</h4>
+                    <h4>Tanda Tangan Penandaan Pasien</h4>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -60,9 +59,6 @@
 
         <div class="section-body">
             <div class="card">
-                <div class="card-header">
-                    <a href="{{ route ('ttd-ok.penandaan.create') }}" class="btn btn-primary"> <i class="fas fa-plus"></i> TAMBAH TTD</a>
-                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-striped" id="table-1">
@@ -70,6 +66,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama Pasien</th>
+                                    <th>Nama penanda tangan</th>
                                     <th>No MR</th>
                                     <th>No Registrasi</th>
                                     <th>Dibuat</th>
@@ -79,10 +76,11 @@
                             </thead>
                             <tbody>
                        
-                                @foreach ($ttdpendaanpasien as $ttd)
+                                @foreach ($ttdpenandaanpasien as $ttd)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $ttd->nama_pasien }}</td>
+                                    <td>{{ $ttd->nama_penanda_tangan }}</td>
                                     <td>{{ $ttd->no_mr }}</td>
                                     <td>{{ $ttd->kode_register }}</td>
                                     <td>{{ $ttd->created_at }}</td>
@@ -90,11 +88,15 @@
                                         <a href="#" data-toggle="modal" data-target="#gambarModal{{ $ttd->id }}">Lihat Tanda Tangan</a>
                                     </td>
                                     <td width="15%">
-                                        <form id="delete-form-{{$ttd->id}}" action="{{ route('list-ttd-pasien.delete', $ttd->id) }}" method="POST" style="display: none;">
+                                        <form id="delete-form-{{$ttd->id}}" action="{{ route('ttd-ok.penandaan.destroy', $ttd->id) }}" method="POST" style="display: none;">
                                             @method('delete')
                                             @csrf
                                         </form>
-                                        <a class="btn btn-sm btn-danger" confirm-delete="true" data-menuId="{{$ttd->ttd_pasien}}" href="#"><i class="fas fa-trash"></i> Hapus</a>
+                                        <a class="btn btn-danger btn-sm" href="#" confirm-delete="true" data-menuId="{{$ttd->id}}">
+                                            <i class="fas fa-trash"></i> Hapus
+                                        </a>
+
+                                        <a href="{{ route('ttd-ok.penandaan.edit', $ttd->id)}}" class="btn btn-sm btn-warning"><i class="fas fa fa-edit"></i> Edit</a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -107,19 +109,19 @@
     </section>
 </div>
 
-{{-- @foreach ($ttdDetail as $ttd)
-<div class="modal fade" id="gambarModal{{ $ttd->ID_TTD_PASIEN }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+@foreach ($ttdpenandaanpasien as $ttd)
+<div class="modal fade" id="gambarModal{{ $ttd->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Tanda Tangan Pengguna - {{ $ttd->NO_MR_PASIEN }}</h5>
+                <h5 class="modal-title" id="exampleModalCenterTitle">Tanda Tangan Pengguna - {{ $ttd->nama_pasien }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body text-center">
-                <p>Dibuat: {{ $ttd->CREATE_AT }}</p>
-                <img src="{{ asset('storage/ttd/' . $ttd->IMAGE) }}" class="img-fluid" alt="Gambar Pengguna">
+                <p>Dibuat: {{ $ttd->created_at }}</p>
+                <img src="{{ asset('storage/operasi/penandaan-pasien/ttd/' . $ttd->ttd_pasien) }}" class="img-fluid" alt="Gambar Pengguna">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -127,7 +129,7 @@
         </div>
     </div>
 </div>
-@endforeach --}}
+@endforeach
 
 
 @endsection

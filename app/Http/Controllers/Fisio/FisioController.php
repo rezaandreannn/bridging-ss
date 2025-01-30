@@ -348,6 +348,7 @@ class FisioController extends Controller
         }
         $title = $this->prefix . ' ' . 'CPPT';
 
+
         $jenisfisio = $this->jenisFisio->getDataJenisFisio();
         $data = $this->fisio->dataEditPasienCPPT($id);
         $terapiDokterLastFisio =  $this->fisio->terapiDokterLastFisio($biodata->NO_MR);

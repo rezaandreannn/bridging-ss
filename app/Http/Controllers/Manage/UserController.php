@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers\Manage;
 
+use Exception;
 use Rules\Password;
 use App\Models\User;
+use App\Models\UserBangsal;
 use Illuminate\Http\Request;
+use App\Models\MasterData\Bangsal;
+use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -38,13 +42,18 @@ class UserController extends Controller
         $title = 'Create' . ' ' . $this->prefix;
         $roles = Role::all();
         $permissions = Permission::all();
+        $bangsals = Bangsal::all();
+        // dd($bangsals);
         $users = User::select('name', 'email', 'password')->get();
-        return view($this->view . 'create', compact('title', 'users', 'roles', 'permissions'));
+        return view($this->view . 'create', compact('title', 'users', 'roles', 'permissions','bangsals'));
     }
 
     public function store(Request $request)
     {
 
+        try{
+
+            DB::beginTransaction();
     
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -66,6 +75,16 @@ class UserController extends Controller
         if($request->username){
             $user->username=$request->username;
             $user->save();
+        }
+
+        if($request->bangsals){
+            $bangsal = UserBangsal::create([
+                'user_id' => $user->id,
+                'kode_bangsal' => $request->bangsals,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+
+            ]);
         }
 
 
@@ -93,8 +112,17 @@ class UserController extends Controller
                 $user->givePermissionTo($permission);
             }
         }
-        $message = 'Data has been Add successfully.';
+        DB::commit();
+        
+        $message = 'Data user berhasil ditambahkan.';
         return redirect()->route($this->routeIndex)->with('toast_success', $message);
+        
+    } catch (Exception $e) {
+        // Redirect dengan pesan error jika terjadi kegagalan
+        DB::rollBack();
+        $message = 'Data user gagal ditambahkan.';
+        return redirect()->route($this->routeIndex)->with('toast_error', $message . $e->getMessage());
+    }
     }
 
     public function edit($id)
@@ -103,8 +131,11 @@ class UserController extends Controller
         $user = User::where('id', $id)->first();
         $roles = Role::all();
         $permissions = Permission::all();
+        $bangsalById = UserBangsal::where('user_id', $user->id)->first();
+        // dd($bangsalById);
+        $bangsals = Bangsal::all();
         $users = User::select('name', 'email', 'password')->get();
-        return view($this->view . 'edit', compact('title', 'user', 'users', 'roles', 'permissions'));
+        return view($this->view . 'edit', compact('title', 'user', 'users', 'roles', 'permissions','bangsals','bangsalById'));
     }
 
     public function update($id, Request $request)
@@ -118,8 +149,8 @@ class UserController extends Controller
             'username' => ['required'],
         ]);
         try {
-            // send API 
-            // $data = $this->organization->patchRequest($url, $body);
+          
+            DB::beginTransaction();
 
             // Send DB
             if ($request->input('password')) {
@@ -142,6 +173,41 @@ class UserController extends Controller
             if($request->username){
                 $user->username=$request->username;
                 $user->save();
+            }
+
+            // update kode_bangsal
+            $bangsalById = UserBangsal::where('user_id', $user->id)->first();
+            // dd($request->roles);
+           
+            if ($request->roles == 'perawat bangsal'){
+             
+                if($bangsalById){
+                
+                    $bangsal = [
+                        'user_id' => $user->id,
+                        'kode_bangsal' => $request->bangsals,
+                        'updated_at' => date('Y-m-d H:i:s'),
+        
+                    ];
+                    $bangsalById->update($bangsal);
+
+                    // jika tidak ada tambah
+                }else {
+                   
+                    $bangsal = UserBangsal::create([
+                        'user_id' => $user->id,
+                        'kode_bangsal' => $request->bangsals,
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s'),
+        
+                    ]);
+                }
+               
+            }
+            else{
+               
+                $bangsalById->delete();
+           
             }
 
             //Upload Image
@@ -178,10 +244,13 @@ class UserController extends Controller
                 $user->syncPermissions($permissions);
             }
 
+            DB::commit();
             $message = 'Data has been updated successfully.';
             return redirect()->route($this->routeIndex)->with('toast_success', $message);
-        } catch (\Throwable $th) {
-            return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan data');
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            $message = 'Data user gagal ditambahkan.';
+            return redirect()->route($this->routeIndex)->with('toast_error', $message . $e->getMessage());
         }
     }
 

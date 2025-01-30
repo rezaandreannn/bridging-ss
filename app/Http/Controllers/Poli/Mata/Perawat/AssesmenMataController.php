@@ -39,6 +39,22 @@ class AssesmenMataController extends Controller
         $this->antrean = new Antrean();
     }
 
+    public function index2(Request $request)
+    {
+        $title = $this->prefix . ' ' . 'Mata';
+        $kode_dokter = $request->input('kode_dokter');
+        $dokters = $this->poliMata->getDokterMata();
+        $tanggal = $request->input('tanggal');
+
+        $pasien = [];
+        if ($kode_dokter != null and $kode_dokter != null) {
+            $pasien = $this->rekam_medis->rekamMedisHarian($kode_dokter, $tanggal);
+        }
+        // dd($pasien);
+        $poliMata = new PoliMata();
+        return view($this->view . 'perawat.index2', compact('title', 'pasien', 'dokters', 'poliMata'));
+    }
+
     // --------- Riwayat Rekam Medis ------------ //
     public function berkas(Request $request)
     {

@@ -41,28 +41,50 @@
         <div class="section-body">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('ttd.storebypetugas') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('ttd-ok.penandaan.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
-                            <div class="col-md-6">
+                            <input type="hidden" name="kode_register" value="{{$biodata->pendaftaran->No_Reg}}">
+                            <input type="hidden" name="nama_pasien" value="{{$biodata->pendaftaran->registerPasien->Nama_Pasien}}">
+
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Nama Pasien</label>
-                                    <select name="NO_REG" class="form-control select2" style="width: 100%;">
-                                        <option value="" selected>-- Pilih Pasien --</option>
-                                        @foreach ($bookings as $pasien)
-                                        <option value="{{$pasien->kode_register}}">{{$pasien->nama_pasien}} - {{$pasien->no_mr}}</option>
-                                        @endforeach
-                                  
-                                    </select>
-                                </div>
+                                    <label class="d-block">Yang bertanda tangan : </label>
+                                    <div class="form-check">
+                                      <input class="form-check-input" type="radio" name="pasien" id="exampleRadios1" onclick="cek_tanda_tangan(this)" value="0">
+                                      <label class="form-check-label" for="exampleRadios1">
+                                        Pasien
+                                      </label>
+                                    </div>
+                                    <div class="form-check">
+                                      <input class="form-check-input" type="radio" name="pasien" id="exampleRadios2" onclick="cek_tanda_tangan(this)" value="1">
+                                      <label class="form-check-label" for="exampleRadios2">
+                                        Perwakilan keluarga
+                                      </label>
+                                    </div>
+                                  </div>
                             </div>
+
+                            <div class="col-md-4" id="form1" style="display: none">
+                                <div class="form-group">
+                                    <label>Nama Keluarga</label>
+                                    <input type="text" name="nama_keluarga" class="form-control @error('nama_keluarga') is-invalid @enderror" >
+                                </div>
+                                @error('nama_keluarga')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
+
+
                             <div class="col-md-12">
                                 <label class="" for="">Tanda Tangan:</label>
                                 <br />
                                 <div id="signat"></div>
                                 <br />
                                 <button id="clear">Hapus Tanda Tangan</button>
-                                <textarea id="signature64" name="signed" style="display: none"></textarea>
+                                <textarea id="signature64" name="ttd_pasien" style="display: none"></textarea>
                             </div>
                         </div>
                         <div class="card-footer text-left">
@@ -102,5 +124,14 @@
     });
 </script>
 
+<script>
+    function cek_tanda_tangan(selected) {
+        var radiobox = selected.value
+        $("#form1").hide();
+        if (radiobox == "1") {
+            $("#form1").show();
+        } 
+    }
+</script>
 <!-- Page Specific JS File -->
 @endpush

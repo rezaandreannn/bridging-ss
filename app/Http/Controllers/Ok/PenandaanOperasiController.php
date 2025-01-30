@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\OK;
 
 use Exception;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Helpers\BookingHelper;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
-use App\Models\Operasi\BookingOperasi;
-use App\Models\Operasi\PenandaanOperasi;
-use App\Models\Rajal;
+use App\Http\Requests\Operasi\PenandaanPasien\StorePenandaanPasienRequest;
+use App\Http\Requests\Operasi\PenandaanPasien\UpdatePenandaanPasienRequest;
 use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\PenandaanOperasiService;
+use App\Services\SimRs\DokterService;
 
 class PenandaanOperasiController extends Controller
 {
@@ -18,6 +21,7 @@ class PenandaanOperasiController extends Controller
     protected $prefix;
     protected $bookingOperasiService;
     protected $penandaanOperasiService;
+    protected $dokterService;
 
     public function __construct()
     {
@@ -26,6 +30,7 @@ class PenandaanOperasiController extends Controller
         $this->prefix = 'Penandaan Lokasi';
         $this->bookingOperasiService = new BookingOperasiService();
         $this->penandaanOperasiService = new PenandaanOperasiService();
+        $this->dokterService = new DokterService();
     }
 
     public function jadwal(Request $request)
@@ -36,18 +41,98 @@ class PenandaanOperasiController extends Controller
         return view($this->view . 'jadwalOperasi.index', compact('title', 'jadwal'));
     }
 
+    public function cetak($kodeRegister)
+    {
+        $title = $this->prefix . ' ' . 'Operasi';
+        // Ambil data berdasarkan ID
+
+        $penandaan = $this->penandaanOperasiService->unduhByRegister($kodeRegister);
+
+        // dd($penandaan);
+        $date = date('dMY');
+        $tanggal = Carbon::now();
+
+        $filename = 'penandaan-operasi-' . $date;
+
+        $pdf = PDF::loadview('pages.ok.penandaan-operasi.cetak-dokumen', ['penandaan' => $penandaan, 'title' => $title, 'tanggal' => $tanggal]);
+        // Set paper size to A5
+        $pdf->setPaper('A4');
+        return $pdf->stream($filename . '.pdf');
+    }
+
     public function index(Request $request)
     {
         $title = 'Penandaan Operasi';
 
-        $penandaans = $this->penandaanOperasiService->get();
-        // dd($penandaans);
 
-        return view($this->view . 'penandaanOperasi.index', compact('penandaans'))
+        // dd('ok');
+
+        $date = date('Y-m-d');
+        if ($request->input('tanggal') != null) {
+            $date = $request->input('tanggal');
+        }
+
+        $isDokterUmum = auth()->user()->hasRole('dokter umum');
+        
+        $penandaans = [];
+        $penandaan = [];
+        $statusPenandaan = null;
+        $statusGambar = null;
+
+        // Cek jika login sebagai userbangsal
+        if (auth()->user()->hasRole('dokter umum')) {
+            $sessionIbs = auth()->user()->username ?? null;
+            $penandaans = $this->bookingOperasiService->byDate($date, '',  '');
+
+            $penandaan = $this->penandaanOperasiService->get();
+
+            // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
+            $statusPenandaan = BookingHelper::getStatusPenandaan($penandaans);
+            $statusGambar = BookingHelper::getStatusGambar($penandaans);
+        }
+        // Cek jika login sebagai dokter
+        elseif (auth()->user()->hasRole('dokter bedah')) {
+            $sessionKodeDokter = auth()->user()->username ?? null;
+            // Ambil pasien dokter
+            $penandaans = $this->bookingOperasiService->byDate($date, '', $sessionKodeDokter ?? '');
+
+            // dd($penandaans);
+
+            $penandaan = $this->penandaanOperasiService->get();
+            // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
+            $statusPenandaan = BookingHelper::getStatusPenandaan($penandaans);
+            $statusGambar = BookingHelper::getStatusGambar($penandaans);
+        }
+
+        elseif (auth()->user()->hasRole('dokter umum')) {
+            $kode_dokter = $request->input('kode_dokter');
+            
+            if ($kode_dokter) {
+                
+                $sessionBangsal = null;
+                $penandaans = $this->bookingOperasiService->byDate($date, $sessionBangsal, $kode_dokter);
+
+                // dd($penandaans);
+
+                $penandaan = $this->penandaanOperasiService->get();
+                // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
+                $statusPenandaan = BookingHelper::getStatusPenandaan($penandaans);
+                $statusGambar = BookingHelper::getStatusGambar($penandaans);
+            }
+        }
+
+        // dd($penandaan);
+
+        return view($this->view . 'penandaan-operasi.index', compact('penandaans','isDokterUmum'))
             ->with([
-                'title' => $title
+                'title' => $title,
+                'statusPenandaan' => $statusPenandaan,
+                'penandaan' => $penandaan,
+                'dokters' => $this->dokterService->byBedahOperasi(),
+                'statusGambar' => $statusGambar,
             ]);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -56,10 +141,11 @@ class PenandaanOperasiController extends Controller
      */
     public function create($noReg)
     {
+
         $title = $this->prefix . ' ' . 'Operasi';
         $biodata = $this->bookingOperasiService->biodata($noReg);
         // dd($biodata);
-        return view($this->view . 'penandaanOperasi.create', compact('title', 'biodata'));
+        return view($this->view . 'penandaan-operasi.create', compact('title', 'biodata'));
     }
 
     /**
@@ -68,18 +154,21 @@ class PenandaanOperasiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePenandaanPasienRequest $request)
     {
         try {
+
             $data = [
                 'kode_register' => $request->kode_register,
                 'hasil_gambar' => $request->signatureData,
-                'jenis_operasi' => $request->jenis_operasi
+                'asal_ruangan' => $request->asal_ruangan,
+                'jenis_operasi' => $request->jenis_operasi,
             ];
 
             $this->penandaanOperasiService->insert($data);
 
             return redirect()->back()->with('success', 'Penandaan Operasi berhasil ditambahkan.');
+            // return redirect('ibs/list-pasien-detail/' . $request->kode_register)->with('success', 'Penandaan Operasi berhasil di ditambahkan.');
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
             return redirect()->back()->with('error', 'Gagal menambahkan Penandaan Operasi: ' . $e->getMessage());
@@ -105,7 +194,18 @@ class PenandaanOperasiController extends Controller
      */
     public function edit($id)
     {
-        //
+        $title = $this->prefix . ' ' . 'Operasi';
+        // Ambil data berdasarkan ID
+        $penandaan = $this->penandaanOperasiService->findById($id);
+        // dd($penandaan);
+
+        // dd($penandaan);
+        $noReg = $penandaan->kode_register;
+
+        // Ambil biodata berdasarkan nomor registrasi
+        $biodata = $this->bookingOperasiService->biodata($noReg);
+        // dd($biodata);
+        return view($this->view . 'penandaan-operasi.edit', compact('title', 'biodata', 'penandaan'));
     }
 
     /**
@@ -115,9 +215,24 @@ class PenandaanOperasiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePenandaanPasienRequest $request, $id)
     {
-        //
+        try {
+            $data = [
+                'kode_register' => $request->kode_register,
+                'hasil_gambar' => $request->signatureData,
+                'asal_ruangan' => $request->asal_ruangan,
+                'jenis_operasi' => $request->jenis_operasi,
+            ];
+
+            // Panggil service untuk melakukan update
+            $this->penandaanOperasiService->update($id, $data);
+            return redirect()->back()->with('success', 'Penandaan Operasi berhasil di ubah.');
+            // return redirect('penandaan/penandaan-operasi')->with('success', 'Penandaan Operasi berhasil di ubah.');
+        } catch (Exception $e) {
+            // Redirect dengan pesan error jika terjadi kegagalan
+            return redirect()->back()->with('error', 'Gagal menambahkan penandaan operasi: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -126,8 +241,17 @@ class PenandaanOperasiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($kode_register)
     {
-        //
+        // dd($kode_register);
+        try {
+            $this->penandaanOperasiService->delete($kode_register);
+            $feedback = 'success';
+            $message = 'Data Berhasil Dihapus!';
+        } catch (\Throwable $e) {
+            $feedback = 'error';
+            $message = 'Data Gagal dihapus' . $e->getMessage();
+        }
+        return redirect()->back()->with($feedback, $message);
     }
 }

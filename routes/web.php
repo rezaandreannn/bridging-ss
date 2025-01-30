@@ -3,7 +3,9 @@
 use App\Models\Fisioterapi;
 use App\Models\Simrs\Icd10;
 use App\Models\Simrs\Antrean;
+use App\Models\Simrs\TrBiayaRinci;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
@@ -32,9 +34,11 @@ use App\Http\Controllers\MasterData\LocationController;
 use App\Http\Controllers\OK\PenandaanOperasiController;
 use App\Http\Controllers\RawatInap\Cppt\CpptController;
 use App\Http\Controllers\IGD\Layanan\SkriningController;
+use App\Http\Controllers\MasterData\TtdDokterController;
 use App\Http\Controllers\Fisio\InformedConcentController;
 use App\Http\Controllers\Kunjungan\PendaftaranController;
 use App\Http\Controllers\MasterData\JenisFisioController;
+use App\Http\Controllers\MasterData\TtdPerawatController;
 use App\Http\Controllers\Farmasi\MasterDataAlkesController;
 use App\Http\Controllers\MasterData\OrganizationController;
 use App\Http\Controllers\profileUser\ProfileUserController;
@@ -60,6 +64,9 @@ use App\Http\Controllers\Poli\Mata\MasterData\PenyakitSekarangController;
 use App\Http\Controllers\Berkas\Rekam_medis_by_mr\RekamMedisByMrController;
 use App\Http\Controllers\Berkas\Rekam_medis_harian\RekamMedisHarianController;
 use App\Http\Controllers\IGD\Layanan\AssesmenController as LayananAssesmenController;
+use App\Models\Simrs\Pendaftaran;
+use App\Services\Operasi\BookingOperasiService;
+use App\Services\Operasi\PraBedah\AssesmenPraBedahService;
 
 /*
 |--------------------------------------------------------------------------
@@ -147,6 +154,20 @@ Route::middleware('auth')->group(function () {
         Route::post('farmasi/harga_alkes/add_proses', [MasterDataAlkesController::class, 'store_harga'])->name('masterHargaAlkes.store');
         Route::put('farmasi/harga_alkes/update_proses/{id}', [MasterDataAlkesController::class, 'update_harga'])->name('masterHargaAlkes.update');
         Route::delete('farmasi/harga_alkes/delete_proses/{id}', [MasterDataAlkesController::class, 'destroy_harga'])->name('masterHargaAlkes.destroy');
+
+        Route::get('ttd-dokter', [TtdDokterController::class, 'index'])->name('ttd-dokter.index');
+        Route::get('ttd-dokter/create', [TtdDokterController::class, 'create'])->name('ttd-dokter.create');
+        Route::get('ttd-dokter/edit/{id}', [TtdDokterController::class, 'edit'])->name('ttd-dokter.edit');
+        Route::post('ttd-dokter', [TtdDokterController::class, 'store'])->name('ttd-dokter.store');
+        Route::put('ttd-dokter/{id}/update', [TtdDokterController::class, 'update'])->name('ttd-dokter.update');
+        Route::delete('ttd-dokter/delete/{id}', [TtdDokterController::class, 'destroy'])->name('ttd-dokter.destroy');
+
+        Route::get('ttd-perawat', [TtdPerawatController::class, 'index'])->name('ttd-perawat.index');
+        Route::delete('ttd-perawat/delete/{id}', [TtdPerawatController::class, 'destroy'])->name('ttd-perawat.destroy');
+        Route::get('ttd-perawat/create', [TtdPerawatController::class, 'create'])->name('ttd-perawat.create');
+        Route::get('ttd-perawat/edit/{id}', [TtdPerawatController::class, 'edit'])->name('ttd-perawat.edit');
+        Route::post('ttd-perawat', [TtdPerawatController::class, 'store'])->name('ttd-perawat.store');
+        Route::put('ttd-perawat/{id}/update', [TtdPerawatController::class, 'update'])->name('ttd-perawat.update');
     });
 
     // ENCOUNTER 
@@ -375,6 +396,9 @@ Route::middleware('auth')->group(function () {
         Route::get('polimata/dokter/assesmen_dokter/copy/{noMr}/{noRegBaru}/{noRegLama}', [AssesmenDokterMataController::class, 'copy_riwayat'])->name('poliMata.copyRiwayat');
 
 
+        // Assesmen Lama
+        Route::get('/polimata/Assesmen_keperawatan2', [AssesmenMataController::class, 'index2'])->name('poliMata.index2');
+        Route::get('/polimata/dokter2', [AssesmenDokterMataController::class, 'index2'])->name('poliMata.indexDokter2');
         // Berkas Riwayat Rekam Medis
         Route::get('/berkasPoliMata/riwayatRekamMedis', [AssesmenMataController::class, 'berkas'])->name('poliMata.rekamMedis');
         // Master Data
@@ -640,7 +664,18 @@ Route::get('/server2', function () {
     return view('pages/rekam_medis/bymr/index');
 });
 
+Route::get('/test-lab', function () {
+    $praService = new AssesmenPraBedahService();
+    $data = $praService->getLabByKodeReg('23-00136634');
+    dd($data);
+});
+
+
+
+
+
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/vclaim.php';
 require __DIR__ . '/operasi.php';
+require __DIR__ . '/test_get_data.php';

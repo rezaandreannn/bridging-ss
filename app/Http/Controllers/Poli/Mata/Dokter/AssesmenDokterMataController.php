@@ -68,6 +68,19 @@ class AssesmenDokterMataController extends Controller
 
     // -----------------------------------------------------------------------------
 
+    public function index2(Request $request)
+    {
+        $title = $this->prefix . ' ' . 'Mata Dokter';
+        $tanggal = $request->input('tanggal');
+
+        $kode_dokter = auth()->user()->username;
+        $pasien = $this->rekam_medis->rekamMedisHarian($kode_dokter, $tanggal);
+        // $pasienKonsul = $this->rajaldokter->getPasienByDokterMataRujukInternal($kode_dokter, $tanggal);
+        $poliMata = new PoliMata();
+        // dd($pasien);
+        return view($this->view . 'dokter.index2', compact('title', 'pasien', 'poliMata'));
+    }
+
     public function index(Request $request)
     {
         $title = $this->prefix . ' ' . 'Mata Dokter';
@@ -77,6 +90,7 @@ class AssesmenDokterMataController extends Controller
         }
         $kode_dokter = auth()->user()->username;
         $pasien = $this->rajaldokter->getPasienByDokterMata(auth()->user()->username);
+        // dd($pasien);
         $pasienKonsul = $this->rajaldokter->getPasienByDokterMataRujukInternal($kode_dokter, $tanggal);
         // dd($pasienKonsul);
         $poliMata = new PoliMata();
