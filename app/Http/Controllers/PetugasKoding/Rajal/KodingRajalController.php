@@ -63,7 +63,7 @@ class KodingRajalController extends Controller
         // die;
 
 
-        return view($this->view . 'rawatJalan.index', compact('title', 'dokters', 'data', 'rajalModel'));
+        return view($this->view . 'rawatJalan.index', compact('title', 'dokters', 'data', 'rajalModel','kode_dokter','tanggal'));
     }
 
     /**
@@ -71,15 +71,19 @@ class KodingRajalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($noReg)
+    public function create($noReg,$tanggal,$kode_dokter)
     {
 
-        // dd($noReg);
+        // dd($tanggal);
         //
         $title = $this->prefix . ' ' . 'Add Data';
         $masterIcd10 = $this->rajaldokter->getIcd10();
         $getAsesmenDokter = $this->koding->getAsesmenDokter($noReg);
-        // dd($getAsesmenDokter);
+        
+        if($getAsesmenDokter == null){
+            return redirect('koding/kodingDiagnosa/rajal/list?kode_dokter=' . $kode_dokter.'&tanggal='.$tanggal)->with('error', 'Data pasien tersebut tidak di input di EMR!');
+         
+        }
 
         $biodata = $this->rajal->pasien_bynoreg($noReg);
 
@@ -106,7 +110,7 @@ class KodingRajalController extends Controller
             return redirect('koding/kodingDiagnosa/rajal/list?kode_dokter=' . $request->input('kode_dokter').'&tanggal='.$request->input('tanggal'))->with('success', 'Data successfully!');
         }
         else{
-            return redirect('koding/kodingDiagnosa/rajal/list?kode_dokter=' . $request->input('kode_dokter').'&tanggal='.$request->input('tanggal'))->with('danger', 'Gagal Simpan!');
+            return redirect('koding/kodingDiagnosa/rajal/list?kode_dokter=' . $request->input('kode_dokter').'&tanggal='.$request->input('tanggal'))->with('error', 'Gagal Simpan!');
         }
     }
 
@@ -161,7 +165,7 @@ class KodingRajalController extends Controller
             return redirect('koding/kodingDiagnosa/rajal/list?kode_dokter=' . $request->input('kode_dokter').'&tanggal='.$request->input('tanggal'))->with('success', 'Data successfully!');
         }
         else{
-            return redirect('koding/kodingDiagnosa/rajal/list?kode_dokter=' . $request->input('kode_dokter').'&tanggal='.$request->input('tanggal'))->with('danger', 'Gagal Simpan!');
+            return redirect('koding/kodingDiagnosa/rajal/list?kode_dokter=' . $request->input('kode_dokter').'&tanggal='.$request->input('tanggal'))->with('error', 'Gagal Simpan!');
         }
    
       

@@ -536,6 +536,9 @@ class FisioController extends Controller
             ->orderBy('a.ID_CPPT_FISIO', 'ASC')
             ->get();
 
+            $row = 8;
+            $row = $row - $data->count();
+
             // dd($data);
 
         $lastCppt = DB::connection('pku')
@@ -571,7 +574,7 @@ class FisioController extends Controller
 
         $date = date('dMY');
         $filename = 'BuktiLayanan-' . $date;
-        $pdf = PDF::loadview($this->view . 'cetak/bukti_pelayanan', ['title' => $title, 'data' => $data, 'biodatas' => $biodatas, 'lastCppt' => $lastCppt, 'firstCppt' => $firstCppt, 'cekFirstCppt' => $cekFirstCppt, 'ttdPasien' => $ttdPasien]);
+        $pdf = PDF::loadview($this->view . 'cetak/bukti_pelayanan', ['title' => $title, 'data' => $data, 'biodatas' => $biodatas, 'lastCppt' => $lastCppt, 'firstCppt' => $firstCppt, 'cekFirstCppt' => $cekFirstCppt, 'ttdPasien' => $ttdPasien, 'row'=>$row]);
         return $pdf->stream($filename . '.pdf');
     }
         // ------------------------

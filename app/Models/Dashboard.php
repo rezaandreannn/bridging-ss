@@ -127,6 +127,9 @@ class Dashboard extends Model
         {
 
             $month = (date('m')-1);
+            if (date('m')==1){
+                $month = 12;
+            }
       
             $data = DB::connection('db_rsmm')
             ->select("SELECT count (*) as total FROM PENDAFTARAN A 
@@ -145,6 +148,10 @@ class Dashboard extends Model
         {
 
             $month = (date('m')-1);
+            if (date('m')==1){
+                $month = 12;
+            }
+      
       
             $data = DB::connection('db_rsmm')
             ->select("SELECT count (*) as total FROM PENDAFTARAN A 
@@ -163,6 +170,9 @@ class Dashboard extends Model
         {
 
             $month = (date('m')-1);
+            if (date('m')==1){
+                $month = 12;
+            }
       
             $data = DB::connection('db_rsmm')
             ->select("SELECT count (*) as total FROM PENDAFTARAN A 
@@ -181,6 +191,10 @@ class Dashboard extends Model
         {
 
             $month = (date('m')-1);
+            if (date('m')==1){
+                $month = 12;
+            }
+      
       
             $data = DB::connection('db_rsmm')
             ->select("SELECT count (*) as total FROM PENDAFTARAN A 
@@ -199,6 +213,10 @@ class Dashboard extends Model
         {
 
             $month = (date('m')-1);
+            if (date('m')==1){
+                $month = 12;
+            }
+      
       
             $data = DB::connection('db_rsmm')
             ->select("SELECT count (*) as total FROM PENDAFTARAN A 
