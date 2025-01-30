@@ -165,17 +165,38 @@
                     </li>
                 </ul>
                 @endcan
+                @can('poliklinik mata assesmen perawat2')
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('pm/polimata/Assesmen_keperawatan2*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('poliMata.index2') }}">Assesmen Lama</a>
+                    </li>
+                </ul>
+                @endcan
                 @can('poliklinik mata refraksi optisi')
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('pm/polimata/refraksi*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('poliMata.refraksi') }}">Refraksi Optisi</a>
                     </li>
                 </ul>
-                @endcan
+                @endcan 
+                @can('poliklinik mata refraksi optisi2')
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('pm/polimata/refraksi2*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('poliMata.refraksi') }}">Refraksi Optisi Lama</a>
+                    </li>
+                </ul>
+                @endcan 
                 @can('poliklinik mata assesmen dokter')
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('pm/polimata/dokter*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('poliMata.indexDokter') }}">Assesmen Dokter</a>
+                    </li>
+                </ul>
+                @endcan
+                @can('poliklinik mata assesmen dokter2')
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('pm/polimata/dokter2*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('poliMata.indexDokter2') }}">Assesmen Dokter Lama</a>
                     </li>
                 </ul>
                 @endcan

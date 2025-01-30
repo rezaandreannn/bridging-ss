@@ -42,6 +42,8 @@ class PostOperasiController extends Controller
 
         $statusPost = BookingHelper::getStatusPostOperasi($postOperasi);
 
+        // dd($statusPost);
+
         return view($this->view . 'index', compact('postOperasi'))
             ->with([
                 'title' => $title,
@@ -113,7 +115,7 @@ class PostOperasiController extends Controller
 
         return view($this->view . 'edit', compact('postOperasi'))->with([
             'title' => $this->prefix . ' ' . 'Edit Data',
-            'biodata' =>$this->bookingOperasiService->biodata($kode_register),
+            'biodata' => $this->bookingOperasiService->biodata($kode_register),
             'asistenOperasi' => $this->laporanOperasiService->getAsistenOperasi(),
             'spesialisAnastesi' => $this->laporanOperasiService->getSpesialisAnastesi(),
             'penataAnastesi' => $this->laporanOperasiService->getPenataAsisten(),

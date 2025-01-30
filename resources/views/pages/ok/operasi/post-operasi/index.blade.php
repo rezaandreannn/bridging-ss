@@ -24,7 +24,7 @@
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{ route('operasi.post-operasi.index') }}">Operasi Kamar</a></div>
-                <div class="breadcrumb-item">Pre Operasi</div>
+                <div class="breadcrumb-item">Post Operasi</div>
             </div>
         </div>
 
@@ -41,6 +41,7 @@
                                             <th scope="col">Nama Pasien</th>
                                             <th scope="col">No MR</th>
                                             <th scope="col">Nama Dokter</th>
+                                            <th scope="col">Status</th>
                                             <th scope="col">Aksi</th>
                                         </tr>
                                     </thead>
@@ -53,6 +54,14 @@
                                             <td>{{ ucwords(strtolower(trim($booking->nama_pasien))) }}</td>
                                             <td>{{$booking->no_mr}}</td>
                                             <td>{{$booking->nama_dokter}}</td>
+                                            <td>
+                                                @if (isset($statusPost[$booking->kode_register]) && 
+                                                            array_filter($statusPost[$booking->kode_register]))
+                                                <span class="badge badge-success">Sudah</span>
+                                                @else
+                                                <span class="badge badge-danger">Belum</span>
+                                                @endif
+                                            </td>
                                             <td>  
                                                 <div class="dropdown d-inline">
                                                     <a href="#" class="text-primary" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

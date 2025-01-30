@@ -62,7 +62,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Dokter Operator</label>
-                                    <select name="nama_operator" id="" class="form-control @error('nama_operator') is-invalid @enderror" readonly>
+                                    <select name="dokter_operator" id="" class="form-control @error('dokter_operator') is-invalid @enderror" readonly>
                                         <option value="{{$biodata->dokter->Kode_Dokter}}" selected>{{$biodata->dokter->Nama_Dokter}}</option>
                                     </select>
                                     @error('dokter_operator')

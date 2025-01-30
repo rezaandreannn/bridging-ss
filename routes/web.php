@@ -396,6 +396,9 @@ Route::middleware('auth')->group(function () {
         Route::get('polimata/dokter/assesmen_dokter/copy/{noMr}/{noRegBaru}/{noRegLama}', [AssesmenDokterMataController::class, 'copy_riwayat'])->name('poliMata.copyRiwayat');
 
 
+        // Assesmen Lama
+        Route::get('/polimata/Assesmen_keperawatan2', [AssesmenMataController::class, 'index2'])->name('poliMata.index2');
+        Route::get('/polimata/dokter2', [AssesmenDokterMataController::class, 'index2'])->name('poliMata.indexDokter2');
         // Berkas Riwayat Rekam Medis
         Route::get('/berkasPoliMata/riwayatRekamMedis', [AssesmenMataController::class, 'berkas'])->name('poliMata.rekamMedis');
         // Master Data
