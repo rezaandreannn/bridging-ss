@@ -158,7 +158,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Jumlah Maksimal Fisio <code>jika tidak terapi isi dengan 0</code> </label>
-                                <input type="number" name="JUMLAH_TOTAL_FISIO" class="form-control" placeholder="Di isi dengan angka" value="8">
+                                <input type="number" name="JUMLAH_TOTAL_FISIO" class="form-control" placeholder="Di isi dengan angka" value="4">
                             </div>
                         </div>
                     </div>

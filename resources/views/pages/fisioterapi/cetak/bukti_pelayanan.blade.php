@@ -155,38 +155,56 @@
             <td style="text-align: center">{{ $loop->iteration }}</td>
             <td style="text-align: center">{{ $item->JENIS_FISIO }}</td>
             <td style="text-align: center">{{ $item->TANGGAL_FISIO }}</td>
-            <td style="text-align: center">
+            <td style="text-align: center ">
                 <div class="gambar">
                     {{-- {!! DNS2D::getBarcodeHTML($item->PASIEN_USERNAME, 'QRCODE', 2, 2) !!} --}}
                     @if($item->ttd_pasien == null)
+                    @if(isset($ttdPasien->IMAGE))
                     <img src="storage/ttd/{{$ttdPasien->IMAGE}}" width="60" height="80" />
+                    @endif
                     @else
+                    @if(isset($item->ttd_pasien))
                     <img src="storage/ttd/{{$item->ttd_pasien}}" width="60" height="80" />
+                    @endif
                     @endif
                 </div>
             </td>
             <td style="text-align: center">
-                @if($item->KODE_DOKTER == '151')
+                <!-- @if($item->KODE_DOKTER == '151')
                     <div class="gambar">
                         {!! DNS2D::getBarcodeHTML($item->name, 'QRCODE', 2, 2) !!}
                     </div>
-                @endif
+                @endif -->
             </td>
             <td style="text-align: center">
-                @if($item->KODE_DOKTER != '151')
+                <!-- @if($item->KODE_DOKTER != '151')
                     <div class="gambar">
                         {!! DNS2D::getBarcodeHTML($item->name, 'QRCODE', 2, 2) !!}
                     </div>
-                @endif
+                @endif -->
             </td>
         </tr>
         @endforeach
+        @for ($x = 0; $x <= $row; $x++)
+        @if ($x == $row)
+            @break
+        @endif
+        <tr>
+            <td style="text-align: center; padding-top: 55px"></td>
+            <td style="text-align: center; padding-top: 55px"></td>
+            <td style="text-align: center; padding-top: 55px"></td>
+            <td style="text-align: center; padding-top: 55px"></td>
+            <td style="text-align: center; padding-top: 55px"></td>
+            <td style="text-align: center; padding-top: 55px"></td>
+        </tr>
+        @endfor
     </table>
     <br />
     <table width="100%">
         <tr>
             <td class="text5" width="60%"></td>
-            <td class="text5">Metro, {{$lastCppt->TANGGAL_FISIO}}, Jam : {{date("H:i", strtotime($lastCppt->JAM_FISIO))}} WIB</td>
+            <!-- <td class="text5">Metro, {{$lastCppt->TANGGAL_FISIO}}, Jam : {{date("H:i", strtotime($lastCppt->JAM_FISIO))}} WIB</td> -->
+            <td class="text5">Metro, </td>
         </tr>
         <tr>
             <td class="text5" width="60%"></td>
@@ -199,12 +217,7 @@
         <tr>
             <td width="60%" class="text5"></td>
           
-            <td class="text5"> 
-                @if ($cekFirstCppt ==false)
-
-                @else
-                {!! DNS2D::getBarcodeHTML($firstCppt->Nama_Dokter, 'QRCODE', 3, 3) !!}
-                @endif
+            <td class="text5" style="padding-top: 60px"> 
             </td>
         </tr>
         <tr>

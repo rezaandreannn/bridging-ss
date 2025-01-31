@@ -144,8 +144,10 @@
                 <td class="text5" style="padding-left: 30px;">RSU Muhammadiyah Metro</td>
             </tr>
             <tr>
-                <td class="text5" style="padding-left: 50px;">{!! DNS2D::getBarcodeHTML($biodata->NAMA_DOKTER, 'QRCODE', 2, 2) !!}</td>
-                <td class="text5" style="padding-left: 50px;">{!! DNS2D::getBarcodeHTML($alkes->nama_verifikator, 'QRCODE', 2, 2) !!}</td>
+                <!-- <td class="text5" style="padding-left: 50px;">{!! DNS2D::getBarcodeHTML($biodata->NAMA_DOKTER, 'QRCODE', 2, 2) !!}</td>
+                <td class="text5" style="padding-left: 50px;">{!! DNS2D::getBarcodeHTML($alkes->nama_verifikator, 'QRCODE', 2, 2) !!}</td> -->
+                <td class="text5" style="padding-left: 50px;"></td>
+                <td class="text5" style="padding-left: 50px;"></td>
             </tr>
             <tr>
                 <td class="text5" style="padding-right: 30px;">({{$biodata->NAMA_DOKTER}})</td>

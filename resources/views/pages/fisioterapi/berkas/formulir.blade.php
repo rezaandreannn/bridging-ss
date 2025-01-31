@@ -257,7 +257,8 @@
             </tr>
             <tr>
                 <td class="text5"></td>
-                <td class="text5" style="padding-left: 135px">{!! DNS2D::getBarcodeHTML($namaDokter->Nama_Dokter, 'QRCODE', 3, 3) !!}</td>
+                <!-- <td class="text5" style="padding-left: 135px">{!! DNS2D::getBarcodeHTML($namaDokter->Nama_Dokter, 'QRCODE', 3, 3) !!}</td> -->
+                <td class="text5" style="padding-left: 135px"><br><br><br></td>
             </tr>
             <tr>
                 <td width="50%" class="text5"></td>Nama_Dokter
@@ -345,7 +346,8 @@
             </tr>
             <tr>
                 <td class="text5"></td>
-                <td class="text5" style="padding-left: 135px">{!! DNS2D::getBarcodeHTML($namaDokter->Nama_Dokter, 'QRCODE', 3, 3) !!}</td>
+                <!-- <td class="text5" style="padding-left: 135px">{!! DNS2D::getBarcodeHTML($namaDokter->Nama_Dokter, 'QRCODE', 3, 3) !!}</td> -->
+                <td class="text5" style="padding-left: 135px"><br><br><br></td>
             </tr>
             <tr>
                 <td width="50%" class="text5"></td>
@@ -456,11 +458,16 @@
             </tr>
             <tr>
                 <td class="text5">
+                    @if (isset($ttdPasien->IMAGE))
                     <img src="storage/ttd/{{$ttdPasien->IMAGE}}" width="80" height="100" />
+                    @else 
+                    <img src="" width="80" height="100" />
+                    @endif
                     {{-- <img src="img/logo.png" width="50" height="50" /> --}}
                     {{-- {!! DNS2D::getBarcodeHTML($biodata->NAMA_PASIEN, 'QRCODE', 3, 3) !!} --}}
                 </td>
-                <td class="text5" style="padding-left: 130px">{!! DNS2D::getBarcodeHTML($namaDokter->Nama_Dokter, 'QRCODE', 3, 3) !!}</td>
+                <!-- <td class="text5" style="padding-left: 130px">{!! DNS2D::getBarcodeHTML($namaDokter->Nama_Dokter, 'QRCODE', 3, 3) !!}</td> -->
+                <td class="text5" style="padding-left: 135px"><br><br><br></td>
             </tr>
             <tr>
                 <td width="50%" class="text5">({{ $biodata->NAMA_PASIEN}})</td>
