@@ -382,7 +382,7 @@ class LaporanOperasiService
 
     public function getSpesialisAnastesi()
     {
-        $data = Dokter::where('Spesialis', 'DOKTER SPESIALIS ANASTESI')->get();
+        $data = Dokter::where('Spesialis', 'SPESIALIS ANASTESI')->get();
         return $this->mapDataAsisten($data);
     }
 
