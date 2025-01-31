@@ -52,9 +52,6 @@ class PenandaanOperasiService
     public function unduhByRegister($kodeRegister)
     {
         $penandaan = PenandaanOperasi::with([
-            'ttdTandaPasien' => function ($query) {
-                $query->select('kode_register', 'ttd_pasien', 'nama_pasien');
-            },
             'booking' => function ($query) {
                 $query->with([
                     'pendaftaran' => function ($query) {
@@ -81,8 +78,6 @@ class PenandaanOperasiService
                 'kode_register' => $penandaan->kode_register,
                 'tanggal' => optional($penandaan->booking)->tanggal,
                 'gambar' => $penandaan->hasil_gambar,
-                'ttd_pasien' => optional($penandaan->ttdTandaPasien)->ttd_pasien,
-                'nama_ttd_pasien' => optional($penandaan->ttdTandaPasien)->nama_pasien,
                 'no_mr' => optional($penandaan->booking->pendaftaran)->No_MR,
                 'nama_pasien' => optional($penandaan->booking->pendaftaran->registerPasien)->Nama_Pasien,
                 'tanggal_lahir' => optional($penandaan->booking->pendaftaran->registerPasien)->TGL_LAHIR,
@@ -156,13 +151,13 @@ class PenandaanOperasiService
     public function delete($kode_register)
     {
         // dd($kode_register);
-        $idpenandaan = PenandaanOperasi::where('kode_register',$kode_register)->first();
+        $idpenandaan = PenandaanOperasi::where('kode_register', $kode_register)->first();
 
         if ($idpenandaan) {
             // dd($id);
             $pathImage = 'public/operasi/penandaan-pasien/image/' . $idpenandaan->hasil_gambar;
             Storage::delete($pathImage);
-            $deletePenandaan=PenandaanOperasi::find($idpenandaan->id);
+            $deletePenandaan = PenandaanOperasi::find($idpenandaan->id);
             $deletePenandaan->delete();
         }
     }

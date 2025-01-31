@@ -24,13 +24,50 @@
             <h1>{{ $title }}</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{ route('prabedah.assesmen-prabedah.index') }}">Operasi Kamar</a></div>
-                <div class="breadcrumb-item">Assesmen Pra Bedah</div>
+                <div class="breadcrumb-item">Berkas Pra Bedah</div>
             </div>
         </div>
 
         <div class="section-body">
             <div class="card">
                 <div class="card-body">
+                    <form id="filterForm2" action="" method="GET">       
+                        <div class="card-footer text-left">
+                            <div class="row">
+                                @if($isPerawatPoli)
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Pilih Dokter</label>
+                                        <select name="kode_dokter" class="form-control select2 @error('kode_dokter') is-invalid @enderror">
+                                            <option value="" selected disabled>--Pilih Dokter--</option>
+                                            @foreach ($dokters as $dokter)
+                                                <option value="{{ $dokter->Kode_Dokter }}" 
+                                                    @if(request('kode_dokter') == $dokter->Kode_Dokter) selected @endif>
+                                                    {{ $dokter->Nama_Dokter }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('kode_dokter')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group mt-4">
+                                        <button type="submit" class="btn btn-primary mr-2" style="margin-top: 5px;">
+                                            <i class="fas fa-search"></i> Filter
+                                        </button>
+                                        <button type="button" class="btn btn-danger" style="margin-top: 5px;" onclick="resetForm()">
+                                            <i class="fas fa-sync"></i> Reset
+                                        </button>
+                                    </div>
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+                        </form>
                     <div class="table-responsive">
                         <table class="table-striped table table-bordered" id="table-1">
                                     <thead>
@@ -58,10 +95,6 @@
                                                         {{-- Input --}}
                                                         <a class="dropdown-item has-icon" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" href="{{ route('prabedah.berkas-prabedah.cetak', $assesmen->kode_register) }}"> 
                                                             <i class="fas fa-download"></i> Download
-                                                        </a>
-
-                                                        <a class="dropdown-item has-icon" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" href="{{ route('prabedah.berkas-pascabedah.cetak', $assesmen->kode_register) }}"> 
-                                                            <i class="fas fa-download"></i> Pasca Bedah
                                                         </a>
                                                         {{-- <a class="dropdown-item has-icon" href="{{ route('prabedah.berkas-prabedah.download', $assesmen->kode_register) }}"> 
                                                             <i class="fas fa-download"></i> BPJS

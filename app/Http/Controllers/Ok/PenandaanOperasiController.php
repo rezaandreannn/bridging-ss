@@ -47,6 +47,7 @@ class PenandaanOperasiController extends Controller
         // Ambil data berdasarkan ID
 
         $penandaan = $this->penandaanOperasiService->unduhByRegister($kodeRegister);
+        // dd($penandaan);
 
         // dd($penandaan);
         $date = date('dMY');
@@ -73,7 +74,7 @@ class PenandaanOperasiController extends Controller
         }
 
         $isDokterUmum = auth()->user()->hasRole('dokter umum');
-        
+
         $penandaans = [];
         $penandaan = [];
         $statusPenandaan = null;
@@ -102,13 +103,11 @@ class PenandaanOperasiController extends Controller
             // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
             $statusPenandaan = BookingHelper::getStatusPenandaan($penandaans);
             $statusGambar = BookingHelper::getStatusGambar($penandaans);
-        }
-
-        elseif (auth()->user()->hasRole('dokter umum')) {
+        } elseif (auth()->user()->hasRole('dokter umum')) {
             $kode_dokter = $request->input('kode_dokter');
-            
+
             if ($kode_dokter) {
-                
+
                 $sessionBangsal = null;
                 $penandaans = $this->bookingOperasiService->byDate($date, $sessionBangsal, $kode_dokter);
 
@@ -123,7 +122,7 @@ class PenandaanOperasiController extends Controller
 
         // dd($penandaan);
 
-        return view($this->view . 'penandaan-operasi.index', compact('penandaans','isDokterUmum'))
+        return view($this->view . 'penandaan-operasi.index', compact('penandaans', 'isDokterUmum'))
             ->with([
                 'title' => $title,
                 'statusPenandaan' => $statusPenandaan,

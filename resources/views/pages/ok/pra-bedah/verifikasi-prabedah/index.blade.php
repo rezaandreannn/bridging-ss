@@ -143,11 +143,11 @@
                                                 @endif
                                                 {{-- <a class="dropdown-item has-icon" href="{{ route('prabedah.verifikasi-prabedah.create',$verifikasi->kode_register)}}"> <i class="fas fa-plus"></i> Tambah</a>
                                                 <a class="dropdown-item has-icon" href="{{ route('prabedah.verifikasi-prabedah.edit',$verifikasi->kode_register)}}"> <i class="fas fa-plus"></i> Edit</a> --}}
-                                                @if (!$statusTtd)
+                                                {{-- @if (!$statusTtd)
                                                 <a class="dropdown-item has-icon" href="{{ route('ttd-perawat.create') }}"> 
                                                     <i class="fas fa-signature"></i> Tanda Tangan
                                                 </a>
-                                                @endif
+                                                @endif --}}
                                             </div>
                                         </div>
                                     </td>
