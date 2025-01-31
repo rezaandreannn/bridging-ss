@@ -30,6 +30,7 @@ class ListPasienController extends Controller
         $statusPascaBedah = null;
         $statusPenandaan = null;
 
+
         if (auth()->user()->hasRole('dokter bedah')) {
             $sessionKodeDokter = auth()->user()->username ?? null;
 
