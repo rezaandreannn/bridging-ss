@@ -10,6 +10,7 @@ use App\Services\MasterData\UserService;
 use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\PraBedah\AssesmenPraBedahService;
 use App\Services\Operasi\PraBedah\VerifikasiPraBedahService;
+use App\Services\SimRs\DokterService;
 
 class BerkasPraBedahController extends Controller
 {
@@ -18,6 +19,7 @@ class BerkasPraBedahController extends Controller
     protected $prefix;
     protected $bookingOperasiService;
     protected $assesmenOperasiService;
+    protected $dokterService;
     protected $verifikasiPraBedahService;
 
     public function __construct()
@@ -25,6 +27,7 @@ class BerkasPraBedahController extends Controller
         $this->view = 'pages.ok.pra-bedah.';
         $this->prefix = 'Berkas Pra Bedah';
         $this->assesmenOperasiService = new AssesmenPraBedahService();
+        $this->dokterService = new DokterService();
         $this->verifikasiPraBedahService = new VerifikasiPraBedahService();
         $this->bookingOperasiService = new BookingOperasiService();
     }
@@ -79,29 +82,41 @@ class BerkasPraBedahController extends Controller
         return $pdf->stream($filename . '.pdf');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $title = $this->prefix . ' ' . 'List';
         // $date = '2024-12-05';
         $date = date('Y-m-d');
 
         $assesmens = [];
-        // Cek jika login sebagai userbangsal
-        if (auth()->user()->hasRole('perawat bangsal')) {
-            $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
-            // Ambil pasien bangsal
-            $assesmens = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '', '');
+
+        $isPerawatPoli = auth()->user()->hasRole('perawat poli');
+
+        if ($isPerawatPoli) {
+
+            $kode_dokter = $request->input('kode_dokter');
+
+            if ($kode_dokter) {
+
+                $sessionBangsal = null;
+                $assesmens = $this->bookingOperasiService->byDate($date, $sessionBangsal, $kode_dokter);
+            }
         }
         // Cek jika login sebagai dokter
         elseif (auth()->user()->hasRole('dokter bedah')) {
             $sessionKodeDokter = auth()->user()->username ?? null;
             // Ambil pasien dokter
             $assesmens = $this->bookingOperasiService->byDate($date, '', $sessionKodeDokter ?? '');
+        } elseif (auth()->user()->hasRole('perawat bangsal')) {
+            $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
+            // Ambil pasien bangsal
+            $assesmens = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '', '');
         }
 
-        return view($this->view . 'berkas.index', compact('assesmens'))
+        return view($this->view . 'berkas.index', compact('assesmens', 'isPerawatPoli'))
             ->with([
                 'title' => $title,
+                'dokters' => $this->dokterService->byBedahOperasi(),
             ]);
     }
 
