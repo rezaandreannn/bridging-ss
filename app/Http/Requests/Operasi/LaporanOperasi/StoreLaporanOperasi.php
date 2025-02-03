@@ -30,7 +30,7 @@ class StoreLaporanOperasi extends FormRequest
             'tanggal' => 'required',
             'diagnosa_pre_op' => 'required',
             'diagnosa_post_op' => 'required',
-            'jaringan_dieksekusi' => 'required',
+            'jaringan_dieksekusi' => 'nullable',
             'mulai_operasi' => 'nullable',
             'selesai_operasi' => 'nullable',
             'lama_operasi' => 'nullable',
@@ -43,7 +43,7 @@ class StoreLaporanOperasi extends FormRequest
             'nama_perawat' => 'nullable',
             'nama_ahli_anastesi' => 'nullable',
             'nama_anastesi' => 'nullable',
-            'jenis_anastesi' => 'required',
+            'jenis_anastesi' => 'nullable',
             // 'cara_masuk' => 'nullable|string'
         ];
     }

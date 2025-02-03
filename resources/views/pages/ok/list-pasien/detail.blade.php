@@ -416,7 +416,10 @@
                                                             <select name="macam_operasi" id="macam_operasi" class="form-control @error('macam_operasi') is-invalid @enderror select2">
                                                                 <option value="">--Pilih Macam Operasi --</option>
                                                                 @foreach($templates as $template)
-                                                                <option value="{{ $template->macam_operasi }}">{{ $template->macam_operasi }}</option>
+                                                                {{-- <option value="{{ $template->macam_operasi }}">{{ $template->macam_operasi }}</option> --}}
+                                                                <option value="{{ $template->macam_operasi }}" {{ old('macam_operasi', isset($laporanOperasi) ? $laporanOperasi->macam_operasi : '') == $template->macam_operasi ? 'selected' : '' }}>
+                                                                    {{ $template->macam_operasi }}
+                                                                </option>
                                                                 @endforeach
                                                             </select>
                                                             @error('macam_operasi')
@@ -425,7 +428,7 @@
                                                             </span>
                                                             @enderror
                                                             @else
-                                                            <input type="text" name="macam_operasi" class="form-control @error('macam_operasi') is-invalid @enderror" placeholder="Masukkan Nama Operasi" value="{{ old('macam_operasi') }}">
+                                                            <input type="text" name="macam_operasi" class="form-control @error('macam_operasi') is-invalid @enderror" placeholder="Masukkan Nama Operasi" value="{{ isset($laporanOperasi) && $laporanOperasi->macam_operasi ? $laporanOperasi->macam_operasi : '' }}">
                                                             @error('macam_operasi')
                                                             <span class="text-danger" style="font-size: 12px;">
                                                                 {{ $message }}

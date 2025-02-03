@@ -56,11 +56,19 @@
                                     <td>{{ $patient->asal_ruangan ?? ''}}</td>
                                     <td>{{ $patient->created_by ?? ''}}</td>
                                     <td>
+                                        @if (auth()->user()->hasRole('perawat ibs'))
+                                            @if (isset($statusLaporanOperasi[$patient->id]) && $statusLaporanOperasi[$patient->id] != 'create')
+                                            <a href="{{ route('operasi.list-pasien-detail.show', $patient->kode_register )}}" class="btn btn-sm btn-primary">
+                                                <i class="fas fa-file-alt"></i>
+                                                Laporan Operasi
+                                            </a>
+                                            @endif
+                                        @endif
+                                        @if (auth()->user()->hasRole('dokter bedah'))
                                         <a href="{{ route('operasi.list-pasien-detail.show', $patient->kode_register )}}" class="btn btn-sm btn-primary">
                                             <i class="fas fa-file-alt"></i>
                                             Forms
                                         </a>
-                                        @if (auth()->user()->hasRole('dokter bedah'))
                                         <div class="dropdown d-inline">
                                             <a href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-sm btn-success">
                                                 <i class="fas fa-download"></i>
