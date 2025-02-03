@@ -33,7 +33,8 @@ class UserController extends Controller
         $title = $this->prefix . ' ' . 'Index';
         $roles = Role::all();
         $permissions = Permission::all();
-        $users = User::with('roles')->get();
+        $users = User::with(['roles','userbangsal'])->get();
+        // dd($users);
         return view($this->view . 'index', compact('title', 'users', 'roles', 'permissions'));
     }
 
@@ -61,7 +62,7 @@ class UserController extends Controller
             'image' => ['image', 'file', 'max:2048'],
             'password' => ['required', 'confirmed'],
             'permissions' => ['array'],
-            'username' => ['required'],
+            'username' => ['required', 'unique:' . User::class],
         ]);
 
 
@@ -206,7 +207,9 @@ class UserController extends Controller
             }
             else{
                
-                $bangsalById->delete();
+                if($bangsalById){
+                    $bangsalById->delete();
+                }
            
             }
 

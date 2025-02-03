@@ -36,8 +36,9 @@
                                         No
                                     </th>
                                     <th>Name</th>
+                                    <th>Username</th>
                                     <th>Email</th>
-                                    <th>Image</th>
+                                    <th>Bangsal</th>
                                     <th>Role</th>
                                     <th>Permission</th>
                                     <th>Action</th>
@@ -50,13 +51,9 @@
                                         {{ $loop->iteration }}
                                     </td>
                                     <td>{{$user->name}}</td>
+                                    <td>{{$user->username}}</td>
                                     <td>{{$user->email}}</td>
-                                    <td>@if ($user->image)
-                                        <img src="{{ asset('storage/images/'. $user->image ) }}" width="25%" alt="Gambar Pengguna">
-                                        @else
-                                        <img src="{{ asset('img/avatar/avatar-1.png') }}" width="25%" alt="Gambar Default">
-                                        @endif
-                                    </td>
+                                    <td>{{$user->userbangsal->bangsal->Nama_Bangsal ?? ''}}</td>
                                     <td>
                                         <button type="button" class="badge border-0
                                              @if($user->roles->count() > 1)
