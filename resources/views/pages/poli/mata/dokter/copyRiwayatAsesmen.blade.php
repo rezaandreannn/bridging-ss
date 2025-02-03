@@ -363,6 +363,27 @@
                                     </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
+                                                <label>Visus Sebelumnya</label>
+                                                <div class="col-md-12">
+                                                    <div class="form-group" style="display: flex; flex-direction: row;">
+                                                        <div class="input-group" style="margin-right: 10px;">
+                                                            <label for="VISUS_OD" class="mr-2 mt-2">
+                                                                OD
+                                                            </label>
+                                                            <input type="text" placeholder="Inputan Mata Kanan" value="{{ $refraksiLama->VISUS_OD }}" class="form-control" readonly>
+                                                        </div>
+                                                        <div class="input-group" style="margin-right: 10px;">
+                                                            <label for="VISUS_OS" class="mr-2 mt-2">
+                                                                OS
+                                                            </label>
+                                                            <input type="text" placeholder="Inputan Mata Kiri" value="{{ $refraksiLama->VISUS_OS }}" class="form-control" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
                                                 <label>Visus</label>
                                                 <div class="col-md-12">
                                                     <input type="hidden" name="NO_REG" value="{{ $biodata->NO_REG }}">

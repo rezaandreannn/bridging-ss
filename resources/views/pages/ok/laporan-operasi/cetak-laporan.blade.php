@@ -48,6 +48,7 @@
 
         .sign {
             padding-right: 50px;
+            padding-bottom: 40px;
         }
 
         .no-border {
@@ -139,7 +140,7 @@
         <div class="signature">
             <p class="sign">Operator,</p>
             <p></p>
-            <p>Tanda Tangan & Nama Jelas</p>
+            <p>{{ $biodata->dokter->Nama_Dokter}}</p>
         </div>
     </div>
 </body>

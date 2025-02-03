@@ -34,6 +34,7 @@
                     <form id="filterForm" action="" method="GET">       
                         <div class="card-footer text-left">
                             <div class="row">
+                                @if($isDokterUmum)
                                 <div class="col-md-4">
                                     <label for="">Filter tanggal</label>
                                     @php
@@ -43,9 +44,7 @@
                                         <input type="date" class="form-control" name="tanggal" {{(request('tanggal')==null) ?  $date : $date = request('tanggal') }} value="{{$date}}"  id="datefilter">
                                     </div>
                                 </div>
-                                 <!-- Only show doctor filter if the user is NOT a perawat bangsal -->
-                                @if($isDokterUmum)
-                                <div class="col-md-4">
+                                {{-- <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Pilih Dokter</label>
                                         <select name="kode_dokter" class="form-control select2 @error('kode_dokter') is-invalid @enderror">
@@ -63,7 +62,7 @@
                                             </div>
                                         @enderror
                                     </div>
-                                </div>
+                                </div> --}}
                                 @endif
                                 <div class="col-md-4">
                                     <div class="form-group mt-4">

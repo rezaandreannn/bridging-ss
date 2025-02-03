@@ -58,12 +58,13 @@ class AssesmenDokterMataController extends Controller
             ->where('TIPE', 'Mata Kanan')
             ->first();
         $refraksi = DB::connection('pku')->table('poli_mata_refraksi')->where('NO_REG', $biodata->NO_REG)->first();
+        $refraksiLama = DB::connection('pku')->table('poli_mata_refraksi')->where('NO_REG', $noRegLama)->first();
         $asesmenDokterGet = DB::connection('pku')->table('poli_mata_dokter')->where('NO_REG', $noRegLama)->first();
 
         $masterObat = $this->rajaldokter->getMasterObat();
         // dd($perawat_mata);
         $title = $this->prefix . ' ' . 'Copy Assesmen Dokter';
-        return view($this->view . 'dokter.copyRiwayatAsesmen', compact('title', 'biodata', 'ttv', 'MataKiri', 'MataKanan', 'medis', 'masterObat', 'perawat_mata', 'asesmen_perawat', 'refraksi', 'asesmenDokterGet', 'biodataLama', 'noRegBaru'));;
+        return view($this->view . 'dokter.copyRiwayatAsesmen', compact('title', 'biodata', 'ttv', 'MataKiri', 'MataKanan', 'refraksiLama', 'medis', 'masterObat', 'perawat_mata', 'asesmen_perawat', 'refraksi', 'asesmenDokterGet', 'biodataLama', 'noRegBaru'));;
     }
 
     // -----------------------------------------------------------------------------
