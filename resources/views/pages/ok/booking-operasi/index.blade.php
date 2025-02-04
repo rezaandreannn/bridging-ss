@@ -140,7 +140,7 @@
                                     </div>
                                 </div>
                                  <!-- Only show doctor filter if the user is NOT a perawat bangsal -->
-                                @if($isPerawatPoli)
+                                 @if (auth()->user()->hasRole('perawat poli') || auth()->user()->hasRole('perawat poli mata'))
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Pilih Dokter</label>

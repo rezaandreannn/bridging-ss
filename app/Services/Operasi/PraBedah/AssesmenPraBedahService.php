@@ -32,7 +32,7 @@ class AssesmenPraBedahService
         ]);
     }
 
-    public function cetak($kode_register)
+    public function cetakBerkas($kode_register)
     {
         $result = AssesmenPraBedah::with([
             'praBedahDarah' => function ($query) {
@@ -107,16 +107,8 @@ class AssesmenPraBedahService
                 );
             },
 
-            'ttdPasien' => function ($query) {
-                $query->select(
-                    'kode_register',
-                    'nama_pasien',
-                    'ttd_pasien'
-                );
-            },
-
             'booking' => function ($query) {
-                $query->select('kode_register', 'tanggal', 'kode_dokter', 'jenis_operasi')->with([
+                $query->with([
                     'pendaftaran' => function ($query) {
                         $query->select('No_Reg', 'No_MR')
                             ->with(['registerPasien' => function ($query) {
@@ -129,11 +121,8 @@ class AssesmenPraBedahService
                                 );
                             }]);
                     },
-                    'dokter' => function ($query) {
-                        $query->select('Kode_Dokter', 'Nama_Dokter');
-                    }
                 ]);
-            }
+            },
         ])
             ->where('kode_register', $kode_register)
             ->first();

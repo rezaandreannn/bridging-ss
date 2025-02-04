@@ -30,8 +30,9 @@ class ListPasienController extends Controller
         $statusPascaBedah = null;
         $statusPenandaan = null;
 
+        $user = auth()->user();
 
-        if (auth()->user()->hasRole('dokter bedah')) {
+        if ($user->hasRole('dokter bedah') || $user->hasRole('dokter mata')) {
             $sessionKodeDokter = auth()->user()->username ?? null;
 
             $DoctorName = Dokter::where('Kode_Dokter', $sessionKodeDokter)
@@ -39,13 +40,15 @@ class ListPasienController extends Controller
                 ->first();
 
             // Ambil pasien dokter
-            $patients = $this->bookingOperasiService->byDate($date, '', $sessionKodeDokter ?? '');
+            $patients = $this->bookingOperasiService->byDateFormDokter($date, $sessionKodeDokter ?? '');
+            // dd($patients);
             $statusLaporanOperasi = LaporanOperasiHelper::getStatusLaporanOperasi($patients);
             $statusPascaBedah = PascaBedahHelper::getStatusPascaBedah($patients);
             $statusPenandaan = BookingHelper::getStatusPenandaan($patients);
-        } elseif (auth()->user()->hasRole('perawat ibs')) {
+        } elseif ($user->hasRole('perawat ibs')) {
             $sessionIbs = auth()->user()->username ?? null;
-            $patients = $this->bookingOperasiService->byDate($date, '',  '');
+            $patients = $this->bookingOperasiService->byDateFormDokter($date, '',  '');
+            // dd($patients);
             $statusLaporanOperasi = LaporanOperasiHelper::getStatusLaporanOperasi($patients);
             // dd($patients);
         }
