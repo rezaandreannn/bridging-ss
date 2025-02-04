@@ -40,7 +40,8 @@ class ListPasienController extends Controller
                 ->first();
 
             // Ambil pasien dokter
-            $patients = $this->bookingOperasiService->byDate($date, '', $sessionKodeDokter ?? '');
+            $patients = $this->bookingOperasiService->byDateFormDokter($date, $sessionKodeDokter ?? '');
+            // dd($patients);
             $statusLaporanOperasi = LaporanOperasiHelper::getStatusLaporanOperasi($patients);
             $statusPascaBedah = PascaBedahHelper::getStatusPascaBedah($patients);
             $statusPenandaan = BookingHelper::getStatusPenandaan($patients);

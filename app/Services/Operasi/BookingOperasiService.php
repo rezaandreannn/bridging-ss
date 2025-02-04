@@ -167,6 +167,29 @@ class BookingOperasiService
         return $this->mapData($filtered);
     }
 
+    public function byDateFormDokter($date, $kodeDokter = "")
+    {
+        if (!empty($kodeDokter)) {
+            $bookings = BookingOperasi::with([
+                'pendaftaran.registerPasien',
+                'dokter',
+            ])->get();
+
+            $filtered = $bookings->filter(function ($booking) use ($date, $kodeDokter) {
+                $dokter = $booking->kode_dokter;
+
+                if ($kodeDokter != null) {
+
+                    if ((string) $dokter ===  $kodeDokter) {
+                        $tanggal = $booking->tanggal;
+                        return $tanggal && $tanggal == $date;
+                    }
+                }
+            });
+        }
+        return $this->mapData($filtered);
+    }
+
     public function byDokterOrAdmin($date, $kodeDokter)
     {
         $bookings = BookingOperasi::with([
