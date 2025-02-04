@@ -51,9 +51,9 @@ class VerifikasiPraBedahController extends Controller
         $statusBerkas = null;
         $statusVerifikasi = null;
 
-        $isPerawatPoli = auth()->user()->hasRole('perawat poli');
+        $user = auth()->user();
 
-        if ($isPerawatPoli) {
+        if ($user->hasRole('perawat poli') || $user->hasRole('perawat poli mata')) {
 
             $kode_dokter = $request->input('kode_dokter');
 
@@ -68,7 +68,7 @@ class VerifikasiPraBedahController extends Controller
             }
         }
         // Check if the user is a 'perawat bangsal' (Nurse in Bangsal)
-        elseif (auth()->user()->hasRole('perawat bangsal')) {
+        elseif ($user->hasRole('perawat bangsal')) {
             $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
             $verifikasis = $this->bookingOperasiService->byDate($date, $sessionBangsal);
 
@@ -77,7 +77,7 @@ class VerifikasiPraBedahController extends Controller
             $statusVerifikasi = BookingHelper::getStatusVerifikasi($verifikasis);
         }
 
-        return view($this->view . 'verifikasi-prabedah.index', compact('verifikasis', 'isPerawatPoli'))
+        return view($this->view . 'verifikasi-prabedah.index', compact('verifikasis'))
             ->with([
                 'title' => $title,
                 'dokters' => $this->dokterService->byBedahOperasi(),

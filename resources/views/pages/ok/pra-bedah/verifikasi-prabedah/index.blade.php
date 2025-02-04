@@ -34,8 +34,8 @@
                     <form id="filterForm2" action="" method="GET">       
                         <div class="card-footer text-left">
                             <div class="row">
-                                @if($isPerawatPoli)
-                                <div class="col-md-6">
+                                @if (auth()->user()->hasRole('perawat poli') || auth()->user()->hasRole('perawat poli mata'))
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Pilih Dokter</label>
                                         <select name="kode_dokter" class="form-control select2 @error('kode_dokter') is-invalid @enderror">

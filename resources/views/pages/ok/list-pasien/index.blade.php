@@ -64,7 +64,7 @@
                                             </a>
                                             @endif
                                         @endif
-                                        @if (auth()->user()->hasRole('dokter bedah'))
+                                        @if (auth()->user()->hasRole('dokter bedah') || auth()->user()->hasRole('dokter mata'))
                                         <a href="{{ route('operasi.list-pasien-detail.show', $patient->kode_register )}}" class="btn btn-sm btn-primary">
                                             <i class="fas fa-file-alt"></i>
                                             Forms

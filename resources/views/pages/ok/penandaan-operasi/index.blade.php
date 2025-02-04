@@ -34,7 +34,7 @@
                     <form id="filterForm" action="" method="GET">       
                         <div class="card-footer text-left">
                             <div class="row">
-                                @if($isDokterUmum)
+                                @if (auth()->user()->hasRole('dokter umum') || auth()->user()->hasRole('perawat poli mata'))
                                 <div class="col-md-4">
                                     <label for="">Filter tanggal</label>
                                     @php
@@ -44,7 +44,9 @@
                                         <input type="date" class="form-control" name="tanggal" {{(request('tanggal')==null) ?  $date : $date = request('tanggal') }} value="{{$date}}"  id="datefilter">
                                     </div>
                                 </div>
-                                {{-- <div class="col-md-4">
+                                @endif
+                                @if (auth()->user()->hasRole('perawat poli mata'))
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Pilih Dokter</label>
                                         <select name="kode_dokter" class="form-control select2 @error('kode_dokter') is-invalid @enderror">
@@ -62,7 +64,7 @@
                                             </div>
                                         @enderror
                                     </div>
-                                </div> --}}
+                                </div>
                                 @endif
                                 <div class="col-md-4">
                                     <div class="form-group mt-4">
@@ -190,6 +192,7 @@
 <script src="{{ asset('library/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('library/datatables/Select-1.2.4/js/dataTables.select.min.js') }}"></script>
 <script src="{{ asset('library/jquery-ui-dist/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('library/sweetalert/dist/sweetalert.baru.js') }}"></script>
 
 <!-- Page Specific JS File -->

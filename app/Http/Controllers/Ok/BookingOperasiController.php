@@ -56,9 +56,9 @@ class BookingOperasiController extends Controller
         $bookings = [];
         $statusPendaftaran = null;
 
-        $isPerawatPoli = auth()->user()->hasRole('perawat poli');
+        $user = auth()->user();
 
-        if ($isPerawatPoli) {
+        if ($user->hasRole('perawat poli') || $user->hasRole('perawat poli mata')) {
 
             $kode_dokter = $request->input('kode_dokter');
 
@@ -69,7 +69,7 @@ class BookingOperasiController extends Controller
                 // cek apakah status aktif
                 $statusPendaftaran = BookingHelper::getStatusPendaftaran($bookings);
             }
-        } elseif (auth()->user()->hasRole('perawat bangsal')) {
+        } elseif ($user->hasRole('perawat bangsal')) {
             $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
             $bookings = $this->bookingOperasiService->byDate($date, $sessionBangsal);
             $statusPendaftaran = BookingHelper::getStatusPendaftaran($bookings);
@@ -88,7 +88,7 @@ class BookingOperasiController extends Controller
         // dd($statusPenandaan);
 
 
-        return view($this->view . 'booking-operasi.index', compact('bookings', 'booking', 'isPerawatPoli'))->with([
+        return view($this->view . 'booking-operasi.index', compact('bookings', 'booking'))->with([
             'title' => $title,
             'ruanganOperasi' => RuanganOperasi::all(),
             'statusPendaftaran' => $statusPendaftaran,

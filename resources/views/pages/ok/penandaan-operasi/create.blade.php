@@ -127,7 +127,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Jenis Operasi</label>
-                                            <input type="text" name="jenis_operasi" class="form-control @error('jenis_operasi') is-invalid @enderror">
+                                            <input type="text" name="jenis_operasi" value="{{ isset($tandaOperasi) && $tandaOperasi->jenis_operasi ? $tandaOperasi->jenis_operasi : '' }}" class="form-control @error('jenis_operasi') is-invalid @enderror">
                                         </div>
                                         @error('jenis_operasi')
                                         <div class="invalid-feedback">
@@ -135,6 +135,20 @@
                                         </div>
                                         @enderror
                                     </div>
+                                    @if(isset($tandaOperasi))
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <a href="#" data-toggle="modal" data-target="#gambarModal{{ $tandaOperasi->id }}" class="badge badge-success">Preview Gambar Sebelumnya</a>
+                                            {{-- {{ dd(asset('storage/operasi/' . $penandaan['hasil_gambar'])) }} --}}
+                                            {{-- <img src="{{ asset('storage/operasi/'. $penandaan->hasil_gambar) }}" width="100%" height="250" /> --}}
+                                        </div>
+                                        @error('jenis_operasi')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                    @endif
                                 </div>
                             </div>
                             {{-- Gambar Operasi --}}
@@ -153,15 +167,40 @@
                                 </div>
                             </div>
                         </div>
+                        @if(isset($tandaOperasi))
+                        @else
                         <div class="text-left">
                             <button type="submit" class="btn btn-primary mb-2"> <i class="fas fa-save"></i> Simpan</button>
                         </div>
+                        @endif
                     </form>
                 </div>
             </div>
         </div>
     </section>
 </div>
+
+@if(isset($tandaOperasi))
+<div class="modal fade" id="gambarModal{{ $tandaOperasi->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">{{ $tandaOperasi->nama_pasien }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <p>Hasil Gambar</p>
+                <img id="gambarZoom{{ $tandaOperasi->id }}" src="{{ asset('storage/operasi/penandaan-pasien/image/' . $tandaOperasi->hasil_gambar) }}" class="img-fluid" alt="Gambar Pengguna"  style="transition: transform 0.3s ease; cursor: zoom-in;">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
 
 @endsection
 
