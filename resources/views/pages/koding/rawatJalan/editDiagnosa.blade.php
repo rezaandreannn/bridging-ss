@@ -45,7 +45,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Diagnosa</label>
-                                    <input type="text" name="diagnosa" class="form-control @error('planning')  is-invalid @enderror" value="{{$getAsesmenDokter->FS_DIAGNOSA}}" readonly>
+                                    <input type="text" name="diagnosa" class="form-control @error('planning')  is-invalid @enderror" value="{{$getAsesmenDokter->DIAGNOSA_MATA == NULL ? $getAsesmenDokter->FS_DIAGNOSA : $getAsesmenDokter->DIAGNOSA_MATA  }}" readonly>
                                     <input type="hidden" name="kode_dokter" value="{{$getAsesmenDokter->FS_KD_MEDIS}}">
                                     <input type="hidden" name="tanggal" value="{{$getAsesmenDokter->mdd}}">
                                     <input type="hidden" name="jam" value="{{$getAsesmenDokter->FS_JAM_TRS}}">

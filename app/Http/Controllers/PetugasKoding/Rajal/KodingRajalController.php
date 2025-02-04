@@ -79,6 +79,7 @@ class KodingRajalController extends Controller
         $title = $this->prefix . ' ' . 'Add Data';
         $masterIcd10 = $this->rajaldokter->getIcd10();
         $getAsesmenDokter = $this->koding->getAsesmenDokter($noReg);
+        // dd($getAsesmenDokter);
         
         if($getAsesmenDokter == null){
             return redirect('koding/kodingDiagnosa/rajal/list?kode_dokter=' . $kode_dokter.'&tanggal='.$tanggal)->with('error', 'Data pasien tersebut tidak di input di EMR!');
