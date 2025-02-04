@@ -37,22 +37,20 @@ class BerkasPraBedahController extends Controller
         $title = $this->prefix . ' ' . 'Operasi';
         // Ambil data berdasarkan ID
 
-        $cetak = $this->assesmenOperasiService->cetak($kode_register);
+        $cetakBerkas = $this->assesmenOperasiService->cetakBerkas($kode_register);
         $labs = $this->assesmenOperasiService->getLabByKodeReg($kode_register);
         $booking = collect($this->bookingOperasiService->byRegister($kode_register))->first();
         $biodataPasien = $this->bookingOperasiService->biodata($kode_register);
         $pasien = $biodataPasien->pendaftaran->registerPasien;
-        // dd($lab);
 
-
-        // dd($cetak);
+        // dd($cetakBerkas);
 
         $date = date('dMY');
         $tanggal = Carbon::now();
         $filename = 'AssesmenPraBedah-' . $date;
 
         $pdf = PDF::loadview('pages.ok.pra-bedah.berkas.cetak-dokumen', [
-            'cetak' => $cetak,
+            'cetak' => $cetakBerkas,
             'labs' => $labs,
             'pasien' => $pasien,
             'booking' => $booking,

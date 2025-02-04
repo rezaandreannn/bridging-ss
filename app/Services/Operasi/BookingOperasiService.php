@@ -186,6 +186,19 @@ class BookingOperasiService
                     }
                 }
             });
+        } else {
+            $bookings = BookingOperasi::with([
+                'pendaftaran.registerPasien',
+                'dokter',
+            ])->get();
+            // dd('ok');
+            $filtered = $bookings->filter(function ($booking) use ($date) {
+
+                $tanggal = $booking->tanggal;
+                return $tanggal && $tanggal == $date;
+            });
+
+            // $filtered = $this->baseQuery()->get();
         }
         return $this->mapData($filtered);
     }

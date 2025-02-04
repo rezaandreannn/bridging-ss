@@ -81,7 +81,7 @@ class PenandaanOperasiController extends Controller
         // Cek jika login sebagai userbangsal
         if ($user->hasRole('dokter umum')) {
             $sessionIbs = auth()->user()->username ?? null;
-            $penandaans = $this->bookingOperasiService->byDate($date, '',  '');
+            $penandaans = $this->bookingOperasiService->byDateFormDokter($date, '',  '');
 
             $penandaan = $this->penandaanOperasiService->get();
 
@@ -93,7 +93,7 @@ class PenandaanOperasiController extends Controller
         elseif ($user->hasRole('dokter bedah')) {
             $sessionKodeDokter = auth()->user()->username ?? null;
             // Ambil pasien dokter
-            $penandaans = $this->bookingOperasiService->byDate($date, '', $sessionKodeDokter ?? '');
+            $penandaans = $this->bookingOperasiService->byDateFormDokter($date, '', $sessionKodeDokter ?? '');
 
             // dd($penandaans);
 
