@@ -14,13 +14,15 @@ class Koding extends Model
     {   
 
         $data = DB::connection('pku')
-        ->table('TAC_RJ_MEDIS')
+        ->table('TAC_RJ_MEDIS as trm')
+        ->join('poli_mata_dokter as pm', 'pm.NO_REG', '=', 'trm.FS_KD_REG','left')
         ->select(
-            'FS_KD_REG',
-            'FS_DIAGNOSA',
-            'FS_KD_MEDIS',
-            'mdd',
-            'FS_JAM_TRS'
+            'trm.FS_KD_REG',
+            'trm.FS_DIAGNOSA',
+            'trm.FS_KD_MEDIS',
+            'trm.mdd',
+            'trm.FS_JAM_TRS',
+            'pm.DIAGNOSA as DIAGNOSA_MATA'
             )
         ->where('FS_KD_REG', $noReg)
         ->first();
