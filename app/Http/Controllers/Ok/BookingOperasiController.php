@@ -75,25 +75,23 @@ class BookingOperasiController extends Controller
             $statusPendaftaran = BookingHelper::getStatusPendaftaran($bookings);
         }
         // $statusPendaftaran = BookingHelper::getStatusPendaftaran($bookings);
-        // dd($statusPendaftaran);
-
-
         $booking = null;
         if (session('booking_id')) {
             $booking = $this->bookingOperasiService->findById(session('booking_id'));
         }
 
+        $pasien = $this->pasienService->byStatusActive();
         // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
         // $statusPenandaan = BookingHelper::getStatusPenandaan($bookings);
-        // dd($statusPenandaan);
+        // dd($this->pasienService->byStatusActive());
+     
+       return view($this->view . 'booking-operasi.index', compact('bookings', 'booking','pasien'))->with([
 
-
-        return view($this->view . 'booking-operasi.index', compact('bookings', 'booking'))->with([
             'title' => $title,
             'ruanganOperasi' => RuanganOperasi::all(),
             'statusPendaftaran' => $statusPendaftaran,
             'dokters' => $this->dokterService->byBedahOperasi(),
-            'pasien' => $this->pasienService->byStatusActive(),
+            
             'filterbooking' =>  response()->json([
                 'bookings' => $bookings
             ])

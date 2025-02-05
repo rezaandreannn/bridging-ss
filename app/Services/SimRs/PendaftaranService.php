@@ -12,8 +12,10 @@ class PendaftaranService
         $month = Date('m');
         $year = Date('Y');
 
-        $startDate = '01-' . $month . '-' . $year;
-        $endDate = Carbon::today();
+        $endDate = date('Y-m-d');
+        $startDate = date('Y-m-d', strtotime('-10 day', strtotime($endDate)));
+
+        // dd($startDate);
 
         $pendaftaran = Pendaftaran::with([
             'registerPasien' => function ($query) {
