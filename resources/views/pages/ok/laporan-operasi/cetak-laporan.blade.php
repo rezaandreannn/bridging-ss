@@ -131,8 +131,8 @@
             </tr>
             <tr>
                 <td>Tgl Operasi <br>{{ date('d-m-Y', strtotime($cetak->tanggal))}}</td>
-                <td colspan="2">Jam Operasi Mulai <br>{{ date('h:i', strtotime($cetak->mulai_operasi))}} WIB</td>
-                <td colspan="2">Jam Operasi Selesai <br>{{ date('h:i', strtotime($cetak->selesai_operasi))}} WIB</td>
+                <td colspan="2">Jam Operasi Mulai <br>{{ date('H:i', strtotime($cetak->mulai_operasi))}} WIB</td>
+                <td colspan="2">Jam Operasi Selesai <br>{{ date('H:i', strtotime($cetak->selesai_operasi))}} WIB</td>
                 <td colspan="2">Lama Operasi Berlangsung <br>{{ $cetak->lama_operasi}}</td>
             </tr>
         </table>
