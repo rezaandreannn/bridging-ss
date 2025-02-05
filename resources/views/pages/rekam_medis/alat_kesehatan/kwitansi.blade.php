@@ -64,6 +64,10 @@
             vertical-align: middle;
             margin-left: 10px;
         }
+        .margin-dokter {
+         
+            margin-top: 35px;
+        }
 
     </style>
 </head>
@@ -120,9 +124,9 @@
         <p>Metro, {{ \Carbon\Carbon::parse($data->updated_at)->format('d F Y') }}.</p>
         {{-- <p>Hormat kami,</p> --}}
         <div class="barcode">
-            {!! DNS2D::getBarcodeHTML($data->NAMA_DOKTER, 'QRCODE', 2, 2) !!}
+            {{-- {!! DNS2D::getBarcodeHTML($data->NAMA_DOKTER, 'QRCODE', 2, 2) !!} --}}
         </div>
-        <p>{{$data->NAMA_DOKTER}}</p>
+        <p class="margin-dokter">{{$data->NAMA_DOKTER}}</p>
     </div>
 </body>
 </html>
