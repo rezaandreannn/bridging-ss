@@ -41,12 +41,6 @@ class VerifikasiPraBedahController extends Controller
         $title = $this->prefix . ' ' . 'List';
         $date = date('Y-m-d');
 
-
-        // Status Tanda Tangan
-        $userId = auth()->id();
-        $statusTtd = TtdPerawat::where('user_id', $userId)->exists();
-        // dd($statusTtd);
-
         $verifikasis = [];
         $statusBerkas = null;
         $statusVerifikasi = null;
@@ -60,15 +54,13 @@ class VerifikasiPraBedahController extends Controller
             if ($kode_dokter) {
 
                 $sessionBangsal = null;
-                $verifikasis = $this->bookingOperasiService->byDate($date, $sessionBangsal, $kode_dokter);
+                $verifikasis = $this->bookingOperasiService->byDatePoli($date, $sessionBangsal, $kode_dokter);
 
                 $statusBerkas = BookingHelper::getStatusBerkasVerifikasi($verifikasis);
 
                 $statusVerifikasi = BookingHelper::getStatusVerifikasi($verifikasis);
             }
-        }
-        // Check if the user is a 'perawat bangsal' (Nurse in Bangsal)
-        elseif ($user->hasRole('perawat bangsal')) {
+        } elseif ($user->hasRole('perawat bangsal')) {
             $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
             $verifikasis = $this->bookingOperasiService->byDate($date, $sessionBangsal);
 
@@ -83,7 +75,6 @@ class VerifikasiPraBedahController extends Controller
                 'dokters' => $this->dokterService->byBedahOperasi(),
                 'statusVerifikasi' => $statusVerifikasi,
                 'statusBerkas' => $statusBerkas,
-                'statusTtd' => $statusTtd
             ]);
     }
 

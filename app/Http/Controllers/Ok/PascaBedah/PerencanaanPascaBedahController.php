@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Ok\PascaBedah;
 use Exception;
 use Carbon\Carbon;
 use App\Models\Simrs\Dokter;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use App\Helpers\BookingHelper;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
+use App\Services\SimRs\DokterService;
 use App\Services\Operasi\BookingOperasiService;
 use App\Http\Requests\Operasi\PascaBedah\StorePascaBedahRequest;
 use App\Http\Requests\Operasi\PascaBedah\UpdatePascaBedahRequest;
@@ -21,6 +23,8 @@ class PerencanaanPascaBedahController extends Controller
     protected $bookingOperasiService;
     protected $perencanaanPascaBedah;
     protected $userService;
+    protected $dokterService;
+
 
     public function __construct()
     {
@@ -28,6 +32,7 @@ class PerencanaanPascaBedahController extends Controller
         $this->prefix = 'Perencanaan Medis Pasca Bedah';
         $this->perencanaanPascaBedah = new PerencanaanPascaBedahService();
         $this->bookingOperasiService = new BookingOperasiService();
+        $this->dokterService = new DokterService();
     }
 
     public function cetak($kode_register)
@@ -55,25 +60,36 @@ class PerencanaanPascaBedahController extends Controller
         return $pdf->stream($filename . '.pdf');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $title = 'Perencanaan Pasca Bedah';
+        $title = $this->prefix . ' ' . 'List';
         $date = date('Y-m-d');
-
-        if (auth()->user()->hasRole('dokter bedah')) {
-            $sessionKodeDokter = auth()->user()->username ?? null;
-
-            $DoctorName = Dokter::where('Kode_Dokter', $sessionKodeDokter)
-                ->pluck('Nama_Dokter')
-                ->first();
-
-            // Ambil pasien dokter
-            $patients = $this->bookingOperasiService->byDate($date, '', $sessionKodeDokter ?? '');
-        } else {
-            abort(403);
+        if ($request->input('tanggal') != null) {
+            $date = $request->input('tanggal');
         }
 
-        return view('pages.ok.pasca-bedah.index', compact('title', 'patients', 'date', 'DoctorName'));
+        $pascaBedah = collect();
+
+        $user = auth()->user();
+
+        if ($user->hasRole('perawat poli') || $user->hasRole('perawat poli mata')) {
+            $kode_dokter = $request->input('kode_dokter');
+            if ($kode_dokter) {
+                $sessionBangsal = null;
+                $pascaBedah = collect($this->bookingOperasiService->pascaBedah($date, $sessionBangsal, $kode_dokter));
+                // dd($pascaBedah);
+            }
+        } elseif ($user->hasRole('perawat bangsal')) {
+            $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
+            $pascaBedah = $this->bookingOperasiService->pascaBedah($date, $sessionBangsal);
+            // dd($pascaBedah);
+        }
+
+        return view($this->view . 'index', compact('pascaBedah'))
+            ->with([
+                'title' => $title,
+                'dokters' => $this->dokterService->byBedahOperasi(),
+            ]);
     }
 
     /**

@@ -311,6 +311,11 @@
             <li class="{{ Request::is('penandaan/penandaan-operasi*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('operasi.penandaan.index')}}"><i class="fas fa-file-medical"></i> <span>Penandaan Operasi</span></a></li>
             @endcan
 
+            {{-- Pasca Bedah --}}
+            @can('perencanaan pasca bedah')
+            <li class="{{ Request::is('operasi/pasca-bedah*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('pascabedah.perencanaan-pascabedah.index')}}"><i class="fas fa-file-medical"></i> <span>Pasca Bedah</span></a></li>
+            @endcan
+
             {{-- IBS Operasi --}}
             @can('ibs')
             @can('jadwal operasi')

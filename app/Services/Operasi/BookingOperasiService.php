@@ -105,7 +105,6 @@ class BookingOperasiService
             $bookings = BookingOperasi::with([
                 'pendaftaran.registerPasien',
                 'pendaftaran.ruang.bangsal',
-                'ruangan',
                 'dokter',
             ])->get();
 
@@ -130,9 +129,6 @@ class BookingOperasiService
         } else if (!empty($kodeDokter)) {
             $bookings = BookingOperasi::with([
                 'pendaftaran.registerPasien',
-                'pendaftaran.ruang.bangsal',
-                'pendaftaran.biayaDetails',
-                'ruangan',
                 'dokter',
             ])->get();
 
@@ -150,9 +146,6 @@ class BookingOperasiService
         } else {
             $bookings = BookingOperasi::with([
                 'pendaftaran.registerPasien',
-                'pendaftaran.ruang.bangsal',
-                'pendaftaran.biayaDetails',
-                'ruangan',
                 'dokter',
             ])->get();
             // dd('ok');
@@ -163,6 +156,52 @@ class BookingOperasiService
             });
 
             // $filtered = $this->baseQuery()->get();
+        }
+        return $this->mapData($filtered);
+    }
+
+    public function pascaBedah($date, $kodeBangsal = "", $kodeDokter = "")
+    {
+        if (!empty($kodeBangsal)) {
+            $bookings = BookingOperasi::with([
+                'pendaftaran.registerPasien',
+                'pendaftaran.ruang.bangsal',
+                'dokter',
+            ])->get();
+
+            $filtered = $bookings->filter(function ($booking) use ($kodeBangsal) {
+                if (!empty($kodeBangsal)) {
+                    if (!empty($booking->pendaftaran->ruang)) {
+                        $bangsal = optional($booking->pendaftaran->ruang->bangsal)->Kode_Bangsal;
+
+                        if ((string) $bangsal === (string) $kodeBangsal) {
+                            return $kodeBangsal;
+                        }
+                    }
+                } else {
+                    $ruang = optional($booking->pendaftaran)->Kode_Ruang;
+                    $tanggal = $booking->tanggal;
+
+                    return empty($ruang) && ($tanggal);
+                }
+            });
+        } else if (!empty($kodeDokter)) {
+            $bookings = BookingOperasi::with([
+                'pendaftaran.registerPasien',
+                'dokter',
+            ])->get();
+
+            $filtered = $bookings->filter(function ($booking) use ($date, $kodeDokter) {
+                $dokter = $booking->kode_dokter;
+
+                if ($kodeDokter != null) {
+
+                    if ((string) $dokter ===  $kodeDokter) {
+                        $tanggal = $booking->tanggal;
+                        return $tanggal && $tanggal == $date;
+                    }
+                }
+            });
         }
         return $this->mapData($filtered);
     }
