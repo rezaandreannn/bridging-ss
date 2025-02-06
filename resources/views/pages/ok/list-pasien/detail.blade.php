@@ -84,6 +84,7 @@
                                 @endif
                             </ul>
                             @endif
+                
                             @if (auth()->user()->hasAnyRole(['perawat ibs', 'dokter bedah','dokter mata']))
                             <div class="tab-content" id="myTabContent2">
                                 @if (auth()->user()->hasRole('dokter bedah') || auth()->user()->hasRole('dokter mata'))
@@ -173,7 +174,7 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>Data Subjektif (Anamnesa) <code>*Wajib Diisi</code></label>
-                                                            <textarea name="anamnesa" class="form-control  @error('anamnesa') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ isset($assesmen) && $assesmen->anamnesa ? $assesmen->anamnesa : '' }}</textarea>
+                                                            <textarea name="anamnesa" class="form-control @error('anamnesa') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ old('anamnesa', isset($assesmen) && $assesmen->anamnesa ? $assesmen->anamnesa : '') }}</textarea>
                                                             @error('anamnesa')
                                                             <div class="invalid-feedback">
                                                                 {{ $message }}
@@ -184,7 +185,7 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>Data Objektif (Pemeriksaan Fisik) <code> *Wajib Diisi</code></label>
-                                                            <textarea name="pemeriksaan_fisik" class="form-control  @error('pemeriksaan_fisik') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ isset($assesmen) && $assesmen->pemeriksaan_fisik ? $assesmen->pemeriksaan_fisik : '' }}</textarea>
+                                                            <textarea name="pemeriksaan_fisik" class="form-control  @error('pemeriksaan_fisik') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ old('pemeriksaan_fisik',isset($assesmen) && $assesmen->pemeriksaan_fisik ? $assesmen->pemeriksaan_fisik : '') }}</textarea>
                                                             @error('pemeriksaan_fisik')
                                                             <div class="invalid-feedback">
                                                                 {{ $message }}
@@ -195,7 +196,7 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>Diagnosis Pra Bedah</label>
-                                                            <textarea name="diagnosa" class="form-control  @error('diagnosa') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ isset($assesmen) && $assesmen->diagnosa ? $assesmen->diagnosa : '' }}</textarea>
+                                                            <textarea name="diagnosa" class="form-control  @error('diagnosa') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ old('diagnosa',isset($assesmen) && $assesmen->diagnosa ? $assesmen->diagnosa : '') }}</textarea>
                                                             @error('diagnosa')
                                                             <div class="invalid-feedback">
                                                                 {{ $message }}
@@ -206,7 +207,7 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>Planning</label>
-                                                            <textarea name="planning" class="form-control  @error('planning') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ isset($assesmen) && $assesmen->planning ? $assesmen->planning : '' }}</textarea>
+                                                            <textarea name="planning" class="form-control  @error('planning') is-invalid @enderror" rows="3" placeholder="Masukan ...">{{ old('planning',isset($assesmen) && $assesmen->planning ? $assesmen->planning : '') }}</textarea>
                                                             @error('planning')
                                                             <div class="invalid-feedback">
                                                                 {{ $message }}
@@ -218,7 +219,7 @@
                                                         <div class="form-group">
                                                             <label>Estimasi waktu yang dibutuhkan</label>
                                                             <div class="input-group">
-                                                                <input type="text" name="estimasi_waktu" id="waktu" class="form-control @error('estimasi_waktu') is-invalid @enderror" value="{{ isset($other) && $other->estimasi_waktu ? $other->estimasi_waktu : '' }}">
+                                                                <input type="text" name="estimasi_waktu" id="waktu" class="form-control @error('estimasi_waktu') is-invalid @enderror" value="{{ old('estimasi_waktu',isset($other) && $other->estimasi_waktu ? $other->estimasi_waktu : '') }}">
                                                                 <div class="input-group-append">
                                                                     <div class="input-group-text">
                                                                         <b>Jam</b>
@@ -235,7 +236,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Rencana Tindakan Pembedahan</label>
-                                                            <input type="text" name="rencana_tindakan" class="form-control @error('rencana_tindakan') is-invalid @enderror" value="{{ isset($other) && $other->rencana_tindakan ? $other->rencana_tindakan : '' }}">
+                                                            <input type="text" name="rencana_tindakan" class="form-control @error('rencana_tindakan') is-invalid @enderror" value="{{ old('rencana_tindakan',isset($other) && $other->rencana_tindakan ? $other->rencana_tindakan : '') }}">
                                                             @error('rencana_tindakan')
                                                             <div class="invalid-feedback">
                                                                 {{ $message }}
@@ -275,7 +276,7 @@
                                                         <select name="nama_asisten[]" class="form-control @error('nama_asisten') is-invalid @enderror select2" multiple>
                                                             <option value="" disabled>--Pilih Asisten--</option>
                                                             @foreach ($asistenOperasi as $asisten)
-                                                            <option value="{{$asisten->kode_dokter}}" {{(in_array($asisten->kode_dokter,$asistenArray)) ? 'selected' : ''}}>{{$asisten->nama_asisten}}</option>
+                                                            <option value="{{$asisten->kode_dokter}}" {{in_array($asisten->kode_dokter,old('nama_asisten',$asistenArray)) ? 'selected' : ''}}>{{$asisten->nama_asisten}}</option>
                                                             @endforeach
                                                         </select>
                                                         @error('nama_asisten')
@@ -291,7 +292,7 @@
                                                         <select name="nama_perawat[]" class="form-control @error('nama_perawat') is-invalid @enderror select2" multiple>
                                                             <option value="" disabled>--Pilih Perawat--</option>
                                                             @foreach ($asistenOperasi as $asisten)
-                                                            <option value="{{$asisten->kode_dokter}}" {{(in_array($asisten->kode_dokter,$perawatArray)) ? 'selected' : ''}}>{{$asisten->nama_asisten}}</option>
+                                                            <option value="{{$asisten->kode_dokter}}" {{in_array($asisten->kode_dokter,old('nama_perawat',$perawatArray)) ? 'selected' : ''}}>{{$asisten->nama_asisten}}</option>
                                                             @endforeach
                                                         </select>
                                                         @error('nama_perawat')
@@ -307,7 +308,7 @@
                                                         <select name="nama_ahli_anastesi[]" class="form-control @error('nama_ahli_anastesi') is-invalid @enderror select2" multiple>
                                                             <option value="" disabled>--Pilih Ahli Anastesi--</option>
                                                             @foreach ($spesialisAnastesi as $anastesi)
-                                                            <option value="{{$anastesi->kode_dokter}}" {{(in_array($anastesi->kode_dokter,$ahliAnastesiArray)) ? 'selected' : ''}}>{{$anastesi->nama_asisten}}</option>
+                                                            <option value="{{$anastesi->kode_dokter}}" {{in_array($anastesi->kode_dokter,old('nama_ahli_anastesi',$ahliAnastesiArray)) ? 'selected' : ''}}>{{$anastesi->nama_asisten}}</option>
                                                             @endforeach
                                                         </select>
                                                         @error('nama_ahli_anastesi')
@@ -323,7 +324,7 @@
                                                         <select name="nama_anastesi[]" class="form-control @error('nama_anastesi') is-invalid @enderror select2" multiple>
                                                             <option value="" disabled>--Pilih Penata Anastesi--</option>
                                                             @foreach ($penataAnastesi as $penataAnastesi)
-                                                            <option value="{{$penataAnastesi->kode_dokter}}" {{(in_array($penataAnastesi->kode_dokter,$anastesiArray)) ? 'selected' : ''}}>{{$penataAnastesi->nama_asisten}}</option>
+                                                            <option value="{{$penataAnastesi->kode_dokter}}" {{in_array($penataAnastesi->kode_dokter,old('nama_anastesi',$anastesiArray)) ? 'selected' : ''}}>{{$penataAnastesi->nama_asisten}}</option>
                                                             @endforeach
                                                         </select>
                                                         @error('nama_anastesi')
@@ -336,7 +337,7 @@
                                                 <div class="mb-3 row">
                                                     <label class="col-3 col-form-label">Jenis Anastesi</label>
                                                     <div class="col-9">
-                                                        <input type="text" name="jenis_anastesi" value="{{ isset($anestesi) && $anestesi->jenis_anastesi ? $anestesi->jenis_anastesi : '' }}" class="form-control @error('jenis_anastesi') is-invalid @enderror">
+                                                        <input type="text" name="jenis_anastesi" value="{{ old('jenis_anastesi',isset($anestesi) && $anestesi->jenis_anastesi ? $anestesi->jenis_anastesi : '') }}" class="form-control @error('jenis_anastesi') is-invalid @enderror">
                                                         @error('jenis_anastesi')
                                                         <div class="invalid-feedback">
                                                             {{ $message }}
@@ -358,8 +359,8 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>Diagnosis Pre-Operatif</label>
-                                                            <textarea name="diagnosa_pre_op" class="form-control" id="diagnosa_pre_op" style="height: 50px;" rows="3">{{ isset($laporanOperasi) && $laporanOperasi->diagnosa_pre_op ? $laporanOperasi->diagnosa_pre_op : '' }}</textarea>
-                                                            @error('pre_operatif')
+                                                            <textarea name="diagnosa_pre_op" class="form-control @error('diagnosa_pre_op') is-invalid @enderror" id="diagnosa_pre_op" style="height: 50px;" rows="3">{{ old('diagnosa_pre_op',isset($laporanOperasi) && $laporanOperasi->diagnosa_pre_op ? $laporanOperasi->diagnosa_pre_op : '') }}</textarea>
+                                                            @error('diagnosa_pre_op')
                                                             <span class="text-danger" style="font-size: 12px;">
                                                                 {{ $message }}
                                                             </span>
@@ -369,8 +370,8 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>Diagnosis Post-Operatif</label>
-                                                            <textarea name="diagnosa_post_op" class="form-control" id="diagnosa_post_op" style="height: 50px;" rows="3">{{ isset($laporanOperasi) && $laporanOperasi->diagnosa_post_op ? $laporanOperasi->diagnosa_post_op : '' }}</textarea>
-                                                            @error('post_operatif')
+                                                            <textarea name="diagnosa_post_op" class="form-control @error('diagnosa_post_op') is-invalid @enderror" id="diagnosa_post_op" style="height: 50px;" rows="3">{{ old('diagnosa_post_op',isset($laporanOperasi) && $laporanOperasi->diagnosa_post_op ? $laporanOperasi->diagnosa_post_op : '') }}</textarea>
+                                                            @error('diagnosa_post_op')
                                                             <span class="text-danger" style="font-size: 12px;">
                                                                 {{ $message }}
                                                             </span>
@@ -380,8 +381,8 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Jaringan yang dieksisi</label>
-                                                            <textarea name="jaringan_dieksekusi" class="form-control" id="jaringan_dieksekusi" style="height: 50px;" rows="3">{{ isset($laporanOperasi) && $laporanOperasi->jaringan_dieksekusi ? $laporanOperasi->jaringan_dieksekusi : '' }}</textarea>
-                                                            @error('jaringan')
+                                                            <textarea name="jaringan_dieksekusi" class="form-control @error('jaringan_dieksekusi') is-invalid @enderror" id="jaringan_dieksekusi" style="height: 50px;" rows="3">{{ old('jaringan_dieksekusi',isset($laporanOperasi) && $laporanOperasi->jaringan_dieksekusi ? $laporanOperasi->jaringan_dieksekusi : '') }}</textarea>
+                                                            @error('jaringan_dieksekusi')
                                                             <span class="text-danger" style="font-size: 12px;">
                                                                 {{ $message }}
                                                             </span>
@@ -392,13 +393,15 @@
                                                         <div class="form-group">
                                                             <label>Dikirim untuk pemeriksaan PA</label>
                                                             <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="permintaan_pa" id="permintaan_pa1" value="1" {{ isset($laporanOperasi) && $laporanOperasi->permintaan_pa == 1 ? 'checked' : '' }}>
-                                                                <label class="form-check-label" for="pemeriksaan_pa1">
+                                                                <input class="form-check-input @error('permintaan_pa') is-invalid @enderror" type="radio" name="permintaan_pa" id="permintaan_pa1" value="1" 
+                                                                {{ old('permintaan_pa', isset($laporanOperasi) ? $laporanOperasi->permintaan_pa : null) == 1 ? 'checked' : '' }}>
+                                                                <label class="form-check-label" for="permintaan_pa1">
                                                                     Ya
                                                                 </label>
                                                             </div>
                                                             <div class="form-check">
-                                                                <input class="form-check-input" type="radio" name="permintaan_pa" id="permintaan_pa2" value="0" {{ isset($laporanOperasi) && $laporanOperasi->permintaan_pa == 0 ? 'checked' : '' }}>
+                                                                <input class="form-check-input @error('permintaan_pa') is-invalid @enderror" type="radio" name="permintaan_pa" id="permintaan_pa2" value="0" 
+                                                                {{ old('permintaan_pa', isset($laporanOperasi) ? $laporanOperasi->permintaan_pa : null) == 0 ? 'checked' : '' }}>
                                                                 <label class="form-check-label" for="permintaan_pa2">
                                                                     Tidak
                                                                 </label>
@@ -428,7 +431,7 @@
                                                             </span>
                                                             @enderror
                                                             @else
-                                                            <input type="text" name="macam_operasi" class="form-control @error('macam_operasi') is-invalid @enderror" placeholder="Masukkan Nama Operasi" value="{{ isset($laporanOperasi) && $laporanOperasi->macam_operasi ? $laporanOperasi->macam_operasi : '' }}">
+                                                            <input type="text" name="macam_operasi" class="form-control @error('macam_operasi') is-invalid @enderror" placeholder="Masukkan Nama Operasi" value="{{ old('macam_operasi',isset($laporanOperasi) && $laporanOperasi->macam_operasi ? $laporanOperasi->macam_operasi : '') }}">
                                                             @error('macam_operasi')
                                                             <span class="text-danger" style="font-size: 12px;">
                                                                 {{ $message }}
@@ -440,7 +443,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label>Perdarahan</label>
-                                                            <input type="text" name="pendarahan" class="form-control @error('pendarahan') is-invalid @enderror" value="{{ isset($laporanOperasi) && $laporanOperasi->pendarahan ? $laporanOperasi->pendarahan : '' }}">
+                                                            <input type="text" name="pendarahan" class="form-control @error('pendarahan') is-invalid @enderror" value="{{ old('pendarahan',isset($laporanOperasi) && $laporanOperasi->pendarahan ? $laporanOperasi->pendarahan : '') }}">
                                                             @error('pendarahan')
                                                             <span class="text-danger" style="font-size: 12px;">
                                                                 {{ $message }}
@@ -451,7 +454,7 @@
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label>Tgl Operasi</label>
-                                                            <input type="date" name="tanggal" class="form-control @error('tanggal') is-invalid @enderror" value="{{$bookingByRegister->tanggal}}" readonly>
+                                                            <input type="date" name="tanggal" class="form-control @error('tanggal') is-invalid @enderror" value="{{old('tanggal',$bookingByRegister->tanggal)}}" readonly>
                                                             @error('tanggal')
                                                             <div class="invalid-feedback">
                                                                 {{ $message }}
@@ -462,7 +465,7 @@
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label>Mulai Operasi</label>
-                                                            <input type="time" name="mulai_operasi" id="mulai_operasi" class="form-control @error('mulai_operasi') is-invalid @enderror" value="{{ isset($laporanOperasi) && $laporanOperasi->mulai_operasi ? date('H:i', strtotime($laporanOperasi->mulai_operasi)) : '' }}">
+                                                            <input type="time" name="mulai_operasi" id="mulai_operasi" class="form-control @error('mulai_operasi') is-invalid @enderror" value="{{ old('mulai_operasi',isset($laporanOperasi) && $laporanOperasi->mulai_operasi ? date('H:i', strtotime($laporanOperasi->mulai_operasi)) : '') }}">
                                                             @error('mulai_operasi')
                                                             <div class="invalid-feedback">
                                                                 {{ $message }}
@@ -473,7 +476,7 @@
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label>Selesai Operasi</label>
-                                                            <input type="time" name="selesai_operasi" id="selesai_operasi" class="form-control @error('selesai_operasi') is-invalid @enderror" value="{{ isset($laporanOperasi) && $laporanOperasi->selesai_operasi ? date('H:i', strtotime($laporanOperasi->selesai_operasi)) : '' }}">
+                                                            <input type="time" name="selesai_operasi" id="selesai_operasi" class="form-control @error('selesai_operasi') is-invalid @enderror" value="{{ old('selesai_operasi',isset($laporanOperasi) && $laporanOperasi->selesai_operasi ? date('H:i', strtotime($laporanOperasi->selesai_operasi)) : '') }}">
                                                             @error('selesai_operasi')
                                                             <div class="invalid-feedback">
                                                                 {{ $message }}
@@ -485,7 +488,7 @@
                                                         <div class="form-group">
                                                             <label>Lama Operasi</label>
                                                             <div class="input-group">
-                                                                <input type="text" name="lama_operasi" id="lama_operasi" value="{{ isset($laporanOperasi) && $laporanOperasi->lama_operasi ? date('H:i', strtotime($laporanOperasi->lama_operasi)) : '' }}" class="form-control @error('lama_operasi') is-invalid @enderror" readonly>
+                                                                <input type="text" name="lama_operasi" id="lama_operasi" value="{{ old('lama_operasi',isset($laporanOperasi) && $laporanOperasi->lama_operasi ? date('H:i', strtotime($laporanOperasi->lama_operasi)) : '') }}" class="form-control @error('lama_operasi') is-invalid @enderror" readonly>
                                                                 <div class="input-group-append">
                                                                     <div class="input-group-text">
                                                                         <b>Jam</b>
@@ -502,7 +505,7 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>Laporan Operasi</label>
-                                                            <textarea name="laporan_operasi" class="form-control" id="laporan_operasi" style="height: 100px;" rows="3">{{ isset($laporanOperasi) && $laporanOperasi->laporan_operasi ? $laporanOperasi->laporan_operasi : '' }}</textarea>
+                                                            <textarea name="laporan_operasi" class="form-control @error('laporan_operasi') is-invalid @enderror" id="laporan_operasi" style="height: 300px;" rows="3">{{ old('laporan_operasi',isset($laporanOperasi) && $laporanOperasi->laporan_operasi ? $laporanOperasi->laporan_operasi : '') }}</textarea>
                                                             @error('laporan_operasi')
                                                             <span class="text-danger" style="font-size: 12px;">
                                                                 {{ $message }}
@@ -541,9 +544,18 @@
                                                     <label class="col-3 col-form-label">Tingkat Perawatan Medis</label>
                                                     <div class="col-9">
                                                         <select name="tingkat_perawatan" class="form-control @error('tingkat_perawatan') is-invalid @enderror selectric">
-                                                            <option value="tinggi" {{ isset($pascaBedah) && $pascaBedah->tingkat_perawatan == 'tinggi' ? 'selected' : '' }}>Tinggi (ICU)</option>
-                                                            <option value="sedang" {{ isset($pascaBedah) && $pascaBedah->tingkat_perawatan == 'sedang' ? 'selected' : '' }}>Sedang (HCU)</option>
-                                                            <option value="rendah" {{ isset($pascaBedah) && $pascaBedah->tingkat_perawatan == 'rendah' ? 'selected' : '' }}>Rendah (Ruang rawat, ODC / Pulang)</option>
+                                                            <option value="tinggi" 
+                                                            {{ old('tingkat_perawatan', isset($pascaBedah) ? $pascaBedah->tingkat_perawatan : '') == 'tinggi' ? 'selected' : '' }}>
+                                                            Tinggi (ICU)
+                                                        </option>
+                                                        <option value="sedang" 
+                                                            {{ old('tingkat_perawatan', isset($pascaBedah) ? $pascaBedah->tingkat_perawatan : '') == 'sedang' ? 'selected' : '' }}>
+                                                            Sedang (HCU)
+                                                        </option>
+                                                        <option value="rendah" 
+                                                            {{ old('tingkat_perawatan', isset($pascaBedah) ? $pascaBedah->tingkat_perawatan : '') == 'rendah' ? 'selected' : '' }}>
+                                                            Rendah (Ruang rawat, ODC / Pulang)
+                                                        </option>
                                                         </select>
                                                         @error('tingkat_perawatan')
                                                         <div class="invalid-feedback">
@@ -557,9 +569,19 @@
                                                     <label class="col-3 col-form-label">Monitoring TD, Nadi, RR, Suhu setiap</label>
                                                     <div class="col-9">
                                                         <div class="input-group mb-3">
-                                                            <input type="text" name="monitoring_ttv_start" class="form-control" value="{{ isset($pascaBedah) && $pascaBedah->monitoring_ttv_start ? $pascaBedah->monitoring_ttv_start : '' }}">
+                                                            <input type="text" name="monitoring_ttv_start" class="form-control @error('monitoring_ttv_start') is-invalid @enderror" value="{{ old('monitoring_ttv_start', isset($pascaBedah) && $pascaBedah->monitoring_ttv_start ? $pascaBedah->monitoring_ttv_start : '') }}">
+                                                            @error('monitoring_ttv_start')
+                                                            <div class="invalid-feedback">
+                                                                {{ $message }}
+                                                            </div>
+                                                            @enderror
                                                             <span class="input-group-text"><b>Sampai</b></span>
-                                                            <input type="text" name="monitoring_ttv_end" class="form-control" value="{{ isset($pascaBedah) && $pascaBedah->monitoring_ttv_end ? $pascaBedah->monitoring_ttv_end : '' }}">
+                                                            <input type="text" name="monitoring_ttv_end" class="form-control  @error('monitoring_ttv_end') is-invalid @enderror" value="{{ old('monitoring_ttv_end', isset($pascaBedah) && $pascaBedah->monitoring_ttv_end ? $pascaBedah->monitoring_ttv_end : '') }}">
+                                                            @error('monitoring_ttv_end')
+                                                            <div class="invalid-feedback">
+                                                                {{ $message }}
+                                                            </div>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                 </div>
@@ -567,7 +589,12 @@
                                                 <div class="mb-3 row">
                                                     <label class="col-3 col-form-label">Konsultasi pembari pelayanan lain</label>
                                                     <div class="col-9">
-                                                        <input type="text" id="" name="konsultasi_pelayanan" class="form-control" value="{{ isset($pascaBedah) && $pascaBedah->konsultasi_pelayanan ? $pascaBedah->konsultasi_pelayanan : '' }}">
+                                                        <input type="text" id="" name="konsultasi_pelayanan" class="form-control @error('konsultasi_pelayanan') is-invalid @enderror" value="{{ old('konsultasi_pelayanan',isset($pascaBedah) && $pascaBedah->konsultasi_pelayanan ? $pascaBedah->konsultasi_pelayanan : '') }}">
+                                                        @error('konsultasi_pelayanan')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                        @enderror
                                                     </div>
                                                 </div>
 
@@ -575,7 +602,12 @@
                                                 <div class="row">
                                                     <label class="col-3 col-form-label">Pengobatan yang diperlukan</label>
                                                     <div class="col-9">
-                                                        <textarea class="form-control" id="" name="terapi" style="height: 200px;">{{ isset($pascaBedah) && $pascaBedah->terapi ? $pascaBedah->terapi : '' }}</textarea>
+                                                        <textarea class="form-control @error('terapi') is-invalid @enderror" id="" name="terapi" style="height: 200px;">{{ old('terapi',isset($pascaBedah) && $pascaBedah->terapi ? $pascaBedah->terapi : '') }}</textarea>
+                                                        @error('terapi')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -633,6 +665,21 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+
+<script>
+    $(document).ready(function() {
+    // Persist selected tab
+    var selectedTab = localStorage.getItem('selectedTab') || '#spkfr2';
+    $('#myTab3 a[href="' + selectedTab + '"]').tab('show');
+
+    $('#myTab3 a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        var target = $(e.target).attr('href');
+        localStorage.setItem('selectedTab', target);
+        
+    });
+
+});
+</script>
 
 <script type="text/javascript">
     var sig = $("#signat").signature({
