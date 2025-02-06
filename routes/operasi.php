@@ -128,6 +128,7 @@ Route::prefix('pascabedah')->name('pascabedah.')->middleware('auth')->group(func
     Route::put('/perencanaan-pascabedah/update/{kode_register}', [PerencanaanPascaBedahController::class, 'update'])->name('perencanaan-pascabedah.update');
     Route::delete('/perencanaan-pascabedah/delete/{id}', [PerencanaanPascaBedahController::class, 'destroy'])->name('perencanaan-pascabedah.destroy');
     Route::get('/perencanaan-pascabedah/cetak/{kode_register}', [PerencanaanPascaBedahController::class, 'cetak'])->name('perencanaan-pascabedah.cetak');
+    Route::get('/perencanaan-pascabedah/show/{kode_register}', [PerencanaanPascaBedahController::class, 'show'])->name('perencanaan-pascabedah.show');
 });
 
 Route::prefix('laporan')->name('laporan.')->middleware('auth')->group(function () {

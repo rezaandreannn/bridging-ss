@@ -80,6 +80,57 @@ class PerencanaanPascaBedahService
         return null;
     }
 
+    public function detailPascaBedah($kode_register)
+    {
+        $result = PerencanaanPascaBedah::with([
+            'booking' => function ($query) {
+                $query->select('kode_register', 'tanggal', 'kode_dokter', 'jenis_operasi')->with([
+                    'pendaftaran' => function ($query) {
+                        $query->select('No_Reg', 'No_MR')
+                            ->with(['registerPasien' => function ($query) {
+                                $query->select(
+                                    'No_MR',
+                                    'Nama_Pasien',
+                                    'ALAMAT',
+                                    'JENIS_KELAMIN',
+                                    DB::raw("FORMAT(TGL_LAHIR, 'yyyy-MM-dd') as TGL_LAHIR")
+                                );
+                            }]);
+                    },
+                    'dokter' => function ($query) {
+                        $query->select('Kode_Dokter', 'Nama_Dokter');
+                    }
+                ]);
+            }
+        ])
+            ->where('kode_register', $kode_register)
+            ->get();
+
+        if ($result) {
+            return collect($result->map(function ($item) {
+                return (object) [
+                    'id' => $item->id,
+                    'kode_register' => $item->kode_register,
+                    'tingkat_perawatan' => $item->tingkat_perawatan,
+                    'monitoring_ttv_start' => $item->monitoring_ttv_start,
+                    'monitoring_ttv_end' => $item->monitoring_ttv_end,
+                    'konsultasi_pelayanan' => $item->konsultasi_pelayanan,
+                    'terapi' => $item->terapi,
+                    'tanggal' => optional($item->booking)->tanggal,
+                    'no_mr' => optional($item->booking->pendaftaran)->No_MR,
+                    'nama_pasien' => optional($item->booking->pendaftaran->registerPasien)->Nama_Pasien,
+                    'tanggal_lahir' => optional($item->booking->pendaftaran->registerPasien)->TGL_LAHIR,
+                    'jenis_kelamin' => optional($item->booking->pendaftaran->registerPasien)->JENIS_KELAMIN,
+                    'nama_dokter' => optional($item->booking->dokter)->Nama_Dokter,
+                    'created_at' => $item->created_at->format('Y-m-d H:i:s'),
+                ];
+            }));
+        
+        }
+
+        return null;
+    }
+
 
     public function findById($kodeRegister)
     {

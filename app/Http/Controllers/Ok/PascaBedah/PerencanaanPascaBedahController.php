@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Ok\PascaBedah;
 
 use Exception;
 use Carbon\Carbon;
+use App\Models\Rajal;
 use App\Models\Simrs\Dokter;
 use Illuminate\Http\Request;
 use App\Helpers\BookingHelper;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Helpers\Ok\PascaBedahHelper;
 use App\Http\Controllers\Controller;
 use App\Services\SimRs\DokterService;
 use App\Services\Operasi\BookingOperasiService;
@@ -24,6 +26,7 @@ class PerencanaanPascaBedahController extends Controller
     protected $perencanaanPascaBedah;
     protected $userService;
     protected $dokterService;
+    protected $rajal;
 
 
     public function __construct()
@@ -33,6 +36,7 @@ class PerencanaanPascaBedahController extends Controller
         $this->perencanaanPascaBedah = new PerencanaanPascaBedahService();
         $this->bookingOperasiService = new BookingOperasiService();
         $this->dokterService = new DokterService();
+        $this->rajal = new Rajal();
     }
 
     public function cetak($kode_register)
@@ -76,12 +80,15 @@ class PerencanaanPascaBedahController extends Controller
             $kode_dokter = $request->input('kode_dokter');
             if ($kode_dokter) {
                 $sessionBangsal = null;
-                $pascaBedah = collect($this->bookingOperasiService->pascaBedah($date, $sessionBangsal, $kode_dokter));
+                $pascaBedah = collect($this->bookingOperasiService->byDate($date, $sessionBangsal, $kode_dokter));
                 // dd($pascaBedah);
             }
         } elseif ($user->hasRole('perawat bangsal')) {
             $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
-            $pascaBedah = $this->bookingOperasiService->pascaBedah($date, $sessionBangsal);
+
+            // Ambil pasien dokter
+            $pascaBedah = $this->bookingOperasiService->byPasienAktif($date, $sessionBangsal);
+            $statusPascaBedah = PascaBedahHelper::getStatusPascaBedah($pascaBedah);
             // dd($pascaBedah);
         }
 
@@ -89,6 +96,7 @@ class PerencanaanPascaBedahController extends Controller
             ->with([
                 'title' => $title,
                 'dokters' => $this->dokterService->byBedahOperasi(),
+                'statusPascaBedah' => $statusPascaBedah,
             ]);
     }
 
@@ -125,9 +133,19 @@ class PerencanaanPascaBedahController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($kode_register)
     {
         //
+        $title = $this->prefix . ' ' . 'Detail';
+        $pascaBedahDetail = $this->perencanaanPascaBedah->detailPascaBedah($kode_register);
+        // dd($pascaBedahDetail);
+
+        return view($this->view . 'detail', compact('pascaBedahDetail'))
+            ->with([
+                'title' => $title,
+                'biodata' => $this->rajal->pasien_bynoreg($kode_register)
+            ]);
+      
     }
 
     /**

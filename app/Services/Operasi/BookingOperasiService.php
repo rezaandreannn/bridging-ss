@@ -160,7 +160,7 @@ class BookingOperasiService
         return $this->mapData($filtered);
     }
 
-    public function pascaBedah($date, $kodeBangsal = "", $kodeDokter = "")
+    public function byPasienAktif($date, $kodeBangsal = "", $kodeDokter = "")
     {
         if (!empty($kodeBangsal)) {
             $bookings = BookingOperasi::with([
@@ -175,14 +175,15 @@ class BookingOperasiService
                         $bangsal = optional($booking->pendaftaran->ruang->bangsal)->Kode_Bangsal;
 
                         if ((string) $bangsal === (string) $kodeBangsal) {
-                            return $kodeBangsal;
+                            $statusAktif = $booking->pendaftaran->Status == '1';
+                            return $kodeBangsal && $statusAktif;
                         }
                     }
                 } else {
                     $ruang = optional($booking->pendaftaran)->Kode_Ruang;
-                    $tanggal = $booking->tanggal;
+                    $statusAktif = $booking->pendaftaran->Status == '1';
 
-                    return empty($ruang) && ($tanggal);
+                    return empty($ruang) && ($statusAktif);
                 }
             });
         } else if (!empty($kodeDokter)) {
@@ -197,8 +198,9 @@ class BookingOperasiService
                 if ($kodeDokter != null) {
 
                     if ((string) $dokter ===  $kodeDokter) {
+                        $statusAktif = $booking->pendaftaran->Status == '1';
                         $tanggal = $booking->tanggal;
-                        return $tanggal && $tanggal == $date;
+                        return $tanggal && $tanggal == $date && $statusAktif;
                     }
                 }
             });
@@ -241,6 +243,49 @@ class BookingOperasiService
         }
         return $this->mapData($filtered);
     }
+
+    // public function pascaBedahCekStatus( $kodeBangsal = "")
+    // {
+    //     if (!empty($kodeBangsal)) {
+    //         $bookings = BookingOperasi::with([
+    //             'pendaftaran.registerPasien',
+    //             'pendaftaran.ruang.bangsal',
+    //             'dokter',
+    //         ])->get();
+
+    //         $filtered = $bookings->filter(function ($booking) use ($kodeBangsal) {
+    //             if (!empty($kodeBangsal)) {
+    //                 if (!empty($booking->pendaftaran->ruang)) {
+    //                     $bangsal = optional($booking->pendaftaran->ruang->bangsal)->Kode_Bangsal;
+
+    //                     if ((string) $bangsal === (string) $kodeBangsal) {
+    //                         $statusAktif = $booking->pendaftaran->Status == '1';
+    //                         return $kodeBangsal && $statusAktif;
+    //                     }
+    //                 }
+    //             } else {
+    //                 $ruang = optional($booking->pendaftaran)->Kode_Ruang;
+    //                 $statusAktif = $booking->pendaftaran->Status == '1';
+
+    //                 return empty($ruang) && ($statusAktif);
+    //             }
+    //         });
+    //     } else {
+    //         $bookings = BookingOperasi::with([
+    //             'pendaftaran.registerPasien',
+    //             'pendaftaran.ruang.bangsal',
+    //             'dokter',
+    //         ])->get();
+    //         // dd('ok');
+    //         $filtered = $bookings->filter(function ($booking) use ($kodeBangsal) {
+
+    //             return $kodeBangsal;
+    //         });
+
+    //         // $filtered = $this->baseQuery()->get();
+    //     }
+    //     return $this->mapData($filtered);
+    // }
 
     public function byDokterOrAdmin($date, $kodeDokter)
     {

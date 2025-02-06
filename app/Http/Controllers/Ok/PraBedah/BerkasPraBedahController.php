@@ -62,23 +62,6 @@ class BerkasPraBedahController extends Controller
         return $pdf->stream($filename . '.pdf');
     }
 
-    public function download($kode_register)
-    {
-        $title = $this->prefix . ' ' . 'Operasi';
-        // Ambil data berdasarkan ID
-
-        $cetak = $this->assesmenOperasiService->cetak($kode_register);
-        // dd($cetak);
-
-        $date = date('dMY');
-        $tanggal = Carbon::now();
-        $filename = 'AssesmenPraBedah-' . $date;
-
-        $pdf = PDF::loadview('pages.ok.pra-bedah.berkas.download', ['cetak' => $cetak, 'title' => $title, 'tanggal' => $tanggal]);
-        // Set paper size to A5
-        $pdf->setPaper('A5');
-        return $pdf->stream($filename . '.pdf');
-    }
 
     public function index(Request $request)
     {
@@ -108,7 +91,7 @@ class BerkasPraBedahController extends Controller
         } elseif (auth()->user()->hasRole('perawat bangsal')) {
             $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
             // Ambil pasien bangsal
-            $assesmens = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '', '');
+            $assesmens = $this->bookingOperasiService->byPasienAktif($date, $sessionBangsal ?? '');
         }
 
         return view($this->view . 'berkas.index', compact('assesmens', 'isPerawatPoli'))

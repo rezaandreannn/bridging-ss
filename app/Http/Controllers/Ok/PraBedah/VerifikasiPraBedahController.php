@@ -54,7 +54,7 @@ class VerifikasiPraBedahController extends Controller
             if ($kode_dokter) {
 
                 $sessionBangsal = null;
-                $verifikasis = $this->bookingOperasiService->byDatePoli($date, $sessionBangsal, $kode_dokter);
+                $verifikasis = $this->bookingOperasiService->byDate($date, $sessionBangsal, $kode_dokter);
 
                 $statusBerkas = BookingHelper::getStatusBerkasVerifikasi($verifikasis);
 
@@ -62,7 +62,7 @@ class VerifikasiPraBedahController extends Controller
             }
         } elseif ($user->hasRole('perawat bangsal')) {
             $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
-            $verifikasis = $this->bookingOperasiService->byDate($date, $sessionBangsal);
+            $verifikasis = $this->bookingOperasiService->byPasienAktif($date, $sessionBangsal);
 
             $statusBerkas = BookingHelper::getStatusBerkasVerifikasi($verifikasis);
 

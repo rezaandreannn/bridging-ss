@@ -98,7 +98,13 @@
                                     <td>{{$verifikasi->tanggal}}</td>
                                     <td>{{$verifikasi->nama_dokter}}</td>
                                     <td>  
-                                       
+                                        @if (isset($statusPascaBedah[$verifikasi->id]) && $statusPascaBedah[$verifikasi->id] != 'create')
+                                        <a href="{{ route('pascabedah.perencanaan-pascabedah.show', $verifikasi->kode_register )}}" class="btn btn-info btn-sm"><i class="far fa-eye"></i> Lihat Detail</a>
+
+                                        <a class="btn btn-primary btn-sm" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" href="{{ route('pascabedah.perencanaan-pascabedah.cetak', $verifikasi->kode_register) }}"> 
+                                            <i class="fas fa-download"></i> Unduh Pasca Bedah
+                                        </a>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
