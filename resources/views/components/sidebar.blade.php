@@ -371,6 +371,13 @@
                     </li>
                 </ul>
                 @endcan
+                @can('berkas pre post')
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('pre-post/berkas-prepost*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('operasi.berkas-prepost.index')}}">Berkas Pre Post</a>
+                    </li>
+                </ul>
+                @endcan
             </li>
             @endcan
 

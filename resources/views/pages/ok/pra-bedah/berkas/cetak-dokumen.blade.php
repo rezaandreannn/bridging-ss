@@ -215,7 +215,7 @@
                 <label>Planning:</label>
                 <textarea class="area-1"> {{ $cetak->planning ?? ''}}</textarea>
                  {{-- Estimasi Waktu --}}
-                 <span>Estimasi Waktu: <b>{{ optional($cetak)->estimasi_waktu ? date('h:i', strtotime($cetak->estimasi_waktu)) : '' }}</b></span><br>
+                 <span>Estimasi Waktu: {{ $cetak->estimasi_waktu ?? ''}}</span><br>
 
                  {{-- Rencana Tindakan --}}
                  <label>Rencana Tindakan:</label>

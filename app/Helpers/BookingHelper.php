@@ -209,4 +209,30 @@ class BookingHelper
 
         return $statusPreOperasi;
     }
+
+    public static function getStatusPrePostOperasi($prePost)
+    {
+        $statusPrePostOperasi = [];
+
+        foreach ($prePost as $operasi) {
+            $kodeRegister = $operasi->kode_register;
+
+            $status = [
+                'pre-operasi' => [
+                    'tindakan' => TindakanPreOperasi::where('kode_register', $kodeRegister)->first(),
+                    'dataUmum' => DataUmumPreOperasi::where('kode_register', $kodeRegister)->first(),
+                    'ttv' => PemeriksaanFisikPreOperasi::where('kode_register', $kodeRegister)->first()
+                ],
+                'post-operasi' => [
+                    'tindakan' => TindakanPostOperasi::where('kode_register', $kodeRegister)->first(),
+                    'alat' => AlatPostOperasi::where('kode_register', $kodeRegister)->first(),
+                    'ttv' => PemeriksaanFisikPostOperasi::where('kode_register', $kodeRegister)->first()
+                ]
+            ];
+
+            $statusPrePostOperasi[$kodeRegister] = $status;
+        }
+
+        return $statusPrePostOperasi;
+    }
 }

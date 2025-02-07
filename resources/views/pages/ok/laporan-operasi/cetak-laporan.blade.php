@@ -32,23 +32,19 @@
             font-size: 18px;
         }
 
-        .diagnosa {
-            padding-bottom: 20px;
-        }
-
         .section-title {
             text-align: left;
-            padding: 10px 10px;
+            padding: 0 10px;
         }
 
         .signature {
-            margin-top: 100px;
+            margin-top: 80px;
             text-align: right;
         }
 
         .sign {
             padding-right: 50px;
-            padding-bottom: 40px;
+            padding-bottom: 20px;
         }
 
         .no-border {
@@ -100,9 +96,11 @@
                     @endforeach
                 </td>
                 <td colspan="3">Nama Penata Anestesi : <br>
-                    @foreach ($anastesis as $anastesi)
-                    {{ $anastesi }}<br>
-                    @endforeach
+                    <ol style="padding: 0; margin: 0;">
+                        @foreach ($anastesis as $anastesi)
+                        <li style="list-style-position: inside;">{{ ucwords(strtolower(trim($anastesi))) }}</li>
+                        @endforeach
+                    </ol>
                 </td>
                 <td colspan="2">Jenis Anastesi : <br>{{ $cetak->jenis_anastesi}}</td>
             </tr>
@@ -131,9 +129,9 @@
             </tr>
             <tr>
                 <td>Tgl Operasi <br>{{ date('d-m-Y', strtotime($cetak->tanggal))}}</td>
-                <td colspan="2">Jam Operasi Mulai <br>{{ date('H:i', strtotime($cetak->mulai_operasi))}} WIB</td>
-                <td colspan="2">Jam Operasi Selesai <br>{{ date('H:i', strtotime($cetak->selesai_operasi))}} WIB</td>
-                <td colspan="2">Lama Operasi Berlangsung <br>{{ $cetak->lama_operasi}}</td>
+                <td colspan="2">Jam operasi mulai <br>{{ date('H:i', strtotime($cetak->mulai_operasi))}} WIB</td>
+                <td colspan="2">Jam operasi selesai <br>{{ date('H:i', strtotime($cetak->selesai_operasi))}} WIB</td>
+                <td colspan="2">Lama operasi berlangsung <br>{{ $cetak->lama_operasi}}</td>
             </tr>
         </table>
         <div class="section-title" style="white-space: pre-wrap;"><b>Laporan Operasi :</b> <br> {!! e($cetak->laporan_operasi) !!}</div>

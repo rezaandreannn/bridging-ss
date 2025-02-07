@@ -4,19 +4,20 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Ok\PreOperasiController;
 use App\Http\Controllers\Ok\PostOperasiController;
 use App\Http\Controllers\Ok\RuangOperasiController;
+use App\Http\Controllers\Ok\BerkasPrePostController;
 use App\Http\Controllers\OK\JadwalOperasiController;
 use App\Http\Controllers\OK\BookingOperasiController;
-use App\Http\Controllers\Ok\ChecklistPembedahan\SignInController;
-use App\Http\Controllers\Ok\ChecklistPembedahan\SignOutController;
 use App\Http\Controllers\OK\TtdTandaOperasiController;
+use App\Http\Controllers\Ok\Medis\ListPasienController;
 use App\Http\Controllers\OK\PenandaanOperasiController;
 use App\Http\Controllers\OK\MasterData\DoctorController;
+use App\Http\Controllers\Ok\Medis\DetailPasienController;
 use App\Http\Controllers\Ok\Laporan\LaporanOperasiController;
 use App\Http\Controllers\Ok\PraBedah\BerkasPraBedahController;
 use App\Http\Controllers\Ok\PraBedah\AssesmenPraBedahController;
+use App\Http\Controllers\Ok\ChecklistPembedahan\SignInController;
 use App\Http\Controllers\Ok\MasterData\TemplateOperasiController;
-use App\Http\Controllers\Ok\Medis\DetailPasienController;
-use App\Http\Controllers\Ok\Medis\ListPasienController;
+use App\Http\Controllers\Ok\ChecklistPembedahan\SignOutController;
 use App\Http\Controllers\Ok\PraBedah\VerifikasiPraBedahController;
 use App\Http\Controllers\Ok\PascaBedah\PerencanaanPascaBedahController;
 
@@ -46,6 +47,11 @@ Route::prefix('pre-post')->name('operasi.')->middleware('auth')->group(function 
     Route::post('/post-operasi', [PostOperasiController::class, 'store'])->name('post-operasi.store');
     Route::get('/post-operasi/update/{kode_register}', [PostOperasiController::class, 'edit'])->name('post-operasi.edit');
     Route::put('/post-operasi/update/{kode_register}', [PostOperasiController::class, 'update'])->name('post-operasi.update');
+
+    // Berkas Pra Bedah
+    Route::get('/berkas-prepost', [BerkasPrePostController::class, 'index'])->name('berkas-prepost.index');
+    Route::get('/berkas-prepost/cetak/{kode_register}', [BerkasPrePostController::class, 'cetak'])->name('berkas-prepost.cetak');
+    Route::get('/berkas-prepost/show/{kode_register}', [BerkasPrePostController::class, 'show'])->name('berkas-prepost.show');
 });
 
 

@@ -41,12 +41,11 @@
                                             <th scope="col">Nama Pasien</th>
                                             <th scope="col">No MR</th>
                                             <th scope="col">Nama Dokter</th>
-                                            <th scope="col">Status</th>
                                             <th scope="col">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($preOperasi as $booking)
+                                        @foreach ($berkas as $booking)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$booking->kode_register}}</td>
@@ -54,32 +53,18 @@
                                             <td>{{ ucwords(strtolower(trim($booking->nama_pasien))) }}</td>
                                             <td>{{$booking->no_mr}}</td>
                                             <td>{{$booking->nama_dokter}}</td>
-                                            <td>
-                                                @if (isset($statusPre[$booking->kode_register]) && array_filter($statusPre[$booking->kode_register]))
-                                                <span class="badge badge-success">Sudah</span>
-                                                @else
-                                                <span class="badge badge-danger">Belum</span>
-                                                @endif
-                                            </td>
                                             <td>  
-                                                <div class="dropdown d-inline">
-                                                    <a href="#" class="text-primary" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v"></i>
+                                                @if (isset($statusPrePost[$booking->kode_register]) && 
+                                                    array_filter($statusPrePost[$booking->kode_register]['pre_operasi'] ?? []) &&
+                                                    array_filter($statusPrePost[$booking->kode_register]['post_operasi'] ?? []))
+                                                    <a href="{{ route('operasi.berkas-prepost.show', $booking->kode_register )}}" class="btn btn-info btn-sm">
+                                                        <i class="far fa-eye"></i> Lihat Detail
                                                     </a>
-                                                    <div class="dropdown-menu">
-                                                        {{-- Input --}}
-                                                        @if (isset($statusPre[$booking->kode_register]) && 
-                                                            array_filter($statusPre[$booking->kode_register]))
-                                                              <a class="dropdown-item has-icon" href="{{ route('operasi.pre-operasi.edit', $booking->kode_register) }}">
-                                                                <i class="fas fa-edit"></i> Edit
-                                                            </a>
-                                                        @else
-                                                        <a class="dropdown-item has-icon" href="{{ route('operasi.pre-operasi.create', $booking->kode_register )}}"> 
-                                                            <i class="fas fa-pencil-alt"></i> Tambah
-                                                        </a>
-                                                        @endif
-                                                    </div>
-                                                </div>
+                                                @endif
+                                                    <a class="btn btn-primary btn-sm" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" 
+                                                        href="{{ route('operasi.berkas-prepost.cetak', $booking->kode_register) }}"> 
+                                                        <i class="fas fa-download"></i> Unduh Berkas
+                                                    </a>
                                             </td>
                                         </tr>
                                         @endforeach

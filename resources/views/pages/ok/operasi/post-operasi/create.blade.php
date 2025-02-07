@@ -91,7 +91,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Jenis Operasi</label>
-                                    <input type="text" name="jenis_operasi"  class="form-control @error('jenis_operasi') is-invalid @enderror" value="{{$laporanOperasi->jenis_operasi}}">
+                                    <input type="text" name="jenis_operasi"  class="form-control @error('jenis_operasi') is-invalid @enderror" value="{{$laporanOperasi->jenis_operasi ?? ''}}">
                                     @error('jenis_operasi')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -102,7 +102,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Jam Operasi</label>
-                                    <input type="time" name="jam_operasi" class="form-control @error('jam_operasi') is-invalid @enderror" value="{{date('H:i:s',strtotime($laporanOperasi->mulai_operasi))}}">
+                                    <input type="time" name="jam_operasi" class="form-control @error('jam_operasi') is-invalid @enderror" value="{{date('H:i:s',strtotime($laporanOperasi->mulai_operasi ?? ''))}}">
                                     @error('jam_operasi')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -113,7 +113,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Jenis Anestesi</label>
-                                    <input type="text" name="jenis_anastesi" class="form-control @error('jenis_anastesi') is-invalid @enderror" value="{{$laporanOperasi->jenis_anastesi}}">
+                                    <input type="text" name="jenis_anastesi" class="form-control @error('jenis_anastesi') is-invalid @enderror" value="{{$laporanOperasi->jenis_anastesi ?? ''}}">
                                     @error('jenis_anastesi')
                                     <div class="invalid-feedback">
                                         {{ $message }}
