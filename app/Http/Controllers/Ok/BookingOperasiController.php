@@ -80,7 +80,8 @@ class BookingOperasiController extends Controller
             $booking = $this->bookingOperasiService->findById(session('booking_id'));
         }
 
-        $pasien = $this->pasienService->byStatusActive();
+        $pasien = $this->pasienService->byStatusActive2();
+        // dd($pasien);
         // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
         // $statusPenandaan = BookingHelper::getStatusPenandaan($bookings);
         // dd($this->pasienService->byStatusActive());

@@ -211,11 +211,11 @@
             </tr>
             <tr>
                 <td class="text3">Riwayat Alergi</td>
-                <td class="text3" colspan="3">: {{$assesmenPerawat->FS_ALERGI}}</td>
+                <td class="text3" colspan="3">: {{$assesmenPerawat->FS_ALERGI ?? ''}}</td>
             </tr>
             <tr>
                 <td class="text3">Reaksi Alergi</td>
-                <td class="text3" colspan="3">: {{$assesmenPerawat->FS_REAK_ALERGI}}</td>
+                <td class="text3" colspan="3">: {{$assesmenPerawat->FS_REAK_ALERGI ?? ''}}</td>
             </tr>
             <tr>
                 <td class="text3">Status Psikologi</td>
