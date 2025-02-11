@@ -18,8 +18,265 @@ class PostOperasiService
             'tindakan' => TindakanPostOperasi::where('kode_register', $kode_register)->first(),
             'alat' => AlatPostOperasi::where('kode_register', $kode_register)->first(),
             'ttv' => PemeriksaanFisikPostOperasi::where('kode_register', $kode_register)->first(),
-            'dataUmum'=> DataUmumPostOperasi::where('kode_register', $kode_register)->first()
+            'dataUmum' => DataUmumPostOperasi::where('kode_register', $kode_register)->first()
         ];
+    }
+
+    public function cetakBerkas($kode_register)
+    {
+        $result = DataUmumPostOperasi::with([
+            'postTindakan' => function ($query) {
+                $query->select(
+                    'kode_register',
+                    'status_pasien',
+                    'catatan_anestesi',
+                    'laporan_pembedahan',
+                    'perencanaan_pasca_medis',
+                    'checklist_keselamatan_pasien',
+                    'checklist_monitoring',
+                    'askep_perioperatif',
+                    'lembar_pemantauan',
+                    'formulir_pemeriksaan',
+                    'sampel_pemeriksaan',
+                    'foto_rontgen',
+                    'resep',
+                    'lainnya',
+                    'deskripsi_lainnya',
+                );
+            },
+            'postAlat' => function ($query) {
+                $query->select(
+                    'kode_register',
+                    'ngt',
+                    'drain',
+                    'tampon_hidung',
+                    'tampon_gigi',
+                    'tampon_abdomen',
+                    'tampon_vagina',
+                    'tranfusi',
+                    'ivfd',
+                    'deskripsi_ivfd',
+                    'kompres_luka',
+                    'dc',
+                    'lainnya',
+                    'deskripsi_lainnya',
+                );
+            },
+
+            'postPemeriksaanFisik' => function ($query) {
+                $query->select(
+                    'kode_register',
+                    'keadaan_umum',
+                    'kesadaran',
+                    'tekanan_darah',
+                    'nadi',
+                    'suhu',
+                    'pernafasan',
+                    'instruksi_dokter'
+                );
+            },
+
+            'preTindakan' => function ($query) {
+                $query->select(
+                    'kode_register',
+                    'lapor_dokter',
+                    'lapor_kamar',
+                    'surat_izin_pembedahan',
+                    'tandai_daerah_operasi',
+                    'memakai_gelang_identitas',
+                    'melepas_aksesoris',
+                    'menghapus_aksesoris',
+                    'melakukan_oral_hygiene',
+                    'memasang_bidai',
+                    'memasang_infuse',
+                    'memasang_dc',
+                    'deskripsi_dc',
+                    'memasang_ngt',
+                    'deskripsi_ngt',
+                    'memasang_drainage',
+                    'memasang_wsd',
+                    'mencukur_daerah_operasi',
+                    'lainnya',
+                    'deskripsi_lainnya',
+                    'penyakit_dm',
+                    'penyakit_hipertensi',
+                    'penyakit_tb_paru',
+                    'penyakit_hiv',
+                    'penyakit_hepatitis',
+                );
+            },
+
+            'prePemeriksaanFisik' => function ($query) {
+                $query->select(
+                    'kode_register',
+                    'tinggi_badan',
+                    'berat_badan',
+                    'tekanan_darah',
+                    'nadi',
+                    'suhu',
+                    'pernafasan',
+                );
+            },
+
+            'preDataUmum' => function ($query) {
+                $query->select(
+                    'kode_register',
+                    'diagnosa',
+                    'jenis_operasi',
+                    'nama_operator',
+                    'puasa_jam',
+                    'riwayat_asma',
+                    'alergi',
+                    'antibiotik_profilaksis',
+                    'antibiotik_profilaksis_jam',
+                    'premedikasi',
+                    'premedikasi_jam',
+                    'ivfd',
+                    'dc',
+                    'assesmen_pra_bedah',
+                    'edukasi_anastesi',
+                    'informed_consent_bedah',
+                    'informed_consent_anastesi',
+                    'darah',
+                    'gol',
+                    'obat',
+                    'rontgen',
+                );
+            },
+
+            'booking' => function ($query) {
+                $query->with([
+                    'pendaftaran' => function ($query) {
+                        $query->select('No_Reg', 'No_MR')
+                            ->with(['registerPasien' => function ($query) {
+                                $query->select(
+                                    'No_MR',
+                                    'Nama_Pasien',
+                                    'ALAMAT',
+                                    'JENIS_KELAMIN',
+                                    DB::raw("FORMAT(TGL_LAHIR, 'yyyy-MM-dd') as TGL_LAHIR")
+                                );
+                            }]);
+                    },
+                ]);
+            },
+        ])
+            ->where('kode_register', $kode_register)
+            ->first();
+
+        if ($result) {
+            return (object) [
+                'id' => $result->id,
+                'kode_register' => $result->kode_register,
+                'diagnosa_prabedah' => $result->diagnosa_prabedah,
+                'diagnosa_pascabedah' => $result->diagnosa_pascabedah,
+                'jenis_operasi' => $result->jenis_operasi,
+                'dokter_operator' => $result->dokter_operator,
+                'asisten_bedah' => $result->asisten_bedah,
+                'jam_operasi' => $result->jam_operasi,
+                'jenis_anastesi' => $result->jenis_anastesi,
+                'dokter_anastesi' => $result->dokter_anastesi,
+                'asisten_anastesi' => $result->asisten_anastesi,
+                'no_mr' => optional($result->booking->pendaftaran)->No_MR,
+                'nama_pasien' => optional($result->booking->pendaftaran->registerPasien)->Nama_Pasien,
+                'tanggal_lahir' => optional($result->booking->pendaftaran->registerPasien)->TGL_LAHIR,
+                'jenis_kelamin' => optional($result->booking->pendaftaran->registerPasien)->JENIS_KELAMIN,
+                'nama_dokter' => optional($result->booking->dokter)->Nama_Dokter,
+                // Post Tindakan
+                'status_pasien' => optional($result->postTindakan)->status_pasien,
+                'catatan_anestesi' => optional($result->postTindakan)->catatan_anestesi,
+                'laporan_pembedahan' => optional($result->postTindakan)->laporan_pembedahan,
+                'perencanaan_pasca_medis' => optional($result->postTindakan)->perencanaan_pasca_medis,
+                'checklist_keselamatan_pasien' => optional($result->postTindakan)->checklist_keselamatan_pasien,
+                'checklist_monitoring' => optional($result->postTindakan)->checklist_monitoring,
+                'askep_perioperatif' => optional($result->postTindakan)->askep_perioperatif,
+                'lembar_pemantauan' => optional($result->postTindakan)->lembar_pemantauan,
+                'formulir_pemeriksaan' => optional($result->postTindakan)->formulir_pemeriksaan,
+                'sampel_pemeriksaan' => optional($result->postTindakan)->sampel_pemeriksaan,
+                'foto_rontgen' => optional($result->postTindakan)->foto_rontgen,
+                'resep' => optional($result->postTindakan)->resep,
+                'lainnya' => optional($result->postTindakan)->lainnya,
+                'deskripsi_lainnya' => optional($result->postTindakan)->deskripsi_lainnya,
+                // Post Alat
+                'ngt' => optional($result->postAlat)->ngt,
+                'drain' => optional($result->postAlat)->drain,
+                'tampon_hidung' => optional($result->postAlat)->tampon_hidung,
+                'tampon_gigi' => optional($result->postAlat)->tampon_gigi,
+                'tampon_abdomen' => optional($result->postAlat)->tampon_abdomen,
+                'tampon_vagina' => optional($result->postAlat)->tampon_vagina,
+                'tranfusi' => optional($result->postAlat)->tranfusi,
+                'ivfd' => optional($result->postAlat)->ivfd,
+                'deskripsi_ivfd' => optional($result->postAlat)->deskripsi_ivfd,
+                'kompres_luka' => optional($result->postAlat)->kompres_luka,
+                'dc' => optional($result->postAlat)->dc,
+                'lainnya' => optional($result->postAlat)->lainnya,
+                'deskripsi_lainnya' => optional($result->postAlat)->deskripsi_lainnya,
+                // Post Pemeriksaan Fisik
+                'keadaan_umum' => optional($result->postPemeriksaanFisik)->keadaan_umum,
+                'kesadaran' => optional($result->postPemeriksaanFisik)->kesadaran,
+                'tekanan_darah' => optional($result->postPemeriksaanFisik)->tekanan_darah,
+                'nadi' => optional($result->postPemeriksaanFisik)->nadi,
+                'suhu' => optional($result->postPemeriksaanFisik)->suhu,
+                'pernafasan' => optional($result->postPemeriksaanFisik)->pernafasan,
+                'instruksi_dokter' => optional($result->postPemeriksaanFisik)->instruksi_dokter,
+                // Pre Tindakan
+                'lapor_dokter' => optional($result->preTindakan)->lapor_dokter,
+                'lapor_kamar' => optional($result->preTindakan)->lapor_kamar,
+                'surat_izin_pembedahan' => optional($result->preTindakan)->surat_izin_pembedahan,
+                'tandai_daerah_operasi' => optional($result->preTindakan)->tandai_daerah_operasi,
+                'memakai_gelang_identitas' => optional($result->preTindakan)->memakai_gelang_identitas,
+                'melepas_aksesoris' => optional($result->preTindakan)->melepas_aksesoris,
+                'menghapus_aksesoris' => optional($result->preTindakan)->menghapus_aksesoris,
+                'melakukan_oral_hygiene' => optional($result->preTindakan)->melakukan_oral_hygiene,
+                'memasang_bidai' => optional($result->preTindakan)->memasang_bidai,
+                'memasang_infuse' => optional($result->preTindakan)->memasang_infuse,
+                'memasang_dc' => optional($result->preTindakan)->memasang_dc,
+                'deskripsi_dc' => optional($result->preTindakan)->deskripsi_dc,
+                'memasang_ngt' => optional($result->preTindakan)->memasang_ngt,
+                'deskripsi_ngt' => optional($result->preTindakan)->deskripsi_ngt,
+                'memasang_drainage' => optional($result->preTindakan)->memasang_drainage,
+                'memasang_wsd' => optional($result->preTindakan)->memasang_wsd,
+                'mencukur_daerah_operasi' => optional($result->preTindakan)->mencukur_daerah_operasi,
+                'lainnya' => optional($result->preTindakan)->lainnya,
+                'deskripsi_lainnya' => optional($result->preTindakan)->deskripsi_lainnya,
+                'penyakit_dm' => optional($result->preTindakan)->penyakit_dm,
+                'penyakit_hipertensi' => optional($result->preTindakan)->penyakit_hipertensi,
+                'penyakit_tb_paru' => optional($result->preTindakan)->penyakit_tb_paru,
+                'penyakit_hiv' => optional($result->preTindakan)->penyakit_hiv,
+                'penyakit_hepatitis' => optional($result->preTindakan)->penyakit_hepatitis,
+                // Pre Pemeriksaan Fisik
+                'tinggi_badan' => optional($result->prePemeriksaanFisik)->tinggi_badan,
+                'berat_badan' => optional($result->prePemeriksaanFisik)->berat_badan,
+                'tekanan_darah' => optional($result->prePemeriksaanFisik)->tekanan_darah,
+                'nadi' => optional($result->prePemeriksaanFisik)->nadi,
+                'suhu' => optional($result->prePemeriksaanFisik)->suhu,
+                'pernafasan' => optional($result->prePemeriksaanFisik)->pernafasan,
+                // Pre Data Umum
+                'radiologi' => optional($result->preDataUmum)->diagnosa,
+                'jenis_operasi' => optional($result->preDataUmum)->jenis_operasi,
+                'nama_operator' => optional($result->preDataUmum)->nama_operator,
+                'deskripsi' => optional($result->preDataUmum)->deskripsi,
+                'puasa_jam' => optional($result->preDataUmum)->puasa_jam,
+                'riwayat_asma' => optional($result->preDataUmum)->riwayat_asma,
+                'alergi' => optional($result->preDataUmum)->alergi,
+                'antibiotik_profilaksis' => optional($result->preDataUmum)->antibiotik_profilaksis,
+                'antibiotik_profilaksis_jam' => optional($result->preDataUmum)->antibiotik_profilaksis_jam,
+                'premedikasi' => optional($result->preDataUmum)->premedikasi,
+                'premedikasi_jam' => optional($result->preDataUmum)->premedikasi_jam,
+                'ivfd' => optional($result->preDataUmum)->ivfd,
+                'dc' => optional($result->preDataUmum)->dc,
+                'assesmen_pra_bedah' => optional($result->preDataUmum)->assesmen_pra_bedah,
+                'edukasi_anastesi' => optional($result->preDataUmum)->edukasi_anastesi,
+                'informed_consent_bedah' => optional($result->preDataUmum)->informed_consent_bedah,
+                'informed_consent_anastesi' => optional($result->preDataUmum)->informed_consent_anastesi,
+                'darah' => optional($result->preDataUmum)->darah,
+                'gol' => optional($result->preDataUmum)->gol,
+                'obat' => optional($result->preDataUmum)->obat,
+                'rontgen' => optional($result->preDataUmum)->rontgen,
+            ];
+        }
+
+        return null;
     }
 
     public function insert(array $data)
@@ -27,7 +284,7 @@ class PostOperasiService
         DB::beginTransaction();
         try {
 
-            
+
             // pisahkan array dengan koma menjadi string
             $asisten_bedah = $data['asisten_bedah'] ?? '';
             $data['asisten_bedah'] = $asisten_bedah;
@@ -46,7 +303,7 @@ class PostOperasiService
                 $data['dokter_anastesi'] = implode(', ', $dokter_anastesi);
             }
 
-        
+
 
             $data_umum_post_op = DataUmumPostOperasi::create([
                 'kode_register' => $data['kode_register'],
@@ -157,23 +414,23 @@ class PostOperasiService
         DB::beginTransaction();
         try {
 
-                     // pisahkan array dengan koma menjadi string
-                     $asisten_bedah = $data['asisten_bedah'] ?? '';
-                     $data['asisten_bedah'] = $asisten_bedah;
-                     if (!empty($asisten_bedah)) {
-                         $data['asisten_bedah'] = implode(', ', $asisten_bedah);
-                     }
-         
-                     $asisten_anastesi = $data['asisten_anastesi'] ?? '';
-                     $data['asisten_anastesi'] = $asisten_anastesi;
-                     if (!empty($asisten_anastesi)) {
-                         $data['asisten_anastesi'] = implode(', ', $asisten_anastesi);
-                     }
-                     $dokter_anastesi = $data['dokter_anastesi'] ?? '';
-                     $data['dokter_anastesi'] = $dokter_anastesi;
-                     if (!empty($dokter_anastesi)) {
-                         $data['dokter_anastesi'] = implode(', ', $dokter_anastesi);
-                     }
+            // pisahkan array dengan koma menjadi string
+            $asisten_bedah = $data['asisten_bedah'] ?? '';
+            $data['asisten_bedah'] = $asisten_bedah;
+            if (!empty($asisten_bedah)) {
+                $data['asisten_bedah'] = implode(', ', $asisten_bedah);
+            }
+
+            $asisten_anastesi = $data['asisten_anastesi'] ?? '';
+            $data['asisten_anastesi'] = $asisten_anastesi;
+            if (!empty($asisten_anastesi)) {
+                $data['asisten_anastesi'] = implode(', ', $asisten_anastesi);
+            }
+            $dokter_anastesi = $data['dokter_anastesi'] ?? '';
+            $data['dokter_anastesi'] = $dokter_anastesi;
+            if (!empty($dokter_anastesi)) {
+                $data['dokter_anastesi'] = implode(', ', $dokter_anastesi);
+            }
 
             // Update Table Tindakan Post Operasi
             $this->updateTable(DataUmumPostOperasi::class, $kode_register, [

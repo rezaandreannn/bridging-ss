@@ -2,8 +2,9 @@
 
 namespace App\Models\Operasi\PreOperasi;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Operasi\PostOperasi\DataUmumPostOperasi;
 
 class DataUmumPreOperasi extends Model
 {
@@ -37,4 +38,9 @@ class DataUmumPreOperasi extends Model
         'created_by',
         'updated_by'
     ];
+
+    public function postDataUmum()
+    {
+        return $this->belongsTo(DataUmumPostOperasi::class, 'kode_register', 'kode_register');
+    }
 }

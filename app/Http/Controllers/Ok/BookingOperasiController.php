@@ -58,7 +58,7 @@ class BookingOperasiController extends Controller
 
         $user = auth()->user();
 
-        if ($user->hasRole('perawat poli') || $user->hasRole('perawat poli mata')) {
+        if ($user->hasRole('perawat poli') || $user->hasRole('perawat poli mata') || $user->hasRole('perawat igd')) {
 
             $kode_dokter = $request->input('kode_dokter');
 
@@ -85,14 +85,14 @@ class BookingOperasiController extends Controller
         // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
         // $statusPenandaan = BookingHelper::getStatusPenandaan($bookings);
         // dd($this->pasienService->byStatusActive());
-     
-       return view($this->view . 'booking-operasi.index', compact('bookings', 'booking','pasien'))->with([
+
+        return view($this->view . 'booking-operasi.index', compact('bookings', 'booking', 'pasien'))->with([
 
             'title' => $title,
             'ruanganOperasi' => RuanganOperasi::all(),
             'statusPendaftaran' => $statusPendaftaran,
             'dokters' => $this->dokterService->byBedahOperasi(),
-            
+
             'filterbooking' =>  response()->json([
                 'bookings' => $bookings
             ])

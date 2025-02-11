@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Ok;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Helpers\BookingHelper;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\DataUmum\PreOperasiService;
@@ -52,8 +54,8 @@ class BerkasPrePostController extends Controller
         $title = $this->prefix . ' ' . 'Operasi';
         // Ambil data berdasarkan ID
 
-        $cetakBerkas = $this->assesmenOperasiService->cetakBerkas($kode_register);
-        $labs = $this->assesmenOperasiService->getLabByKodeReg($kode_register);
+        $cetakBerkas = $this->postOperasiService->cetakBerkas($kode_register);
+        // dd($cetakBerkas);
         $booking = collect($this->bookingOperasiService->byRegister($kode_register))->first();
         $biodataPasien = $this->bookingOperasiService->biodata($kode_register);
         $pasien = $biodataPasien->pendaftaran->registerPasien;
@@ -62,11 +64,10 @@ class BerkasPrePostController extends Controller
 
         $date = date('dMY');
         $tanggal = Carbon::now();
-        $filename = 'AssesmenPraBedah-' . $date;
+        $filename = 'PrePost-' . $date;
 
-        $pdf = PDF::loadview('pages.ok.pra-bedah.berkas.cetak-dokumen', [
+        $pdf = PDF::loadview('pages.ok.operasi.berkas.cetak-dokumen', [
             'cetak' => $cetakBerkas,
-            'labs' => $labs,
             'pasien' => $pasien,
             'booking' => $booking,
             'title' => $title,

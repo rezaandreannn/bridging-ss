@@ -47,7 +47,7 @@ class VerifikasiPraBedahController extends Controller
 
         $user = auth()->user();
 
-        if ($user->hasRole('perawat poli') || $user->hasRole('perawat poli mata')) {
+        if ($user->hasRole('perawat poli') || $user->hasRole('perawat poli mata') || $user->hasRole('perawat igd')) {
 
             $kode_dokter = $request->input('kode_dokter');
 
@@ -67,6 +67,7 @@ class VerifikasiPraBedahController extends Controller
             $statusBerkas = BookingHelper::getStatusBerkasVerifikasi($verifikasis);
 
             $statusVerifikasi = BookingHelper::getStatusVerifikasi($verifikasis);
+            // dd($verifikasis);
         }
 
         return view($this->view . 'verifikasi-prabedah.index', compact('verifikasis'))

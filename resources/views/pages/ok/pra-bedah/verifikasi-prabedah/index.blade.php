@@ -34,7 +34,7 @@
                     <form id="filterForm2" action="" method="GET">       
                         <div class="card-footer text-left">
                             <div class="row">
-                                @if (auth()->user()->hasRole('perawat poli') || auth()->user()->hasRole('perawat poli mata'))
+                                @if (auth()->user()->hasRole('perawat poli') || auth()->user()->hasRole('perawat poli mata') || auth()->user()->hasRole('perawat igd'))
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Pilih Dokter</label>
@@ -125,22 +125,26 @@
                                     @endif
                                     </td>
                                     <td>  
+                                        @if($verifikasi->tanggal == now()->format('Y-m-d'))
                                         <div class="dropdown d-inline">
                                             <a href="#" class="text-primary" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="fas fa-ellipsis-v"></i>
                                             </a>
                                             <div class="dropdown-menu">
                                                 {{-- Input --}}
-                                                @if (isset($statusVerifikasi[$verifikasi->kode_register]) && 
-                                                    array_filter($statusVerifikasi[$verifikasi->kode_register]))
-                                                    <a class="dropdown-item has-icon" href="{{ route('prabedah.verifikasi-prabedah.edit', $verifikasi->kode_register) }}">
-                                                        <i class="fas fa-edit"></i> Edit
-                                                    </a>
-                                                @else
-                                                    <a class="dropdown-item has-icon" href="{{ route('prabedah.verifikasi-prabedah.create', $verifikasi->kode_register) }}">
-                                                        <i class="fas fa-plus"></i> Tambah
-                                                    </a>
-                                                @endif
+                                               
+                                                    @if (isset($statusVerifikasi[$verifikasi->kode_register]) && 
+                                                        array_filter($statusVerifikasi[$verifikasi->kode_register]))
+                                                        <a class="dropdown-item has-icon" href="{{ route('prabedah.verifikasi-prabedah.edit', $verifikasi->kode_register) }}">
+                                                            <i class="fas fa-edit"></i> Edit
+                                                        </a>
+                                                    @else
+                                                        <a class="dropdown-item has-icon" href="{{ route('prabedah.verifikasi-prabedah.create', $verifikasi->kode_register) }}">
+                                                            <i class="fas fa-plus"></i> Tambah
+                                                        </a>
+                                                    @endif
+
+                                               
                                                 {{-- <a class="dropdown-item has-icon" href="{{ route('prabedah.verifikasi-prabedah.create',$verifikasi->kode_register)}}"> <i class="fas fa-plus"></i> Tambah</a>
                                                 <a class="dropdown-item has-icon" href="{{ route('prabedah.verifikasi-prabedah.edit',$verifikasi->kode_register)}}"> <i class="fas fa-plus"></i> Edit</a> --}}
                                                 {{-- @if (!$statusTtd)
@@ -150,6 +154,7 @@
                                                 @endif --}}
                                             </div>
                                         </div>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach

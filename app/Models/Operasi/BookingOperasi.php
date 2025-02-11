@@ -3,6 +3,7 @@
 namespace App\Models\Operasi;
 
 use App\Models\MasterData\TtdDokter;
+use App\Models\Operasi\PostOperasi\DataUmumPostOperasi;
 use App\Models\Simrs\Dokter;
 use App\Models\Simrs\Pendaftaran;
 use App\Models\User;
@@ -34,8 +35,6 @@ class BookingOperasi extends Model
     {
         return $this->belongsTo(RuanganOperasi::class);
     }
-    // Batas Relasi
-
 
     public function dokter()
     {

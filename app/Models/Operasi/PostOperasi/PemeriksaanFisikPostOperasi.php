@@ -2,8 +2,9 @@
 
 namespace App\Models\Operasi\PostOperasi;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Operasi\PostOperasi\DataUmumPostOperasi;
 
 class PemeriksaanFisikPostOperasi extends Model
 {
@@ -24,4 +25,9 @@ class PemeriksaanFisikPostOperasi extends Model
         'created_by',
         'updated_by'
     ];
+
+    public function postDataUmum()
+    {
+        return $this->belongsTo(DataUmumPostOperasi::class, 'kode_register', 'kode_register');
+    }
 }
