@@ -47,7 +47,7 @@ class ListPasienController extends Controller
             $statusPenandaan = BookingHelper::getStatusPenandaan($patients);
         } elseif ($user->hasRole('perawat ibs')) {
             $sessionIbs = auth()->user()->username ?? null;
-            $patients = $this->bookingOperasiService->byDateFormDokter($date, '',  '');
+            $patients = $this->bookingOperasiService->byDateFormIbsCadangan($date, '',  '');
             // dd($patients);
             $statusLaporanOperasi = LaporanOperasiHelper::getStatusLaporanOperasi($patients);
             // dd($patients);
