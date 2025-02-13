@@ -2,6 +2,7 @@
 
 namespace App\Models\Operasi\PostOperasi;
 
+use App\Models\User;
 use App\Models\Operasi\BookingOperasi;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Operasi\PreOperasi\DataUmumPreOperasi;
@@ -30,6 +31,11 @@ class DataUmumPostOperasi extends Model
         'created_by',
         'updated_by'
     ];
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'created_by');
+    }
 
     public function booking()
     {

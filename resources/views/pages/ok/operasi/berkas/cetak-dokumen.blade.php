@@ -116,9 +116,12 @@
             font-size: 14px;
             padding-left:10px;
         }
+        .text-1{
+            font-size: 14px;
+        }
 
         .checkbox {
-            top: 30px;
+            font-size: 15px;
         }
 
         td,
@@ -190,23 +193,37 @@
         </tr>
         <tr>
             <td colspan="2" style="padding-top:0;">
-                <label>Diagnosa :</label><br>
-                <label>Jenis Operasi :</label><br>
-                <label>Dokter Operator :</label><br>
-                <label>Puasa Jam :</label><br>
-                <label>Riwayat Asma : Ada <input type="checkbox"> Tidak <input type="checkbox"></label><br>
-                <label>Alergi :</label><br>
-                <label>Antibiotik Profilaksis :</label>
+                <label class="text-1">Diagnosa : {{ $cetak->diagnosa ?? ''}}</label> <label style="float:right;" class="text-1">TB : {{ $cetak->tinggi_badan ?? ''}}</label><br>
+                <label class="text-1">Jenis Operasi : {{ $cetak->jenis_operasi ?? ''}}</label> <label style="float:right;" class="text-1">BB : {{ $cetak->berat_badan ?? ''}}</label><br>
+                <label class="text-1">Dokter Operator :</label> <label style="float:right;">TD : {{ $cetak->tekanan_darah ?? ''}}</label><br>
+                <label class="text-1">Puasa Jam : {{ $cetak->puasa_jam ?? ''}}</label> <label style="float:right;" class="text-1">ND : {{ $cetak->nadi ?? ''}}</label><br>
+                <label class="text-1">Riwayat Asma : Ada <input type="checkbox" {{ optional($cetak)->riwayat_asma == '0' ? 'checked' : '' }}> Tidak <input type="checkbox" {{ optional($cetak)->riwayat_asma == '1' ? 'checked' : '' }}></label> <label style="float:right;" class="text-1">P : {{ $cetak->pernafasan ?? ''}}</label><br>
+                <label class="text-1">Alergi : {{ $cetak->alergi ?? ''}}</label> <label style="float:right;" class="text-1">SH : {{ $cetak->suhu ?? ''}}</label><br>
+                <label class="text-1">Antibiotik Profilaksis : {{ $cetak->antibiotik_profilaksis ?? ''}}</label><label style="float:right;" class="text-1">Jam : {{ $cetak->antibiotik_profilaksis_jam ?? ''}}</label>      
             </td>
             <td style="padding-top:0;">
-                <label>Diagnosa Pra Bedah :</label><br>
-                <label>Diagnosa Pasca Bedah :</label><br>
-                <label>Jenis Operasi :</label><br>
-                <label>Dokter Operator :</label><br>
-                <label>Asisten Bedah :</label><br>
-                <label>Jam Operasi :</label><br>
-                <label>Jenis Anestesi :</label><br>
-                <label>Asisten Anestesi :</label>
+                <label class="text-1">Diagnosa Pra Bedah : {{ $cetak->diagnosa_prabedah ?? ''}}</label><br>
+                <label class="text-1">Diagnosa Pasca Bedah : {{ $cetak->diagnosa_pascabedah ?? ''}}</label><br>
+                <label class="text-1">Jenis Operasi : {{ $cetak->jenis_operasi_post ?? ''}}</label>  <label class="text-1" style="padding-left: 15px;">Jam Operasi :</label><br>
+                <label class="text-1">Dokter Operator :  
+                    @foreach ($operators as $operator)
+                    {{ $operator }}
+                    @endforeach</label><br>
+                <label class="text-1">Asisten Bedah :  
+                    @foreach ($assistens as $asisten)
+                    {{ ucwords(strtolower(trim($asisten))) }}
+                    @endforeach
+                </label><br>
+                <label class="text-1">Jenis Anestesi :</label><br>
+                <label class="text-1">Dokter Anestesi :  
+                    @foreach ($dokters as $dokter)
+                    {{ $dokter }}
+                    @endforeach</label><br>
+                <label class="text-1">Asisten Anestesi :
+                    @foreach ($anastesis as $anastesi)
+                    {{ ucwords(strtolower(trim($anastesi))) }}
+                    @endforeach
+                </label>
             </td>
         </tr>
         <tr>
@@ -232,92 +249,92 @@
                         <tr>
                             <td class="tindakan">1</td>
                             <td class="tindakan">Melapor ke dokter bedah</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->lapor_dokter == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->lapor_dokter == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">2</td>
                             <td class="tindakan">Melapor ke kamar bedah</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->lapor_kamar == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->lapor_kamar == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">3</td>
                             <td class="tindakan">Mengisi surat izin pembedahan dan anestesi</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->surat_izin_pembedahan == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->surat_izin_pembedahan == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">4</td>
                             <td class="tindakan">Menandai daerah operasi</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->tandai_daerah_operasi == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->tandai_daerah_operasi == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">5</td>
                             <td class="tindakan">Memakai gelang identitas</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->memakai_gelang_identitas == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->memakai_gelang_identitas == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">6</td>
                             <td class="tindakan">Melepas Aksesoris</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->melepas_aksesoris == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->melepas_aksesoris == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">7</td>
                             <td class="tindakan">Menghapus lipstick,cat kuku</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->menghapus_aksesoris == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->menghapus_aksesoris == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">8</td>
                             <td class="tindakan">Melakukan oral hygiene</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->melakukan_oral_hygiene == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->melakukan_oral_hygiene == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">9</td>
                             <td class="tindakan">Memasang bidai, fiksasi leher</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->memasang_bidai == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->memasang_bidai == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">10</td>
                             <td class="tindakan">Memasang infuse</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->memasang_infuse == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->memasang_infuse == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">11</td>
                             <td class="tindakan">Memasang DC</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->memasang_dc == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->memasang_dc == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">12</td>
                             <td class="tindakan">Memasang NGT</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->memasang_ngt == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->memasang_ngt == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">13</td>
                             <td class="tindakan">Memasang drainage</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->memasang_drainage == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->memasang_drainage == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">14</td>
                             <td class="tindakan">Memasang WSD</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->memasang_wsd == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->memasang_wsd == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">15</td>
                             <td class="tindakan">Mencukur daerah operasi</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->mencukur_daerah_operasi == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->mencukur_daerah_operasi == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -334,47 +351,48 @@
                         <tr>
                             <td class="tindakan">1</td>
                             <td class="tindakan">DM</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"> <input type="checkbox" {{ optional($cetak)->penyakit_dm == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"> <input type="checkbox" {{ optional($cetak)->penyakit_dm == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">2</td>
                             <td class="tindakan">Hipertensi</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->penyakit_hipertensi == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->penyakit_hipertensi == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">3</td>
                             <td class="tindakan">TB Paru</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->penyakit_tb_paru == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->penyakit_tb_paru == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">4</td>
                             <td class="tindakan">HIV / AIDS</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->penyakit_hiv == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->penyakit_hiv == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">5</td>
                             <td class="tindakan">Hepatitis B-C-A</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->penyakit_hepatitis == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->penyakit_hepatitis == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                     </tbody>
                 </table>
-                <span>Premedikasi :</span><br>
-                <label>IVFD : tts/menis</label><br>
-                <label>DC No :</label><br>
-                <label>Yang disertakan dengan pasien :</label><br>
-                <label>Catatan medis :  <input type="checkbox" {{ optional($cetak)->ngt == '1' ? 'checked' : '' }} class="checkbox"> Asesmen Pra Bedah <br>
-                    <input type="checkbox" {{ optional($cetak)->drain == '1' ? 'checked' : '' }} class="checkbox"> Edukasi Anestesi <br>
-                    <input type="checkbox" {{ optional($cetak)->tampon_hidung == '1' ? 'checked' : '' }} class="checkbox"> Informed Consent Bedah & Anestesi
+                <label>Premedikasi : {{ $cetak->premedikasi ?? ''}} </label> <label style="padding-left:20px;">Jam : {{ $cetak->premedikasi_jam ?? ''}}</label><br>
+                <label>IVFD : {{ $cetak->ivfd ?? ''}} tts/menis</label>
+                <label style="padding-left:20px;">DC No : {{ $cetak->dc ?? ''}}</label><br>
+                <label>Catatan Medis :</label><br>
+                    <input type="checkbox" {{ optional($cetak)->assesmen_pra_bedah == '1' ? 'checked' : '' }} class="checkbox"> Asesmen Pra Bedah
+                    <input type="checkbox" {{ optional($cetak)->edukasi_anastesi == '1' ? 'checked' : '' }} class="checkbox"> Edukasi Anestesi <br>
+                    <input type="checkbox" {{ optional($cetak)->informed_consent_bedah == '1' ? 'checked' : '' }} class="checkbox"> Informed Consent Bedah
+                    <input type="checkbox" {{ optional($cetak)->informed_consent_anestesi == '1' ? 'checked' : '' }} class="checkbox"> Informed Consent Anestesi
                 </label><br>
-                <label>Darah : cc</label>
-                <label>Gol : </label><br>
-                <label>Obat : </label>
-                <label>Foto Rontgen : </label>
+                <label>Darah : {{ $cetak->darah ?? ''}} cc</label>
+                <label style="padding-left: 20px;">Gol : {{ $cetak->gol ?? ''}}</label><br>
+                <label>Obat : {{ $cetak->obat ?? ''}}</label>
+                <label style="padding-left: 30px;">Foto Rontgen : {{ $cetak->rontgen ?? ''}}</label>
             </td> 
             <td width="50%">
                 <table class="tindakan">
@@ -390,74 +408,74 @@
                         <tr>
                             <td class="tindakan">1</td>
                             <td class="tindakan">Status Pasien</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->status_pasien == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->status_pasien == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">2</td>
                             <td class="tindakan">Catatan anestesi</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->catatan_anestesi == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->catatan_anestesi == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">3</td>
                             <td class="tindakan">Laporan pembedahan</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->laporan_pembedahan == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->laporan_pembedahan == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">4</td>
                             <td class="tindakan">Perencanaa medis pasca bedah</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->perencanaan_pasca_medis == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->perencanaan_pasca_medis == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">5</td>
                             <td class="tindakan">Cheklist keselamatan pasien</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->checklist_keselamatan_pasien == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->checklist_keselamatan_pasien == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">6</td>
                             <td class="tindakan">Cheklist monitoring alat</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->checklist_monitoring == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->checklist_monitoring == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">7</td>
                             <td class="tindakan">Askep perioperatif</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->askep_perioperatif == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->askep_perioperatif == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">8</td>
                             <td class="tindakan">Lembar pemantauan pembedahan</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->lembar_pemantauan == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->lembar_pemantauan == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">9</td>
                             <td class="tindakan">Formulir pemeriksaan</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->formulir_pemeriksaan == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->formulir_pemeriksaan == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">10</td>
                             <td class="tindakan">Bahan/sampel pemeriksaan</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->sampel_pemeriksaan == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->sampel_pemeriksaan == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">11</td>
                             <td class="tindakan">Foto rontgen</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->foto_rontgen_post == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->foto_rontgen_post == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                         <tr>
                             <td class="tindakan">12</td>
                             <td class="tindakan">Resep</td>
-                            <td class="tindakan"></td>
-                            <td class="tindakan"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->resep == '1' ? 'checked' : '' }} class="checkbox"></td>
+                            <td class="tindakan"><input type="checkbox" {{ optional($cetak)->resep == '0' ? 'checked' : '' }} class="checkbox"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -472,11 +490,11 @@
                 <input type="checkbox" {{ optional($cetak)->kompres_luka == '1' ? 'checked' : '' }} class="checkbox"> Kompres Luka<br>
                 <input type="checkbox" {{ optional($cetak)->tampon_abdomen == '1' ? 'checked' : '' }} class="checkbox"> Tampon Abdomen
                 <input type="checkbox" {{ optional($cetak)->dc == '1' ? 'checked' : '' }} class="checkbox"> DC<br><br>
-                <label>Keadaan Umum : </label><br>
-                <label>Kesadaran : </label><br>
-                <label>TD : mmHg, ND : X/mnt</label><br>
-                <label>SH : mmHg, P : X/mnt</label><br>
-                <label>Intruksi Dokter bedah via lisan :</label><br>
+                <label>Keadaan Umum : {{ $cetak->keadaan_umum_post ?? ''}}</label><br>
+                <label>Kesadaran : {{ $cetak->kesadaran_post ?? ''}}</label><br>
+                <label>TD : {{ $cetak->tekanan_darah_post ?? ''}} mmHg,</label> <label style="padding-left: 20px;">ND : {{ $cetak->nadi_post ?? ''}} x/mnt</label><br>
+                <label>SH : {{ $cetak->suhu_post ?? ''}} mmHg,</label> <label style="padding-left: 20px;">P : {{ $cetak->pernafasan_post ?? ''}} x/mnt</label><br>
+                <label>Intruksi Dokter bedah via lisan : {{ $cetak->instruksi_dokter ?? ''}}</label><br>
             </td>
     </table>
     <table style="border: 1px solid black; border-top:none" width="100%">
@@ -487,16 +505,16 @@
             <td width="25%" class="text5"> Yang menyerahkan Petugas Anestesi</td>
         </tr>
         <tr>
-            <td width="25%" class="text5" style="padding-left: 60px;">{!! DNS2D::getBarcodeHTML($booking->nama_dokter, 'QRCODE', 2, 2) !!}</td>
-            <td width="25%" class="text5" style="padding-left: 80px;"> {!! DNS2D::getBarcodeHTML($booking->nama_pasien, 'QRCODE', 2, 2) !!}</td>
-            <td width="25%" class="text5" style="padding-left: 70px;">{!! DNS2D::getBarcodeHTML($booking->created_by, 'QRCODE', 2, 2) !!}</td>
-            <td width="25%" class="text5" style="padding-left: 70px;">{!! DNS2D::getBarcodeHTML($booking->created_by, 'QRCODE', 2, 2) !!}</td>
+            <td width="25%" class="text5" style="padding-left: 60px;">{!! DNS2D::getBarcodeHTML($cetak->created_by_post, 'QRCODE', 2, 2) !!}</td>
+            <td width="25%" class="text5" style="padding-left: 80px;"> {!! DNS2D::getBarcodeHTML($cetak->created_by_pre, 'QRCODE', 2, 2) !!}</td>
+            <td width="25%" class="text5" style="padding-left: 70px;">{!! DNS2D::getBarcodeHTML($cetak->created_by_pre, 'QRCODE', 2, 2) !!}</td>
+            <td width="25%" class="text5" style="padding-left: 70px;">{!! DNS2D::getBarcodeHTML($cetak->created_by_post, 'QRCODE', 2, 2) !!}</td>
         </tr>
         <tr>
-            <td width="25%" class="text5">({{ $booking->nama_dokter}})</td>
-            <td width="25%" class="text9">({{ $booking->nama_pasien}})</td>
-            <td width="25%" class="text5">({{ optional($cetak)->created_by ?? ''}})</td>
-            <td width="25%" class="text5">({{ optional($cetak)->created_by ?? ''}})</td>
+            <td width="25%" class="text5">({{ $cetak->created_by_post}})</td>
+            <td width="25%" class="text5">({{ $cetak->created_by_pre}})</td>
+            <td width="25%" class="text5">({{ optional($cetak)->created_by_pre ?? ''}})</td>
+            <td width="25%" class="text5">({{ optional($cetak)->created_by_post ?? ''}})</td>
         </tr>
     </table>
 </body>

@@ -7,9 +7,12 @@ use Illuminate\Http\Request;
 use App\Helpers\BookingHelper;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
+use App\Models\Operasi\OperatorAsistenDetail;
+use App\Models\Operasi\PostOperasi\DataUmumPostOperasi;
 use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\DataUmum\PreOperasiService;
 use App\Services\Operasi\DataUmum\PostOperasiService;
+use App\Services\Operasi\LaporanOperasi\LaporanOperasiService;
 
 class BerkasPrePostController extends Controller
 {
@@ -19,6 +22,7 @@ class BerkasPrePostController extends Controller
     protected $bookingOperasiService;
     protected $preOperasiService;
     protected $postOperasiService;
+    protected $laporanOperasiService;
 
     public function __construct()
     {
@@ -27,6 +31,7 @@ class BerkasPrePostController extends Controller
         $this->bookingOperasiService = new BookingOperasiService();
         $this->preOperasiService = new PreOperasiService();
         $this->postOperasiService = new PostOperasiService();
+        $this->laporanOperasiService = new LaporanOperasiService();
     }
 
     public function index()
@@ -60,6 +65,21 @@ class BerkasPrePostController extends Controller
         $biodataPasien = $this->bookingOperasiService->biodata($kode_register);
         $pasien = $biodataPasien->pendaftaran->registerPasien;
 
+        // ambil data field assisten code
+        $perawatByReg = DataUmumPostOperasi::where('kode_register', $kode_register)->first()->toArray();
+        // dd($perawatByReg);
+        // Dokter Operator
+        $operatorCodes = explode(', ', $perawatByReg["dokter_operator"]);
+        $operators =  $this->laporanOperasiService->getNameAssistenByCodes($operatorCodes);
+        // Asisten Bedah
+        $asistenCodes = explode(', ', $perawatByReg["asisten_bedah"]);
+        $assistens =  $this->laporanOperasiService->getNameAssistenByCodes($asistenCodes);
+        // Dokter Anastesi
+        $dokterCodes = explode(', ', $perawatByReg["dokter_anastesi"]);
+        $dokters =  $this->laporanOperasiService->getNameAssistenByCodes($dokterCodes);
+        // Perawat Anastesi
+        $anastesiCodes = explode(', ', $perawatByReg["asisten_anastesi"]);
+        $anastesis =  $this->laporanOperasiService->getNameAssistenByCodes($anastesiCodes);
         // dd($cetakBerkas);
 
         $date = date('dMY');
@@ -71,7 +91,11 @@ class BerkasPrePostController extends Controller
             'pasien' => $pasien,
             'booking' => $booking,
             'title' => $title,
-            'tanggal' => $tanggal
+            'tanggal' => $tanggal,
+            'operators' => $operators,
+            'assistens' => $assistens,
+            'dokters' => $dokters,
+            'anastesis' => $anastesis,
         ]);
         // Set paper size to A5
         $pdf->setPaper('A4');
