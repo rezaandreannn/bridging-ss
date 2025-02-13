@@ -3,6 +3,7 @@
 use App\Models\Fisioterapi;
 use App\Models\Simrs\Icd10;
 use App\Models\Simrs\Antrean;
+use App\Models\Simrs\Pendaftaran;
 use App\Models\Simrs\TrBiayaRinci;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
@@ -14,6 +15,7 @@ use App\Http\Controllers\Fisio\FisioController;
 use App\Http\Controllers\Manage\RoleController;
 use App\Http\Controllers\Manage\UserController;
 use App\Http\Controllers\TandaTanganController;
+use App\Services\Operasi\BookingOperasiService;
 use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\Rj\RawatJalanController;
 use App\Http\Controllers\IGD\Layanan\EwsController;
@@ -39,6 +41,7 @@ use App\Http\Controllers\Fisio\InformedConcentController;
 use App\Http\Controllers\Kunjungan\PendaftaranController;
 use App\Http\Controllers\MasterData\JenisFisioController;
 use App\Http\Controllers\MasterData\TtdPerawatController;
+use App\Services\Operasi\PraBedah\AssesmenPraBedahService;
 use App\Http\Controllers\Farmasi\MasterDataAlkesController;
 use App\Http\Controllers\MasterData\OrganizationController;
 use App\Http\Controllers\profileUser\ProfileUserController;
@@ -46,6 +49,8 @@ use App\Http\Controllers\Berkas\igd\RekamMedisIgdController;
 use App\Http\Controllers\Fisio\Berkas\BerkasFisioController;
 use App\Http\Controllers\Manage\RoleHasPermissionController;
 use App\Http\Controllers\Mapping\MappingEncounterController;
+use App\Http\Controllers\RiwayatMedis\BerkasMedisController;
+use App\Http\Controllers\RiwayatMedis\BerkasOperasiController;
 use App\Http\Controllers\Fisio\Dokter\AssesmenDokterController;
 use App\Http\Controllers\Fisio\MasterData\KesimpulanController;
 use App\Http\Controllers\RawatJalan\Perawat\AssesmenController;
@@ -64,9 +69,6 @@ use App\Http\Controllers\Poli\Mata\MasterData\PenyakitSekarangController;
 use App\Http\Controllers\Berkas\Rekam_medis_by_mr\RekamMedisByMrController;
 use App\Http\Controllers\Berkas\Rekam_medis_harian\RekamMedisHarianController;
 use App\Http\Controllers\IGD\Layanan\AssesmenController as LayananAssesmenController;
-use App\Models\Simrs\Pendaftaran;
-use App\Services\Operasi\BookingOperasiService;
-use App\Services\Operasi\PraBedah\AssesmenPraBedahService;
 
 /*
 |--------------------------------------------------------------------------
@@ -86,6 +88,10 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('riwayat-medis/operasi', [BerkasOperasiController::class, 'index'])->name('berkas-operasi.index');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
