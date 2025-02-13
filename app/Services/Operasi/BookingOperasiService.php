@@ -186,25 +186,33 @@ class BookingOperasiService
                     return empty($ruang) && ($statusAktif);
                 }
             });
-        } else if (!empty($kodeDokter)) {
+        } else {
             $bookings = BookingOperasi::with([
                 'pendaftaran.registerPasien',
+                'pendaftaran.ruang.bangsal',
                 'dokter',
             ])->get();
 
             $filtered = $bookings->filter(function ($booking) use ($date, $kodeDokter) {
-                $dokter = $booking->kode_dokter;
+                  // looping filter
+                  $tanggal = $booking->tanggal;
+                  
+                  // looping filter   
+                //   dd($kodedokter);
 
-                if ($kodeDokter != null) {
-
-                    if ((string) $dokter ===  $kodeDokter) {
+                    if ((string) $tanggal ===  $date) {
+                        if(!empty($kodeDokter)){
+                            $kodedokter = $booking->kode_dokter;
+                            $statusAktif = $booking->pendaftaran->Status == '1';
+                            $tanggal = $booking->tanggal;
+                            return $kodedokter == $kodeDokter && $statusAktif;
+                        }
                         $statusAktif = $booking->pendaftaran->Status == '1';
-                        $tanggal = $booking->tanggal;
-                        return $tanggal && $tanggal == $date && $statusAktif;
+                        return $tanggal && $statusAktif;
                     }
-                }
+        
             });
-        }
+        } 
         return $this->mapData($filtered);
     }
 

@@ -67,7 +67,8 @@ class PerencanaanPascaBedahController extends Controller
     public function index(Request $request)
     {
         $title = $this->prefix . ' ' . 'List';
-        $date = date('Y-m-d');
+        $date = date('Y-m-d'); 
+    
         if ($request->input('tanggal') != null) {
             $date = $request->input('tanggal');
         }
@@ -85,9 +86,17 @@ class PerencanaanPascaBedahController extends Controller
             }
         } elseif ($user->hasRole('perawat bangsal')) {
             $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
-
             // Ambil pasien dokter
             $pascaBedah = $this->bookingOperasiService->byPasienAktif($date, $sessionBangsal);
+            $statusPascaBedah = PascaBedahHelper::getStatusPascaBedah($pascaBedah);
+            // dd($pascaBedah);
+        } 
+        else {
+            $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
+            // Ambil pasien dokter
+            $kodeDokter = $request->input('kode_dokter');
+            // dd($kodeDokter);
+            $pascaBedah = $this->bookingOperasiService->byPasienAktif($date, $sessionBangsal, $kodeDokter);
             $statusPascaBedah = PascaBedahHelper::getStatusPascaBedah($pascaBedah);
             // dd($pascaBedah);
         }
