@@ -40,14 +40,14 @@ class ListPasienController extends Controller
                 ->first();
 
             // Ambil pasien dokter
-            $patients = $this->bookingOperasiService->byDateFormDokter($date, $sessionKodeDokter ?? '');
+            $patients = $this->bookingOperasiService->byDateFormDokterCadangan($date, $sessionKodeDokter ?? '');
             // dd($patients);
             $statusLaporanOperasi = LaporanOperasiHelper::getStatusLaporanOperasi($patients);
             $statusPascaBedah = PascaBedahHelper::getStatusPascaBedah($patients);
             $statusPenandaan = BookingHelper::getStatusPenandaan($patients);
         } elseif ($user->hasRole('perawat ibs')) {
             $sessionIbs = auth()->user()->username ?? null;
-            $patients = $this->bookingOperasiService->byDateFormDokter($date, '',  '');
+            $patients = $this->bookingOperasiService->byDateFormIbsCadangan($date, '',  '');
             // dd($patients);
             $statusLaporanOperasi = LaporanOperasiHelper::getStatusLaporanOperasi($patients);
             // dd($patients);
