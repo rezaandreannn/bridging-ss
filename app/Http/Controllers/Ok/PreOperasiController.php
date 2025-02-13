@@ -40,10 +40,13 @@ class PreOperasiController extends Controller
 
         $statusPre = BookingHelper::getStatusPreOperasi($preOperasi);
 
+        $verifikasiPre = BookingHelper::getVerifikasiPreOperasi($preOperasi);
+
         return view($this->view . 'index', compact('preOperasi'))
             ->with([
                 'title' => $title,
                 'statusPre' => $statusPre,
+                'verifikasiPre' => $verifikasiPre,
             ]);
     }
 

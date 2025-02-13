@@ -141,7 +141,12 @@ class PostOperasiService
                     'gol',
                     'obat',
                     'rontgen',
-                );
+                    'created_by'
+                )->with([
+                    'user' => function ($query) {
+                        $query->select('id', 'name');
+                    }
+                ]);
             },
 
             'booking' => function ($query) {
@@ -170,13 +175,17 @@ class PostOperasiService
                 'kode_register' => $result->kode_register,
                 'diagnosa_prabedah' => $result->diagnosa_prabedah,
                 'diagnosa_pascabedah' => $result->diagnosa_pascabedah,
-                'jenis_operasi' => $result->jenis_operasi,
+                'jenis_operasi_post' => $result->jenis_operasi,
                 'dokter_operator' => $result->dokter_operator,
                 'asisten_bedah' => $result->asisten_bedah,
                 'jam_operasi' => $result->jam_operasi,
                 'jenis_anastesi' => $result->jenis_anastesi,
                 'dokter_anastesi' => $result->dokter_anastesi,
                 'asisten_anastesi' => $result->asisten_anastesi,
+                'created_by_post' => $result->created_by,
+                'created_by_post' => $result->user->id > 0
+                    ? $result->user->name
+                    : NULL,
                 'no_mr' => optional($result->booking->pendaftaran)->No_MR,
                 'nama_pasien' => optional($result->booking->pendaftaran->registerPasien)->Nama_Pasien,
                 'tanggal_lahir' => optional($result->booking->pendaftaran->registerPasien)->TGL_LAHIR,
@@ -193,7 +202,7 @@ class PostOperasiService
                 'lembar_pemantauan' => optional($result->postTindakan)->lembar_pemantauan,
                 'formulir_pemeriksaan' => optional($result->postTindakan)->formulir_pemeriksaan,
                 'sampel_pemeriksaan' => optional($result->postTindakan)->sampel_pemeriksaan,
-                'foto_rontgen' => optional($result->postTindakan)->foto_rontgen,
+                'foto_rontgen_post' => optional($result->postTindakan)->foto_rontgen,
                 'resep' => optional($result->postTindakan)->resep,
                 'lainnya' => optional($result->postTindakan)->lainnya,
                 'deskripsi_lainnya' => optional($result->postTindakan)->deskripsi_lainnya,
@@ -205,19 +214,19 @@ class PostOperasiService
                 'tampon_abdomen' => optional($result->postAlat)->tampon_abdomen,
                 'tampon_vagina' => optional($result->postAlat)->tampon_vagina,
                 'tranfusi' => optional($result->postAlat)->tranfusi,
-                'ivfd' => optional($result->postAlat)->ivfd,
-                'deskripsi_ivfd' => optional($result->postAlat)->deskripsi_ivfd,
+                'ivfd_post' => optional($result->postAlat)->ivfd,
+                'deskripsi_ivfd_post' => optional($result->postAlat)->deskripsi_ivfd,
                 'kompres_luka' => optional($result->postAlat)->kompres_luka,
-                'dc' => optional($result->postAlat)->dc,
+                'dc_post' => optional($result->postAlat)->dc,
                 'lainnya' => optional($result->postAlat)->lainnya,
                 'deskripsi_lainnya' => optional($result->postAlat)->deskripsi_lainnya,
                 // Post Pemeriksaan Fisik
-                'keadaan_umum' => optional($result->postPemeriksaanFisik)->keadaan_umum,
-                'kesadaran' => optional($result->postPemeriksaanFisik)->kesadaran,
-                'tekanan_darah' => optional($result->postPemeriksaanFisik)->tekanan_darah,
-                'nadi' => optional($result->postPemeriksaanFisik)->nadi,
-                'suhu' => optional($result->postPemeriksaanFisik)->suhu,
-                'pernafasan' => optional($result->postPemeriksaanFisik)->pernafasan,
+                'keadaan_umum_post' => optional($result->postPemeriksaanFisik)->keadaan_umum,
+                'kesadaran_post' => optional($result->postPemeriksaanFisik)->kesadaran,
+                'tekanan_darah_post' => optional($result->postPemeriksaanFisik)->tekanan_darah,
+                'nadi_post' => optional($result->postPemeriksaanFisik)->nadi,
+                'suhu_post' => optional($result->postPemeriksaanFisik)->suhu,
+                'pernafasan_post' => optional($result->postPemeriksaanFisik)->pernafasan,
                 'instruksi_dokter' => optional($result->postPemeriksaanFisik)->instruksi_dokter,
                 // Pre Tindakan
                 'lapor_dokter' => optional($result->preTindakan)->lapor_dokter,
@@ -252,7 +261,10 @@ class PostOperasiService
                 'suhu' => optional($result->prePemeriksaanFisik)->suhu,
                 'pernafasan' => optional($result->prePemeriksaanFisik)->pernafasan,
                 // Pre Data Umum
-                'radiologi' => optional($result->preDataUmum)->diagnosa,
+                'diagnosa' => optional($result->preDataUmum)->diagnosa,
+                'created_by_pre' => optional(optional($result->preDataUmum)->user)->id > 0
+                    ? optional($result->preDataUmum->user)->name
+                    : NULL,
                 'jenis_operasi' => optional($result->preDataUmum)->jenis_operasi,
                 'nama_operator' => optional($result->preDataUmum)->nama_operator,
                 'deskripsi' => optional($result->preDataUmum)->deskripsi,

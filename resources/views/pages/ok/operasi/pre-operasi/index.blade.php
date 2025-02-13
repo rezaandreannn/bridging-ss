@@ -42,6 +42,7 @@
                                             <th scope="col">No MR</th>
                                             <th scope="col">Nama Dokter</th>
                                             <th scope="col">Status</th>
+                                            <th scope="col">Verifikasi</th>
                                             <th scope="col">Aksi</th>
                                         </tr>
                                     </thead>
@@ -57,6 +58,13 @@
                                             <td>
                                                 @if (isset($statusPre[$booking->kode_register]) && array_filter($statusPre[$booking->kode_register]))
                                                 <span class="badge badge-success">Sudah</span>
+                                                @else
+                                                <span class="badge badge-danger">Belum</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if (isset($verifikasiPre[$booking->kode_register]) && array_filter($verifikasiPre[$booking->kode_register]))
+                                                <span class="badge badge-success">Verif</span>
                                                 @else
                                                 <span class="badge badge-danger">Belum</span>
                                                 @endif
@@ -78,6 +86,10 @@
                                                             <i class="fas fa-pencil-alt"></i> Tambah
                                                         </a>
                                                         @endif
+                                                       
+                                                        <a class="dropdown-item has-icon" href="#">
+                                                            <i class="fas fa-edit"></i> Verifkasi
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </td>
