@@ -15,12 +15,9 @@
             text-align: center;
         }
 
-        .text-3 {
-            margin-bottom: 10px;
-        }
-
         .text5 {
             font-size: 15px;
+            padding: 0;
             text-align: center;
         }
 
@@ -110,26 +107,18 @@
         }
         .judul-tindakan {
             padding: 0;
-            font-size: 14px;
+            font-size: 12px;
             text-align: center;
             font-weight: bold;
         }
         .tindakan {
             padding: 0;
-            font-size: 18px;
+            font-size: 14px;
             padding-left:10px;
         }
 
         .checkbox {
-            margin-right: 3px;
-        }
-
-        .area-1 {
-            height: 80px;
-            width: 300px;
-            font-family: Arial, Helvetica, sans-serif;
-            border:none;
-            font-size: 12px;
+            top: 30px;
         }
 
         td,
@@ -200,7 +189,7 @@
             <td colspan="3" class="section-title">DATA UMUM PASIEN PRE DAN POST OPERASI</td>
         </tr>
         <tr>
-            <td colspan="2">
+            <td colspan="2" style="padding-top:0;">
                 <label>Diagnosa :</label><br>
                 <label>Jenis Operasi :</label><br>
                 <label>Dokter Operator :</label><br>
@@ -209,7 +198,7 @@
                 <label>Alergi :</label><br>
                 <label>Antibiotik Profilaksis :</label>
             </td>
-            <td>
+            <td style="padding-top:0;">
                 <label>Diagnosa Pra Bedah :</label><br>
                 <label>Diagnosa Pasca Bedah :</label><br>
                 <label>Jenis Operasi :</label><br>
@@ -377,6 +366,11 @@
                 <span>Premedikasi :</span><br>
                 <label>IVFD : tts/menis</label><br>
                 <label>DC No :</label><br>
+                <label>Yang disertakan dengan pasien :</label><br>
+                <label>Catatan medis :  <input type="checkbox" {{ optional($cetak)->ngt == '1' ? 'checked' : '' }} class="checkbox"> Asesmen Pra Bedah <br>
+                    <input type="checkbox" {{ optional($cetak)->drain == '1' ? 'checked' : '' }} class="checkbox"> Edukasi Anestesi <br>
+                    <input type="checkbox" {{ optional($cetak)->tampon_hidung == '1' ? 'checked' : '' }} class="checkbox"> Informed Consent Bedah & Anestesi
+                </label><br>
                 <label>Darah : cc</label>
                 <label>Gol : </label><br>
                 <label>Obat : </label>
@@ -468,42 +462,41 @@
                     </tbody>
                 </table>
                 <span>Terpasang :</span><br>
-                <div style="display: flex; gap: 20px;">
-                    <!-- Bagian 1 -->
-                    <div>
-                        <input type="checkbox" {{ optional($cetak)->ngt == '1' ? 'checked' : '' }} class="checkbox"> NGT<br>
-                        <input type="checkbox" {{ optional($cetak)->drain == '1' ? 'checked' : '' }} class="checkbox"> Drain<br>
-                        <input type="checkbox" {{ optional($cetak)->tampon_hidung == '1' ? 'checked' : '' }} class="checkbox"> Tampon Hidung<br>
-                        <input type="checkbox" {{ optional($cetak)->tampon_gigi == '1' ? 'checked' : '' }} class="checkbox"> Tampon Gigi<br>
-                        <input type="checkbox" {{ optional($cetak)->tampon_abdomen == '1' ? 'checked' : '' }} class="checkbox"> Tampon Abdomen<br>
-                    </div>
-                
-                    <!-- Bagian 2 -->
-                    <div>
-                        <input type="checkbox" {{ optional($cetak)->tampon_vagina == '1' ? 'checked' : '' }} class="checkbox"> Tampon Vagina<br>
-                        <input type="checkbox" {{ optional($cetak)->tranfusi == '1' ? 'checked' : '' }} class="checkbox"> Tranfusi<br>
-                        <input type="checkbox" {{ optional($cetak)->ivfd == '1' ? 'checked' : '' }} class="checkbox"> IVFD<br>
-                        <input type="checkbox" {{ optional($cetak)->kompres_luka == '1' ? 'checked' : '' }} class="checkbox"> Kompres Luka<br>
-                        <input type="checkbox" {{ optional($cetak)->dc == '1' ? 'checked' : '' }} class="checkbox"> DC<br>
-                    </div>
-                </div>
+                <input type="checkbox" {{ optional($cetak)->ngt == '1' ? 'checked' : '' }} class="checkbox"> NGT
+                <input type="checkbox" {{ optional($cetak)->tampon_vagina == '1' ? 'checked' : '' }} class="checkbox"> Tampon Vagina<br>
+                <input type="checkbox" {{ optional($cetak)->drain == '1' ? 'checked' : '' }} class="checkbox"> Drain
+                <input type="checkbox" {{ optional($cetak)->tranfusi == '1' ? 'checked' : '' }} class="checkbox"> Tranfusi<br>
+                <input type="checkbox" {{ optional($cetak)->tampon_hidung == '1' ? 'checked' : '' }} class="checkbox"> Tampon Hidung
+                <input type="checkbox" {{ optional($cetak)->ivfd == '1' ? 'checked' : '' }} class="checkbox"> IVFD<br>
+                <input type="checkbox" {{ optional($cetak)->tampon_gigi == '1' ? 'checked' : '' }} class="checkbox"> Tampon Gigi
+                <input type="checkbox" {{ optional($cetak)->kompres_luka == '1' ? 'checked' : '' }} class="checkbox"> Kompres Luka<br>
+                <input type="checkbox" {{ optional($cetak)->tampon_abdomen == '1' ? 'checked' : '' }} class="checkbox"> Tampon Abdomen
+                <input type="checkbox" {{ optional($cetak)->dc == '1' ? 'checked' : '' }} class="checkbox"> DC<br><br>
+                <label>Keadaan Umum : </label><br>
+                <label>Kesadaran : </label><br>
+                <label>TD : mmHg, ND : X/mnt</label><br>
+                <label>SH : mmHg, P : X/mnt</label><br>
+                <label>Intruksi Dokter bedah via lisan :</label><br>
             </td>
     </table>
     <table style="border: 1px solid black; border-top:none" width="100%">
         <tr>
-            <td width="30%" class="text5"> Tanda Tangan Dokter Operator</td>
-            <td width="40%" class="text5"> Tanda Tangan Pasien/Keluarga</td>
-            <td width="30%" class="text5"> Tanda Tangan Perawat</td>
+            <td width="25%" class="text5"> Yang menerima Petugas Anestesi</td>
+            <td width="25%" class="text5"> Yang menyerahkan Petugas Ruangan</td>
+            <td width="25%" class="text5"> Yang menerima Petugas Ruangan</td>
+            <td width="25%" class="text5"> Yang menyerahkan Petugas Anestesi</td>
         </tr>
         <tr>
-            <td width="30%" class="text5" style="padding-left: 60px;">{!! DNS2D::getBarcodeHTML($booking->nama_dokter, 'QRCODE', 3, 3) !!}</td>
-            <td width="40%" class="text5" style="padding-left: 80px;"> {!! DNS2D::getBarcodeHTML($booking->nama_pasien, 'QRCODE', 3, 3) !!}</td>
-            <td width="30%" class="text5" style="padding-left: 70px;">{!! DNS2D::getBarcodeHTML($booking->created_by, 'QRCODE', 3, 3) !!}</td>
+            <td width="25%" class="text5" style="padding-left: 60px;">{!! DNS2D::getBarcodeHTML($booking->nama_dokter, 'QRCODE', 2, 2) !!}</td>
+            <td width="25%" class="text5" style="padding-left: 80px;"> {!! DNS2D::getBarcodeHTML($booking->nama_pasien, 'QRCODE', 2, 2) !!}</td>
+            <td width="25%" class="text5" style="padding-left: 70px;">{!! DNS2D::getBarcodeHTML($booking->created_by, 'QRCODE', 2, 2) !!}</td>
+            <td width="25%" class="text5" style="padding-left: 70px;">{!! DNS2D::getBarcodeHTML($booking->created_by, 'QRCODE', 2, 2) !!}</td>
         </tr>
         <tr>
-            <td width="30%" class="text5">({{ $booking->nama_dokter}})</td>
-            <td width="40%" class="text9">({{ $booking->nama_pasien}})</td>
-            <td width="30%" class="text5">({{ optional($cetak)->created_by ?? ''}})</td>
+            <td width="25%" class="text5">({{ $booking->nama_dokter}})</td>
+            <td width="25%" class="text9">({{ $booking->nama_pasien}})</td>
+            <td width="25%" class="text5">({{ optional($cetak)->created_by ?? ''}})</td>
+            <td width="25%" class="text5">({{ optional($cetak)->created_by ?? ''}})</td>
         </tr>
     </table>
 </body>
