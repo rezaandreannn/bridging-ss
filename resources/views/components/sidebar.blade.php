@@ -17,6 +17,19 @@
             @endcan --}}
             {{-- booking operasi --}}
             @endcan
+            @can('riwayat medis')
+            <li class="nav-item dropdown {{ Request::is('riwayat-medis*') ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-notes-medical"></i> <span>Riwayat Medis</span></a>
+                @can('Riwayat Berkas Operasi')
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('riwayat-medis/operasi*') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('berkas-operasi.index') }}">Berkas Operasi</a>
+                    </li>
+                </ul>
+                @endcan
+            </li>
+            @endcan
+
             <!-- <li class="menu-header">RSUMM</li> -->
             @can('master data')
             <li class="menu-header">Master Data</li>
@@ -178,14 +191,14 @@
                         <a class="nav-link" href="{{ route('poliMata.refraksi') }}">Refraksi Optisi</a>
                     </li>
                 </ul>
-                @endcan 
+                @endcan
                 @can('poliklinik mata refraksi optisi2')
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('pm/polimata/refraksi2*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('poliMata.refraksi') }}">Refraksi Optisi Lama</a>
                     </li>
                 </ul>
-                @endcan 
+                @endcan
                 @can('poliklinik mata assesmen dokter')
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('pm/polimata/dokter*') ? 'active' : '' }}">
@@ -412,14 +425,14 @@
             {{-- belum clear --}}
             {{-- @can('pasca bedah')
             <li class="nav-item dropdown  {{ Request::is('pascabedah/*') ? 'active' : '' }}">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-bed-pulse"></i> <span>Pasca Bedah</span></a>
-                @can('perencanaan pasca bedah')
-                <ul class="dropdown-menu">
-                    <li class="{{ Request::is('pascabedah/perencanaan-pascabedah*') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('pascabedah.perencanaan-pascabedah.index')}}">Perencanaan Pasca Bedah</a>
-                    </li>
-                </ul>
-                @endcan
+            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-bed-pulse"></i> <span>Pasca Bedah</span></a>
+            @can('perencanaan pasca bedah')
+            <ul class="dropdown-menu">
+                <li class="{{ Request::is('pascabedah/perencanaan-pascabedah*') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('pascabedah.perencanaan-pascabedah.index')}}">Perencanaan Pasca Bedah</a>
+                </li>
+            </ul>
+            @endcan
             </li>
             @endcan --}}
 
@@ -684,22 +697,9 @@
                 </ul>
             </li>
             @endcan
-            {{-- <li class="menu-header">Docs</li>
-            <li class="nav-item dropdown  {{ Request::is('dc*') ? 'active' : '' }}">
-            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-rocket"></i><span>Terminology</span></a>
-            <ul class="dropdown-menu">
-                <li class="{{ Request::is('dc/docs-location') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('docs.location') }}">Location</a>
-                </li>
-                <li class="{{ Request::is('dc/docs-organization') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('docs.organization') }}">Organization</a>
-                </li>
-                <li class="{{ Request::is('dc/docs-encounter') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('docs.encounter') }}">Encounter</a>
-                </li>
-            </ul>
-            </li> --}}
+
         </ul>
+
 
         <div class="hide-sidebar-mini mt-4 mb-4 p-3">
 

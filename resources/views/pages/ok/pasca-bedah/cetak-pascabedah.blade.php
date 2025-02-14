@@ -235,7 +235,7 @@
         </tr>
         <tr>
             <td width="30%" class="text5" style="border:none;"></td>
-            <td width="40%" class="text9" style="border:none;">({{ $cetak->nama_dokter}})</td>
+            <td width="40%" class="text5" style="border:none;">({{ $cetak->nama_dokter}})</td>
             <td width="30%" class="text5" style="border:none;"></td>
         </tr>
     </table>

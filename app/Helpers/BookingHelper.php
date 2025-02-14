@@ -2,27 +2,29 @@
 
 namespace App\Helpers;
 
+use App\Models\Simrs\Pendaftaran;
 use App\Models\MasterData\TtdPerawat;
-use App\Models\Operasi\ChecklistPembedahan\SignIn;
-use App\Models\Operasi\ChecklistPembedahan\SignOut;
 use App\Models\Operasi\LaporanOperasi;
 use App\Models\Operasi\TtdTandaOperasi;
 use App\Models\Operasi\PenandaanOperasi;
 use App\Models\Operasi\PraBedah\AssesmenPraBedah;
+use App\Models\Operasi\ChecklistPembedahan\SignIn;
+use App\Models\Operasi\ChecklistPembedahan\SignOut;
 use App\Models\Operasi\PostOperasi\AlatPostOperasi;
+use App\Models\Operasi\PreOperasi\DataUmumPreOperasi;
+use App\Models\Operasi\PreOperasi\TindakanPreOperasi;
 use App\Models\Operasi\PraBedah\VerifikasiPraBedahEkg;
 use App\Models\Operasi\PraBedah\VerifikasiPraBedahLab;
 use App\Models\Operasi\PostOperasi\TindakanPostOperasi;
 use App\Models\Operasi\PraBedah\VerifikasiPraBedahObat;
+use App\Models\Operasi\PreOperasi\VerifikasiPreOperasi;
 use App\Models\Operasi\PraBedah\VerifikasiPraBedahDarah;
+use App\Models\Operasi\PostOperasi\VerifikasiPostOperasi;
 use App\Models\Operasi\PraBedah\VerifikasiPraBedahBerkas;
 use App\Models\Operasi\PraBedah\VerifikasiPraBedahRontgen;
-use App\Models\Operasi\PostOperasi\PemeriksaanFisikPostOperasi;
 use App\Models\Operasi\PraBedah\VerifikasiPraBedahRadiologi;
-use App\Models\Operasi\PreOperasi\DataUmumPreOperasi;
 use App\Models\Operasi\PreOperasi\PemeriksaanFisikPreOperasi;
-use App\Models\Operasi\PreOperasi\TindakanPreOperasi;
-use App\Models\Simrs\Pendaftaran;
+use App\Models\Operasi\PostOperasi\PemeriksaanFisikPostOperasi;
 
 class BookingHelper
 {
@@ -150,6 +152,7 @@ class BookingHelper
         return $statusVerifikasi;
     }
 
+    // Status Verifikasi Pra Bedah
     public static function getStatusVerifikasi($verifikasis)
     {
         $statusVerifikasi = [];
@@ -172,6 +175,8 @@ class BookingHelper
         return $statusVerifikasi;
     }
 
+
+    // Status Post Operasi
     public static function getStatusPostOperasi($postOperasi)
     {
         $statusPostOperasi = [];
@@ -191,6 +196,7 @@ class BookingHelper
         return $statusPostOperasi;
     }
 
+    // Status Pre Operasi
     public static function getStatusPreOperasi($postOperasi)
     {
         $statusPreOperasi = [];
@@ -210,6 +216,44 @@ class BookingHelper
         return $statusPreOperasi;
     }
 
+    // Verifikasi Pre Operasi
+    public static function getVerifikasiPreOperasi($verifikasiPre)
+    {
+        $verifikasiPreOperasi = [];
+
+        foreach ($verifikasiPre as $pre) {
+            $kodeRegister = $pre->kode_register;
+
+            $status = [
+                'verifikasi' => VerifikasiPreOperasi::where('kode_register', $kodeRegister)->first(),
+            ];
+
+            $verifikasiPreOperasi[$kodeRegister] = $status;
+        }
+
+        return $verifikasiPreOperasi;
+    }
+
+    // Verifikasi Post Operasi
+    public static function getVerifikasiPostOperasi($verifikasiPost)
+    {
+        $verifikasiPostOperasi = [];
+
+        foreach ($verifikasiPost as $post) {
+            $kodeRegister = $post->kode_register;
+
+            $status = [
+                'verifikasi' => VerifikasiPostOperasi::where('kode_register', $kodeRegister)->first(),
+            ];
+
+            $verifikasiPostOperasi[$kodeRegister] = $status;
+        }
+
+        return $verifikasiPostOperasi;
+    }
+
+
+    // Status Berkas Pre Post
     public static function getStatusPrePostOperasi($prePost)
     {
         $statusPrePostOperasi = [];
