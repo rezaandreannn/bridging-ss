@@ -13,6 +13,8 @@ class VerifikasiPreOperasi extends Model
     protected $connection = 'pku';
     protected $table = 'ok_verifikasi_anastesi_pre_op';
 
+    protected $with = ['user'];
+
     protected $fillable = [
         'kode_register',
         'user_id',

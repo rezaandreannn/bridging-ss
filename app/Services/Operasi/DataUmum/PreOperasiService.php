@@ -5,11 +5,12 @@ namespace App\Services\Operasi\DataUmum;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use App\Models\Operasi\PostOperasi\AlatPostOperasi;
+use App\Models\Operasi\PreOperasi\DataUmumPreOperasi;
 use App\Models\Operasi\PreOperasi\TindakanPreOperasi;
 use App\Models\Operasi\PostOperasi\TindakanPostOperasi;
-use App\Models\Operasi\PostOperasi\PemeriksaanFisikPostOperasi;
-use App\Models\Operasi\PreOperasi\DataUmumPreOperasi;
+use App\Models\Operasi\PreOperasi\VerifikasiPreOperasi;
 use App\Models\Operasi\PreOperasi\PemeriksaanFisikPreOperasi;
+use App\Models\Operasi\PostOperasi\PemeriksaanFisikPostOperasi;
 
 class PreOperasiService
 {
@@ -102,6 +103,29 @@ class PreOperasiService
         } catch (\Throwable $th) {
             DB::rollBack();
             throw new Exception("Gagal menambahkan Data Pre Operasi: " . $th->getMessage());
+        }
+    }
+
+    public function insertVerifPreOp($kode_register)
+    {
+        // dd($kode_register);
+        DB::beginTransaction();
+        try {
+            
+            $verifikasiAnastesiPreOp = VerifikasiPreOperasi::create([
+                'kode_register' => $kode_register,
+                'user_id' => auth()->user()->id,
+                'created_by' => auth()->user()->id,
+
+            ]);
+
+        
+            DB::commit();
+
+            return $verifikasiAnastesiPreOp;
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw new Exception("Gagal memverivikasi Pre Operasi: " . $th->getMessage());
         }
     }
 

@@ -39,6 +39,7 @@ Route::prefix('pre-post')->name('operasi.')->middleware('auth')->group(function 
     Route::get('/pre-operasi/create/{kode_register}', [PreOperasiController::class, 'create'])->name('pre-operasi.create');
     Route::post('/pre-operasi', [PreOperasiController::class, 'store'])->name('pre-operasi.store');
     Route::get('/pre-operasi/update/{kode_register}', [PreOperasiController::class, 'edit'])->name('pre-operasi.edit');
+    Route::post('/pre-operasi/insertVerifikasiPreOp/{kode_register}', [PreOperasiController::class, 'VerifikasiPreOp'])->name('pre-operasi.Verifikasi-pre-op');
     Route::put('/pre-operasi/update/{kode_register}', [PreOperasiController::class, 'update'])->name('pre-operasi.update');
 
     // Post Operasi

@@ -8,9 +8,11 @@ use App\Helpers\BookingHelper;
 use App\Http\Controllers\Controller;
 use App\Services\Operasi\BookingOperasiService;
 use App\Services\Operasi\DataUmum\PreOperasiService;
+use App\Models\Operasi\PostOperasi\VerifikasiPostOperasi;
 use App\Services\Operasi\PraBedah\AssesmenPraBedahService;
 use App\Http\Requests\Operasi\PreOperasi\StorePreOperasiRequest;
 use App\Http\Requests\Operasi\PreOperasi\UpdatePreOperasiRequest;
+use App\Models\Operasi\PreOperasi\VerifikasiPreOperasi;
 
 class PreOperasiController extends Controller
 {
@@ -36,6 +38,7 @@ class PreOperasiController extends Controller
 
         // get data from service
         $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
+        
         $preOperasi = $this->bookingOperasiService->byDate($date, $sessionBangsal ?? '');
 
         $statusPre = BookingHelper::getStatusPreOperasi($preOperasi);
@@ -130,6 +133,20 @@ class PreOperasiController extends Controller
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
             return redirect()->back()->with('error', 'Gagal merubah post operasi: ' . $e->getMessage());
+        }
+    }
+
+    public function VerifikasiPreOp($kode_register)
+    {
+        // dd($kode_register);
+        try {
+            $this->preOperasiService->insertVerifPreOp($kode_register);
+
+            return redirect('/pre-post/pre-operasi')->with('success', 'Verifikasi Pre Operasi berhasil.');
+            // return redirect()->back()->with('success', 'Pre Operasi berhasil ditambahkan.');
+        } catch (Exception $e) {
+            // Redirect dengan pesan error jika terjadi kegagalan
+            return redirect()->back()->with('error', 'Gagal menambahkan post operasi: ' . $e->getMessage());
         }
     }
 

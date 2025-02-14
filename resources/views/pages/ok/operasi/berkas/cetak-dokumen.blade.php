@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cetak Assesmen Pra Bedah</title>
+    <title>Cetak Pre Post Operasi</title>
     <style>
         table {
             border-collapse: collapse;
