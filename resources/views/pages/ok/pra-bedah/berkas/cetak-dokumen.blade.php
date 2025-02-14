@@ -262,12 +262,12 @@
         </tr>
         <tr>
             <td width="30%" class="text5" style="padding-left: 60px;">{!! DNS2D::getBarcodeHTML($booking->nama_dokter, 'QRCODE', 3, 3) !!}</td>
-            <td width="40%" class="text5" style="padding-left: 80px;"> {!! DNS2D::getBarcodeHTML($booking->nama_pasien, 'QRCODE', 3, 3) !!}</td>
+            <td width="40%" class="text5" style="padding-left: 100px;"> {!! DNS2D::getBarcodeHTML($booking->nama_pasien, 'QRCODE', 3, 3) !!}</td>
             <td width="30%" class="text5" style="padding-left: 70px;">{!! DNS2D::getBarcodeHTML($booking->created_by, 'QRCODE', 3, 3) !!}</td>
         </tr>
         <tr>
             <td width="30%" class="text5">({{ $booking->nama_dokter}})</td>
-            <td width="40%" class="text9">({{ $booking->nama_pasien}})</td>
+            <td width="40%" class="text5">({{ $booking->nama_pasien}})</td>
             <td width="30%" class="text5">({{ optional($cetak)->created_by ?? ''}})</td>
         </tr>
     </table>

@@ -17,14 +17,18 @@
             @endcan --}}
             {{-- booking operasi --}}
             @endcan
+            @can('riwayat medis')
             <li class="nav-item dropdown {{ Request::is('riwayat-medis*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-notes-medical"></i> <span>Riwayat Medis</span></a>
+                @can('Riwayat Berkas Operasi')
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('riwayat-medis/operasi*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('berkas-operasi.index') }}">Berkas Operasi</a>
                     </li>
                 </ul>
+                @endcan
             </li>
+            @endcan
 
             <!-- <li class="menu-header">RSUMM</li> -->
             @can('master data')

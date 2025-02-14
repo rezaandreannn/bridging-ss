@@ -92,10 +92,10 @@
                         </div>
                         <div class="card-footer text-center border-0">
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <a href="" class="btn btn-outline-success btn-sm">Penandaan Operasi</a>
-                                <a href="" class="btn btn-outline-success btn-sm">Pra Bedah</a>
-                                <a href="" class="btn btn-outline-success btn-sm">Laporan Operasi</a>
-                                <a href="" class="btn btn-outline-success btn-sm">Pasca Bedah</a>
+                                <a href="{{ route('operasi.penandaan.cetak', $data->kode_register) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-outline-success btn-sm">Penandaan Operasi</a>
+                                <a href="{{ route('prabedah.berkas-prabedah.cetak', $data->kode_register) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-outline-success btn-sm">Pra Bedah</a>
+                                <a href="{{ route('laporan.operasi.cetak', $data->kode_register) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-outline-success btn-sm">Laporan Operasi</a>
+                                <a href="{{ route('pascabedah.perencanaan-pascabedah.cetak', $data->kode_register) }}" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" class="btn btn-outline-success btn-sm">Pasca Bedah</a>
                             </div>
                         </div>
                     </div>
