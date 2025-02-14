@@ -526,7 +526,17 @@ class BookingOperasiService
     private function mapData($databookings)
     {
         return collect($databookings->map(function ($item) {
+            
             $transaksiKamar = $item->transaksiKamar->first();
+            if ($transaksiKamar) {
+                // Cek apakah transaksiKamar punya ruang dan bangsal
+                $ruangan = optional($transaksiKamar->ruang)->Nama_Ruang;
+            }
+            else {
+                $ruangan = '';
+
+            }
+
             return (object) [
                 'id' => $item->id,
                 'kode_register' => $item->kode_register,
@@ -535,7 +545,7 @@ class BookingOperasiService
                 'nama_pasien' => optional($item->pendaftaran->registerPasien)->Nama_Pasien ?? '',
                 'asal_ruangan' => $item->asal_ruangan,
                 'nama_dokter' => optional($item->dokter)->Nama_Dokter,
-                'nama_ruangan' => optional($transaksiKamar->ruang)->Nama_Ruang,
+                'nama_ruangan' => $ruangan,
                 'jenis_operasi' => $item->jenis_operasi,
                 'terlaksana' => $item->terlaksana,
                 'rencana_operasi' => $item->rencana_operasi,
