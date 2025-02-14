@@ -85,6 +85,7 @@
                                     <th scope="col">No MR</th>
                                     <th scope="col">Nama Pasien</th>
                                     <th scope="col">Tanggal</th>
+                                    <th scope="col">Ruangan</th>
                                     <th scope="col">Dokter Operator</th>
                                     <th scope="col">Aksi</th>
                                 </tr>
@@ -96,6 +97,7 @@
                                     <td>{{$verifikasi->no_mr}}</td>
                                     <td>{{ ucwords(strtolower(trim($verifikasi->nama_pasien))) }}</td>
                                     <td>{{$verifikasi->tanggal}}</td>
+                                    <td>{{$verifikasi->nama_ruangan}}</td>
                                     <td>{{$verifikasi->nama_dokter}}</td>
                                     <td>  
                                         @if (isset($statusPascaBedah[$verifikasi->id]) && $statusPascaBedah[$verifikasi->id] != 'create')

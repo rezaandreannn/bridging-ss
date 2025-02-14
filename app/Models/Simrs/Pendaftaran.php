@@ -3,8 +3,9 @@
 namespace App\Models\Simrs;
 
 use App\Models\Operasi\BookingOperasi;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Transaksi\TransaksiKamar;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Pendaftaran extends Model
 {

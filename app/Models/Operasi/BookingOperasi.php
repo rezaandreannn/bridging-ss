@@ -6,6 +6,7 @@ use App\Models\MasterData\TtdDokter;
 use App\Models\Operasi\PostOperasi\DataUmumPostOperasi;
 use App\Models\Simrs\Dokter;
 use App\Models\Simrs\Pendaftaran;
+use App\Models\Transaksi\TransaksiKamar;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -60,4 +61,10 @@ class BookingOperasi extends Model
     {
         return $this->hasOne(User::class, 'id', 'created_by');
     }
+
+    public function transaksiKamar()
+    {
+        return $this->hasMany(TransaksiKamar::class, 'No_Reg', 'kode_register');
+    }
+
 }
