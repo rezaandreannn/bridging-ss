@@ -42,12 +42,15 @@ class PostOperasiController extends Controller
 
         $statusPost = BookingHelper::getStatusPostOperasi($postOperasi);
 
-        // dd($statusPost);
+        $verifikasiPost = BookingHelper::getVerifikasiPostOperasi($postOperasi);
+
+        // dd($verifikasiPost);
 
         return view($this->view . 'index', compact('postOperasi'))
             ->with([
                 'title' => $title,
                 'statusPost' => $statusPost,
+                'verifikasiPost' => $verifikasiPost,
             ]);
     }
 
@@ -142,6 +145,20 @@ class PostOperasiController extends Controller
         } catch (Exception $e) {
             // Redirect dengan pesan error jika terjadi kegagalan
             return redirect()->back()->with('error', 'Gagal merubah post operasi: ' . $e->getMessage());
+        }
+    }
+
+    public function VerifikasiPostOp($kode_register)
+    {
+        // dd($kode_register);
+        try {
+            $this->postOperasiService->insertVerifPostOp($kode_register);
+
+            return redirect('/pre-post/post-operasi')->with('success', 'Verifikasi Pre Operasi berhasil.');
+            // return redirect()->back()->with('success', 'Pre Operasi berhasil ditambahkan.');
+        } catch (Exception $e) {
+            // Redirect dengan pesan error jika terjadi kegagalan
+            return redirect()->back()->with('error', 'Gagal menambahkan post operasi: ' . $e->getMessage());
         }
     }
 

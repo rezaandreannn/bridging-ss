@@ -150,11 +150,21 @@
                                         
                                         @if($pasien->Medis == 'RAWAT JALAN')
                                         <a href="#" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> Scan</a>
-                                            @if($pasien->Nama_Dokter == 'FISIOTERAPI')
-
-                                            @else
-                                            <a href="{{ route('rj.rmDokter', ['noReg' => $pasien->No_Reg, 'noMR'=> $pasien->No_MR]) }}" class="btn btn-sm btn-warning"><i class="fas fa-download"></i> RM</a>
-                                            @endif
+                                            @switch($pasien->Nama_Dokter)
+                                                @case('FISIOTERAPI')
+                                                    {{-- No action needed, or add a message if required --}}
+                                                    @break
+                                            
+                                                @case('SPESIALIS MATA')
+                                                    <a href="{{ route('polimata.cetakRM', [$pasien->No_Reg]) }}" class="btn btn-sm btn-success">
+                                                        <i class="fas fa-download"></i> RM
+                                                    </a>
+                                                    @break
+                                                @default
+                                                    <a href="{{ route('rj.rmDokter', ['noReg' => $pasien->No_Reg, 'noMR'=> $pasien->No_MR]) }}" class="btn btn-sm btn-warning">
+                                                        <i class="fas fa-download"></i> RM
+                                                    </a>
+                                            @endswitch
                                         @else
                                        
                                         <a href="{{ route('rm.detail', $pasien->No_Reg) }}" class="btn btn-sm btn-primary"><i class="fas fa-info-circle"></i> Detail</a>
