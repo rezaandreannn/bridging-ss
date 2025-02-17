@@ -60,7 +60,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Kode ICD10</label>
-                                    <select name="kode_diagnosa" class="form-control select2" data-placeholder="Pilih Kode ICD 10" data-dropdown-css-class="select2-purple" style="width: 100%;">
+                                    <select name="kode_diagnosa" class="form-control select2" style="width: 100%;">
                                         <option value="" selected disabled>-- Pilih Kode ICD 10 --</option>
                                         @foreach ($masterIcd10 as $icd10)
                                         <option value="{{$icd10->icd10_code}}">{{$icd10->icd10_code}} || {{$icd10->icd10_en}}</option>

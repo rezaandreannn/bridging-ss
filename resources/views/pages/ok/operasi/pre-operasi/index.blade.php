@@ -84,19 +84,24 @@
                                                               <a class="dropdown-item has-icon" href="{{ route('operasi.pre-operasi.edit', $booking->kode_register) }}">
                                                                 <i class="fas fa-edit"></i> Edit
                                                             </a>
+                                                            
+                                                            {{-- tombol verifikasi anastesi --}}
+
+                                                            @if (!isset($verifikasiPre[$booking->kode_register]) || !array_filter($verifikasiPre[$booking->kode_register]))
+                                                            <form id="verifikasi-form-{{$booking->kode_register}}" action="{{ route('operasi.pre-operasi.Verifikasi-pre-op', $booking->kode_register) }}" method="POST" style="display: none;">
+                                                                @method('post')
+                                                                @csrf
+                                                            </form>
+                                                            <a class="dropdown-item has-icon" confirm-delete="true" data-menuId="{{$booking->kode_register}}" href="#"><i class="fas fa-check"></i> Verifkasi</a>
+                                                            @endif
+                                                            
                                                         @else
                                                         <a class="dropdown-item has-icon" href="{{ route('operasi.pre-operasi.create', $booking->kode_register )}}"> 
                                                             <i class="fas fa-pencil-alt"></i> Tambah
                                                         </a>
                                                         @endif
                                                    
-                                                        @if (!isset($verifikasiPre[$booking->kode_register]) || !array_filter($verifikasiPre[$booking->kode_register]))
-                                                        <form id="verifikasi-form-{{$booking->kode_register}}" action="{{ route('operasi.pre-operasi.Verifikasi-pre-op', $booking->kode_register) }}" method="POST" style="display: none;">
-                                                            @method('post')
-                                                            @csrf
-                                                        </form>
-                                                        <a class="dropdown-item has-icon" confirm-delete="true" data-menuId="{{$booking->kode_register}}" href="#"><i class="fas fa-check"></i> Verifkasi</a>
-                                                        @endif
+                                                   
                                                     </div>
                                                 </div>
                                             </td>

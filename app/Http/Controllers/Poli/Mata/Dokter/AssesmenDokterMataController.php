@@ -169,6 +169,7 @@ class AssesmenDokterMataController extends Controller
             DB::connection('pku')->table('TAC_RJ_MEDIS')->insert([
                 'FS_KD_REG' => $request->input('NO_REG'),
                 'FS_TERAPI' => $request->input('FS_TERAPI') ?? '',
+                'FS_KD_MEDIS' => auth()->user()->username,
                 'FS_CARA_PULANG' => $request->input('FS_CARA_PULANG'),
                 'mdd' => date('Y-m-d'),
                 'mdb' => auth()->user()->username,
