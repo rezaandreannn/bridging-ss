@@ -2,12 +2,13 @@
 
 namespace App\Services\Operasi\DataUmum;
 
-use App\Models\Operasi\PostOperasi\AlatPostOperasi;
-use App\Models\Operasi\PostOperasi\DataUmumPostOperasi;
-use App\Models\Operasi\PostOperasi\PemeriksaanFisikPostOperasi;
-use App\Models\Operasi\PostOperasi\TindakanPostOperasi;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use App\Models\Operasi\PostOperasi\AlatPostOperasi;
+use App\Models\Operasi\PostOperasi\DataUmumPostOperasi;
+use App\Models\Operasi\PostOperasi\TindakanPostOperasi;
+use App\Models\Operasi\PostOperasi\VerifikasiPostOperasi;
+use App\Models\Operasi\PostOperasi\PemeriksaanFisikPostOperasi;
 
 class PostOperasiService
 {
@@ -392,6 +393,29 @@ class PostOperasiService
         } catch (\Throwable $th) {
             DB::rollBack();
             throw new Exception("Gagal menambahkan Data Post Operasi: " . $th->getMessage());
+        }
+    }
+
+    public function insertVerifPostOp($kode_register)
+    {
+        // dd($kode_register);
+        DB::beginTransaction();
+        try {
+
+            $verifikasiRuanganPostOp = VerifikasiPostOperasi::create([
+                'kode_register' => $kode_register,
+                'user_id' => auth()->user()->id,
+                'created_by' => auth()->user()->id,
+
+            ]);
+
+
+            DB::commit();
+
+            return $verifikasiRuanganPostOp;
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw new Exception("Gagal memverifikasi Post Operasi: " . $th->getMessage());
         }
     }
 

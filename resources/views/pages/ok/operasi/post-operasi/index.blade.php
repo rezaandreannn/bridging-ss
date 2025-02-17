@@ -42,6 +42,7 @@
                                             <th scope="col">No MR</th>
                                             <th scope="col">Nama Dokter</th>
                                             <th scope="col">Status</th>
+                                            <th scope="col">Verifikasi</th>
                                             <th scope="col">Aksi</th>
                                         </tr>
                                     </thead>
@@ -62,6 +63,16 @@
                                                 <span class="badge badge-danger">Belum</span>
                                                 @endif
                                             </td>
+                                            <td>
+                                                @if (isset($verifikasiPost[$booking->kode_register]) && array_filter($verifikasiPost[$booking->kode_register]))
+                                                <span class="badge badge-light">
+                                                    {{ $verifikasiPost[$booking->kode_register]['verifikasi']->user->name }} <br> {{ $verifikasiPost[$booking->kode_register]['verifikasi']->created_at }}
+                                                </span>
+
+                                                @else
+                                                -
+                                                @endif
+                                            </td>
                                             <td>  
                                                 <div class="dropdown d-inline">
                                                     <a href="#" class="text-primary" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -74,11 +85,21 @@
                                                             <a class="dropdown-item has-icon" href="{{ route('operasi.post-operasi.edit', $booking->kode_register) }}">
                                                                 <i class="fas fa-edit"></i> Edit
                                                             </a>
+
+                                                            @if (!isset($verifikasiPost[$booking->kode_register]) || !array_filter($verifikasiPost[$booking->kode_register]))
+                                                            <form id="verifikasi-form-{{$booking->kode_register}}" action="{{ route('operasi.post-operasi.Verifikasi-post-op', $booking->kode_register) }}" method="POST" style="display: none;">
+                                                                @method('post')
+                                                                @csrf
+                                                            </form>
+                                                            <a class="dropdown-item has-icon" confirm-delete="true" data-menuId="{{$booking->kode_register}}" href="#"><i class="fas fa-check"></i> Verifkasi</a>
+                                                            @endif
                                                         @else
                                                             <a class="dropdown-item has-icon" href="{{ route('operasi.post-operasi.create', $booking->kode_register) }}">
                                                                 <i class="fas fa-plus"></i> Tambah
                                                             </a>
                                                         @endif
+                                                        
+
                                                     </div>
                                                 </div>
                                             </td>
@@ -115,20 +136,20 @@
             event.preventDefault();
             var menuId = $(this).data('menuid');
             Swal.fire({
-                title: 'Apakah Kamu Yakin?'
+                title: 'Apakah Kamu Yakin Menerima Pasien?'
                 , text: "Anda tidak akan dapat mengembalikan ini!"
                 , icon: 'warning'
                 , showCancelButton: true
                 , confirmButtonColor: '#6777EF'
                 , cancelButtonColor: '#d33'
-                , confirmButtonText: 'Ya, Hapus saja!'
+                , confirmButtonText: 'Ya, Terima!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    var form = $('#delete-form-' + menuId);
+                    var form = $('#verifikasi-form-' + menuId);
                     if (form.length) {
                         form.submit();
                     } else {
-                        console.error('Data will not be deleted!:', menuId);
+                        console.error('Data gagal di verifikasi!:', menuId);
                     }
                 }
             });
