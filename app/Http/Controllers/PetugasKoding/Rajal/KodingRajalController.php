@@ -66,6 +66,21 @@ class KodingRajalController extends Controller
         return view($this->view . 'rawatJalan.index', compact('title', 'dokters', 'data', 'rajalModel','kode_dokter','tanggal'));
     }
 
+    public function search(Request $request)
+    {
+        $searchTerm = $request->get('search', '');
+    
+        $icd10 = DB::connection('bridging_ss')
+            ->table('satusehat_icd10')
+            ->where('icd10_code', 'like', '%' . $searchTerm . '%')
+            ->orWhere('icd10_en', 'like', '%' . $searchTerm . '%')
+            ->select('icd10_code', 'icd10_en')
+            ->limit(20)  // Batasi hasil pencarian, bisa disesuaikan
+            ->get();
+    
+        return response()->json($icd10);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

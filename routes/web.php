@@ -663,6 +663,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/documentation', [DocumentationController::class, 'index'])->name('documentation.index');
 });
 
+// icd 10
+Route::get('icd10/search', [KodingRajalController::class, 'search'])->name('icd10.search');
+// icd 10
+
 Route::get('/server', function () {
     return view('pages/rekam_medis/bymr/index');
 });

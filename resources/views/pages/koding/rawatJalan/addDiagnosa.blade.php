@@ -62,12 +62,7 @@
                                     <label>Kode ICD10</label>
                                     <select name="kode_diagnosa" class="form-control select2" style="width: 100%;">
                                         <option value="" selected disabled>-- Pilih Kode ICD 10 --</option>
-                                        @foreach ($masterIcd10 as $icd10)
-                                        <option value="{{$icd10->icd10_code}}">{{$icd10->icd10_code}} || {{$icd10->icd10_en}}</option>
-                                
-                                        @endforeach
                                     </select>
-                          
                                 </div>
                             </div>
                         </div>
@@ -98,5 +93,36 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+
+<script>
+
+$(document).ready(function() {
+    $('.select2').select2({
+        placeholder: '-- Pilih Kode ICD 10 --',
+        ajax: {
+            url: '{{ route('icd10.search') }}',  // URL untuk memproses pencarian ICD10
+            dataType: 'json',
+            delay: 250,  // Menunggu 250ms sebelum melakukan pencarian
+            data: function (params) {
+                return {
+                    search: params.term // Mencari berdasarkan query yang diketik
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data.map(function(item) {
+                        return {
+                            id: item.icd10_code,
+                            text: item.icd10_code + ' || ' + item.icd10_en
+                        };
+                    })
+                };
+            },
+            cache: true
+        }
+    });
+});
+
+</script>
 
 @endpush
