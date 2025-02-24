@@ -104,7 +104,31 @@
                                         @endphp
 
                                         @if ($tanggalBooking >= $three_day_later)
-                                        <span class="badge badge-warning"> pasien sudah lebih dari 3 hari</span>
+                                        <div class="dropdown d-inline">
+                                            <a href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-sm btn-success">
+                                                <i class="fas fa-download"></i>
+                                                Berkas
+                                            </a> 
+                                            <div class="dropdown-menu">
+                                                @if (isset($statusPenandaan[$patient->id]) && $statusPenandaan[$patient->id] != 'create')
+                                                <a class="dropdown-item has-icon" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" href="{{ route('operasi.penandaan.cetak', $patient->kode_register) }}">
+                                                    <i class="fas fa-download"></i> Unduh Penandaan Operasi</a>
+                                                @endif
+                                                @if (isset($statusLaporanOperasi[$patient->id]) && $statusLaporanOperasi[$patient->id] != 'create')
+                                                <a class="dropdown-item has-icon" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" href="{{ route('laporan.operasi.cetak', $patient->kode_register) }}">
+                                                    <i class="fas fa-download"></i> Unduh Laporan Operasi
+                                                </a>
+                                                @endif
+                                                @if (isset($statusPascaBedah[$patient->id]) && $statusPascaBedah[$patient->id] != 'create')
+                                                <a class="dropdown-item has-icon" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" href="{{ route('pascabedah.perencanaan-pascabedah.cetak', $patient->kode_register) }}"> 
+                                                    <i class="fas fa-download"></i> Unduh Pasca Bedah
+                                                </a>
+                                                @endif
+                                                <a class="dropdown-item has-icon" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" href="{{ route('prabedah.berkas-prabedah.cetak', $patient->kode_register) }}"> 
+                                                    <i class="fas fa-download"></i> Unduh Pra Bedah
+                                                </a>
+                                            </div>
+                                        </div>
 
                                         @else
                                         <a href="{{ route('operasi.list-pasien-detail.show', $patient->kode_register )}}" class="btn btn-sm btn-primary">
