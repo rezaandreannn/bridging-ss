@@ -20,7 +20,7 @@
             @can('riwayat medis')
             <li class="nav-item dropdown {{ Request::is('riwayat-medis*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-notes-medical"></i> <span>Riwayat Medis</span></a>
-                @can('Riwayat Berkas Operasi')
+                @can('riwayat berkas operasi')
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('riwayat-medis/operasi*') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('berkas-operasi.index') }}">Berkas Operasi</a>
