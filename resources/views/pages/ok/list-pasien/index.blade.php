@@ -111,14 +111,15 @@
                                             <i class="fas fa-file-alt"></i>
                                             Forms
                                         </a>
-                                        <a href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-sm btn-success">
-                                            <i class="fas fa-download"></i>
-                                            Berkas
-                                        </a>    
-                                        @endif
+                                      
+                                      
                                         {{-- batas tombol tanggal non aktif --}}
                                      
                                         <div class="dropdown d-inline">
+                                            <a href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-sm btn-success">
+                                                <i class="fas fa-download"></i>
+                                                Berkas
+                                            </a> 
                                             <div class="dropdown-menu">
                                                 @if (isset($statusPenandaan[$patient->id]) && $statusPenandaan[$patient->id] != 'create')
                                                 <a class="dropdown-item has-icon" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" href="{{ route('operasi.penandaan.cetak', $patient->kode_register) }}">
@@ -139,6 +140,7 @@
                                                 </a>
                                             </div>
                                         </div>
+                                        @endif
                                         @endif
                                     </td>
                                 </tr>
