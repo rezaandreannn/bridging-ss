@@ -18,7 +18,7 @@ class ListPasienController extends Controller
     {
         $this->bookingOperasiService = new BookingOperasiService();
     }
-    public function index()
+    public function index(Request $request)
     {
         $title = 'List pasien operasi';
         $date = date('Y-m-d');
@@ -39,8 +39,9 @@ class ListPasienController extends Controller
                 ->pluck('Nama_Dokter')
                 ->first();
 
+            $byDate = $request->input('tanggal') != null ? $request->input('tanggal') : date('Y-m-d');
             // Ambil pasien dokter
-            $patients = $this->bookingOperasiService->byDateFormDokterCadangan($date, $sessionKodeDokter ?? '');
+            $patients = $this->bookingOperasiService->byDateFormDokterCadangan($byDate, $sessionKodeDokter ?? '');
             // dd($patients);
             $statusLaporanOperasi = LaporanOperasiHelper::getStatusLaporanOperasi($patients);
             $statusPascaBedah = PascaBedahHelper::getStatusPascaBedah($patients);

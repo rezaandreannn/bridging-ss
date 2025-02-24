@@ -30,11 +30,39 @@
 
         <div class="section-body">
             <h2 class="section-title">{{ $DoctorName ?? '' }}</h2>
+            @php
+                request('tanggal')==null ?  $date : $date = request('tanggal');
+            @endphp
             <p class="section-lead">
-                Menampilkan list pasien yang sudah terjadwal untuk operasi pada hari ini tanggal <b>{{ date('d-m-Y', strtotime($date ))}}</b>.
+                Menampilkan list pasien yang sudah terjadwal untuk operasi pada tanggal <b>{{ date('d-m-Y', strtotime($date ))}}</b>.
             </p>
             <div class="card">
                 <div class="card-body">
+                    <form id="filterForm" action="" method="GET">       
+                        <div class="card-footer text-left">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="">Filter tanggal</label>
+                                    @php
+                                        $date = date('Y-m-d');
+                                    @endphp
+                                    <div class="form-group">
+                                        <input type="date" class="form-control" name="tanggal" {{(request('tanggal')==null) ?  $date : $date = request('tanggal') }} value="{{$date}}"  id="datefilter">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group mt-4">
+                                        <button type="submit" class="btn btn-primary mr-2" style="margin-top: 5px;">
+                                            <i class="fas fa-search"></i> Filter
+                                        </button>
+                                        <button type="button" class="btn btn-danger" style="margin-top: 5px;" onclick="resetForm()">
+                                            <i class="fas fa-sync"></i> Reset
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
                     <div class="table-responsive">
                         <table class="table-striped table" id="table-1">
                             <thead>
@@ -42,6 +70,7 @@
                                     <th scope="col">No</th>
                                     <th scope="col">No MR</th>
                                     <th scope="col">Nama Pasien</th>
+                                    <th scope="col">Tgl Booking Operasi</th>
                                     <th scope="col">Asal Ruangan</th>
                                     <th scope="col">Booking by</th>
                                     <th scope="col">Aksi</th>
@@ -53,6 +82,7 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td><b>{{ $patient->no_mr }}</b></td>
                                     <td>{{ ucwords(strtolower(trim($patient->nama_pasien))) }}</td>
+                                    <td>{{ $patient->tanggal_booking ?? ''}}</td>
                                     <td>{{ $patient->asal_ruangan ?? ''}}</td>
                                     <td>{{ $patient->created_by ?? ''}}</td>
                                     <td>
@@ -65,15 +95,30 @@
                                             @endif
                                         @endif
                                         @if (auth()->user()->hasRole('dokter bedah') || auth()->user()->hasRole('dokter mata'))
+                                        
+                                        {{-- tanggal --}}
+                                        @php
+                                        $tanggalBooking = date('Y-m-d');
+                                        $three_day_later = date('Y-m-d', strtotime('+3 day', strtotime($patient->tanggal_booking)));
+
+                                        @endphp
+
+                                        @if ($tanggalBooking >= $three_day_later)
+                                        <span class="badge badge-warning"> pasien sudah lebih dari 3 hari</span>
+
+                                        @else
                                         <a href="{{ route('operasi.list-pasien-detail.show', $patient->kode_register )}}" class="btn btn-sm btn-primary">
                                             <i class="fas fa-file-alt"></i>
                                             Forms
                                         </a>
+                                        <a href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-sm btn-success">
+                                            <i class="fas fa-download"></i>
+                                            Berkas
+                                        </a>    
+                                        @endif
+                                        {{-- batas tombol tanggal non aktif --}}
+                                     
                                         <div class="dropdown d-inline">
-                                            <a href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-sm btn-success">
-                                                <i class="fas fa-download"></i>
-                                                Berkas
-                                            </a>
                                             <div class="dropdown-menu">
                                                 @if (isset($statusPenandaan[$patient->id]) && $statusPenandaan[$patient->id] != 'create')
                                                 <a class="dropdown-item has-icon" onclick="window.open(this.href,'_blank', 'location=yes,toolbar=yes,width=800,height=600'); return false;" href="{{ route('operasi.penandaan.cetak', $patient->kode_register) }}">
@@ -117,4 +162,12 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('js/page/modules-datatables.js') }}"></script>
+
+<script>
+    function resetForm() {
+        document.getElementById("filterForm").value = "";
+        alert('Filter telah direset!');
+        window.location.href = "{{ route('operasi.list-pasien.index') }}";
+    }
+</script>
 @endpush

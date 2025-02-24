@@ -306,6 +306,7 @@ class BookingOperasiService
                 'ob.id',
                 'ob.kode_register',
                 'p.Tanggal',
+                'ob.Tanggal as tanggal_booking',
                 'p.No_MR',
                 'rp.Nama_Pasien',
                 'ob.asal_ruangan',
@@ -562,7 +563,8 @@ class BookingOperasiService
             return (object) [
                 'id' => $item->id,
                 'kode_register' => $item->kode_register ?? '',
-                'tanggal' => $item->Tanggal ?? '',
+                'tanggal' => date('Y-m-d',strtotime($item->Tanggal)) ?? '',
+                'tanggal_booking' => date('Y-m-d',strtotime($item->tanggal_booking)) ?? '',
                 'no_mr' => $item->No_MR ?? '',
                 'nama_pasien' => $item->Nama_Pasien ?? '',
                 'asal_ruangan' => $item->asal_ruangan ?? '',
