@@ -67,9 +67,10 @@ class BookingOperasiController extends Controller
                 $statusPendaftaran = BookingHelper::getStatusPendaftaran($bookings);
             }
         } elseif ($user->hasRole('perawat bangsal')) {
+            // dd('ok');
             $kodeDokter = null;
             $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
-            $bookings = $this->bookingOperasiService->byPasienAktifRuangan($date, $sessionBangsal,$kodeDokter);
+            $bookings = $this->bookingOperasiService->byPasienAktifbooking($date, $sessionBangsal,$kodeDokter);
             $statusPendaftaran = BookingHelper::getStatusPendaftaran($bookings);
             // dd($bookings);
         }
