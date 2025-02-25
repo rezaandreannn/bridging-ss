@@ -14,6 +14,7 @@ use App\Models\Operasi\PraBedah\AssesmenPraBedah;
 use App\Services\Operasi\PraBedah\VerifikasiPraBedahService;
 use App\Http\Requests\Operasi\Prabedah\StoreVerifikasiPraBedahRequest;
 use App\Http\Requests\Operasi\Prabedah\UpdateVerifikasiPraBedahRequest;
+use App\Services\Operasi\PascaBedah\PerencanaanPascaBedahService;
 use App\Services\Operasi\PraBedah\AssesmenPraBedahService;
 
 class VerifikasiPraBedahController extends Controller
@@ -22,6 +23,7 @@ class VerifikasiPraBedahController extends Controller
     protected $routeIndex;
     protected $prefix;
     protected $bookingOperasiService;
+    protected $perencanaanPascaBedah;
     protected $assesmenOperasiService;
     protected $verifikasiPraBedahService;
     protected $dokterService;
@@ -33,6 +35,7 @@ class VerifikasiPraBedahController extends Controller
         $this->assesmenOperasiService = new AssesmenPraBedahService();
         $this->verifikasiPraBedahService = new VerifikasiPraBedahService();
         $this->dokterService = new DokterService();
+        $this->perencanaanPascaBedah = new PerencanaanPascaBedahService();
         $this->bookingOperasiService = new BookingOperasiService();
     }
 
@@ -64,7 +67,7 @@ class VerifikasiPraBedahController extends Controller
             // dd('ok');
             $kodeDokter = null;
             $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
-            $verifikasis = $this->bookingOperasiService->byPasienAktifRuangan($date, $sessionBangsal, $kodeDokter);
+            $verifikasis = $this->perencanaanPascaBedah->byPasienAktifRuangan($date, $sessionBangsal, $kodeDokter);
 
             $statusBerkas = BookingHelper::getStatusBerkasVerifikasi($verifikasis);
 

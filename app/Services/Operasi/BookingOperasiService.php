@@ -359,21 +359,24 @@ class BookingOperasiService
 
         if ($sessionBangsal != null) {
             $bookings->where('mr.Kode_Bangsal', $sessionBangsal);
-            $bookings->where('tk.Status', '1');
+            $bookings->where('ob.Tanggal', $date);
         } else if ($kodeDokter == null){
             $bookings->where('ob.Tanggal', $date);
         } else if ($kodeDokter != null){
             $bookings->where('ob.Tanggal', $date);
             $bookings->where('ob.kode_dokter', $kodeDokter);
         }
-
+        
         $bookings = $bookings
+            ->where('tk.Status', '1')
             ->orderBy('ob.tanggal', 'DESC')
             ->get();
 
         return $this->mapDataCadangan($bookings);
 }
-    public function byPasienAktifbookingRuangan($date,$sessionBangsal,$kodeDokter){
+
+
+    public function byPasienAktifbookingPoli($date,$sessionBangsal,$kodeDokter){
    
         $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
         $sqlsrv = DB::connection('sqlsrv')->getDatabaseName();
@@ -412,12 +415,22 @@ class BookingOperasiService
             $bookings->where('tk.Status', '1');
         } else if ($kodeDokter == null){
             $bookings->where('ob.Tanggal', $date);
-        } else if ($kodeDokter != null){
+        } else if ($kodeDokter != null) {
+            
+            // Always filter by doctor and date
             $bookings->where('ob.Tanggal', $date);
             $bookings->where('ob.kode_dokter', $kodeDokter);
+            
+            // Check if there's a valid join with TR_KAMAR by ensuring No_Reg is not null
+            $bookings->where(function($query) {
+                $query->whereNull('tk.No_Reg')  // No join with TR_KAMAR (No_Reg is null)
+                      ->orWhere('tk.Status', '1');  // Only apply status condition if there is a valid join
+            });
         }
-
+        
         $bookings = $bookings
+        
+            
             ->orderBy('ob.tanggal', 'DESC')
             ->get();
 

@@ -31,7 +31,7 @@ class PenandaanOperasiService
 
     public function get()
     {
-        $penandaans = $this->baseQuery()->get();
+        $penandaans = $this->baseQuery()->limit('20')->get();
         return $this->mapData($penandaans);
     }
 

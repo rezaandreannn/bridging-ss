@@ -107,7 +107,7 @@ class PenandaanOperasiController extends Controller
             if ($kode_dokter) {
 
                 $sessionBangsal = null;
-                $penandaans = $this->bookingOperasiService->byDate($date, $sessionBangsal, $kode_dokter);
+                $penandaans = $this->bookingOperasiService->byPasienAktifRuangan($date, $sessionBangsal, $kode_dokter);
                 $penandaan = $this->penandaanOperasiService->get();
                 // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
                 $statusPenandaan = BookingHelper::getStatusPenandaan($penandaans);

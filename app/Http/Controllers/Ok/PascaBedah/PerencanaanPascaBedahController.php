@@ -94,7 +94,7 @@ class PerencanaanPascaBedahController extends Controller
             // Ambil pasien dokter
             $kodeDokter = $request->input('kode_dokter');
             // dd($kodeDokter);
-            $pascaBedah = $this->perencanaanPascaBedah->byPasienAktifRuangan($date, $sessionBangsal, $kodeDokter,$kodeDokter);
+            $pascaBedah = $this->perencanaanPascaBedah->byPasienAktifRuangan($date, $sessionBangsal, $kodeDokter);
             $statusPascaBedah = PascaBedahHelper::getStatusPascaBedah($pascaBedah);
             // dd($pascaBedah);
         }

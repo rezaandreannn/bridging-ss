@@ -180,7 +180,7 @@
                                     <tr>
                                         <th scope="col">No</th>
                                         <th scope="col">Kode Register</th>
-                                        <th scope="col">Tanggal</th>
+                                        <th scope="col">Tanggal Booking</th>
                                         <th scope="col">Nama Pasien</th>
                                         <th scope="col">No MR</th>
                                         <th scope="col">Nama Dokter</th>
