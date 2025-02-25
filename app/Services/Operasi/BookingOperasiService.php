@@ -373,7 +373,7 @@ class BookingOperasiService
 
         return $this->mapDataCadangan($bookings);
 }
-    public function byPasienAktifBooking($date,$sessionBangsal,$kodeDokter){
+    public function byPasienAktifbookingRuangan($date,$sessionBangsal,$kodeDokter){
    
         $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
         $sqlsrv = DB::connection('sqlsrv')->getDatabaseName();

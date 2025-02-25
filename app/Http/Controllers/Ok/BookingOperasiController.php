@@ -70,7 +70,7 @@ class BookingOperasiController extends Controller
             // dd('ok');
             $kodeDokter = null;
             $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
-            $bookings = $this->bookingOperasiService->byPasienAktifbooking($date, $sessionBangsal,$kodeDokter);
+            $bookings = $this->bookingOperasiService->byPasienAktifbookingRuangan($date, $sessionBangsal,$kodeDokter);
             $statusPendaftaran = BookingHelper::getStatusPendaftaran($bookings);
             // dd($bookings);
         }
