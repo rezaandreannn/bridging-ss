@@ -131,6 +131,77 @@ class PerencanaanPascaBedahService
         return null;
     }
 
+    public function byPasienAktifRuangan($date,$sessionBangsal,$kodeDokter){
+   
+            $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
+            $sqlsrv = DB::connection('sqlsrv')->getDatabaseName();
+            $bookings = DB::connection('pku')
+                ->table('ok_booking_operasi as ob')
+                ->Join($db_rsmm . '.dbo.PENDAFTARAN as p', 'ob.kode_register', '=', 'p.No_REG')
+                ->Join($db_rsmm . '.dbo.REGISTER_PASIEN as rp', 'p.No_MR', '=', 'rp.No_MR')
+                ->Join($db_rsmm . '.dbo.DOKTER as d', 'ob.Kode_Dokter', '=', 'd.Kode_Dokter')
+                ->leftJoin($db_rsmm . '.dbo.TR_KAMAR as tk', 'p.No_Reg', '=', 'tk.No_Reg')
+                ->leftJoin($db_rsmm . '.dbo.M_RUANG as mr', 'tk.Kode_Ruang', '=', 'mr.Kode_Ruang')
+                ->select(
+                    'ob.id',
+                    'ob.kode_register',
+                    'p.Tanggal',
+                    'ob.Tanggal as tanggal_booking',
+                    'p.No_MR',
+                    'rp.Nama_Pasien',
+                    'ob.asal_ruangan',
+                    'd.Nama_Dokter',
+                    'ob.jenis_operasi',
+                    'ob.terlaksana',
+                    'ob.rencana_operasi',
+                    'mr.Nama_Ruang',
+                    'mr.Kode_Ruang',
+    
+                )
+                ->where('p.Status','1');
+           
+                // kondisi jika sessionbangsal, tanggal dan kode dokter
+
+            if ($sessionBangsal != null) {
+                $bookings->where('mr.Kode_Bangsal', $sessionBangsal);
+            } else if ($kodeDokter == null){
+                $bookings->where('ob.Tanggal', $date);
+            } else if ($kodeDokter != null){
+                $bookings->where('ob.Tanggal', $date);
+                $bookings->where('ob.kode_dokter', $kodeDokter);
+            }
+
+            $bookings = $bookings
+                ->where('tk.Status', '1')
+                ->orderBy('ob.tanggal', 'DESC')
+                ->get();
+    
+            return $this->mapDataCadangan($bookings);
+    }
+
+    private function mapDataCadangan($databookings)
+    {
+        return collect($databookings->map(function ($item) {
+     
+            return (object) [
+                'id' => $item->id,
+                'kode_register' => $item->kode_register ?? '',
+                'tanggal' => date('Y-m-d',strtotime($item->Tanggal)) ?? '',
+                'tanggal_booking' => date('Y-m-d',strtotime($item->tanggal_booking)) ?? '',
+                'no_mr' => $item->No_MR ?? '',
+                'nama_pasien' => $item->Nama_Pasien ?? '',
+                'asal_ruangan' => $item->asal_ruangan ?? '',
+                'nama_dokter' => $item->Nama_Dokter ?? '',
+                'jenis_operasi' => $item->jenis_operasi ?? '',
+                'terlaksana' => $item->terlaksana ?? '',
+                'rencana_operasi' => $item->rencana_operasi ?? '',
+                'nama_ruangan' => $item->Nama_Ruang ?? '',
+                'kode_ruang' => $item->Kode_Ruang ?? '',
+          
+            ];
+        }));
+    }
+
 
     public function findById($kodeRegister)
     {

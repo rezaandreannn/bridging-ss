@@ -84,7 +84,7 @@
                                     <th scope="col">No</th>
                                     <th scope="col">No MR</th>
                                     <th scope="col">Nama Pasien</th>
-                                    <th scope="col">Tanggal</th>
+                                    <th scope="col">Tanggal Operasi</th>
                                     <th scope="col">Ruangan</th>
                                     <th scope="col">Dokter Operator</th>
                                     <th scope="col">Aksi</th>
@@ -96,7 +96,7 @@
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$verifikasi->no_mr}}</td>
                                     <td>{{ ucwords(strtolower(trim($verifikasi->nama_pasien))) }}</td>
-                                    <td>{{$verifikasi->tanggal}}</td>
+                                    <td>{{$verifikasi->tanggal_booking}}</td>
                                     <td>{{$verifikasi->nama_ruangan}}</td>
                                     <td>{{$verifikasi->nama_dokter}}</td>
                                     <td>  
@@ -169,7 +169,7 @@
     function resetForm() {
         document.getElementById("filterForm2").value = "";
         alert('Filter telah direset!');
-        window.location.href = "{{ route('prabedah.verifikasi-prabedah.index') }}";
+        window.location.href = "{{ route('pascabedah.perencanaan-pascabedah.index') }}";
     }
 </script>
 

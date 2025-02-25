@@ -67,27 +67,25 @@ class PerencanaanPascaBedahController extends Controller
     public function index(Request $request)
     {
         $title = $this->prefix . ' ' . 'List';
-        $date = date('Y-m-d'); 
-    
-        if ($request->input('tanggal') != null) {
-            $date = $request->input('tanggal');
-        }
-
+        $date = $request->input('tanggal') != null ? $request->input('tanggal') : date('Y-m-d'); 
         $pascaBedah = collect();
 
         $user = auth()->user();
 
         if ($user->hasRole('perawat poli') || $user->hasRole('perawat poli mata')) {
             $kode_dokter = $request->input('kode_dokter');
-            if ($kode_dokter) {
+    
                 $sessionBangsal = null;
-                $pascaBedah = collect($this->bookingOperasiService->byDate($date, $sessionBangsal, $kode_dokter));
+                $pascaBedah = collect($this->perencanaanPascaBedah->byPasienAktifRuangan($date, $sessionBangsal, $kode_dokter));
                 // dd($pascaBedah);
-            }
+                $statusPascaBedah = PascaBedahHelper::getStatusPascaBedah($pascaBedah);
+          
         } elseif ($user->hasRole('perawat bangsal')) {
+           
+            $kodeDokter = null;
             $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
             // Ambil pasien dokter
-            $pascaBedah = $this->bookingOperasiService->byPasienAktif($date, $sessionBangsal);
+            $pascaBedah = $this->perencanaanPascaBedah->byPasienAktifRuangan($date, $sessionBangsal,$kodeDokter);
             $statusPascaBedah = PascaBedahHelper::getStatusPascaBedah($pascaBedah);
             // dd($pascaBedah);
         } 
@@ -96,7 +94,7 @@ class PerencanaanPascaBedahController extends Controller
             // Ambil pasien dokter
             $kodeDokter = $request->input('kode_dokter');
             // dd($kodeDokter);
-            $pascaBedah = $this->bookingOperasiService->byPasienAktif($date, $sessionBangsal, $kodeDokter);
+            $pascaBedah = $this->perencanaanPascaBedah->byPasienAktifRuangan($date, $sessionBangsal, $kodeDokter,$kodeDokter);
             $statusPascaBedah = PascaBedahHelper::getStatusPascaBedah($pascaBedah);
             // dd($pascaBedah);
         }
