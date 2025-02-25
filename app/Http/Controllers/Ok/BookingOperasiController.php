@@ -47,10 +47,7 @@ class BookingOperasiController extends Controller
         $title = $this->prefix . ' ' . 'List';
 
 
-        $date = date('Y-m-d');
-        if ($request->input('tanggal') != null) {
-            $date = $request->input('tanggal');
-        }
+        $date = $request->input('tanggal') != null ? $request->input('tanggal') : date('Y-m-d'); 
 
 
         $bookings = [];
@@ -65,15 +62,16 @@ class BookingOperasiController extends Controller
             if ($kode_dokter) {
 
                 $sessionBangsal = null;
-                $bookings = $this->bookingOperasiService->byDate($date, $sessionBangsal, $kode_dokter);
+                $bookings = $this->bookingOperasiService->byPasienAktifRuangan($date, $sessionBangsal, $kode_dokter);
                 // cek apakah status aktif
                 $statusPendaftaran = BookingHelper::getStatusPendaftaran($bookings);
             }
         } elseif ($user->hasRole('perawat bangsal')) {
-            // dd('ok');
+            $kodeDokter = null;
             $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
-            $bookings = $this->bookingOperasiService->byDate($date, $sessionBangsal);
+            $bookings = $this->bookingOperasiService->byPasienAktifRuangan($date, $sessionBangsal,$kodeDokter);
             $statusPendaftaran = BookingHelper::getStatusPendaftaran($bookings);
+            // dd($bookings);
         }
         // $statusPendaftaran = BookingHelper::getStatusPendaftaran($bookings);
         $booking = null;

@@ -39,7 +39,7 @@ class VerifikasiPraBedahController extends Controller
     public function index(Request $request)
     {
         $title = $this->prefix . ' ' . 'List';
-        $date = date('Y-m-d');
+        $date = $request->input('tanggal') != null ? $request->input('tanggal') : date('Y-m-d'); 
 
         $verifikasis = [];
         $statusBerkas = null;
@@ -54,20 +54,22 @@ class VerifikasiPraBedahController extends Controller
             if ($kode_dokter) {
 
                 $sessionBangsal = null;
-                $verifikasis = $this->bookingOperasiService->byDate($date, $sessionBangsal, $kode_dokter);
+                $verifikasis = $this->bookingOperasiService->byPasienAktifRuangan($date, $sessionBangsal, $kode_dokter);
 
                 $statusBerkas = BookingHelper::getStatusBerkasVerifikasi($verifikasis);
 
                 $statusVerifikasi = BookingHelper::getStatusVerifikasi($verifikasis);
             }
         } elseif ($user->hasRole('perawat bangsal')) {
+            // dd('ok');
+            $kodeDokter = null;
             $sessionBangsal = auth()->user()->userbangsal->kode_bangsal ?? null;
-            $verifikasis = $this->bookingOperasiService->byPasienAktif($date, $sessionBangsal);
+            $verifikasis = $this->bookingOperasiService->byPasienAktifRuangan($date, $sessionBangsal, $kodeDokter);
 
             $statusBerkas = BookingHelper::getStatusBerkasVerifikasi($verifikasis);
 
             $statusVerifikasi = BookingHelper::getStatusVerifikasi($verifikasis);
-            // dd($verifikasis);
+            // dd($statusVerifikasi);
         }
 
         return view($this->view . 'verifikasi-prabedah.index', compact('verifikasis'))
