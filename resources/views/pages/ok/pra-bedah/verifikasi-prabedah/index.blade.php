@@ -75,7 +75,7 @@
                                     <th scope="col">No</th>
                                     <th scope="col">No MR</th>
                                     <th scope="col">Nama Pasien</th>
-                                    <th scope="col">Tanggal</th>
+                                    <th scope="col">Tanggal Booking</th>
                                     <th scope="col">Dokter Operator</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Aksi</th>
@@ -87,7 +87,7 @@
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$verifikasi->no_mr}}</td>
                                     <td>{{ ucwords(strtolower(trim($verifikasi->nama_pasien))) }}</td>
-                                    <td>{{$verifikasi->tanggal}}</td>
+                                    <td>{{$verifikasi->tanggal_booking}}</td>
                                     <td>{{$verifikasi->nama_dokter}}</td>
                                     <td>
                                     @if (isset($statusBerkas[$verifikasi->id]))
@@ -125,7 +125,7 @@
                                     @endif
                                     </td>
                                     <td>  
-                                        @if($verifikasi->tanggal == now()->format('Y-m-d'))
+                                        @if($verifikasi->tanggal_booking == now()->format('Y-m-d'))
                                         <div class="dropdown d-inline">
                                             <a href="#" class="text-primary" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="fas fa-ellipsis-v"></i>

@@ -72,7 +72,7 @@ class VerifikasiPraBedahController extends Controller
             $statusBerkas = BookingHelper::getStatusBerkasVerifikasi($verifikasis);
 
             $statusVerifikasi = BookingHelper::getStatusVerifikasi($verifikasis);
-            // dd($statusVerifikasi);
+            // dd($verifikasis);
         }
 
         return view($this->view . 'verifikasi-prabedah.index', compact('verifikasis'))
