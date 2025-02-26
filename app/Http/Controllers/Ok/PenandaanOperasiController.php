@@ -81,8 +81,8 @@ class PenandaanOperasiController extends Controller
         // Cek jika login sebagai userbangsal
         if ($user->hasRole('dokter umum')) {
             $sessionIbs = auth()->user()->username ?? null;
-            $penandaans = $this->bookingOperasiService->byDateFormDokter($date, '',  '');
-
+            $penandaans = $this->bookingOperasiService->penandaanByDokterUmum($date);
+            // dd($penandaans);
             $penandaan = $this->penandaanOperasiService->get();
 
             // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
