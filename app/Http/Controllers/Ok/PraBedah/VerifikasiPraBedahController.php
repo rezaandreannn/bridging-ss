@@ -57,8 +57,9 @@ class VerifikasiPraBedahController extends Controller
             if ($kode_dokter) {
 
                 $sessionBangsal = null;
-                $verifikasis = $this->bookingOperasiService->byPasienAktifRuangan($date, $sessionBangsal, $kode_dokter);
-
+                // $verifikasis = $this->bookingOperasiService->byPasienAktifRuangan($date, $sessionBangsal, $kode_dokter);
+                $verifikasis = $this->bookingOperasiService->byPasienAktifbookingPoli($date, $sessionBangsal, $kode_dokter);
+                // dd($verifikasis);
                 $statusBerkas = BookingHelper::getStatusBerkasVerifikasi($verifikasis);
 
                 $statusVerifikasi = BookingHelper::getStatusVerifikasi($verifikasis);
