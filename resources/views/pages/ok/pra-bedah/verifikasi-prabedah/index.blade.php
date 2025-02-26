@@ -125,7 +125,7 @@
                                     @endif
                                     </td>
                                     <td>  
-                                        {{-- @if($verifikasi->tanggal == now()->format('Y-m-d')) --}}
+                                        @if($verifikasi->tanggal == now()->format('Y-m-d'))
                                         <div class="dropdown d-inline">
                                             <a href="#" class="text-primary" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="fas fa-ellipsis-v"></i>
@@ -154,7 +154,7 @@
                                                 @endif --}}
                                             </div>
                                         </div>
-                                        {{-- @endif --}}
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
