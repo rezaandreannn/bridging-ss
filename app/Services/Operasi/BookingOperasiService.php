@@ -325,37 +325,7 @@ class BookingOperasiService
         return $this->mapDataCadangan($bookings);
     }
 
-    public function penandaanByDokterUmum($date)
-
-    {
-        $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
-        $sqlsrv = DB::connection('sqlsrv')->getDatabaseName();
-        $bookings = DB::connection('pku')
-            ->table('ok_booking_operasi as ob')
-            ->Join($db_rsmm . '.dbo.PENDAFTARAN as p', 'ob.kode_register', '=', 'p.No_REG')
-            ->Join($db_rsmm . '.dbo.REGISTER_PASIEN as rp', 'p.No_MR', '=', 'rp.No_MR')
-            ->Join($db_rsmm . '.dbo.DOKTER as d', 'ob.Kode_Dokter', '=', 'd.Kode_Dokter')
-            ->Join($sqlsrv . '.dbo.Users as u', 'ob.created_by', '=', 'u.id')
-            ->select(
-                'ob.id',
-                'ob.kode_register',
-                'p.Tanggal',
-                'ob.Tanggal as tanggal_booking',
-                'p.No_MR',
-                'rp.Nama_Pasien',
-                'ob.asal_ruangan',
-                'd.Nama_Dokter',
-                'ob.jenis_operasi',
-                'ob.terlaksana',
-                'ob.rencana_operasi',
-                'u.name',
-
-            )
-            ->where('ob.tanggal',$date)
-            ->get();
-        
-        return $this->mapDataPenandaan($bookings);
-    }
+  
 
     public function byPasienAktifRuangan($date,$sessionBangsal,$kodeDokter){
    
@@ -469,6 +439,9 @@ class BookingOperasiService
 
         return $this->mapDataCadangan($bookings);
 }
+
+
+   
 
     public function byDateFormIbsCadangan($date, $kodeDokter = "")
     {
@@ -722,24 +695,5 @@ class BookingOperasiService
             ];
         }));
     }
-    private function mapDataPenandaan($databookings)
-    {
-        return collect($databookings->map(function ($item) {
-     
-            return (object) [
-                'id' => $item->id,
-                'kode_register' => $item->kode_register ?? '',
-                'tanggal' => date('Y-m-d',strtotime($item->tanggal_booking)) ?? '',
-                // 'tanggal_booking' => date('Y-m-d',strtotime($item->tanggal_booking)) ?? '',
-                'no_mr' => $item->No_MR ?? '',
-                'nama_pasien' => $item->Nama_Pasien ?? '',
-                'asal_ruangan' => $item->asal_ruangan ?? '',
-                'nama_dokter' => $item->Nama_Dokter ?? '',
-                'jenis_operasi' => $item->jenis_operasi ?? '',
-                'terlaksana' => $item->terlaksana ?? '',
-                'rencana_operasi' => $item->rencana_operasi ?? '',
-                'created_by' => $item->name ?? '',
-            ];
-        }));
-    }
+
 }

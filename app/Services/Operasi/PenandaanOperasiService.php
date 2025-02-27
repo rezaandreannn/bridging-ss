@@ -29,12 +29,12 @@ class PenandaanOperasiService
         ]);
     }
 
-    public function get()
-    {
-        $penandaans = $this->baseQuery()->limit('20')->get();
-        return $this->mapData($penandaans);
-    }
-
+        public function get()
+            {
+                $penandaans = $this->baseQuery()->limit('20')->get();
+                return $this->mapData($penandaans);
+            }
+  
     public function findById($id)
     {
         return PenandaanOperasi::find($id);
@@ -178,4 +178,89 @@ class PenandaanOperasiService
             ];
         }));
     }
+
+    public function penandaanOperasi($date,$sessionBangsal,$kodeDokter){
+   
+        $db_rsmm = DB::connection('db_rsmm')->getDatabaseName();
+        $sqlsrv = DB::connection('sqlsrv')->getDatabaseName();
+        $bookings = DB::connection('pku')
+            ->table('ok_booking_operasi as ob')
+            ->leftJoin('ok_tanda_operasi as to', 'ob.kode_register', '=', 'to.kode_register')
+            ->Join($db_rsmm . '.dbo.PENDAFTARAN as p', 'ob.kode_register', '=', 'p.No_REG')
+            ->Join($db_rsmm . '.dbo.REGISTER_PASIEN as rp', 'p.No_MR', '=', 'rp.No_MR')
+            ->Join($db_rsmm . '.dbo.DOKTER as d', 'ob.Kode_Dokter', '=', 'd.Kode_Dokter')
+            ->leftJoin($db_rsmm . '.dbo.TR_KAMAR as tk', 'p.No_Reg', '=', 'tk.No_Reg')
+            ->leftJoin($db_rsmm . '.dbo.M_RUANG as mr', 'tk.Kode_Ruang', '=', 'mr.Kode_Ruang')
+            ->Join($sqlsrv . '.dbo.Users as u', 'ob.created_by', '=', 'u.id')
+            ->select(
+                'ob.id',
+                'ob.kode_register',
+                'p.Tanggal',
+                'to.hasil_gambar',
+                'ob.Tanggal as tanggal_booking',
+                'p.No_MR',
+                'rp.Nama_Pasien',
+                'ob.asal_ruangan',
+                'd.Nama_Dokter',
+                'ob.jenis_operasi',
+                'ob.terlaksana',
+                'ob.rencana_operasi',
+                'mr.Nama_Ruang',
+                'mr.Kode_Ruang',
+                'u.name',
+
+            )
+            ->where('p.Status','1');
+       
+            // kondisi jika sessionbangsal, tanggal dan kode dokter
+
+        if ($sessionBangsal != null) {
+            $bookings->where('mr.Kode_Bangsal', $sessionBangsal);
+            $bookings->where('ob.Tanggal', $date);
+            $bookings->where('tk.Status', '1');
+        } else if ($kodeDokter == null){
+            $bookings->where('ob.Tanggal', $date);
+        } else if ($kodeDokter != null) {
+            
+            // Always filter by doctor and date
+            $bookings->where('ob.Tanggal', $date);
+            $bookings->where('ob.kode_dokter', $kodeDokter);
+            
+            // Check if there's a valid join with TR_KAMAR by ensuring No_Reg is not null
+            $bookings->where(function($query) {
+                $query->whereNull('tk.No_Reg')  // No join with TR_KAMAR (No_Reg is null)
+                      ->orWhere('tk.Status', '1');  // Only apply status condition if there is a valid join
+            });
+        }
+        
+        $bookings = $bookings
+        
+            
+            ->orderBy('ob.tanggal', 'DESC')
+            ->get();
+
+        return $this->mapDataPenandaan($bookings);
+}
+
+private function mapDataPenandaan($databookings)
+{
+    return collect($databookings->map(function ($item) {
+ 
+        return (object) [
+            'id' => $item->id,
+            'kode_register' => $item->kode_register ?? '',
+            'tanggal' => date('Y-m-d',strtotime($item->tanggal_booking)) ?? '',
+            // 'tanggal_booking' => date('Y-m-d',strtotime($item->tanggal_booking)) ?? '',
+            'no_mr' => $item->No_MR ?? '',
+            'nama_pasien' => $item->Nama_Pasien ?? '',
+            'gambar' => $item->hasil_gambar ?? '',
+            'asal_ruangan' => $item->asal_ruangan ?? '',
+            'nama_dokter' => $item->Nama_Dokter ?? '',
+            'jenis_operasi' => $item->jenis_operasi ?? '',
+            'terlaksana' => $item->terlaksana ?? '',
+            'rencana_operasi' => $item->rencana_operasi ?? '',
+            'created_by' => $item->name ?? '',
+        ];
+    }));
+}
 }

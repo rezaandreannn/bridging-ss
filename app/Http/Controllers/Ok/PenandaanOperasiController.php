@@ -80,35 +80,27 @@ class PenandaanOperasiController extends Controller
 
         // Cek jika login sebagai userbangsal
         if ($user->hasRole('dokter umum')) {
-            $sessionIbs = auth()->user()->username ?? null;
-            $penandaans = $this->bookingOperasiService->penandaanByDokterUmum($date);
+            $kode_dokter = $request->input('kode_dokter') ?? null;
+            $sessionBangsal = null;
+            $penandaans = $this->penandaanOperasiService->penandaanOperasi($date, $sessionBangsal, $kode_dokter);
             // dd($penandaans);
-            $penandaan = $this->penandaanOperasiService->get();
+            // $penandaan = $this->penandaanOperasiService->getPenandaans();
 
             // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
             $statusPenandaan = BookingHelper::getStatusPenandaan($penandaans);
             $statusGambar = BookingHelper::getStatusGambar($penandaans);
         }
-        // Cek jika login sebagai dokter
-        elseif ($user->hasRole('dokter bedah')) {
-            $sessionKodeDokter = auth()->user()->username ?? null;
-            // Ambil pasien dokter
-            $penandaans = $this->bookingOperasiService->byDateFormDokter($date, '', $sessionKodeDokter ?? '');
 
-            // dd($penandaans);
-
-            $penandaan = $this->penandaanOperasiService->get();
-            // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
-            $statusPenandaan = BookingHelper::getStatusPenandaan($penandaans);
-            $statusGambar = BookingHelper::getStatusGambar($penandaans);
-        } elseif ($user->hasRole('perawat poli mata')) {
+        // Cek jika login sebagai perawat poli mata
+         else {
             $kode_dokter = $request->input('kode_dokter');
 
             if ($kode_dokter) {
 
                 $sessionBangsal = null;
-                $penandaans = $this->bookingOperasiService->byPasienAktifRuangan($date, $sessionBangsal, $kode_dokter);
-                $penandaan = $this->penandaanOperasiService->get();
+                $penandaans = $this->penandaanOperasiService->penandaanOperasi($date, $sessionBangsal, $kode_dokter);
+                // $penandaan = $this->penandaanOperasiService->getPenandaans();
+                // dd($penandaan);
                 // cek apakah di data booking ini sudah di beri penandaan lokasi operasi
                 $statusPenandaan = BookingHelper::getStatusPenandaan($penandaans);
                 $statusGambar = BookingHelper::getStatusGambar($penandaans);
@@ -121,7 +113,6 @@ class PenandaanOperasiController extends Controller
             ->with([
                 'title' => $title,
                 'statusPenandaan' => $statusPenandaan,
-                'penandaan' => $penandaan,
                 'dokters' => $this->dokterService->byBedahOperasi(),
                 'statusGambar' => $statusGambar,
             ]);

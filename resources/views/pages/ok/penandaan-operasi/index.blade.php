@@ -163,7 +163,7 @@
 </div>
 
 
-@foreach ($penandaan as $p)
+@foreach ($penandaans as $p)
 <div class="modal fade" id="gambarModal{{ $p->kode_register ?? '' }}" tabindex="-1" role="dialog" aria-labelledby="gambarModalLabel{{ $p->kode_register ?? '' }}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
