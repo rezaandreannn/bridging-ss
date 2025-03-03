@@ -176,7 +176,7 @@ class Berkas_rm_controller extends Controller
         return $pdf->stream($filename . '.pdf');
     }
 
-    public function cetakRujukan($noReg, $kode_transaksi, $id_surat)
+    public function cetakRujukan($noReg, $kode_transaksi)
     {
         $resep = $this->rekam_medis->cetakResep2($noReg, $kode_transaksi);
         // dd($resep);
@@ -189,7 +189,7 @@ class Berkas_rm_controller extends Controller
 
             )
             ->where('a.FS_KD_REG', $noReg)
-            ->where('a.FS_KD_TRS', $id_surat)
+            // ->where('a.FS_KD_TRS', $id_surat)
             ->first();
 
         // dd($data);
